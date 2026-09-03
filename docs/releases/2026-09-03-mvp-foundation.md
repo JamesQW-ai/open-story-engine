@@ -3,7 +3,8 @@
 - 日期：2026-09-03 16:14:03 CST
 - 阶段：`v0.1.0` MVP 基础实现与私有共创树开发试玩
 - 目标分支：`main`
-- 提交：将在首次提交完成后以 Git 历史哈希为准。
+- 基线提交：`3e61698b2c013046544e8d44adfb7ec01e953fe9`（`feat: establish interactive story engine MVP foundation`）。
+- 上传回执：本记录将以独立文档提交推送到 `origin/main`；推送结果以该提交的 Git 远程跟踪状态为准。
 
 ## 已交付范围
 
