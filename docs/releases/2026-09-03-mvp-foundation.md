@@ -4,7 +4,7 @@
 - 阶段：`v0.1.0` MVP 基础实现与私有共创树开发试玩
 - 目标分支：`main`
 - 基线提交：`3e61698b2c013046544e8d44adfb7ec01e953fe9`（`feat: establish interactive story engine MVP foundation`）。
-- 上传回执：2026-09-03 首次推送 `origin/main` 因 GitHub HTTPS 身份未配置而被认证前阻断；远程未收到任何提交。认证恢复后应直接推送本地提交并检查远程跟踪状态。
+- 上传回执：2026-09-03 已通过 SSH 推送至 `git@github.com:JamesQW-ai/open-story-engine.git`；`origin/main` 已建立跟踪关系。已发布提交：`3e61698`、`2b91637`、`45426e5`。
 
 ## 已交付范围
 
