@@ -1,0 +1,150 @@
+{
+  "annotationVersion": "1.0",
+  "storyId": "rainy-waiting-room",
+  "reviewStatus": "reviewed_for_canonical_package",
+  "source": {
+    "path": "content/source/rainy-waiting-room.v0.1.txt",
+    "format": "text/plain; charset=utf-8",
+    "sha256": "918fd8656c43a65b0bab33a4099a4a556b29a847db7f97f6d54b0a15f7f924a8",
+    "title": "雨夜候车室",
+    "perspective": "third_person_limited",
+    "canonicalProtagonistId": "character_xu_chuan"
+  },
+  "canonicalArc": {
+    "id": "arc_original_canon",
+    "mode": "canonical_play",
+    "directionId": "direction_original_canon",
+    "summary": "许川在列车放行前取得录音和篡改记录，与姜序进入维修隧道救出唐栖，并令证据得到上报。",
+    "nodeIds": [
+      "node_arrival",
+      "node_records",
+      "node_tunnel",
+      "node_aftermath"
+    ],
+    "endingId": "ending_truth_survives"
+  },
+  "sourceTimeline": [
+    {
+      "id": "timeline_repairs_delayed",
+      "when": "去年秋季至故事发生前",
+      "fact": "陈砚挪用隧道防水与排水泵维修款，并以伪造的姜序签名完成验收记录。",
+      "sourceRef": { "lineRange": [75, 79], "anchor": "防水工程验收单，日期不对" }
+    },
+    {
+      "id": "timeline_tang_records_evidence",
+      "when": "故事开始前",
+      "fact": "唐栖发现问题、录下陈砚承认挪款的谈话，并将录音笔藏入十七号柜。",
+      "sourceRef": { "lineRange": [129, 153], "anchor": "把唯一能证明陈砚说过这些话的东西藏进十七号柜" }
+    },
+    {
+      "id": "timeline_tang_message",
+      "when": "22:55",
+      "fact": "唐栖向许川发送语音，警告陈砚、储物柜和隧道中的人。",
+      "sourceRef": { "lineRange": [9, 17], "anchor": "别让陈砚拿到储物柜里的录音" }
+    },
+    {
+      "id": "timeline_train_held",
+      "when": "23:10",
+      "fact": "暴雨中末班列车停在临潮站，陈砚准备在零点前恢复放行。",
+      "sourceRef": { "lineRange": [5, 7], "anchor": "末班列车停在那里" }
+    }
+  ],
+  "entities": {
+    "characters": [
+      {
+        "id": "character_xu_chuan",
+        "role": "canonical_protagonist",
+        "facts": ["唐栖的朋友", "收到唐栖语音后到达临潮站", "在规范主线中取得并保全录音"],
+        "sourceRef": { "lineRange": [9, 17], "anchor": "许川赶到临潮站" }
+      },
+      {
+        "id": "character_tang_qi",
+        "role": "missing_witness",
+        "facts": ["整理旧档案", "发现维修款与验收记录异常", "受困于信号室"],
+        "sourceRef": { "lineRange": [131, 153], "anchor": "排水泵的采购款去哪里了" }
+      },
+      {
+        "id": "character_chen_yan",
+        "role": "antagonist",
+        "facts": ["临潮站值班主管", "篡改维修与门禁记录", "试图取得录音并放行列车"],
+        "sourceRef": { "lineRange": [141, 149], "anchor": "我要是不把账做得好看" }
+      },
+      {
+        "id": "character_jiang_xu",
+        "role": "reluctant_ally",
+        "facts": ["夜班维修工", "验收签名被伪造", "开启手动阀并协助救援"],
+        "sourceRef": { "lineRange": [237, 257], "anchor": "我去开阀" }
+      }
+    ],
+    "immutableFacts": [
+      "临潮站是暴雨夜中通信受限的小型海边车站。",
+      "信号室排水泵故障，零点后积水会增加救援风险。",
+      "陈砚挪用维修款并伪造验收与门禁记录。",
+      "唐栖被困时，录音笔和原始记录是可证明事件的证据。",
+      "世界不存在超自然能力、凭空援军或未持有工具的即时解法。"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "node_arrival",
+      "canonicalOrder": 1,
+      "sourceRef": { "lineRange": [3, 109], "anchor": "许川绕过那只手，朝西侧走去" },
+      "objective": "确认唐栖的处境，取得进入站务室和调查十七号柜的依据。",
+      "canonicalFactsConfirmed": ["唐栖失联", "列车将于零点前放行", "姜序掌握隧道相关信息"],
+      "canonicalStateChanges": ["取得 item_locker_token", "发现西侧消防通道", "与姜序建立最低协作"],
+      "canonicalExit": "flag_locker_token_found && flag_office_access"
+    },
+    {
+      "id": "node_records",
+      "canonicalOrder": 2,
+      "sourceRef": { "lineRange": [111, 227], "anchor": "候车厅里有人开始收拾行李。雨更大了" },
+      "objective": "取得录音与调度记录，确认陈砚的责任和唐栖所在位置。",
+      "canonicalFactsConfirmed": ["验收签名被伪造", "排水泵故障未修复", "唐栖受困于信号室"],
+      "canonicalStateChanges": ["取得 item_recorder", "flag_evidence_secured", "flag_log_tampered", "flag_tang_located", "取得应急灯和维修通道协助"],
+      "canonicalExit": "flag_evidence_secured && flag_tang_located && flag_tunnel_access"
+    },
+    {
+      "id": "node_tunnel",
+      "canonicalOrder": 3,
+      "sourceRef": { "lineRange": [229, 377], "anchor": "站外的列车又鸣了一次" },
+      "objective": "在水位失控与列车放行前完成排水、打开信号室并保全唐栖与证据。",
+      "canonicalFactsConfirmed": ["陈砚切换门禁并卡住信号室外部滑栓", "姜序开启手动阀", "列车司机可通过故障程序上报"],
+      "canonicalStateChanges": ["flag_relief_valve_opened", "flag_signal_door_opened", "flag_tang_rescued", "flag_train_departure_held"],
+      "canonicalExit": "flag_tang_rescued"
+    },
+    {
+      "id": "node_aftermath",
+      "canonicalOrder": 4,
+      "sourceRef": { "lineRange": [379, 417], "anchor": "临潮站的灯在雨夜里亮着" },
+      "objective": "在候车厅公开证据，使列车依故障程序停止放行。",
+      "canonicalFactsConfirmed": ["列车司机可通过故障程序上报", "唐栖与原始记录已回到候车厅"],
+      "canonicalStateChanges": ["flag_train_departure_held", "flag_chen_yan_confronted"],
+      "canonicalExit": "flag_train_departure_held && flag_evidence_secured"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_truth_survives",
+      "type": "canonical",
+      "conditions": ["flag_tang_rescued", "flag_evidence_secured", "flag_train_departure_held", "!flag_train_departed"],
+      "sourceRef": { "lineRange": [379, 417], "anchor": "列车不再放行。我要上报隧道积水、人员受困和站务记录异常" }
+    },
+    {
+      "id": "ending_rescue_without_proof",
+      "type": "future_controlled_deviation",
+      "conditions": ["flag_tang_rescued", "!flag_evidence_secured", "!flag_train_departed"],
+      "sourceEvidence": "原著未采用此结局；它仅是 MVP 规则层预留的受控偏离。"
+    },
+    {
+      "id": "ending_last_train",
+      "type": "future_controlled_deviation",
+      "conditions": ["flag_train_departed", "!flag_tang_rescued"],
+      "sourceEvidence": "原著未采用此结局；它仅是 MVP 规则层预留的受控偏离。"
+    }
+  ],
+  "reviewNotes": [
+    "规范主线和三个节点均有原文锚点，不需要 LLM 推断原著事实。",
+    "非规范结局不是原文剧情，必须在规则实现前补齐显式状态变化与叙事锚点。",
+    "未来 derivative_co_creation 需由 SessionStoryContract 复制本包引用和继承范围，不能改写本标注或故事包。"
+  ]
+}

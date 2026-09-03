@@ -1,0 +1,28 @@
+{
+  "name": "open-story-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "validate:story": "tsx src/cli/validate-story.ts",
+    "play": "tsx src/cli/play.ts",
+    "co-create": "node --env-file-if-exists=.env --import tsx src/cli/co-create.ts"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.7"
+  }
+}
