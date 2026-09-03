@@ -17,6 +17,19 @@ describe("OpenAiCompatibleGateway", () => {
     expect(JSON.parse(String(calls[0]?.init?.body))).toMatchObject({ model: "test-model", response_format: { type: "json_object" }, max_tokens: 42, stream: true });
   });
 
+  it("can request a bounded non-streaming completion", async () => {
+    const calls: Array<{ init?: RequestInit }> = [];
+    const fakeFetch = async (_input: string | URL | Request, init?: RequestInit): Promise<Response> => {
+      calls.push({ init });
+      return new Response(JSON.stringify({ model: "test-model", choices: [{ message: { content: "{\"ok\":true}" } }] }), { status: 200 });
+    };
+    const gateway = new OpenAiCompatibleGateway({ apiKey: "test-key", model: "test-model", stream: false, fetchImplementation: fakeFetch as typeof fetch });
+
+    await expect(gateway.completeJson({ systemPrompt: "system", userPrompt: "user", maxOutputTokens: 42 })).resolves.toEqual({ model: "test-model", content: "{\"ok\":true}", finishReason: undefined });
+    expect(calls[0]?.init?.headers).toMatchObject({ Accept: "application/json" });
+    expect(JSON.parse(String(calls[0]?.init?.body))).toMatchObject({ stream: false });
+  });
+
   it("reassembles an OpenAI-compatible SSE response", async () => {
     const eventBody = [
       "data: {\"model\":\"test-model\",\"choices\":[{\"delta\":{\"content\":\"{\\\"ok\\\":\"},\"finish_reason\":null}]}\n\n",
@@ -24,6 +37,14 @@ describe("OpenAiCompatibleGateway", () => {
       "data: [DONE]\n\n",
     ];
     const fakeFetch = async (): Promise<Response> => new Response(eventBody.join(""), { headers: { "content-type": "text/event-stream" } });
+    const gateway = new OpenAiCompatibleGateway({ apiKey: "test-key", model: "test-model", fetchImplementation: fakeFetch as typeof fetch });
+
+    await expect(gateway.completeJson({ systemPrompt: "system", userPrompt: "user", maxOutputTokens: 42 })).resolves.toEqual({ model: "test-model", content: "{\"ok\":true}", finishReason: "stop" });
+  });
+
+  it("accepts a complete message payload sent in an SSE event", async () => {
+    const eventBody = "data: {\"model\":\"test-model\",\"choices\":[{\"message\":{\"content\":\"{\\\"ok\\\":true}\"},\"finish_reason\":\"stop\"}]}\n\n";
+    const fakeFetch = async (): Promise<Response> => new Response(eventBody, { headers: { "content-type": "text/event-stream" } });
     const gateway = new OpenAiCompatibleGateway({ apiKey: "test-key", model: "test-model", fetchImplementation: fakeFetch as typeof fetch });
 
     await expect(gateway.completeJson({ systemPrompt: "system", userPrompt: "user", maxOutputTokens: 42 })).resolves.toEqual({ model: "test-model", content: "{\"ok\":true}", finishReason: "stop" });

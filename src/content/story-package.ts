@@ -73,7 +73,7 @@ const narrativeBeatSchema = z.object({
     title: z.string().min(1),
     summary: z.string().min(1),
     canonicalBeatId: idSchema.optional(),
-    sourceNodeRef: idSchema.optional(),
+    rejoinTargetId: idSchema.optional(),
     statePatch: branchStatePatchSchema,
     when: z.array(conditionSchema).default([]),
     suggestedInput: z.string().min(1),
@@ -87,6 +87,20 @@ const narrativeEdgeSchema = z.object({
   when: z.array(conditionSchema).min(1),
   canonical: z.boolean(),
   transitionText: z.string().min(1),
+});
+
+const sceneRouteSchema = z.object({
+  fromNodeId: idSchema,
+  fromLocationId: idSchema,
+  toLocationId: idSchema,
+  toNodeId: idSchema,
+});
+
+const rejoinTargetSchema = z.object({
+  id: idSchema,
+  fromNodeId: idSchema,
+  targetBeatId: idSchema,
+  requiredOpenThreads: z.array(z.string().min(1)).min(1),
 });
 
 const resolutionSchema = z.object({
@@ -148,6 +162,8 @@ export const storyPackageSchema = z.object({
       edges: z.array(narrativeEdgeSchema).min(1),
       endingBeatIds: z.record(idSchema),
     }),
+    sceneRoutes: z.array(sceneRouteSchema).min(1),
+    rejoinTargets: z.array(rejoinTargetSchema).default([]),
   }),
   directions: z.array(z.object({
     id: idSchema, title: z.string().min(1), summary: z.string().min(1), primaryGoal: z.string().min(1),
@@ -183,6 +199,24 @@ export const storyPackageSchema = z.object({
   const allEntityIds = new Set([...ids.character, ...ids.location, ...ids.item]);
   const addIssue = (path: (string | number)[], message: string) => context.addIssue({ code: z.ZodIssueCode.custom, path, message });
   const duplicate = (entries: string[]) => new Set(entries).size !== entries.length;
+  const canReachLocation = (fromLocationId: string, toLocationId: string) => {
+    const visited = new Set([fromLocationId]);
+    const pending = [fromLocationId];
+
+    while (pending.length > 0) {
+      const currentLocationId = pending.shift()!;
+      if (currentLocationId === toLocationId) return true;
+      const location = storyPackage.locations.find((entry) => entry.id === currentLocationId);
+      location?.exits.forEach((exit) => {
+        if (!visited.has(exit)) {
+          visited.add(exit);
+          pending.push(exit);
+        }
+      });
+    }
+
+    return false;
+  };
 
   const groups: [string, string[]][] = [
     ["character", storyPackage.characters.map((entry) => entry.id)], ["location", storyPackage.locations.map((entry) => entry.id)],
@@ -224,6 +258,37 @@ export const storyPackageSchema = z.object({
   storyPackage.story.narrativeGraph.edges.forEach((edge, index) => {
     if (!ids.beat.has(edge.fromBeatId)) addIssue(["story", "narrativeGraph", "edges", index, "fromBeatId"], "叙事边起点不存在");
     if (!ids.beat.has(edge.toBeatId)) addIssue(["story", "narrativeGraph", "edges", index, "toBeatId"], "叙事边终点不存在");
+  });
+  const routeKeys = new Set<string>();
+  storyPackage.story.sceneRoutes.forEach((route, index) => {
+    const key = `${route.fromNodeId}:${route.fromLocationId}:${route.toLocationId}`;
+    if (routeKeys.has(key)) addIssue(["story", "sceneRoutes", index], "场景路线重复");
+    routeKeys.add(key);
+    if (!ids.node.has(route.fromNodeId)) addIssue(["story", "sceneRoutes", index, "fromNodeId"], "场景路线起始节点不存在");
+    if (!ids.node.has(route.toNodeId)) addIssue(["story", "sceneRoutes", index, "toNodeId"], "场景路线目标节点不存在");
+    if (!ids.location.has(route.fromLocationId)) addIssue(["story", "sceneRoutes", index, "fromLocationId"], "场景路线起始地点不存在");
+    if (!ids.location.has(route.toLocationId)) addIssue(["story", "sceneRoutes", index, "toLocationId"], "场景路线目标地点不存在");
+    const fromNode = storyPackage.story.nodes.find((node) => node.id === route.fromNodeId);
+    const toNode = storyPackage.story.nodes.find((node) => node.id === route.toNodeId);
+    if (fromNode && !fromNode.contextRefs.includes(route.fromLocationId)) addIssue(["story", "sceneRoutes", index, "fromLocationId"], "场景路线起始地点不属于起始节点");
+    if (toNode && !toNode.contextRefs.includes(route.toLocationId)) addIssue(["story", "sceneRoutes", index, "toLocationId"], "场景路线目标地点不属于目标节点");
+    if (!canReachLocation(route.fromLocationId, route.toLocationId)) addIssue(["story", "sceneRoutes", index, "toLocationId"], "场景路线目标地点不可达");
+  });
+  const rejoinTargetIds = new Set<string>();
+  storyPackage.story.rejoinTargets.forEach((target, index) => {
+    if (rejoinTargetIds.has(target.id)) addIssue(["story", "rejoinTargets", index, "id"], "汇合目标 ID 重复");
+    rejoinTargetIds.add(target.id);
+    if (!ids.node.has(target.fromNodeId)) addIssue(["story", "rejoinTargets", index, "fromNodeId"], "汇合来源场景不存在");
+    const targetBeat = storyPackage.story.narrativeGraph.beats.find((beat) => beat.id === target.targetBeatId);
+    if (!targetBeat) addIssue(["story", "rejoinTargets", index, "targetBeatId"], "汇合目标锚点不存在");
+    if (duplicate(target.requiredOpenThreads)) addIssue(["story", "rejoinTargets", index, "requiredOpenThreads"], "汇合必要线索重复");
+  });
+  storyPackage.story.narrativeGraph.beats.forEach((beat, beatIndex) => {
+    beat.nextDirections.forEach((direction, directionIndex) => {
+      if (direction.rejoinTargetId && !rejoinTargetIds.has(direction.rejoinTargetId)) {
+        addIssue(["story", "narrativeGraph", "beats", beatIndex, "nextDirections", directionIndex, "rejoinTargetId"], "方向引用的汇合目标不存在");
+      }
+    });
   });
   Object.entries(storyPackage.story.narrativeGraph.endingBeatIds).forEach(([endingId, beatId]) => {
     if (!ids.ending.has(endingId)) addIssue(["story", "narrativeGraph", "endingBeatIds", endingId], "叙事结局不存在");

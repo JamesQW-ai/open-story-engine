@@ -36,7 +36,7 @@ StoryPackage + 进入节点 + 继承范围 + 角色
 - `parentId` 与全局递增 `sequence`，用于回放和重建树关系。
 - 本次选择的 `selectedDirectionId` 与原始玩家方向文本。
 - 仅属于本节点的剧情正文、摘要、事实增量、未解线索与下一批方向。
-- `canonicalRelation`：`on_line`、`diverged` 或未来由一致性检查确认的 `rejoined`。
+- `canonicalRelation`：`on_line`、`diverged` 或由故事包兼容条件确认的 `rejoined`。
 
 ## `BranchState`
 
@@ -48,6 +48,24 @@ Planner 不输出或决定 `BranchState`。它只获得已确认的 `resolvedSta
 
 仓储层拒绝跨会话父节点、非契约进入节点的根节点，以及不属于父节点 `nextDirections` 的子节点。因此 Planner 无法静默改写来源或跳过玩家已见方向。
 
+## `NarrativePlan`
+
+从第二阶段起，服务在方向已选定、路线已解析、状态补丁已确认之后，构建并持久化一个 `NarrativePlan`。它不新增状态字段，也不替代玩家的下一次选择；它把一次高层方向限定为 2 至 3 个可审阅的叙事节拍：
+
+1. `establish_constraint`：承接当前场景和有限的未解线索。
+2. `transition_scene`：仅在 `sceneRoutes` 切换原著场景时出现。
+3. `advance_direction`：落实本次已经选择的方向及其已确认 `statePatch`。
+
+计划保存方向 ID、源/目标场景节点、被选择的状态补丁和每个节拍的摘要。它由 `CoCreationService` 生成并随子 `BranchNode` 一同追加，Planner 的 JSON schema 不包含此字段；即使模型返回同名字段，也会在服务端解析时被丢弃。LLM 只可按计划顺序组织新增正文，不能创造、删除、重排节拍或把后续方向的状态提前写成当前结果。
+
+## 受控汇合
+
+故事包可在 `rejoinTargets` 中声明可汇合检查点。每个检查点固定来源场景、目标叙事锚点和必要未解线索；目标锚点的完整 `BranchState` 是额外兼容条件。方向只有携带已声明的 `rejoinTargetId` 才能请求汇合。
+
+服务在玩家真正选择该方向后，依次验证：父场景与必要线索、`sceneRoutes` 解析出的目标场景、状态补丁后的完整状态，以及祖先链中确实存在 `diverged`。全部通过才把新节点标为 `rejoined`。Planner 的 `canonicalRelation` 不具有决定权，普通动态结果统一由服务标记为 `diverged`。
+
+`rejoined` 是兼容检查点，不是原著节选拼接许可。汇合节点与其后代仍由 Planner 生成连续正文，避免跳过玩家未见的原著段落；原文复用仍只适用于祖先链全为 `on_line` 的规范路径。
+
 ## Planner 边界
 
 当前 `MockBranchPlanner` 只为《雨夜候车室》提供固定测试内容，用于验证树的生长和分叉。它的输入是：
@@ -58,17 +76,19 @@ Planner 不输出或决定 `BranchState`。它只获得已确认的 `resolvedSta
 
 它输出 `PlannerResult`：剧情正文、摘要、事实增量、后续方向、与原著的关系，以及规划引用、置信度和状态变更建议。状态建议只用于审计和后续规则映射；Planner 不得直接修改 `GameState`。SQLite 在确认父子关系后才会赋予节点 ID、时间和顺序。
 
-`ContextBuilder` 只携带本回合需要的原著不可变事实、规范前史、当前父节点的祖先链、当前节点场景、已确认的 `BranchState` 和相关实体；不会把整棵分支树、完整原著或其他会话数据交给 Planner。动态方向可在故事包上声明受控的 `sourceNodeRef`，用来切换下一回合的原著场景窗口；未声明时继承父节点场景。模型返回的 `sourceNodeRef` 不具备权限，服务会以该受控值覆盖它。`PlannerResult` 的每个引用必须位于这份上下文的 `availableReferences` 中，否则拒绝写入。
+`ContextBuilder` 只携带本回合需要的原著不可变事实、规范前史、当前父节点的祖先链、当前节点场景、已确认的 `BranchState` 和相关实体；不会把整棵分支树、完整原著或其他会话数据交给 Planner。若方向的 `statePatch.playerLocationId` 改变许川地点，服务层只依据故事包中 `sceneRoutes` 声明的“当前节点 + 当前地点 -> 目标地点 -> 目标节点”路线切换下一回合场景窗口；路线不存在时拒绝该方向。Planner 不输出或决定 `sourceNodeRef`。`PlannerResult` 的每个引用必须位于这份上下文的 `availableReferences` 中，否则拒绝写入。
 
-`LlmBranchPlanner` 已通过 `LlmGateway` 接入 OpenAI-compatible `/chat/completions`，但 CLI 默认仍为 Mock。`npm run co-create` 会使用 Node 的 `--env-file-if-exists=.env` 自动读取本地配置；只有 `.env` 设置 `STORY_PLANNER=openai`、`STORY_LLM_BASE_URL`、`STORY_LLM_API_KEY` 和 `STORY_LLM_MODEL` 后才会发起外部调用。`.env` 被 Git 忽略，`.env.example` 只保存无密钥模板。网关请求 SSE 流，若中转站只返回普通响应则兼容处理；CLI 只会在完整 JSON 经 schema、引用范围、叙事事实和 400-700 字正文长度校验、分支落库后逐段呈现正文，避免把无效半段剧情显示为正式内容。叙事事实校验会拒绝正文提前宣称信号室已穿过、证据已取得、唐栖已离开隧道、水位已下降或列车已移动，并把明确原因用于一次修复重试；它是对 `BranchState` 可表达事实的确定性补充，不试图替代通用语义理解。规范方向的原文复用不调用外部模型。模型 JSON 不完整、长度不合格或 schema 校验失败时，Planner 会用更严格的紧凑输出约束重试一次；两次失败仍不会创建分支。调用请求摘要、原始模型输出或错误保存到 `llm_audits`，密钥不写入数据库或审计。
+`LlmBranchPlanner` 已通过 `LlmGateway` 接入 OpenAI-compatible `/chat/completions`，但 CLI 默认仍为 Mock。`npm run co-create` 会使用 Node 的 `--env-file-if-exists=.env` 自动读取本地配置；只有 `.env` 设置 `STORY_PLANNER=openai`、`STORY_LLM_BASE_URL`、`STORY_LLM_API_KEY` 和 `STORY_LLM_MODEL` 后才会发起外部调用。`.env` 被 Git 忽略，`.env.example` 只保存无密钥模板。网关请求 SSE 流，兼容常规 `delta.content` 与个别中转站在 SSE 事件中直接给出的 `message.content`；若中转站只返回普通响应也会兼容处理。服务会把已构建的 `NarrativePlan` 连同受限上下文交给模型，CLI 只会在模型 JSON 经 schema、引用范围、叙事事实和 400-600 字正文长度校验、分支落库后逐段呈现正文，避免把无效半段剧情显示为正式内容。叙事事实校验会拒绝正文提前宣称信号室已穿过、证据已取得、唐栖已离开隧道、水位已下降或列车已移动，并把明确原因用于一次修复重试；它是对 `BranchState` 可表达事实的确定性补充，不试图替代通用语义理解。规范方向的原文复用不调用外部模型。模型 JSON 不完整、长度不合格或 schema 校验失败时，Planner 会用更严格的紧凑输出约束重试一次；两次失败仍不会创建分支。调用请求摘要、原始模型输出或错误保存到 `llm_audits`，密钥不写入数据库或审计。
 
-## 自由文本方向的 Mock 判定
+## 自由文本方向判定
 
-当前 `MockDirectionEvaluator` 已允许 CLI 以一句自然语言描述选择方向，但它不是通用自然语言理解器：只会把文本唯一映射到父节点已经公布的高层方向。模糊、同时命中多个方向或当前无法映射的输入会返回澄清提示；违反原著不可变事实的超自然、瞬移或复活类输入会被拒绝，且不创建分支节点。
+`DirectionEvaluator` 只负责把玩家的自然语言意图映射到父节点已经公布的高层方向，不能创建方向、状态补丁、场景路线或叙事正文。`MockDirectionEvaluator` 以关键词覆盖离线试玩；当 `STORY_PLANNER=openai` 时，CLI 使用同一受限上下文和 `LlmGateway` 创建 `LlmDirectionEvaluator`。后者只可返回 `accepted`、`clarification_needed` 或 `rejected` 三类结果：接受结果的 `directionId` 必须属于父节点的 `nextDirections`，拒绝结果的不可变事实引用必须在当前上下文中。
 
-因此，该阶段验证的是“自由文本输入 -> 可解释的受限方向选择 -> 分支规划”的完整路径，而不是开放式剧情生成。未来 LLM Evaluator 必须复用相同的结果类型，并将其判断依据限定在 `ContextBuilder` 提供的上下文中。
+模型 JSON、引用或方向 ID 不合格时，评估器会携带失败原因重试一次；仍失败则降级为澄清提示，不创建分支。服务层会再次校验评估结果后才调用 Planner，因此模型不能借自由文本绕过内容包、地点路由、`RuleEngine` 约束或受控汇合检查。
 
-每次自由文本方向判定都会写入 `direction_evaluations`，无论结果是接受、澄清还是拒绝。记录保存原始输入、父分支、结构化判定和时间，不修改 `GameState`；`audits` 命令可在 CLI 中读取本次会话的判定历史。
+每次自由文本方向判定都会写入 `direction_evaluations`，无论结果是接受、澄清还是拒绝。记录保存原始输入、父分支、结构化判定和时间，不修改 `GameState`。LLM 判定的受限请求摘要、原始输出和错误另存入 `direction_evaluator_audits`；`audits` 查看判定历史，`llm-audits` 同时显示规划与方向判定调用。
+
+调用方可为 `continue` 或 `continueWithPlayerDirection` 提供 `requestId`。同一会话内该 ID 会绑定到唯一的自由文本判定和生成子节点；重复提交返回既有判定或分支节点，不重新调用模型、不重复追加剧情。若同一 ID 被用于不同父节点、输入或方向，服务会明确拒绝。
 
 ## 开发试玩
 
@@ -78,4 +98,4 @@ Planner 不输出或决定 `BranchState`。它只获得已确认的 `resolvedSta
 npm run co-create
 ```
 
-该命令创建一个独立会话，显示 Mock Planner 的方向编号；也可输入自然语言方向，`history` 可查看本次生成的分支节点。它只验证数据流，不是正式玩家界面，也不代表已接入 LLM 或开放式剧情生成。
+该命令创建一个独立会话，显示当前 Planner 的方向编号；也可输入自然语言方向，`history` 可查看本次生成的分支节点。默认配置使用 Mock 验证数据流；设置 `STORY_PLANNER=openai` 后，方向评估与动态正文都会通过受限 LLM 路径运行。它仍不是正式玩家界面，也不开放模型自行创造状态、场景路线或剧情方向。

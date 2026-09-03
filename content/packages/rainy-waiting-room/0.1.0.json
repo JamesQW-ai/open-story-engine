@@ -513,7 +513,6 @@
               "title": "救援优先",
               "summary": "暂时放下记录，请姜序从维修通道带路去找唐栖。",
               "suggestedInput": "许川请求姜序先带路去信号室",
-              "sourceNodeRef": "node_tunnel",
               "statePatch": {
                 "playerLocationId": "location_signal_tunnel",
                 "jiangLocationId": "location_signal_tunnel",
@@ -684,6 +683,18 @@
               "statePatch": {
                 "waterLevel": "lowered"
               }
+            },
+            {
+              "id": "direction_return_for_records",
+              "title": "折返取证",
+              "summary": "趁水位尚未恶化，返回站务室保全录音与维修图纸，再重新组织救援。",
+              "suggestedInput": "许川决定先返回站务室取得录音和维修图纸",
+              "rejoinTargetId": "rejoin_records_before_rescue",
+              "statePatch": {
+                "playerLocationId": "location_station_office",
+                "jiangLocationId": "location_waiting_hall",
+                "evidenceStatus": "secured"
+              }
             }
           ],
           "branchState": {
@@ -765,8 +776,7 @@
                 "tangLocationId": "location_waiting_hall",
                 "tangStatus": "rescued",
                 "signalRoomStatus": "opened"
-              },
-              "sourceNodeRef": "node_aftermath"
+              }
             }
           ],
           "branchState": {
@@ -981,8 +991,50 @@
         "ending_rescue_without_proof": "beat_ending_rescue_without_proof",
         "ending_last_train": "beat_ending_last_train"
       }
-    }
-  },
+    },
+    "sceneRoutes": [
+        {
+          "fromNodeId": "node_arrival",
+          "fromLocationId": "location_waiting_hall",
+          "toLocationId": "location_station_office",
+          "toNodeId": "node_records"
+        },
+        {
+          "fromNodeId": "node_arrival",
+          "fromLocationId": "location_waiting_hall",
+          "toLocationId": "location_signal_tunnel",
+          "toNodeId": "node_tunnel"
+        },
+        {
+          "fromNodeId": "node_records",
+          "fromLocationId": "location_station_office",
+          "toLocationId": "location_signal_tunnel",
+          "toNodeId": "node_tunnel"
+        },
+        {
+          "fromNodeId": "node_tunnel",
+          "fromLocationId": "location_signal_tunnel",
+          "toLocationId": "location_waiting_hall",
+          "toNodeId": "node_aftermath"
+        },
+        {
+          "fromNodeId": "node_tunnel",
+          "fromLocationId": "location_signal_tunnel",
+          "toLocationId": "location_station_office",
+          "toNodeId": "node_records"
+        }
+      ],
+      "rejoinTargets": [
+        {
+          "id": "rejoin_records_before_rescue",
+          "fromNodeId": "node_tunnel",
+          "targetBeatId": "beat_evidence_secured",
+          "requiredOpenThreads": [
+            "未取得的证据"
+          ]
+        }
+      ]
+    },
   "directions": [
     {
       "id": "direction_original_canon",

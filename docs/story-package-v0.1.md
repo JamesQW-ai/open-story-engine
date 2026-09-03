@@ -133,6 +133,12 @@ MVP 只从 `defaultDirectionId` 创建会话，不实现方向选择器，也不
 
 `narrativeGraph` 不替代 `nodes` 或 `rules`：节点负责规则推进，图负责在已确认的状态下选择能够承接上一段正文的剧情锚点。每个 `NarrativeBeat` 必须有 `narrativeAnchor`，它是运行时承接和模型上下文使用的简短文本，不得冒充原文。若该节点来自原著，则可附 `sourceExcerpt`，其中的 `text` 必须逐字来自母本，`lineRange` 必须能定位母本行号；偏离原著的分支不得伪造 `sourceExcerpt`。每条图边都必须有稳定 ID、来源与目标锚点、条件、规范性标记和仅属于该转移的承接文本。完整规则见[连贯叙事推进 v0.1](narrative-progression-v0.1.md)。
 
+共创场景窗口由 `story.sceneRoutes` 补充声明。每条路线固定 `fromNodeId`、`fromLocationId`、`toLocationId` 与 `toNodeId`，并且必须对应可达地点与两个节点的地点上下文。动态方向只可通过 `statePatch.playerLocationId` 请求移动；服务层以路线表解析目标场景，Planner 不得输出场景节点 ID。这样地点变化、状态校验和模型上下文会在同一受控决策中切换。
+
+`story.rejoinTargets` 声明从已偏离分支回到一个兼容叙事锚点的检查条件。每项包含来源场景 `fromNodeId`、目标锚点 `targetBeatId` 与必须仍未关闭的 `requiredOpenThreads`。目标锚点自身的完整 `branchState` 是隐含的状态契约：服务会在方向补丁生效后进行精确比较。
+
+方向可选 `rejoinTargetId`，但只有服务在玩家选中方向时验证所有条件才会写入 `canonicalRelation: rejoined`。它不授权直接复用目标锚点的 `sourceExcerpt`。
+
 ### `rules`
 
 `rules` 只描述代码能够权威执行的部分，并和后续 `RuleEngine` 一一对应。

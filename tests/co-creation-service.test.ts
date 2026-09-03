@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { CoCreationService } from "../src/application/co-creation-service.js";
 import { parseStoryPackage } from "../src/content/story-package.js";
 import { CoCreationContextBuilder, type CoCreationContext } from "../src/domain/co-creation/context-builder.js";
+import { LlmDirectionEvaluator } from "../src/domain/co-creation/llm-direction-evaluator.js";
 import { MockDirectionEvaluator } from "../src/domain/co-creation/mock-direction-evaluator.js";
 import { MockBranchPlanner } from "../src/domain/co-creation/mock-branch-planner.js";
 import type { BranchPlanner } from "../src/domain/co-creation/branch-planner.js";
@@ -51,7 +52,22 @@ describe("CoCreationService", () => {
     expect(evidencePath.canonicalRelation).toBe("on_line");
     expect(rescuePath.parentId).toBe(tokenPath.id);
     expect(rescuePath.canonicalRelation).toBe("diverged");
-    expect(rescuePath.nextDirections.map((direction) => direction.id)).toEqual(["direction_lower_water_without_proof"]);
+    expect(rescuePath.nextDirections.map((direction) => direction.id)).toEqual([
+      "direction_lower_water_without_proof",
+      "direction_return_for_records",
+    ]);
+    expect(tokenPath.narrativePlan?.beats.map((beat) => beat.kind)).toEqual(["establish_constraint", "advance_direction"]);
+    expect(rescuePath.narrativePlan).toMatchObject({
+      directionId: "direction_rescue_first",
+      sourceNodeRef: "node_arrival",
+      targetNodeRef: "node_tunnel",
+      selectedStatePatch: { playerLocationId: "location_signal_tunnel" },
+    });
+    expect(rescuePath.narrativePlan?.beats.map((beat) => beat.kind)).toEqual([
+      "establish_constraint",
+      "transition_scene",
+      "advance_direction",
+    ]);
     expect(rescuePath.planning.citations).toEqual([{ kind: "immutable_fact", ref: "fact_tunnel_flooding", rationale: "隧道积水使救援优先具有即时合理性。" }]);
     expect(rescuePath.planning.stateChangeProposals).toEqual([]);
     expect(rescuePath.branchState).toMatchObject({
@@ -116,6 +132,85 @@ describe("CoCreationService", () => {
     store.close();
   });
 
+  it("marks an explicitly compatible divergent route as rejoined without splicing a canonical excerpt", async () => {
+    const { store, storyPackage, service, sessionId } = await createFixture();
+    const { root } = service.start({ sessionId });
+    const tokenPath = await service.continue(sessionId, root.id, "direction_find_token");
+    const rescuePath = await service.continue(sessionId, tokenPath.id, "direction_rescue_first");
+    const rejoined = await service.continue(sessionId, rescuePath.id, "direction_return_for_records");
+    const targetBeat = storyPackage.story.narrativeGraph.beats.find((beat) => beat.id === "beat_evidence_secured");
+
+    expect(rejoined.canonicalRelation).toBe("rejoined");
+    expect(rejoined.sourceNodeRef).toBe("node_records");
+    expect(rejoined.branchState).toEqual(targetBeat?.branchState);
+    expect(rejoined.narrativeText).not.toBe(targetBeat?.sourceExcerpt?.text);
+
+    const continued = await service.continue(sessionId, rejoined.id, "direction_enter_tunnel_with_proof");
+    expect(continued.canonicalRelation).toBe("diverged");
+    expect(continued.narrativeText).not.toBe(storyPackage.story.narrativeGraph.beats.find((beat) => beat.id === "beat_tunnel_with_proof")?.sourceExcerpt?.text);
+    store.close();
+  });
+
+  it("publishes target-beat directions after a rejoin instead of accepting model-invented routes", async () => {
+    const { store, storyPackage, sessionId } = await createFixture();
+    const mockPlanner = new MockBranchPlanner();
+    const planner: BranchPlanner = {
+      async plan(request) {
+        const execution = await mockPlanner.plan(request);
+        if (execution.kind !== "completed" || request.selectedDirectionId !== "direction_return_for_records") return execution;
+        return {
+          ...execution,
+          result: {
+            ...execution.result,
+            nextDirections: [{
+              id: "direction_model_invented_return",
+              title: "直接返回候车厅",
+              summary: "跳过已发布的隧道路线，直接回到候车厅。",
+              statePatch: { playerLocationId: "location_waiting_hall" },
+            }],
+          },
+        };
+      },
+    };
+    const service = new CoCreationService(storyPackage, store, planner, new MockDirectionEvaluator());
+    const { root } = service.start({ sessionId });
+    const tokenPath = await service.continue(sessionId, root.id, "direction_find_token");
+    const rescuePath = await service.continue(sessionId, tokenPath.id, "direction_rescue_first");
+    const rejoined = await service.continue(sessionId, rescuePath.id, "direction_return_for_records");
+
+    expect(rejoined.canonicalRelation).toBe("rejoined");
+    expect(rejoined.nextDirections.map((direction) => direction.id)).toEqual(["direction_enter_tunnel_with_proof"]);
+    store.close();
+  });
+
+  it("rejects a declared rejoin when the selected patch does not reach its target state", async () => {
+    const { store, storyPackage, sessionId } = await createFixture();
+    const mockPlanner = new MockBranchPlanner();
+    const planner: BranchPlanner = {
+      async plan(request) {
+        const execution = await mockPlanner.plan(request);
+        if (execution.kind !== "completed" || request.selectedDirectionId !== "direction_rescue_first") return execution;
+        return {
+          ...execution,
+          result: {
+            ...execution.result,
+            nextDirections: execution.result.nextDirections.map((direction) => direction.id === "direction_return_for_records"
+              ? { ...direction, statePatch: { playerLocationId: "location_station_office" } }
+              : direction),
+          },
+        };
+      },
+    };
+    const service = new CoCreationService(storyPackage, store, planner, new MockDirectionEvaluator());
+    const { root } = service.start({ sessionId });
+    const tokenPath = await service.continue(sessionId, root.id, "direction_find_token");
+    const rescuePath = await service.continue(sessionId, tokenPath.id, "direction_rescue_first");
+
+    await expect(service.continue(sessionId, rescuePath.id, "direction_return_for_records")).rejects.toThrow("汇合目标状态不兼容");
+    expect(service.history(sessionId)).toHaveLength(3);
+    store.close();
+  });
+
   it("rejects a generated direction whose state patch violates character continuity", async () => {
     const { store, storyPackage, sessionId } = await createFixture();
     const mockPlanner = new MockBranchPlanner();
@@ -147,11 +242,120 @@ describe("CoCreationService", () => {
     store.close();
   });
 
+  it("resolves a returned station-office direction through the content-owned scene route", async () => {
+    const { store, storyPackage, sessionId } = await createFixture();
+    const mockPlanner = new MockBranchPlanner();
+    const planner: BranchPlanner = {
+      async plan(request) {
+        if (request.selectedDirectionId === "direction_lower_water_without_proof") {
+          return {
+            kind: "completed",
+            result: {
+              narrativeText: "阀门终于转开，积水暂时退到隧道的裂缝里。唐栖仍被锁在信号室，许川意识到若要找到能撬开滑栓的工具，必须返回站务室。",
+              summary: "水位降低后，许川决定回站务室寻找已知的维修工具。",
+              factDeltas: [{ id: "fact_water_lowered", source: "derived", summary: "隧道水位已降低，信号室仍锁闭。" }],
+              openThreads: ["信号室滑栓", "站务室中的维修工具"],
+              nextDirections: [{
+                id: "direction_return_to_office",
+                title: "返回站务室",
+                summary: "回到站务室检查已知的维修工具，再设法打开信号室。",
+                statePatch: { playerLocationId: "location_station_office" },
+                sourceNodeRef: "node_tunnel",
+              }],
+              canonicalRelation: "diverged",
+              planning: { citations: [{ kind: "immutable_fact", ref: "fact_tunnel_flooding", rationale: "排水只能暂时降低隧道风险。" }], confidence: "high", stateChangeProposals: [] },
+            },
+          } as never;
+        }
+        if (request.selectedDirectionId === "direction_return_to_office") {
+          expect(request.sourceNodeRef).toBe("node_records");
+          expect(request.context.sourceWindow.nodeId).toBe("node_records");
+          expect(request.resolvedState.playerLocationId).toBe("location_station_office");
+          return {
+            kind: "completed",
+            result: {
+              narrativeText: "许川沿着已经退去一些的积水折回站务室。终端的冷光仍映在潮湿的墙面上，他没有虚构新的线索，只把目光放回已经确认存在的维修图纸和应急灯。",
+              summary: "许川回到站务室，准备利用已知工具继续救援。",
+              factDeltas: [{ id: "fact_returned_to_office", source: "derived", summary: "许川从隧道返回站务室。" }],
+              openThreads: ["信号室滑栓", "唐栖的安危"],
+              nextDirections: [],
+              canonicalRelation: "diverged",
+              planning: { citations: [{ kind: "branch_node", ref: request.context.parent.id, rationale: "返回路线承接刚完成的排水。" }], confidence: "high", stateChangeProposals: [] },
+            },
+          };
+        }
+        return mockPlanner.plan(request);
+      },
+    };
+    const service = new CoCreationService(storyPackage, store, planner, new MockDirectionEvaluator());
+    const { root } = service.start({ sessionId });
+    const tokenPath = await service.continue(sessionId, root.id, "direction_find_token");
+    const rescuePath = await service.continue(sessionId, tokenPath.id, "direction_rescue_first");
+    const valvePath = await service.continue(sessionId, rescuePath.id, "direction_lower_water_without_proof");
+    const returned = await service.continue(sessionId, valvePath.id, "direction_return_to_office");
+
+    expect(valvePath.nextDirections[0]).not.toHaveProperty("sourceNodeRef");
+    expect(returned.sourceNodeRef).toBe("node_records");
+    expect(returned.branchState).toMatchObject({
+      playerLocationId: "location_station_office",
+      waterLevel: "lowered",
+      signalRoomStatus: "locked",
+      tangStatus: "located",
+    });
+    store.close();
+  });
+
+  it("rejects a planner result that publishes a direction without a legal scene route", async () => {
+    const { store, storyPackage, sessionId } = await createFixture();
+    const mockPlanner = new MockBranchPlanner();
+    const planner: BranchPlanner = {
+      async plan(request) {
+        const execution = await mockPlanner.plan(request);
+        if (execution.kind !== "completed" || request.selectedDirectionId !== "direction_rescue_first") return execution;
+        return {
+          ...execution,
+          result: {
+            ...execution.result,
+            nextDirections: [{
+              id: "direction_unknown_destination",
+              title: "前往不存在的地点",
+              summary: "尝试离开当前故事空间。",
+              statePatch: { playerLocationId: "location_unknown" },
+            }],
+          },
+        };
+      },
+    };
+    const service = new CoCreationService(storyPackage, store, planner, new MockDirectionEvaluator());
+    const { root } = service.start({ sessionId });
+    const tokenPath = await service.continue(sessionId, root.id, "direction_find_token");
+
+    await expect(service.continue(sessionId, tokenPath.id, "direction_rescue_first")).rejects.toThrow("当前场景没有到达目标地点的受控路线");
+    expect(service.history(sessionId)).toHaveLength(2);
+    store.close();
+  });
+
   it("rejects a planner result that is not one of its parent's published directions", async () => {
     const { store, storyPackage, service, sessionId } = await createFixture();
     const { contract, root } = service.start({ sessionId });
     const context = new CoCreationContextBuilder().build(storyPackage, contract, store.listBranchLineage(sessionId, root.id));
-    const execution = await new MockBranchPlanner().plan({ context, selectedDirectionId: "direction_find_token" });
+    const execution = await new MockBranchPlanner().plan({
+      context,
+      selectedDirectionId: "direction_find_token",
+      sourceNodeRef: "node_arrival",
+      resolvedState: root.branchState,
+      narrativePlan: {
+        directionId: "direction_find_token",
+        goal: "追查十七号柜线索。",
+        sourceNodeRef: "node_arrival",
+        targetNodeRef: "node_arrival",
+        selectedStatePatch: { hasLockerToken: true },
+        beats: [
+          { kind: "establish_constraint", sourceNodeRef: "node_arrival", summary: "承接候车厅的既有局面。" },
+          { kind: "advance_direction", sourceNodeRef: "node_arrival", summary: "落实十七号柜线索。" },
+        ],
+      },
+    });
     if (execution.kind !== "completed") throw new Error("expected mock planner output");
     const planned = { ...execution.result, selectedDirectionId: "direction_not_published" };
 
@@ -206,6 +410,125 @@ describe("CoCreationService", () => {
       parentBranchId: root.id,
       playerDirection: "许川施展魔法让雨停下",
       citations: [{ kind: "immutable_fact", ref: "fact_no_supernatural" }],
+    }]);
+    store.close();
+  });
+
+  it("uses the LLM evaluator to map a semantically equivalent free-text action to a published direction", async () => {
+    const { store, storyPackage, sessionId } = await createFixture();
+    const gateway: LlmGateway = {
+      async completeJson(request) {
+        const payload = JSON.parse(request.userPrompt) as { context: CoCreationContext; playerDirection: string };
+        expect(payload.playerDirection).toBe("先把人从积水尽头的维修间带出来");
+        expect(payload.context.parent.nextDirections.map((direction) => direction.id)).toContain("direction_rescue_first");
+        return {
+          model: "test-direction-model",
+          content: JSON.stringify({
+            kind: "accepted",
+            directionId: "direction_rescue_first",
+            rationale: "输入明确优先处理唐栖所在区域的救援。",
+          }),
+        };
+      },
+    };
+    const service = new CoCreationService(
+      storyPackage,
+      store,
+      new MockBranchPlanner(),
+      new LlmDirectionEvaluator(gateway, "test-direction-model"),
+    );
+    const { root } = service.start({ sessionId });
+    const tokenPath = await service.continue(sessionId, root.id, "direction_find_token");
+    const result = await service.continueWithPlayerDirection(sessionId, tokenPath.id, "先把人从积水尽头的维修间带出来");
+
+    expect(result.kind).toBe("accepted");
+    if (result.kind === "accepted") expect(result.node.selectedDirectionId).toBe("direction_rescue_first");
+    expect(service.directionAudits(sessionId)).toMatchObject([{
+      kind: "accepted",
+      directionId: "direction_rescue_first",
+      playerDirection: "先把人从积水尽头的维修间带出来",
+    }]);
+    expect(service.directionEvaluatorAudits(sessionId)).toMatchObject([{
+      operation: "direction_evaluator",
+      model: "test-direction-model",
+      error: undefined,
+      rawResponse: expect.stringContaining("direction_rescue_first"),
+    }]);
+    store.close();
+  });
+
+  it("reuses an accepted free-text request without invoking the evaluator or appending a second branch", async () => {
+    const { store, storyPackage, sessionId } = await createFixture();
+    let calls = 0;
+    const gateway: LlmGateway = {
+      async completeJson() {
+        calls += 1;
+        return {
+          model: "test-direction-model",
+          content: JSON.stringify({
+            kind: "accepted",
+            directionId: "direction_find_token",
+            rationale: "输入明确要求追查十七号柜线索。",
+          }),
+        };
+      },
+    };
+    const service = new CoCreationService(
+      storyPackage,
+      store,
+      new MockBranchPlanner(),
+      new LlmDirectionEvaluator(gateway, "test-direction-model"),
+    );
+    const { root } = service.start({ sessionId });
+    const requestId = "free-text-idempotent-1";
+    const first = await service.continueWithPlayerDirection(sessionId, root.id, "查清十七号柜留下的线索", requestId);
+    const repeated = await service.continueWithPlayerDirection(sessionId, root.id, "查清十七号柜留下的线索", requestId);
+
+    expect(first.kind).toBe("accepted");
+    expect(repeated.kind).toBe("accepted");
+    if (first.kind === "accepted" && repeated.kind === "accepted") {
+      expect(repeated.node.id).toBe(first.node.id);
+      expect(repeated.node.requestId).toBe(requestId);
+    }
+    expect(calls).toBe(1);
+    expect(service.history(sessionId)).toHaveLength(2);
+    expect(service.directionAudits(sessionId)).toHaveLength(1);
+    expect(service.directionEvaluatorAudits(sessionId)).toHaveLength(1);
+    store.close();
+  });
+
+  it("does not append a branch when the LLM evaluator invents a direction outside the parent context", async () => {
+    const { store, storyPackage, sessionId } = await createFixture();
+    let calls = 0;
+    const gateway: LlmGateway = {
+      async completeJson() {
+        calls += 1;
+        return {
+          model: "test-direction-model",
+          content: JSON.stringify({
+            kind: "accepted",
+            directionId: "direction_invented_by_model",
+            rationale: "虚构方向。",
+          }),
+        };
+      },
+    };
+    const service = new CoCreationService(
+      storyPackage,
+      store,
+      new MockBranchPlanner(),
+      new LlmDirectionEvaluator(gateway, "test-direction-model"),
+    );
+    const { root } = service.start({ sessionId });
+    const result = await service.continueWithPlayerDirection(sessionId, root.id, "许川想另找一条秘密通道");
+
+    expect(result).toMatchObject({ kind: "clarification_needed" });
+    expect(calls).toBe(2);
+    expect(service.history(sessionId)).toHaveLength(1);
+    expect(service.directionAudits(sessionId)).toMatchObject([{ kind: "clarification_needed" }]);
+    expect(service.directionEvaluatorAudits(sessionId)).toMatchObject([{
+      error: expect.stringContaining("当前未公布的剧情方向"),
+      rawResponse: expect.stringContaining("--- retry ---"),
     }]);
     store.close();
   });
@@ -329,6 +652,7 @@ describe("CoCreationService", () => {
           content: JSON.stringify({
             ...execution.result,
             sourceNodeRef: "branch_not_a_source_node",
+            narrativePlan: { directionId: "direction_hold_train", beats: [] },
             narrativeText: extendNarrativeForLlmTest(execution.result.narrativeText),
             planning: {
               ...execution.result.planning,
@@ -345,6 +669,11 @@ describe("CoCreationService", () => {
     const node = await service.continue(sessionId, tokenPath.id, "direction_rescue_first", "许川请姜序先带路去找唐栖");
     expect(node.selectedDirectionId).toBe("direction_rescue_first");
     expect(node.sourceNodeRef).toBe("node_tunnel");
+    expect(node.narrativePlan).toMatchObject({
+      directionId: "direction_rescue_first",
+      sourceNodeRef: "node_arrival",
+      targetNodeRef: "node_tunnel",
+    });
     expect(node.planning.stateChangeProposals).toEqual([{ summary: "许川靠近十七号柜。", rationale: "这是玩家已选择的剧情方向。" }]);
     expect(service.llmAudits(sessionId)).toMatchObject([{ model: "test-model", error: undefined }]);
     expect(service.history(sessionId)).toHaveLength(3);

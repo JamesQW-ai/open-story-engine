@@ -25,7 +25,7 @@ export const coCreationContextSchema = z.object({
     openThreads: z.array(z.string().min(1)),
     canonicalRelation: z.enum(["on_line", "diverged", "rejoined"]),
     branchState: branchStateSchema,
-    nextDirections: z.array(z.object({ id: z.string().min(1), title: z.string().min(1), summary: z.string().min(1), canonicalBeatId: z.string().min(1).optional(), sourceNodeRef: z.string().min(1).optional() })),
+    nextDirections: z.array(z.object({ id: z.string().min(1), title: z.string().min(1), summary: z.string().min(1), canonicalBeatId: z.string().min(1).optional(), rejoinTargetId: z.string().min(1).optional() })),
   }),
   sourceWindow: z.object({
     nodeId: z.string().min(1),
@@ -33,6 +33,14 @@ export const coCreationContextSchema = z.object({
     sceneSetup: z.array(z.string().min(1)).min(1),
     entityContext: z.array(z.object({ id: z.string().min(1), name: z.string().min(1), summary: z.string().min(1) })),
   }),
+  rejoinTargets: z.array(z.object({
+    id: z.string().min(1),
+    targetBeatId: z.string().min(1),
+    targetNodeId: z.string().min(1),
+    summary: z.string().min(1),
+    requiredOpenThreads: z.array(z.string().min(1)),
+    targetState: branchStateSchema,
+  })),
   branchLedger: z.array(z.object({ id: z.string().min(1), summary: z.string().min(1), canonicalRelation: z.enum(["on_line", "diverged", "rejoined"]) })).min(1),
   narrativeConstraints: z.object({
     perspective: z.literal("third_person_limited"),
@@ -64,6 +72,20 @@ export class CoCreationContextBuilder {
       return { kind: "canonical_node" as const, ref: canonicalNode.id, summary: canonicalNode.objective };
     });
     const branchReferences = lineage.map((node) => ({ kind: "branch_node" as const, ref: node.id, summary: node.summary }));
+    const rejoinTargets = storyPackage.story.rejoinTargets
+      .filter((target) => target.fromNodeId === sourceNode.id)
+      .map((target) => {
+        const targetBeat = storyPackage.story.narrativeGraph.beats.find((beat) => beat.id === target.targetBeatId);
+        if (!targetBeat) throw new Error(`共创汇合目标锚点不存在: ${target.targetBeatId}`);
+        return {
+          id: target.id,
+          targetBeatId: targetBeat.id,
+          targetNodeId: targetBeat.nodeId,
+          summary: targetBeat.summary,
+          requiredOpenThreads: target.requiredOpenThreads,
+          targetState: targetBeat.branchState,
+        };
+      });
 
     return coCreationContextSchema.parse({
       contract: {
@@ -88,6 +110,7 @@ export class CoCreationContextBuilder {
         sceneSetup: sourceNode.sceneSetup,
         entityContext: sourceNode.contextRefs.map((reference) => describeEntity(storyPackage, reference)),
       },
+      rejoinTargets,
       branchLedger: lineage.map((node) => ({ id: node.id, summary: node.summary, canonicalRelation: node.canonicalRelation })),
       narrativeConstraints: {
         perspective: storyPackage.world.narrativeGuidelines.perspective,

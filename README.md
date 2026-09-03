@@ -52,3 +52,5 @@ STORY_LLM_BASE_URL=https://你的中转站地址/v1
 ```
 
 `STORY_LLM_BASE_URL` 必须是 OpenAI-compatible API 前缀，不要包含 `/chat/completions`。共创 CLI 会请求 SSE 流式响应，并在 JSON 结构、引用范围校验通过且分支已落库后逐段呈现正文；中转站忽略流式请求时会自动回退到普通响应。模型返回不完整 JSON 或 schema 不通过时，Planner 会以更严格的紧凑格式要求重试一次；两次均失败则不会创建分支，可用 `llm-audits` 查看本次会话的调用结果。
+
+真实模型回归不包含在默认测试中。显式设置 `STORY_LIVE_EVALUATION=1` 后运行 `npm run evaluate:live`，它会以受限调用次数在内存会话中验证自由文本、锁闭状态、受控汇合和请求幂等性；详见[真实 LLM 评估 v0.1](docs/live-llm-evaluation-v0.1.md)。

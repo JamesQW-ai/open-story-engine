@@ -4,6 +4,8 @@ import { createInterface } from "node:readline/promises";
 import { fileURLToPath } from "node:url";
 import { CoCreationService } from "../application/co-creation-service.js";
 import { loadStoryPackage } from "../content/story-package.js";
+import { type DirectionEvaluator } from "../domain/co-creation/direction-evaluation.js";
+import { LlmDirectionEvaluator } from "../domain/co-creation/llm-direction-evaluator.js";
 import { MockDirectionEvaluator } from "../domain/co-creation/mock-direction-evaluator.js";
 import { MockBranchPlanner } from "../domain/co-creation/mock-branch-planner.js";
 import type { BranchPlanner } from "../domain/co-creation/branch-planner.js";
@@ -16,10 +18,10 @@ const defaultDatabasePath = resolve(process.env.STORY_DATABASE_PATH ?? "data/ope
 
 async function main(): Promise<void> {
   const storyPackage = await loadStoryPackage(defaultPackagePath);
-  const { planner, label } = createPlanner();
+  const { planner, directionEvaluator, label } = createRuntime();
   const store = new SqliteSessionStore(defaultDatabasePath);
   const session = store.createSession(storyPackage);
-  const service = new CoCreationService(storyPackage, store, planner, new MockDirectionEvaluator());
+  const service = new CoCreationService(storyPackage, store, planner, directionEvaluator);
   const { contract, root } = service.start({ sessionId: session.id });
   const readline = createInterface({ input: stdin, output: stdout });
   let current = root;
@@ -61,6 +63,9 @@ async function main(): Promise<void> {
         service.llmAudits(session.id).forEach((audit) => {
           console.log(`#${audit.id} ${audit.operation} | ${audit.model} | ${audit.error ?? "ok"}`);
         });
+        service.directionEvaluatorAudits(session.id).forEach((audit) => {
+          console.log(`#${audit.id} ${audit.operation} | ${audit.model} | ${audit.error ?? "ok"}`);
+        });
         continue;
       }
       if (!/^\d+$/.test(input)) {
@@ -90,16 +95,20 @@ async function main(): Promise<void> {
   }
 }
 
-function createPlanner(): { planner: BranchPlanner; label: string } {
-  if ((process.env.STORY_PLANNER ?? "mock") === "mock") return { planner: new MockBranchPlanner(), label: "Mock Planner" };
+function createRuntime(): { planner: BranchPlanner; directionEvaluator: DirectionEvaluator; label: string } {
+  if ((process.env.STORY_PLANNER ?? "mock") === "mock") {
+    return { planner: new MockBranchPlanner(), directionEvaluator: new MockDirectionEvaluator(), label: "Mock Planner + Direction Evaluator" };
+  }
   if (process.env.STORY_PLANNER !== "openai") throw new Error("STORY_PLANNER 仅支持 mock 或 openai");
   const apiKey = process.env.STORY_LLM_API_KEY?.trim();
   const model = process.env.STORY_LLM_MODEL?.trim();
   const baseUrl = process.env.STORY_LLM_BASE_URL?.trim();
   if (!apiKey || !model || !baseUrl) throw new Error("使用 STORY_PLANNER=openai 时必须设置 STORY_LLM_BASE_URL、STORY_LLM_API_KEY 与 STORY_LLM_MODEL");
+  const gateway = new OpenAiCompatibleGateway({ apiKey, model, baseUrl });
   return {
-    planner: new LlmBranchPlanner(new OpenAiCompatibleGateway({ apiKey, model, baseUrl }), model),
-    label: `LLM Planner (${model})`,
+    planner: new LlmBranchPlanner(gateway, model),
+    directionEvaluator: new LlmDirectionEvaluator(gateway, model),
+    label: `LLM Planner + Direction Evaluator (${model})`,
   };
 }
 

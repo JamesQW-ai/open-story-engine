@@ -1,5 +1,6 @@
 import type { CoCreationContext } from "./context-builder.js";
 import type { BranchState } from "./branch-state.js";
+import type { NarrativePlan } from "./narrative-plan.js";
 import type { PlannerResult } from "./planner-result.js";
 
 export type BranchPlanRequest = {
@@ -7,6 +8,7 @@ export type BranchPlanRequest = {
   selectedDirectionId: string;
   sourceNodeRef: string;
   resolvedState: BranchState;
+  narrativePlan: NarrativePlan;
   playerDirection?: string;
 };
 

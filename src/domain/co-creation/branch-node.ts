@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import type { StoryPackage } from "../../content/story-package.js";
 import { branchStatePatchSchema, branchStateSchema } from "./branch-state.js";
+import { narrativePlanSchema } from "./narrative-plan.js";
 import type { SessionStoryContract } from "./session-story-contract.js";
 
 const idSchema = z.string().min(1).regex(/^[A-Za-z0-9_-]+$/);
@@ -11,7 +12,7 @@ export const branchDirectionSchema = z.object({
   title: z.string().min(1),
   summary: z.string().min(1),
   canonicalBeatId: idSchema.optional(),
-  sourceNodeRef: idSchema.optional(),
+  rejoinTargetId: idSchema.optional(),
   statePatch: branchStatePatchSchema,
 });
 
@@ -47,6 +48,7 @@ export const branchNodeSchema = z.object({
   parentId: idSchema.optional(),
   sourceNodeRef: idSchema.optional(),
   branchState: branchStateSchema,
+  requestId: idSchema.optional(),
   selectedDirectionId: idSchema.optional(),
   playerDirection: z.string().min(1).optional(),
   narrativeText: z.string().min(1),
@@ -55,6 +57,7 @@ export const branchNodeSchema = z.object({
   openThreads: z.array(z.string().min(1)),
   nextDirections: z.array(branchDirectionSchema),
   canonicalRelation: z.enum(["on_line", "diverged", "rejoined"]),
+  narrativePlan: narrativePlanSchema.optional(),
   planning: branchPlanningSchema,
   createdAt: z.string().datetime(),
 });
@@ -76,7 +79,7 @@ export function createEntryBranchNode(storyPackage: StoryPackage, contract: Sess
     summary: beat.summary,
     factDeltas: [{ id: "fact_source_entry", source: "source", summary: `原著前史已继承至 ${contract.entryNodeId}` }],
     openThreads: beat.openThreads,
-    nextDirections: beat.nextDirections.map(({ id, title, summary, canonicalBeatId, sourceNodeRef, statePatch }) => ({ id, title, summary, canonicalBeatId, sourceNodeRef, statePatch })),
+    nextDirections: beat.nextDirections.map(({ id, title, summary, canonicalBeatId, rejoinTargetId, statePatch }) => ({ id, title, summary, canonicalBeatId, rejoinTargetId, statePatch })),
     canonicalRelation: "on_line",
     planning: {
       citations: [{ kind: "canonical_node", ref: contract.entryNodeId, rationale: "共创从此原著节点进入。" }],

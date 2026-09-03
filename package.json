@@ -12,7 +12,8 @@
     "test": "vitest run",
     "validate:story": "tsx src/cli/validate-story.ts",
     "play": "tsx src/cli/play.ts",
-    "co-create": "node --env-file-if-exists=.env --import tsx src/cli/co-create.ts"
+    "co-create": "node --env-file-if-exists=.env --import tsx src/cli/co-create.ts",
+    "evaluate:live": "node --env-file-if-exists=.env --import tsx src/cli/evaluate-live.ts"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",

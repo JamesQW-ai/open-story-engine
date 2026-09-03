@@ -8,6 +8,7 @@ import type { NarrativeContinuity } from "../../domain/narrative/narrative-progr
 import { parseBranchNode, type BranchNode } from "../../domain/co-creation/branch-node.js";
 import { parseDirectionEvaluation, type DirectionEvaluation } from "../../domain/co-creation/direction-evaluation.js";
 import type { PlannerAudit } from "../../domain/co-creation/branch-planner.js";
+import type { DirectionEvaluationAudit } from "../../domain/co-creation/direction-evaluation.js";
 import { parseSessionStoryContract, type SessionStoryContract } from "../../domain/co-creation/session-story-contract.js";
 import { applyStatePatch, createStatePatch, type StatePatchOperation } from "../../domain/state/state-patch.js";
 
@@ -89,12 +90,20 @@ export type StoredDirectionEvaluation = DirectionEvaluation & {
   sessionId: string;
   parentBranchId: string;
   playerDirection: string;
+  requestId?: string;
   createdAt: string;
 };
 
 export type StoredLlmAudit = PlannerAudit & {
   id: number;
   sessionId: string;
+  createdAt: string;
+};
+
+export type StoredDirectionEvaluatorAudit = DirectionEvaluationAudit & {
+  id: number;
+  sessionId: string;
+  parentBranchId: string;
   createdAt: string;
 };
 
@@ -115,6 +124,7 @@ type BranchNodeRow = {
   id: string;
   session_id: string;
   sequence: number;
+  request_id: string | null;
   node_json: string;
 };
 
@@ -123,6 +133,7 @@ type DirectionEvaluationRow = {
   session_id: string;
   parent_branch_id: string;
   player_direction: string;
+  request_id: string | null;
   evaluation_json: string;
   created_at: string;
 };
@@ -131,6 +142,18 @@ type LlmAuditRow = {
   id: number;
   session_id: string;
   operation: "branch_planner";
+  model: string;
+  prompt_version: string;
+  request_summary: string;
+  raw_response: string | null;
+  error: string | null;
+  created_at: string;
+};
+
+type DirectionEvaluatorAuditRow = {
+  id: number;
+  session_id: string;
+  parent_branch_id: string;
   model: string;
   prompt_version: string;
   request_summary: string;
@@ -149,7 +172,7 @@ export class SqliteSessionStore {
     this.initializeSchema();
   }
 
-  createSession(storyPackage: StoryPackage, sessionId = randomUUID()): StoredSession {
+  createSession(storyPackage: StoryPackage, sessionId: string = randomUUID()): StoredSession {
     const state = structuredClone(storyPackage.initialState);
     const now = new Date().toISOString();
     this.database.prepare(`
@@ -280,8 +303,8 @@ export class SqliteSessionStore {
       const existing = this.database.prepare("SELECT id FROM branch_nodes WHERE session_id = ? AND parent_id IS NULL").get(sessionId) as { id: string } | undefined;
       if (existing) throw new Error(`共创根节点已存在: ${existing.id}`);
       this.database.prepare(`
-        INSERT INTO branch_nodes (id, session_id, sequence, parent_id, node_json, created_at)
-        VALUES (?, ?, 0, NULL, ?, ?)
+        INSERT INTO branch_nodes (id, session_id, sequence, parent_id, request_id, node_json, created_at)
+        VALUES (?, ?, 0, NULL, NULL, ?, ?)
       `).run(node.id, sessionId, JSON.stringify(node), node.createdAt);
       return { ...node, sessionId, sequence: 0 };
     })();
@@ -308,9 +331,9 @@ export class SqliteSessionStore {
       });
       const sequence = row.latest_sequence + 1;
       this.database.prepare(`
-        INSERT INTO branch_nodes (id, session_id, sequence, parent_id, node_json, created_at)
-        VALUES (?, ?, ?, ?, ?, ?)
-      `).run(fullNode.id, sessionId, sequence, parent.id, JSON.stringify(fullNode), fullNode.createdAt);
+        INSERT INTO branch_nodes (id, session_id, sequence, parent_id, request_id, node_json, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `).run(fullNode.id, sessionId, sequence, parent.id, fullNode.requestId ?? null, JSON.stringify(fullNode), fullNode.createdAt);
       return { ...fullNode, sessionId, sequence };
     })();
   }
@@ -319,6 +342,11 @@ export class SqliteSessionStore {
     const row = this.database.prepare("SELECT * FROM branch_nodes WHERE session_id = ? AND id = ?").get(sessionId, nodeId) as BranchNodeRow | undefined;
     if (!row) throw new Error(`共创分支节点不存在: ${nodeId}`);
     return this.toBranchNode(row);
+  }
+
+  findBranchNodeByRequestId(sessionId: string, requestId: string): StoredBranchNode | undefined {
+    const row = this.database.prepare("SELECT * FROM branch_nodes WHERE session_id = ? AND request_id = ?").get(sessionId, requestId) as BranchNodeRow | undefined;
+    return row ? this.toBranchNode(row) : undefined;
   }
 
   listBranchNodes(sessionId: string): StoredBranchNode[] {
@@ -346,13 +374,14 @@ export class SqliteSessionStore {
     parentBranchId: string,
     playerDirection: string,
     evaluation: DirectionEvaluation,
+    requestId?: string,
   ): StoredDirectionEvaluation {
     this.getBranchNode(sessionId, parentBranchId);
     const now = new Date().toISOString();
     const result = this.database.prepare(`
-      INSERT INTO direction_evaluations (session_id, parent_branch_id, player_direction, evaluation_json, created_at)
-      VALUES (?, ?, ?, ?, ?)
-    `).run(sessionId, parentBranchId, playerDirection, JSON.stringify(evaluation), now);
+      INSERT INTO direction_evaluations (session_id, parent_branch_id, player_direction, request_id, evaluation_json, created_at)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `).run(sessionId, parentBranchId, playerDirection, requestId ?? null, JSON.stringify(evaluation), now);
     const row = this.database.prepare("SELECT * FROM direction_evaluations WHERE id = ?").get(result.lastInsertRowid) as DirectionEvaluationRow | undefined;
     if (!row) throw new Error("自由文本方向判定写入失败");
     return this.toDirectionEvaluation(row);
@@ -361,6 +390,11 @@ export class SqliteSessionStore {
   listDirectionEvaluations(sessionId: string): StoredDirectionEvaluation[] {
     const rows = this.database.prepare("SELECT * FROM direction_evaluations WHERE session_id = ? ORDER BY id ASC").all(sessionId) as DirectionEvaluationRow[];
     return rows.map((row) => this.toDirectionEvaluation(row));
+  }
+
+  findDirectionEvaluationByRequestId(sessionId: string, requestId: string): StoredDirectionEvaluation | undefined {
+    const row = this.database.prepare("SELECT * FROM direction_evaluations WHERE session_id = ? AND request_id = ?").get(sessionId, requestId) as DirectionEvaluationRow | undefined;
+    return row ? this.toDirectionEvaluation(row) : undefined;
   }
 
   saveLlmAudit(sessionId: string, audit: PlannerAudit): StoredLlmAudit {
@@ -378,6 +412,27 @@ export class SqliteSessionStore {
   listLlmAudits(sessionId: string): StoredLlmAudit[] {
     const rows = this.database.prepare("SELECT * FROM llm_audits WHERE session_id = ? ORDER BY id ASC").all(sessionId) as LlmAuditRow[];
     return rows.map((row) => this.toLlmAudit(row));
+  }
+
+  saveDirectionEvaluatorAudit(
+    sessionId: string,
+    parentBranchId: string,
+    audit: DirectionEvaluationAudit,
+  ): StoredDirectionEvaluatorAudit {
+    this.getBranchNode(sessionId, parentBranchId);
+    const now = new Date().toISOString();
+    const result = this.database.prepare(`
+      INSERT INTO direction_evaluator_audits (session_id, parent_branch_id, model, prompt_version, request_summary, raw_response, error, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(sessionId, parentBranchId, audit.model, audit.promptVersion, audit.requestSummary, audit.rawResponse ?? null, audit.error ?? null, now);
+    const row = this.database.prepare("SELECT * FROM direction_evaluator_audits WHERE id = ?").get(result.lastInsertRowid) as DirectionEvaluatorAuditRow | undefined;
+    if (!row) throw new Error("LLM 方向判定审计写入失败");
+    return this.toDirectionEvaluatorAudit(row);
+  }
+
+  listDirectionEvaluatorAudits(sessionId: string): StoredDirectionEvaluatorAudit[] {
+    const rows = this.database.prepare("SELECT * FROM direction_evaluator_audits WHERE session_id = ? ORDER BY id ASC").all(sessionId) as DirectionEvaluatorAuditRow[];
+    return rows.map((row) => this.toDirectionEvaluatorAudit(row));
   }
 
   close(): void {
@@ -434,6 +489,7 @@ export class SqliteSessionStore {
         session_id TEXT NOT NULL REFERENCES game_sessions(id),
         sequence INTEGER NOT NULL CHECK (sequence >= 0),
         parent_id TEXT REFERENCES branch_nodes(id),
+        request_id TEXT,
         node_json TEXT NOT NULL,
         created_at TEXT NOT NULL,
         UNIQUE(session_id, sequence)
@@ -444,6 +500,7 @@ export class SqliteSessionStore {
         session_id TEXT NOT NULL REFERENCES game_sessions(id),
         parent_branch_id TEXT NOT NULL REFERENCES branch_nodes(id),
         player_direction TEXT NOT NULL,
+        request_id TEXT,
         evaluation_json TEXT NOT NULL,
         created_at TEXT NOT NULL
       );
@@ -459,6 +516,18 @@ export class SqliteSessionStore {
         error TEXT,
         created_at TEXT NOT NULL
       );
+
+      CREATE TABLE IF NOT EXISTS direction_evaluator_audits (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        session_id TEXT NOT NULL REFERENCES game_sessions(id),
+        parent_branch_id TEXT NOT NULL REFERENCES branch_nodes(id),
+        model TEXT NOT NULL,
+        prompt_version TEXT NOT NULL,
+        request_summary TEXT NOT NULL,
+        raw_response TEXT,
+        error TEXT,
+        created_at TEXT NOT NULL
+      );
     `);
     const eventColumns = this.database.prepare("PRAGMA table_info(game_events)").all() as Array<{ name: string }>;
     if (!eventColumns.some((column) => column.name === "player_input")) {
@@ -467,6 +536,17 @@ export class SqliteSessionStore {
     const narrationColumns = this.database.prepare("PRAGMA table_info(event_narrations)").all() as Array<{ name: string }>;
     if (!narrationColumns.some((column) => column.name === "continuity_json")) {
       this.database.exec("ALTER TABLE event_narrations ADD COLUMN continuity_json TEXT NOT NULL DEFAULT '{}'");
+    }
+    this.ensureColumn("branch_nodes", "request_id", "TEXT");
+    this.ensureColumn("direction_evaluations", "request_id", "TEXT");
+    this.database.exec("CREATE UNIQUE INDEX IF NOT EXISTS branch_nodes_request_id_unique ON branch_nodes(session_id, request_id) WHERE request_id IS NOT NULL");
+    this.database.exec("CREATE UNIQUE INDEX IF NOT EXISTS direction_evaluations_request_id_unique ON direction_evaluations(session_id, request_id) WHERE request_id IS NOT NULL");
+  }
+
+  private ensureColumn(tableName: "branch_nodes" | "direction_evaluations", columnName: "request_id", declaration: string): void {
+    const columns = this.database.prepare(`PRAGMA table_info(${tableName})`).all() as Array<{ name: string }>;
+    if (!columns.some((column) => column.name === columnName)) {
+      this.database.exec(`ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${declaration}`);
     }
   }
 
@@ -516,6 +596,7 @@ export class SqliteSessionStore {
       sessionId: row.session_id,
       parentBranchId: row.parent_branch_id,
       playerDirection: row.player_direction,
+      requestId: row.request_id ?? undefined,
       createdAt: row.created_at,
     };
   }
@@ -525,6 +606,21 @@ export class SqliteSessionStore {
       id: row.id,
       sessionId: row.session_id,
       operation: row.operation,
+      model: row.model,
+      promptVersion: row.prompt_version,
+      requestSummary: row.request_summary,
+      rawResponse: row.raw_response ?? undefined,
+      error: row.error ?? undefined,
+      createdAt: row.created_at,
+    };
+  }
+
+  private toDirectionEvaluatorAudit(row: DirectionEvaluatorAuditRow): StoredDirectionEvaluatorAudit {
+    return {
+      id: row.id,
+      sessionId: row.session_id,
+      parentBranchId: row.parent_branch_id,
+      operation: "direction_evaluator",
       model: row.model,
       promptVersion: row.prompt_version,
       requestSummary: row.request_summary,

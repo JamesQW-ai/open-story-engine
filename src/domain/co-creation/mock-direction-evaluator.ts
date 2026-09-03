@@ -1,11 +1,7 @@
 import type { CoCreationContext } from "./context-builder.js";
-import { directionEvaluationSchema, type DirectionEvaluation } from "./direction-evaluation.js";
+import { directionEvaluationSchema, type DirectionEvaluation, type DirectionEvaluationExecution, type DirectionEvaluator } from "./direction-evaluation.js";
 
-export type { DirectionEvaluation } from "./direction-evaluation.js";
-
-export interface DirectionEvaluator {
-  evaluate(context: CoCreationContext, playerDirection: string): DirectionEvaluation;
-}
+export type { DirectionEvaluation, DirectionEvaluator } from "./direction-evaluation.js";
 
 const directionSignals: Record<string, string[]> = {
   direction_find_token: ["十七号", "铜牌", "储物柜", "柜子", "线索"],
@@ -23,7 +19,11 @@ const directionSignals: Record<string, string[]> = {
 const supernaturalSignals = ["魔法", "法术", "超能力", "瞬移", "传送", "复活", "起死回生"];
 
 export class MockDirectionEvaluator implements DirectionEvaluator {
-  evaluate(context: CoCreationContext, playerDirection: string): DirectionEvaluation {
+  async evaluate(context: CoCreationContext, playerDirection: string): Promise<DirectionEvaluationExecution> {
+    return { evaluation: this.evaluateInput(context, playerDirection) };
+  }
+
+  private evaluateInput(context: CoCreationContext, playerDirection: string): DirectionEvaluation {
     const normalized = normalize(playerDirection);
     if (!normalized) {
       return { kind: "clarification_needed", message: "请用一句话说明希望优先推动哪条剧情方向。" };

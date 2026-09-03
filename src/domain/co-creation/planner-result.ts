@@ -3,7 +3,6 @@ import { branchDirectionSchema, branchFactDeltaSchema, branchPlanningSchema } fr
 import type { CoCreationContext } from "./context-builder.js";
 
 export const plannerResultSchema = z.object({
-  sourceNodeRef: z.string().min(1).optional(),
   narrativeText: z.string().min(1),
   summary: z.string().min(1),
   factDeltas: z.array(branchFactDeltaSchema),
@@ -20,6 +19,11 @@ export function assertPlannerResultFitsContext(result: PlannerResult, context: C
   for (const citation of result.planning.citations) {
     if (!availableReferences.has(`${citation.kind}:${citation.ref}`)) {
       throw new Error(`规划结果引用了当前上下文之外的内容: ${citation.kind}:${citation.ref}`);
+    }
+  }
+  for (const direction of result.nextDirections) {
+    if (direction.rejoinTargetId && !context.rejoinTargets.some((target) => target.id === direction.rejoinTargetId)) {
+      throw new Error(`规划结果引用了当前场景之外的汇合目标: ${direction.rejoinTargetId}`);
     }
   }
   return result;

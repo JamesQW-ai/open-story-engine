@@ -5,17 +5,20 @@ export type OpenAiCompatibleGatewayConfig = {
   model: string;
   baseUrl?: string;
   timeoutMs?: number;
+  stream?: boolean;
   fetchImplementation?: typeof fetch;
 };
 
 export class OpenAiCompatibleGateway implements LlmGateway {
   private readonly baseUrl: string;
   private readonly timeoutMs: number;
+  private readonly stream: boolean;
   private readonly fetchImplementation: typeof fetch;
 
   constructor(private readonly config: OpenAiCompatibleGatewayConfig) {
     this.baseUrl = (config.baseUrl ?? "https://api.openai.com/v1").replace(/\/+$/, "");
     this.timeoutMs = config.timeoutMs ?? 30_000;
+    this.stream = config.stream ?? true;
     this.fetchImplementation = config.fetchImplementation ?? fetch;
   }
 
@@ -25,7 +28,7 @@ export class OpenAiCompatibleGateway implements LlmGateway {
       headers: {
         Authorization: `Bearer ${this.config.apiKey}`,
         "Content-Type": "application/json",
-        Accept: "text/event-stream, application/json",
+        Accept: this.stream ? "text/event-stream, application/json" : "application/json",
       },
       body: JSON.stringify({
         model: this.config.model,
@@ -36,7 +39,7 @@ export class OpenAiCompatibleGateway implements LlmGateway {
         response_format: { type: "json_object" },
         max_tokens: request.maxOutputTokens,
         temperature: 0.7,
-        stream: true,
+        stream: this.stream,
       }),
       signal: AbortSignal.timeout(this.timeoutMs),
     });
@@ -78,7 +81,7 @@ async function readSseCompletion(response: Response, fallbackModel: string): Pro
         throw new Error("LLM 流式响应包含无法解析的事件");
       }
       model = extractModel(payload) ?? model;
-      content += extractDeltaContent(payload) ?? "";
+      content += extractDeltaContent(payload) ?? extractContent(payload) ?? "";
       finishReason = extractFinishReason(payload) ?? finishReason;
     }
   };
@@ -93,7 +96,7 @@ async function readSseCompletion(response: Response, fallbackModel: string): Pro
   }
 
   if (buffer.trim()) consumeEvents(true);
-  if (!content) throw new Error("LLM 流式响应缺少 choices[0].delta.content");
+  if (!content) throw new Error("LLM 流式响应缺少 choices[0].delta.content 或 choices[0].message.content");
   return { model, content, finishReason };
 }
 

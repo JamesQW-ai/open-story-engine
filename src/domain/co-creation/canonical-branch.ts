@@ -18,7 +18,7 @@ export function createCanonicalBranch(
     summary: beat.summary,
     factDeltas: [{ id: `fact_source_${beat.id}`, source: "source", summary: `沿原著推进至 ${beat.id}。` }],
     openThreads: beat.openThreads,
-    nextDirections: beat.nextDirections.map(({ id, title, summary, canonicalBeatId, sourceNodeRef, statePatch }) => ({ id, title, summary, canonicalBeatId, sourceNodeRef, statePatch })),
+    nextDirections: beat.nextDirections.map(({ id, title, summary, canonicalBeatId, rejoinTargetId, statePatch }) => ({ id, title, summary, canonicalBeatId, rejoinTargetId, statePatch })),
     canonicalRelation: "on_line",
     planning: {
       citations: [{ kind: "canonical_node", ref: beat.nodeId, rationale: "当前分支未偏离原著，所选方向可直接复用该原文节点。" }],
