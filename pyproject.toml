@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "open-story-engine"
+version = "0.1.0"
+description = "State-authoritative interactive fiction runtime"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.scripts]
+open-story-play = "open_story_engine.entrypoints:play"
+open-story-co-create = "open_story_engine.entrypoints:co_create"
+open-story-validate = "open_story_engine.entrypoints:validate"
+open-story-evaluate-live = "open_story_engine.entrypoints:evaluate_live"
+
+[tool.setuptools.packages.find]
+include = ["open_story_engine*"]

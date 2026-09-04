@@ -13,7 +13,11 @@
     "validate:story": "tsx src/cli/validate-story.ts",
     "play": "tsx src/cli/play.ts",
     "co-create": "node --env-file-if-exists=.env --import tsx src/cli/co-create.ts",
-    "evaluate:live": "node --env-file-if-exists=.env --import tsx src/cli/evaluate-live.ts"
+    "evaluate:live": "node --env-file-if-exists=.env --import tsx src/cli/evaluate-live.ts",
+    "py:validate": "python3 -m open_story_engine validate",
+    "py:play": "python3 -m open_story_engine play",
+    "py:co-create": "python3 -m open_story_engine co-create",
+    "py:evaluate:live": "python3 -m open_story_engine evaluate-live"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",

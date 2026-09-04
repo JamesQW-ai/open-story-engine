@@ -4,10 +4,23 @@
 
 `npm run evaluate:live` 用少量真实模型调用验证共创链路的运行时边界。它不是默认测试，也不替代 `npm test`、`npm run typecheck` 或 StoryPackage 校验。
 
+迁移期 Python 对等入口是 `python3 -m open_story_engine evaluate-live`（或 `npm run py:evaluate:live`）。它只覆盖 Python 当前实现的宽泛目标场景；完整六场景 TypeScript 评估在 Python 完整替换前仍是行为基线。
+
 命令只加载固定的原创 StoryPackage，并在内存 SQLite 会话中运行；默认不写入项目数据库、不会打印或保存模型原始输出。仅当调用方显式设置 `STORY_LIVE_EVALUATION=1` 后才会访问 `.env` 中配置的模型端点。为将剧情行为验收与中转站 SSE 传输波动区分开，评估请求使用普通 JSON 响应并允许单次等待 60 秒；玩家 CLI 仍默认使用 SSE 逐段展示。
 
 ```bash
 STORY_LIVE_EVALUATION=1 npm run evaluate:live
+```
+
+Python 的单场景授权验收使用独立内存会话：
+
+```bash
+STORY_PLANNER=openai \
+STORY_LIVE_EVALUATION=1 \
+STORY_LIVE_EVALUATION_MAX_CALLS=4 \
+python3 -m open_story_engine evaluate-live \
+  --scenario broad_goal_starts_current_phase \
+  --output /private/tmp/open-story-engine-python-live.json
 ```
 
 可用 `STORY_LIVE_EVALUATION_MAX_CALLS` 设置总调用上限，默认值为 `8`，允许范围为 `1` 至 `20`。模型重试也计入上限。需要保留脱敏报告时，可附加 `--output data/live-evaluation-report.json`；报告包含场景名、通过状态、检查项、调用次数、错误摘要，以及每次调用的操作阶段、重试原因、耗时、响应模式、HTTP 状态和失败类别。报告不保存模型原文、请求正文或密钥。指定 `--output` 时，每完成一个场景和每开始或结束一次模型调用都会更新报告；中断前的报告会标为 `runStatus: "incomplete"`，并保留 `inFlightCall`，不得当作完整验收结论。

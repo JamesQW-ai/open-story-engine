@@ -47,6 +47,12 @@ StoryPackage + 进入节点 + 继承范围 + 角色
 
 Planner 不输出或决定 `BranchState`。它只获得已确认的 `resolvedState` 来叙述本回合，并为下一批高层方向声明候选 `statePatch`。下一回合只有在玩家选择该方向后，服务端才验证和应用该补丁。这样，模型不能凭正文让唐栖获救、让证据出现、让列车重新进站或离站。
 
+### 独立衍生故事包
+
+`StoryPackage` 是不可变的原著基线。它的角色、地点、方向、叙事图和规则不会因会话、模型输出或玩家偏离而改写。已结束且唐栖获救的分支，玩家可明确创建一个 `DerivedStoryPackage`；它只保存原包 `id`、`version`、内容指纹与分叉分支 ID，不复制或修改原包内容。
+
+派生包保存在会话隔离的 SQLite 记录中。它的 `revisions` 是追加式账本：创建入口为修订 `0`，此后每个衍生回合追加该分支的摘要、事实增量、章节信息，以及本回合经选择才生效的新地点、人物或身份揭示。派生实体只在进入 `resolvedState` 后可供正文使用；人物初次出现时只保存读者当前可见的称谓，真实姓名、职业、立场等身份信息必须由后续被选择方向的 `characterReveals` 追加，不能倒写进此前正文。模型决定角色是否离开既有地点以及新地点如何命名；但若方向让角色抵达新地点，必须在同一 `statePatch.derivedAdditions.locations` 登记，并同步更新抵达角色的位置。新增地点没有成为任何角色目的地，或获救后的唐栖未与许川同步移动，都会被拒绝写入。衍生故事的具体地点、人物、身份和钩子由真实 Planner 围绕玩家目标动态规划；`MockBranchPlanner` 的匿名联系人流程仅是可重复的离线验收样本。它们不会进入原包，也不会出现在其他会话。派生包创建后不能回到原著受控场景路线，且不能创建第二个同会话派生包。
+
 仓储层拒绝跨会话父节点、非契约进入节点的根节点，以及不属于父节点 `nextDirections` 的子节点。因此 Planner 无法静默改写来源或跳过玩家已见方向。
 
 ## `NarrativePlan`
@@ -77,9 +83,9 @@ Planner 不输出或决定 `BranchState`。它只获得已确认的 `resolvedSta
 
 它输出 `PlannerResult`：剧情正文、摘要、事实增量、后续方向、与原著的关系，以及规划引用、置信度和状态变更建议。状态建议只用于审计和后续规则映射；Planner 不得直接修改 `GameState`。SQLite 在确认父子关系后才会赋予节点 ID、时间和顺序。
 
-`ContextBuilder` 只携带本回合需要的原著不可变事实、规范前史、当前父节点的祖先链、当前节点场景、已确认的 `BranchState` 和相关实体；不会把整棵分支树、完整原著或其他会话数据交给 Planner。若方向的 `statePatch.playerLocationId` 改变许川地点，服务层只依据故事包中 `sceneRoutes` 声明的“当前节点 + 当前地点 -> 目标地点 -> 目标节点”路线切换下一回合场景窗口；路线不存在时拒绝该方向。Planner 不输出或决定 `sourceNodeRef`。`PlannerResult` 的每个引用必须位于这份上下文的 `availableReferences` 中，否则拒绝写入。
+`ContextBuilder` 只携带本回合需要的原著不可变事实、规范前史、当前父节点的祖先链、当前节点场景、已确认的 `BranchState` 和相关实体；不会把整棵分支树、完整原著或其他会话数据交给 Planner。若方向的 `statePatch.playerLocationId` 改变许川地点，服务层只依据故事包中 `sceneRoutes` 声明的“当前节点 + 当前地点 -> 目标地点 -> 目标节点”路线切换下一回合场景窗口；路线不存在时拒绝该方向。Planner 不输出或决定 `sourceNodeRef`。`PlannerResult` 的每个引用必须位于这份上下文的 `availableReferences` 中，否则拒绝写入。`openThreads` 是面向读者的叙事文本，不是稳定的机器主键：汇合目标仍以其声明的未解事项为前提，但会以 `BranchState` 中对应的证据、救援、水位、信号室或列车状态确认该事项是否仍开放，避免模型同义改写导致合法分支无法汇合。
 
-`LlmBranchPlanner` 已通过 `LlmGateway` 接入 OpenAI-compatible `/chat/completions`，但 CLI 默认仍为 Mock。`npm run co-create` 会使用 Node 的 `--env-file-if-exists=.env` 自动读取本地配置；只有 `.env` 设置 `STORY_PLANNER=openai`、`STORY_LLM_BASE_URL`、`STORY_LLM_API_KEY` 和 `STORY_LLM_MODEL` 后才会发起外部调用。`.env` 被 Git 忽略，`.env.example` 只保存无密钥模板。网关请求 SSE 流，兼容常规 `delta.content` 与个别中转站在 SSE 事件中直接给出的 `message.content`；若中转站只返回普通响应也会兼容处理。服务会把已构建的 `NarrativePlan` 连同受限上下文交给模型，CLI 只会在模型 JSON 经 schema、引用范围、叙事事实与技术安全上限校验、分支落库后逐段呈现正文；不再以固定文学字数拒绝可用章节。`storyArc` 让模型持续看见当前宏观目标，并要求它只展开可交互的当前阶段，待自然收束时才标记“本章完”。每个后续方向的 `statePatch` 还必须至少推进一项已确认状态，防止正文已经完成某个行动却把同一行动再次交给玩家选择。叙事事实校验会拒绝正文提前宣称信号室已穿过、证据已取得、唐栖已离开隧道、水位已下降或列车已移动，并把明确原因用于一次修复重试；它是对 `BranchState` 可表达事实的确定性补充，不试图替代通用语义理解。规范方向的原文复用不调用外部模型。模型 JSON 不完整、超过技术安全上限或 schema 校验失败时，Planner 会用更严格的紧凑输出约束重试一次；两次失败仍不会创建分支。调用请求摘要、原始模型输出或错误保存到 `llm_audits`，密钥不写入数据库或审计。
+`LlmBranchPlanner` 已通过 `LlmGateway` 接入 OpenAI-compatible `/chat/completions`，但 CLI 默认仍为 Mock。迁移期的 Python 对应入口为 `python3 -m open_story_engine co-create`；其 `open_story_engine.llm` 使用标准库 HTTP，现有 `npm run co-create` 仍保留为 TypeScript 基线。只有 `.env` 设置 `STORY_PLANNER=openai`、`STORY_LLM_BASE_URL`、`STORY_LLM_API_KEY` 和 `STORY_LLM_MODEL` 后才会发起外部调用。`.env` 被 Git 忽略，`.env.example` 只保存无密钥模板。共创 CLI 默认让正文 Planner 请求 SSE（`STORY_LLM_STREAM=true`）：网关把每个内容块交给 Planner，Planner 只从首字段 `narrativeText` 抽取完整字符交给 CLI 作为“尚未提交”的正文草稿。完整 JSON 仍必须通过 schema、引用范围、叙事事实与技术安全上限校验并落库，CLI 才显示“剧情已确认”和后续方向；因此预览不等同于已发生剧情。自由文本方向判定固定使用普通 JSON，因为其结构化结果不会直接显示给玩家。SSE 缺少正文或超时时，已展示的草稿会标记为未采纳，网关重置预览后以普通 JSON 回退；Planner 校验失败后的重试也会丢弃首轮草稿。可设置 `STORY_LLM_STREAM=false` 排查不可靠的中转站。网关兼容常规 `delta.content` 与个别中转站在 SSE 事件中直接给出的 `message.content`。不再以固定文学字数拒绝可用章节。普通回合以约 2,000 至 2,500 个中文字符的场景正文为质量目标，要求写出承接、行动、阻力、细节和新压力；强悬念或自然收束可明显更短，且不会因为长度被拒绝。Mock 同样应输出多段可阅读场景，而非状态补丁的单句扩写。`storyArc` 让模型持续看见当前宏观目标，并要求它只展开可交互的当前阶段，待自然收束时才标记“本章完”。每个后续方向的 `statePatch` 还必须至少推进一项已确认状态；衍生范围还必须将 `derivedTurn` 精确推进一回合，防止正文已经完成某个行动却把同一行动再次交给玩家选择。叙事事实校验会拒绝正文提前宣称信号室已穿过、证据已取得、唐栖已离开隧道、水位已下降或列车已移动；LLM Planner 在重试前执行它，服务层则对所有 Planner 的最终结果再次执行，确保 Mock 与外部模型共享相同状态边界。它是对 `BranchState` 可表达事实的确定性补充，不试图替代通用语义理解。规范方向的原文复用不调用外部模型。`STORY_LLM_QUALITY_REVIEW=true` 时，Python 在这些确定性校验之后调用只读审阅器；它只可提出一次重写，不可影响状态、场景路线或原始故事包。模型 JSON 不完整、超过技术安全上限或 schema 校验失败时，Planner 会用更严格的紧凑输出约束重试一次；两次失败仍不会创建分支。调用请求摘要、原始模型输出或错误保存到 `llm_audits`，密钥不写入数据库或审计。
 
 ## 自由文本方向判定
 
@@ -96,7 +102,9 @@ Planner 不输出或决定 `BranchState`。它只获得已确认的 `resolvedSta
 运行：
 
 ```bash
-npm run co-create
+STORY_PLANNER=mock \
+STORY_DATABASE_PATH=/private/tmp/open-story-engine-python-manual.sqlite \
+python3 -m open_story_engine co-create
 ```
 
-该命令创建一个独立会话，显示当前 Planner 的方向编号；也可输入自然语言方向，`history` 可查看本次生成的分支节点。默认配置使用 Mock 验证数据流；设置 `STORY_PLANNER=openai` 后，方向评估与动态正文都会通过受限 LLM 路径运行。它仍不是正式玩家界面，也不开放模型自行创造状态、场景路线或剧情方向。
+该命令创建一个独立会话，显示当前 Planner 的方向编号；也可输入自然语言方向，`history` 可查看本次生成的分支节点。当前分支结束后，`derive <后续目标>` 会从该叶节点创建独立的 `DerivedStoryPackage`，而非续写或改写原始故事包。默认配置使用 Mock 验证数据流；设置 `STORY_PLANNER=openai` 后，方向评估与动态正文都会通过受限 LLM 路径运行。Python CLI 会读取根目录 `.env`，但命令行显式变量优先。`npm run co-create` 暂保留为 TypeScript 行为基线，迁移验收时要使用另一个 SQLite 文件。它仍不是正式玩家界面，也不开放模型自行创造原著状态、场景路线或剧情方向。
