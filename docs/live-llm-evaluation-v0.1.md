@@ -17,7 +17,7 @@ STORY_LIVE_EVALUATION=1 npm run evaluate:live
 ## 场景
 
 1. `canonical_route_skips_model`：规范节点复用不应调用模型。
-2. `semantic_rescue_direction_and_narration`：自由文本经 LLM 判定为救援优先，并由 LLM 生成受校验正文。
+2. `broad_goal_starts_current_phase`：宽泛目标经 LLM 锚定为救援优先，动态正文以 `storyArc.started` 的当前阶段开始，不能提前封章。
 3. `locked_signal_room_state`：排水后水位降低，但信号室仍锁闭、唐栖仍未获救。
 4. `controlled_rejoin_uses_new_narration`：折返取证满足汇合状态，但正文不得拼接未展示原著节选。
 5. `free_text_request_idempotency`：同一 `requestId` 不重复调用方向评估器或追加节点。

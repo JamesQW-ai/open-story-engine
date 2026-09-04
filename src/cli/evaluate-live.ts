@@ -229,26 +229,28 @@ function createScenarios(
       },
     },
     {
-      id: "semantic_rescue_direction_and_narration",
+      id: "broad_goal_starts_current_phase",
       async run() {
-        const { store, service, sessionId } = createService(storyPackage, new LlmBranchPlanner(gateway, model), new LlmDirectionEvaluator(gateway, model), "live-semantic-rescue");
+        const { store, service, sessionId } = createService(storyPackage, new LlmBranchPlanner(gateway, model), new LlmDirectionEvaluator(gateway, model), "live-broad-goal");
         try {
           const { root } = service.start({ sessionId });
           const token = await service.continue(sessionId, root.id, "direction_find_token");
           const result = await service.continueWithPlayerDirection(
             sessionId,
             token.id,
-            "不要再等线索了，先让姜序带我去积水尽头确认唐栖的情况",
-            "live-semantic-rescue-1",
+            "先让姜序带路去积水尽头确认唐栖的情况，在救援中查清事故真相，并阻止列车放行。",
+            "live-broad-goal-1",
           );
-          assert(result.kind === "accepted", "自由文本没有被接受为合法方向");
-          if (result.kind !== "accepted") throw new Error("自由文本没有生成分支节点");
-          assert(result.node.selectedDirectionId === "direction_rescue_first", "自由文本没有映射到救援优先");
-          assert(result.node.canonicalRelation === "diverged", "救援优先应进入偏离分支");
+          assert(result.kind === "accepted", "宽泛目标没有被接受为合法方向");
+          if (result.kind !== "accepted") throw new Error("宽泛目标没有生成分支节点");
+          assert(result.node.selectedDirectionId === "direction_rescue_first", "宽泛目标没有锚定到救援优先");
+          assert(result.node.canonicalRelation === "diverged", "宽泛目标应进入动态分支");
           assert(result.node.branchState.playerLocationId === "location_signal_tunnel", "救援优先没有切换到隧道场景");
+          assert(result.node.storyArc?.goalDisposition === "started", "宽泛目标没有以 started 开始故事主线");
+          assert(result.node.storyArc?.chapter.status === "continuing", "宽泛目标首阶段不应提前结束章节");
           assert(service.directionEvaluatorAudits(sessionId).at(-1)?.error === undefined, "方向评估审计包含错误");
           assert(service.llmAudits(sessionId).at(-1)?.error === undefined, "剧情规划审计包含错误");
-          return ["语义方向映射为救援优先", "LLM 正文通过状态与场景校验"];
+          return ["宽泛目标锚定为救援优先", "主线以当前阶段开始且正文通过状态与场景校验"];
         } finally {
           store.close();
         }
