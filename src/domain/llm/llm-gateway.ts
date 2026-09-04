@@ -16,7 +16,7 @@ export type LlmTransportObservation = {
   responseMode: LlmResponseMode;
   httpStatus?: number;
   fallback?: {
-    reason: "sse_missing_content";
+    reason: "sse_missing_content" | "sse_timeout";
     initialAttempt: LlmTransportAttempt;
   };
 };

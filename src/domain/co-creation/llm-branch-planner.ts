@@ -3,7 +3,7 @@ import type { BranchPlanner, BranchPlanRequest, PlannerExecution } from "./branc
 import { assertNarrativeMatchesBranchState } from "./narrative-fact-guard.js";
 import { assertPlannerResultFitsContext, plannerResultSchema } from "./planner-result.js";
 
-const promptVersion = "co-creation-planner-v0.8";
+const promptVersion = "co-creation-planner-v0.9";
 const maxAttempts = 2;
 const maxOutputTokens = 4_096;
 
@@ -45,7 +45,7 @@ export class LlmBranchPlanner implements BranchPlanner {
         if (response.finishReason === "length") throw new Error("LLM 输出在完成 JSON 前达到长度上限");
         const parsedResult = plannerResultSchema.parse(normalizePlannerPayload(parseJsonObject(response.content)));
         // 场景窗口只能由服务层的内容路线解析器决定。
-        const result = assertPlannerResultFitsContext(parsedResult, request.context);
+        const result = assertPlannerResultFitsContext(parsedResult, request.context, request.resolvedState);
         assertNarrativeMatchesBranchState(result.narrativeText, request.resolvedState);
         callObservations.push({ attempt, retryReason, outcome: "completed", transport: response.transport });
         return {
@@ -142,7 +142,7 @@ function systemPrompt(attempt: number, repairInstruction?: string): string {
     "同一正文不得前后否认已出现或已明确可用的物件、工具、通道或人物行动。若角色持有或眼前存在工具，不能笼统写成没有工具；如该工具不适用，必须说明其不适用的具体原因。",
     "storyArc 必须为 {activeGoal,currentPhase,goalDisposition,chapter:{title,status}}。activeGoal 是玩家正在追求的宏观目标；若 context.parent.storyArc 不存在，必须把 goalDisposition 写为 started，并以 playerDirection（没有自由文本时以 narrativePlan.goal）概括 activeGoal。若 context.parent.storyArc 存在，除非 playerDirection 明确改道、放弃或完成它，否则必须逐字保留 activeGoal，并将 goalDisposition 写为 continued。明确改道时，把新的玩家目标写为 activeGoal，goalDisposition 写为 replaced；自然达成目标时写为 completed。currentPhase 只描述本回合正在推进的一个阶段。chapter.title 是当前章节标题；同一章未结束时继承父节点标题，chapter.status 仅可为 continuing 或 complete。",
     "不要按固定字数写作。根据当前阶段的戏剧密度决定篇幅：普通阶段可写成可阅读的章节段落，紧张或悬念处可以自然收短；不得为凑字数重复，也不得把跨越多个阶段、长期时间跳跃或后续结果一次性写完。遇到宽泛的 activeGoal，只展开当前最先发生、最值得玩家介入的一小段原因、阻力、细节或伏笔，并在 nextDirections 中给出继续推进、调整或中断该目标的高层选择。仅在阶段性冲突收束、场景或时间发生实质转换、或形成明确悬念钩子时，chapter.status 才能为 complete。",
-    "summary 不超过 50 个汉字，最多给出 2 个高层剧情方向。每个 nextDirection 必须带 statePatch，且只能预告该方向会造成的受控状态变化；移动许川时必须在 statePatch 中写入 playerLocationId。仅当 rejoinTargets 中存在对应 ID 时才能给 nextDirection 填写 rejoinTargetId，并且状态补丁必须使目标状态完全成立。场景窗口由服务层依据故事包路线决定，禁止输出 sourceNodeRef。statePatch 的枚举只能使用：signalRoomStatus 为 locked|opened，evidenceStatus 为 unsecured|secured，waterLevel 为 rising|lowered，tangStatus 为 missing|located|rescued，trainStatus 为 pending_release|held|departed；不要使用 unlocked、partially_secured 等中间词。stateChangeProposals 可以为空数组；非空项必须有 rationale，建议同时给 summary。请使用紧凑的单行 JSON，必须输出完整、可由标准 JSON.parse 解析的对象。",
+    "summary 不超过 50 个汉字，最多给出 2 个高层剧情方向。每个 nextDirection 必须带 statePatch，且只能预告该方向会造成的受控状态变化；它必须至少让一个字段与 resolvedState 不同，不能把正文已经完成的行动再作为下一步选择。移动许川时必须在 statePatch 中写入 playerLocationId。仅当 rejoinTargets 中存在对应 ID 时才能给 nextDirection 填写 rejoinTargetId，并且状态补丁必须使目标状态完全成立。场景窗口由服务层依据故事包路线决定，禁止输出 sourceNodeRef。statePatch 的枚举只能使用：signalRoomStatus 为 locked|opened，evidenceStatus 为 unsecured|secured，waterLevel 为 rising|lowered，tangStatus 为 missing|located|rescued，trainStatus 为 pending_release|held|departed；不要使用 unlocked、partially_secured 等中间词。stateChangeProposals 可以为空数组；非空项必须有 rationale，建议同时给 summary。请使用紧凑的单行 JSON，必须输出完整、可由标准 JSON.parse 解析的对象。",
     "若 branchLedger 中已有 diverged，绝不可复述或照搬原著段落；nextDirections 的第一项必须是在当前分支事实下最接近原著长期目标的可行推进，而不是声称回到未经验证的原著状态。",
     attempt > 1 ? `上一次输出未通过校验：${repairInstruction ?? "未知错误"}。必须修正该问题，并输出完整、严格的 JSON。` : "",
   ].filter(Boolean).join("\n");

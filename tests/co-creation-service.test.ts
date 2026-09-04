@@ -712,6 +712,58 @@ describe("CoCreationService", () => {
     store.close();
   });
 
+  it("retries an LLM plan whose next direction repeats the resolved state", async () => {
+    const { store, storyPackage, sessionId } = await createFixture();
+    let calls = 0;
+    const requests: Parameters<LlmGateway["completeJson"]>[0][] = [];
+    const gateway: LlmGateway = {
+      async completeJson(request) {
+        calls += 1;
+        requests.push(request);
+        const payload = JSON.parse(request.userPrompt) as { context: CoCreationContext; selectedDirectionId: string; resolvedState: Record<string, unknown> };
+        const execution = await new MockBranchPlanner().plan(payload);
+        if (execution.kind !== "completed") throw new Error("expected mock planner output");
+        if (calls === 2) {
+          return {
+            model: "test-model",
+            content: JSON.stringify({
+              ...execution.result,
+              narrativeText: extendNarrativeForLlmTest(execution.result.narrativeText),
+              nextDirections: [{
+                id: "direction_enter_again",
+                title: "再次进入信号室",
+                summary: "重复已经完成的进入动作。",
+                statePatch: payload.resolvedState,
+              }],
+            }),
+          };
+        }
+        return {
+          model: "test-model",
+          content: JSON.stringify({ ...execution.result, narrativeText: extendNarrativeForLlmTest(execution.result.narrativeText) }),
+        };
+      },
+    };
+    const service = new CoCreationService(storyPackage, store, new LlmBranchPlanner(gateway, "test-model"), new MockDirectionEvaluator());
+    const { root } = service.start({ sessionId });
+    const tokenPath = await service.continue(sessionId, root.id, "direction_find_token");
+    const rescuePath = await service.continue(sessionId, tokenPath.id, "direction_rescue_first");
+
+    const node = await service.continue(sessionId, rescuePath.id, "direction_lower_water_without_proof");
+    expect(calls).toBe(3);
+    expect(requests[2]?.systemPrompt).toContain("剧情方向没有推进任何受控状态: direction_enter_again");
+    expect(node.nextDirections).not.toContainEqual(expect.objectContaining({ id: "direction_enter_again" }));
+    expect(service.llmAudits(sessionId).at(-1)).toMatchObject({
+      error: undefined,
+      rawResponse: expect.stringContaining("--- retry ---"),
+      callObservations: [
+        { attempt: 1, outcome: "failed", failureKind: "model_output_rejected" },
+        { attempt: 2, outcome: "completed" },
+      ],
+    });
+    store.close();
+  });
+
   it("accepts a chapter-length LLM segment without a fixed literary word-count gate", async () => {
     const { store, storyPackage, sessionId } = await createFixture();
     const gateway: LlmGateway = {

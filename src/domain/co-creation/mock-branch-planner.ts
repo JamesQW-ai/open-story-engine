@@ -150,7 +150,7 @@ export class MockBranchPlanner implements BranchPlanner {
         statePatch: getDirectionStatePatch(direction.id),
       })),
     };
-    return { kind: "completed", result: assertPlannerResultFitsContext(plannerResultSchema.parse(result), request.context) };
+    return { kind: "completed", result: assertPlannerResultFitsContext(plannerResultSchema.parse(result), request.context, request.resolvedState) };
   }
 }
 

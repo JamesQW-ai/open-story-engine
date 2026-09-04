@@ -114,7 +114,7 @@ export class CoCreationService {
     const execution = await this.planner.plan({ context, selectedDirectionId, sourceNodeRef, resolvedState, narrativePlan, playerDirection });
     if (execution.audit) this.store.saveLlmAudit(sessionId, execution.audit);
     if (execution.kind === "failed") throw new Error(execution.message);
-    const result = assertPlannerResultFitsContext(plannerResultSchema.parse(execution.result), context);
+    const result = assertPlannerResultFitsContext(plannerResultSchema.parse(execution.result), context, resolvedState);
     const rejoinTargetBeat = rejoin
       ? this.storyPackage.story.narrativeGraph.beats.find((beat) => beat.id === rejoin.targetBeatId)
       : undefined;

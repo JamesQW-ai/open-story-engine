@@ -34,7 +34,9 @@ export class OpenAiCompatibleGateway implements LlmGateway {
     try {
       return await this.completeJsonWithMode(request, this.stream);
     } catch (error) {
-      if (!(error instanceof LlmGatewayError) || !shouldFallbackToJson(error)) throw error;
+      if (!(error instanceof LlmGatewayError)) throw error;
+      const fallbackReason = fallbackReasonFor(error);
+      if (!fallbackReason) throw error;
       const initialAttempt = toFailedAttempt(error);
       try {
         const fallback = await this.completeJsonWithMode(request, false);
@@ -43,7 +45,7 @@ export class OpenAiCompatibleGateway implements LlmGateway {
           ...fallback,
           transport: {
             ...fallback.transport,
-            fallback: { reason: "sse_missing_content", initialAttempt },
+            fallback: { reason: fallbackReason, initialAttempt },
           },
         };
       } catch (fallbackError) {
@@ -51,7 +53,7 @@ export class OpenAiCompatibleGateway implements LlmGateway {
           throw new LlmGatewayError(
             fallbackError.message,
             fallbackError.failureKind,
-            { ...fallbackError.transport, fallback: { reason: "sse_missing_content", initialAttempt } },
+            { ...fallbackError.transport, fallback: { reason: fallbackReason, initialAttempt } },
           );
         }
         throw fallbackError;
@@ -124,10 +126,16 @@ function isResponseFormatError(error: unknown): error is Error {
   );
 }
 
-function shouldFallbackToJson(error: LlmGatewayError): boolean {
-  return error.failureKind === "invalid_response"
-    && error.transport.responseMode === "sse"
-    && error.message === "LLM 流式响应缺少 choices[0].delta.content 或 choices[0].message.content";
+function fallbackReasonFor(error: LlmGatewayError): "sse_missing_content" | "sse_timeout" | undefined {
+  if (error.transport.responseMode !== "sse") return undefined;
+  if (
+    error.failureKind === "invalid_response"
+    && error.message === "LLM 流式响应缺少 choices[0].delta.content 或 choices[0].message.content"
+  ) {
+    return "sse_missing_content";
+  }
+  if (error.failureKind === "timeout" && error.transport.httpStatus !== undefined) return "sse_timeout";
+  return undefined;
 }
 
 function toFailedAttempt(error: LlmGatewayError): LlmTransportAttempt {

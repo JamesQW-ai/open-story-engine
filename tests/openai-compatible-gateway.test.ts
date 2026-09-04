@@ -99,6 +99,39 @@ describe("OpenAiCompatibleGateway", () => {
     expect(JSON.parse(String(calls[1]?.body))).toMatchObject({ stream: false });
   });
 
+  it("retries once with JSON when an established SSE response times out", async () => {
+    const calls: RequestInit[] = [];
+    const fakeFetch = async (_input: string | URL | Request, init?: RequestInit): Promise<Response> => {
+      calls.push(init ?? {});
+      if (calls.length === 1) {
+        const signal = init?.signal as AbortSignal;
+        const body = new ReadableStream<Uint8Array>({
+          start(controller) {
+            signal.addEventListener("abort", () => controller.error(new DOMException("Timed out", "TimeoutError")));
+          },
+        });
+        return new Response(body, { headers: { "content-type": "text/event-stream" } });
+      }
+      return new Response(JSON.stringify({ model: "test-model", choices: [{ message: { content: "{\"ok\":true}" }, finish_reason: "stop" }] }), { headers: { "content-type": "application/json" } });
+    };
+    const gateway = new OpenAiCompatibleGateway({ apiKey: "test-key", model: "test-model", timeoutMs: 25, fetchImplementation: fakeFetch as typeof fetch });
+
+    await expect(gateway.completeJson({ systemPrompt: "system", userPrompt: "user", maxOutputTokens: 42 })).resolves.toMatchObject({
+      content: "{\"ok\":true}",
+      transport: {
+        responseMode: "json",
+        httpStatus: 200,
+        fallback: {
+          reason: "sse_timeout",
+          initialAttempt: { responseMode: "sse", httpStatus: 200, failureKind: "timeout" },
+        },
+      },
+    });
+    expect(calls).toHaveLength(2);
+    expect(JSON.parse(String(calls[0]?.body))).toMatchObject({ stream: true });
+    expect(JSON.parse(String(calls[1]?.body))).toMatchObject({ stream: false });
+  });
+
   it("does not retry malformed SSE events with JSON", async () => {
     let calls = 0;
     const fakeFetch = async (): Promise<Response> => {
@@ -134,7 +167,9 @@ describe("OpenAiCompatibleGateway", () => {
   });
 
   it("classifies a timeout without retaining an endpoint response body", async () => {
+    let calls = 0;
     const fakeFetch = async (): Promise<Response> => {
+      calls += 1;
       throw new DOMException("Timed out", "TimeoutError");
     };
     const gateway = new OpenAiCompatibleGateway({ apiKey: "test-key", model: "test-model", timeoutMs: 25, fetchImplementation: fakeFetch as typeof fetch });
@@ -144,5 +179,6 @@ describe("OpenAiCompatibleGateway", () => {
       failureKind: "timeout",
       transport: { responseMode: "sse" },
     });
+    expect(calls).toBe(1);
   });
 });
