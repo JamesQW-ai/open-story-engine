@@ -1,14 +1,16 @@
 import { z } from "zod";
-import { branchDirectionSchema, branchFactDeltaSchema, branchPlanningSchema } from "./branch-node.js";
+import { branchDirectionSchema, branchFactDeltaSchema, branchPlanningSchema, storyArcSchema } from "./branch-node.js";
 import type { CoCreationContext } from "./context-builder.js";
 
 export const plannerResultSchema = z.object({
-  narrativeText: z.string().min(1),
+  // This is a technical guardrail, not a literary pacing requirement.
+  narrativeText: z.string().min(1).max(12_000),
   summary: z.string().min(1),
   factDeltas: z.array(branchFactDeltaSchema),
   openThreads: z.array(z.string().min(1)),
   nextDirections: z.array(branchDirectionSchema),
   canonicalRelation: z.enum(["on_line", "diverged", "rejoined"]),
+  storyArc: storyArcSchema,
   planning: branchPlanningSchema,
 });
 

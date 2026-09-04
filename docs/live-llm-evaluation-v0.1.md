@@ -10,7 +10,7 @@
 STORY_LIVE_EVALUATION=1 npm run evaluate:live
 ```
 
-可用 `STORY_LIVE_EVALUATION_MAX_CALLS` 设置总调用上限，默认值为 `8`，允许范围为 `1` 至 `20`。模型重试也计入上限。需要保留脱敏报告时，可附加 `--output data/live-evaluation-report.json`；报告包含场景名、通过状态、检查项、调用次数、错误摘要，以及由本次场景结果自动归纳的验收结论。
+可用 `STORY_LIVE_EVALUATION_MAX_CALLS` 设置总调用上限，默认值为 `8`，允许范围为 `1` 至 `20`。模型重试也计入上限。需要保留脱敏报告时，可附加 `--output data/live-evaluation-report.json`；报告包含场景名、通过状态、检查项、调用次数、错误摘要，以及每次调用的操作阶段、重试原因、耗时、响应模式、HTTP 状态和失败类别。报告不保存模型原文、请求正文或密钥。指定 `--output` 时，每完成一个场景和每开始或结束一次模型调用都会更新报告；中断前的报告会标为 `runStatus: "incomplete"`，并保留 `inFlightCall`，不得当作完整验收结论。
 
 排查或回归单个问题时可附加 `--scenario <场景 ID>`，只执行指定场景，避免重复调用已完成的场景。
 

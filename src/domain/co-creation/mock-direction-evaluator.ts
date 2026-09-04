@@ -7,7 +7,7 @@ const directionSignals: Record<string, string[]> = {
   direction_find_token: ["十七号", "铜牌", "储物柜", "柜子", "线索"],
   direction_secure_evidence: ["站务室", "证据", "录音", "调度"],
   direction_rescue_first: ["救援", "救人", "唐栖", "姜序", "信号室", "隧道"],
-  direction_verify_records: ["核实", "记录", "录音", "调度", "失联"],
+  direction_verify_records: ["核实", "记录", "录音", "调度", "失联", "证据", "保全", "保存"],
   direction_enter_tunnel_with_proof: ["隧道", "姜序", "证据", "带着录音"],
   direction_lower_water_with_proof: ["排水", "水位", "手动阀", "阀门"],
   direction_lower_water_without_proof: ["排水", "水位", "手动阀", "阀门"],
@@ -41,12 +41,16 @@ export class MockDirectionEvaluator implements DirectionEvaluator {
       });
     }
 
-    const matches = context.parent.nextDirections.filter((direction) => {
+    const matches = context.parent.nextDirections.flatMap((direction) => {
       const signals = directionSignals[direction.id] ?? [direction.title];
-      return signals.some((signal) => normalized.includes(normalize(signal)));
+      const firstSignalIndex = signals
+        .map((signal) => normalized.indexOf(normalize(signal)))
+        .filter((index) => index >= 0)
+        .sort((left, right) => left - right)[0];
+      return firstSignalIndex === undefined ? [] : [{ direction, firstSignalIndex }];
     });
     if (matches.length === 1) {
-      const direction = matches[0];
+      const direction = matches[0]?.direction;
       if (direction) {
         return directionEvaluationSchema.parse({
           kind: "accepted",
@@ -56,9 +60,19 @@ export class MockDirectionEvaluator implements DirectionEvaluator {
       }
     }
     if (matches.length > 1) {
+      const earliest = [...matches].sort((left, right) => left.firstSignalIndex - right.firstSignalIndex);
+      const selected = earliest[0];
+      const competing = earliest[1];
+      if (selected && (!competing || selected.firstSignalIndex < competing.firstSignalIndex)) {
+        return directionEvaluationSchema.parse({
+          kind: "accepted",
+          directionId: selected.direction.id,
+          rationale: `输入先要求推进“${selected.direction.title}”，其余目标保留给后续章节。`,
+        });
+      }
       return {
         kind: "clarification_needed",
-        message: `这段描述同时涉及多条方向：${matches.map((direction) => direction.title).join("、")}。请明确本回合优先哪一条。`,
+        message: `这段描述同时涉及多条方向：${matches.map(({ direction }) => direction.title).join("、")}。请明确本回合优先哪一条。`,
       };
     }
     return {

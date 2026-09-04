@@ -1,4 +1,12 @@
-import type { LlmGateway, LlmJsonRequest, LlmJsonResponse } from "../../domain/llm/llm-gateway.js";
+import {
+  LlmGatewayError,
+  type LlmGateway,
+  type LlmJsonRequest,
+  type LlmJsonResponse,
+  type LlmResponseMode,
+  type LlmTransportAttempt,
+  type LlmTransportObservation,
+} from "../../domain/llm/llm-gateway.js";
 
 export type OpenAiCompatibleGatewayConfig = {
   apiKey: string;
@@ -23,37 +31,112 @@ export class OpenAiCompatibleGateway implements LlmGateway {
   }
 
   async completeJson(request: LlmJsonRequest): Promise<LlmJsonResponse> {
-    const response = await this.fetchImplementation(`${this.baseUrl}/chat/completions`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${this.config.apiKey}`,
-        "Content-Type": "application/json",
-        Accept: this.stream ? "text/event-stream, application/json" : "application/json",
-      },
-      body: JSON.stringify({
-        model: this.config.model,
-        messages: [
-          { role: "system", content: request.systemPrompt },
-          { role: "user", content: request.userPrompt },
-        ],
-        response_format: { type: "json_object" },
-        max_tokens: request.maxOutputTokens,
-        temperature: 0.7,
-        stream: this.stream,
-      }),
-      signal: AbortSignal.timeout(this.timeoutMs),
-    });
-    if (!response.ok) {
-      const body = await response.text();
-      throw new Error(`LLM 请求失败 (${response.status}): ${body.slice(0, 500)}`);
+    try {
+      return await this.completeJsonWithMode(request, this.stream);
+    } catch (error) {
+      if (!(error instanceof LlmGatewayError) || !shouldFallbackToJson(error)) throw error;
+      const initialAttempt = toFailedAttempt(error);
+      try {
+        const fallback = await this.completeJsonWithMode(request, false);
+        if (!fallback.transport) throw new Error("JSON 回退缺少传输观测");
+        return {
+          ...fallback,
+          transport: {
+            ...fallback.transport,
+            fallback: { reason: "sse_missing_content", initialAttempt },
+          },
+        };
+      } catch (fallbackError) {
+        if (fallbackError instanceof LlmGatewayError) {
+          throw new LlmGatewayError(
+            fallbackError.message,
+            fallbackError.failureKind,
+            { ...fallbackError.transport, fallback: { reason: "sse_missing_content", initialAttempt } },
+          );
+        }
+        throw fallbackError;
+      }
     }
-
-    if (response.headers.get("content-type")?.includes("text/event-stream")) {
-      return readSseCompletion(response, this.config.model);
-    }
-
-    return parseCompletion(await response.text(), this.config.model);
   }
+
+  private async completeJsonWithMode(request: LlmJsonRequest, stream: boolean): Promise<LlmJsonResponse> {
+    const startedAt = performance.now();
+    const signal = AbortSignal.timeout(this.timeoutMs);
+    let responseMode: LlmResponseMode = stream ? "sse" : "json";
+    let httpStatus: number | undefined;
+
+    try {
+      const response = await this.fetchImplementation(`${this.baseUrl}/chat/completions`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.config.apiKey}`,
+          "Content-Type": "application/json",
+          Accept: stream ? "text/event-stream, application/json" : "application/json",
+        },
+        body: JSON.stringify({
+          model: this.config.model,
+          messages: [
+            { role: "system", content: request.systemPrompt },
+            { role: "user", content: request.userPrompt },
+          ],
+          response_format: { type: "json_object" },
+          max_tokens: request.maxOutputTokens,
+          temperature: 0.7,
+          stream,
+        }),
+        signal,
+      });
+      httpStatus = response.status;
+      responseMode = response.headers.get("content-type")?.includes("text/event-stream") ? "sse" : "json";
+      if (!response.ok) {
+        throw new LlmGatewayError(
+          `LLM 请求失败 (${response.status})`,
+          "http_error",
+          createTransportObservation(startedAt, responseMode, httpStatus),
+        );
+      }
+
+      const parsed = responseMode === "sse"
+        ? await readSseCompletion(response, this.config.model)
+        : parseCompletion(await response.text(), this.config.model);
+      return { ...parsed, transport: createTransportObservation(startedAt, responseMode, httpStatus) };
+    } catch (error) {
+      if (error instanceof LlmGatewayError) throw error;
+      const transport = createTransportObservation(startedAt, responseMode, httpStatus);
+      if (signal.aborted || (error instanceof Error && error.name === "TimeoutError")) {
+        throw new LlmGatewayError(`LLM 请求在 ${this.timeoutMs}ms 后超时`, "timeout", transport);
+      }
+      if (isResponseFormatError(error)) {
+        throw new LlmGatewayError(error.message, "invalid_response", transport);
+      }
+      throw new LlmGatewayError("LLM 请求传输失败", "transport_error", transport);
+    }
+  }
+}
+
+function createTransportObservation(startedAt: number, responseMode: LlmResponseMode, httpStatus?: number): LlmTransportObservation {
+  return { durationMs: Math.round(performance.now() - startedAt), responseMode, httpStatus };
+}
+
+function isResponseFormatError(error: unknown): error is Error {
+  return error instanceof Error && (
+    error.message.startsWith("LLM 响应") || error.message.startsWith("LLM 流式响应")
+  );
+}
+
+function shouldFallbackToJson(error: LlmGatewayError): boolean {
+  return error.failureKind === "invalid_response"
+    && error.transport.responseMode === "sse"
+    && error.message === "LLM 流式响应缺少 choices[0].delta.content 或 choices[0].message.content";
+}
+
+function toFailedAttempt(error: LlmGatewayError): LlmTransportAttempt {
+  return {
+    durationMs: error.transport.durationMs,
+    responseMode: error.transport.responseMode,
+    httpStatus: error.transport.httpStatus,
+    failureKind: error.failureKind,
+  };
 }
 
 async function readSseCompletion(response: Response, fallbackModel: string): Promise<LlmJsonResponse> {
@@ -107,8 +190,9 @@ function parseCompletion(body: string, fallbackModel: string): LlmJsonResponse {
   } catch {
     throw new Error("LLM 响应不是 JSON");
   }
-  const content = extractContent(payload);
-  if (!content) throw new Error("LLM 响应缺少 choices[0].message.content");
+  // Some OpenAI-compatible proxies keep the streaming delta envelope even when stream=false.
+  const content = extractContent(payload) ?? extractDeltaContent(payload);
+  if (!content) throw new Error("LLM 响应缺少 choices[0].message.content 或 choices[0].delta.content");
   return { model: extractModel(payload) ?? fallbackModel, content, finishReason: extractFinishReason(payload) };
 }
 

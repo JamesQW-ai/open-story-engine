@@ -42,6 +42,18 @@ export const branchPlanningSchema = z.object({
   stateChangeProposals: z.array(stateChangeProposalSchema),
 });
 
+export const storyArcSchema = z.object({
+  activeGoal: z.string().min(1).max(500),
+  currentPhase: z.string().min(1).max(300),
+  goalDisposition: z.enum(["started", "continued", "replaced", "completed"]),
+  chapter: z.object({
+    title: z.string().min(1).max(120),
+    status: z.enum(["continuing", "complete"]),
+  }),
+});
+
+export type StoryArc = z.infer<typeof storyArcSchema>;
+
 export const branchNodeSchema = z.object({
   id: idSchema,
   kind: z.enum(["source_entry", "generated"]),
@@ -58,6 +70,7 @@ export const branchNodeSchema = z.object({
   nextDirections: z.array(branchDirectionSchema),
   canonicalRelation: z.enum(["on_line", "diverged", "rejoined"]),
   narrativePlan: narrativePlanSchema.optional(),
+  storyArc: storyArcSchema.optional(),
   planning: branchPlanningSchema,
   createdAt: z.string().datetime(),
 });

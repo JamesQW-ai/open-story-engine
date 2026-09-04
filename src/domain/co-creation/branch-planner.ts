@@ -2,6 +2,7 @@ import type { CoCreationContext } from "./context-builder.js";
 import type { BranchState } from "./branch-state.js";
 import type { NarrativePlan } from "./narrative-plan.js";
 import type { PlannerResult } from "./planner-result.js";
+import type { LlmCallObservation } from "../llm/llm-gateway.js";
 
 export type BranchPlanRequest = {
   context: CoCreationContext;
@@ -19,6 +20,7 @@ export type PlannerAudit = {
   requestSummary: string;
   rawResponse?: string;
   error?: string;
+  callObservations?: LlmCallObservation[];
 };
 
 export type PlannerExecution =

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { StoryPackage } from "../../content/story-package.js";
-import type { BranchNode } from "./branch-node.js";
+import { storyArcSchema, type BranchNode } from "./branch-node.js";
 import { branchStateSchema } from "./branch-state.js";
 import type { SessionStoryContract } from "./session-story-contract.js";
 
@@ -25,6 +25,7 @@ export const coCreationContextSchema = z.object({
     openThreads: z.array(z.string().min(1)),
     canonicalRelation: z.enum(["on_line", "diverged", "rejoined"]),
     branchState: branchStateSchema,
+    storyArc: storyArcSchema.optional(),
     nextDirections: z.array(z.object({ id: z.string().min(1), title: z.string().min(1), summary: z.string().min(1), canonicalBeatId: z.string().min(1).optional(), rejoinTargetId: z.string().min(1).optional() })),
   }),
   sourceWindow: z.object({
@@ -102,6 +103,7 @@ export class CoCreationContextBuilder {
         openThreads: parent.openThreads,
         canonicalRelation: parent.canonicalRelation,
         branchState: parent.branchState,
+        storyArc: parent.storyArc,
         nextDirections: parent.nextDirections,
       },
       sourceWindow: {

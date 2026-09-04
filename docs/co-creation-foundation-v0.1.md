@@ -36,6 +36,7 @@ StoryPackage + 进入节点 + 继承范围 + 角色
 - `parentId` 与全局递增 `sequence`，用于回放和重建树关系。
 - 本次选择的 `selectedDirectionId` 与原始玩家方向文本。
 - 仅属于本节点的剧情正文、摘要、事实增量、未解线索与下一批方向。
+- 可选 `storyArc`：当前分支的宏观目标、正在推进的阶段、目标变更原因与章节标题/收束状态。它是叙事连续性元数据，不是 `BranchState`，不能改变地点、人物、证据或结局条件。
 - `canonicalRelation`：`on_line`、`diverged` 或由故事包兼容条件确认的 `rejoined`。
 
 ## `BranchState`
@@ -78,11 +79,11 @@ Planner 不输出或决定 `BranchState`。它只获得已确认的 `resolvedSta
 
 `ContextBuilder` 只携带本回合需要的原著不可变事实、规范前史、当前父节点的祖先链、当前节点场景、已确认的 `BranchState` 和相关实体；不会把整棵分支树、完整原著或其他会话数据交给 Planner。若方向的 `statePatch.playerLocationId` 改变许川地点，服务层只依据故事包中 `sceneRoutes` 声明的“当前节点 + 当前地点 -> 目标地点 -> 目标节点”路线切换下一回合场景窗口；路线不存在时拒绝该方向。Planner 不输出或决定 `sourceNodeRef`。`PlannerResult` 的每个引用必须位于这份上下文的 `availableReferences` 中，否则拒绝写入。
 
-`LlmBranchPlanner` 已通过 `LlmGateway` 接入 OpenAI-compatible `/chat/completions`，但 CLI 默认仍为 Mock。`npm run co-create` 会使用 Node 的 `--env-file-if-exists=.env` 自动读取本地配置；只有 `.env` 设置 `STORY_PLANNER=openai`、`STORY_LLM_BASE_URL`、`STORY_LLM_API_KEY` 和 `STORY_LLM_MODEL` 后才会发起外部调用。`.env` 被 Git 忽略，`.env.example` 只保存无密钥模板。网关请求 SSE 流，兼容常规 `delta.content` 与个别中转站在 SSE 事件中直接给出的 `message.content`；若中转站只返回普通响应也会兼容处理。服务会把已构建的 `NarrativePlan` 连同受限上下文交给模型，CLI 只会在模型 JSON 经 schema、引用范围、叙事事实和 400-600 字正文长度校验、分支落库后逐段呈现正文，避免把无效半段剧情显示为正式内容。叙事事实校验会拒绝正文提前宣称信号室已穿过、证据已取得、唐栖已离开隧道、水位已下降或列车已移动，并把明确原因用于一次修复重试；它是对 `BranchState` 可表达事实的确定性补充，不试图替代通用语义理解。规范方向的原文复用不调用外部模型。模型 JSON 不完整、长度不合格或 schema 校验失败时，Planner 会用更严格的紧凑输出约束重试一次；两次失败仍不会创建分支。调用请求摘要、原始模型输出或错误保存到 `llm_audits`，密钥不写入数据库或审计。
+`LlmBranchPlanner` 已通过 `LlmGateway` 接入 OpenAI-compatible `/chat/completions`，但 CLI 默认仍为 Mock。`npm run co-create` 会使用 Node 的 `--env-file-if-exists=.env` 自动读取本地配置；只有 `.env` 设置 `STORY_PLANNER=openai`、`STORY_LLM_BASE_URL`、`STORY_LLM_API_KEY` 和 `STORY_LLM_MODEL` 后才会发起外部调用。`.env` 被 Git 忽略，`.env.example` 只保存无密钥模板。网关请求 SSE 流，兼容常规 `delta.content` 与个别中转站在 SSE 事件中直接给出的 `message.content`；若中转站只返回普通响应也会兼容处理。服务会把已构建的 `NarrativePlan` 连同受限上下文交给模型，CLI 只会在模型 JSON 经 schema、引用范围、叙事事实与技术安全上限校验、分支落库后逐段呈现正文；不再以固定文学字数拒绝可用章节。`storyArc` 让模型持续看见当前宏观目标，并要求它只展开可交互的当前阶段，待自然收束时才标记“本章完”。叙事事实校验会拒绝正文提前宣称信号室已穿过、证据已取得、唐栖已离开隧道、水位已下降或列车已移动，并把明确原因用于一次修复重试；它是对 `BranchState` 可表达事实的确定性补充，不试图替代通用语义理解。规范方向的原文复用不调用外部模型。模型 JSON 不完整、超过技术安全上限或 schema 校验失败时，Planner 会用更严格的紧凑输出约束重试一次；两次失败仍不会创建分支。调用请求摘要、原始模型输出或错误保存到 `llm_audits`，密钥不写入数据库或审计。
 
 ## 自由文本方向判定
 
-`DirectionEvaluator` 只负责把玩家的自然语言意图映射到父节点已经公布的高层方向，不能创建方向、状态补丁、场景路线或叙事正文。`MockDirectionEvaluator` 以关键词覆盖离线试玩；当 `STORY_PLANNER=openai` 时，CLI 使用同一受限上下文和 `LlmGateway` 创建 `LlmDirectionEvaluator`。后者只可返回 `accepted`、`clarification_needed` 或 `rejected` 三类结果：接受结果的 `directionId` 必须属于父节点的 `nextDirections`，拒绝结果的不可变事实引用必须在当前上下文中。
+`DirectionEvaluator` 只负责把玩家的自然语言意图锚定到父节点已经公布的高层方向，不能创建方向、状态补丁、场景路线或叙事正文。对于“先 X，再 Y”的多阶段目标，它选择能落实 X 的最早合法方向，并保留完整输入供 Planner 逐章推进；只有当前行动确实无法判定时才要求澄清。`MockDirectionEvaluator` 以关键词覆盖离线试玩；当 `STORY_PLANNER=openai` 时，CLI 使用同一受限上下文和 `LlmGateway` 创建 `LlmDirectionEvaluator`。后者只可返回 `accepted`、`clarification_needed` 或 `rejected` 三类结果：接受结果的 `directionId` 必须属于父节点的 `nextDirections`，拒绝结果的不可变事实引用必须在当前上下文中。
 
 模型 JSON、引用或方向 ID 不合格时，评估器会携带失败原因重试一次；仍失败则降级为澄清提示，不创建分支。服务层会再次校验评估结果后才调用 Planner，因此模型不能借自由文本绕过内容包、地点路由、`RuleEngine` 约束或受控汇合检查。
 

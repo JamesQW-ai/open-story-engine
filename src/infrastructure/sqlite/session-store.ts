@@ -147,6 +147,7 @@ type LlmAuditRow = {
   request_summary: string;
   raw_response: string | null;
   error: string | null;
+  call_observations_json: string | null;
   created_at: string;
 };
 
@@ -159,6 +160,7 @@ type DirectionEvaluatorAuditRow = {
   request_summary: string;
   raw_response: string | null;
   error: string | null;
+  call_observations_json: string | null;
   created_at: string;
 };
 
@@ -401,9 +403,9 @@ export class SqliteSessionStore {
     this.getSession(sessionId);
     const now = new Date().toISOString();
     const result = this.database.prepare(`
-      INSERT INTO llm_audits (session_id, operation, model, prompt_version, request_summary, raw_response, error, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(sessionId, audit.operation, audit.model, audit.promptVersion, audit.requestSummary, audit.rawResponse ?? null, audit.error ?? null, now);
+      INSERT INTO llm_audits (session_id, operation, model, prompt_version, request_summary, raw_response, error, call_observations_json, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(sessionId, audit.operation, audit.model, audit.promptVersion, audit.requestSummary, audit.rawResponse ?? null, audit.error ?? null, audit.callObservations ? JSON.stringify(audit.callObservations) : null, now);
     const row = this.database.prepare("SELECT * FROM llm_audits WHERE id = ?").get(result.lastInsertRowid) as LlmAuditRow | undefined;
     if (!row) throw new Error("LLM 审计写入失败");
     return this.toLlmAudit(row);
@@ -422,9 +424,9 @@ export class SqliteSessionStore {
     this.getBranchNode(sessionId, parentBranchId);
     const now = new Date().toISOString();
     const result = this.database.prepare(`
-      INSERT INTO direction_evaluator_audits (session_id, parent_branch_id, model, prompt_version, request_summary, raw_response, error, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(sessionId, parentBranchId, audit.model, audit.promptVersion, audit.requestSummary, audit.rawResponse ?? null, audit.error ?? null, now);
+      INSERT INTO direction_evaluator_audits (session_id, parent_branch_id, model, prompt_version, request_summary, raw_response, error, call_observations_json, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(sessionId, parentBranchId, audit.model, audit.promptVersion, audit.requestSummary, audit.rawResponse ?? null, audit.error ?? null, audit.callObservations ? JSON.stringify(audit.callObservations) : null, now);
     const row = this.database.prepare("SELECT * FROM direction_evaluator_audits WHERE id = ?").get(result.lastInsertRowid) as DirectionEvaluatorAuditRow | undefined;
     if (!row) throw new Error("LLM 方向判定审计写入失败");
     return this.toDirectionEvaluatorAudit(row);
@@ -514,6 +516,7 @@ export class SqliteSessionStore {
         request_summary TEXT NOT NULL,
         raw_response TEXT,
         error TEXT,
+        call_observations_json TEXT,
         created_at TEXT NOT NULL
       );
 
@@ -526,6 +529,7 @@ export class SqliteSessionStore {
         request_summary TEXT NOT NULL,
         raw_response TEXT,
         error TEXT,
+        call_observations_json TEXT,
         created_at TEXT NOT NULL
       );
     `);
@@ -539,11 +543,13 @@ export class SqliteSessionStore {
     }
     this.ensureColumn("branch_nodes", "request_id", "TEXT");
     this.ensureColumn("direction_evaluations", "request_id", "TEXT");
+    this.ensureColumn("llm_audits", "call_observations_json", "TEXT");
+    this.ensureColumn("direction_evaluator_audits", "call_observations_json", "TEXT");
     this.database.exec("CREATE UNIQUE INDEX IF NOT EXISTS branch_nodes_request_id_unique ON branch_nodes(session_id, request_id) WHERE request_id IS NOT NULL");
     this.database.exec("CREATE UNIQUE INDEX IF NOT EXISTS direction_evaluations_request_id_unique ON direction_evaluations(session_id, request_id) WHERE request_id IS NOT NULL");
   }
 
-  private ensureColumn(tableName: "branch_nodes" | "direction_evaluations", columnName: "request_id", declaration: string): void {
+  private ensureColumn(tableName: "branch_nodes" | "direction_evaluations" | "llm_audits" | "direction_evaluator_audits", columnName: string, declaration: string): void {
     const columns = this.database.prepare(`PRAGMA table_info(${tableName})`).all() as Array<{ name: string }>;
     if (!columns.some((column) => column.name === columnName)) {
       this.database.exec(`ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${declaration}`);
@@ -611,6 +617,7 @@ export class SqliteSessionStore {
       requestSummary: row.request_summary,
       rawResponse: row.raw_response ?? undefined,
       error: row.error ?? undefined,
+      callObservations: row.call_observations_json ? JSON.parse(row.call_observations_json) : undefined,
       createdAt: row.created_at,
     };
   }
@@ -626,6 +633,7 @@ export class SqliteSessionStore {
       requestSummary: row.request_summary,
       rawResponse: row.raw_response ?? undefined,
       error: row.error ?? undefined,
+      callObservations: row.call_observations_json ? JSON.parse(row.call_observations_json) : undefined,
       createdAt: row.created_at,
     };
   }

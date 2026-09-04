@@ -9,7 +9,7 @@ import { MockDirectionEvaluator } from "../src/domain/co-creation/mock-direction
 import { MockBranchPlanner } from "../src/domain/co-creation/mock-branch-planner.js";
 import type { BranchPlanner } from "../src/domain/co-creation/branch-planner.js";
 import { LlmBranchPlanner } from "../src/domain/co-creation/llm-branch-planner.js";
-import type { LlmGateway } from "../src/domain/llm/llm-gateway.js";
+import { LlmGatewayError, type LlmGateway } from "../src/domain/llm/llm-gateway.js";
 import { createSessionStoryContract } from "../src/domain/co-creation/session-story-contract.js";
 import { SqliteSessionStore } from "../src/infrastructure/sqlite/session-store.js";
 
@@ -263,6 +263,12 @@ describe("CoCreationService", () => {
                 sourceNodeRef: "node_tunnel",
               }],
               canonicalRelation: "diverged",
+              storyArc: {
+                activeGoal: request.context.parent.storyArc?.activeGoal ?? "在水位再次上涨前救出唐栖。",
+                currentPhase: "先降低隧道水位，再决定是否折返取工具。",
+                goalDisposition: "continued",
+                chapter: { title: request.context.parent.storyArc?.chapter.title ?? "雨夜救援", status: "continuing" },
+              },
               planning: { citations: [{ kind: "immutable_fact", ref: "fact_tunnel_flooding", rationale: "排水只能暂时降低隧道风险。" }], confidence: "high", stateChangeProposals: [] },
             },
           } as never;
@@ -280,6 +286,12 @@ describe("CoCreationService", () => {
               openThreads: ["信号室滑栓", "唐栖的安危"],
               nextDirections: [],
               canonicalRelation: "diverged",
+              storyArc: {
+                activeGoal: request.context.parent.storyArc?.activeGoal ?? "在水位再次上涨前救出唐栖。",
+                currentPhase: "回到站务室，利用既有工具继续救援。",
+                goalDisposition: "completed",
+                chapter: { title: request.context.parent.storyArc?.chapter.title ?? "雨夜救援", status: "complete" },
+              },
               planning: { citations: [{ kind: "branch_node", ref: request.context.parent.id, rationale: "返回路线承接刚完成的排水。" }], confidence: "high", stateChangeProposals: [] },
             },
           };
@@ -395,6 +407,63 @@ describe("CoCreationService", () => {
       playerDirection: "许川请姜序先带路去找唐栖",
       directionId: "direction_rescue_first",
     }]);
+    store.close();
+  });
+
+  it("anchors a broad free-text plan to its earliest legal phase and preserves the full goal for the generated chapter", async () => {
+    const { store, service, sessionId } = await createFixture();
+    const { root } = service.start({ sessionId });
+    const tokenPath = await service.continue(sessionId, root.id, "direction_find_token");
+    const goal = "先让姜序带路去积水尽头确认唐栖的情况，在救援中查清事故真相，并阻止列车放行。";
+
+    const result = await service.continueWithPlayerDirection(sessionId, tokenPath.id, goal);
+
+    expect(result.kind).toBe("accepted");
+    if (result.kind === "accepted") {
+      expect(result.node).toMatchObject({
+        canonicalRelation: "diverged",
+        selectedDirectionId: "direction_rescue_first",
+        playerDirection: goal,
+        storyArc: { activeGoal: goal, goalDisposition: "started" },
+      });
+    }
+    store.close();
+  });
+
+  it("uses the planner for free text even when its legal anchor has canonical source text", async () => {
+    const { store, service, sessionId } = await createFixture();
+    const { root } = service.start({ sessionId });
+    const goal = "先追查十七号柜，再设法保护唐栖留下的录音。";
+
+    const result = await service.continueWithPlayerDirection(sessionId, root.id, goal);
+
+    expect(result.kind).toBe("accepted");
+    if (result.kind === "accepted") {
+      expect(result.node).toMatchObject({
+        canonicalRelation: "diverged",
+        selectedDirectionId: "direction_find_token",
+        playerDirection: goal,
+        storyArc: { activeGoal: goal, goalDisposition: "started" },
+      });
+      expect(result.node.factDeltas.some((delta) => delta.source === "source")).toBe(false);
+    }
+    store.close();
+  });
+
+  it("persists a broad player goal across phases and records an explicit override", async () => {
+    const { store, storyPackage, service, sessionId } = await createFixture();
+    const { root } = service.start({ sessionId });
+    const tokenPath = await service.continue(sessionId, root.id, "direction_find_token");
+    const initialGoal = "先让姜序带路确认唐栖情况，再决定如何救援";
+    const rescuePath = await service.continue(sessionId, tokenPath.id, "direction_rescue_first", initialGoal);
+    const continued = await service.continue(sessionId, rescuePath.id, "direction_lower_water_without_proof", "选择方向：排开积水");
+    const replacementGoal = "放弃立刻救援，先折返站务室保全录音，再重新组织救援";
+    const overridden = await service.continue(sessionId, rescuePath.id, "direction_return_for_records", replacementGoal);
+
+    expect(rescuePath.storyArc).toMatchObject({ activeGoal: initialGoal, goalDisposition: "started" });
+    expect(continued.storyArc).toMatchObject({ activeGoal: initialGoal, goalDisposition: "continued" });
+    expect(overridden.storyArc).toMatchObject({ activeGoal: replacementGoal, goalDisposition: "replaced" });
+    expect(new CoCreationContextBuilder().build(storyPackage, service.getContract(sessionId), store.listBranchLineage(sessionId, continued.id)).parent.storyArc).toEqual(continued.storyArc);
     store.close();
   });
 
@@ -571,16 +640,44 @@ describe("CoCreationService", () => {
       model: "test-model",
       rawResponse: expect.stringContaining("--- retry ---"),
       error: expect.any(String),
+      callObservations: [
+        { attempt: 1, outcome: "failed", failureKind: "model_output_rejected" },
+        { attempt: 2, outcome: "failed", failureKind: "model_output_rejected" },
+      ],
     }]);
+    store.close();
+  });
+
+  it("records SSE transport metadata when the gateway rejects a stream without content", async () => {
+    const { store, storyPackage, sessionId } = await createFixture();
+    const invalidGateway: LlmGateway = {
+      async completeJson() {
+        throw new LlmGatewayError("LLM 流式响应缺少正文", "invalid_response", { durationMs: 120, responseMode: "sse", httpStatus: 200 });
+      },
+    };
+    const service = new CoCreationService(storyPackage, store, new LlmBranchPlanner(invalidGateway, "test-model"), new MockDirectionEvaluator());
+    const { root } = service.start({ sessionId });
+    const tokenPath = await service.continue(sessionId, root.id, "direction_find_token");
+
+    await expect(service.continue(sessionId, tokenPath.id, "direction_rescue_first")).rejects.toThrow("LLM Planner 未生成可用剧情");
+    expect(service.llmAudits(sessionId)).toMatchObject([{
+      callObservations: [
+        { attempt: 1, outcome: "failed", failureKind: "invalid_response", transport: { responseMode: "sse", httpStatus: 200, durationMs: 120 } },
+        { attempt: 2, outcome: "failed", failureKind: "invalid_response", transport: { responseMode: "sse", httpStatus: 200, durationMs: 120 } },
+      ],
+    }]);
+    expect(service.history(sessionId)).toHaveLength(2);
     store.close();
   });
 
   it("retries one incomplete LLM response before it appends a valid branch", async () => {
     const { store, storyPackage, sessionId } = await createFixture();
     let calls = 0;
+    const requests: Parameters<LlmGateway["completeJson"]>[0][] = [];
     const gateway: LlmGateway = {
       async completeJson(request) {
         calls += 1;
+        requests.push(request);
         if (calls === 1) return { model: "test-model", content: "{\"narrativeText\":\"incomplete" };
         const payload = JSON.parse(request.userPrompt) as { context: CoCreationContext; selectedDirectionId: string; playerDirection?: string };
         const execution = await new MockBranchPlanner().plan(payload);
@@ -598,12 +695,44 @@ describe("CoCreationService", () => {
 
     const node = await service.continue(sessionId, tokenPath.id, "direction_rescue_first");
     expect(calls).toBe(2);
+    expect(requests).toMatchObject([
+      { operation: "branch_planner", attempt: 1, retryReason: undefined },
+      { operation: "branch_planner", attempt: 2, retryReason: "model_output_rejected" },
+    ]);
     expect(node.selectedDirectionId).toBe("direction_rescue_first");
     expect(service.history(sessionId)).toHaveLength(3);
     expect(service.llmAudits(sessionId)).toMatchObject([{
       error: undefined,
       rawResponse: expect.stringContaining("--- retry ---"),
+      callObservations: [
+        { attempt: 1, outcome: "failed", failureKind: "model_output_rejected" },
+        { attempt: 2, outcome: "completed" },
+      ],
     }]);
+    store.close();
+  });
+
+  it("accepts a chapter-length LLM segment without a fixed literary word-count gate", async () => {
+    const { store, storyPackage, sessionId } = await createFixture();
+    const gateway: LlmGateway = {
+      async completeJson(request) {
+        const payload = JSON.parse(request.userPrompt) as { context: CoCreationContext; selectedDirectionId: string; playerDirection?: string };
+        const execution = await new MockBranchPlanner().plan(payload);
+        if (execution.kind !== "completed") throw new Error("expected mock planner output");
+        return {
+          model: "test-model",
+          content: JSON.stringify({ ...execution.result, narrativeText: "雨".repeat(659) }),
+        };
+      },
+    };
+    const service = new CoCreationService(storyPackage, store, new LlmBranchPlanner(gateway, "test-model"), new MockDirectionEvaluator());
+    const { root } = service.start({ sessionId });
+    const tokenPath = await service.continue(sessionId, root.id, "direction_find_token");
+    const node = await service.continue(sessionId, tokenPath.id, "direction_rescue_first", "先让姜序带路确认唐栖情况");
+
+    expect([...node.narrativeText].length).toBe(659);
+    expect(node.storyArc).toMatchObject({ activeGoal: "先让姜序带路确认唐栖情况", chapter: { status: "continuing" } });
+    expect(service.llmAudits(sessionId)).toMatchObject([{ error: undefined }]);
     store.close();
   });
 
@@ -659,6 +788,20 @@ describe("CoCreationService", () => {
               stateChangeProposals: [{ proposal: "许川靠近十七号柜。", rationale: "这是玩家已选择的剧情方向。" }],
             },
           }),
+          transport: {
+            durationMs: 340,
+            responseMode: "json",
+            httpStatus: 200,
+            fallback: {
+              reason: "sse_missing_content",
+              initialAttempt: {
+                durationMs: 120,
+                responseMode: "sse",
+                httpStatus: 200,
+                failureKind: "invalid_response",
+              },
+            },
+          },
         };
       },
     };
@@ -675,7 +818,21 @@ describe("CoCreationService", () => {
       targetNodeRef: "node_tunnel",
     });
     expect(node.planning.stateChangeProposals).toEqual([{ summary: "许川靠近十七号柜。", rationale: "这是玩家已选择的剧情方向。" }]);
-    expect(service.llmAudits(sessionId)).toMatchObject([{ model: "test-model", error: undefined }]);
+    expect(service.llmAudits(sessionId)).toMatchObject([{
+      model: "test-model",
+      error: undefined,
+      callObservations: [{
+        outcome: "completed",
+        transport: {
+          responseMode: "json",
+          httpStatus: 200,
+          fallback: {
+            reason: "sse_missing_content",
+            initialAttempt: { responseMode: "sse", httpStatus: 200, failureKind: "invalid_response" },
+          },
+        },
+      }],
+    }]);
     expect(service.history(sessionId)).toHaveLength(3);
     store.close();
   });

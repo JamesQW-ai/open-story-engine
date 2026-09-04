@@ -6,7 +6,7 @@ import { loadStoryPackage } from "../content/story-package.js";
 import { LlmDirectionEvaluator } from "../domain/co-creation/llm-direction-evaluator.js";
 import { LlmBranchPlanner } from "../domain/co-creation/llm-branch-planner.js";
 import { MockBranchPlanner } from "../domain/co-creation/mock-branch-planner.js";
-import type { LlmGateway, LlmJsonRequest, LlmJsonResponse } from "../domain/llm/llm-gateway.js";
+import { LlmGatewayError, type LlmGateway, type LlmJsonRequest, type LlmJsonResponse, type LlmResponseMode } from "../domain/llm/llm-gateway.js";
 import { OpenAiCompatibleGateway } from "../infrastructure/llm/openai-compatible-gateway.js";
 import { SqliteSessionStore } from "../infrastructure/sqlite/session-store.js";
 
@@ -17,7 +17,24 @@ type ScenarioResult = {
   status: "passed" | "failed";
   checks: string[];
   modelCalls: number;
+  callObservations: LiveCallObservation[];
   error?: string;
+};
+
+type LiveCallObservation = {
+  operation: NonNullable<LlmJsonRequest["operation"]> | "unknown";
+  attempt?: number;
+  retryReason?: LlmJsonRequest["retryReason"];
+  durationMs: number;
+  responseMode: LlmResponseMode;
+  httpStatus?: number;
+  outcome: "responded" | "failed";
+  failureKind?: LlmGatewayError["failureKind"] | "unexpected";
+};
+
+type LiveInFlightCall = Pick<LiveCallObservation, "operation" | "attempt" | "retryReason"> & {
+  scenarioId?: string;
+  startedAt: string;
 };
 
 type Scenario = {
@@ -26,7 +43,7 @@ type Scenario = {
 };
 
 type AcceptanceConclusion = {
-  status: "passed" | "failed";
+  status: "passed" | "failed" | "incomplete";
   statement: string;
   verifiedEffects: string[];
   failedScenarioIds: string[];
@@ -35,16 +52,57 @@ type AcceptanceConclusion = {
 
 class BudgetedGateway implements LlmGateway {
   calls = 0;
+  readonly observations: LiveCallObservation[] = [];
+  scenarioId?: string;
+  inFlightCall?: LiveInFlightCall;
 
   constructor(
     private readonly delegate: LlmGateway,
     private readonly maxCalls: number,
+    private readonly onChange?: () => Promise<void>,
   ) {}
 
   async completeJson(request: LlmJsonRequest): Promise<LlmJsonResponse> {
     if (this.calls >= this.maxCalls) throw new Error(`真实模型评估已达到调用上限: ${this.maxCalls}`);
     this.calls += 1;
-    return this.delegate.completeJson(request);
+    this.inFlightCall = {
+      operation: request.operation ?? "unknown",
+      attempt: request.attempt,
+      retryReason: request.retryReason,
+      scenarioId: this.scenarioId,
+      startedAt: new Date().toISOString(),
+    };
+    await this.onChange?.();
+    const startedAt = performance.now();
+    try {
+      const response = await this.delegate.completeJson(request);
+      this.observations.push({
+        operation: request.operation ?? "unknown",
+        attempt: request.attempt,
+        retryReason: request.retryReason,
+        durationMs: response.transport?.durationMs ?? Math.round(performance.now() - startedAt),
+        responseMode: response.transport?.responseMode ?? "unknown",
+        httpStatus: response.transport?.httpStatus,
+        outcome: "responded",
+      });
+      return response;
+    } catch (error) {
+      const gatewayError = error instanceof LlmGatewayError ? error : undefined;
+      this.observations.push({
+        operation: request.operation ?? "unknown",
+        attempt: request.attempt,
+        retryReason: request.retryReason,
+        durationMs: gatewayError?.transport.durationMs ?? Math.round(performance.now() - startedAt),
+        responseMode: gatewayError?.transport.responseMode ?? "unknown",
+        httpStatus: gatewayError?.transport.httpStatus,
+        outcome: "failed",
+        failureKind: gatewayError?.failureKind ?? "unexpected",
+      });
+      throw error;
+    } finally {
+      this.inFlightCall = undefined;
+      await this.onChange?.();
+    }
   }
 }
 
@@ -57,18 +115,25 @@ async function main(): Promise<void> {
   const baseUrl = requiredEnvironment("STORY_LLM_BASE_URL");
   const maxCalls = parseMaxCalls(process.env.STORY_LIVE_EVALUATION_MAX_CALLS);
   const storyPackage = await loadStoryPackage(defaultPackagePath);
-  const gateway = new BudgetedGateway(new OpenAiCompatibleGateway({ apiKey, model, baseUrl, stream: false, timeoutMs: 60_000 }), maxCalls);
-  const scenarios = selectScenarios(createScenarios(storyPackage, gateway, model), process.argv);
   const results: ScenarioResult[] = [];
+  let gateway: BudgetedGateway;
+  const checkpoint = async (): Promise<void> => {
+    await writeReportIfRequested(buildReport(storyPackage, model, maxCalls, gateway, results, "incomplete"));
+  };
+  gateway = new BudgetedGateway(new OpenAiCompatibleGateway({ apiKey, model, baseUrl, stream: false, timeoutMs: 60_000 }), maxCalls, checkpoint);
+  const scenarios = selectScenarios(createScenarios(storyPackage, gateway, model), process.argv);
 
   for (const scenario of scenarios) {
+    gateway.scenarioId = scenario.id;
     const callsBefore = gateway.calls;
+    const observationsBefore = gateway.observations.length;
     try {
       results.push({
         id: scenario.id,
         status: "passed",
         checks: await scenario.run(),
         modelCalls: gateway.calls - callsBefore,
+        callObservations: gateway.observations.slice(observationsBefore),
       });
     } catch (error) {
       results.push({
@@ -76,29 +141,55 @@ async function main(): Promise<void> {
         status: "failed",
         checks: [],
         modelCalls: gateway.calls - callsBefore,
+        callObservations: gateway.observations.slice(observationsBefore),
         error: error instanceof Error ? error.message : "未知真实模型评估错误",
       });
     }
+    await writeReportIfRequested(buildReport(storyPackage, model, maxCalls, gateway, results, "incomplete"));
   }
+  gateway.scenarioId = undefined;
 
-  const report = {
-    package: `${storyPackage.id}@${storyPackage.version}`,
-    model,
-    maxCalls,
-    totalModelCalls: gateway.calls,
-    results,
-    conclusion: buildConclusion(results),
-  };
+  const report = buildReport(storyPackage, model, maxCalls, gateway, results, "completed");
   await writeReportIfRequested(report);
   console.log(JSON.stringify(report, null, 2));
   if (results.some((result) => result.status === "failed")) process.exitCode = 1;
 }
 
-function buildConclusion(results: ScenarioResult[]): AcceptanceConclusion {
+function buildReport(
+  storyPackage: Awaited<ReturnType<typeof loadStoryPackage>>,
+  model: string,
+  maxCalls: number,
+  gateway: BudgetedGateway,
+  results: ScenarioResult[],
+  runStatus: "incomplete" | "completed",
+) {
+  return {
+    runStatus,
+    package: `${storyPackage.id}@${storyPackage.version}`,
+    model,
+    maxCalls,
+    totalModelCalls: gateway.calls,
+    results,
+    inFlightCall: gateway.inFlightCall,
+    conclusion: buildConclusion(results, runStatus),
+  };
+}
+
+function buildConclusion(results: ScenarioResult[], runStatus: "incomplete" | "completed"): AcceptanceConclusion {
   const failedScenarioIds = results.filter((result) => result.status === "failed").map((result) => result.id);
   const verifiedEffects = results
     .filter((result) => result.status === "passed")
     .flatMap((result) => result.checks);
+
+  if (runStatus === "incomplete") {
+    return {
+      status: "incomplete",
+      statement: `真实模型验收尚未完成：已结束 ${results.length}/6 个场景，不能作为批量验收结论。`,
+      verifiedEffects,
+      failedScenarioIds,
+      notProven: ["进程在完整六场景验收结束前中断，未完成场景和整体稳定性均未验证。"],
+    };
+  }
 
   return {
     status: failedScenarioIds.length === 0 ? "passed" : "failed",

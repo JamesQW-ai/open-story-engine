@@ -61,16 +61,22 @@ async function main(): Promise<void> {
       }
       if (input === "llm-audits") {
         service.llmAudits(session.id).forEach((audit) => {
-          console.log(`#${audit.id} ${audit.operation} | ${audit.model} | ${audit.error ?? "ok"}`);
+          console.log(`#${audit.id} ${audit.operation} | ${audit.model} | ${audit.error ?? "ok"}${formatCallObservations(audit.callObservations)}`);
         });
         service.directionEvaluatorAudits(session.id).forEach((audit) => {
-          console.log(`#${audit.id} ${audit.operation} | ${audit.model} | ${audit.error ?? "ok"}`);
+          console.log(`#${audit.id} ${audit.operation} | ${audit.model} | ${audit.error ?? "ok"}${formatCallObservations(audit.callObservations)}`);
         });
         continue;
       }
       if (!/^\d+$/.test(input)) {
         console.log("\n正在确认剧情连续性...");
-        const result = await service.continueWithPlayerDirection(session.id, current.id, input);
+        let result: Awaited<ReturnType<typeof service.continueWithPlayerDirection>>;
+        try {
+          result = await service.continueWithPlayerDirection(session.id, current.id, input);
+        } catch (error) {
+          console.log(error instanceof Error ? error.message : "剧情生成失败，请重试或选择已显示的方向。");
+          continue;
+        }
         if (result.kind !== "accepted") {
           console.log(result.message);
           continue;
@@ -86,7 +92,12 @@ async function main(): Promise<void> {
         continue;
       }
       console.log("\n正在确认剧情连续性...");
-      current = await service.continue(session.id, current.id, selected.id, `选择方向：${selected.title}`);
+      try {
+        current = await service.continue(session.id, current.id, selected.id, `选择方向：${selected.title}`);
+      } catch (error) {
+        console.log(error instanceof Error ? error.message : "剧情生成失败，请重试或选择其他方向。");
+        continue;
+      }
       await printGeneratedNode(current);
     }
   } finally {
@@ -113,6 +124,7 @@ function createRuntime(): { planner: BranchPlanner; directionEvaluator: Directio
 }
 
 function printNode(node: StoredBranchNode): void {
+  printStoryArc(node);
   console.log(node.narrativeText);
   if (node.nextDirections.length === 0) return;
   console.log("\n可能的剧情方向：");
@@ -123,7 +135,9 @@ function printNode(node: StoredBranchNode): void {
 
 async function printGeneratedNode(node: StoredBranchNode): Promise<void> {
   console.log(node.factDeltas.some((delta) => delta.source === "source") ? "\n原著段落：" : "\n剧情：");
+  printStoryArc(node);
   await writeProgressively(node.narrativeText);
+  if (node.storyArc?.chapter.status === "complete") console.log(`\n\n本章完：${node.storyArc.chapter.title}`);
   if (node.nextDirections.length === 0) return;
   console.log("\n\n可能的剧情方向：");
   node.nextDirections.forEach((direction, index) => {
@@ -144,6 +158,14 @@ function printBranchState(storyPackage: Awaited<ReturnType<typeof loadStoryPacka
   console.log(`唐栖：${tangStatus[state.tangStatus]}，${locationName(state.tangLocationId)}`);
   console.log(`姜序：${locationName(state.jiangLocationId)}`);
   console.log(`证据：${evidenceStatus[state.evidenceStatus]} | 水位：${waterLevel[state.waterLevel]} | 信号室：${signalRoom[state.signalRoomStatus]} | 列车：${trainStatus[state.trainStatus]}`);
+  if (node.storyArc) console.log(`主线目标：${node.storyArc.activeGoal} | 当前阶段：${node.storyArc.currentPhase} | 章节：${node.storyArc.chapter.title}`);
+}
+
+function printStoryArc(node: StoredBranchNode): void {
+  if (!node.storyArc) return;
+  console.log(`章节：${node.storyArc.chapter.title}`);
+  console.log(`主线目标：${node.storyArc.activeGoal}`);
+  console.log(`当前阶段：${node.storyArc.currentPhase}\n`);
 }
 
 async function writeProgressively(text: string): Promise<void> {
@@ -152,6 +174,18 @@ async function writeProgressively(text: string): Promise<void> {
     stdout.write(text.slice(start, start + chunkSize));
     await new Promise<void>((resolveDelay) => setTimeout(resolveDelay, 16));
   }
+}
+
+function formatCallObservations(observations: Array<{ attempt: number; outcome: string; failureKind?: string; transport?: { responseMode: string; httpStatus?: number; durationMs: number; fallback?: { reason: string; initialAttempt: { responseMode: string; httpStatus?: number; durationMs: number; failureKind?: string } } } }> | undefined): string {
+  if (!observations?.length) return "";
+  return ` | ${observations.map((observation) => {
+    const transport = observation.transport;
+    const fallback = transport?.fallback;
+    const endpoint = transport
+      ? `${transport.responseMode}/${transport.httpStatus ?? "no-status"}/${transport.durationMs}ms${fallback ? `; fallback=${fallback.initialAttempt.responseMode}/${fallback.initialAttempt.httpStatus ?? "no-status"}/${fallback.initialAttempt.durationMs}ms/${fallback.initialAttempt.failureKind ?? fallback.reason}` : ""}`
+      : "no-transport";
+    return `#${observation.attempt}:${observation.outcome}${observation.failureKind ? `/${observation.failureKind}` : ""}/${endpoint}`;
+  }).join(", ")}`;
 }
 
 main().catch((error: unknown) => {

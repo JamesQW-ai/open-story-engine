@@ -70,7 +70,7 @@ export class CoCreationService {
       parent.branchState.playerLocationId,
       selectedDirection.statePatch,
     );
-    const canonicalBranch = lineage.every((node) => node.canonicalRelation === "on_line")
+    const canonicalBranch = isPublishedDirectionSelection(playerDirection) && lineage.every((node) => node.canonicalRelation === "on_line")
       ? createCanonicalBranch(this.storyPackage, selectedDirection)
       : undefined;
     const resolvedState = applyBranchStatePatch(this.storyPackage, parent.branchState, selectedDirection.statePatch, sourceNodeRef);
@@ -100,7 +100,15 @@ export class CoCreationService {
         throw new Error(`规范方向状态快照与补丁不一致: ${selectedDirection.id}`);
       }
       this.assertPublishedDirections(canonicalBranch.sourceNodeRef, canonicalBranch.branchState, canonicalBranch.nextDirections);
-      return this.store.appendBranchNode(sessionId, parent.id, { ...canonicalBranch, narrativePlan, selectedDirectionId, playerDirection, requestId });
+      return this.store.appendBranchNode(sessionId, parent.id, {
+        ...canonicalBranch,
+        // 原著复用不调用 Planner；它只能继承既有叙事目标，不能静默改写目标或章节。
+        storyArc: parent.storyArc,
+        narrativePlan,
+        selectedDirectionId,
+        playerDirection,
+        requestId,
+      });
     }
     const context = this.contextBuilder.build(this.storyPackage, contract, lineage, sourceNodeRef);
     const execution = await this.planner.plan({ context, selectedDirectionId, sourceNodeRef, resolvedState, narrativePlan, playerDirection });
@@ -193,4 +201,8 @@ export class CoCreationService {
       resolveSceneNodeId(this.storyPackage, sourceNodeId, state.playerLocationId, direction.statePatch);
     }
   }
+}
+
+function isPublishedDirectionSelection(playerDirection: string | undefined): boolean {
+  return !playerDirection || playerDirection.startsWith("选择方向：");
 }

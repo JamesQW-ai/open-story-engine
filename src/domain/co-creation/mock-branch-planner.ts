@@ -1,4 +1,4 @@
-import type { BranchNode } from "./branch-node.js";
+import type { BranchNode, StoryArc } from "./branch-node.js";
 import type { BranchPlanRequest, BranchPlanner, PlannerExecution } from "./branch-planner.js";
 import type { BranchStatePatch } from "./branch-state.js";
 import { narrativePlanSchema } from "./narrative-plan.js";
@@ -6,7 +6,7 @@ import { assertPlannerResultFitsContext, plannerResultSchema, type PlannerResult
 
 export type PlannedBranchNode = Omit<BranchNode, "id" | "kind" | "parentId" | "createdAt" | "branchState">;
 
-type Template = Omit<PlannerResult, "nextDirections"> & {
+type Template = Omit<PlannerResult, "nextDirections" | "storyArc"> & {
   nextDirections: Array<Omit<PlannerResult["nextDirections"][number], "statePatch">>;
 };
 
@@ -144,6 +144,7 @@ export class MockBranchPlanner implements BranchPlanner {
     if (!template) throw new Error(`Mock Planner 尚未配置方向: ${request.selectedDirectionId}`);
     const result = {
       ...structuredClone(template),
+      storyArc: createStoryArc(request, template),
       nextDirections: template.nextDirections.map((direction) => ({
         ...direction,
         statePatch: getDirectionStatePatch(direction.id),
@@ -151,6 +152,29 @@ export class MockBranchPlanner implements BranchPlanner {
     };
     return { kind: "completed", result: assertPlannerResultFitsContext(plannerResultSchema.parse(result), request.context) };
   }
+}
+
+function createStoryArc(request: BranchPlanRequest, template: Template): StoryArc {
+  const parentArc = request.context.parent.storyArc;
+  const playerGoal = request.playerDirection?.trim();
+  const explicitPlayerGoal = playerGoal && !playerGoal.startsWith("选择方向：") ? playerGoal : undefined;
+  const goalDisposition: StoryArc["goalDisposition"] = !parentArc
+    ? "started"
+    : explicitPlayerGoal && explicitPlayerGoal !== parentArc.activeGoal
+      ? "replaced"
+      : template.nextDirections.length === 0
+        ? "completed"
+        : "continued";
+  const title = goalDisposition === "replaced" || parentArc?.chapter.status !== "continuing"
+    ? `雨夜候车室·${request.context.parent.nextDirections.find((direction) => direction.id === request.selectedDirectionId)?.title ?? "新阶段"}`
+    : parentArc.chapter.title;
+
+  return {
+    activeGoal: explicitPlayerGoal ?? parentArc?.activeGoal ?? request.narrativePlan.goal,
+    currentPhase: template.summary,
+    goalDisposition,
+    chapter: { title, status: template.nextDirections.length === 0 ? "complete" : "continuing" },
+  };
 }
 
 function getDirectionStatePatch(directionId: string): BranchStatePatch {

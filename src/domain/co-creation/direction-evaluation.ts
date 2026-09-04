@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { CoCreationContext } from "./context-builder.js";
+import type { LlmCallObservation } from "../llm/llm-gateway.js";
 
 export const directionEvaluationSchema = z.discriminatedUnion("kind", [
   z.object({
@@ -27,6 +28,7 @@ export type DirectionEvaluationAudit = {
   requestSummary: string;
   rawResponse?: string;
   error?: string;
+  callObservations?: LlmCallObservation[];
 };
 
 export type DirectionEvaluationExecution = {
