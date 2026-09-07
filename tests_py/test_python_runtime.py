@@ -655,6 +655,10 @@ class PythonRuntimeTests(unittest.TestCase):
             )
         self.assertEqual(gateway.calls, 2)
         self.assertLess(raised.exception.audit["rejectedNarrativeCharacters"], 2000)
+        self.assertEqual(
+            next(item["rejectedNarrativeCharacters"] for item in raised.exception.audit["callObservations"] if "rejectedNarrativeCharacters" in item),
+            raised.exception.audit["rejectedNarrativeCharacters"],
+        )
         store.close()
 
     def test_llm_planner_appends_one_continuation_when_first_chapter_is_short(self):

@@ -175,6 +175,12 @@ def run_co_create(_: argparse.Namespace) -> int:
                     suffix = f" | {requests} 次模型请求" if requests else ""
                     if any(item.get("generationStage") == "continuation" for item in observations):
                         suffix += " | 含短稿续写"
+                    rejected_characters = next(
+                        (item["rejectedNarrativeCharacters"] for item in observations if "rejectedNarrativeCharacters" in item),
+                        None,
+                    )
+                    if rejected_characters is not None:
+                        suffix += f" | 被拒正文 {rejected_characters} 字"
                     print(f"#{audit['id']} {audit['operation']} | {audit['model']} | {audit.get('error') or 'ok'}{suffix}")
                     for item in observations:
                         if item.get("outcome") == "failed" and item.get("error"):

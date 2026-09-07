@@ -1005,8 +1005,20 @@ class LlmPlanner(Planner):
             return result, {"operation": "branch_planner", "model": self.gateway.model, "promptVersion": "python-v0.6", "requestSummary": selected["title"], "rawResponse": "\n\n".join(raw_responses), "callObservations": observations}
         except LlmError as error:
             observations.extend(error.observations)
+            if rejected_narrative_characters is not None:
+                observations.append({
+                    "attempt": 1,
+                    "outcome": "rejected",
+                    "rejectedNarrativeCharacters": rejected_narrative_characters,
+                })
             observations.append({"attempt": 1, "outcome": "failed", "failureKind": error.code, "error": str(error)})
         except ValueError as error:
+            if rejected_narrative_characters is not None:
+                observations.append({
+                    "attempt": 1,
+                    "outcome": "rejected",
+                    "rejectedNarrativeCharacters": rejected_narrative_characters,
+                })
             observations.append({"attempt": 1, "outcome": "failed", "failureKind": "model_output_rejected", "error": str(error)})
         error = LlmError("LLM Planner 未生成可用剧情：" + observations[-1]["error"], observations[-1]["failureKind"])
         error.audit = {"operation": "branch_planner", "model": self.gateway.model, "promptVersion": "python-v0.6", "requestSummary": selected["title"], "rawResponse": "\n\n".join(raw_responses), "error": observations[-1]["error"], "callObservations": observations, "rejectedNarrativeCharacters": rejected_narrative_characters}
