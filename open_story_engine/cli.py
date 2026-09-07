@@ -13,7 +13,7 @@ from typing import Any, Callable, Dict, Optional
 from .cocreation import CoCreationService, DirectionEvaluator, LlmDirectionEvaluator, LlmNarrativeReviewer, LlmPlanner, MockPlanner, NarrativeReviewer, location_name
 from .content import load_story_package, package_path_from_root
 from .environment import load_env_file
-from .llm import OpenAICompatibleGateway
+from .llm import LlmError, OpenAICompatibleGateway
 from .play import PlayerTurnService
 from .storage import SessionStore
 
@@ -73,10 +73,12 @@ def print_state(package: Dict[str, Any], node: Dict[str, Any]) -> None:
     print("唐栖：" + labels[state["tangStatus"]] + "，" + location_name(package, {**state, "playerLocationId": state["tangLocationId"]}))
     print("姜序：" + location_name(package, {**state, "playerLocationId": state["jiangLocationId"]}))
     print(f"证据：{labels[state['evidenceStatus']]} | 水位：{labels[state['waterLevel']]} | 信号室：{labels[state['signalRoomStatus']]} | 列车：{labels[state['trainStatus']]}")
-    if state["storyScope"] == "derived":
+    if state["derivedLocations"] or state["derivedCharacters"]:
         names = {item["characterId"]: item["name"] for item in state["derivedCharacterReveals"]}
         characters = "、".join(names.get(item["id"], item["name"]) for item in state["derivedCharacters"]) or "暂无"
-        print(f"衍生包：{state['derivativeStage']} | 回合：{state['derivedTurn']} | 私有地点：{'、'.join(item['name'] for item in state['derivedLocations']) or '暂无'} | 私有人物：{characters}")
+        print(f"分支扩展：地点 {'、'.join(item['name'] for item in state['derivedLocations']) or '暂无'} | 人物 {characters}")
+    if state["storyScope"] == "derived":
+        print(f"衍生包：{state['derivativeStage']} | 回合：{state['derivedTurn']}")
 
 
 def paced_writer() -> tuple[Callable[[str], None], Callable[[str], None], Callable[[], bool]]:
@@ -90,8 +92,18 @@ def paced_writer() -> tuple[Callable[[str], None], Callable[[str], None], Callab
             sys.stdout.flush()
             time.sleep(0.012)
     def reset(reason: str) -> None:
-        if visible[0]:
-            sys.stdout.write("\n\n[草稿未采纳：" + ("流式响应不可用，改用兼容 JSON 响应。" if reason == "transport_fallback" else "草稿需要按审阅意见重写。") + "]\n")
+        if reason == "transport_fallback" and not visible[0]:
+            sys.stdout.write("\n[SSE 在首段正文返回前超时，改用兼容 JSON 响应继续生成。]\n")
+            sys.stdout.flush()
+        elif reason == "json_transport_fallback" and not visible[0]:
+            sys.stdout.write("\n[JSON 在首段正文返回前未响应，改用 SSE 流式生成。]\n")
+            sys.stdout.flush()
+        elif visible[0]:
+            messages = {
+                "transport_fallback": "流式响应中断，改用兼容 JSON 响应继续生成。",
+            }
+            message = messages.get(reason, "草稿未通过校验。")
+            sys.stdout.write("\n\n[草稿未采纳：" + message + "]\n")
             sys.stdout.flush()
         visible[0] = False
     return write, reset, lambda: visible[0]
@@ -108,8 +120,12 @@ def create_cocreation_runtime() -> tuple[Any, Any, NarrativeReviewer, str]:
         raise ValueError("使用 STORY_PLANNER=openai 时必须设置 STORY_LLM_BASE_URL、STORY_LLM_API_KEY 与 STORY_LLM_MODEL")
     stream = environment_bool("STORY_LLM_STREAM", True)
     timeout = environment_integer("STORY_LLM_TIMEOUT_SECONDS", 30, 5, 120)
-    planner = LlmPlanner(OpenAICompatibleGateway(required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"], stream, timeout))
-    evaluator = LlmDirectionEvaluator(OpenAICompatibleGateway(required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"], False, timeout))
+    max_tokens = environment_integer("STORY_LLM_MAX_TOKENS", 4096, 1024, 8192)
+    planner = LlmPlanner(
+        OpenAICompatibleGateway(required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"], stream, timeout, max_tokens),
+        minimum_narrative_characters=2000,
+    )
+    evaluator = LlmDirectionEvaluator(OpenAICompatibleGateway(required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"], False, timeout, max_tokens))
     reviewer: NarrativeReviewer = NarrativeReviewer()
     if environment_bool("STORY_LLM_QUALITY_REVIEW", False):
         reviewer = LlmNarrativeReviewer(OpenAICompatibleGateway(required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"], False, timeout))
@@ -121,6 +137,7 @@ def run_co_create(_: argparse.Namespace) -> int:
     store = SessionStore(database_path())
     session = store.create_session(package)
     planner, evaluator, reviewer, label = create_cocreation_runtime()
+    streams_body = os.environ.get("STORY_PLANNER", "mock").strip().lower() == "openai" and environment_bool("STORY_LLM_STREAM", True)
     service = CoCreationService(package, store, planner, evaluator, reviewer)
     contract, current = service.start(session["id"])
     print(f"\n{package['metadata']['title']} | 共创树开发试玩 {session['id']}")
@@ -132,6 +149,9 @@ def run_co_create(_: argparse.Namespace) -> int:
             try:
                 player_input = input("\n方向 > ").strip()
             except EOFError:
+                break
+            except KeyboardInterrupt:
+                print("\n已退出共创试玩。")
                 break
             if not player_input:
                 continue
@@ -150,9 +170,16 @@ def run_co_create(_: argparse.Namespace) -> int:
             if player_input == "llm-audits":
                 audits = store.llm_audits(session["id"]) + store.direction_evaluator_audits(session["id"])
                 for audit in audits:
-                    attempts = len(audit.get("callObservations", []))
-                    suffix = f" | {attempts} 次调用" if attempts else ""
+                    observations = audit.get("callObservations", [])
+                    requests = sum(1 for item in observations if "transport" in item)
+                    suffix = f" | {requests} 次模型请求" if requests else ""
+                    if any(item.get("generationStage") == "continuation" for item in observations):
+                        suffix += " | 含短稿续写"
                     print(f"#{audit['id']} {audit['operation']} | {audit['model']} | {audit.get('error') or 'ok'}{suffix}")
+                    for item in observations:
+                        if item.get("outcome") == "failed" and item.get("error"):
+                            origin = "传输失败" if item.get("transport") or item.get("failureKind") == "transport_error" else "被本地拒绝"
+                            print(f"  尝试 {item['attempt']} {origin}：{item['error']}")
                 continue
             if player_input.startswith("derive "):
                 try:
@@ -163,6 +190,11 @@ def run_co_create(_: argparse.Namespace) -> int:
                     print(error)
                 continue
             stream, stream_reset, has_output = paced_writer()
+            def generation_status() -> None:
+                print(
+                    "正在生成正文草稿（等待首段 SSE；无响应将自动切换 JSON）..."
+                    if streams_body else "正在生成正文草稿..."
+                )
             try:
                 if player_input.isdigit():
                     print("\n正在确认剧情连续性...")
@@ -170,7 +202,10 @@ def run_co_create(_: argparse.Namespace) -> int:
                     if index < 0 or index >= len(current["nextDirections"]):
                         print("没有这个剧情方向。请输入显示的编号。"); continue
                     selected = current["nextDirections"][index]
-                    current = service.continue_direction(session["id"], current["id"], selected["id"], "选择方向：" + selected["title"], stream, stream_reset)
+                    current = service.continue_direction(
+                        session["id"], current["id"], selected["id"], "选择方向：" + selected["title"],
+                        stream, stream_reset, generation_status,
+                    )
                 else:
                     print("\n正在判定自由方向...")
                     result = service.continue_free_text(
@@ -179,7 +214,8 @@ def run_co_create(_: argparse.Namespace) -> int:
                         player_input,
                         stream,
                         stream_reset,
-                        lambda evaluation: print("方向已确认：" + evaluation["rationale"] + "\n正在生成正文草稿..."),
+                        lambda evaluation: print("方向已确认：" + evaluation["rationale"]),
+                        generation_status,
                     )
                     if result["kind"] != "accepted":
                         print(result["message"]); continue
@@ -187,6 +223,8 @@ def run_co_create(_: argparse.Namespace) -> int:
                 if has_output():
                     print("\n\n剧情已确认。")
                 print_branch(package, current, has_output())
+            except KeyboardInterrupt:
+                print("\n本次生成已取消，未写入分支。")
             except Exception as error:
                 print("\n草稿未通过校验，未写入分支：" + str(error))
     finally:
@@ -265,7 +303,20 @@ def run_evaluate_live(args: argparse.Namespace) -> int:
         passed = node["branchState"]["tangStatus"] == "located" and node["branchState"]["playerLocationId"] == "location_signal_tunnel" and node["storyArc"]["currentPhase"]
         output = {"runStatus": "completed" if passed and calls <= max_calls else "failed", "package": package["id"] + "@" + package["version"], "model": label, "maxCalls": max_calls, "totalModelCalls": calls, "results": [{"id": args.scenario or "broad_goal_starts_current_phase", "status": "passed" if passed else "failed", "checks": ["宽泛目标锚定为救援优先", "主线以当前阶段开始且正文通过状态校验"], "modelCalls": calls}], "conclusion": {"status": "passed" if passed and calls <= max_calls else "failed", "statement": "本次 Python 真实模型验收通过。" if passed and calls <= max_calls else "真实模型验收未满足调用上限或状态断言。"}}
     except Exception as error:
-        output = {"runStatus": "failed", "results": [{"id": args.scenario or "broad_goal_starts_current_phase", "status": "failed", "error": str(error)}], "conclusion": {"status": "failed", "statement": "Python 真实模型验收失败。"}}
+        diagnostic: Dict[str, Any] = {}
+        audit = getattr(error, "audit", None)
+        if isinstance(error, LlmError) and isinstance(audit, dict):
+            diagnostic = {
+                "model": audit.get("model"),
+                "plannerError": audit.get("error"),
+                "modelCalls": len(audit.get("callObservations", [])),
+            }
+            if audit.get("rejectedNarrativeCharacters") is not None:
+                diagnostic["rejectedNarrativeCharacters"] = audit["rejectedNarrativeCharacters"]
+        result: Dict[str, Any] = {"id": args.scenario or "broad_goal_starts_current_phase", "status": "failed", "error": str(error)}
+        if diagnostic:
+            result["diagnostic"] = diagnostic
+        output = {"runStatus": "failed", "results": [result], "conclusion": {"status": "failed", "statement": "Python 真实模型验收失败。"}}
     finally:
         store.close()
     if args.output:

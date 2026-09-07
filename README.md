@@ -55,10 +55,12 @@ STORY_LLM_BASE_URL=https://你的中转站地址/v1
 STORY_LLM_STREAM=true
 # 单次模型请求的超时上限，默认 30 秒。
 STORY_LLM_TIMEOUT_SECONDS=30
+# 单次正文模型响应的最大 token 预算，默认 4096；增大可能提高成本。
+STORY_LLM_MAX_TOKENS=4096
 # 可选：正文通过确定性校验后做审阅；审阅意见仅写入 audit，不会自动重写本回合。
 STORY_LLM_QUALITY_REVIEW=false
 ```
 
-`STORY_LLM_BASE_URL` 必须是 OpenAI-compatible API 前缀，不要包含 `/chat/completions`。共创 CLI 默认让正文 Planner 优先使用 SSE：模型 JSON 的 `narrativeText` 到达时会立即显示为“尚未提交”的剧情草稿，完整 JSON 通过结构、引用范围和叙事事实校验且分支落库后才显示“剧情已确认”和后续方向。自由文本输入先执行非流式方向判定，CLI 会显示“正在判定自由方向”；判定通过后才显示“正在生成正文草稿”。一次成功的正文草稿只会接受一次模型结果：结构完整但摘要、章节信息或菜单局部无效时，运行时会做可审计的本地归一化；有效的新地点、人物、物品和方向会连同状态一起写入分支。草稿出现不可安全修复的 JSON、叙事事实或状态冲突时会被拒绝，既不会写入分支，也不会自动重试。每次模型请求默认 30 秒超时，可通过 `STORY_LLM_TIMEOUT_SECONDS` 设置为 5 至 120 秒。`STORY_LLM_STREAM=true` 并非 SSE-only：若 SSE 在连接或首段正文返回前保持静默，CLI 最多等待 15 秒，再以本回合剩余时间改用兼容 JSON 请求；因此一次正文 Planner 回合在传输降级时可能产生一次 SSE 和一次 JSON 模型请求。该降级不是对已返回草稿的重写；同一正文 Planner 会熔断失效的 SSE，后续回合直接使用 JSON，避免重复等待。传输失败、SSE 中断或草稿未通过校验时，CLI 会明确标记草稿未采纳；这些草稿不会改变状态或写入分支。将 `STORY_LLM_STREAM=false` 可临时让正文也改为普通 JSON；可用 `llm-audits` 查看本次会话的调用、归一化和拒绝记录。
+`STORY_LLM_BASE_URL` 必须是 OpenAI-compatible API 前缀，不要包含 `/chat/completions`。共创 CLI 默认让正文 Planner 优先使用 SSE：模型 JSON 的 `narrativeText` 到达时会立即显示为“尚未提交”的剧情草稿，完整 JSON 通过结构、引用范围和叙事事实校验且分支落库后才显示“剧情已确认”和后续方向。自由文本输入先执行非流式方向判定，CLI 会显示“正在判定自由方向”；判定通过后才显示“正在生成正文草稿”。动态正文提示目标为 2,200 至 2,800 个中文字符；首稿少于 2,000 个非空白字符时，Planner 最多请求一次只追加正文的受控续写，合并后仍不足或违反状态约束才拒绝，且不会写入分支。每次请求默认携带 `max_tokens=4096`，可通过 `STORY_LLM_MAX_TOKENS` 在 1,024 至 8,192 之间调整；提高该值可能增加成本。除短稿的受控续写外，一次成功的正文草稿只会接受一次模型结果：结构完整但摘要、章节信息或菜单局部无效时，运行时会做可审计的本地归一化；有效的新地点、人物、物品和方向会连同状态一起写入分支。草稿出现不可安全修复的 JSON、叙事事实或状态冲突时会被拒绝，既不会写入分支，也不会自动重试。每次模型请求默认 30 秒超时，可通过 `STORY_LLM_TIMEOUT_SECONDS` 设置为 5 至 120 秒。`STORY_LLM_STREAM=true` 并非 SSE-only：若 SSE 在连接或首段正文返回前保持静默，CLI 最多等待 15 秒，再以本回合剩余时间改用兼容 JSON 请求；因此一次正文 Planner 回合在传输降级时可能产生一次 SSE 和一次 JSON 模型请求。该降级不是对已返回草稿的重写；同一正文 Planner 会熔断失效的 SSE，后续回合直接使用 JSON，避免重复等待。传输失败、SSE 中断或草稿未通过校验时，CLI 会明确标记草稿未采纳；这些草稿不会改变状态或写入分支。将 `STORY_LLM_STREAM=false` 可临时让正文也改为普通 JSON；可用 `llm-audits` 查看本次会话的调用、归一化和拒绝记录。
 
 真实模型回归不包含在默认测试中。显式设置 `STORY_LIVE_EVALUATION=1` 后运行 `python3 -m open_story_engine evaluate-live --scenario broad_goal_starts_current_phase --output /private/tmp/open-story-engine-python-live.json`，它会以受限调用次数在内存会话中验证宽泛自由文本能锚定到当前阶段；详见[真实 LLM 评估 v0.1](docs/live-llm-evaluation-v0.1.md)。

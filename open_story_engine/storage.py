@@ -198,7 +198,10 @@ class SessionStore:
             exists = self.connection.execute("SELECT 1 FROM branch_nodes WHERE session_id=? AND parent_id IS NULL", (session_id,)).fetchone()
             if exists:
                 raise ValueError("共创根节点已存在")
-            self.connection.execute("INSERT INTO branch_nodes VALUES(?,?,?,?,?,?,?)", (node["id"], session_id, 0, None, None, dump(node), node["createdAt"]))
+            self.connection.execute(
+                "INSERT INTO branch_nodes(id,session_id,sequence,parent_id,request_id,node_json,created_at) VALUES(?,?,?,?,?,?,?)",
+                (node["id"], session_id, 0, None, None, dump(node), node["createdAt"]),
+            )
         return self.branch(session_id, node["id"])
 
     def append_branch(self, session_id: str, parent_id: str, node: Dict[str, Any]) -> Dict[str, Any]:
@@ -212,13 +215,19 @@ class SessionStore:
         node.setdefault("createdAt", now())
         with self.connection:
             sequence = self.connection.execute("SELECT COALESCE(MAX(sequence),0)+1 FROM branch_nodes WHERE session_id=?", (session_id,)).fetchone()[0]
-            self.connection.execute("INSERT INTO branch_nodes VALUES(?,?,?,?,?,?,?)", (node["id"], session_id, sequence, parent_id, node.get("requestId"), dump(node), node["createdAt"]))
+            self.connection.execute(
+                "INSERT INTO branch_nodes(id,session_id,sequence,parent_id,request_id,node_json,created_at) VALUES(?,?,?,?,?,?,?)",
+                (node["id"], session_id, sequence, parent_id, node.get("requestId"), dump(node), node["createdAt"]),
+            )
         return self.branch(session_id, node["id"])
 
     def create_derived_entry(self, session_id: str, parent_id: str, node: Dict[str, Any]) -> Dict[str, Any]:
         with self.connection:
             sequence = self.connection.execute("SELECT COALESCE(MAX(sequence),0)+1 FROM branch_nodes WHERE session_id=?", (session_id,)).fetchone()[0]
-            self.connection.execute("INSERT INTO branch_nodes VALUES(?,?,?,?,?,?,?)", (node["id"], session_id, sequence, parent_id, None, dump(node), node["createdAt"]))
+            self.connection.execute(
+                "INSERT INTO branch_nodes(id,session_id,sequence,parent_id,request_id,node_json,created_at) VALUES(?,?,?,?,?,?,?)",
+                (node["id"], session_id, sequence, parent_id, None, dump(node), node["createdAt"]),
+            )
         return self.branch(session_id, node["id"])
 
     def branch(self, session_id: str, node_id: str) -> Dict[str, Any]:

@@ -61,6 +61,13 @@ def validate_story_package(package: Dict[str, Any]) -> None:
         for exit_id in location.get("exits", []):
             if exit_id not in ids["地点"]:
                 raise StoryPackageError(f"地点出口不存在: {exit_id}")
+    bindings = package.get("world", {}).get("narrativeGuidelines", {}).get("characterLocationStateFields")
+    if bindings is not None:
+        if not isinstance(bindings, dict):
+            raise StoryPackageError("characterLocationStateFields 必须是对象")
+        for character_id, state_field in bindings.items():
+            if character_id not in ids["角色"] or not isinstance(state_field, str) or not state_field.strip():
+                raise StoryPackageError("characterLocationStateFields 必须引用已登记角色和非空状态字段")
     for beat in graph.get("beats", []):
         if beat.get("nodeId") not in ids["场景"]:
             raise StoryPackageError(f"叙事锚点引用的场景不存在: {beat.get('id')}")
