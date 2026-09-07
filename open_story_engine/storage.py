@@ -28,9 +28,8 @@ def load(value: str) -> Any:
 class SessionStore:
     """Persists sessions, normal turns, co-creation nodes and auditable model calls.
 
-    The schema intentionally mirrors the TypeScript tables. Python can therefore
-    read a database created by the existing runtime during migration, while new
-    Python-only audit operations use the same flexible audit table.
+    The schema is owned by the Python runtime. Its flexible audit tables keep
+    model requests and local validation outcomes available for later review.
     """
 
     def __init__(self, database_path: str) -> None:

@@ -1,10 +1,10 @@
-# Python 迁移 v0.1
+# Python 运行时 v0.1
 
 ## 目标与边界
 
-运行时迁移到 Python 3.9+，但不改变 `StoryPackage`、权威状态、事件重建、共创契约或衍生故事包的语义。`content/packages/` 始终是版本化的只读输入；玩家选择产生的会话、事件、分支、审计与衍生修订仅写入 SQLite。
+运行时采用 Python 3.9+，不改变 `StoryPackage`、权威状态、事件重建、共创契约或衍生故事包的语义。`content/packages/` 始终是版本化的只读输入；玩家选择产生的会话、事件、分支、审计与衍生修订仅写入 SQLite。
 
-本次迁移采用并行策略：`open_story_engine/` 是 Python 实现，`src/` 中现有 TypeScript 继续保留为行为基线，直到 Python 的自动回归、真实模型验收和人工 CLI 阅读验收完成。迁移期间不得通过删除 TypeScript 或改写原故事包来“通过”测试。
+`open_story_engine/` 是唯一受跟踪的运行时实现。历史 TypeScript 文件仅可留在本机作为追溯资料，已从云端仓库移除且由 `.gitignore` 排除；后续功能、测试和文档均采用 Python。
 
 ## 命令
 
@@ -40,6 +40,6 @@ Python 标准库覆盖 JSON、SQLite、CLI 与 OpenAI-compatible HTTP；当前�
 
 `MockPlanner` 是离线契约夹具，用于稳定验证路线、状态补丁、回归与衍生包；它不代表发布级的正文质量。人工阅读验收必须使用经授权的真实 Planner，并保留其 `llm-audits` 结果。
 
-## 未完成迁移门槛
+## 验收门槛
 
-Python 版不得在下列验收前替换 TypeScript 命令或删除 TypeScript：完整 Python 自动回归、真实模型 `evaluate-live`、一次普通成功/失败路径人工验收、一次共创 SSE 人工阅读验收、一次衍生包人工验收。任何一项失败都只说明迁移尚未完成，不授权回退故事包或跳过状态校验。
+发布或继续扩展前必须完成完整 Python 自动回归、真实模型 `evaluate-live`、一次普通成功/失败路径人工验收、一次共创 SSE 人工阅读验收和一次衍生包人工验收。任何一项失败都不授权回退故事包或跳过状态校验。

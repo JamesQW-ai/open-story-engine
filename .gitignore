@@ -7,3 +7,13 @@ data/*.sqlite-wal
 .env
 .env.*
 !.env.example
+
+# 本机保留的 TypeScript 追溯资料，不再进入 Python-only 仓库。
+src/
+tests/
+package.json
+package-lock.json
+tsconfig.json
+*.tsbuildinfo
+docs/issues/2026-09-03-live-llm-batch-timeout.md
+docs/releases/2026-09-03-mvp-foundation.md

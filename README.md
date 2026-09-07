@@ -32,17 +32,17 @@
 ## 开发顺序
 
 1. 将标准小说母本转为标注与可校验的机器可读故事包。已完成候选内容。
-2. 初始化 TypeScript、故事包 schema、确定性规则检定与自动化测试。已完成；作为 Python 迁移期行为基线保留。
+2. 初始化 Python 运行时、故事包校验、确定性规则检定与自动化测试。已完成。
 3. 增加 SQLite 事件写入、状态重建与本地 CLI 试玩。已完成。
 4. 用 mock 行动解析器、剧情图、叙事器和高层剧情方向列表跑通端到端试玩与自动化测试。已完成。
 5. 增加 `SessionStoryContract`、动态 `BranchNode` 与 Mock Planner，验证共创树的持久化和分叉。已完成基础切片。
-6. 接入真实 LLM Planner/叙事适配器，并在规则不受模型影响的前提下评估方向与正文质量。Python 迁移版已提供同等 CLI 入口，尚待完整人工验收后替换基线。
+6. 接入真实 LLM Planner/叙事适配器，并在规则不受模型影响的前提下评估方向与正文质量。Python CLI 是唯一运行时入口。
 
 在第 4 步通过之前，不提前开发 Web 界面或小说导入能力。
 
-迁移期开发试玩优先运行 `python3 -m open_story_engine play`。每段剧情后会列出当前可达的高层方向；可输入方向编号，或直接输入自定义的自然语言行动。`npm run play` 暂保留为 TypeScript 行为基线，不能与同一 SQLite 测试库混用。完整说明见[连贯叙事推进 v0.1](docs/narrative-progression-v0.1.md)。
+开发试玩运行 `python3 -m open_story_engine play`。每段剧情后会列出当前可达的高层方向；可输入方向编号，或直接输入自定义的自然语言行动。完整说明见[连贯叙事推进 v0.1](docs/narrative-progression-v0.1.md)。
 
-动态树迁移版可运行 `python3 -m open_story_engine co-create`；默认使用 Mock Planner 验证契约和分支节点写入，也可输入自然语言方向。完成一个分支后可用 `derive <后续目标>` 创建会话隔离的 `DerivedStoryPackage`；它引用但不改写原始 `StoryPackage`。衍生人物可先以可见称谓出现，待玩家选择对应方向后再追加揭示姓名或身份；真实 Planner 根据目标动态决定是否引入这些要素，Mock 仅提供固定验收样本。`.env` 仅供本机使用且被 Git 忽略，`.env.example` 是可共享的配置模板。完整迁移边界见[Python 迁移 v0.1](docs/python-migration-v0.1.md)。
+动态树迁移版可运行 `python3 -m open_story_engine co-create`；默认使用 Mock Planner 验证契约和分支节点写入，也可输入自然语言方向。完成一个分支后可用 `derive <后续目标>` 创建会话隔离的 `DerivedStoryPackage`；它引用但不改写原始 `StoryPackage`。无论处于原故事分支还是衍生包，真实 Planner 都可在单回合中登记分支私有地点、人物、物品或延后揭示的身份；这些实体只写入该分支状态，后续回合可持续引用，固定故事包不会被改写。世界约束与叙事禁则来自各自的 `StoryPackage.world`，Mock 仅提供固定验收样本。`.env` 仅供本机使用且被 Git 忽略，`.env.example` 是可共享的配置模板。完整迁移边界见[Python 迁移 v0.1](docs/python-migration-v0.1.md)。
 
 要启用真实 OpenAI-compatible Planner，在 `.env` 中设置：
 
@@ -55,10 +55,10 @@ STORY_LLM_BASE_URL=https://你的中转站地址/v1
 STORY_LLM_STREAM=true
 # 单次模型请求的超时上限，默认 30 秒。
 STORY_LLM_TIMEOUT_SECONDS=30
-# 可选：正文通过确定性校验后，再由模型审阅可读性并决定是否重写一次。
+# 可选：正文通过确定性校验后做审阅；审阅意见仅写入 audit，不会自动重写本回合。
 STORY_LLM_QUALITY_REVIEW=false
 ```
 
-`STORY_LLM_BASE_URL` 必须是 OpenAI-compatible API 前缀，不要包含 `/chat/completions`。共创 CLI 默认让正文 Planner 使用 SSE：模型 JSON 的 `narrativeText` 到达时会立即显示为“尚未提交”的剧情草稿，完整 JSON 通过结构、引用范围和叙事事实校验且分支落库后才显示“剧情已确认”和后续方向。自由文本输入先执行非流式方向判定，CLI 会显示“正在判定自由方向”；判定通过后才显示“正在生成正文草稿”。每次模型请求默认 30 秒超时，可通过 `STORY_LLM_TIMEOUT_SECONDS` 设置为 5 至 120 秒。SSE 中断或草稿未通过校验时，CLI 会明确标记草稿未采纳，再使用兼容 JSON 请求或修复重试；这些草稿不会改变状态或写入分支。将 `STORY_LLM_STREAM=false` 可临时让正文也改为普通 JSON。模型返回不完整 JSON 或 schema 不通过时，Planner 会以更严格的紧凑格式要求重试一次；两次均失败则不会创建分支，可用 `llm-audits` 查看本次会话的调用结果。
+`STORY_LLM_BASE_URL` 必须是 OpenAI-compatible API 前缀，不要包含 `/chat/completions`。共创 CLI 默认让正文 Planner 优先使用 SSE：模型 JSON 的 `narrativeText` 到达时会立即显示为“尚未提交”的剧情草稿，完整 JSON 通过结构、引用范围和叙事事实校验且分支落库后才显示“剧情已确认”和后续方向。自由文本输入先执行非流式方向判定，CLI 会显示“正在判定自由方向”；判定通过后才显示“正在生成正文草稿”。一次成功的正文草稿只会接受一次模型结果：结构完整但摘要、章节信息或菜单局部无效时，运行时会做可审计的本地归一化；有效的新地点、人物、物品和方向会连同状态一起写入分支。草稿出现不可安全修复的 JSON、叙事事实或状态冲突时会被拒绝，既不会写入分支，也不会自动重试。每次模型请求默认 30 秒超时，可通过 `STORY_LLM_TIMEOUT_SECONDS` 设置为 5 至 120 秒。`STORY_LLM_STREAM=true` 并非 SSE-only：若 SSE 在连接或首段正文返回前保持静默，CLI 最多等待 15 秒，再以本回合剩余时间改用兼容 JSON 请求；因此一次正文 Planner 回合在传输降级时可能产生一次 SSE 和一次 JSON 模型请求。该降级不是对已返回草稿的重写；同一正文 Planner 会熔断失效的 SSE，后续回合直接使用 JSON，避免重复等待。传输失败、SSE 中断或草稿未通过校验时，CLI 会明确标记草稿未采纳；这些草稿不会改变状态或写入分支。将 `STORY_LLM_STREAM=false` 可临时让正文也改为普通 JSON；可用 `llm-audits` 查看本次会话的调用、归一化和拒绝记录。
 
-真实模型回归不包含在默认测试中。显式设置 `STORY_LIVE_EVALUATION=1` 后运行 `python3 -m open_story_engine evaluate-live --scenario broad_goal_starts_current_phase --output /private/tmp/open-story-engine-python-live.json`，它会以受限调用次数在内存会话中验证宽泛自由文本能锚定到当前阶段。完整的 TypeScript 六场景评估在迁移期继续作为基线；详见[真实 LLM 评估 v0.1](docs/live-llm-evaluation-v0.1.md)。
+真实模型回归不包含在默认测试中。显式设置 `STORY_LIVE_EVALUATION=1` 后运行 `python3 -m open_story_engine evaluate-live --scenario broad_goal_starts_current_phase --output /private/tmp/open-story-engine-python-live.json`，它会以受限调用次数在内存会话中验证宽泛自由文本能锚定到当前阶段；详见[真实 LLM 评估 v0.1](docs/live-llm-evaluation-v0.1.md)。

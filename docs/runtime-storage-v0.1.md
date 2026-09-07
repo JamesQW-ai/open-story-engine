@@ -18,7 +18,7 @@
 
 ## 当前 CLI
 
-迁移期优先使用 `python3 -m open_story_engine play`（或 `npm run py:play`）创建新会话，默认写入 `data/open-story-engine.sqlite`。`npm run play` 继续保留为 TypeScript 行为基线；两种运行时不得共用同一个 SQLite 测试文件，因为迁移验收需要能独立归因。CLI 接受许川的自然语言行动，例如“许川俯身检查十七号柜的铜牌”或“他请求姜序带路”。mock `ActionParser` 只会映射到故事包中既有的稳定 ID；它不确定时返回澄清，不会写入事件。
+使用 `python3 -m open_story_engine play` 创建新会话，默认写入 `data/open-story-engine.sqlite`。CLI 接受许川的自然语言行动，例如“许川俯身检查十七号柜的铜牌”或“他请求姜序带路”。mock `ActionParser` 只会映射到故事包中既有的稳定 ID；它不确定时返回澄清，不会写入事件。
 
 `status`、`history`、`rebuild` 和 `quit` 是开发命令。CLI 不提供固定动作菜单，也不是正式玩家界面。mock `Narrator` 从最近保存的叙事锚点和本回合已确认的 `Resolution` 生成一段新的第三人称文本；以后替换为 LLM 适配器也不能改变规则结果或选择未满足条件的剧情边。
 

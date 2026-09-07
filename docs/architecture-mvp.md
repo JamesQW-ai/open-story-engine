@@ -16,12 +16,12 @@ CLI 是开发验证工具。正式玩家端将以“小说阅读器 + 自由行�
 
 | 领域 | 选择 | 原因 |
 | --- | --- | --- |
-| 运行时 | Python 3.9+ | 迁移版使用标准库完成 CLI、JSON、SQLite 与 OpenAI-compatible HTTP；TypeScript 暂保留为行为基线。 |
+| 运行时 | Python 3.9+ | 使用标准库完成 CLI、JSON、SQLite 与 OpenAI-compatible HTTP。 |
 | 语言与模块 | Python | `open_story_engine/` 按内容、状态、普通试玩、共创、LLM、存储和 CLI 分层。 |
 | CLI | `argparse` | 无第三方依赖，适合脚本化与人工试玩。 |
 | 数据校验 | 保守结构校验 + 状态守卫 | 在读取故事包、写入状态、解析 LLM 输出时保持必需字段、交叉引用和不可逆状态约束。 |
 | 本地存储 | SQLite + `sqlite3` | 零部署，支持原子事务、本地存档和可审计事件历史。 |
-| 测试 | `unittest` + TypeScript `vitest` 基线 | Python 迁移测试和既有行为基线并行运行。 |
+| 测试 | `unittest` | 覆盖 Python 运行时的规则、共创、LLM 传输与状态边界。 |
 | LLM 接入 | OpenAI-compatible 网关 + 可选质量审阅 | 不让状态域依赖特定供应商；审阅器无权修改状态。 |
 
 不在 MVP 中引入 Web 框架、ORM、向量数据库、工作流编排框架或多智能体系统。它们解决的规模问题尚未出现，反而会掩盖叙事规则是否成立。
@@ -82,29 +82,27 @@ MVP 状态使用经 schema 校验的 JSON 快照：属性、背包、关系、�
 ## 目录方案
 
 ```text
-src/
-  cli/
-  application/
-  domain/
-    rules/
-  content/
-  infrastructure/
-    db/
-    llm/
-  shared/
-tests/
+open_story_engine/
+  cli.py
+  content.py
+  state.py
+  play.py
+  cocreation.py
+  llm.py
+  storage.py
+tests_py/
 docs/
 data/                # 运行期 SQLite 文件，Git 忽略
 ```
 
-领域代码不得直接依赖 `commander`、SQLite 或具体 LLM SDK；这些依赖只存在于 `cli/` 和 `infrastructure/`。`content/` 的故事包必须能够被测试单独加载和校验。
+领域逻辑不得依赖具体 LLM 供应商；`cli.py` 与 `llm.py` 负责进程和传输边界。`content/` 的故事包必须能够被测试单独加载和校验。
 
 ## 首个实现切片
 
 首个代码提交只覆盖以下能力：
 
-1. 初始化 Node.js / TypeScript / Vitest 项目及基础命令。
-2. 创建一个小型预置故事包和对应 `zod` schema。
+1. 初始化 Python 包、CLI 与 `unittest` 命令。
+2. 创建一个小型预置故事包和对应结构校验。
 3. 创建 SQLite 会话、快照、事件和审计表。
 4. 实现三种固定行动的确定性检定与状态更新。
 5. 提供 `mock` 叙事器和 `play`、`status` 命令。

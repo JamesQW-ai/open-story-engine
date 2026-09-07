@@ -6,7 +6,7 @@
 
 ## 2026-09-04 真实观察
 
-在临时 SQLite 数据库中以 `STORY_PLANNER=openai npm run co-create` 运行固定的 `rainy-waiting-room@0.1.0`。先选择原著方向“追查十七号柜”，再输入“先让姜序带路去积水尽头确认唐栖的情况”。
+在临时 SQLite 数据库中以 `STORY_PLANNER=openai python3 -m open_story_engine co-create` 运行固定的 `rainy-waiting-room@0.1.0`。先选择原著方向“追查十七号柜”，再输入“先让姜序带路去积水尽头确认唐栖的情况”。
 
 - 三次 `direction_evaluator` 调用均成功，说明自由文本映射与该模型端点可用。
 - 一次 `branch_planner` 在两次本地修复尝试后，最终正文为 382 字，被 400 至 600 字正文契约拒绝；没有追加分支。
@@ -103,7 +103,7 @@
 
 但第二回合正文已写明许川穿过打开的门、看见并听见唐栖，随后公布的首个方向仍为“进入信号室与唐栖会合”。这会把正文已经完成的动作重新交给玩家选择，不计为人工阅读验收通过。
 
-`co-creation-planner-v0.9` 已要求并校验每个 `nextDirection.statePatch` 至少有一个字段与本回合 `resolvedState` 不同。全量重复当前状态的方向会以“剧情方向没有推进任何受控状态”拒绝，并触发一次 Planner 修复重试。该规则不改变 `rescued` 的定义：唐栖只有被带回候车厅才是获救；在已打开的信号室内会合时仍可为 `located`。离线共创服务回归覆盖首次无推进方向被拒绝、第二次有效方向成功落库；仍需新的人工 CLI 两回合复测确认阅读体验。
+`co-creation-planner-v0.9` 要求并校验每个 `nextDirection.statePatch` 至少有一个字段与本回合 `resolvedState` 不同。模型生成的全量状态回显不会再让已经通过正文校验的首稿被丢弃：源故事会以当前场景和精确状态匹配 StoryPackage 的受控方向模板，并记录本地菜单标准化，不再触发第二次 Planner 调用。该规则不改变 `rescued` 的定义：唐栖只有被带回候车厅才是获救；在已打开的信号室内会合时仍可为 `located`。结构错误、状态矛盾、未登记姓名或找不到匹配受控菜单时，仍会拒绝首稿并执行一次修复重试。
 
 ## 2026-09-04 v0.9 两回合人工验收通过
 
