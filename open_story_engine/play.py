@@ -17,32 +17,25 @@ ACTION_TERMS = {
     "negotiate": ["询问", "问", "交谈", "沟通", "请求", "拜托", "劝", "说服", "告诉", "说明"],
     "risk": ["进入", "进去", "冲", "闯", "绕过", "冒险", "打开", "撬", "拉", "拧", "涉水", "救"],
 }
-TARGET_TERMS = {
-    "item_locker_token": ["储物柜", "十七号柜", "铜牌", "柜牌"], "location_station_office": ["站务室", "消防通道", "办公室"],
-    "item_recorder": ["录音笔", "录音", "调度记录", "档案"], "character_jiang_xu": ["姜序", "维修工"],
-    "item_relief_valve": ["手动阀", "排水阀", "阀门", "水位"], "item_signal_door": ["信号室", "滑栓", "信号门"],
-    "character_train_driver": ["列车司机", "司机"],
-}
-
-
 def parse_action(package: Dict[str, Any], player_input: str) -> Dict[str, Any]:
     normalized = player_input.strip()
+    focal_name = focal_character_name(package)
     if not normalized:
-        return {"kind": "clarification", "message": "许川还没有采取行动。请用一句话说明他想做什么。"}
+        return {"kind": "clarification", "message": f"{focal_name}还没有采取行动。请用一句话说明他想做什么。"}
     if len(normalized) > 160:
         return {"kind": "clarification", "message": "这段行动描述过长。请保留眼下最想尝试的一件事。"}
     candidates: List[Tuple[int, Dict[str, Any]]] = []
     enabled = {(item["actionType"], item["targetId"]) for item in package["rules"]["resolutions"]}
     for action_type, target_id in enabled:
         target = entity_name(package, target_id) or target_id
-        terms = [target] + TARGET_TERMS.get(target_id, [])
+        terms = entity_terms(package, target_id, target)
         target_score = 10 if any(term in normalized for term in terms) else 0
         action_score = 2 if any(term in normalized for term in ACTION_TERMS[action_type]) else 0
         if target_score:
             candidates.append((target_score + action_score, {"actionType": action_type, "targetId": target_id, "approach": normalized}))
     candidates.sort(key=lambda item: item[0], reverse=True)
     if not candidates or (len(candidates) > 1 and candidates[0][0] == candidates[1][0]):
-        return {"kind": "clarification", "message": "许川能听见雨声和站内的动静，但还无法判断他要把注意力放在哪里。请把对象说得更明确一些。"}
+        return {"kind": "clarification", "message": f"{focal_name}还无法判断要把注意力放在哪里。请把行动对象说得更明确一些。"}
     return {"kind": "parsed", "intent": candidates[0][1]}
 
 
@@ -61,9 +54,10 @@ def select_progression(package: Dict[str, Any], state: Dict[str, Any], previous:
 
 def narrate(package: Dict[str, Any], intent: Dict[str, Any], resolution: Dict[str, Any], progression: Dict[str, Any]) -> str:
     target = entity_name(package, intent["targetId"]) or intent["targetId"]
+    focal_name = focal_character_name(package)
     if resolution["outcome"] in ("blocked", "terminal"):
-        return f"许川的注意力落在{target}上，但{resolution.get('blockReason', '眼前的处境还不允许他这样做')}。{progression['continuity']['summary']}"
-    bridge = (progression.get("transition") or {}).get("transitionText", f"许川朝{target}迈出一步。")
+        return f"{focal_name}的注意力落在{target}上，但{resolution.get('blockReason', '眼前的处境还不允许他这样做')}。{progression['continuity']['summary']}"
+    bridge = (progression.get("transition") or {}).get("transitionText", f"{focal_name}朝{target}迈出一步。")
     if progression["changed"]:
         return bridge + progression["beat"]["narrativeAnchor"]
     sentences: List[str] = []
@@ -72,12 +66,28 @@ def narrate(package: Dict[str, Any], intent: Dict[str, Any], resolution: Dict[st
             name = entity_name(package, effect[4:])
             if name:
                 sentences.append("他确认拿到了" + name + "。")
-        elif effect == "increment:pressure_level":
-            sentences.append("列车放行的压力因此更近了一层。")
-        elif effect == "increment:flood_level":
-            sentences.append("隧道里的水位又向上逼近了一点。")
+        elif effect.startswith("increment:"):
+            sentences.append("局势的压力又累积了一层。")
     outcome = "事情勉强有了进展，代价也随着雨水一起逼近。" if resolution["outcome"] == "partial_success" else "这一步没能打开局面。" if resolution["outcome"] == "failure" else ""
     return bridge + outcome + "".join(sentences or ["局面仍需要下一处突破口。"])
+
+
+def focal_character_name(package: Dict[str, Any]) -> str:
+    player_id = package.get("initialState", {}).get("player", {}).get("characterId")
+    return entity_name(package, player_id) or "焦点人物"
+
+
+def entity_terms(package: Dict[str, Any], entity_id: str, fallback: str) -> List[str]:
+    for collection in ("items", "locations", "characters"):
+        entity = next((item for item in package.get(collection, []) if item.get("id") == entity_id), None)
+        if entity is None:
+            continue
+        aliases = entity.get("aliases", [])
+        if not isinstance(aliases, list) or any(not isinstance(item, str) for item in aliases):
+            aliases = []
+        role = entity.get("role")
+        return list(dict.fromkeys([fallback, *aliases, role] if isinstance(role, str) else [fallback, *aliases]))
+    return [fallback]
 
 
 class PlayerTurnService:

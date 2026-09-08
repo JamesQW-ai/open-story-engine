@@ -2,43 +2,53 @@
 
 ## 目的
 
-`python3 -m open_story_engine evaluate-live` 用少量真实模型调用验证共创链路的运行时边界。它不是默认测试，也不替代 Python 自动回归或 StoryPackage 校验。
+`python3 -m open_story_engine evaluate-live` 用固定场景验证共创链路的运行时边界。它不是默认测试，也不替代 Python 自动回归、StoryPackage 校验或玩家 CLI 的 SSE 人工阅读验收。
 
-Python 运行时的授权评估覆盖当前实现的宽泛目标场景。
+评估只加载固定的原创 StoryPackage，并为每个场景新建内存 SQLite 会话；不会写入 `STORY_DATABASE_PATH` 指向的项目数据库。评估报告不包含模型原文、请求正文或密钥。
 
-命令只加载固定的原创 StoryPackage，并在内存 SQLite 会话中运行；默认不写入项目数据库、不会打印或保存模型原始输出。仅当调用方显式设置 `STORY_LIVE_EVALUATION=1` 后才会访问 `.env` 中配置的模型端点。为将剧情行为验收与中转站 SSE 传输波动区分开，评估请求使用普通 JSON 响应并允许单次等待 60 秒；玩家 CLI 仍默认使用 SSE 逐段展示。
+为将剧情行为验收和中转站 SSE 波动分离，`evaluate-live` 忽略 `STORY_LLM_STREAM` 与 `STORY_LLM_TIMEOUT_SECONDS`，固定使用普通 JSON、单请求 60 秒、禁用 JSON/SSE 传输降级。玩家 CLI 的 SSE 优先与 JSON 回退逻辑不受影响，应单独人工验收。
 
-```bash
-STORY_LIVE_EVALUATION=1 python3 -m open_story_engine evaluate-live \
-  --scenario broad_goal_starts_current_phase
-```
+## 命令
 
-Python 的单场景授权验收使用独立内存会话：
+先在 `.env` 或当前 shell 设置 `STORY_LLM_BASE_URL`、`STORY_LLM_API_KEY`、`STORY_LLM_MODEL`，然后执行：
 
 ```bash
 STORY_PLANNER=openai \
 STORY_LIVE_EVALUATION=1 \
-STORY_LIVE_EVALUATION_MAX_CALLS=4 \
+STORY_LIVE_EVALUATION_MAX_CALLS=8 \
 python3 -m open_story_engine evaluate-live \
-  --scenario broad_goal_starts_current_phase \
   --output /private/tmp/open-story-engine-python-live.json
 ```
 
-可用 `STORY_LIVE_EVALUATION_MAX_CALLS` 设置总调用上限，默认值为 `8`，允许范围为 `1` 至 `20`。模型重试也计入上限。需要保留脱敏报告时，可附加 `--output data/live-evaluation-report.json`；报告包含场景名、通过状态、检查项、调用次数、错误摘要，以及每次调用的操作阶段、重试原因、耗时、响应模式、HTTP 状态和失败类别。报告不保存模型原文、请求正文或密钥。指定 `--output` 时，每完成一个场景和每开始或结束一次模型调用都会更新报告；中断前的报告会标为 `runStatus: "incomplete"`，并保留 `inFlightCall`，不得当作完整验收结论。
+`STORY_LIVE_EVALUATION_MAX_CALLS` 默认是 `8`，可设为 `1` 至 `20`。报告只把带有 transport 记录的 HTTP 请求计入调用次数；本地归一化、状态拒绝和审计记录不计为模型调用。若累计调用数已达到上限，后续需要模型的场景标为 `not_run`，离线场景仍会执行。
 
-排查或回归单个问题时可附加 `--scenario <场景 ID>`，只执行指定场景，避免重复调用已完成的场景。
+传入 `--scenario <场景 ID>` 时只运行该场景：
+
+```bash
+STORY_PLANNER=openai \
+STORY_LIVE_EVALUATION=1 \
+python3 -m open_story_engine evaluate-live \
+  --scenario locked_signal_room_state \
+  --output /private/tmp/open-story-engine-locked-room.json
+```
+
+指定 `--output` 后，命令会先写入 `runStatus: "incomplete"`，并在每个场景完成后更新报告。中断时已完成场景会被保留，不能视为完整验收结论。
 
 ## 场景
 
-1. `canonical_route_skips_model`：规范节点复用不应调用模型。
-2. `broad_goal_starts_current_phase`：宽泛目标经 LLM 锚定为救援优先，动态正文以 `storyArc.started` 的当前阶段开始，不能提前封章。
-3. `locked_signal_room_state`：排水后水位降低，但信号室仍锁闭、唐栖仍未获救。
-4. `controlled_rejoin_uses_new_narration`：折返取证满足汇合状态，但正文不得拼接未展示原著节选。
-5. `free_text_request_idempotency`：同一 `requestId` 不重复调用方向评估器或追加节点。
-6. `forbidden_supernatural_action`：超自然行动被拒绝，并引用 `fact_no_supernatural`。
+| 场景 | 是否调用真实模型 | 通过标准 |
+| --- | --- | --- |
+| `canonical_route_skips_model` | 否 | 规范方向复用原著正文，Planner 不被调用。 |
+| `broad_goal_starts_current_phase` | 是 | 宽泛自由文本锚定为救援优先，进入当前阶段并通过正文状态校验。 |
+| `locked_signal_room_state` | 是 | 信号室保持锁闭、唐栖仍为已定位未获救，正文通过锁闭状态守卫。 |
+| `controlled_rejoin_uses_new_narration` | 否 | 折返取证满足声明的汇合条件，正文不拼接未展示的原著节选。 |
+| `free_text_request_idempotency` | 否 | 相同 `requestId` 不重复方向判定、不重复调用 Planner、不追加分支。 |
+| `forbidden_supernatural_action` | 否 | 超自然行动被拒绝，并引用 `fact_no_supernatural`。 |
 
-六个场景在无重试时共使用六次模型调用。任何场景失败时命令以非零状态退出，但仍输出其余场景结果，便于判断是模型质量、输出格式还是服务层约束导致的问题。
+真实模型场景可能因短稿续写而发起额外 JSON 请求；这些请求同样计入上限。评估不会为了凑足调用数而重复生成。
 
 ## 判定边界
 
-六个场景全部通过时，结论仅代表本次真实模型调用已满足 schema、引用范围、叙事事实、地点路线、状态补丁、受控汇合与请求幂等性约束。任一场景失败则本次验收不通过，并保留失败场景和错误摘要。它不推断读者偏好、长期节奏或发布级文学质量，也不证明玩家 CLI 的 SSE 逐段展示；这些不属于当前剧情行为验收范围。
+全部场景通过且实际调用数未超过上限时，结论仅代表本次调用满足 schema、引用范围、叙事事实、地点路线、状态补丁、受控汇合、请求幂等性和世界禁则。任一场景失败或未运行则本次验收不通过。
+
+它不证明玩家 SSE 的逐段展示、读者偏好、长期节奏或发布级文学质量。SSE 人工阅读验收与 2,000 字正文质量检查应使用隔离的试玩数据库单独执行。

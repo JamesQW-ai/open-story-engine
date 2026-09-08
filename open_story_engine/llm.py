@@ -18,6 +18,8 @@ class LlmError(RuntimeError):
         super().__init__(message)
         self.code = code
         self.observations: List[Dict[str, Any]] = []
+        self.raw_response: Optional[str] = None
+        self.http_status: Optional[int] = None
 
 
 @dataclass
@@ -37,7 +39,9 @@ class OpenAICompatibleGateway:
         model: str,
         stream: bool,
         timeout_seconds: int = 45,
-        max_tokens: int = 4096,
+        max_tokens: int = 8192,
+        allow_transport_fallback: bool = True,
+        reasoning_effort: Optional[str] = None,
     ) -> None:
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
@@ -45,6 +49,8 @@ class OpenAICompatibleGateway:
         self.stream = stream
         self.timeout_seconds = timeout_seconds
         self.max_tokens = max_tokens
+        self.allow_transport_fallback = allow_transport_fallback
+        self.reasoning_effort = reasoning_effort
 
     def _first_sse_delta_timeout_seconds(self) -> int:
         """Allow compatible endpoints time to start prose or reasoning events."""
@@ -80,18 +86,54 @@ class OpenAICompatibleGateway:
         on_delta: Optional[Callable[[str], None]] = None,
         on_reset: Optional[Callable[[str], None]] = None,
     ) -> Completion:
+        return self._complete(
+            messages,
+            {"type": "json_object"},
+            on_delta,
+            on_reset,
+        )
+
+    def complete_text(
+        self,
+        messages: List[Dict[str, str]],
+        on_delta: Optional[Callable[[str], None]] = None,
+        on_reset: Optional[Callable[[str], None]] = None,
+    ) -> Completion:
+        """Request prose without making the provider serialize application state."""
+        return self._complete(messages, None, on_delta, on_reset)
+
+    def _complete(
+        self,
+        messages: List[Dict[str, str]],
+        response_format: Optional[Dict[str, str]],
+        on_delta: Optional[Callable[[str], None]],
+        on_reset: Optional[Callable[[str], None]],
+    ) -> Completion:
         request_body = {
             "model": self.model,
             "messages": messages,
-            "temperature": 0.65,
+            "temperature": 0.35,
             "max_tokens": self.max_tokens,
-            "response_format": {"type": "json_object"},
             "stream": self.stream,
         }
+        if response_format is not None:
+            request_body["response_format"] = response_format
+        if self.reasoning_effort:
+            request_body["reasoning_effort"] = self.reasoning_effort
         start = time.monotonic()
         deadline = start + self.timeout_seconds
         try:
             if not self.stream:
+                if not self.allow_transport_fallback:
+                    content, raw = self._json(
+                        request_body,
+                        self._remaining_until(deadline, "LLM 请求总超时"),
+                    )
+                    return Completion(
+                        content=content,
+                        raw_response=raw,
+                        observations=[self._observation(1, "completed", "json", start)],
+                    )
                 try:
                     content, raw = self._json(
                         request_body,
@@ -139,6 +181,17 @@ class OpenAICompatibleGateway:
                         body_was_streamed=True,
                     )
 
+            if not self.allow_transport_fallback:
+                content, raw = self._stream(
+                    request_body,
+                    on_delta,
+                    self._remaining_until(deadline, "LLM 请求总超时"),
+                )
+                return Completion(
+                    content=content,
+                    raw_response=raw,
+                    observations=[self._observation(1, "completed", "sse", start)],
+                )
             try:
                 content, raw = self._stream(
                     request_body,
@@ -184,10 +237,43 @@ class OpenAICompatibleGateway:
                     ],
                     used_transport_fallback=True,
                 )
+        except LlmError as error:
+            if not error.observations:
+                error.observations = [
+                    self._observation(
+                        1,
+                        "failed",
+                        "sse" if request_body["stream"] else "json",
+                        start,
+                        str(error),
+                        failure_kind=error.code,
+                    )
+                ]
+            raise
         except (HTTPError, URLError, TimeoutError, socket.timeout) as error:
-            raise LlmError(str(error), "transport_error") from error
+            failure = LlmError(str(error), "transport_error")
+            failure.observations = [
+                self._observation(
+                    1,
+                    "failed",
+                    "sse" if request_body["stream"] else "json",
+                    start,
+                    str(error),
+                )
+            ]
+            raise failure from error
         except ValueError as error:
-            raise LlmError(str(error), "response_error") from error
+            failure = LlmError(str(error), "response_error")
+            failure.observations = [
+                self._observation(
+                    1,
+                    "failed",
+                    "sse" if request_body["stream"] else "json",
+                    start,
+                    str(error),
+                )
+            ]
+            raise failure from error
 
     def _observation(
         self,
@@ -197,16 +283,24 @@ class OpenAICompatibleGateway:
         started: float,
         error: Optional[str] = None,
         retry_reason: Optional[str] = None,
+        failure_kind: Optional[str] = None,
+        http_status: Optional[int] = None,
     ) -> Dict[str, Any]:
         observation: Dict[str, Any] = {
             "attempt": attempt,
             "outcome": outcome,
-            "transport": {"responseMode": mode, "httpStatus": 200, "durationMs": round((time.monotonic() - started) * 1000)},
+            "transport": {
+                "responseMode": mode,
+                "httpStatus": 200 if outcome == "completed" else http_status,
+                "durationMs": round((time.monotonic() - started) * 1000),
+            },
         }
         if error:
             observation["error"] = error
         if retry_reason:
             observation["retryReason"] = retry_reason
+        if failure_kind:
+            observation["failureKind"] = failure_kind
         return observation
 
     def _request(self, body: Dict[str, Any], timeout_seconds: Optional[int] = None) -> Any:
@@ -282,7 +376,14 @@ class OpenAICompatibleGateway:
             # the streaming-shaped delta field even when stream=false.
             content = (choice.get("delta") or {}).get("content")
         if not isinstance(content, str) or not content.strip():
-            raise LlmError("LLM 响应缺少 choices[0].message.content 或 choices[0].delta.content", "empty_json")
+            message = "LLM 响应缺少 choices[0].message.content 或 choices[0].delta.content"
+            response_message = choice.get("message")
+            reasoning_only = isinstance(response_message, dict) and isinstance(response_message.get("reasoning_content"), str)
+            if reasoning_only and choice.get("finish_reason") == "length":
+                message += "；响应仅含 reasoning_content 且被长度截断，未产生正文。可尝试设置 STORY_LLM_REASONING_EFFORT=none，或改用不占用正文预算的模型。"
+            error = LlmError(message, "empty_json")
+            error.raw_response = raw
+            raise error
         return content, raw
 
     def _stream(

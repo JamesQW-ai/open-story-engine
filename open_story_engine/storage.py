@@ -242,6 +242,23 @@ class SessionStore:
         row = self.connection.execute("SELECT * FROM branch_nodes WHERE session_id=? AND request_id=?", (session_id, request_id)).fetchone()
         return self.branch(session_id, row["id"]) if row else None
 
+    def find_direction_request(self, session_id: str, request_id: str) -> Optional[Dict[str, Any]]:
+        row = self.connection.execute(
+            "SELECT * FROM direction_evaluations WHERE session_id=? AND request_id=?",
+            (session_id, request_id),
+        ).fetchone()
+        if row is None:
+            return None
+        return {
+            **load(row["evaluation_json"]),
+            "id": row["id"],
+            "sessionId": row["session_id"],
+            "parentBranchId": row["parent_branch_id"],
+            "playerDirection": row["player_direction"],
+            "requestId": row["request_id"],
+            "createdAt": row["created_at"],
+        }
+
     def branches(self, session_id: str) -> List[Dict[str, Any]]:
         return [self.branch(session_id, row["id"]) for row in self.connection.execute("SELECT id FROM branch_nodes WHERE session_id=? ORDER BY sequence", (session_id,))]
 

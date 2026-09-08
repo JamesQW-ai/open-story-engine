@@ -28,26 +28,42 @@ StoryPackage（固定、版本化内容）
 
 ## 顶层结构
 
-```ts
-interface StoryPackage {
-  schemaVersion: "1.0";
-  id: string;
-  version: string;
-  metadata: StoryMetadata;
-  world: WorldDefinition;
-  characters: CharacterDefinition[];
-  locations: LocationDefinition[];
-  items: ItemDefinition[];
-  timeline: TimelineEvent[];
-  story: StoryDefinition;
-  directions: StoryDirection[];
-  defaultDirectionId: string;
-  rules: RuleDefinition;
-  initialState: InitialStateTemplate;
+```json
+{
+  "schemaVersion": "1.0",
+  "id": "stable-package-id",
+  "version": "semantic-content-version",
+  "metadata": {},
+  "world": {},
+  "characters": [],
+  "locations": [],
+  "items": [],
+  "timeline": [],
+  "story": {},
+  "directions": [],
+  "defaultDirectionId": "direction-id",
+  "rules": {},
+  "initialState": {},
+  "stateModel": {}
 }
 ```
 
 所有实体 `id` 在包内必须唯一且稳定。运行中的会话只保存这些 ID 的引用，避免通过显示名称匹配内容。版本更新不得无提示地改变已发布实体的含义；若影响既有存档，需新增包版本并声明迁移策略。
+
+### `stateModel`
+
+`stateModel` 将母本中可随剧情推进的事实声明为运行时可执行的规则。引擎不认识任何特定的人名、地点名或状态字段；它只读取此结构。因此导入新的小说时，解析器与人工审核应产出新的实体目录和状态声明，而不是修改 Python 代码。
+
+- `locationReferenceFields`：哪些状态字段必须引用已登记地点，例如焦点人物和同行角色的位置。
+- `monotonicEnums`：只能按声明顺序推进的状态序列，例如“失联 -> 已定位 -> 获救”。
+- `immutableFields`：分支方向不得改写的会话范围或身份字段。
+- `transitionRules`：在满足 `when` 时必须按声明方式变化的计数或阶段字段。
+- `invariants`：条件成立时必须同时满足的跨字段事实；`equals`、`oneOf` 与 `sameAs` 分别表示相等、属于候选值和与另一状态字段相等。
+- `narrativeAssertions`：条件成立时禁止出现在正文中的正则模式，以及相应的提示词约束和拒绝信息。
+- `derivativeEntry`：满足前置状态后进入衍生篇时的首个受控节点与状态补丁。
+- `mockFollowups`：仅供离线 `MockPlanner` 验收使用的状态到后续方向模板；真实 Planner 不读取它，不能承载母本事实或生产剧情。
+
+例如，某部小说可以声明“角色 A 未脱困时的位置必须是地点 X”；另一部小说可以声明“角色 B 获救后与焦点人物同行”。二者都只是包数据，运行时不需要知道角色和地点的显示名称。模型只能提交候选补丁，最终仍由 `stateModel` 校验。
 
 ## 字段定义
 
@@ -120,6 +136,12 @@ MVP 只从 `defaultDirectionId` 创建会话，不实现方向选择器，也不
 
 `StoryDirection` 与每回合 `ActionIntent` 的职责必须分开：前者回答“这局故事想走向哪里”，后者回答“此刻玩家尝试做什么”。方向不应写成“检查某个物品”或“询问某个角色”。
 
+### `story.arcModel`
+
+共创模式可在 `story.arcModel` 声明可验证的两层剧情推进。`entryArcIds` 是当前进入节点可选择的大方向；每个 `arcs[]` 包含稳定 `id`、面向玩家的 `title` 与 `summary`、`completionWhen`、归属的 `phaseDirectionIds`，以及可选的状态门槛 `availableWhen` 和完成后的 `nextArcIds`。
+
+大方向不含 `statePatch`，它只确立跨章节目标。`phaseDirectionIds` 指向 `narrativeGraph` 中已声明的、带非空 `statePatch` 的小方向；一次小方向选择生成并结算一章。运行时在该章结束后检查 `completionWhen`：未满足则继续公布同一大方向内当前状态可执行的小方向，满足则只公布 `nextArcIds` 中满足 `availableWhen` 的新大方向。一个小方向只能属于一个大方向，避免同一状态变化被两个阶段重复结算。
+
 每个 `StoryNode` 至少定义：
 
 - `objective`：玩家当前清楚可感知的近目标。
@@ -138,6 +160,8 @@ MVP 只从 `defaultDirectionId` 创建会话，不实现方向选择器，也不
 `story.rejoinTargets` 声明从已偏离分支回到一个兼容叙事锚点的检查条件。每项包含来源场景 `fromNodeId`、目标锚点 `targetBeatId` 与必须仍未关闭的 `requiredOpenThreads`。目标锚点自身的完整 `branchState` 是隐含的状态契约：服务会在方向补丁生效后进行精确比较。
 
 方向可选 `rejoinTargetId`，但只有服务在玩家选中方向时验证所有条件才会写入 `canonicalRelation: rejoined`。它不授权直接复用目标锚点的 `sourceExcerpt`。
+
+偏离规范线却仍有固定后续菜单时，方向可声明 `followupBeatId`。该字段指向同一包内的叙事锚点，运行时据此读取该锚点的 `nextDirections`；不得在 Python 服务层按具体方向 ID 编写映射。
 
 ### `rules`
 

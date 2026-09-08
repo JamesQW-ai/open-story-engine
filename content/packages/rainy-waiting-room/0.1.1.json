@@ -1,0 +1,1609 @@
+{
+  "schemaVersion": "1.0",
+  "id": "rainy-waiting-room",
+  "version": "0.1.1",
+  "metadata": {
+    "title": "雨夜候车室",
+    "summary": "暴雨困住临潮站的末班列车。许川必须在零点前找到失联的唐栖，并决定如何面对一份可能改变所有人命运的录音。",
+    "authoringSource": "original",
+    "contentRating": "general",
+    "language": "zh-CN"
+  },
+  "world": {
+    "premise": "故事发生在暴雨夜的临潮站。通信受限、隧道进水、末班列车即将放行，所有选择都在午夜前产生后果。",
+    "immutableFacts": [
+      {
+        "id": "fact_no_supernatural",
+        "text": "世界不存在超自然能力或凭空出现的援军。"
+      },
+      {
+        "id": "fact_tunnel_flooding",
+        "text": "信号室排水泵故障，水位会持续威胁救援。"
+      },
+      {
+        "id": "fact_chen_tampered_records",
+        "text": "陈砚挪用维修款并伪造验收与门禁记录。"
+      },
+      {
+        "id": "fact_evidence_exists",
+        "text": "录音笔和原始记录能够证明陈砚知晓并掩盖风险。"
+      }
+    ],
+    "narrativeGuidelines": {
+      "perspective": "third_person_limited",
+      "focalCharacterId": "character_xu_chuan",
+      "characterLocationStateFields": {
+        "character_xu_chuan": "playerLocationId",
+        "character_tang_qi": "tangLocationId",
+        "character_jiang_xu": "jiangLocationId"
+      },
+      "tense": "present",
+      "language": "zh-CN",
+      "turnLengthCharacters": {
+        "min": 250,
+        "max": 450
+      },
+      "prohibitions": [
+        "不得替玩家声明未输入的行动",
+        "不得描述未被 Resolution 确认的事实或结果"
+      ]
+    },
+    "globalConstraints": [
+      "资源消耗必须有后果",
+      "地点可达性由规则判断",
+      "零点放行压力不可由叙事器撤销"
+    ]
+  },
+  "stateModel": {
+    "runtimeStateFields": [
+      "storyScope",
+      "derivativeStage",
+      "derivedTurn"
+    ],
+    "locationReferenceFields": [
+      "playerLocationId",
+      "tangLocationId",
+      "jiangLocationId"
+    ],
+    "immutableFields": [
+      "storyScope"
+    ],
+    "monotonicEnums": {
+      "tangStatus": ["missing", "located", "rescued"],
+      "evidenceStatus": ["unsecured", "secured"],
+      "waterLevel": ["rising", "lowered"],
+      "signalRoomStatus": ["locked", "opened"],
+      "trainStatus": ["pending_release", "held", "departed"],
+      "derivativeStage": ["inactive", "setup", "active"]
+    },
+    "transitionRules": [
+      {
+        "when": {"storyScope": {"equals": "derived"}},
+        "field": "derivedTurn",
+        "change": "increment",
+        "amount": 1,
+        "message": "衍生剧情回合必须按顺序推进"
+      }
+    ],
+    "invariants": [
+      {
+        "id": "source_unrescued_witness_is_confined",
+        "when": {"storyScope": {"equals": "source"}, "tangStatus": {"oneOf": ["missing", "located"]}},
+        "require": {"tangLocationId": {"equals": "location_signal_room"}},
+        "message": "未获救见证人必须保留在母本声明的受困地点"
+      },
+      {
+        "id": "source_rescued_witness_rejoins_group",
+        "when": {"storyScope": {"equals": "source"}, "tangStatus": {"equals": "rescued"}},
+        "require": {"tangLocationId": {"equals": "location_waiting_hall"}},
+        "message": "获救见证人必须位于母本声明的汇合地点"
+      },
+      {
+        "id": "derived_rescued_witness_stays_with_player",
+        "when": {"storyScope": {"equals": "derived"}, "tangStatus": {"equals": "rescued"}},
+        "require": {"tangLocationId": {"sameAs": "playerLocationId"}},
+        "message": "衍生故事中获救见证人必须与焦点人物处于同一地点"
+      }
+    ],
+    "derivativeEntry": {
+      "requiredState": {"tangStatus": {"equals": "rescued"}},
+      "message": "当前 StoryPackage 声明的衍生篇前置状态尚未满足",
+      "statePatch": {"storyScope": "derived", "derivativeStage": "setup"},
+      "narrativeText": "临潮站的灯还亮着，但这一夜已经收束。许川和唐栖没有替以后下结论；玩家写下的目标会成为独立衍生故事的起点。新的地点、人物、物品与身份揭示只会在后续回合逐步进入，不会改写原始故事包。",
+      "summary": "玩家从已完成分支创建独立衍生故事包。",
+      "openThreads": ["衍生故事的第一步"],
+      "nextDirection": {
+        "id": "direction_derivative_start",
+        "title": "前往站务室展开衍生篇",
+        "summary": "与唐栖前往站务室整理尚未结案的记录，再按设定目标展开第一章。",
+        "statePatch": {"derivativeStage": "active", "derivedTurn": 1, "playerLocationId": "location_station_office", "tangLocationId": "location_station_office"}
+      },
+      "currentPhase": "确定衍生故事的第一步",
+      "chapterTitle": "衍生篇·起点"
+    },
+    "mockFollowups": [
+      {
+        "when": {"storyScope": {"equals": "derived"}, "derivedTurn": {"equals": 1}},
+        "nextDirections": [
+          {
+            "id": "direction_derivative_follow_lead",
+            "title": "暂离车站并跟进线索",
+            "summary": "带唐栖到安全住处整理细节，再核验匿名线索。",
+            "statePatch": {
+              "derivedTurn": 2,
+              "playerLocationId": "location_derivative_shelter",
+              "tangLocationId": "location_derivative_shelter",
+              "derivedAdditions": {
+                "locations": [{"id": "location_derivative_shelter", "name": "临时落脚处", "summary": "离开车站后整理线索的住处。"}],
+                "characters": [{"id": "character_unidentified_contact", "name": "未署名联系人", "summary": "暂不透露身份的线索提供者。"}],
+                "characterReveals": []
+              }
+            }
+          }
+        ]
+      },
+      {
+        "when": {"storyScope": {"equals": "derived"}, "derivedTurn": {"equals": 2}},
+        "nextDirections": [
+          {
+            "id": "direction_derivative_ask_identity",
+            "title": "核验联系人身份",
+            "summary": "先判断新线索是否可信，并决定是否接受对方透露的名字。",
+            "statePatch": {
+              "derivedTurn": 3,
+              "derivedAdditions": {
+                "locations": [],
+                "characters": [],
+                "characterReveals": [{"characterId": "character_unidentified_contact", "name": "罗峥", "summary": "自称掌握相似项目编号线索的人；背景与动机仍待核验。"}]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "when": {"storyScope": {"equals": "derived"}, "derivedTurn": {"equals": 3}},
+        "nextDirections": [
+          {
+            "id": "direction_derivative_verify_clue",
+            "title": "核验初步线索",
+            "summary": "带着已知细节赴约，先核验项目编号与责任链。",
+            "statePatch": {
+              "derivedTurn": 4,
+              "playerLocationId": "location_derivative_meeting_point",
+              "tangLocationId": "location_derivative_meeting_point",
+              "derivedAdditions": {
+                "locations": [{"id": "location_derivative_meeting_point", "name": "约定会面处", "summary": "许川、唐栖与罗峥核验线索的会面地点。"}],
+                "characters": [],
+                "characterReveals": []
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "narrativeAssertions": [
+      {
+        "id": "train_has_not_departed",
+        "when": {"trainStatus": {"equals": "pending_release"}},
+        "forbiddenPatterns": ["列车已经离站", "末班列车离开", "列车驶离", "列车发车(?!前|后|时|之前|之后)"],
+        "instruction": "列车仍在等待放行；不能写列车已经进站、离站、发车或驶离。",
+        "message": "剧情正文与已确认状态矛盾：列车仍在等待放行。"
+      },
+      {
+        "id": "confined_witness_cannot_escape",
+        "when": {"signalRoomStatus": {"equals": "locked"}, "tangStatus": {"oneOf": ["missing", "located"]}},
+        "forbiddenPatterns": ["唐栖走出信号室", "唐栖.{0,24}(?:从|经由).{0,16}(?:信号室|通风口).{0,12}(?:爬出|钻出|走出|逃出|离开)", "唐栖.{0,40}(?:跨出|走出|逃出|离开).{0,8}(?:门|门口|门缝)", "唐栖.{0,20}(?:在|位于|待在|站在|蹲在|出现在|进入|来到|走进|走到).{0,12}设备间", "设备间(?:里|内|中).{0,20}唐栖"],
+        "instruction": "唐栖仍被困在锁闭的信号室内；可以隔门回应，但不能自行离开或出现在其他地点。",
+        "message": "剧情正文与已确认状态矛盾：信号室仍锁闭，唐栖不能自行离开。"
+      },
+      {
+        "id": "unrescued_witness_is_not_reunited",
+        "when": {"tangStatus": {"oneOf": ["missing", "located"]}},
+        "forbiddenPatterns": ["唐栖已经获救", "唐栖回到候车厅"],
+        "instruction": "唐栖尚未获救；不能写她已获救、回到候车厅或与焦点人物一同行动。",
+        "message": "剧情正文与已确认状态矛盾：唐栖尚未获救。"
+      },
+      {
+        "id": "unsecured_evidence_is_not_possessed",
+        "when": {"evidenceStatus": {"equals": "unsecured"}},
+        "forbiddenPatterns": ["证据已经保全", "证据已保全", "录音已经取得", "录音已取得", "证据有了", "拿到证据", "录下来了", "(?:拿到|取得|取出|持有|携带|带走|收好|贴身收好|保全|攥着|拿着)[^。！？；，、]{0,12}录音笔", "录音笔[^。！？；，、]{0,12}(?:拿到|取得|取出|持有|携带|带走|收好|贴身收好|保全)"],
+        "instruction": "证据尚未取得；可讨论其位置或风险，但不能写任何人已取得、持有、使用、保全或带走它。",
+        "message": "剧情正文与已确认状态矛盾：证据尚未取得。"
+      }
+    ]
+  },
+  "characters": [
+    {
+      "id": "character_xu_chuan",
+      "name": "许川",
+      "role": "protagonist",
+      "description": "唐栖的朋友，在收到语音后赶到临潮站。",
+      "initialLocationId": "location_waiting_hall",
+      "tags": [
+        "canonical_player"
+      ]
+    },
+    {
+      "id": "character_tang_qi",
+      "name": "唐栖",
+      "role": "missing_witness",
+      "description": "整理旧档案时发现维修记录异常，并被困在信号室。",
+      "initialLocationId": "location_signal_room",
+      "hiddenInfo": {
+        "unlockWhen": [
+          "flag_log_tampered",
+          "flag_tang_rescued"
+        ]
+      },
+      "tags": [
+        "witness"
+      ]
+    },
+    {
+      "id": "character_chen_yan",
+      "name": "陈砚",
+      "role": "antagonist",
+      "description": "临潮站值班主管，急于让列车放行。",
+      "initialLocationId": "location_waiting_hall",
+      "hiddenInfo": {
+        "unlockWhen": [
+          "flag_log_tampered"
+        ]
+      },
+      "tags": [
+        "station_supervisor"
+      ]
+    },
+    {
+      "id": "character_jiang_xu",
+      "name": "姜序",
+      "role": "reluctant_ally",
+      "description": "夜班维修工，知道隧道和验收记录的问题。",
+      "initialLocationId": "location_waiting_hall",
+      "tags": [
+        "maintenance_worker"
+      ]
+    },
+    {
+      "id": "character_train_driver",
+      "name": "列车司机",
+      "role": "safety_witness",
+      "description": "遵守故障程序，在证据和救援事实确认后拒绝放行列车。",
+      "initialLocationId": "location_waiting_hall",
+      "tags": [
+        "terminal_reporter"
+      ]
+    }
+  ],
+  "locations": [
+    {
+      "id": "location_waiting_hall",
+      "name": "候车厅",
+      "description": "末班列车停在站台，陈砚和姜序都在附近。",
+      "exits": [
+        "location_station_office"
+      ],
+      "discoverableItemIds": [
+        "item_locker_token"
+      ],
+      "tags": [
+        "start"
+      ]
+    },
+    {
+      "id": "location_station_office",
+      "name": "站务室",
+      "description": "可经西侧消防通道进入，内有调度终端和十七号柜。",
+      "exits": [
+        "location_waiting_hall",
+        "location_signal_tunnel"
+      ],
+      "discoverableItemIds": [
+        "item_recorder",
+        "item_maintenance_map",
+        "item_emergency_lamp"
+      ],
+      "tags": [
+        "records"
+      ]
+    },
+    {
+      "id": "location_signal_tunnel",
+      "name": "信号维修隧道",
+      "description": "积水持续上升，信号室入口受损。",
+      "exits": [
+        "location_station_office",
+        "location_signal_room"
+      ],
+      "discoverableItemIds": [
+        "item_relief_valve",
+        "item_signal_door"
+      ],
+      "tags": [
+        "high_risk"
+      ]
+    },
+    {
+      "id": "location_signal_room",
+      "name": "信号室",
+      "description": "位于信号维修隧道尽头，绿漆铁门的外部滑栓卡住；唐栖尚未获救时始终被困在门内。",
+      "exits": [
+        "location_signal_tunnel"
+      ],
+      "discoverableItemIds": [],
+      "tags": [
+        "locked",
+        "rescue_target"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "item_voice_message",
+      "name": "唐栖的语音",
+      "portable": true,
+      "initialHolderId": "character_xu_chuan",
+      "effects": [
+        "提供储物柜、陈砚和隧道线索"
+      ]
+    },
+    {
+      "id": "item_locker_token",
+      "name": "十七号柜铜牌",
+      "aliases": ["十七号柜", "铜牌", "柜牌", "储物柜"],
+      "portable": true,
+      "initialLocationId": "location_waiting_hall",
+      "effects": [
+        "开启十七号柜"
+      ]
+    },
+    {
+      "id": "item_recorder",
+      "name": "防水录音笔",
+      "aliases": ["录音笔", "录音", "调度记录", "档案"],
+      "portable": true,
+      "initialLocationId": "location_station_office",
+      "effects": [
+        "设置 flag_evidence_secured"
+      ]
+    },
+    {
+      "id": "item_maintenance_map",
+      "name": "维修图纸",
+      "portable": true,
+      "initialLocationId": "location_station_office",
+      "effects": [
+        "确认手动阀和备用检修通道"
+      ]
+    },
+    {
+      "id": "item_maintenance_pass",
+      "name": "维修通行证",
+      "portable": true,
+      "initialHolderId": "character_jiang_xu",
+      "effects": [
+        "满足隧道入口前置条件"
+      ]
+    },
+    {
+      "id": "item_emergency_lamp",
+      "name": "应急灯",
+      "portable": true,
+      "initialLocationId": "location_station_office",
+      "effects": [
+        "降低隧道失败代价"
+      ]
+    },
+    {
+      "id": "item_relief_valve",
+      "name": "手动阀",
+      "aliases": ["排水阀", "阀门", "水位"],
+      "portable": false,
+      "initialLocationId": "location_signal_tunnel",
+      "effects": [
+        "设置 flag_relief_valve_opened"
+      ]
+    },
+    {
+      "id": "item_signal_door",
+      "name": "信号室外部滑栓",
+      "aliases": ["信号室", "滑栓", "信号门"],
+      "portable": false,
+      "initialLocationId": "location_signal_tunnel",
+      "effects": [
+        "设置 flag_signal_door_opened"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "id": "timeline_repairs_delayed",
+      "order": 1,
+      "knownAtStart": false,
+      "description": "陈砚挪用维修款并伪造姜序签名。"
+    },
+    {
+      "id": "timeline_tang_records_evidence",
+      "order": 2,
+      "knownAtStart": false,
+      "description": "唐栖录下陈砚的谈话并将录音藏入十七号柜。"
+    },
+    {
+      "id": "timeline_tang_message",
+      "order": 3,
+      "knownAtStart": true,
+      "description": "22:55，唐栖向许川发送求助语音。"
+    },
+    {
+      "id": "timeline_train_held",
+      "order": 4,
+      "knownAtStart": true,
+      "description": "23:10，末班列车被临时扣留，陈砚准备零点前放行。"
+    }
+  ],
+  "story": {
+    "mode": "mainline",
+    "premise": "许川必须在列车放行和隧道进水前找到唐栖，确认她留下证据的意义。",
+    "longTermGoal": "救出唐栖并让陈砚无法继续掩盖维修事故。",
+    "arcModel": {
+      "entryArcIds": [
+        "arc_rescue_tang"
+      ],
+      "arcs": [
+        {
+          "id": "arc_rescue_tang",
+          "title": "救出唐栖并保留查明事故的机会",
+          "summary": "先在积水和放行压力下确认唐栖位置、组织救援；是否保全证据会决定下一阶段能否追究事故责任。",
+          "completionWhen": {
+            "tangStatus": {
+              "equals": "rescued"
+            }
+          },
+          "phaseDirectionIds": [
+            "direction_find_token",
+            "direction_secure_evidence",
+            "direction_rescue_first",
+            "direction_verify_records",
+            "direction_enter_tunnel_with_proof",
+            "direction_lower_water_with_proof",
+            "direction_lower_water_without_proof",
+            "direction_return_for_records",
+            "direction_open_signal_room_with_proof",
+            "direction_open_signal_room_without_proof"
+          ],
+          "nextArcIds": [
+            "arc_hold_train"
+          ]
+        },
+        {
+          "id": "arc_hold_train",
+          "title": "让事故真相进入公开程序",
+          "summary": "在唐栖获救且证据仍在的前提下，迫使列车与站务系统暂停对事故的掩盖。",
+          "availableWhen": {
+            "evidenceStatus": {
+              "equals": "secured"
+            }
+          },
+          "completionWhen": {
+            "trainStatus": {
+              "equals": "held"
+            }
+          },
+          "phaseDirectionIds": [
+            "direction_hold_train"
+          ],
+          "nextArcIds": []
+        }
+      ]
+    },
+    "startNodeId": "node_arrival",
+    "nodes": [
+      {
+        "id": "node_arrival",
+        "objective": "找到进入站务室的依据，并确认唐栖的线索。",
+        "sceneSetup": [
+          "许川在候车厅",
+          "陈砚试图维持放行秩序",
+          "姜序掌握维修通道信息"
+        ],
+        "requiredProgress": [
+          "flag_locker_token_found",
+          "flag_office_access"
+        ],
+        "pressure": {
+          "field": "pressure_level",
+          "terminalAt": 3,
+          "effect": "列车进入放行程序"
+        },
+        "transitions": [
+          {
+            "toNodeId": "node_records",
+            "when": [
+              "flag_locker_token_found",
+              "flag_office_access"
+            ],
+            "canonical": true
+          },
+          {
+            "toNodeId": "node_tunnel",
+            "when": [
+              "flag_tunnel_access",
+              "flag_tang_located"
+            ],
+            "canonical": false
+          }
+        ],
+        "contextRefs": [
+          "item_voice_message",
+          "character_chen_yan",
+          "character_jiang_xu",
+          "location_waiting_hall"
+        ]
+      },
+      {
+        "id": "node_records",
+        "objective": "取得录音和调度记录，确认唐栖在信号室。",
+        "sceneSetup": [
+          "十七号柜在站务室",
+          "调度终端显示异常记录",
+          "陈砚会施加干预"
+        ],
+        "requiredProgress": [
+          "flag_evidence_secured",
+          "flag_log_tampered",
+          "flag_tang_located",
+          "flag_tunnel_access"
+        ],
+        "pressure": {
+          "field": "pressure_level",
+          "terminalAt": 3,
+          "effect": "列车进入放行程序"
+        },
+        "transitions": [
+          {
+            "toNodeId": "node_tunnel",
+            "when": [
+              "flag_tang_located",
+              "flag_tunnel_access"
+            ],
+            "canonical": true
+          }
+        ],
+        "contextRefs": [
+          "item_recorder",
+          "item_maintenance_map",
+          "character_chen_yan",
+          "character_jiang_xu",
+          "location_station_office"
+        ]
+      },
+      {
+        "id": "node_tunnel",
+        "objective": "降低水位、打开信号室并救出唐栖。",
+        "sceneSetup": [
+          "隧道积水",
+          "姜序可开启手动阀",
+          "信号室外部滑栓被卡住"
+        ],
+        "requiredProgress": [
+          "flag_relief_valve_opened",
+          "flag_signal_door_opened",
+          "flag_tang_rescued"
+        ],
+        "pressure": {
+          "field": "flood_level",
+          "terminalAt": 3,
+          "effect": "flag_train_departed"
+        },
+        "transitions": [
+          {
+            "toNodeId": "node_aftermath",
+            "when": [
+              "flag_tang_rescued"
+            ],
+            "canonical": true
+          }
+        ],
+        "contextRefs": [
+          "item_relief_valve",
+          "item_signal_door",
+          "item_emergency_lamp",
+          "character_tang_qi",
+          "character_chen_yan",
+          "character_jiang_xu",
+          "location_signal_tunnel"
+        ]
+      },
+      {
+        "id": "node_aftermath",
+        "objective": "向列车司机公开已确认的救援和证据事实，阻止列车放行。",
+        "sceneSetup": [
+          "唐栖和原始记录已回到候车厅",
+          "司机仍在等待放行复诵",
+          "陈砚无法继续隐藏录音"
+        ],
+        "requiredProgress": [
+          "flag_train_departure_held"
+        ],
+        "pressure": {
+          "field": "pressure_level",
+          "terminalAt": 3,
+          "effect": "flag_train_departed"
+        },
+        "transitions": [],
+        "contextRefs": [
+          "item_recorder",
+          "character_tang_qi",
+          "character_chen_yan",
+          "character_train_driver",
+          "location_waiting_hall"
+        ]
+      }
+    ],
+    "endings": [
+      {
+        "id": "ending_truth_survives",
+        "title": "灯还亮着",
+        "when": [
+          "flag_tang_rescued",
+          "flag_evidence_secured",
+          "flag_train_departure_held",
+          "!flag_train_departed"
+        ],
+        "canonical": true,
+        "narrativeAnchor": "列车不再放行，唐栖、录音和原始记录都留在候车厅。"
+      },
+      {
+        "id": "ending_rescue_without_proof",
+        "title": "只有两个人知道",
+        "when": [
+          "flag_tang_rescued",
+          "!flag_evidence_secured",
+          "!flag_train_departed"
+        ],
+        "canonical": false,
+        "narrativeAnchor": "唐栖离开了积水中的信号室，但录音和记录仍留在陈砚能够触及的地方。雨夜之后，真相只先留在许川和唐栖之间。"
+      },
+      {
+        "id": "ending_last_train",
+        "title": "最后一班车",
+        "when": [
+          "flag_train_departed",
+          "!flag_tang_rescued"
+        ],
+        "canonical": false,
+        "narrativeAnchor": "末班列车切开雨幕，唐栖的回应被站台上的人群和风雨隔在身后。许川明白，这一夜已经没有机会重来。"
+      }
+    ],
+    "narrativeGraph": {
+      "startBeatId": "beat_arrival",
+      "beats": [
+        {
+          "id": "beat_arrival",
+          "nodeId": "node_arrival",
+          "summary": "许川刚到临潮站，唐栖失联，末班列车仍被扣在雨夜的站台。",
+          "sourceExcerpt": {
+            "text": "临潮站的电子钟停在二十三点十分。\n\n它并不是真的坏了。红色的数字每隔一秒轻轻暗一下，又在下一秒亮回来，像一颗不肯认输的心脏。候车厅的玻璃门外，雨被海风推成斜线，扑在站台的黄灯上。末班列车停在那里，车窗里一排排空座位浮在湿漉漉的夜色中，车门紧闭，像一条没有开口的鱼。\n\n许川站在候车厅中央，第三次点开唐栖发来的语音。\n\n录音只有十九秒。前半段全是风声和急促的脚步，唐栖的声音被雷声切得断断续续。\n\n“别让陈砚拿到储物柜里的录音。隧道里还有人。”\n\n最后一个“人”字拖得很轻，随后是金属门猛然合上的巨响。\n\n语音的发送时间是二十二点五十五分。十五分钟后，许川赶到临潮站，唐栖的电话已经无法接通。站里的信号显示全线临时管制，外部通信被暴雨打断，只剩一盏盏在潮气里发白的灯。\n\n“各位旅客，请耐心等候。”\n\n站台尽头，一个男人正对着十来个乘客重复这句话。他穿着深蓝色站务制服，袖口平整得与这个夜晚不相称。每次有人问列车何时发车，他都会先看一眼墙上的钟，再说“很快”。\n\n那是陈砚，临潮站的值班主管。唐栖在语音里叫出的名字。\n\n陈砚抬起头时，恰好看见许川把手机按灭。\n\n“找人？”他问。\n\n“唐栖。”许川说，“她在这里。”\n\n陈砚脸上没有出现惊讶，只有一种过于平稳的疲惫。“今晚站里来过不少人。雨这么大，谁都可能临时躲进来。你先坐下，等信号恢复。”\n\n“她给我留了语音，说有录音在储物柜。”\n\n候车厅像被这句话按住了。有人抱着孩子缩了缩肩膀，远处售票窗后的应急灯闪了一下。陈砚的目光落在许川的手机上，停了不到一秒，才移开。\n\n“唐栖情绪不稳定。”他说，“下午她翻旧档案，和维修组的人起过争执。她如果说了什么，你别急着当真。”\n\n靠墙的长椅旁，一个穿旧雨衣的男人抬起头。他四十多岁，手背裂着细小的口子，靴边结着黑泥。他没有替自己辩解，只把一张灰色通行证攥得更紧。通行证上写着：姜序，夜班维修。\n\n陈砚顺着许川的视线看过去，声音放低了些：“就是他。唐栖最后一次出现前，和他在站务室门口吵过。”\n\n姜序终于开口：“她问我，隧道的排水泵为什么三年没换。”\n\n“你不该回答她。”陈砚说。\n\n“她问的是该问的事。”姜序看着地面，“我没来得及回答完。”\n\n一道雷落在站外，玻璃门轻轻震动。许川想起录音里那句“隧道里还有人”。临潮站只有一段通往旧信号室的维修隧道，平日不对旅客开放。暴雨前，唐栖曾发过一张那里的照片给他：水泥墙上长着盐霜，尽头一扇绿漆铁门，门牌已经锈得看不清。\n\n“我要看看站务室。”许川说。\n\n“不行。”陈砚回答得太快，“设备间进水，里面危险。”\n",
+            "lineRange": [
+              5,
+              54
+            ]
+          },
+          "narrativeAnchor": "候车厅的灯光在雨幕里忽明忽暗，唐栖那段没能说完的语音仍在许川耳边。",
+          "openThreads": [
+            "唐栖的下落",
+            "十七号柜",
+            "列车放行"
+          ],
+          "nextDirections": [
+            {
+              "id": "direction_find_token",
+              "title": "追查十七号柜",
+              "summary": "从唐栖留下的语音线索入手，确认十七号柜里藏着什么。",
+              "suggestedInput": "许川检查十七号柜旁的铜牌",
+              "canonicalBeatId": "beat_token_found",
+              "statePatch": {
+                "hasLockerToken": true
+              }
+            }
+          ],
+          "branchState": {
+            "playerLocationId": "location_waiting_hall",
+            "tangLocationId": "location_signal_room",
+            "jiangLocationId": "location_waiting_hall",
+            "tangStatus": "missing",
+            "hasLockerToken": false,
+            "evidenceStatus": "unsecured",
+            "waterLevel": "rising",
+            "signalRoomStatus": "locked",
+            "trainStatus": "pending_release"
+          }
+        },
+        {
+          "id": "beat_token_found",
+          "nodeId": "node_arrival",
+          "summary": "许川取得十七号柜铜牌，站务室和姜序都成为下一步的可能入口。",
+          "narrativeAnchor": "铜牌贴在掌心，边缘被潮气磨得发冷。候车厅另一端，陈砚仍挡在通往站务室的门前。",
+          "openThreads": [
+            "站务室封锁",
+            "姜序知道的维修通道",
+            "唐栖的下落"
+          ],
+          "nextDirections": [
+            {
+              "id": "direction_secure_evidence",
+              "title": "先取得证据",
+              "summary": "进入站务室，查清唐栖留下的录音与调度记录。",
+              "suggestedInput": "许川绕过人群进入站务室",
+              "canonicalBeatId": "beat_office_entered",
+              "statePatch": {
+                "playerLocationId": "location_station_office"
+              }
+            },
+            {
+              "id": "direction_rescue_first",
+              "title": "先确认唐栖位置",
+              "summary": "请姜序带路进入维修隧道，隔门确认唐栖的位置与回应。本回合不打开信号室、不带人离开，也不取得录音笔或记录。",
+              "suggestedInput": "许川请求姜序先带路去信号室门前，确认唐栖的位置",
+              "followupBeatId": "beat_tunnel_without_proof",
+              "statePatch": {
+                "playerLocationId": "location_signal_tunnel",
+                "jiangLocationId": "location_signal_tunnel",
+                "tangLocationId": "location_signal_room",
+                "tangStatus": "located"
+              }
+            }
+          ],
+          "sourceExcerpt": {
+            "text": "他转身去检查闸门。许川看见他腰间挂着一张黑色门卡，和一串新换不久的钥匙。长椅下方，一本被雨水浸透的旧时刻表被风吹开，露出夹在封底里的半枚黄铜牌。\n\n铜牌上刻着褪色的数字：17。\n\n许川弯腰把它捡起来。金属很冷，边缘却有一圈新鲜的指纹油。唐栖没有来得及把它藏好，只能把它塞进任何一个不会立刻被搜到的地方。\n\n姜序看见铜牌，眼神变了。\n\n“旧档案柜的牌。”他说，“在站务室里。”\n\n“你认识它？”许川问。\n\n“认识的人都以为它早该报废了。”姜序停了停，“十七号柜以前存维修原始单据。后来档案室并到市里，柜子就空了。”\n\n陈砚从闸门边回头。姜序不再说话。\n\n许川把铜牌放进口袋，走到姜序身边。雨衣上有一股铁锈和海水混在一起的味道。\n\n“唐栖和你吵什么？”\n\n“她发现去年秋天的防水工程验收单，日期不对。问我是不是签过字。”\n\n“你签了吗？”\n\n“我没签。”姜序抬眼看他，眼底有压了很久的怒意，“但我也没敢当场说。陈砚说泵坏了只是小事，等雨季过去再补。可泵不是今天才坏。”\n\n候车厅的广播忽然响起一阵杂音。陈砚按住对讲机，背对着众人说：“零点前必须恢复放行。线路不能一直占着。”\n\n姜序听见那句话，脸色白了白。\n\n“零点以后，”他说，“低处的水会漫进隧道。信号室的备用电池撑不了多久。”\n\n“唐栖在那里？”\n\n姜序没有点头，也没有摇头。他把通行证塞进内袋，像是在把一句更危险的话压回去。\n\n“我不知道。”他说，“但她下午问过我，信号室的门从里面能不能打开。”\n\n陈砚朝这边走来。姜序忽然向后退了半步。\n\n“别从正门进站务室。”他说得很低，“西边消防通道的锁坏了。你要是进去，先找应急灯。别摸终端右侧那根线。”\n\n这不是承诺，也不是帮助。但它足够让许川知道，姜序并没有把唐栖当成一场与自己无关的麻烦。\n\n陈砚走到许川面前，目光落在他的口袋上。“东西找到了吗？”\n\n“一张废铜牌。”\n\n许川看着他，没有动。\n\n陈砚的笑意很淡。“今晚别把自己卷进不必要的事。列车一开，你就该回去了。”\n\n他的手伸出来，掌心朝上。候车厅的红色电子钟仍停在二十三点十分，像在替所有人保守一个即将被冲开的秘密。\n",
+            "lineRange": [
+              55,
+              108
+            ]
+          },
+          "branchState": {
+            "playerLocationId": "location_waiting_hall",
+            "tangLocationId": "location_signal_room",
+            "jiangLocationId": "location_waiting_hall",
+            "tangStatus": "missing",
+            "hasLockerToken": true,
+            "evidenceStatus": "unsecured",
+            "waterLevel": "rising",
+            "signalRoomStatus": "locked",
+            "trainStatus": "pending_release"
+          }
+        },
+        {
+          "id": "beat_office_entered",
+          "nodeId": "node_records",
+          "summary": "许川跨过站务室封锁，得以查验十七号柜和调度记录。",
+          "narrativeAnchor": "站务室里只有调度终端的冷光。十七号柜安静地靠着墙，像在等许川确认唐栖留下了什么。",
+          "openThreads": [
+            "录音与记录",
+            "唐栖的下落",
+            "陈砚的隐瞒"
+          ],
+          "nextDirections": [
+            {
+              "id": "direction_verify_records",
+              "title": "核实失联线索",
+              "summary": "翻查录音与调度记录，确认唐栖被困的位置和陈砚隐瞒的事实。",
+              "suggestedInput": "许川翻查录音笔与调度记录",
+              "canonicalBeatId": "beat_evidence_secured",
+              "statePatch": {
+                "evidenceStatus": "secured",
+                "tangStatus": "located"
+              }
+            }
+          ],
+          "sourceExcerpt": {
+            "text": "许川绕过那只手，朝西侧走去。\n\n二、十七号柜\n\n消防通道在候车厅最暗的一角。门上贴着褪色的“非工作人员禁止进入”，底下积着一层从门缝渗进来的雨水。姜序说得没错，锁舌没有完全扣住。许川推开门时，铁门发出一声尖锐的摩擦声，仿佛整座车站都听见了。\n\n里面是一条狭窄的走廊。顶灯坏了两盏，剩下的灯管把地面照成病人的脸色。墙上贴着多年前的安全宣传画，画里的工人戴着鲜红的安全帽，笑得毫无必要。\n\n站务室的门在走廊尽头。门锁着，但旁边一扇小窗没有关严。窗下堆着废弃的纸箱，潮湿得几乎散架。许川踩上纸箱，推开小窗翻进去，落地时手掌被桌角划出一道浅口。\n\n站务室比候车厅暖一些，空气里却没有人气，只有发热的终端和湿纸张的霉味。调度台上的屏幕亮着，画面停在列车放行记录。右侧一排文件柜贴着编号，十七号柜藏在最里面，绿漆剥落得像旧伤口。\n\n许川将铜牌插进锁孔。它转得很涩，像有人很久没有碰过它。\n\n柜门打开的一瞬间，一阵细小的纸屑飘下来。里面放着一只黑色防水录音笔、一卷用塑料袋包住的维修图纸，还有一张被撕下的调度日志。\n\n录音笔的电量只剩一格。\n",
+            "lineRange": [
+              109,
+              126
+            ]
+          },
+          "branchState": {
+            "playerLocationId": "location_station_office",
+            "tangLocationId": "location_signal_room",
+            "jiangLocationId": "location_waiting_hall",
+            "tangStatus": "missing",
+            "hasLockerToken": true,
+            "evidenceStatus": "unsecured",
+            "waterLevel": "rising",
+            "signalRoomStatus": "locked",
+            "trainStatus": "pending_release"
+          }
+        },
+        {
+          "id": "beat_evidence_secured",
+          "nodeId": "node_records",
+          "summary": "许川保住了录音和维修图纸，确认唐栖被困在信号室。",
+          "narrativeAnchor": "录音笔里的杂音后，唐栖的呼吸短促而清晰。维修图纸上的红线指向信号维修隧道。",
+          "openThreads": [
+            "进入隧道",
+            "救出唐栖",
+            "阻止陈砚掩盖事实"
+          ],
+          "nextDirections": [
+            {
+              "id": "direction_enter_tunnel_with_proof",
+              "title": "带着证据进入隧道",
+              "summary": "请姜序带路，在救援唐栖时保住能够揭露真相的记录。",
+              "suggestedInput": "许川请求姜序带路进入信号维修隧道",
+              "canonicalBeatId": "beat_tunnel_with_proof",
+              "statePatch": {
+                "playerLocationId": "location_signal_tunnel",
+                "jiangLocationId": "location_signal_tunnel"
+              }
+            }
+          ],
+          "sourceExcerpt": {
+            "text": "许川按下播放键。\n\n先是一阵椅子拖动的声音。接着是唐栖的声音，比语音里镇定得多。\n\n“去年十月十八号，隧道防水工程验收。姜序没有签字，为什么验收单上有他的签名？”\n\n陈砚的声音从录音里传来，近得像就站在许川身后。\n\n“一个名字而已。工程做没做完，不影响列车按时跑。”\n\n“影响的是人。”唐栖说，“排水泵的采购款去哪里了？”\n\n短暂的沉默后，陈砚笑了一声。\n\n“你以为谁愿意守着这个快被撤掉的小站？市里每年只给一笔够擦玻璃的钱。我要是不把账做得好看，临潮站去年就关了。”\n\n“所以你把钱挪走，再让维修组背锅？”\n\n录音里传来一声重物碰撞。唐栖的呼吸变急，但没有停。\n\n“我已经把副本发出去了。”她说。\n\n“外面台风，什么也发不出去。”陈砚的声音不再平稳，“把录音给我。你现在知道得太多了。”\n\n录音到这里戛然而止。\n\n许川握紧录音笔。所谓“副本”显然没有成功送出，否则唐栖不会叫他来拿它。她把唯一能证明陈砚说过这些话的东西藏进十七号柜，又去了隧道。\n\n调度终端右侧的指示灯忽然转红。许川想起姜序的提醒，没有去碰那根线，只俯身看屏幕。记录页上，二十三点四十七分的检修申请被标记为“已完成”，可屏幕右下角的设备状态却显示：信号室排水泵故障，备用电池剩余四十五分钟。\n\n有人在系统里把未完成的维修改成了完成。有人又在今晚把列车的“暂缓放行”改成了“零点自动放行”。\n\n许川用手机拍下屏幕和撕下的日志。屏幕的反光里，门口出现一个人的影子。\n\n“我说过，里面危险。”陈砚站在门边。\n\n他没有喊，也没有冲过来。那种克制反而让房间显得更小。他看见柜门开着，看见许川手里的录音笔，脸上的疲惫一点点退掉了。\n\n“唐栖在哪？”许川问。\n\n“她不在这儿。”\n\n“信号室排水泵坏了。”\n\n“老设备都有报警。”\n\n“为什么列车会在零点自动放行？”\n\n陈砚看向终端，眼神终于有一瞬的慌乱。随后他走近两步，压低声音：“你不知道自己在看什么。隧道有积水，列车不走，整条支线都会堵。唐栖执意进去检查，她是成年人，要为自己的选择负责。”\n\n“她是被你困进去的。”\n\n“没有人困她。”陈砚说，“门是防火门，里面有手动开关。”\n\n“姜序说备用电池撑不了多久。”\n\n“姜序？”陈砚嗤笑，“他最怕有人查旧账。你真觉得他会告诉你真话？”\n\n他伸出手。“把录音给我。那是内部谈话，被人断章取义，对谁都没有好处。”\n\n许川没有交出去。陈砚的目光越过他，落在打开的文件柜上。窗外雷光亮起，他脸上的肌肉绷得很紧。\n\n“你可以带着它离开。”他说，“上零点的车，回家。临潮站的事，明天会有人处理。”\n\n“唐栖等不到明天。”\n\n陈砚沉默了。\n\n隔着走廊，候车厅的广播再次响起来：“距末班列车恢复放行，还有十五分钟。”\n\n那不是自动广播。许川听得出陈砚的声音被对讲机放大后带着一点失真。\n",
+            "lineRange": [
+              127,
+              198
+            ]
+          },
+          "branchState": {
+            "playerLocationId": "location_station_office",
+            "tangLocationId": "location_signal_room",
+            "jiangLocationId": "location_waiting_hall",
+            "tangStatus": "located",
+            "hasLockerToken": true,
+            "evidenceStatus": "secured",
+            "waterLevel": "rising",
+            "signalRoomStatus": "locked",
+            "trainStatus": "pending_release"
+          }
+        },
+        {
+          "id": "beat_tunnel_with_proof",
+          "nodeId": "node_tunnel",
+          "summary": "姜序带许川进入隧道，证据已被保住，救援仍受水位限制。",
+          "narrativeAnchor": "姜序把通行证塞回口袋，先一步踏进积水。许川跟上时，录音笔在衣内侧贴着心口。",
+          "openThreads": [
+            "降低水位",
+            "打开信号室",
+            "带证据返回候车厅"
+          ],
+          "nextDirections": [
+            {
+              "id": "direction_lower_water_with_proof",
+              "title": "排开积水",
+              "summary": "先打开排水通路，为进入信号室争取时间。",
+              "suggestedInput": "许川拧开隧道里的手动阀",
+              "canonicalBeatId": "beat_valve_with_proof",
+              "statePatch": {
+                "waterLevel": "lowered"
+              }
+            }
+          ],
+          "sourceExcerpt": {
+            "text": "许川把录音笔塞进内袋，抓起柜里的维修图纸。图纸上标着隧道的排水沟和一条备用检修通道，通道从站务室后方通往信号室，比正门近，但水位更深。图纸角落有姜序的铅笔标记：手动阀在入口左侧，先开阀，再进。\n\n“你别进去。”陈砚说。\n\n许川绕开他，拉开门。陈砚伸手来拦，许川用肩膀撞开他的手臂。他没有立刻追上来，只在身后说：“你救不了她。你只会把自己也留在里面。”\n\n走廊尽头，姜序正站在消防通道门边。他手里提着一盏黄色应急灯，另一只手握着那张灰色通行证。\n\n“我听见录音了。”许川说。\n\n“我在等你出来。”姜序看了一眼陈砚，“也在等自己别再装作什么都不知道。”\n\n他把应急灯递给许川。灯的把手被使用得发亮，电池仓旁贴着一张褪色标签：连续照明四十分钟。\n\n“维修通道的门需要我的卡。”他说，“我带你到入口。里面的阀门，我来开。”\n\n陈砚从站务室走出，脸色阴沉。“姜序，你敢擅自启用隧道？”\n\n“泵坏了，里面有人。”姜序说。\n\n“那是唐栖自己进去的。”\n\n“她进去之前，门禁记录被谁删了？”姜序抬起头，“我修了一辈子机器，至少知道机器不会自己怕人查账。”\n\n陈砚的脸抽动了一下。他拿起对讲机，按住通话键。\n\n“准备放行。”他说。\n\n候车厅里有人开始收拾行李。雨更大了。\n\n三、水位线以下\n\n维修隧道的入口藏在站务室后方，一扇低矮的铁门后面。姜序刷开通行证，门刚开一条缝，冷风就裹着水汽扑出来。里面没有黑暗，远处有一盏红色故障灯一闪一闪，把积水照得像浑浊的血。\n\n“信号室在最里面，走主道要八分钟。”姜序说，“水已经过膝，别走右侧。右边是旧电缆槽。”\n\n“唐栖为什么会进去？”许川问。\n\n姜序沉默片刻，才回答：“她下午拿着那份验收单来找我。她说陈砚把维修款挪走，不只是为了填账。他知道排水泵撑不到这个雨季，却还把故障写成‘已排除’。唐栖想把记录拍下来，等明天交给市里。”\n\n“她怎么会被困？”\n\n“她进去后，陈砚用站务室的总控把防火门切到手动模式。正常时候，信号室可以从里边开门。可备用电池开始掉电，电磁锁回不到默认位置。”姜序看着前方，“我看见他改门禁记录的时候，没敢说。我想着等雨小一点，等明天……每一次等，都是替他多做一次遮掩。”\n",
+            "lineRange": [
+              199,
+              242
+            ]
+          },
+          "branchState": {
+            "playerLocationId": "location_signal_tunnel",
+            "tangLocationId": "location_signal_room",
+            "jiangLocationId": "location_signal_tunnel",
+            "tangStatus": "located",
+            "hasLockerToken": true,
+            "evidenceStatus": "secured",
+            "waterLevel": "rising",
+            "signalRoomStatus": "locked",
+            "trainStatus": "pending_release"
+          }
+        },
+        {
+          "id": "beat_tunnel_without_proof",
+          "nodeId": "node_tunnel",
+          "summary": "姜序先带许川进入隧道救援，录音和原始记录仍未取得。",
+          "narrativeAnchor": "姜序没有再看站务室的方向，只把维修通行证压进许川手里。两人穿过雨水灌进来的检修口，先去找唐栖。",
+          "openThreads": [
+            "降低水位",
+            "打开信号室",
+            "遗失的证据"
+          ],
+          "nextDirections": [
+            {
+              "id": "direction_lower_water_without_proof",
+              "title": "排开积水",
+              "summary": "先打开排水通路，为打开信号室争取时间。",
+              "suggestedInput": "许川拧开隧道里的手动阀",
+              "followupBeatId": "beat_valve_without_proof",
+              "statePatch": {
+                "waterLevel": "lowered"
+              }
+            },
+            {
+              "id": "direction_return_for_records",
+              "title": "折返取证",
+              "summary": "趁水位尚未恶化，返回站务室保全录音与维修图纸，再重新组织救援。",
+              "suggestedInput": "许川决定先返回站务室取得录音和维修图纸",
+              "followupBeatId": "beat_evidence_secured",
+              "rejoinTargetId": "rejoin_records_before_rescue",
+              "statePatch": {
+                "playerLocationId": "location_station_office",
+                "jiangLocationId": "location_waiting_hall",
+                "evidenceStatus": "secured"
+              }
+            }
+          ],
+          "branchState": {
+            "playerLocationId": "location_signal_tunnel",
+            "tangLocationId": "location_signal_room",
+            "jiangLocationId": "location_signal_tunnel",
+            "tangStatus": "located",
+            "hasLockerToken": true,
+            "evidenceStatus": "unsecured",
+            "waterLevel": "rising",
+            "signalRoomStatus": "locked",
+            "trainStatus": "pending_release"
+          }
+        },
+        {
+          "id": "beat_valve_with_proof",
+          "nodeId": "node_tunnel",
+          "summary": "排水通路打开，许川仍带着证据前往信号室。",
+          "narrativeAnchor": "阀门转动时发出沉闷的摩擦声，水流开始退向隧道更深处。信号室方向传来一次微弱的撞击。",
+          "openThreads": [
+            "打开信号室",
+            "唐栖的安危",
+            "保存的证据"
+          ],
+          "nextDirections": [
+            {
+              "id": "direction_open_signal_room_with_proof",
+              "title": "打开信号室",
+              "summary": "趁水位退去，设法拉开卡住的滑栓救出唐栖。",
+              "suggestedInput": "许川拉开信号室的滑栓，救出唐栖",
+              "canonicalBeatId": "beat_aftermath",
+              "statePatch": {
+                "playerLocationId": "location_waiting_hall",
+                "jiangLocationId": "location_waiting_hall",
+                "tangLocationId": "location_waiting_hall",
+                "tangStatus": "rescued",
+                "signalRoomStatus": "opened"
+              }
+            }
+          ],
+          "sourceExcerpt": {
+            "text": "他们踏进水里。\n\n冰冷的水立刻灌进鞋面，像有无数细小的手抓住脚踝。应急灯的光在墙上摇晃，照出一行行剥落的编号。隧道顶部传来闷响，雨水正从看不见的裂缝里渗下来。\n\n走到第一个岔口，姜序忽然停住。\n\n入口左侧有一只锈死的手动阀，旁边的压力表指针贴在红线。图纸上那条备用排水沟被碎石堵住了，如果不先开阀，水会继续往信号室倒灌。\n\n“我去开阀。”姜序说，“你沿主道走，看到黄黑条纹的门就是信号室。”\n\n“一起走。”\n\n“阀门需要两个人？不，需要一个知道它会不会断的人。”他勉强笑了笑，“灯带走。唐栖怕黑。”\n\n许川想把录音笔交给他，姜序却摇头。“那是她留给你的。别让陈砚拿到。”\n\n身后传来铁门撞开的声音。陈砚也进了隧道。\n\n“你们回来！”他的喊声在狭窄空间里层层反弹，“阀门撑不住，别再往里走！”\n\n姜序望了许川一眼，转向岔路。许川继续向前。水越来越深，灯光下漂着碎木片和不知从哪里冲来的旧报纸。一张报纸贴上他的腿，又被水流带走，标题只剩半行：临潮支线维修项目通过验收。\n\n他忽然明白唐栖为什么要录音。账目、表格、签名，所有东西都可以被人说成误会；只有一个人亲口承认自己知道危险，才会让那些被抹掉的细节重新有重量。\n",
+            "lineRange": [
+              243,
+              266
+            ]
+          },
+          "branchState": {
+            "playerLocationId": "location_signal_tunnel",
+            "tangLocationId": "location_signal_room",
+            "jiangLocationId": "location_signal_tunnel",
+            "tangStatus": "located",
+            "hasLockerToken": true,
+            "evidenceStatus": "secured",
+            "waterLevel": "lowered",
+            "signalRoomStatus": "locked",
+            "trainStatus": "pending_release"
+          }
+        },
+        {
+          "id": "beat_valve_without_proof",
+          "nodeId": "node_tunnel",
+          "summary": "排水通路打开，许川只能先抢救唐栖，证据仍留在站务室。",
+          "narrativeAnchor": "积水终于不再上涨，但站务室里的录音没有跟来。许川听见信号室内的撞击声，知道不能再耽搁。",
+          "openThreads": [
+            "打开信号室",
+            "唐栖的安危",
+            "遗失的证据"
+          ],
+          "nextDirections": [
+            {
+              "id": "direction_open_signal_room_without_proof",
+              "title": "打开信号室",
+              "summary": "趁水位退去，优先救出被困在信号室的唐栖。",
+              "suggestedInput": "许川拉开信号室的滑栓，救出唐栖",
+              "followupBeatId": "beat_ending_rescue_without_proof",
+              "statePatch": {
+                "playerLocationId": "location_waiting_hall",
+                "jiangLocationId": "location_waiting_hall",
+                "tangLocationId": "location_waiting_hall",
+                "tangStatus": "rescued",
+                "signalRoomStatus": "opened"
+              }
+            }
+          ],
+          "branchState": {
+            "playerLocationId": "location_signal_tunnel",
+            "tangLocationId": "location_signal_room",
+            "jiangLocationId": "location_signal_tunnel",
+            "tangStatus": "located",
+            "hasLockerToken": true,
+            "evidenceStatus": "unsecured",
+            "waterLevel": "lowered",
+            "signalRoomStatus": "locked",
+            "trainStatus": "pending_release"
+          }
+        },
+        {
+          "id": "beat_aftermath",
+          "nodeId": "node_aftermath",
+          "summary": "唐栖获救并回到候车厅，许川需要让司机确认救援与证据。",
+          "narrativeAnchor": "唐栖裹着姜序递来的雨衣回到候车厅。列车司机站在车门旁，等待一个不能再含糊的说明。",
+          "openThreads": [
+            "阻止列车放行",
+            "陈砚的责任",
+            "公开证据"
+          ],
+          "nextDirections": [
+            {
+              "id": "direction_hold_train",
+              "title": "公开真相",
+              "summary": "向列车司机说明录音和救援事实，阻止末班列车放行。",
+              "suggestedInput": "许川向列车司机说明录音里的事实",
+              "canonicalBeatId": "beat_ending_truth_survives",
+              "statePatch": {
+                "trainStatus": "held"
+              }
+            }
+          ],
+          "sourceExcerpt": {
+            "text": "信号室的门就在前方。黄黑条纹被水汽泡得发白，门缝底下透出微弱的蓝光。\n\n“唐栖！”许川拍门。\n\n里面先是沉默，随后传来三下轻轻的敲击。\n\n“是你吗？”唐栖的声音很哑。\n\n“是我。姜序在开阀。门怎么打不开？”\n\n“锁死了。”她说，“控制箱没电了，手动栓在外面。”\n\n许川照向门侧。厚重的滑栓被一片变形的金属卡住，显然有人用工具把它撬过。水已经漫到门槛，冷气从缝里冒出来。\n\n“退开。”他说。\n\n他用肩膀撞了一次，门纹丝不动。第二次，滑栓发出钝响。应急灯忽然暗了一格，隧道远处又传来水流加快的声音。\n\n陈砚从黑暗里走出来。他没有带伞，也没有穿雨衣，裤脚全湿了，手里却还握着对讲机。\n\n“别撞了。”他说，“门框已经松了，再撞整个配电箱都会进水。”\n\n“是你把栓卡住的。”\n\n“我只是想让她冷静。”他看着门，“她拿着资料要往外跑，今晚线路全乱了。要是她把没核实的东西发出去，临潮站就完了。”\n\n“临潮站不是你。”\n\n陈砚的目光落在许川的内袋上。“录音给我。我去开门。”\n\n“你先开门。”\n\n“你不明白。那段录音出去，维修组、站里、所有人都会被牵连。你以为把我推下去，事情就结束了？”\n\n“姜序没签过字。”\n\n“可签名在单子上。”陈砚说，“你们救她出去，谁来证明那不是她编的？一段录音能证明什么？”\n\n这句话说得近乎恳求。许川第一次看清，陈砚不是没有害怕，而是把害怕变成了要求别人一起沉默的理由。\n\n对讲机响了。\n\n“陈主管，列车等待放行指令。”司机的声音断断续续，“再不走，前方区间要关闭。”\n\n陈砚按住通话键，却没有立刻回答。他看一眼门，又看一眼积水，仿佛在衡量哪一边更容易被遗忘。\n\n门内的唐栖咳了一声。\n\n“你还在吗？”她问。\n\n“在。”许川回答。\n\n应急灯开始闪烁。他想起姜序说过，手动阀一开，水压会暂时下降；可在那之前，门外的卡栓必须被撬开。他蹲下身，从积水里摸到一截被冲来的扳手。扳手上还印着维修组的编号。\n\n陈砚看见他的动作，伸手来抢。许川侧身避开，陈砚脚下一滑，撞在墙上。对讲机掉进水里，发出一串刺耳的杂音。\n\n陈砚没有再追。他靠着墙，喘得很急。\n\n“零点了。”他说。\n\n远处，列车的鸣笛穿过墙体，短促得像一声警告。\n\n许川把扳手插进变形的金属片和滑栓之间，用尽力气向下压。手掌刚才被划破的地方再次裂开，血被水冲成很淡的红。门内，唐栖也在推动。一下，两下，第三下时，金属终于断开。\n\n信号室的门向里弹开。\n\n唐栖跌出来，脸色苍白，外套湿透，怀里却紧紧抱着一个塑料文件袋。她先看见许川，又看见陈砚，眼里的惊惧慢慢变成难以置信的平静。\n\n“录音呢？”她问。\n\n许川把录音笔递给她。\n\n陈砚闭上眼。\n\n就在这时，隧道另一头传来一声沉闷的轰响，接着水流明显减弱。姜序的声音隔着岔路传来：“阀开了！快回来！”\n\n唐栖扶住墙站起来。她的手很冷，但握住许川手腕时很稳。\n\n“资料里有原始采购单。”她说，“还有他改过的门禁记录。只要能带出去——”\n\n“带出去以后呢？”陈砚忽然问。\n\n没有人回答。\n\n隧道里只剩水滴落下的声音。陈砚慢慢从墙边站直。他的制服湿得贴在身上，曾经平整的袖口沾满泥水。\n\n“你们以为市里会谢谢你们？”他说，“他们会说我一个人私自挪款，会说维修组监管不力，会把临潮站关掉。站没了，这里的人去哪里？”\n\n“不是因为你拿了钱，站才会关。”姜序从岔路走来，肩膀上全是污水，“是因为你让它坏着，又让所有人替你说没坏。”\n\n陈砚没有看他。\n\n站外的列车又鸣了一次。比刚才更长。\n",
+            "lineRange": [
+              267,
+              360
+            ]
+          },
+          "branchState": {
+            "playerLocationId": "location_waiting_hall",
+            "tangLocationId": "location_waiting_hall",
+            "jiangLocationId": "location_waiting_hall",
+            "tangStatus": "rescued",
+            "hasLockerToken": true,
+            "evidenceStatus": "secured",
+            "waterLevel": "lowered",
+            "signalRoomStatus": "opened",
+            "trainStatus": "pending_release"
+          }
+        },
+        {
+          "id": "beat_ending_truth_survives",
+          "nodeId": "node_aftermath",
+          "summary": "唐栖获救，证据保全，列车没有放行。",
+          "narrativeAnchor": "司机放下对讲机。站台上第一次安静下来，雨还在落，但陈砚已经无法把这一夜从记录里抹去。",
+          "openThreads": [],
+          "nextDirections": [],
+          "sourceExcerpt": {
+            "text": "四、灯还亮着\n\n回到候车厅时，电子钟终于从二十三点十分跳到了零点零三分。\n\n原来它一直在走，只是显示屏受潮，数字被困在同一刻太久。现在红色的零点零三分在墙上亮着，像迟来的审判，也像一扇终于打开的门。\n\n列车没有开走。司机站在站台边，手里提着一盏手电，几个乘客围在他身后。陈砚的对讲机落水后，司机没有等到放行复诵，按规程切断了启动程序。有人抱怨了一阵，更多人只是沉默地看着从维修通道里走出来的他们。\n\n唐栖的裤脚还滴着水，脸上有擦伤。她抱着文件袋，另一只手拿着录音笔。姜序走在她旁边，步子很慢。陈砚落在最后，没有逃，也没有再解释。\n\n司机问：“里面怎么了？”\n\n唐栖没有立刻把录音放出来。她先把文件袋放到候车厅中央那张长椅上，拿出被水浸湿却仍能辨认的原始采购单、验收单复印件和门禁记录。她把其中一张递给姜序。\n\n“这不是你的签名。”她说。\n\n姜序接过去，看了很久。他的手在抖，却没有把纸攥皱。\n\n陈砚站在雨声里，忽然笑了一下。“一张纸，一段录音。你们真觉得这能说明什么？”\n\n唐栖按下播放键。\n\n候车厅很安静。没有人说话，也没有人去碰已经亮起的车门。录音里，陈砚那个平稳、疲惫的声音清清楚楚地穿出来。\n\n“工程做没做完，不影响列车按时跑。”\n\n他听见自己说过的话，脸上的笑意消失了。\n\n司机拿出随车应急卫星终端。暴雨切断了站内的普通通信，列车却必须保留一条故障上报通道。陈砚一直知道这一点，所以他才急着在零点前让列车离开；一旦车离开，这座小站又会只剩下失效的电话、被改过的终端和一群不愿多事的人。\n\n“按事故程序，”司机说，“列车不再放行。我要上报隧道积水、人员受困和站务记录异常。”\n\n陈砚看向站台。他只要穿过那几步距离，就能上车，坐进空座位里，像任何一个急着离开暴雨的人。但车门前站着司机，候车厅里站着唐栖、许川和姜序，地上摊着他以为永远不会被看见的单据。\n\n他最终没有动。\n\n外面的雨仍然没有停。可候车厅里有人拿出干毛巾，有人把热水递给唐栖。刚才催促放行的乘客安静下来，替姜序扶住了那盏快没电的应急灯。灯光微弱，照不亮整座车站，却足够照见每个人湿透的鞋尖和脚下还在蔓延的水。\n\n唐栖坐在长椅上，抬头看许川。\n\n“我以为你会赶不上。”她说。\n\n“我差一点听了他的话。”\n\n“很多人都会。”她轻声说，“他说的不是全错。临潮站确实快撑不下去了，姜序也确实害怕丢掉工作。可这不能变成让人留在水里的理由。”\n\n许川在她身边坐下。远处海面上的雷声滚过来，像一趟看不见的列车。电子钟的数字继续向前跳动，零点零四分，零点零五分。\n\n姜序从站务室拿来新的日志本。他没有再坐回墙角，而是在调度台前写下第一行：二十三点四十七分，信号室排水泵故障，未完成维修。二十三点五十五分，发现人员受困。零点零三分，救援完成。\n\n写到最后，他停住，抬头看陈砚。\n\n陈砚站在门边，雨水从他的发梢落下来。他没有要求修改，也没有再说“明天会有人处理”。\n\n临潮站的灯在雨夜里亮着。\n\n它们很旧，光线发白，随时可能再被潮气逼得闪烁。但这一夜，它们没有熄灭。",
+            "lineRange": [
+              361,
+              417
+            ]
+          },
+          "branchState": {
+            "playerLocationId": "location_waiting_hall",
+            "tangLocationId": "location_waiting_hall",
+            "jiangLocationId": "location_waiting_hall",
+            "tangStatus": "rescued",
+            "hasLockerToken": true,
+            "evidenceStatus": "secured",
+            "waterLevel": "lowered",
+            "signalRoomStatus": "opened",
+            "trainStatus": "held"
+          }
+        },
+        {
+          "id": "beat_ending_rescue_without_proof",
+          "nodeId": "node_aftermath",
+          "summary": "唐栖获救，但证据未能保全。",
+          "narrativeAnchor": "许川和唐栖站在候车厅的灯下，没有人能替他们证明站务室里曾经藏着什么。列车尚未离开，真相却只能暂时留在两人之间。",
+          "openThreads": [
+            "未取得的证据",
+            "陈砚的责任"
+          ],
+          "nextDirections": [],
+          "branchState": {
+            "playerLocationId": "location_waiting_hall",
+            "tangLocationId": "location_waiting_hall",
+            "jiangLocationId": "location_waiting_hall",
+            "tangStatus": "rescued",
+            "hasLockerToken": true,
+            "evidenceStatus": "unsecured",
+            "waterLevel": "lowered",
+            "signalRoomStatus": "opened",
+            "trainStatus": "pending_release"
+          }
+        },
+        {
+          "id": "beat_ending_last_train",
+          "nodeId": "node_tunnel",
+          "summary": "列车离站，唐栖仍未获救。",
+          "narrativeAnchor": "末班列车切开雨幕，唐栖的回应被站台上的人群和风雨隔在身后。许川明白，这一夜已经没有机会重来。",
+          "openThreads": [],
+          "nextDirections": [],
+          "branchState": {
+            "playerLocationId": "location_signal_tunnel",
+            "tangLocationId": "location_signal_room",
+            "jiangLocationId": "location_signal_tunnel",
+            "tangStatus": "located",
+            "hasLockerToken": true,
+            "evidenceStatus": "unsecured",
+            "waterLevel": "rising",
+            "signalRoomStatus": "locked",
+            "trainStatus": "departed"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "edge_token_found",
+          "fromBeatId": "beat_arrival",
+          "toBeatId": "beat_token_found",
+          "when": [
+            "flag_locker_token_found"
+          ],
+          "canonical": true,
+          "transitionText": "许川在十七号柜旁找到那块旧铜牌，唐栖语音里的第一条线索终于有了重量。"
+        },
+        {
+          "id": "edge_office_entered",
+          "fromBeatId": "beat_token_found",
+          "toBeatId": "beat_office_entered",
+          "when": [
+            "flag_office_access"
+          ],
+          "canonical": true,
+          "transitionText": "他没有再和陈砚纠缠，趁候车厅的目光被广播吸走，穿过了站务室的封锁。"
+        },
+        {
+          "id": "edge_tunnel_without_proof",
+          "fromBeatId": "beat_token_found",
+          "toBeatId": "beat_tunnel_without_proof",
+          "when": [
+            "flag_tunnel_access",
+            "flag_tang_located",
+            "!flag_evidence_secured"
+          ],
+          "canonical": false,
+          "transitionText": "姜序听完许川的请求，只说信号室那边等不起。他们把还没查清的记录留在身后，先转向隧道。"
+        },
+        {
+          "id": "edge_evidence_secured",
+          "fromBeatId": "beat_office_entered",
+          "toBeatId": "beat_evidence_secured",
+          "when": [
+            "flag_evidence_secured",
+            "flag_tang_located"
+          ],
+          "canonical": true,
+          "transitionText": "录音笔里的片段和调度记录互相印证，许川终于明白唐栖为什么会被困在隧道尽头。"
+        },
+        {
+          "id": "edge_tunnel_with_proof",
+          "fromBeatId": "beat_evidence_secured",
+          "toBeatId": "beat_tunnel_with_proof",
+          "when": [
+            "flag_tunnel_access"
+          ],
+          "canonical": true,
+          "transitionText": "姜序看见录音笔后沉默了片刻，随后带许川从维修通道进入隧道。"
+        },
+        {
+          "id": "edge_valve_with_proof",
+          "fromBeatId": "beat_tunnel_with_proof",
+          "toBeatId": "beat_valve_with_proof",
+          "when": [
+            "flag_relief_valve_opened"
+          ],
+          "canonical": true,
+          "transitionText": "许川和姜序一起拧开手动阀，水位的退让给信号室留下了一点时间。"
+        },
+        {
+          "id": "edge_valve_without_proof",
+          "fromBeatId": "beat_tunnel_without_proof",
+          "toBeatId": "beat_valve_without_proof",
+          "when": [
+            "flag_relief_valve_opened"
+          ],
+          "canonical": false,
+          "transitionText": "没有录音，也没有图纸，许川只能凭姜序的指引找到手动阀，把每一秒都用在救援上。"
+        },
+        {
+          "id": "edge_aftermath",
+          "fromBeatId": "beat_valve_with_proof",
+          "toBeatId": "beat_aftermath",
+          "when": [
+            "flag_tang_rescued",
+            "flag_evidence_secured"
+          ],
+          "canonical": true,
+          "transitionText": "滑栓松开后，唐栖终于抓住许川伸过去的手。三人带着录音回到候车厅。"
+        }
+      ],
+      "endingBeatIds": {
+        "ending_truth_survives": "beat_ending_truth_survives",
+        "ending_rescue_without_proof": "beat_ending_rescue_without_proof",
+        "ending_last_train": "beat_ending_last_train"
+      }
+    },
+    "sceneRoutes": [
+        {
+          "fromNodeId": "node_arrival",
+          "fromLocationId": "location_waiting_hall",
+          "toLocationId": "location_station_office",
+          "toNodeId": "node_records"
+        },
+        {
+          "fromNodeId": "node_arrival",
+          "fromLocationId": "location_waiting_hall",
+          "toLocationId": "location_signal_tunnel",
+          "toNodeId": "node_tunnel"
+        },
+        {
+          "fromNodeId": "node_records",
+          "fromLocationId": "location_station_office",
+          "toLocationId": "location_signal_tunnel",
+          "toNodeId": "node_tunnel"
+        },
+        {
+          "fromNodeId": "node_tunnel",
+          "fromLocationId": "location_signal_tunnel",
+          "toLocationId": "location_waiting_hall",
+          "toNodeId": "node_aftermath"
+        },
+        {
+          "fromNodeId": "node_tunnel",
+          "fromLocationId": "location_signal_tunnel",
+          "toLocationId": "location_station_office",
+          "toNodeId": "node_records"
+        }
+      ],
+      "rejoinTargets": [
+        {
+          "id": "rejoin_records_before_rescue",
+          "fromNodeId": "node_tunnel",
+          "targetBeatId": "beat_evidence_secured",
+          "requiredOpenThreads": [],
+          "requiredState": {
+            "evidenceStatus": {"equals": "unsecured"}
+          }
+        }
+      ]
+    },
+  "directions": [
+    {
+      "id": "direction_original_canon",
+      "title": "雨夜中的证词",
+      "summary": "沿原著主线，在午夜前救出唐栖并保全陈砚篡改记录的证据。",
+      "primaryGoal": "救援与真相同时成立。",
+      "preferredNodeIds": [
+        "node_arrival",
+        "node_records",
+        "node_tunnel",
+        "node_aftermath"
+      ],
+      "reachableEndingIds": [
+        "ending_truth_survives",
+        "ending_rescue_without_proof",
+        "ending_last_train"
+      ]
+    }
+  ],
+  "defaultDirectionId": "direction_original_canon",
+  "rules": {
+    "actionTypes": [
+      "investigate",
+      "negotiate",
+      "risk"
+    ],
+    "check": {
+      "randomRange": {
+        "min": 1,
+        "max": 6
+      },
+      "successAt": 5,
+      "partialSuccessAt": 4
+    },
+    "attributes": [
+      "insight",
+      "empathy",
+      "nerve"
+    ],
+    "resolutions": [
+      {
+        "id": "resolve_locker_token",
+        "nodeId": "node_arrival",
+        "actionType": "investigate",
+        "targetId": "item_locker_token",
+        "attribute": "insight",
+        "difficulty": 1,
+        "onSuccess": [
+          "add:item_locker_token",
+          "set:flag_locker_token_found"
+        ],
+        "onPartial": [
+          "add:item_locker_token",
+          "set:flag_locker_token_found",
+          "increment:pressure_level"
+        ],
+        "onFailure": [
+          "increment:pressure_level"
+        ]
+      },
+      {
+        "id": "resolve_office_access",
+        "nodeId": "node_arrival",
+        "actionType": "risk",
+        "targetId": "location_station_office",
+        "attribute": "nerve",
+        "difficulty": 2,
+        "guards": [
+          "flag_locker_token_found"
+        ],
+        "onSuccess": [
+          "set:flag_office_access",
+          "move:location_station_office"
+        ],
+        "onPartial": [
+          "set:flag_office_access",
+          "move:location_station_office",
+          "increment:pressure_level"
+        ],
+        "onFailure": [
+          "increment:pressure_level"
+        ]
+      },
+      {
+        "id": "resolve_jiang_rescue_first",
+        "nodeId": "node_arrival",
+        "actionType": "negotiate",
+        "targetId": "character_jiang_xu",
+        "attribute": "empathy",
+        "difficulty": 3,
+        "guards": [
+          "flag_locker_token_found"
+        ],
+        "onSuccess": [
+          "add:item_maintenance_pass",
+          "set:flag_tunnel_access",
+          "set:flag_tang_located",
+          "set:relationship.character_jiang_xu=1",
+          "move:location_signal_tunnel"
+        ],
+        "onPartial": [
+          "add:item_maintenance_pass",
+          "set:flag_tunnel_access",
+          "set:flag_tang_located",
+          "increment:pressure_level",
+          "move:location_signal_tunnel"
+        ],
+        "onFailure": [
+          "increment:pressure_level"
+        ]
+      },
+      {
+        "id": "resolve_records",
+        "nodeId": "node_records",
+        "actionType": "investigate",
+        "targetId": "item_recorder",
+        "attribute": "insight",
+        "difficulty": 2,
+        "guards": [
+          "flag_locker_token_found",
+          "flag_office_access"
+        ],
+        "onSuccess": [
+          "add:item_recorder",
+          "add:item_maintenance_map",
+          "add:item_emergency_lamp",
+          "set:flag_evidence_secured",
+          "set:flag_log_tampered",
+          "set:flag_tang_located"
+        ],
+        "onPartial": [
+          "add:item_recorder",
+          "set:flag_evidence_secured",
+          "set:flag_tang_located",
+          "increment:pressure_level"
+        ],
+        "onFailure": [
+          "increment:pressure_level"
+        ]
+      },
+      {
+        "id": "resolve_tunnel_access",
+        "nodeId": "node_records",
+        "actionType": "negotiate",
+        "targetId": "character_jiang_xu",
+        "attribute": "empathy",
+        "difficulty": 2,
+        "guards": [
+          "flag_evidence_secured",
+          "flag_tang_located"
+        ],
+        "onSuccess": [
+          "add:item_maintenance_pass",
+          "set:flag_tunnel_access",
+          "set:relationship.character_jiang_xu=1",
+          "move:location_signal_tunnel"
+        ],
+        "onPartial": [
+          "add:item_maintenance_pass",
+          "set:flag_tunnel_access",
+          "increment:pressure_level",
+          "move:location_signal_tunnel"
+        ],
+        "onFailure": [
+          "increment:pressure_level"
+        ]
+      },
+      {
+        "id": "resolve_relief_valve",
+        "nodeId": "node_tunnel",
+        "actionType": "risk",
+        "targetId": "item_relief_valve",
+        "attribute": "nerve",
+        "difficulty": 2,
+        "guards": [
+          "flag_tunnel_access"
+        ],
+        "onSuccess": [
+          "set:flag_relief_valve_opened",
+          "set:flood_level=0"
+        ],
+        "onPartial": [
+          "set:flag_relief_valve_opened",
+          "increment:flood_level"
+        ],
+        "onFailure": [
+          "increment:flood_level"
+        ]
+      },
+      {
+        "id": "resolve_signal_door",
+        "nodeId": "node_tunnel",
+        "actionType": "risk",
+        "targetId": "item_signal_door",
+        "attribute": "nerve",
+        "difficulty": 3,
+        "guards": [
+          "flag_relief_valve_opened",
+          "has:item_emergency_lamp"
+        ],
+        "onSuccess": [
+          "set:flag_signal_door_opened",
+          "set:flag_tang_rescued",
+          "move:location_waiting_hall"
+        ],
+        "onPartial": [
+          "set:flag_signal_door_opened",
+          "set:flag_tang_rescued",
+          "increment:flood_level",
+          "move:location_waiting_hall"
+        ],
+        "onFailure": [
+          "increment:flood_level"
+        ]
+      },
+      {
+        "id": "resolve_signal_door_without_lamp",
+        "nodeId": "node_tunnel",
+        "actionType": "risk",
+        "targetId": "item_signal_door",
+        "attribute": "nerve",
+        "difficulty": 4,
+        "guards": [
+          "flag_relief_valve_opened",
+          "not_has:item_emergency_lamp"
+        ],
+        "onSuccess": [
+          "set:flag_signal_door_opened",
+          "set:flag_tang_rescued",
+          "move:location_waiting_hall"
+        ],
+        "onPartial": [
+          "set:flag_signal_door_opened",
+          "set:flag_tang_rescued",
+          "increment:flood_level",
+          "move:location_waiting_hall"
+        ],
+        "onFailure": [
+          "increment:flood_level"
+        ]
+      },
+      {
+        "id": "resolve_evidence_report",
+        "nodeId": "node_aftermath",
+        "actionType": "negotiate",
+        "targetId": "character_train_driver",
+        "attribute": "empathy",
+        "difficulty": 1,
+        "guards": [
+          "flag_tang_rescued",
+          "flag_evidence_secured"
+        ],
+        "onSuccess": [
+          "set:flag_train_departure_held",
+          "set:flag_chen_yan_confronted"
+        ],
+        "onPartial": [
+          "set:flag_train_departure_held"
+        ],
+        "onFailure": [
+          "increment:pressure_level"
+        ]
+      }
+    ],
+    "guards": [
+      "终局会话不得接受普通行动",
+      "当前节点之外的 resolution 不可执行",
+      "所有 StateDelta 必须来自 resolution"
+    ],
+    "terminalRules": [
+      {
+        "when": [
+          "pressure_level>=3",
+          "!flag_tang_rescued"
+        ],
+        "set": [
+          "set:flag_train_departed"
+        ]
+      },
+      {
+        "when": [
+          "flood_level>=3",
+          "!flag_tang_rescued"
+        ],
+        "set": [
+          "set:flag_train_departed"
+        ]
+      }
+    ]
+  },
+  "initialState": {
+    "player": {
+      "characterId": "character_xu_chuan",
+      "attributes": {
+        "insight": 2,
+        "empathy": 2,
+        "nerve": 2
+      }
+    },
+    "inventory": [
+      "item_voice_message"
+    ],
+    "relationships": {
+      "character_tang_qi": 2,
+      "character_chen_yan": 0,
+      "character_jiang_xu": 0
+    },
+    "flags": {
+      "flag_locker_token_found": false,
+      "flag_office_access": false,
+      "flag_evidence_secured": false,
+      "flag_log_tampered": false,
+      "flag_tang_located": false,
+      "flag_tunnel_access": false,
+      "flag_relief_valve_opened": false,
+      "flag_signal_door_opened": false,
+      "flag_tang_rescued": false,
+      "flag_train_departure_held": false,
+      "flag_train_departed": false,
+      "flag_chen_yan_confronted": false
+    },
+    "counters": {
+      "pressure_level": 0,
+      "flood_level": 0
+    },
+    "knownFacts": [
+      "timeline_tang_message",
+      "timeline_train_held"
+    ],
+    "currentNodeId": "node_arrival",
+    "currentLocationId": "location_waiting_hall",
+    "directionId": "direction_original_canon"
+  }
+}

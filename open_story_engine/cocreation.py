@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import os
 import re
@@ -36,6 +37,96 @@ def empty_branch_additions() -> Dict[str, List[Dict[str, Any]]]:
 
 
 BRANCH_PRIVATE_STATE_KEYS = frozenset({"derivedLocations", "derivedCharacters", "derivedItems", "derivedCharacterReveals"})
+
+
+def arc_model(package: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """Return the optional, package-owned macro-plot model."""
+    model = package.get("story", {}).get("arcModel")
+    return model if isinstance(model, dict) else None
+
+
+def arc_by_id(package: Dict[str, Any], arc_id: str) -> Dict[str, Any]:
+    model = arc_model(package)
+    if model is None:
+        raise ValueError("StoryPackage 未声明大方向模型")
+    arc = next((item for item in model["arcs"] if item["id"] == arc_id), None)
+    if arc is None:
+        raise ValueError("大方向不存在: " + arc_id)
+    return arc
+
+
+def macro_directions(package: Dict[str, Any], arc_ids: List[str], state: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
+    directions: List[Dict[str, Any]] = []
+    for arc_id in arc_ids:
+        arc = arc_by_id(package, arc_id)
+        if state is not None and arc.get("availableWhen") and not state_matches(arc["availableWhen"], state):
+            continue
+        directions.append({
+            "id": "arc:" + arc_id,
+            "title": arc["title"],
+            "summary": arc["summary"],
+            "directionLevel": "arc",
+            "arcId": arc_id,
+        })
+    return directions
+
+
+def phase_directions_for_arc(
+    package: Dict[str, Any], source_node_ref: str, state: Dict[str, Any], arc_id: str,
+) -> List[Dict[str, Any]]:
+    """Expose only the current chapter-sized choices declared for one macro plot."""
+    phase_ids = set(arc_by_id(package, arc_id)["phaseDirectionIds"])
+    directions = controlled_scene_directions(package, source_node_ref, state)
+    return [
+        {**direction, "directionLevel": "phase", "arcId": arc_id}
+        for direction in directions
+        if direction["id"] in phase_ids
+    ]
+
+
+def advance_story_arc(
+    package: Dict[str, Any], parent_arc: Optional[Dict[str, Any]], selected: Dict[str, Any],
+    resolved_state: Dict[str, Any], model_arc: Optional[Dict[str, Any]],
+) -> Tuple[Optional[Dict[str, Any]], Optional[List[Dict[str, Any]]]]:
+    """Make chapter and macro-plot transitions authoritative after one phase."""
+    if parent_arc is None or not parent_arc.get("arcId"):
+        return model_arc, None
+    arc = arc_by_id(package, parent_arc["arcId"])
+    completed_phase_ids = list(parent_arc.get("completedPhaseIds", []))
+    if selected["id"] not in completed_phase_ids:
+        completed_phase_ids.append(selected["id"])
+    chapter = (model_arc or {}).get("chapter", {})
+    chapter_title = chapter.get("title") if isinstance(chapter.get("title"), str) and chapter["title"].strip() else selected["title"]
+    previous_title = parent_arc.get("chapter", {}).get("title")
+    if chapter_title == previous_title:
+        chapter_title = selected["title"]
+    arc_completed = state_matches(arc["completionWhen"], resolved_state)
+    next_directions = macro_directions(package, arc.get("nextArcIds", []), resolved_state) if arc_completed else None
+    return {
+        "arcId": arc["id"],
+        "activeGoal": arc["title"],
+        "currentPhase": selected["title"],
+        "completedPhaseIds": completed_phase_ids,
+        "goalDisposition": "completed" if arc_completed else "continued",
+        "menuLevel": "arc" if arc_completed else "phase",
+        "chapter": {"title": chapter_title, "status": "complete"},
+    }, next_directions
+
+
+def state_matches(constraints: Dict[str, Any], state: Dict[str, Any]) -> bool:
+    """Evaluate a StoryPackage declarative state constraint."""
+    for field, expected in constraints.items():
+        actual = state.get(field)
+        if isinstance(expected, dict):
+            if "equals" in expected and actual != expected["equals"]:
+                return False
+            if "oneOf" in expected and actual not in expected["oneOf"]:
+                return False
+            if "sameAs" in expected and actual != state.get(expected["sameAs"]):
+                return False
+        elif actual != expected:
+            return False
+    return True
 
 
 def has_branch_additions(value: Dict[str, List[Dict[str, Any]]]) -> bool:
@@ -93,6 +184,92 @@ def validate_branch_additions(package: Dict[str, Any], state: Dict[str, Any], va
     return additions
 
 
+def normalize_optional_branch_items(package: Dict[str, Any], state: Dict[str, Any], value: Any, observations: List[Dict[str, Any]]) -> Any:
+    """Repair optional item metadata without changing authoritative state."""
+    if value is None or not isinstance(value, dict):
+        return value
+    normalized = {key: copy.deepcopy(item) for key, item in value.items() if key in empty_branch_additions()}
+    ignored = set(value) - set(normalized)
+    if ignored:
+        observations.append({"attempt": 1, "outcome": "normalized", "normalization": "discarded_unknown_branch_addition_fields", "fields": sorted(ignored)})
+    entries = normalized.get("items", [])
+    if isinstance(entries, dict):
+        entries = [entries]
+    elif isinstance(entries, str):
+        entries = [{"name": entries}]
+    elif not isinstance(entries, list):
+        observations.append({"attempt": 1, "outcome": "normalized", "normalization": "discarded_non_array_branch_items"})
+        entries = []
+    known_ids = {item["id"] for item in package["locations"] + package["characters"] + package["items"]}
+    known_ids.update(item["id"] for item in state.get("derivedLocations", []) + state.get("derivedCharacters", []) + state.get("derivedItems", []))
+    known_names = {item["name"].strip() for item in package["items"] + state.get("derivedItems", [])}
+    repaired: List[Dict[str, str]] = []
+    discarded = 0
+    repaired_count = 0
+    for entry in entries:
+        candidate = entry if isinstance(entry, dict) else {"name": entry} if isinstance(entry, str) else {}
+        name = candidate.get("name")
+        if not isinstance(name, str) or not name.strip():
+            discarded += 1
+            continue
+        name = name.strip()
+        if name in known_names:
+            discarded += 1
+            continue
+        summary = candidate.get("summary")
+        if not isinstance(summary, str) or not summary.strip():
+            summary = candidate.get("description")
+        if not isinstance(summary, str) or not summary.strip():
+            summary = "本回合新增的分支私有物品：" + name + "。"
+        summary = summary.strip()
+        item_id = candidate.get("id")
+        if not isinstance(item_id, str) or not re.fullmatch(r"item_[a-z0-9_]{2,80}", item_id) or item_id in known_ids:
+            digest = hashlib.sha256((name + "\n" + summary).encode("utf-8")).hexdigest()[:16]
+            item_id = "item_generated_" + digest
+            while item_id in known_ids:
+                digest = hashlib.sha256((item_id + name).encode("utf-8")).hexdigest()[:16]
+                item_id = "item_generated_" + digest
+            repaired_count += 1
+        if not (isinstance(candidate.get("summary"), str) and candidate["summary"].strip()):
+            repaired_count += 1
+        repaired.append({"id": item_id, "name": name, "summary": summary})
+        known_ids.add(item_id)
+        known_names.add(name)
+    normalized["items"] = repaired
+    if repaired_count or discarded:
+        observations.append({"attempt": 1, "outcome": "normalized", "normalization": "repaired_optional_branch_items", "repaired": repaired_count, "discarded": discarded})
+    return normalized
+
+
+def parse_narrative_continuation(content: str) -> str:
+    """Parse the continuation's prose-only response without relaxing planner JSON."""
+    try:
+        result = parse_json_content(content)
+    except LlmError as error:
+        normalized = content.strip()
+        match = re.fullmatch(
+            r'\{\s*"narrativeContinuation"\s*:\s*"(?P<text>.*)"\s*\}',
+            normalized,
+            flags=re.DOTALL,
+        )
+        if not match:
+            raise error
+        encoded = '"' + match.group("text").replace("\r\n", "\\n").replace("\n", "\\n") + '"'
+        try:
+            continuation = json.loads(encoded)
+        except json.JSONDecodeError:
+            raise error
+        if not isinstance(continuation, str) or not continuation.strip():
+            raise error
+        return continuation
+    if set(result) != {"narrativeContinuation"}:
+        raise LlmError("LLM 剧情续写结果只能包含 narrativeContinuation", "model_output_rejected")
+    continuation = result.get("narrativeContinuation")
+    if not isinstance(continuation, str) or not continuation.strip():
+        raise LlmError("LLM 剧情续写结果缺少 narrativeContinuation", "model_output_rejected")
+    return continuation
+
+
 def apply_branch_patch(package: Dict[str, Any], current: Dict[str, Any], patch: Dict[str, Any], source_node_ref: str) -> Dict[str, Any]:
     if not patch:
         raise ValueError("剧情方向必须声明至少一个状态变化")
@@ -129,42 +306,38 @@ def apply_branch_patch(package: Dict[str, Any], current: Dict[str, Any], patch: 
             raise ValueError("人物身份只能对已出现且未揭示的人物声明一次")
         next_state["derivedCharacterReveals"].append(copy.deepcopy(reveal))
         revealed.add(reveal["characterId"])
-    ranks = {
-        "tangStatus": ["missing", "located", "rescued"],
-        "evidenceStatus": ["unsecured", "secured"],
-        "waterLevel": ["rising", "lowered"],
-        "signalRoomStatus": ["locked", "opened"],
-        "trainStatus": ["pending_release", "held", "departed"],
-        "derivativeStage": ["inactive", "setup", "active"],
-    }
+    state_model = package.get("stateModel", {})
+    ranks = state_model.get("monotonicEnums", {})
     for key, order in ranks.items():
+        if key not in current or key not in next_state:
+            raise ValueError(f"状态模型引用了不存在的状态字段: {key}")
         if next_state[key] not in order:
             raise ValueError(f"{key} 不支持状态值: {next_state[key]}")
         if current[key] not in order:
             raise ValueError(f"当前状态包含不支持的 {key} 值: {current[key]}")
         if order.index(next_state[key]) < order.index(current[key]):
             raise ValueError(f"{key} 不能倒退: {current[key]} -> {next_state[key]}")
-    if current["storyScope"] != next_state["storyScope"]:
-        raise ValueError("剧情方向不能改变故事包范围")
-    if current["storyScope"] == "derived" and next_state["derivedTurn"] != current["derivedTurn"] + 1:
-        raise ValueError("衍生剧情回合必须按顺序推进")
-    if current["trainStatus"] == "held" and next_state["trainStatus"] == "departed":
-        raise ValueError("已阻止放行的列车不能重新离站")
+    for field in state_model.get("immutableFields", []):
+        if current.get(field) != next_state.get(field):
+            raise ValueError(f"剧情方向不能改变不可变状态字段: {field}")
+    for rule in state_model.get("transitionRules", []):
+        if not state_matches(rule.get("when", {}), next_state):
+            continue
+        field = rule["field"]
+        if rule["change"] == "increment" and next_state.get(field) != current.get(field) + rule["amount"]:
+            raise ValueError(rule["message"])
     known_locations = {location["id"] for location in package["locations"]} | {location["id"] for location in next_state["derivedLocations"]}
-    if any(next_state[key] not in known_locations for key in ("playerLocationId", "tangLocationId", "jiangLocationId")):
-        raise ValueError("共创状态引用了不存在的地点")
-    if next_state["storyScope"] == "source":
-        if next_state["tangStatus"] == "rescued" and next_state["tangLocationId"] != "location_waiting_hall":
-            raise ValueError("唐栖获救后必须回到候车厅")
-        if next_state["tangStatus"] != "rescued" and next_state["tangLocationId"] != "location_signal_tunnel":
-            raise ValueError("唐栖未获救时必须仍在信号维修隧道区域")
-    elif next_state["tangStatus"] == "rescued" and next_state["tangLocationId"] != next_state["playerLocationId"]:
-        raise ValueError("衍生故事中唐栖获救后必须与许川处于同一地点")
+    for field in state_model.get("locationReferenceFields", []):
+        if next_state.get(field) not in known_locations:
+            raise ValueError(f"共创状态的 {field} 引用了不存在的地点")
+    for invariant in state_model.get("invariants", []):
+        if state_matches(invariant["when"], next_state) and not state_matches(invariant["require"], next_state):
+            raise ValueError(invariant["message"])
     return next_state
 
 
 def branch_direction(direction: Dict[str, Any]) -> Dict[str, Any]:
-    return {key: copy.deepcopy(direction[key]) for key in ("id", "title", "summary", "canonicalBeatId", "rejoinTargetId", "statePatch") if key in direction}
+    return {key: copy.deepcopy(direction[key]) for key in ("id", "title", "summary", "canonicalBeatId", "followupBeatId", "rejoinTargetId", "statePatch", "directionLevel", "arcId") if key in direction}
 
 
 def create_contract(package: Dict[str, Any], session_id: str) -> Dict[str, Any]:
@@ -186,11 +359,13 @@ def entry_node(package: Dict[str, Any], contract: Dict[str, Any]) -> Dict[str, A
     beat = next((item for item in graph["beats"] if item["id"] == graph["startBeatId"]), None)
     if beat is None:
         raise ValueError("共创起始节点没有叙事锚点")
+    model = arc_model(package)
+    directions = macro_directions(package, model["entryArcIds"], initial_branch_state(beat)) if model is not None else [branch_direction(item) for item in beat["nextDirections"]]
     return {
         "id": "branch_" + str(uuid.uuid4()), "kind": "source_entry", "sourceNodeRef": contract["entryNodeId"],
         "branchState": initial_branch_state(beat), "narrativeText": beat.get("sourceExcerpt", {}).get("text", beat["narrativeAnchor"]),
         "summary": beat["summary"], "factDeltas": [{"id": "fact_source_entry", "source": "source", "summary": "原著前史已继承"}],
-        "openThreads": beat["openThreads"], "nextDirections": [branch_direction(item) for item in beat["nextDirections"]],
+        "openThreads": beat["openThreads"], "nextDirections": directions,
         "canonicalRelation": "on_line", "planning": {"citations": [{"kind": "canonical_node", "ref": contract["entryNodeId"], "rationale": "共创从原著节点进入。"}], "confidence": "high", "stateChangeProposals": []}, "createdAt": timestamp(),
     }
 
@@ -199,8 +374,15 @@ def resolve_source_node(package: Dict[str, Any], parent: Dict[str, Any], state: 
     if state["storyScope"] == "derived":
         return parent.get("sourceNodeRef") or package["story"]["startNodeId"]
     source = parent.get("sourceNodeRef") or package["story"]["startNodeId"]
+    focal_location_field = focal_character_location_field(package, state)
+    if focal_location_field is None:
+        return source
     for route in package["story"].get("sceneRoutes", []):
-        if route["fromNodeId"] == source and route["fromLocationId"] == parent["branchState"]["playerLocationId"] and route["toLocationId"] == state["playerLocationId"]:
+        if (
+            route["fromNodeId"] == source
+            and route["fromLocationId"] == parent["branchState"].get(focal_location_field)
+            and route["toLocationId"] == state.get(focal_location_field)
+        ):
             return route["toNodeId"]
     return source
 
@@ -229,8 +411,10 @@ def resolve_rejoin(
         raise ValueError("方向引用的汇合目标不存在: " + str(target_id))
     if target["fromNodeId"] != parent_source_node_id:
         raise ValueError("汇合目标的来源场景不匹配: " + target["fromNodeId"])
-    if not all(rejoin_thread_is_open(thread, parent_open_threads, parent_state) for thread in target["requiredOpenThreads"]):
+    if not all(rejoin_thread_is_open(thread, parent_open_threads) for thread in target["requiredOpenThreads"]):
         raise ValueError("汇合目标缺少必要未解线索: " + target["id"])
+    if target.get("requiredState") and not state_matches(target["requiredState"], parent_state):
+        raise ValueError("汇合目标不满足必要状态: " + target["id"])
     beat = find_beat(package, target["targetBeatId"])
     if beat["nodeId"] != target_node_id:
         raise ValueError("汇合目标场景与受控路线不一致: " + target["id"])
@@ -239,28 +423,17 @@ def resolve_rejoin(
     return {"id": target["id"], "targetBeatId": target["targetBeatId"]}
 
 
-def rejoin_thread_is_open(required_thread: str, open_threads: List[str], state: Dict[str, Any]) -> bool:
-    """Match declared rejoin prerequisites without treating reader-facing prose as IDs."""
-    if required_thread in open_threads:
-        return True
-    normalized = normalize(required_thread)
-    if "证据" in normalized:
-        return state["evidenceStatus"] == "unsecured"
-    if "唐栖" in normalized or "救援" in normalized:
-        return state["tangStatus"] != "rescued"
-    if "水位" in normalized or "积水" in normalized:
-        return state["waterLevel"] == "rising"
-    if "信号室" in normalized:
-        return state["signalRoomStatus"] == "locked"
-    if "列车" in normalized or "放行" in normalized:
-        return state["trainStatus"] == "pending_release"
-    return False
+def rejoin_thread_is_open(required_thread: str, open_threads: List[str]) -> bool:
+    """Rejoin prerequisites are package-declared thread identifiers, not prose heuristics."""
+    return required_thread in open_threads
 
 
 def assert_published_directions(package: Dict[str, Any], source_node_ref: str, state: Dict[str, Any], directions: List[Dict[str, Any]]) -> None:
     """Validate announced choices before a player can choose them on the next turn."""
     parent = {"sourceNodeRef": source_node_ref, "branchState": state}
     for direction in directions:
+        if direction.get("directionLevel") == "arc":
+            continue
         provisional = copy.deepcopy(state)
         provisional.update({key: value for key, value in direction["statePatch"].items() if key != "derivedAdditions"})
         target_node_ref = resolve_source_node(package, parent, provisional, direction)
@@ -296,16 +469,6 @@ def controlled_scene_directions(package: Dict[str, Any], source_node_ref: str, s
     return []
 
 
-SOURCE_FOLLOWUP_BEATS = {
-    # Divergent source choices have no canonical beat themselves. Their
-    # subsequent menus are nevertheless declared by a StoryPackage beat.
-    "direction_rescue_first": "beat_tunnel_without_proof",
-    "direction_lower_water_without_proof": "beat_valve_without_proof",
-    "direction_open_signal_room_without_proof": "beat_ending_rescue_without_proof",
-    "direction_return_for_records": "beat_evidence_secured",
-}
-
-
 def controlled_followup_directions(
     package: Dict[str, Any],
     selected: Dict[str, Any],
@@ -321,7 +484,7 @@ def controlled_followup_directions(
     """
     if state["storyScope"] != "source":
         return None
-    beat_id = selected.get("canonicalBeatId") or SOURCE_FOLLOWUP_BEATS.get(selected["id"])
+    beat_id = selected.get("followupBeatId") or selected.get("canonicalBeatId")
     if beat_id:
         beat = find_beat(package, beat_id)
         if matches_storypackage_state(initial_branch_state(beat), state):
@@ -431,8 +594,6 @@ def source_continuity_context(package: Dict[str, Any], lineage: List[Dict[str, A
         holder = item.get("initialHolderId")
         if holder in character_by_id:
             facts.append(f"{character_by_id[holder]}持有{item['name']}")
-    if state.get("hasLockerToken"):
-        facts.append("许川已取得十七号柜铜牌")
     for item in state.get("derivedItems", []):
         facts.append("分支登记物品：" + item["name"] + "（" + item["summary"] + "）")
     excerpts: List[str] = []
@@ -495,6 +656,18 @@ def state_character_locations(package: Dict[str, Any], state: Dict[str, Any]) ->
     return result
 
 
+def focal_character_location_field(package: Dict[str, Any], state: Dict[str, Any]) -> Optional[str]:
+    """Return the package-declared state field for the focal character's location."""
+    focal_id = package.get("world", {}).get("narrativeGuidelines", {}).get("focalCharacterId")
+    if not isinstance(focal_id, str):
+        focal_id = package.get("initialState", {}).get("player", {}).get("characterId")
+    positions = state_character_locations(package, state)
+    for position in positions.values():
+        if position["characterId"] == focal_id:
+            return position["stateField"]
+    return "playerLocationId" if "playerLocationId" in state else None
+
+
 def state_character_location_context(package: Dict[str, Any], state: Dict[str, Any]) -> str:
     positions = state_character_locations(package, state)
     if not positions:
@@ -522,8 +695,8 @@ def guard_character_final_locations(text: str, package: Dict[str, Any], state: D
     registered_locations = list(by_id(package.get("locations", [])).values()) + state.get("derivedLocations", [])
     narration = narration_outside_dialogue(text)
     sentence_list = [sentence for sentence in re.split(r"[。！？\n]+", narration) if sentence.strip()]
-    # Static scene-setting (for example, "姜序在候车厅尽头停下") can be
-    # an intermediate point before the character follows someone elsewhere.
+    # Static scene-setting can be an intermediate point before the character
+    # follows someone elsewhere.
     # Only an explicit arrival or return names a final location by itself.
     movement = r"(?:位于|回到|返回|回|来到|走进|进入|抵达|赶到)"
     for name, expected in locations.items():
@@ -540,7 +713,7 @@ def guard_character_final_locations(text: str, package: Dict[str, Any], state: D
                     sentence,
                 )
                 named_placement = re.search(
-                    rf"{re.escape(location_name)}(?:里|内|中|外|门前)(?:[，、：: ]{{0,3}}){re.escape(name)}",
+                    rf"{re.escape(location_name)}(?:里|内|中)(?:只|正|还|就)?(?:有|站着|坐着|躲着|是)?{re.escape(name)}",
                     sentence,
                 )
                 if direct_move or named_placement:
@@ -563,35 +736,18 @@ def guard_narrative(
     narration = re.sub(r"\s+", "", narration_outside_dialogue(text))
     perspective = (narrative_guidelines or {}).get("perspective", "third_person_limited")
     if perspective == "third_person_limited" and re.search(r"(?:^|[。！？；])你(?:[在正又也还将把向从的]|[\u4e00-\u9fff])", narration):
-        raise ValueError("剧情正文视角错误：叙事必须使用第三人称许川，不能把玩家写成“你”。")
-    if state["trainStatus"] == "pending_release" and any(word in normalized for word in ("列车已经离站", "末班列车离开", "列车驶离", "列车发车")):
-        raise ValueError("剧情正文与已确认状态矛盾：列车仍在等待放行，正文不能描写列车已经进站、离站或发车。")
-    if state["signalRoomStatus"] == "locked" and (
-        "唐栖走出信号室" in normalized
-        or re.search(r"唐栖.{0,24}(?:从|经由).{0,16}(?:信号室|通风口).{0,12}(?:爬出|钻出|走出|逃出|离开)", normalized)
-        or re.search(r"唐栖.{0,40}(?:跨出|走出|逃出|离开).{0,8}(?:门|门口|门缝)", normalized)
-        or re.search(r"唐栖.{0,20}(?:在|位于|待在|站在|蹲在|出现在|进入|来到|走进|走到).{0,12}设备间", normalized)
-        or re.search(r"设备间(?:里|内|中).{0,20}唐栖", normalized)
-    ):
-        raise ValueError("剧情正文与已确认状态矛盾：信号室仍锁闭，唐栖不能自行离开或出现在设备间。")
-    if state["tangStatus"] != "rescued" and any(word in normalized for word in ("唐栖已经获救", "唐栖回到候车厅")):
-        raise ValueError("剧情正文与已确认状态矛盾：唐栖尚未获救。")
-    if state["evidenceStatus"] == "unsecured":
-        secured_evidence_terms = ("证据已经保全", "证据已保全", "录音已经取得", "录音已取得", "证据有了", "拿到证据", "录下来了")
-        recorder_is_held = re.search(
-            r"(?:拿到|取得|取出|持有|携带|带走|收好|贴身收好|保全|攥着|拿着)[^。！？；，、]{0,12}录音笔"
-            r"|录音笔[^。！？；，、]{0,12}(?:拿到|取得|取出|持有|携带|带走|收好|贴身收好|保全)",
-            normalized,
-        )
-        if any(term in normalized for term in secured_evidence_terms) or recorder_is_held:
-            raise ValueError("剧情正文与已确认状态矛盾：证据尚未取得。")
+        focal_name = "焦点人物"
+        if package is not None:
+            focal_id = (narrative_guidelines or {}).get("focalCharacterId")
+            focal_name = next((item["name"] for item in package.get("characters", []) if item["id"] == focal_id), focal_name)
+        raise ValueError(f"剧情正文视角错误：叙事必须使用第三人称{focal_name}，不能把玩家写成“你”。")
     if package is not None:
+        for assertion in package.get("stateModel", {}).get("narrativeAssertions", []):
+            if state_matches(assertion["when"], state) and any(
+                re.search(pattern, normalized) for pattern in assertion["forbiddenPatterns"]
+            ):
+                raise ValueError(assertion["message"])
         guard_character_final_locations(text, package, state)
-    # Reject only direct known-detail inversions. New appearances stay allowed;
-    # identity may be intentionally withheld until later chapters.
-    for detail in character_details:
-        if "深蓝" in detail["detail"] and (detail["name"] + "穿着浅色") in normalized:
-            raise ValueError(f"剧情正文与已确认人物细节矛盾：{detail['name']} 的衣着描述不一致。")
 
 
 def guard_source_character_names(text: str, package: Dict[str, Any], state: Dict[str, Any], additions: Optional[Dict[str, List[Dict[str, Any]]]] = None) -> None:
@@ -639,32 +795,34 @@ def guard_source_character_names(text: str, package: Dict[str, Any], state: Dict
             raise ValueError("剧情正文引入了未登记的新人物姓名: " + candidate)
 
 
-def narrative_state_guardrails(state: Dict[str, Any]) -> str:
+def narrative_state_guardrails(package: Dict[str, Any], state: Dict[str, Any]) -> str:
     """Render the state facts a planner must preserve in its single draft."""
     rules = [
         "- 正文必须从本回合的已确认状态开始；只能描写本回合选择已经导致的变化，不能预支下一次方向的结果。",
         "- 状态中的地点、人物状态、道具归属和已发生事件均为事实；可补充合理过程、细节、新角色或新地点，但不得改变这些事实。",
     ]
-    if state.get("trainStatus") == "pending_release":
-        rules.append("- 列车仍在等待放行；不能写列车已经进站、离站、发车或驶离。")
-    if state.get("signalRoomStatus") == "locked" and state.get("tangStatus") != "rescued":
-        rules.append(
-            "- 唐栖仍被困在锁闭的信号室内。她可以隔门回应、敲击，或通过既有门缝与外部交流；"
-            "不能自行走出、爬出、钻出、逃出或离开信号室，也不能出现在设备间、通风口外或其他地点。"
-        )
-    if state.get("tangStatus") != "rescued":
-        rules.append("- 唐栖尚未获救；不能写她已获救、回到候车厅或与许川一同行动。")
-    if state.get("evidenceStatus") == "unsecured":
-        rules.append(
-            "- 证据尚未取得。可写人物寻找、讨论或怀疑录音和记录，"
-            "但不能写任何人已拿到、取出、持有、带走、收好、保全录音笔、录音或可用证据。"
-        )
+    for assertion in package.get("stateModel", {}).get("narrativeAssertions", []):
+        if state_matches(assertion["when"], state):
+            rules.append("- " + assertion["instruction"])
     return "\n".join(rules)
 
 
 def normalize_narrative_text(text: str) -> str:
     """Recover paragraph breaks double-escaped by incompatible model gateways."""
     return text.replace("\\\\r\\\\n", "\n").replace("\\\\n", "\n").replace("\\\\r", "\n")
+
+
+def plain_model_narrative(content: str) -> str:
+    """Reject a structured response instead of persisting it as chapter prose."""
+    narrative = normalize_narrative_text(content).strip()
+    if narrative.startswith(("{", "[")):
+        try:
+            json.JSONDecoder().raw_decode(narrative)
+        except json.JSONDecodeError:
+            pass
+        else:
+            raise LlmError("LLM 正文接口只接受小说文本，不能返回 JSON", "model_output_rejected")
+    return narrative
 
 
 def narrative_character_count(text: str) -> int:
@@ -753,141 +911,101 @@ class MockPlanner(Planner):
             narrative += self._chapter_extension(context["package"], selected, resolved_state)
         next_directions = self._next(context, selected, resolved_state)
         result = plan_result(context, selected, narrative, title, next_directions, "medium")
+        result["planning"]["narrativeOrigin"] = "mock_structural_fixture"
         if stream:
             stream(narrative)
         return result, None
 
     def _narrative(self, package: Dict[str, Any], selected: Dict[str, Any], state: Dict[str, Any]) -> str:
-        direction_id = selected["id"]
-        if direction_id == "direction_rescue_first":
-            return (
-                "姜序把通行证攥在掌心，先穿过候车厅最暗的一段走廊。许川跟在他身后，没有再回头看陈砚。"
-                "消防通道的锁舌果然没有扣紧，门缝里涌出的冷气带着铁锈和海水的味道，像把整座车站的雨声都压进了地下。\n\n"
-                "维修隧道的坡道向下延伸，积水已经没过鞋面。姜序用应急灯扫过墙上的旧编号，提醒许川避开右侧的电缆槽；"
-                "许川则把铜牌按进内袋，知道自己现在没有录音、没有图纸，只有赶在水位继续上涨前确认唐栖仍能回应。\n\n"
-                "拐过弯后，绿漆铁门出现在隧道尽头。门没有打开，门缝里却透出一线微弱的灯光。许川敲了三下，里面很快传来同样的回应。"
-                "唐栖仍被困在锁闭的信号室内，但她还醒着；这让救援从猜测变成了眼前必须解决的障碍。\n\n"
-                "姜序站在门侧，望着被水汽锈住的滑栓，声音低得几乎被水声盖过：先让水退下去，才有余地处理这扇门。"
-                "许川看向隧道入口，远处的广播仍在催促列车放行。他们已经进入救援路线，却还没有取得足以对抗陈砚的证据。"
-            )
-        if direction_id in ("direction_lower_water_with_proof", "direction_lower_water_without_proof"):
-            evidence_note = "录音与维修图纸被许川贴身收好，" if state["evidenceStatus"] == "secured" else "站务室里的录音和维修图纸仍未取得，"
-            return (
-                "姜序跪在锈死的手动阀旁，用肩膀顶住湿滑的管壁。许川扶住阀杆，两人合力把卡滞的金属一点点拧开。"
-                "起初只有沉闷的摩擦声，随后排水沟深处传来一阵持续的轰响，积水终于开始向更低处退去。\n\n"
-                "水面从膝侧退到脚背，露出被淹没的检修编号和散落的碎石。许川没有把这当成救援已经完成；"
-                "信号室的门仍锁着，唐栖隔着门板的回应提醒他们，真正的阻碍还在前面。\n\n"
-                + evidence_note
-                + "许川因此不能把下一步只当成一次破拆。他要决定是马上处理滑栓，还是冒险让其中一人折返，"
-                "在列车放行压力再次逼近前补上这条证据缺口。\n\n"
-                "姜序擦去手背上的污水，把应急灯照向那扇绿漆铁门。门前的水流已经缓下来，隧道却没有变得安全。"
-                "许川听见门后一次短促的敲击，便知道这一回合争取到的是时间，而不是答案。"
-            )
-        if direction_id == "direction_return_for_records":
-            return (
-                "许川把隧道里的应急灯交给姜序，沿原路折返站务室。积水在身后发出持续的回响，提醒他这趟折返并不是放弃救援，"
-                "而是要带回足以让陈砚无法再把危险说成误会的东西。\n\n"
-                "十七号柜仍开着。许川取出录音笔和维修图纸，把调度记录上的异常时间逐项拍下；每确认一项，"
-                "他都更清楚唐栖为何会被困在信号室。证据终于有了可保全的形状，也让下一次回到隧道不再只是凭猜测行事。\n\n"
-                "候车厅方向传来模糊的广播，列车依旧等待放行。姜序已经先回到候车厅，"
-                "替唐栖争取的那点余地仍需要许川尽快带着证据去兑现。\n\n"
-                "许川把录音笔贴进内袋，关上柜门。现在他既要把证据带回人前，也必须尽快回到信号室门前；"
-                "这两件事都不能再交给下一场雨来决定。"
-            )
-        if direction_id == "direction_derivative_start":
-            return (
-                "站务室的门在身后合上，雨声被隔成一层遥远的底噪。许川把湿透的记录摊在桌上，唐栖坐到调度终端旁，"
-                "先把还能辨认的时间和编号抄进新的笔记本。两人都没有把这一夜当成已经结束的故事。\n\n"
-                "唐栖的手背仍留着擦伤，却坚持逐页核对采购单。许川替她换掉被水浸软的纸垫，发现那些看似零散的数字"
-                "开始指向同一条未核实的责任链：有人知道设备会坏，也有人一直从记录里抹去警告。\n\n"
-                "站外的列车还停在雨里，候车厅偶尔传来乘客的说话声。这里暂时安全，但安全并不等于可以遗忘；"
-                "他们需要先把手里已有的事实整理清楚，才能决定是否追查匿名线索。\n\n"
-                "许川合上最上面那份记录，和唐栖确认下一步只做一件事：从可核验的细节开始，"
-                "不让新的目标反过来改写已经留下的证据。"
-            )
         location = location_name(package, state)
+        focal_id = package.get("world", {}).get("narrativeGuidelines", {}).get("focalCharacterId")
+        focal = next((item["name"] for item in package.get("characters", []) if item["id"] == focal_id), "焦点人物")
+        companions = [name for name, position in state_character_locations(package, state).items()
+                      if name != focal and position["locationName"] == location]
+        companion_text = "、".join(companions) if companions else "身边的人"
+        node_id = next((item.get("nodeId") for item in package["story"]["narrativeGraph"]["beats"]
+                        if item.get("branchState") == {key: value for key, value in state.items() if key not in BRANCH_PRIVATE_STATE_KEYS}), None)
+        node = next((item for item in package["story"].get("nodes", []) if item["id"] == node_id), {})
+        objective = node.get("objective", package["story"].get("longTermGoal", "当前目标"))
+        pressure = node.get("pressure", {}).get("effect", "仍在累积的压力")
         return (
-            f"{location}里的声响没有因为许川作出“{selected['title']}”的选择而停下来。"
-            "他先重新确认脚下的路线和仍未完成的目标，再把决定告诉身边的人，避免把下一步写成已经解决的结局。\n\n"
-            "潮湿的空气里混着机油、雨水和旧纸张的味道。有人守着入口，有人留意远处的动静；"
-            "许川从这些细节里判断出，眼前能推进的并不是一句笼统的承诺，而是一项必须承担后果的行动。\n\n"
-            "行动推进后，已经确认的状态没有被叙述替换：尚未拿到的证据仍需取得，尚未打开的门仍需处理，"
-            "还在等待的列车也没有突然离开。新的压力因此变得更清晰，而不是被一段漂亮的收束掩盖。\n\n"
-            "许川把注意力放回下一项具体选择上。他知道下一回合应该决定谁去做、去哪里做，以及完成后会改变什么，"
-            "而不是让故事跳过那些仍在眼前的障碍。"
+            f"{location}没有因为“{selected['title']}”这个决定而立刻安静下来。{focal}先停住脚步，"
+            f"和{companion_text}确认眼前能够看见的路径、工具与风险；他们知道这一回合只推进已选择的事情，不能替下一步预支结果。\n\n"
+            f"当前要解决的是“{objective}”。这个方向界定了本回合推进的范围，{focal}没有把它当作保证，"
+            "而是把它拆成能核验的判断：谁在场，地点是否可达，已确认的线索还缺少什么，以及一旦受阻应当如何留下退路。\n\n"
+            "周围的细节仍在提醒他们，叙事不能替代事实。已经发生的变化可以被看见、被讨论，也可以带来新的情绪和阻力；"
+            "尚未确认的人、物、地点和结果则必须继续保持悬而未决。任何看似省事的跳跃，都会让之后的选择失去可追溯的依据。\n\n"
+            f"{focal}把注意力从笼统的愿望收回到当前动作上。{companion_text}各自保留了不同的顾虑，"
+            "却都同意先把能确认的部分做扎实：检查环境、说明限制、记录变化，并让新的方向真正对应一个尚未完成的问题。\n\n"
+            f"场景之外的{pressure}没有消失。{focal}因此没有宣布胜利，也没有替任何人作出未经选择的承诺；"
+            "他只确认这一步已经改变了什么，并把其余问题留给下一次明确的决定。"
         )
 
     def _chapter_extension(self, package: Dict[str, Any], selected: Dict[str, Any], state: Dict[str, Any]) -> str:
         location = location_name(package, state)
-        water = {"rising": "仍在上涨", "lowered": "已经退到较低处"}.get(state.get("waterLevel"), "仍需确认")
-        evidence = "仍未取得" if state.get("evidenceStatus") == "unsecured" else "已经保全"
-        train = {"pending_release": "仍在等待放行", "held": "已经被暂缓放行", "departed": "已经离站"}.get(state.get("trainStatus"), "状态未明")
-        tang = (
-            "唐栖已经脱离即时危险，但她留下的记录仍需要被完整核验。"
-            if state.get("tangStatus") == "rescued"
-            else "唐栖仍未获救；每一次隔门的回应都只能证明她还在，不能替代真正的救援。"
-        )
-        signal = "信号室仍是锁闭状态，滑栓和门框的处理不能被跳过。" if state.get("signalRoomStatus") == "locked" else "信号室已经打开，眼前的重点转为带人离开、保存记录与应对站内反应。"
+        focal_id = package.get("world", {}).get("narrativeGuidelines", {}).get("focalCharacterId")
+        focal = next((item["name"] for item in package.get("characters", []) if item["id"] == focal_id), "焦点人物")
         return (
-            f"\n\n{location}里的光线并不稳定。许川停下脚步，让眼睛适应应急灯忽明忽暗的节奏；"
-            "墙面上的盐霜、管道上的水珠和地面被冲散的纸屑，都让这里看上去像一处被人刻意遗忘的角落。"
-            "他没有急着替任何人下结论，只先辨认脚下的水流、能够借力的墙面，以及一旦发生意外可以退回的方向。\n\n"
-            f"“{selected['title']}”并没有让此前的压力自动消失。积水{water}，证据{evidence}，"
-            f"列车{train}。这些状态并不是背景说明，而是每个人说话、停顿和犹豫时都绕不开的限制。"
-            "许川把它们逐一记在心里，避免因为眼前出现一点转机，就把尚未兑现的结果写成既成事实。\n\n"
-            "姜序的手始终没有离开通行证和应急灯。他不再像候车厅里那样只用沉默回避问题，"
-            "却也没有突然变成能解决一切的人。每当远处传来金属受力的轻响，他都会先听一会儿，"
-            "再说明哪一段管线可能仍在通电、哪一处积水不能贸然踩过去。许川听得出，这些提醒既是经验，也是迟来的愧疚。\n\n"
-            f"{tang}许川没有把这句话说出口，只把注意力放到能够确认的细节上："
-            "回应从哪里传来，声音是否还清醒，门、阀门或通道究竟需要怎样的处理。这样做不会让局面立刻变好，"
-            "却能让下一步不至于建立在误听、猜测或陈砚留下的说辞上。\n\n"
-            "隧道深处偶尔传来水泵吃力运转的闷响，像一台随时会停下的旧机器。许川想起唐栖最早那段语音，"
-            "也想起陈砚在候车厅里过分平稳的语气。两件事之间仍隔着许多没有核实的记录，"
-            "但他已经能看见其中共同的轮廓：有人知道风险存在，却希望所有人继续把它当成小事。\n\n"
-            f"{signal}许川没有伸手去做尚未选定的下一步，也没有让姜序替他作出承诺。"
-            "他们先检查现有条件，确认眼前动作真正会改变什么，随后才把新的问题摆到台面上。"
-            "这让场景里的紧张感没有消退，反而变得具体：时间在流失，水声在靠近，而每一次选择都会留下可以追溯的后果。\n\n"
-            "远处的广播被厚墙削得模糊，只能听见断续的电流杂音。站内其他人未必了解这里发生了什么，"
-            "也知道陈砚可能正在利用这种信息差拖延、施压或掩盖。可他不能为了追上对方的节奏而牺牲已经确认的事实；"
-            "无论是救人还是取证，最后都必须经得起回看。\n\n"
-            "他看向姜序。两人之间没有再多说漂亮的话，只把下一项能够完成的行动说清楚：谁留意危险，"
-            "谁承担工具和路线，完成以后又该怎样确认结果。这样的分工并不保证安全，却让他们不必靠夸张的勇敢掩盖准备不足。\n\n"
-            "姜序把应急灯抬高了一点，光圈沿着墙根缓慢扫过去，照出几道新旧不一的划痕。"
-            "他没有断言那些痕迹属于谁，只指出其中有几道的高度与水线接近，可能是有人在视线很差的时候留下的记号。"
-            "许川蹲下去看了片刻，先确认记号没有通向明显的危险处，才示意姜序把这个细节记住。"
-            "他们都明白，一条可疑的痕迹不是答案；它最多只能换来一个值得继续核验的问题。\n\n"
-            "“别把我当成已经知道路的人。”姜序忽然说。他的声音压得很低，几乎被管道里的杂音盖住，"
-            "“我只能告诉你以前的检修习惯，至于现在还有没有人改动过，必须亲眼看见。”"
-            "许川点头，没有把这句话当成推脱。正因为姜序承认自己的边界，他们才可以把能确认的部分和只能猜测的部分分开，"
-            "也避免在焦急时把一段旧经验误当成当前的保证。\n\n"
-            "短暂的安静里，水滴一下一下落在金属边缘，声音比先前更清楚。许川重新检查手边能够使用的物件，"
-            "确认它们没有被水浸坏，也确认没有谁为了图快而把不该带走的东西塞进口袋。"
-            "这些琐碎的确认看似拖慢了脚步，却让两人保留了随时后退、互相说明和纠正判断的余地。"
-            "在这样狭窄的地方，真正危险的往往不是走得慢，而是误以为自己已经没有必要再检查。\n\n"
-            "许川把目光从脚边移开，等姜序也准备好之后，才让两人的注意力重新回到当前方向。"
-            "他们没有承诺接下来一定会顺利，也没有把尚未发生的转机提前说成胜利；"
-            "但至少此刻，他们知道该带着什么问题继续、该避开什么风险，以及一旦听见新的回应应该先确认什么。"
-            "这份克制没有让雨夜变得轻松，却让前方的路不再只剩下盲目的冲动。\n\n"
-            "雨声仍从看不见的出口灌进来。许川没有把眼前的进展误认成结局，而是重新核对仍受状态约束的人、地点和证据，"
-            "把注意力留给下一项真正能够改变局面的选择。他也明白，任何看似省时的捷径都会留下新的代价；"
-            "只有把已经确认的进展守住，下一步的风险才值得承担。"
+            f"\n\n{location}中的光线、声音和气味都在不断提醒{focal}：环境并不会为叙事让路。"
+            "他先检查能够使用的物件、可撤回的路径和身边人的反应，再决定是否继续把风险交给下一步。"
+            "这种确认并不华丽，却让每一项变化都有来源，也让角色的犹豫、分歧和承担能够落在具体事实之上。\n\n"
+            f"内容包为此刻声明的状态边界仍然有效。{focal}没有把这些限制当作背景说明，"
+            "而是把它们带进每一次观察和对话：什么已经得到证实，什么还只是推测，什么必须等到玩家明确选择后才能发生。\n\n"
+            "短暂的安静没有消除压力，反而让未解的问题显出轮廓。有人提出可能的办法，也有人指出其代价；"
+            "他们因此把计划拆开，先核实最接近当前场景的细节，再保留对后续走向的判断。这样，故事可以继续推进，"
+            "却不会用一句方便的结论覆盖仍未解决的因果。\n\n"
+            f"{focal}听完不同意见，没有立刻选择最省力的一条路。他先让每个人说明自己真正看见了什么，"
+            "哪些判断来自经验，哪些只是为了安慰彼此而作出的推断。说清这些差异并不会削弱场景的紧张，"
+            "反而让每个人承担的风险变得可以辨认：有人负责留意环境变化，有人负责保管已有线索，"
+            "有人则必须在条件不足时承认暂时无法继续。\n\n"
+            f"在{location}里，细节从来不是装饰。脚步停在什么位置、工具是否还能使用、"
+            "一句迟疑是否意味着有人隐瞒了信息，都会改变下一步的代价。"
+            f"{focal}把这些变化逐一记下，不把它们夸大成答案，也不因为暂时没有答案就把它们忽略。"
+            "故事由此保留了继续追问的空间，而不是把读者和角色一同推向没有依据的结论。\n\n"
+            "身边的人也在这种克制中显出各自的位置。有人愿意提供帮助，却不一定能替别人承担后果；"
+            "有人掌握片段信息，却仍需要被核验；有人看似沉默，也可能正在衡量自己是否该承担此前回避的责任。"
+            "这些关系不会因为一次选择自动变得可靠，只能在可被看见的行动和回应中慢慢改变。\n\n"
+            f"{focal}没有催促谁立刻给出承诺。他让场景保持足够的停顿，先确认眼前的变化已经被共同看见，"
+            "再说明这一回合到此为止。这样做不是拖延，而是避免把下一次行动的门槛偷偷藏进已经完成的叙述里。"
+            "只有当玩家明确选择新的方向，人物才会跨过那条边界，承担随之而来的新事实。\n\n"
+            "远处的动静仍在持续，时间和外部压力也没有停止计算。可角色已经不再只是在等待一个偶然的转机；"
+            "他们知道应当带着什么问题进入下一段场景，也知道哪些事实必须在转身前被守住。"
+            "这种明确并不保证结果，却让每一次失败、让步或收获都有能够回看的原因。\n\n"
+            f"{focal}又回头看了一眼{location}。那些看似无关紧要的痕迹仍然留在原处："
+            "被反复使用过的边角、被匆忙挪开的物件、说到一半便停住的话。它们未必立刻构成线索，"
+            "却提醒每个人，真正可靠的判断需要允许自己暂时不知道。角色可以提出怀疑，可以调整计划，"
+            "也可以承认此前的选择并不充分；唯一不能做的，是为了尽快结束场景而把不确定性伪装成确定事实。\n\n"
+            "于是他们把刚才发生的事重新说了一遍，确认谁看见了什么、谁承担了什么、哪些变化已经留在现场。"
+            "这段复盘没有让气氛松弛，反而让原先模糊的风险有了轮廓。每个人都明白，下一次选择不仅会推动目标，"
+            "也会决定关系是否值得信任、资源是否还能使用，以及后来的人将如何理解这一刻的因果。\n\n"
+            f"{focal}没有要求所有人达成同一种解释。他只要求下一步能够被清楚地说出来："
+            "目的是什么，边界在哪里，行动失败后谁需要负责收拾后果。这样的约定让人物仍有分歧，"
+            "却不必靠误解或突然出现的万能答案维持冲突。它也给读者留下了判断的余地，"
+            "让接下来的方向成为真正的选择，而不是早已被正文替代完成的程序。\n\n"
+            "在重新出发之前，他们没有再增加新的事实，只把已知信息按轻重放回心里："
+            "眼前能够处理的障碍、尚待核验的说法，以及一旦局势变化就必须优先回应的人。"
+            "这份排序并不替代行动，却让行动拥有了清晰的起点。\n\n"
+            f"{focal}最后重新确认“{selected['title']}”只完成了本回合应完成的部分。"
+            "他把余下的问题留在可选择的方向里，让下一次行动决定谁去做、在哪里做，以及它究竟会改变什么。"
         )
 
     def _next(self, context: Dict[str, Any], selected: Dict[str, Any], state: Dict[str, Any]) -> List[Dict[str, Any]]:
-        package = context["package"]
-        source_node_ref = resolve_source_node(package, context["parent"], state, selected)
-        controlled = controlled_followup_directions(package, selected, source_node_ref, state)
-        if controlled is not None:
-            return controlled
-        if state["storyScope"] == "derived":
-            turn = state["derivedTurn"]
-            if turn == 1:
-                return [derived_direction("direction_derivative_follow_lead", "暂离车站并跟进线索", "带唐栖到安全住处整理细节，再核验匿名线索。", {"derivedTurn": 2, "playerLocationId": "location_derivative_shelter", "tangLocationId": "location_derivative_shelter", "derivedAdditions": {"locations": [{"id": "location_derivative_shelter", "name": "临时落脚处", "summary": "离开车站后整理线索的住处。"}], "characters": [{"id": "character_unidentified_contact", "name": "未署名联系人", "summary": "暂不透露身份的线索提供者。"}], "characterReveals": []}})]
-            if turn == 2:
-                return [derived_direction("direction_derivative_ask_identity", "核验联系人身份", "先判断新线索是否可信，并决定是否接受对方透露的名字。", {"derivedTurn": 3, "derivedAdditions": {"locations": [], "characters": [], "characterReveals": [{"characterId": "character_unidentified_contact", "name": "罗峥", "summary": "自称掌握相似项目编号线索的人；背景与动机仍待核验。"}]}})]
-            if turn == 3:
-                return [derived_direction("direction_derivative_verify_clue", "核验初步线索", "带着已知细节赴约，先核验项目编号与责任链。", {"derivedTurn": 4, "playerLocationId": "location_derivative_meeting_point", "tangLocationId": "location_derivative_meeting_point", "derivedAdditions": {"locations": [{"id": "location_derivative_meeting_point", "name": "约定会面处", "summary": "许川、唐栖与罗峥核验线索的会面地点。"}], "characters": [], "characterReveals": []}})]
-        return []
+        return scripted_followup_directions(context, selected, state)
+
+
+def scripted_followup_directions(
+    context: Dict[str, Any], selected: Dict[str, Any], state: Dict[str, Any],
+) -> List[Dict[str, Any]]:
+    """Publish only StoryPackage-defined choices after a completed chapter."""
+    package = context["package"]
+    source_node_ref = resolve_source_node(package, context["parent"], state, selected)
+    controlled = controlled_followup_directions(package, selected, source_node_ref, state)
+    if controlled is not None:
+        return controlled
+    for template in package.get("stateModel", {}).get("mockFollowups", []):
+        if state_matches(template.get("when", {}), state):
+            return [branch_direction(item) for item in template["nextDirections"]]
+    return []
 
 
 def derived_direction(identifier: str, title: str, summary: str, patch: Dict[str, Any]) -> Dict[str, Any]:
@@ -904,33 +1022,30 @@ class LlmPlanner(Planner):
         observations: List[Dict[str, Any]] = []
         rejected_narrative_characters: Optional[int] = None
         source_node_ref = resolve_source_node(context["package"], context["parent"], resolved_state, selected)
-        controlled_directions = controlled_followup_directions(
-            context["package"], selected, source_node_ref, resolved_state,
-        )
-        observer = NarrativeFieldStream(stream)
         prompt = self._prompt(
             context, selected, resolved_state, repair,
-            terminal_source_branch=controlled_directions == [],
+            terminal_source_branch=controlled_followup_directions(
+                context["package"], selected, source_node_ref, resolved_state,
+            ) == [],
         )
         try:
-            completion = self.gateway.complete_json(
-                [{"role": "system", "content": "你是中文互动小说叙事规划器。只输出一个 JSON 对象。"}, {"role": "user", "content": prompt}],
-                observer.feed if stream else None,
+            completion = self.gateway.complete_text(
+                [{"role": "system", "content": "你是中文互动小说叙事者。只输出小说正文。"}, {"role": "user", "content": prompt}],
+                stream,
                 stream_reset,
             )
             raw_responses.append(completion.raw_response)
             observations.extend({**item, "generationStage": "initial"} for item in completion.observations)
-            result = parse_json_content(completion.content)
-            if not isinstance(result.get("narrativeText"), str) or not result["narrativeText"].strip():
-                raise LlmError("LLM 剧情结果缺少 narrativeText", "model_output_rejected")
-            result["narrativeText"] = normalize_narrative_text(result["narrativeText"])
-            rejected_narrative_characters = narrative_character_count(result["narrativeText"])
+            narrative = plain_model_narrative(completion.content)
+            if not narrative:
+                raise LlmError("LLM 剧情正文为空", "model_output_rejected")
+            rejected_narrative_characters = narrative_character_count(narrative)
             if rejected_narrative_characters < self.minimum_narrative_characters:
-                continuation_completion = self.gateway.complete_json(
+                continuation_completion = self.gateway.complete_text(
                     [
-                        {"role": "system", "content": "你是中文互动小说续写器。只输出一个 JSON 对象。"},
+                        {"role": "system", "content": "你是中文互动小说续写器。只输出小说正文。"},
                         {"role": "user", "content": self._continuation_prompt(
-                            context, selected, resolved_state, result["narrativeText"],
+                            context, selected, resolved_state, narrative,
                         )},
                     ],
                     None,
@@ -938,13 +1053,11 @@ class LlmPlanner(Planner):
                 )
                 raw_responses.append(continuation_completion.raw_response)
                 observations.extend({**item, "generationStage": "continuation"} for item in continuation_completion.observations)
-                continuation_result = parse_json_content(continuation_completion.content)
-                continuation = continuation_result.get("narrativeContinuation")
-                if not isinstance(continuation, str) or not continuation.strip():
-                    raise LlmError("LLM 剧情续写结果缺少 narrativeContinuation", "model_output_rejected")
-                continuation = normalize_narrative_text(continuation).strip()
-                result["narrativeText"] += "\n\n" + continuation
-                rejected_narrative_characters = narrative_character_count(result["narrativeText"])
+                continuation = plain_model_narrative(continuation_completion.content)
+                if not continuation:
+                    raise LlmError("LLM 续写正文为空", "model_output_rejected")
+                narrative += "\n\n" + continuation
+                rejected_narrative_characters = narrative_character_count(narrative)
                 initial_was_streamed = stream and (
                     not completion.used_transport_fallback or completion.body_was_streamed
                 )
@@ -955,55 +1068,21 @@ class LlmPlanner(Planner):
                         f"LLM 剧情正文少于 {self.minimum_narrative_characters} 个非空白字符",
                         "model_output_rejected",
                     )
-            branch_additions = validate_branch_additions(context["package"], resolved_state, result.get("branchAdditions"))
-            state_with_additions = resolved_state
-            if has_branch_additions(branch_additions):
-                state_with_additions = apply_branch_patch(
-                    context["package"], resolved_state, {"derivedAdditions": branch_additions}, source_node_ref,
-                )
-            result["branchAdditions"] = branch_additions
             guard_narrative(
-                result["narrativeText"], state_with_additions, context["characterDetails"],
+                narrative, resolved_state, context["characterDetails"],
                 context["package"]["world"].get("narrativeGuidelines"), context["package"],
             )
-            guard_source_character_names(result["narrativeText"], context["package"], state_with_additions, branch_additions)
-            result["summary"] = result.get("summary") if isinstance(result.get("summary"), str) and result["summary"].strip() else selected["summary"]
-            result["factDeltas"] = result.get("factDeltas") if isinstance(result.get("factDeltas"), list) else []
-            result["openThreads"] = [item for item in result.get("openThreads", []) if isinstance(item, str) and item.strip()]
-            if not result["openThreads"]:
-                result["openThreads"] = list(context["parent"].get("openThreads", []))
-            result["planning"] = result.get("planning") if isinstance(result.get("planning"), dict) else {"citations": [], "confidence": "medium", "stateChangeProposals": []}
-            model_directions = valid_model_directions(
-                context["package"], source_node_ref, state_with_additions, result.get("nextDirections"), observations, 1,
-            )
-            if model_directions:
-                result["nextDirections"] = merge_followup_directions(
-                    model_directions, controlled_directions, observations, 1,
-                )
-            elif controlled_directions is not None:
-                result["nextDirections"] = controlled_directions
-                observations.append({"attempt": 1, "outcome": "normalized", "normalization": "replaced_invalid_model_directions_with_storypackage_templates"})
-            elif isinstance(result.get("nextDirections"), list) and not result["nextDirections"]:
-                result["nextDirections"] = []
-            else:
-                raise LlmError("LLM 未提供可发布的后续方向", "model_output_rejected")
-            try:
-                result["storyArc"] = validate_story_arc(result.get("storyArc"))
-            except LlmError:
-                result["storyArc"] = fallback_story_arc(context, selected, result["nextDirections"])
-                observations.append({"attempt": 1, "outcome": "normalized", "normalization": "generated_local_story_arc"})
-            if controlled_directions == []:
-                chapter = result["storyArc"]["chapter"]
-                result["storyArc"] = {
-                    **result["storyArc"],
-                    "goalDisposition": "completed",
-                    "chapter": {**chapter, "status": "complete"},
-                }
-                observations.append({"attempt": 1, "outcome": "normalized", "normalization": "completed_storypackage_terminal_arc"})
+            guard_source_character_names(narrative, context["package"], resolved_state, empty_branch_additions())
+            next_directions = scripted_followup_directions(context, selected, resolved_state)
+            result = plan_result(context, selected, narrative, selected["title"], next_directions, "medium")
+            result["branchAdditions"] = empty_branch_additions()
+            observations.append({"attempt": 1, "outcome": "normalized", "normalization": "generated_scripted_turn_metadata"})
             if completion.used_transport_fallback and stream and not completion.body_was_streamed:
-                stream(result["narrativeText"])
-            return result, {"operation": "branch_planner", "model": self.gateway.model, "promptVersion": "python-v0.6", "requestSummary": selected["title"], "rawResponse": "\n\n".join(raw_responses), "callObservations": observations}
+                stream(narrative)
+            return result, {"operation": "branch_planner", "model": self.gateway.model, "promptVersion": "python-v0.7", "requestSummary": selected["title"], "rawResponse": "\n\n".join(raw_responses), "callObservations": observations}
         except LlmError as error:
+            if error.raw_response:
+                raw_responses.append(error.raw_response)
             observations.extend(error.observations)
             if rejected_narrative_characters is not None:
                 observations.append({
@@ -1021,7 +1100,7 @@ class LlmPlanner(Planner):
                 })
             observations.append({"attempt": 1, "outcome": "failed", "failureKind": "model_output_rejected", "error": str(error)})
         error = LlmError("LLM Planner 未生成可用剧情：" + observations[-1]["error"], observations[-1]["failureKind"])
-        error.audit = {"operation": "branch_planner", "model": self.gateway.model, "promptVersion": "python-v0.6", "requestSummary": selected["title"], "rawResponse": "\n\n".join(raw_responses), "error": observations[-1]["error"], "callObservations": observations, "rejectedNarrativeCharacters": rejected_narrative_characters}
+        error.audit = {"operation": "branch_planner", "model": self.gateway.model, "promptVersion": "python-v0.7", "requestSummary": selected["title"], "rawResponse": "\n\n".join(raw_responses), "error": observations[-1]["error"], "callObservations": observations, "rejectedNarrativeCharacters": rejected_narrative_characters}
         raise error
 
     def _continuation_prompt(
@@ -1033,7 +1112,7 @@ class LlmPlanner(Planner):
     ) -> str:
         current_characters = narrative_character_count(narrative)
         target_characters = max(self.minimum_narrative_characters + 200, 2200)
-        state_guardrail_text = narrative_state_guardrails(state)
+        state_guardrail_text = narrative_state_guardrails(context["package"], state)
         return f"""续写已经生成但篇幅不足的同一章互动小说。不得改写、概述、重复或否定既有正文；只从最后一句之后自然续写。
 
 本回合选择：{selected['title']}。{selected['summary']}
@@ -1043,12 +1122,15 @@ class LlmPlanner(Planner):
 当前状态门槛（不可违反）：
 {state_guardrail_text}
 
-特别注意：若 `evidenceStatus` 为 `unsecured`，录音笔、录音、维修图纸和任何可用证据都仍未取得；只能提及其位置或风险，绝不可写任何人已拿到、查看、持有、使用、保全或带走它们。不得新增会跨回合影响因果的命名人物、地点或物品。以第三人称许川继续，不能使用“你”。
+特别注意：不得新增会跨回合影响因果的命名人物、地点或物品。必须遵守 StoryPackage 声明的叙事视角，不能把焦点人物写成“你”。
 
 已有正文：
 {narrative}
 
-只输出 JSON：{{"narrativeContinuation":""}}。"""
+提交前最后核对（优先级最高；若已有正文的任一句与此冲突，以此为准，绝不可顺着冲突继续写）：
+{state_guardrail_text}
+
+只输出续写正文，不要输出标题、JSON、说明或代码块。"""
 
     def _prompt(
         self,
@@ -1079,13 +1161,7 @@ class LlmPlanner(Planner):
         )
         character_text = "\n".join("- " + item["name"] + "：" + item["detail"] for item in context["characterDetails"]) or "- 暂无额外已确认外观细节"
         continuity_text = source_continuity_context(context["package"], context.get("lineage", [context["parent"]]), state)
-        state_guardrail_text = narrative_state_guardrails(state)
-        evidence_rule = (
-            "本回合 `evidenceStatus` 固定为 `unsecured`。录音笔、录音、维修图纸和任何可用证据都仍未被取得；"
-            "只能写它们的位置、线索或尚待取得的风险，绝不可写任何人已拿到、查看、持有、使用、保全或带走它们。"
-            if state.get("evidenceStatus") == "unsecured"
-            else "本回合证据状态按上列已确认状态继续，不能虚构新的保全或遗失。"
-        )
+        state_guardrail_text = narrative_state_guardrails(context["package"], state)
         character_location_text = state_character_location_context(context["package"], state)
         selected_patch = {key: value for key, value in selected["statePatch"].items() if key != "derivedAdditions"}
         state_transition = {
@@ -1093,22 +1169,29 @@ class LlmPlanner(Planner):
             for key in selected_patch
         }
         state_patch_targets = {key: state.get(key) for key in selected_patch}
+        parent_arc = context["parent"].get("storyArc") or {}
+        arc_instruction = ""
+        if parent_arc.get("arcId"):
+            arc_instruction = (
+                f"当前大方向：{parent_arc['activeGoal']}。当前小方向：{selected['title']}。"
+                "本回合只完成这个小方向对应的一章；运行时会依据 StoryPackage 的完成条件决定"
+                "接下来继续给出小方向，还是切换到新的大方向；章节标题和方向均由运行时生成。"
+            )
         terminal_instruction = (
             "本回合抵达已声明的源分支终点。正文应收束当前即时危机，不能安排还需要本分支立刻执行的新行动，"
-            "也不能用未兑现的道具、约定或命令制造假菜单。`nextDirections` 必须为 []，"
-            "`storyArc.goalDisposition` 必须为 `completed`，`storyArc.chapter.status` 必须为 `complete`。"
+            "也不能用未兑现的道具、约定或命令制造假菜单。"
             "如需继续，只能在本分支结束后另行创建独立衍生故事；正文不得提及命令或系统。"
             if terminal_source_branch
             else "本回合尚未到达声明的源分支终点；只给出与当前状态一致、下一回合可执行的方向。"
         )
-        schema = '{"narrativeText":"", "summary":"", "factDeltas":[], "openThreads":[""], "branchAdditions":{"locations":[],"characters":[],"items":[],"characterReveals":[]}, "nextDirections":[{"id":"","title":"","summary":"","statePatch":{}}], "storyArc":{"activeGoal":"","currentPhase":"","goalDisposition":"continued","chapter":{"title":"","status":"continuing"}}, "planning":{"citations":[{"kind":"branch_node","ref":"' + context["parent"]["id"] + '","rationale":""}],"confidence":"medium","stateChangeProposals":[]}}'
         return f"""根据已确认状态继续中文互动小说。不能改写 StoryPackage，不能凭空让未获得的证据、救援或列车状态发生。
 
 玩家本回合选择：{selected['title']}。{selected['summary']}
 本回合必须在正文中实际完成的状态变化：{json.dumps(state_transition, ensure_ascii=False)}
 本回合结束后的已确认状态：{json.dumps(state, ensure_ascii=False)}
-`nextDirections[].statePatch` 只使用目标原始值：{json.dumps(state_patch_targets, ensure_ascii=False)}。上面的 `from`/`to` 对象只用于说明本回合的状态变化，绝不可复制进 `statePatch`；除 `derivedAdditions` 外，任何 `statePatch` 字段都不得是对象或数组，字段值必须与当前状态中的同名字段类型一致。
-当前证据边界（不可违反）：{evidence_rule}
+正文只可完成上列 `from` 到 `to` 的状态变化；未列出的状态字段必须保持父节点状态，不能把下一方向的开门、救出人物、取得证据、降低水位或阻止放行提前写为已发生。状态、物品、人物、地点、章节名、摘要和后续方向均由运行时处理，你不能输出或声明它们。
+声明式状态断言：满足条件的 StoryPackage 叙事断言均已列入下方状态门槛。
+{arc_instruction}
 原著不可变事实：\n{fact_text}
 世界全局约束：\n{constraint_text}
 叙事禁则：\n{guideline_text}
@@ -1118,18 +1201,18 @@ class LlmPlanner(Planner):
 上一节点摘要：{context['parent']['summary']}
 受控连续性上下文：\n{continuity_text}
 
-写作要求：{perspective_instruction}正文必须实际写出玩家所选行动，以及上列状态变化如何发生；不能只写准备、讨论、寻找或尝试，却把结果留给下一回合。再写出选择造成的阻碍、人物反应和新的具体问题。请规划 2,200 至 2,800 个中文字符的 `narrativeText`，以留出高于 2,000 字硬下限的余量；提交 JSON 前按非空白字符自行计数，少于 2,200 时必须继续补充新的场景、动作、对话或后果，不能重复句子或概述。不要替玩家完成后续选择。公开方向必须是下一步可执行的单一行动。每个 `statePatch` 只能包含相对“已确认状态”发生变化的最少字段，绝不可复制整份当前状态；至少改变一个受支持的状态值，且每个状态字段必须使用已确认状态中的枚举值。
+写作要求：{perspective_instruction}正文必须实际写出玩家所选行动，以及上列状态变化如何发生；不能只写准备、讨论、寻找或尝试，却把结果留给下一回合。再写出选择造成的阻碍、人物反应和新的具体问题。请规划 2,200 至 2,800 个中文字符，以留出高于 2,000 字硬下限的余量；按非空白字符自行计数，少于 2,200 时必须继续补充新的场景、动作、对话或后果，不能重复句子或概述。不要替玩家完成后续选择。
 
-分支扩展规则：StoryPackage 固定不改写，但当前分支可以自然出现新地点、新人物、新物品或延后揭示的身份。若正文第一次以名称写出新人物，必须在 `branchAdditions.characters` 同回合登记其 `character_` 前缀 id、名称和简述；若首次引入会跨回合影响行动、取证或因果的物品、工具、文件、标记或线索，必须在 `branchAdditions.items` 同回合登记其 `item_` 前缀 id、名称和简述，后续只能按该登记继续使用或处置，不能重新定义其来历或能力。新地点仅在它是与已登记地点不同、将跨回合复用或成为人物位置/方向目的地的独立场所时，才可在 `branchAdditions.locations` 同回合登记其 `location_` 前缀 id、名称和简述。既有地点内的通道、角落、入口、台阶、门前、低洼段或设备区域只是场景细节，不能注册为新地点，也不得用近义名称重复登记已有地点。身份暂不公开时可先用匿名称谓登记人物，后续通过 `characterReveals` 只揭示一次真实名字。后续方向可以在 `statePatch.derivedAdditions` 中登记将于该选择发生时出现的实体，并在同一补丁中引用新地点。没有新增实体时，`locations`、`characters`、`items`、`characterReveals` 必须全部输出空数组。受保护的世界历史中的时间、保管、隐藏、交接和已发生因果均不能被替换；除非本回合的已确认状态变化明确表示该对象发生转移，否则不得为了铺垫而补写一次未确认的转移。所有新设定都必须服从上面的原著事实、世界全局约束与叙事禁则。正文使用真实段落换行，不能输出字面量 \\n 或 \\r\\n。`storyArc.chapter.title` 必须给本回合一个简洁中文章节名。
+分支扩展规则：StoryPackage 固定不改写。正文不得首次引入会跨回合影响行动、取证或因果的命名人物、地点、物品、工具、文件、标记或线索；只可使用上文已经登记的实体，或以不命名、不可复用的场景细节表达。新实体必须等待用户通过后续的结构化确认流程登记。受保护的世界历史中的时间、保管、隐藏、交接和已发生因果均不能被替换；除非本回合的已确认状态变化明确表示该对象发生转移，否则不得为了铺垫而补写一次未确认的转移。正文使用真实段落换行，不能输出字面量 \\n 或 \\r\\n。
 
 必须遵守的当前状态门槛（优先级最高）：
 {state_guardrail_text}
 
 分支终点规则（优先级最高）：{terminal_instruction}
 
-提交前在本次请求内自行核对：`narrativeText`、`summary`、`nextDirections` 和 `statePatch` 都不得违反上述门槛；若发现冲突，请在输出前改写为仍能推进剧情的版本。只输出一次完整 JSON，不要解释、自评、草稿版本或重写过程。
+提交前自行核对正文不得违反上述门槛。只输出一次完整小说正文，不要标题、JSON、解释、自评、草稿版本或重写过程。
 {('上次草稿的问题：' + repair + '。请只修复这些问题并保留合理剧情。') if repair else ''}
-按此 JSON 格式输出：{schema}"""
+"""
 
 
 class NarrativeReviewer:
@@ -1152,22 +1235,41 @@ class LlmNarrativeReviewer(NarrativeReviewer):
 
 
 class DirectionEvaluator:
-    signals = {
-        "direction_find_token": ["十七号", "铜牌", "储物柜", "线索"], "direction_secure_evidence": ["站务室", "证据", "录音", "调度"],
-        "direction_rescue_first": ["救援", "救人", "唐栖", "姜序", "信号室", "隧道"], "direction_verify_records": ["核实", "记录", "录音", "保全"],
-        "direction_lower_water_with_proof": ["排水", "水位", "手动阀"], "direction_lower_water_without_proof": ["排水", "水位", "手动阀"],
-        "direction_open_signal_room_with_proof": ["打开信号室", "滑栓", "救出"], "direction_open_signal_room_without_proof": ["打开信号室", "滑栓", "救出"],
-    }
+    def __init__(self, package: Optional[Dict[str, Any]] = None) -> None:
+        self.package = package
+
+    def _forbidden_world_fact(self, player_direction: str) -> Optional[Dict[str, str]]:
+        if self.package is None:
+            return None
+        normalized = normalize(player_direction)
+        supernatural_terms = ("魔法", "法术", "超能力", "瞬移", "复活")
+        if not any(term in normalized for term in supernatural_terms):
+            return None
+        for fact in self.package.get("world", {}).get("immutableFacts", []):
+            text = normalize(str(fact.get("text", "")))
+            if "超自然" in text or "魔法" in text or "法术" in text:
+                return fact
+        return None
+
+    @staticmethod
+    def _direction_terms(direction: Dict[str, Any]) -> List[str]:
+        source = "".join(str(direction.get(key, "")) for key in ("title", "summary", "suggestedInput"))
+        terms = [direction["title"]]
+        for segment in re.findall(r"[\u4e00-\u9fff]{2,}", source):
+            for width in range(2, min(5, len(segment) + 1)):
+                terms.extend(segment[index:index + width] for index in range(len(segment) - width + 1))
+        return list(dict.fromkeys(term for term in terms if len(normalize(term)) >= 2))
 
     def evaluate(self, parent: Dict[str, Any], player_direction: str) -> Tuple[Dict[str, Any], Optional[Dict[str, Any]]]:
         normalized = normalize(player_direction)
         if not normalized:
             return {"kind": "clarification_needed", "message": "请用一句话说明希望优先推动哪条剧情方向。"}, None
-        if any(word in normalized for word in ("魔法", "法术", "超能力", "瞬移", "复活")):
-            return {"kind": "rejected", "message": "当前故事不允许以超自然能力直接解决障碍。请在既有世界规则内说明行动。", "citations": [{"kind": "immutable_fact", "ref": "fact_no_supernatural"}]}, None
+        forbidden_fact = self._forbidden_world_fact(player_direction)
+        if forbidden_fact is not None:
+            return {"kind": "rejected", "message": "当前故事不允许以超自然能力直接解决障碍。请在既有世界规则内说明行动。", "citations": [{"kind": "immutable_fact", "ref": forbidden_fact["id"]}]}, None
         matches = []
         for direction in parent["nextDirections"]:
-            words = self.signals.get(direction["id"], [direction["title"]])
+            words = self._direction_terms(direction)
             positions = [normalized.find(normalize(word)) for word in words if normalize(word) in normalized]
             if positions:
                 matches.append((min(positions), direction))
@@ -1182,12 +1284,25 @@ class DirectionEvaluator:
 class LlmDirectionEvaluator(DirectionEvaluator):
     """Maps free text to only already-published directions."""
     def __init__(self, gateway: OpenAICompatibleGateway) -> None:
+        super().__init__()
         self.gateway = gateway
+
+    def _ordered_direction_fallback(self, parent: Dict[str, Any], player_direction: str) -> Optional[Dict[str, Any]]:
+        """Resolve a clear first action when the model unnecessarily asks again."""
+        normalized = normalize(player_direction)
+        if not normalized or any(marker in normalized for marker in ("还是", "或者", "抑或", "二选一", "任选", "哪个")):
+            return None
+        evaluation, _ = super().evaluate(parent, player_direction)
+        return evaluation if evaluation["kind"] == "accepted" else None
 
     def evaluate(self, parent: Dict[str, Any], player_direction: str) -> Tuple[Dict[str, Any], Optional[Dict[str, Any]]]:
         directions = [{"id": item["id"], "title": item["title"], "summary": item["summary"]} for item in parent["nextDirections"]]
         prompt = f"""将玩家的中文自由文本判定为当前一个已公布方向，或要求澄清/拒绝。不可发明方向，不可把多个目标合为一步；若多个目标并列，选择文本中最先明确的一个。拒绝超自然、瞬移、复活等违背世界设定的内容。\n当前方向：{json.dumps(directions, ensure_ascii=False)}\n玩家输入：{player_direction}\n只输出 {{\"kind\":\"accepted\",\"directionId\":\"已公布ID\",\"rationale\":\"\"}}，或 {{\"kind\":\"clarification_needed\",\"message\":\"\"}}，或 {{\"kind\":\"rejected\",\"message\":\"\",\"citations\":[{{\"kind\":\"immutable_fact\",\"ref\":\"fact_no_supernatural\"}}]}}。"""
-        completion = self.gateway.complete_json([{"role": "system", "content": "你是互动小说方向判定器。只输出 JSON。"}, {"role": "user", "content": prompt}])
+        try:
+            completion = self.gateway.complete_json([{"role": "system", "content": "你是互动小说方向判定器。只输出 JSON。"}, {"role": "user", "content": prompt}])
+        except LlmError as error:
+            error.audit = {"operation": "direction_evaluator", "model": self.gateway.model, "promptVersion": "python-v0.1", "requestSummary": player_direction[:300], "rawResponse": None, "error": str(error), "callObservations": error.observations}
+            raise
         evaluation = parse_json_content(completion.content)
         kind = evaluation.get("kind")
         if kind == "accepted":
@@ -1198,7 +1313,21 @@ class LlmDirectionEvaluator(DirectionEvaluator):
                 raise LlmError("LLM 方向判定缺少说明")
         else:
             raise LlmError("LLM 方向判定 kind 无效")
-        audit = {"operation": "direction_evaluator", "model": self.gateway.model, "promptVersion": "python-v0.1", "requestSummary": player_direction[:300], "rawResponse": completion.raw_response, "callObservations": completion.observations}
+        fallback = self._ordered_direction_fallback(parent, player_direction) if kind == "clarification_needed" else None
+        observations = list(completion.observations)
+        if fallback is not None:
+            evaluation = {
+                "kind": "accepted",
+                "directionId": fallback["directionId"],
+                "rationale": "输入包含后续目标，已按最先明确的已公布方向推进。",
+            }
+            observations.append({
+                "attempt": 1,
+                "outcome": "normalized",
+                "normalization": "resolved_ordered_multi_goal_to_first_published_direction",
+                "directionId": fallback["directionId"],
+            })
+        audit = {"operation": "direction_evaluator", "model": self.gateway.model, "promptVersion": "python-v0.1", "requestSummary": player_direction[:300], "rawResponse": completion.raw_response, "callObservations": observations}
         return evaluation, audit
 
 
@@ -1209,13 +1338,15 @@ def normalize(value: str) -> str:
 def validate_direction(direction: Dict[str, Any]) -> Dict[str, Any]:
     if not all(isinstance(direction.get(key), str) and direction[key].strip() for key in ("id", "title", "summary")) or not isinstance(direction.get("statePatch"), dict) or not direction["statePatch"]:
         raise LlmError("LLM 后续方向缺少 id、title、summary 或 statePatch")
-    return {key: copy.deepcopy(direction[key]) for key in ("id", "title", "summary", "canonicalBeatId", "rejoinTargetId", "statePatch") if key in direction}
+    return {key: copy.deepcopy(direction[key]) for key in ("id", "title", "summary", "canonicalBeatId", "followupBeatId", "rejoinTargetId", "statePatch") if key in direction}
 
 
 def location_name(package: Dict[str, Any], state: Dict[str, Any]) -> str:
     locations = by_id(package["locations"])
     locations.update(by_id(state.get("derivedLocations", [])))
-    return locations.get(state["playerLocationId"], {"name": state["playerLocationId"]})["name"]
+    field = focal_character_location_field(package, state)
+    location_id = state.get(field) if field else None
+    return locations.get(location_id, {"name": location_id or "当前地点"})["name"]
 
 
 def plan_result(context: Dict[str, Any], selected: Dict[str, Any], narrative: str, phase: str, directions: List[Dict[str, Any]], confidence: str) -> Dict[str, Any]:
@@ -1223,14 +1354,16 @@ def plan_result(context: Dict[str, Any], selected: Dict[str, Any], narrative: st
     return {
         "narrativeText": narrative, "summary": phase + "已推进，新的风险和选择仍然存在。", "factDeltas": [],
         "openThreads": list(dict.fromkeys(context["parent"].get("openThreads", []) + ["尚未完成的当前目标"]))[-6:], "nextDirections": directions,
-        "storyArc": {"activeGoal": parent_arc.get("activeGoal", selected["title"]), "currentPhase": phase, "goalDisposition": "completed" if not directions else "continued", "chapter": {"title": parent_arc.get("chapter", {}).get("title", "雨夜候车室·共创篇"), "status": "complete" if not directions else "continuing"}},
+        "storyArc": {"activeGoal": parent_arc.get("activeGoal", selected["title"]), "currentPhase": phase, "goalDisposition": "completed" if not directions else "continued", "chapter": {"title": parent_arc.get("chapter", {}).get("title", context["package"]["metadata"]["title"] + "·共创篇"), "status": "complete" if not directions else "continuing"}},
         "planning": {"citations": [{"kind": "branch_node", "ref": context["parent"]["id"], "rationale": "承接已确认的上一节点。"}], "confidence": confidence, "stateChangeProposals": []},
     }
 
 
 class CoCreationService:
     def __init__(self, package: Dict[str, Any], store: SessionStore, planner: Planner, evaluator: Optional[DirectionEvaluator] = None, reviewer: Optional[NarrativeReviewer] = None) -> None:
-        self.package, self.store, self.planner, self.evaluator = package, store, planner, evaluator or DirectionEvaluator()
+        self.package, self.store, self.planner, self.evaluator = package, store, planner, evaluator or DirectionEvaluator(package)
+        if self.evaluator.package is None:
+            self.evaluator.package = package
         self.reviewer = reviewer or NarrativeReviewer()
 
     def start(self, session_id: str) -> Tuple[Dict[str, Any], Dict[str, Any]]:
@@ -1245,12 +1378,61 @@ class CoCreationService:
             raise ValueError("共创会话没有分支节点")
         return nodes[-1]
 
-    def continue_direction(self, session_id: str, parent_id: str, direction_id: str, player_direction: Optional[str] = None, stream: Optional[Callable[[str], None]] = None, stream_reset: Optional[Callable[[str], None]] = None, on_generation_start: Optional[Callable[[], None]] = None) -> Dict[str, Any]:
+    def _select_arc(
+        self, session_id: str, parent_id: str, parent: Dict[str, Any], selected: Dict[str, Any],
+        player_direction: Optional[str], request_id: Optional[str], contract: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        """Record a macro-plot choice, then expose its first chapter choices."""
+        arc = arc_by_id(self.package, selected["arcId"])
+        source_node_ref = parent.get("sourceNodeRef") or contract["entryNodeId"]
+        phases = phase_directions_for_arc(self.package, source_node_ref, parent["branchState"], arc["id"])
+        if not phases:
+            raise ValueError("当前状态下该大方向没有可执行的小方向: " + arc["title"])
+        result = {
+            "kind": "arc_selection",
+            "sourceNodeRef": source_node_ref,
+            "branchState": copy.deepcopy(parent["branchState"]),
+            "narrativeText": "大方向已确立：" + arc["title"] + "。接下来请选择本章要推进的小方向。",
+            "summary": arc["summary"],
+            "factDeltas": [],
+            "openThreads": copy.deepcopy(parent.get("openThreads", [])),
+            "nextDirections": phases,
+            "canonicalRelation": "on_line",
+            "selectedDirectionId": selected["id"],
+            "playerDirection": player_direction,
+            "requestId": request_id,
+            "storyArc": {
+                "arcId": arc["id"],
+                "activeGoal": arc["title"],
+                "currentPhase": "等待选择本章推进",
+                "completedPhaseIds": [],
+                "goalDisposition": "started",
+                "menuLevel": "phase",
+                "chapter": {"title": "", "status": "pending"},
+            },
+            "planning": {"citations": [{"kind": "story_arc", "ref": arc["id"], "rationale": "玩家已选择本阶段大方向。"}], "confidence": "high", "stateChangeProposals": []},
+            "createdAt": timestamp(),
+        }
+        return self.store.append_branch(session_id, parent_id, result)
+
+    def continue_direction(self, session_id: str, parent_id: str, direction_id: str, player_direction: Optional[str] = None, stream: Optional[Callable[[str], None]] = None, stream_reset: Optional[Callable[[str], None]] = None, on_generation_start: Optional[Callable[[], None]] = None, request_id: Optional[str] = None) -> Dict[str, Any]:
+        if request_id:
+            existing = self.store.find_branch_request(session_id, request_id)
+            if existing is not None:
+                if (
+                    existing["parentId"] != parent_id
+                    or existing["selectedDirectionId"] != direction_id
+                    or existing.get("playerDirection") != player_direction
+                ):
+                    raise ValueError("同一 requestId 不能用于不同的父分支、方向或玩家输入")
+                return existing
         contract = self.store.contract(session_id)
         parent = self.store.branch(session_id, parent_id)
         selected = next((item for item in parent["nextDirections"] if item["id"] == direction_id), None)
         if selected is None:
             raise ValueError("当前分支不存在可选方向: " + direction_id)
+        if selected.get("directionLevel") == "arc":
+            return self._select_arc(session_id, parent_id, parent, selected, player_direction, request_id, contract)
         lineage = self.store.lineage(session_id, parent_id)
         provisional = copy.deepcopy(parent["branchState"])
         # Route resolution is based on a provisional patch. The actual patch is
@@ -1305,8 +1487,20 @@ class CoCreationService:
         if rejoin:
             target_beat = find_beat(self.package, rejoin["targetBeatId"])
             result = {**result, "nextDirections": [branch_direction(item) for item in target_beat["nextDirections"]]}
+        story_arc, next_arc_directions = advance_story_arc(
+            self.package, parent.get("storyArc"), selected, resolved, result.get("storyArc"),
+        )
+        if story_arc is not None:
+            result["storyArc"] = story_arc
+            if next_arc_directions is not None:
+                result["nextDirections"] = next_arc_directions
+            elif story_arc.get("arcId"):
+                result["nextDirections"] = [
+                    {**direction, "directionLevel": "phase", "arcId": story_arc["arcId"]}
+                    for direction in result["nextDirections"]
+                ]
         assert_published_directions(self.package, source_node_ref, resolved, result["nextDirections"])
-        node = {**result, "sourceNodeRef": source_node_ref, "branchState": resolved, "canonicalRelation": relation, "selectedDirectionId": direction_id, "playerDirection": player_direction, "createdAt": timestamp()}
+        node = {**result, "sourceNodeRef": source_node_ref, "branchState": resolved, "canonicalRelation": relation, "selectedDirectionId": direction_id, "playerDirection": player_direction, "requestId": request_id, "createdAt": timestamp()}
         stored = self.store.append_branch(session_id, parent_id, node)
         if resolved["storyScope"] == "derived":
             derived = self.store.derived(session_id)
@@ -1325,19 +1519,37 @@ class CoCreationService:
         stream_reset: Optional[Callable[[str], None]] = None,
         on_direction_accepted: Optional[Callable[[Dict[str, Any]], None]] = None,
         on_generation_start: Optional[Callable[[], None]] = None,
+        request_id: Optional[str] = None,
     ) -> Dict[str, Any]:
         parent = self.store.branch(session_id, parent_id)
-        evaluation, audit = self.evaluator.evaluate(parent, player_direction)
+        if request_id:
+            existing = self.store.find_direction_request(session_id, request_id)
+            if existing is not None:
+                if existing["parentBranchId"] != parent_id or existing["playerDirection"] != player_direction:
+                    raise ValueError("同一 requestId 不能用于不同的父分支或玩家输入")
+                if existing["kind"] != "accepted":
+                    return {key: value for key, value in existing.items() if key not in ("id", "sessionId", "parentBranchId", "playerDirection", "requestId", "createdAt")}
+                node = self.store.find_branch_request(session_id, request_id)
+                if node is None:
+                    raise ValueError("同一 requestId 的方向已判定，但正文未生成；请使用新的 requestId 重试")
+                return {"kind": "accepted", "node": node, "rationale": existing["rationale"]}
+        try:
+            evaluation, audit = self.evaluator.evaluate(parent, player_direction)
+        except LlmError as error:
+            failure_audit = getattr(error, "audit", None)
+            if failure_audit:
+                self.store.save_audit(session_id, failure_audit, parent_id)
+            raise
         if audit:
             self.store.save_audit(session_id, audit, parent_id)
-        self.store.save_direction_evaluation(session_id, parent_id, player_direction, evaluation)
+        self.store.save_direction_evaluation(session_id, parent_id, player_direction, evaluation, request_id)
         if evaluation["kind"] != "accepted":
             return evaluation
         if on_direction_accepted:
             on_direction_accepted(evaluation)
         node = self.continue_direction(
             session_id, parent_id, evaluation["directionId"], player_direction, stream, stream_reset,
-            on_generation_start,
+            on_generation_start, request_id,
         )
         return {"kind": "accepted", "node": node, "rationale": evaluation["rationale"]}
 
@@ -1345,13 +1557,27 @@ class CoCreationService:
         parent = self.store.branch(session_id, parent_id)
         if parent["nextDirections"]:
             raise ValueError("请先完成当前分支；只有没有后续方向的节点可以创建衍生故事包")
-        if parent["branchState"]["tangStatus"] != "rescued":
-            raise ValueError("唐栖获救后才能创建衍生故事包")
+        policy = self.package.get("stateModel", {}).get("derivativeEntry")
+        if not isinstance(policy, dict):
+            raise ValueError("StoryPackage 未声明衍生故事入口规则")
+        if not state_matches(policy["requiredState"], parent["branchState"]):
+            raise ValueError(policy["message"])
         if self.store.derived(session_id):
             raise ValueError("当前会话已经创建衍生故事包")
         state = copy.deepcopy(parent["branchState"])
-        state.update({"storyScope": "derived", "derivativeStage": "setup"})
-        entry = {"id": "branch_" + str(uuid.uuid4()), "kind": "derived_entry", "parentId": parent_id, "sourceNodeRef": parent.get("sourceNodeRef"), "branchState": state, "selectedDirectionId": "direction_begin_derivative", "playerDirection": goal.strip(), "narrativeText": "临潮站的灯还亮着，但这一夜已经收束。许川和唐栖没有替以后下结论；玩家写下的目标会成为独立衍生故事的起点。新的地点、人物、物品与身份揭示只会在后续回合逐步进入，不会改写原始故事包。", "summary": "玩家从已完成分支创建独立衍生故事包。", "factDeltas": [{"id": "fact_derivative_entry", "source": "user", "summary": "衍生目标：" + goal.strip()}], "openThreads": ["衍生故事的第一步"], "nextDirections": [derived_direction("direction_derivative_start", "前往站务室展开衍生篇", "与唐栖前往站务室整理尚未结案的记录，再按设定目标展开第一章。", {"derivativeStage": "active", "derivedTurn": 1, "playerLocationId": "location_station_office", "tangLocationId": "location_station_office"})], "canonicalRelation": "diverged", "storyArc": {"activeGoal": goal.strip(), "currentPhase": "确定衍生故事的第一步", "goalDisposition": "started", "chapter": {"title": "衍生篇·起点", "status": "continuing"}}, "planning": {"citations": [{"kind": "branch_node", "ref": parent_id, "rationale": "衍生故事继承分叉结果。"}], "confidence": "high", "stateChangeProposals": []}, "createdAt": timestamp()}
+        state.update(copy.deepcopy(policy["statePatch"]))
+        next_direction = copy.deepcopy(policy["nextDirection"])
+        entry = {
+            "id": "branch_" + str(uuid.uuid4()), "kind": "derived_entry", "parentId": parent_id,
+            "sourceNodeRef": parent.get("sourceNodeRef"), "branchState": state,
+            "selectedDirectionId": "direction_begin_derivative", "playerDirection": goal.strip(),
+            "narrativeText": policy["narrativeText"], "summary": policy["summary"],
+            "factDeltas": [{"id": "fact_derivative_entry", "source": "user", "summary": "衍生目标：" + goal.strip()}],
+            "openThreads": copy.deepcopy(policy["openThreads"]), "nextDirections": [next_direction],
+            "canonicalRelation": "diverged",
+            "storyArc": {"activeGoal": goal.strip(), "currentPhase": policy["currentPhase"], "goalDisposition": "started", "chapter": {"title": policy["chapterTitle"], "status": "continuing"}},
+            "planning": {"citations": [{"kind": "branch_node", "ref": parent_id, "rationale": "衍生故事继承分叉结果。"}], "confidence": "high", "stateChangeProposals": []}, "createdAt": timestamp(),
+        }
         package = {"id": "derived_" + str(uuid.uuid4()), "sessionId": session_id, "sourcePackageRef": {"id": self.package["id"], "version": self.package["version"]}, "forkBranchId": parent_id, "title": self.package["metadata"]["title"] + "·衍生篇", "goal": goal.strip(), "createdAt": timestamp(), "revisions": []}
         self.store.save_derived(package)
         return package, self.store.create_derived_entry(session_id, parent_id, entry)
