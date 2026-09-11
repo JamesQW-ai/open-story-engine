@@ -1,0 +1,421 @@
+{
+  "schemaVersion": "story-package-chapter-module/0.1",
+  "package": {
+    "id": "rainy-waiting-room-source",
+    "version": "0.1.8"
+  },
+  "chapter": {
+    "id": "chapter-002",
+    "title": "十七号柜",
+    "lineRange": {
+      "start": 111,
+      "end": 228
+    }
+  },
+  "neighborChapterIds": [
+    "chapter-001",
+    "chapter-003"
+  ],
+  "contextRefs": {
+    "characterIds": [
+      "character_8df21ea6bdc3"
+    ],
+    "locationIds": [
+      "location_977097fb7855"
+    ],
+    "itemIds": [
+      "item_338d6f8c3d3a",
+      "item_fc1ba0440c8c",
+      "item_4de50894b8c1"
+    ]
+  },
+  "facts": [
+    {
+      "id": "fact_18f95085f3b7",
+      "text": "调度台上的屏幕亮着，画面停在列车放行记录。",
+      "sourceChapterId": "chapter-002",
+      "sourceProgress": "chapter_003",
+      "lineRange": {
+        "start": 119,
+        "end": 119
+      }
+    },
+    {
+      "id": "fact_16fdc2792917",
+      "text": "记录页上，二十三点四十七分的检修申请被标记为“已完成”，可屏幕右下角的设备状态却显示：信号室排水泵故障，备用电池剩余四十五分钟。",
+      "sourceChapterId": "chapter-002",
+      "sourceProgress": "chapter_003",
+      "lineRange": {
+        "start": 155,
+        "end": 155
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "id": "timeline_49a5cf7aacf3",
+      "order": 3,
+      "knownAtStart": false,
+      "description": "许川推开门时，铁门发出一声尖锐的摩擦声，仿佛整座车站都听见了。"
+    },
+    {
+      "id": "timeline_2770c12a6368",
+      "order": 4,
+      "knownAtStart": false,
+      "description": "许川踩上纸箱，推开小窗翻进去，落地时手掌被桌角划出一道浅口。"
+    },
+    {
+      "id": "timeline_de397fa0466c",
+      "order": 5,
+      "knownAtStart": false,
+      "description": "许川用手机拍下屏幕和撕下的日志。"
+    },
+    {
+      "id": "timeline_fa18c24e7049",
+      "order": 6,
+      "knownAtStart": false,
+      "description": "许川把录音笔塞进内袋，抓起柜里的维修图纸。"
+    },
+    {
+      "id": "timeline_0b6fa1710e31",
+      "order": 7,
+      "knownAtStart": false,
+      "description": "他把应急灯递给许川。"
+    }
+  ],
+  "beats": [
+    {
+      "id": "beat_chapter_003",
+      "nodeId": "node_source_continuity",
+      "summary": "许川推开门时，铁门发出一声尖锐的摩擦声，仿佛整座车站都听见了。",
+      "sourceEvidence": {
+        "lineRange": {
+          "start": 113,
+          "end": 113
+        }
+      },
+      "narrativeAnchor": "许川推开门时，铁门发出一声尖锐的摩擦声，仿佛整座车站都听见了。",
+      "openThreads": [
+        "许川推开"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_003_to_004",
+          "title": "许川推开",
+          "summary": "许川踩上纸箱，推开小窗翻进去，落地时手掌被桌角划出一道浅口。",
+          "suggestedInput": "沿母本推进到下一关键剧情节点",
+          "canonicalBeatId": "beat_chapter_004",
+          "statePatch": {
+            "sourceProgress": "chapter_004",
+            "playerLocationId": "location_7eb3d788abcd"
+          }
+        }
+      ],
+      "branchState": {
+        "playerLocationId": "location_977097fb7855",
+        "sourceProgress": "chapter_003",
+        "freeTextProgress": 0
+      },
+      "contextRefs": {
+        "characterIds": [
+          "character_8df21ea6bdc3"
+        ],
+        "locationIds": [
+          "location_977097fb7855"
+        ],
+        "itemIds": []
+      }
+    },
+    {
+      "id": "beat_chapter_004",
+      "nodeId": "node_source_continuity",
+      "summary": "许川踩上纸箱，推开小窗翻进去，落地时手掌被桌角划出一道浅口。",
+      "sourceEvidence": {
+        "lineRange": {
+          "start": 117,
+          "end": 117
+        }
+      },
+      "narrativeAnchor": "许川踩上纸箱，推开小窗翻进去，落地时手掌被桌角划出一道浅口。",
+      "openThreads": [
+        "许川拍下"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_004_to_005",
+          "title": "许川拍下",
+          "summary": "许川用手机拍下屏幕和撕下的日志。",
+          "suggestedInput": "沿母本推进到下一关键剧情节点",
+          "canonicalBeatId": "beat_chapter_005",
+          "statePatch": {
+            "sourceProgress": "chapter_005",
+            "playerLocationId": "location_7eb3d788abcd"
+          }
+        }
+      ],
+      "branchState": {
+        "playerLocationId": "location_7eb3d788abcd",
+        "sourceProgress": "chapter_004",
+        "freeTextProgress": 0
+      },
+      "contextRefs": {
+        "characterIds": [
+          "character_8df21ea6bdc3"
+        ],
+        "locationIds": [],
+        "itemIds": []
+      }
+    },
+    {
+      "id": "beat_chapter_005",
+      "nodeId": "node_source_continuity",
+      "summary": "许川用手机拍下屏幕和撕下的日志。",
+      "sourceEvidence": {
+        "lineRange": {
+          "start": 159,
+          "end": 159
+        }
+      },
+      "narrativeAnchor": "许川用手机拍下屏幕和撕下的日志。",
+      "openThreads": [
+        "许川抓起"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_005_to_006",
+          "title": "许川抓起",
+          "summary": "许川把录音笔塞进内袋，抓起柜里的维修图纸。",
+          "suggestedInput": "沿母本推进到下一关键剧情节点",
+          "canonicalBeatId": "beat_chapter_006",
+          "statePatch": {
+            "sourceProgress": "chapter_006",
+            "playerLocationId": "location_7eb3d788abcd"
+          }
+        }
+      ],
+      "branchState": {
+        "playerLocationId": "location_7eb3d788abcd",
+        "sourceProgress": "chapter_005",
+        "freeTextProgress": 0
+      },
+      "contextRefs": {
+        "characterIds": [
+          "character_8df21ea6bdc3"
+        ],
+        "locationIds": [],
+        "itemIds": [
+          "item_9c01ad091190",
+          "item_4de50894b8c1"
+        ]
+      }
+    },
+    {
+      "id": "beat_chapter_006",
+      "nodeId": "node_source_continuity",
+      "summary": "许川把录音笔塞进内袋，抓起柜里的维修图纸。",
+      "sourceEvidence": {
+        "lineRange": {
+          "start": 199,
+          "end": 199
+        }
+      },
+      "narrativeAnchor": "许川把录音笔塞进内袋，抓起柜里的维修图纸。",
+      "openThreads": [
+        "关键推进：递给"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_006_to_007",
+          "title": "关键推进：递给",
+          "summary": "他把应急灯递给许川。",
+          "suggestedInput": "沿母本推进到下一关键剧情节点",
+          "canonicalBeatId": "beat_chapter_007",
+          "statePatch": {
+            "sourceProgress": "chapter_007",
+            "playerLocationId": "location_7eb3d788abcd"
+          }
+        }
+      ],
+      "branchState": {
+        "playerLocationId": "location_7eb3d788abcd",
+        "sourceProgress": "chapter_006",
+        "freeTextProgress": 0
+      },
+      "contextRefs": {
+        "characterIds": [
+          "character_8df21ea6bdc3"
+        ],
+        "locationIds": [],
+        "itemIds": [
+          "item_338d6f8c3d3a",
+          "item_fc1ba0440c8c"
+        ]
+      }
+    },
+    {
+      "id": "beat_chapter_007",
+      "nodeId": "node_source_continuity",
+      "summary": "他把应急灯递给许川。",
+      "sourceEvidence": {
+        "lineRange": {
+          "start": 211,
+          "end": 211
+        }
+      },
+      "narrativeAnchor": "他把应急灯递给许川。",
+      "openThreads": [
+        "姜序刷开"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_007_to_008",
+          "title": "姜序刷开",
+          "summary": "姜序刷开通行证，门刚开一条缝，冷风就裹着水汽扑出来。",
+          "suggestedInput": "沿母本推进到下一关键剧情节点",
+          "canonicalBeatId": "beat_chapter_008",
+          "statePatch": {
+            "sourceProgress": "chapter_008",
+            "playerLocationId": "location_d649e9cd8ce7"
+          }
+        }
+      ],
+      "branchState": {
+        "playerLocationId": "location_7eb3d788abcd",
+        "sourceProgress": "chapter_007",
+        "freeTextProgress": 0
+      },
+      "contextRefs": {
+        "characterIds": [
+          "character_8df21ea6bdc3"
+        ],
+        "locationIds": [],
+        "itemIds": []
+      }
+    }
+  ],
+  "entryPoints": [
+    {
+      "id": "entry_chapter-002-event-001",
+      "title": "许川推开",
+      "summary": "许川推开门时，铁门发出一声尖锐的摩擦声，仿佛整座车站都听见了。",
+      "chapterTitle": "十七号柜",
+      "sourceChapterId": "chapter-002",
+      "nodeId": "node_source_continuity",
+      "beatId": "beat_chapter_003",
+      "sourceCharacterIds": [
+        "character_8df21ea6bdc3"
+      ],
+      "timelineRefs": [
+        "timeline_49a5cf7aacf3"
+      ],
+      "availableToNewCharacter": true,
+      "newCharacterNarrative": "新角色从《十七号柜》的“许川推开”之后进入；不得改写此前已确认的母本事实。",
+      "sourceCharacterNarratives": {}
+    },
+    {
+      "id": "entry_chapter-002-event-002",
+      "title": "许川推开",
+      "summary": "许川踩上纸箱，推开小窗翻进去，落地时手掌被桌角划出一道浅口。",
+      "chapterTitle": "十七号柜",
+      "sourceChapterId": "chapter-002",
+      "nodeId": "node_source_continuity",
+      "beatId": "beat_chapter_004",
+      "sourceCharacterIds": [
+        "character_8df21ea6bdc3"
+      ],
+      "timelineRefs": [
+        "timeline_2770c12a6368"
+      ],
+      "availableToNewCharacter": true,
+      "newCharacterNarrative": "新角色从《十七号柜》的“许川推开”之后进入；不得改写此前已确认的母本事实。",
+      "sourceCharacterNarratives": {}
+    },
+    {
+      "id": "entry_chapter-002-event-003",
+      "title": "许川拍下",
+      "summary": "许川用手机拍下屏幕和撕下的日志。",
+      "chapterTitle": "十七号柜",
+      "sourceChapterId": "chapter-002",
+      "nodeId": "node_source_continuity",
+      "beatId": "beat_chapter_005",
+      "sourceCharacterIds": [
+        "character_8df21ea6bdc3"
+      ],
+      "timelineRefs": [
+        "timeline_de397fa0466c"
+      ],
+      "availableToNewCharacter": true,
+      "newCharacterNarrative": "新角色从《十七号柜》的“许川拍下”之后进入；不得改写此前已确认的母本事实。",
+      "sourceCharacterNarratives": {}
+    },
+    {
+      "id": "entry_chapter-002-event-004",
+      "title": "许川抓起",
+      "summary": "许川把录音笔塞进内袋，抓起柜里的维修图纸。",
+      "chapterTitle": "十七号柜",
+      "sourceChapterId": "chapter-002",
+      "nodeId": "node_source_continuity",
+      "beatId": "beat_chapter_006",
+      "sourceCharacterIds": [
+        "character_8df21ea6bdc3"
+      ],
+      "timelineRefs": [
+        "timeline_fa18c24e7049"
+      ],
+      "availableToNewCharacter": true,
+      "newCharacterNarrative": "新角色从《十七号柜》的“许川抓起”之后进入；不得改写此前已确认的母本事实。",
+      "sourceCharacterNarratives": {}
+    },
+    {
+      "id": "entry_chapter-002-event-005",
+      "title": "关键推进：递给",
+      "summary": "他把应急灯递给许川。",
+      "chapterTitle": "十七号柜",
+      "sourceChapterId": "chapter-002",
+      "nodeId": "node_source_continuity",
+      "beatId": "beat_chapter_007",
+      "sourceCharacterIds": [
+        "character_8df21ea6bdc3"
+      ],
+      "timelineRefs": [
+        "timeline_0b6fa1710e31"
+      ],
+      "availableToNewCharacter": true,
+      "newCharacterNarrative": "新角色从《十七号柜》的“关键推进：递给”之后进入；不得改写此前已确认的母本事实。",
+      "sourceCharacterNarratives": {}
+    }
+  ],
+  "arcs": [
+    {
+      "id": "arc_source_chapter_002",
+      "title": "推进：十七号柜",
+      "summary": "许川推开门时，铁门发出一声尖锐的摩擦声，仿佛整座车站都听见了。",
+      "availableWhen": {
+        "sourceProgress": {
+          "oneOf": [
+            "chapter_003",
+            "chapter_004",
+            "chapter_005",
+            "chapter_006",
+            "chapter_007"
+          ]
+        }
+      },
+      "completionWhen": {
+        "sourceProgress": {
+          "equals": "chapter_008"
+        }
+      },
+      "phaseDirectionIds": [
+        "direction_chapter_003_to_004",
+        "direction_chapter_004_to_005",
+        "direction_chapter_005_to_006",
+        "direction_chapter_006_to_007",
+        "direction_chapter_007_to_008"
+      ],
+      "nextArcIds": [
+        "arc_source_chapter_003"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "rainy-waiting-room-source",
+    "version": "0.1.16"
+  },
+  "arc": {
+    "id": "arc_source_chapter_004",
+    "title": "推进：灯还亮着",
+    "summary": "陈砚的对讲机落水后，司机没有等到放行复诵，按规程切断了启动程序。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_011",
+          "chapter_012",
+          "chapter_013"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_014"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_011_to_012",
+      "direction_chapter_012_to_013",
+      "direction_chapter_013_to_014"
+    ],
+    "nextArcIds": []
+  }
+}

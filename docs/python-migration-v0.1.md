@@ -4,7 +4,7 @@
 
 运行时采用 Python 3.9+，不改变 `StoryPackage`、权威状态、事件重建、共创契约或衍生故事包的语义。`content/packages/` 始终是版本化的只读输入；玩家选择产生的会话、事件、分支、审计与衍生修订仅写入 SQLite。
 
-`open_story_engine/` 是唯一受跟踪的运行时实现。历史 TypeScript 文件仅可留在本机作为追溯资料，已从云端仓库移除且由 `.gitignore` 排除；后续功能、测试和文档均采用 Python。
+`open_story_engine/` 是后端与 CLI 的运行时实现。历史 TypeScript 后端文件仅可留在本机作为追溯资料，已从云端仓库移除且由 `.gitignore` 排除；后续后端功能与测试采用 Python。2026-09-09 确认仅实施 Python API；React + TypeScript 前端选型保留为后续规划，本轮不编写前端页面。
 
 ## 命令
 

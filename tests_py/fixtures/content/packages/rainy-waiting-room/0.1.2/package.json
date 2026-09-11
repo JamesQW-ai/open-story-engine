@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "id": "rainy-waiting-room",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "metadata": {
     "title": "雨夜候车室",
     "summary": "暴雨困住临潮站的末班列车。许川必须在零点前找到失联的唐栖，并决定如何面对一份可能改变所有人命运的录音。",
@@ -445,6 +445,34 @@
     "mode": "mainline",
     "premise": "许川必须在列车放行和隧道进水前找到唐栖，确认她留下证据的意义。",
     "longTermGoal": "救出唐栖并让陈砚无法继续掩盖维修事故。",
+    "entryModel": {
+      "sourceCharacterIds": [
+        "character_xu_chuan"
+      ],
+      "newCharacter": {
+        "enabled": true
+      },
+      "defaultEntryPointId": "entry_rainy_arrival",
+      "entryPoints": [
+        {
+          "id": "entry_rainy_arrival",
+          "title": "暴雨封锁临潮站",
+          "summary": "唐栖失联，末班列车仍在等待放行；从这场雨夜开始决定是救人、取证还是先确认局势。",
+          "chapterTitle": "第一章 二十三点十分",
+          "nodeId": "node_arrival",
+          "beatId": "beat_arrival",
+          "timelineRefs": [
+            "timeline_tang_message",
+            "timeline_train_held"
+          ],
+          "sourceCharacterIds": [
+            "character_xu_chuan"
+          ],
+          "availableToNewCharacter": true,
+          "newCharacterNarrative": "暴雨封住了临潮站的出入口，候车厅里的旅客被要求等待放行。唐栖失联的消息、陈砚急于维持秩序的姿态，以及姜序始终没有说完的话，都让这座车站显得比雨夜更封闭。"
+        }
+      ]
+    },
     "arcModel": {
       "entryArcIds": [
         "arc_rescue_tang"

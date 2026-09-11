@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "novel-918fd8656c43a65b0bab33a4099a4a556b29a847db7f97f6d54b0a15f7f924a8",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_003",
+    "title": "推进：水位线以下",
+    "summary": "姜序刷开通行证，门刚开一条缝，冷风就裹着水汽扑出来。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_008",
+          "chapter_009",
+          "chapter_010"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_011"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_008_to_009",
+      "direction_chapter_009_to_010",
+      "direction_chapter_010_to_011"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_004"
+    ]
+  }
+}

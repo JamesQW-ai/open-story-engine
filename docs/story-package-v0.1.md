@@ -39,7 +39,7 @@ StoryPackage（固定、版本化内容）
   "locations": [],
   "items": [],
   "timeline": [],
-  "story": {},
+  "story": {"entryModel": {}},
   "directions": [],
   "defaultDirectionId": "direction-id",
   "rules": {},
@@ -55,6 +55,7 @@ StoryPackage（固定、版本化内容）
 `stateModel` 将母本中可随剧情推进的事实声明为运行时可执行的规则。引擎不认识任何特定的人名、地点名或状态字段；它只读取此结构。因此导入新的小说时，解析器与人工审核应产出新的实体目录和状态声明，而不是修改 Python 代码。
 
 - `locationReferenceFields`：哪些状态字段必须引用已登记地点，例如焦点人物和同行角色的位置。
+- `characterLocationIds`：脚本生成包的会话级角色到地点映射。仅本地方向解析器能因玩家明确点名的同行或带路行动更新它；它不属于母本固定内容，也不由正文模型输出。
 - `monotonicEnums`：只能按声明顺序推进的状态序列，例如“失联 -> 已定位 -> 获救”。
 - `immutableFields`：分支方向不得改写的会话范围或身份字段。
 - `transitionRules`：在满足 `when` 时必须按声明方式变化的计数或阶段字段。
@@ -64,6 +65,10 @@ StoryPackage（固定、版本化内容）
 - `mockFollowups`：仅供离线 `MockPlanner` 验收使用的状态到后续方向模板；真实 Planner 不读取它，不能承载母本事实或生产剧情。
 
 例如，某部小说可以声明“角色 A 未脱困时的位置必须是地点 X”；另一部小说可以声明“角色 B 获救后与焦点人物同行”。二者都只是包数据，运行时不需要知道角色和地点的显示名称。模型只能提交候选补丁，最终仍由 `stateModel` 校验。
+
+### 分支状态账本
+
+母本 StoryPackage 始终只读。每个共创分支的 `branchState.branchLedger` 由运行时受控追加，使用 `branch-state-ledger/0.1` 记录角色、地点、物品、关系、线索、事件的新增或变化，以及每条事实的前后状态和来源（方向、玩家输入、母本或规划器）。`derived*` 实体目录只保存分支私有实体，账本才是跨回合因果的权威记录；节点 `summary` 和正文片段不能作为因果状态的来源。创建衍生故事时，运行时将账本快照写入 `session_derived_story_packages.branchLedger`，其后只允许追加条目和修订记录，不能改写母本引用或既有账本。
 
 ## 字段定义
 
@@ -126,13 +131,25 @@ StoryPackage（固定、版本化内容）
 | `endings` | 2 至 3 个结局，需有明确达成条件和结局文本锚点。 |
 | `narrativeGraph` | 规则节点之间可审阅的叙事锚点、条件边与结局锚点映射。 |
 
+### `story.entryModel`
+
+共创入口由故事包数据声明，而不是由 Python 针对某部小说的角色、地点或章节写条件。它将“选择身份 -> 选择剧情节点”固定为可审计的会话输入：
+
+- `sourceCharacterIds`：可作为既有身份进入的主要角色 ID。仅有姓名的龙套仍留在实体目录中，但不必出现在这里。
+- `newCharacter.enabled`：是否允许新建会话角色。由编包脚本生成的 `profileFields` 固定包含姓名、性别、年龄、职业、与原著角色或势力的关系、个人背景；档案只写入该会话的 `SessionStoryContract`，不回写母本故事包。
+- `entryPoints`：每项包含稳定 `id`、展示用 `title`、`summary`、`chapterTitle`，以及一致的 `nodeId` 与 `beatId`。脚本生成包还会声明 `sourceChapterId`，供同版本目录中的 `reader.json` 在本地找到完整章节；该字段不进入 Planner 上下文。`sourceCharacterIds` 决定既有角色能看到哪些节点，`availableToNewCharacter` 决定新角色可选择的主要节点。
+- `timelineRefs`：该入口之前应提供给运行时的压缩时间线摘要 ID。Planner 只能取得这些摘要、当前状态和已确认分支摘要，不读取 TXT、不检索章节原文，也不接收母本全文。
+- 允许新建角色的入口必须有 `newCharacterNarrative`。这是该身份的包内开场锚点，避免把另一个原著角色的原文片段误当成新角色已经经历的事实。
+
+`defaultEntryPointId` 只用于无界面调用的兼容默认值。正式界面应先列出包声明的主要身份，再按身份过滤剧情节点；每个入口对应的章节内容可由阅读界面展示，但其原文不作为 Planner 上下文。`entryModel` 是来源分析和审核后的编包产物，不得由运行时根据当前示例小说推断或补写。
+
 ### `directions` 与 `defaultDirectionId`
 
 `StoryDirection` 是玩家在一局故事开始时选择或声明的高层叙事意图，例如“优先救出失联的朋友”或“先查清这场事故的真相”。它决定系统在开局和后续叙事中优先强调的目标、冲突与回收方式；它不是一回合内的具体操作。
 
 每个方向至少包含稳定 `id`、面向玩家的标题与简介、`primaryGoal`、可优先加载的节点或上下文，以及可达结局的范围。`defaultDirectionId` 指向包的默认方向。
 
-MVP 只从 `defaultDirectionId` 创建会话，不实现方向选择器，也不接受用户自定义方向。这样故事包先验证“方向约束下的自由行动”是否成立。后续版本可提供预置方向选择；再之后才允许用户用自然语言声明自定义方向，并将其校验、固化为该会话的故事契约，而不是直接修改原始包。
+`defaultDirectionId` 是规则层的兼容默认方向，不替代共创的角色或进入节点选择。会话建立后，运行时先根据 `story.entryModel` 固化身份与节点，再公布由 `arcModel` 声明的大方向。用户可用自然语言表达当前意图，但只能锚定到已公布的合法方向，不能直接改写原始包。
 
 `StoryDirection` 与每回合 `ActionIntent` 的职责必须分开：前者回答“这局故事想走向哪里”，后者回答“此刻玩家尝试做什么”。方向不应写成“检查某个物品”或“询问某个角色”。
 
@@ -180,7 +197,7 @@ MVP 只从 `defaultDirectionId` 创建会话，不实现方向选择器，也不
 
 - `player`：玩家角色的初始属性和身份。
 - `inventory`、`relationships`、`flags` 与 `knownFacts` 的初值。
-- `currentNodeId`、`currentLocationId` 与 `directionId`，其中节点必须等于 `story.startNodeId`，方向必须等于 `defaultDirectionId`。
+- `currentNodeId`、`currentLocationId` 与 `directionId`，其中默认模板的节点等于 `story.startNodeId`，方向等于 `defaultDirectionId`。共创会话若选择了 `entryModel.entryPoints` 中的节点，运行时从该节点对应的 `NarrativeBeat.branchState` 复制独立快照，不修改模板或原故事包。
 - 已解锁的实体和开局可感知的冲突，不提供强制的具体行动菜单。
 
 同一包创建的不同会话从模板复制，各自独立演化。模板内容在游戏中不可变。
@@ -196,6 +213,14 @@ MVP 只从 `defaultDirectionId` 创建会话，不实现方向选择器，也不
 5. 不可违背事实、运行期状态和叙事建议没有混在同一字段中。
 6. 取当前节点及其 `contextRefs` 可组成一份有限、相关的模型上下文，不需要加载整个包。
 7. 默认剧情方向以高层目标描述，且不要求玩家在任一节点执行某个指定动作。
+
+## 脚本生成的模块目录
+
+`build-story-package` 会为每个固定 StoryPackage 创建 `content/packages/<package-id>/<version>/` 版本目录。目录的固定入口是 `package.json`，同级的 `analysis.json`、`audit.json`、本地 `reader.json` 与 `modules/` 都属于同一次脚本构建结果。`modules/` 不是人工编辑的第二份故事包，而是同一来源、同一版本的可审计投影：`package-index.json` 保存源哈希、模块路径和每个模块的 SHA-256；`runtime-index.json` 只声明世界、状态、全局图谱、场景节点索引、宏观方向索引、身份入口索引、剧情拍点索引和实体索引这些运行时入口；`chapter-index.json`、`beat-index.json`、`entry-index.json`、`arc-index.json` 是根总清单，只保存分段定位所需的稳定 ID 与选择键，详细索引写入 `indexes/` 下的分段文件：章节按 `sourceProgress` 定位，拍点按当前章节定位，身份入口按所选角色定位，宏观方向按当前剧情节点定位。启动只读根总清单；只有实际选择或进入对应上下文时才读取分段。`node-index.json`、`arc-model.json`、`entry-model.json` 和各实体索引保留各自运行时的轻量入口；`main-story-graph.json` 保存全局骨架；`world.json` 和 `state-schema.json` 保存全局规则；场景节点、宏观方向、身份入口、剧情拍点、章节、角色、地点、物品和关系按稳定 ID 分文件。所有这些文件均为脚本生成物，不能作为人工编辑入口。
+
+剧情节点模块只保留与按需上下文选择有关的压缩拍点、时间线、事实和 `contextRefs`。运行时可读取当前拍点及最多两个已发生拍点的摘要；不得读取后续拍点，也不得把当前章节中尚未到达拍点的摘要、事实或角色证据放入 Planner 上下文。完整母本章节只能写入同名 `reader/` 模块，供本地阅读器显示，不能作为 Planner 上下文。`audit-story-package-modules` 必须验证所有索引路径、覆盖范围和内容哈希；任何人工改写或文件遗漏均会导致审计失败。
+
+`package.json` 是构建与审计时的完整、版本化快照；脚本会将 `package-index.json` 的 SHA-256 写入 `package.moduleIndexSha256`。具有 `runtime-index.json` 的脚本生成包在共创启动时只读取核心模块和索引，场景节点和宏观方向通过 `id`、身份入口在用户选中后、剧情拍点通过 `id` 与 `sourceProgress` 在实际访问时才从其模块加载；身份选择菜单只读取入口索引卡，不读取开场叙事和时间线明细。每个已读取模块均验证版本绑定与 SHA-256，并排除所有 `NarrativeBeat.sourceExcerpt`。会话会保存同一模块索引哈希，续局时若内容投影变化则明确拒绝混用。正文 Planner 再从该投影按需选择当前拍点、最多两个已发生拍点、当前地点、已登场角色和相关物品；角色卡片仅能使用当前拍点行范围及此前的证据，绝不读取 `reader/` 原著章节。缺少模块目录或运行时索引的历史包保留单文件兼容路径。
 
 ## 后续演进
 

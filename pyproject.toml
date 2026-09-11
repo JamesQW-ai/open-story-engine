@@ -9,6 +9,10 @@ description = "State-authoritative interactive fiction runtime"
 requires-python = ">=3.9"
 dependencies = []
 
+[project.optional-dependencies]
+api = ["fastapi==0.141.1", "uvicorn==0.52.4"]
+api-test = ["httpx==0.28.1"]
+
 [project.scripts]
 open-story-play = "open_story_engine.entrypoints:play"
 open-story-co-create = "open_story_engine.entrypoints:co_create"

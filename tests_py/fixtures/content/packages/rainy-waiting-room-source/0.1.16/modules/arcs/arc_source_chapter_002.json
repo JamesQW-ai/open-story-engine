@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "rainy-waiting-room-source",
+    "version": "0.1.16"
+  },
+  "arc": {
+    "id": "arc_source_chapter_002",
+    "title": "推进：十七号柜",
+    "summary": "许川推开门时，铁门发出一声尖锐的摩擦声，仿佛整座车站都听见了。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_003",
+          "chapter_004",
+          "chapter_005",
+          "chapter_006",
+          "chapter_007"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_008"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_003_to_004",
+      "direction_chapter_004_to_005",
+      "direction_chapter_005_to_006",
+      "direction_chapter_006_to_007",
+      "direction_chapter_007_to_008"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_003"
+    ]
+  }
+}

@@ -7,6 +7,7 @@ data/*.sqlite-wal
 .env
 .env.*
 !.env.example
+.DS_Store
 
 # 本机保留的 TypeScript 追溯资料，不再进入 Python-only 仓库。
 src/
@@ -15,5 +16,30 @@ package.json
 package-lock.json
 tsconfig.json
 *.tsbuildinfo
+
+# StoryPackage 的版本入口也命名为 package.json，属于可提交的脚本产物。
+!content/packages/**/package.json
+
+# API 独立环境及构建缓存。
+.venv-api/
+__pycache__/
+*.egg-info/
 docs/issues/2026-09-03-live-llm-batch-timeout.md
 docs/releases/2026-09-03-mvp-foundation.md
+
+# 当前 React 前端；保留根部历史 TypeScript 的忽略边界。
+!web/src/
+!web/src/**
+!web/package.json
+!web/package-lock.json
+!web/tsconfig.json
+
+# 版本快照包含回归测试及其故事包入口。
+!web/tests/
+!web/tests/**
+!tests_py/fixtures/content/packages/**/package.json
+!tests_api/fixtures/**/package.json
+
+# 本机运行数据、实时插图缓存与浏览器调试记录。
+/data/
+/.playwright-cli/

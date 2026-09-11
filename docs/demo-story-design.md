@@ -4,7 +4,7 @@
 
 《雨夜候车室》是首个用于验证引擎的原创现代悬疑故事。其小说母本位于 `content/source/rainy-waiting-room.v0.1.txt`，采用第三人称限知视角，以许川为焦点人物；母本没有面向机器的元数据或结构标记。
 
-`content/annotations/rainy-waiting-room.v0.1.json` 保留从母本到结构化剧情锚点的溯源记录；`content/packages/rainy-waiting-room/0.1.1.json` 是引擎实际加载的候选 `StoryPackage`，`0.1.0.json` 保留为历史基线。稳定 ID、状态旗标、检定与结局条件均以候选故事包为准，不由叙事模型再次推断。
+`content/annotations/rainy-waiting-room.v0.1.json` 保留从母本到结构化剧情锚点的溯源记录；`tests_py/fixtures/content/packages/rainy-waiting-room/0.1.2/package.json` 是主线回归使用的候选 `StoryPackage`。运行书库已清空，用户从导入 TXT 开始，`0.1.0` 的旧格式样本仅保存在 `tests_py/fixtures/legacy-story-package.json`，用于兼容性回归。稳定 ID、状态旗标、检定与结局条件均以候选故事包为准，不由叙事模型再次推断。
 
 首个运行模式为 `mainline`。默认且唯一可选方向为 `direction_original_canon`，即沿原著的规范剧情推进至“救援和真相同时成立”的结局。后续的受控偏离、玩家新建角色和私有同人共创属于独立会话契约能力，不会修改本故事包的原著事实。
 

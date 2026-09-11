@@ -1,0 +1,166 @@
+{
+  "date": "2026-09-11",
+  "model": "deepseek-v4-pro:cloud",
+  "database": "isolated backup; no production generation writes",
+  "source_sha256": "918fd8656c43a65b0bab33a4099a4a556b29a847db7f97f6d54b0a15f7f924a8",
+  "scope": "真实模型唐栖的一条连续父子路线。实现迭代期间生成，末章使用最终规则；不是所有身份或所有选项的真实模型验收。",
+  "stages": [
+    {
+      "stage": 1,
+      "branch_id": "branch_0de71015-bf1a-4d68-a522-e0a2735c42f4",
+      "parent_id": "branch_8de5f7fb-cb10-4034-87f1-8de8a5efc2a2",
+      "action": "留在信号室，观察周围动静",
+      "characters": 2243,
+      "progress": 25,
+      "status": "active",
+      "next_direction_count": 2,
+      "milestones": [
+        {
+          "label": "走出锁死的门",
+          "complete": true
+        }
+      ],
+      "people": [
+        "许川",
+        "唐栖",
+        "陈砚",
+        "姜序"
+      ],
+      "text_file": "route-closure-1.txt",
+      "sha256": "d86b17a8675c38057ef0d53a62cedc6c403d08f7f2c699e517338e8cfd9a4fbe"
+    },
+    {
+      "stage": 2,
+      "branch_id": "branch_eae9beff-25f5-4150-99d2-01e66551e871",
+      "parent_id": "branch_0de71015-bf1a-4d68-a522-e0a2735c42f4",
+      "action": "先护好文件袋，请许川搀扶撤离",
+      "characters": 2197,
+      "progress": 50,
+      "status": "active",
+      "next_direction_count": 2,
+      "milestones": [
+        {
+          "label": "走出锁死的门",
+          "complete": true
+        },
+        {
+          "label": "把材料带出去",
+          "complete": true
+        }
+      ],
+      "people": [
+        "许川",
+        "唐栖",
+        "陈砚",
+        "姜序"
+      ],
+      "text_file": "route-closure-2.txt",
+      "sha256": "a88a947e8ce85704079881e7550e6d55f5ffd1be8bafdad4240e4628886ca169",
+      "first_delta_seconds": 1.139,
+      "elapsed_seconds": 61.12,
+      "resets": [
+        "chapter_expanded",
+        "chapter_revision",
+        "chapter_revision",
+        "chapter_expanded"
+      ],
+      "stream_matches": true
+    },
+    {
+      "stage": 3,
+      "branch_id": "branch_8801b670-c327-4f63-a61b-8c83da3e828a",
+      "parent_id": "branch_eae9beff-25f5-4150-99d2-01e66551e871",
+      "action": "先核对验收单，请姜序辨认签名",
+      "characters": 2249,
+      "progress": 75,
+      "status": "active",
+      "next_direction_count": 2,
+      "milestones": [
+        {
+          "label": "走出锁死的门",
+          "complete": true
+        },
+        {
+          "label": "把材料带出去",
+          "complete": true
+        },
+        {
+          "label": "互相印证的证据",
+          "complete": true
+        }
+      ],
+      "people": [
+        "许川",
+        "唐栖",
+        "陈砚",
+        "姜序"
+      ],
+      "text_file": "route-closure-3.txt",
+      "sha256": "b65615a416792d0d225cbffceeb5471ff23a75d93f1816b66fd15f2c1355f5b3",
+      "first_delta_seconds": 1.643,
+      "elapsed_seconds": 23.46,
+      "resets": [
+        "chapter_edited"
+      ],
+      "stream_matches": true
+    },
+    {
+      "stage": 4,
+      "branch_id": "branch_cf7b8f90-770e-418f-871a-2821197adbf5",
+      "parent_id": "branch_8801b670-c327-4f63-a61b-8c83da3e828a",
+      "action": "确认材料由谁保管和接手",
+      "characters": 2347,
+      "progress": 100,
+      "status": "completed",
+      "next_direction_count": 0,
+      "milestones": [
+        {
+          "label": "走出锁死的门",
+          "complete": true
+        },
+        {
+          "label": "把材料带出去",
+          "complete": true
+        },
+        {
+          "label": "互相印证的证据",
+          "complete": true
+        },
+        {
+          "label": "调查有了回应",
+          "complete": true
+        }
+      ],
+      "people": [
+        "许川",
+        "唐栖",
+        "陈砚",
+        "姜序"
+      ],
+      "text_file": "route-closure-4.txt",
+      "sha256": "b816fce1f8110b993a4ee5b6fd74f64318a34bceec4996364480e2dbde5786ea",
+      "first_delta_seconds": 2.923,
+      "elapsed_seconds": 19.94,
+      "resets": [],
+      "stream_matches": true
+    }
+  ],
+  "checks": {
+    "api_tests": 68,
+    "core_tests": 192,
+    "frontend_tests": 9,
+    "frontend_build": "passed",
+    "diff_check": "passed",
+    "production_proxy_health": 200
+  },
+  "quality_review": {
+    "functional_closure": "passed: rescue, evidence retained, report received, completed 100, no next directions",
+    "literary_and_full_fact_acceptance": "not accepted",
+    "remaining_examples": [
+      "第三阶段仍有未在源事实中提供的签名字形、值班往事等细节。",
+      "末章将此前日志与签名核对回忆为在信号室发生，仍存在具体地点回忆偏差。"
+    ],
+    "limitations": "自动审查和局部修复不能保证识别所有语义矛盾。已保存旧正文不自动改写。"
+  },
+  "ui_verification": "本轮通过前端代理读取正式存档与人物列表；CUA 缺少认证，未做新的浏览器视觉验收。"
+}

@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "story-package-entry-model/0.1",
+  "package": {
+    "id": "rainy-waiting-room-source",
+    "version": "0.1.16"
+  },
+  "entryModel": {
+    "sourceCharacterIds": [
+      "character_8df21ea6bdc3",
+      "character_7e24f2f3c928",
+      "character_e0fb57325ea2",
+      "character_23316be23fd1"
+    ],
+    "defaultEntryPointId": "entry_chapter-001-event-001",
+    "newCharacter": {
+      "enabled": true,
+      "profileFields": [
+        {
+          "id": "name",
+          "label": "姓名",
+          "type": "text",
+          "minLength": 2,
+          "maxLength": 12
+        },
+        {
+          "id": "gender",
+          "label": "性别",
+          "type": "text",
+          "minLength": 1,
+          "maxLength": 12
+        },
+        {
+          "id": "age",
+          "label": "年龄",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 150
+        },
+        {
+          "id": "occupation",
+          "label": "职业",
+          "type": "text",
+          "minLength": 2,
+          "maxLength": 40
+        },
+        {
+          "id": "sourceRelationship",
+          "label": "与原著角色或势力的关系",
+          "type": "text",
+          "minLength": 2,
+          "maxLength": 120
+        },
+        {
+          "id": "background",
+          "label": "个人背景",
+          "type": "text",
+          "minLength": 8,
+          "maxLength": 300
+        }
+      ]
+    }
+  }
+}

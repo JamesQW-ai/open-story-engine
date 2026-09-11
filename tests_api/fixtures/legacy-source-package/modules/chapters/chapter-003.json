@@ -1,0 +1,309 @@
+{
+  "schemaVersion": "story-package-chapter-module/0.1",
+  "package": {
+    "id": "rainy-waiting-room-source",
+    "version": "0.1.8"
+  },
+  "chapter": {
+    "id": "chapter-003",
+    "title": "水位线以下",
+    "lineRange": {
+      "start": 229,
+      "end": 360
+    }
+  },
+  "neighborChapterIds": [
+    "chapter-002",
+    "chapter-004"
+  ],
+  "contextRefs": {
+    "characterIds": [
+      "character_23316be23fd1",
+      "character_8df21ea6bdc3"
+    ],
+    "locationIds": [],
+    "itemIds": [
+      "item_da04d5fe18f9",
+      "item_6c2446fe99fd"
+    ]
+  },
+  "facts": [
+    {
+      "id": "fact_fe0ebb6a9278",
+      "text": "里面没有黑暗，远处有一盏红色故障灯一闪一闪，把积水照得像浑浊的血。",
+      "sourceChapterId": "chapter-003",
+      "sourceProgress": "chapter_008",
+      "lineRange": {
+        "start": 231,
+        "end": 231
+      }
+    },
+    {
+      "id": "fact_c4d45f714b4e",
+      "text": "他知道排水泵撑不到这个雨季，却还把故障写成‘已排除’。",
+      "sourceChapterId": "chapter-003",
+      "sourceProgress": "chapter_008",
+      "lineRange": {
+        "start": 237,
+        "end": 237
+      }
+    },
+    {
+      "id": "fact_eb2a65fe10d2",
+      "text": "图纸上那条备用排水沟被碎石堵住了，如果不先开阀，水会继续往信号室倒灌。",
+      "sourceChapterId": "chapter-003",
+      "sourceProgress": "chapter_008",
+      "lineRange": {
+        "start": 249,
+        "end": 249
+      }
+    },
+    {
+      "id": "fact_012dfc6a9412",
+      "text": "一下，两下，第三下时，金属终于断开。",
+      "sourceChapterId": "chapter-003",
+      "sourceProgress": "chapter_008",
+      "lineRange": {
+        "start": 329,
+        "end": 329
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "id": "timeline_f0e9c130a596",
+      "order": 8,
+      "knownAtStart": false,
+      "description": "姜序刷开通行证，门刚开一条缝，冷风就裹着水汽扑出来。"
+    },
+    {
+      "id": "timeline_5b43c30c55c1",
+      "order": 9,
+      "knownAtStart": false,
+      "description": "他想起姜序说过，手动阀一开，水压会暂时下降；可在那之前，门外的卡栓必须被撬开。"
+    },
+    {
+      "id": "timeline_f5e1d20d2671",
+      "order": 10,
+      "knownAtStart": false,
+      "description": "许川把录音笔递给她。"
+    }
+  ],
+  "beats": [
+    {
+      "id": "beat_chapter_008",
+      "nodeId": "node_source_continuity",
+      "summary": "姜序刷开通行证，门刚开一条缝，冷风就裹着水汽扑出来。",
+      "sourceEvidence": {
+        "lineRange": {
+          "start": 231,
+          "end": 231
+        }
+      },
+      "narrativeAnchor": "姜序刷开通行证，门刚开一条缝，冷风就裹着水汽扑出来。",
+      "openThreads": [
+        "关键推进：撬开"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_008_to_009",
+          "title": "关键推进：撬开",
+          "summary": "他想起姜序说过，手动阀一开，水压会暂时下降；可在那之前，门外的卡栓必须被撬开。",
+          "suggestedInput": "沿母本推进到下一关键剧情节点",
+          "canonicalBeatId": "beat_chapter_009",
+          "statePatch": {
+            "sourceProgress": "chapter_009",
+            "playerLocationId": "location_d649e9cd8ce7"
+          }
+        }
+      ],
+      "branchState": {
+        "playerLocationId": "location_d649e9cd8ce7",
+        "sourceProgress": "chapter_008",
+        "freeTextProgress": 0
+      },
+      "contextRefs": {
+        "characterIds": [
+          "character_23316be23fd1"
+        ],
+        "locationIds": [],
+        "itemIds": [
+          "item_2b077442f6d4"
+        ]
+      }
+    },
+    {
+      "id": "beat_chapter_009",
+      "nodeId": "node_source_continuity",
+      "summary": "他想起姜序说过，手动阀一开，水压会暂时下降；可在那之前，门外的卡栓必须被撬开。",
+      "sourceEvidence": {
+        "lineRange": {
+          "start": 319,
+          "end": 319
+        }
+      },
+      "narrativeAnchor": "他想起姜序说过，手动阀一开，水压会暂时下降；可在那之前，门外的卡栓必须被撬开。",
+      "openThreads": [
+        "许川递给"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_009_to_010",
+          "title": "许川递给",
+          "summary": "许川把录音笔递给她。",
+          "suggestedInput": "沿母本推进到下一关键剧情节点",
+          "canonicalBeatId": "beat_chapter_010",
+          "statePatch": {
+            "sourceProgress": "chapter_010",
+            "playerLocationId": "location_d649e9cd8ce7"
+          }
+        }
+      ],
+      "branchState": {
+        "playerLocationId": "location_d649e9cd8ce7",
+        "sourceProgress": "chapter_009",
+        "freeTextProgress": 0
+      },
+      "contextRefs": {
+        "characterIds": [
+          "character_23316be23fd1"
+        ],
+        "locationIds": [],
+        "itemIds": [
+          "item_da04d5fe18f9"
+        ]
+      }
+    },
+    {
+      "id": "beat_chapter_010",
+      "nodeId": "node_source_continuity",
+      "summary": "许川把录音笔递给她。",
+      "sourceEvidence": {
+        "lineRange": {
+          "start": 337,
+          "end": 337
+        }
+      },
+      "narrativeAnchor": "许川把录音笔递给她。",
+      "openThreads": [
+        "关键推进：启动"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_010_to_011",
+          "title": "关键推进：启动",
+          "summary": "陈砚的对讲机落水后，司机没有等到放行复诵，按规程切断了启动程序。",
+          "suggestedInput": "沿母本推进到下一关键剧情节点",
+          "canonicalBeatId": "beat_chapter_011",
+          "statePatch": {
+            "sourceProgress": "chapter_011",
+            "playerLocationId": "location_17d89e704870"
+          }
+        }
+      ],
+      "branchState": {
+        "playerLocationId": "location_d649e9cd8ce7",
+        "sourceProgress": "chapter_010",
+        "freeTextProgress": 0
+      },
+      "contextRefs": {
+        "characterIds": [
+          "character_8df21ea6bdc3"
+        ],
+        "locationIds": [],
+        "itemIds": [
+          "item_338d6f8c3d3a"
+        ]
+      }
+    }
+  ],
+  "entryPoints": [
+    {
+      "id": "entry_chapter-003-event-001",
+      "title": "姜序刷开",
+      "summary": "姜序刷开通行证，门刚开一条缝，冷风就裹着水汽扑出来。",
+      "chapterTitle": "水位线以下",
+      "sourceChapterId": "chapter-003",
+      "nodeId": "node_source_continuity",
+      "beatId": "beat_chapter_008",
+      "sourceCharacterIds": [
+        "character_23316be23fd1"
+      ],
+      "timelineRefs": [
+        "timeline_f0e9c130a596"
+      ],
+      "availableToNewCharacter": true,
+      "newCharacterNarrative": "新角色从《水位线以下》的“姜序刷开”之后进入；不得改写此前已确认的母本事实。",
+      "sourceCharacterNarratives": {
+        "character_23316be23fd1": "以该原著角色的身份，从《水位线以下》的“姜序刷开”之后进入共创；已确认母本事实保持不变。"
+      }
+    },
+    {
+      "id": "entry_chapter-003-event-002",
+      "title": "关键推进：撬开",
+      "summary": "他想起姜序说过，手动阀一开，水压会暂时下降；可在那之前，门外的卡栓必须被撬开。",
+      "chapterTitle": "水位线以下",
+      "sourceChapterId": "chapter-003",
+      "nodeId": "node_source_continuity",
+      "beatId": "beat_chapter_009",
+      "sourceCharacterIds": [
+        "character_23316be23fd1"
+      ],
+      "timelineRefs": [
+        "timeline_5b43c30c55c1"
+      ],
+      "availableToNewCharacter": true,
+      "newCharacterNarrative": "新角色从《水位线以下》的“关键推进：撬开”之后进入；不得改写此前已确认的母本事实。",
+      "sourceCharacterNarratives": {
+        "character_23316be23fd1": "以该原著角色的身份，从《水位线以下》的“关键推进：撬开”之后进入共创；已确认母本事实保持不变。"
+      }
+    },
+    {
+      "id": "entry_chapter-003-event-003",
+      "title": "许川递给",
+      "summary": "许川把录音笔递给她。",
+      "chapterTitle": "水位线以下",
+      "sourceChapterId": "chapter-003",
+      "nodeId": "node_source_continuity",
+      "beatId": "beat_chapter_010",
+      "sourceCharacterIds": [
+        "character_8df21ea6bdc3"
+      ],
+      "timelineRefs": [
+        "timeline_f5e1d20d2671"
+      ],
+      "availableToNewCharacter": true,
+      "newCharacterNarrative": "新角色从《水位线以下》的“许川递给”之后进入；不得改写此前已确认的母本事实。",
+      "sourceCharacterNarratives": {}
+    }
+  ],
+  "arcs": [
+    {
+      "id": "arc_source_chapter_003",
+      "title": "推进：水位线以下",
+      "summary": "姜序刷开通行证，门刚开一条缝，冷风就裹着水汽扑出来。",
+      "availableWhen": {
+        "sourceProgress": {
+          "oneOf": [
+            "chapter_008",
+            "chapter_009",
+            "chapter_010"
+          ]
+        }
+      },
+      "completionWhen": {
+        "sourceProgress": {
+          "equals": "chapter_011"
+        }
+      },
+      "phaseDirectionIds": [
+        "direction_chapter_008_to_009",
+        "direction_chapter_009_to_010",
+        "direction_chapter_010_to_011"
+      ],
+      "nextArcIds": [
+        "arc_source_chapter_004"
+      ]
+    }
+  ]
+}

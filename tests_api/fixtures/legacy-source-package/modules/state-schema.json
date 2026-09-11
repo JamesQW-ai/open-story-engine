@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "story-package-state-module/0.1",
+  "package": {
+    "id": "rainy-waiting-room-source",
+    "version": "0.1.8"
+  },
+  "initialState": {
+    "player": {
+      "characterId": "character_8df21ea6bdc3",
+      "attributes": {
+        "insight": 2,
+        "empathy": 2,
+        "nerve": 2
+      }
+    },
+    "inventory": [],
+    "relationships": {},
+    "flags": {},
+    "counters": {},
+    "knownFacts": [
+      "timeline_d33985f0ce11"
+    ],
+    "freeTextProgress": 0,
+    "currentNodeId": "node_source_continuity",
+    "currentLocationId": "location_17d89e704870",
+    "directionId": "direction_default"
+  },
+  "stateModel": {
+    "runtimeStateFields": [
+      "storyScope",
+      "derivativeStage",
+      "derivedTurn",
+      "freeTextProgress",
+      "characterLocationIds",
+      "itemOwnerCharacterIds"
+    ],
+    "locationReferenceFields": [
+      "playerLocationId"
+    ],
+    "immutableFields": [
+      "storyScope",
+      "itemOwnerCharacterIds"
+    ],
+    "monotonicEnums": {
+      "sourceProgress": [
+        "chapter_001",
+        "chapter_002",
+        "chapter_003",
+        "chapter_004",
+        "chapter_005",
+        "chapter_006",
+        "chapter_007",
+        "chapter_008",
+        "chapter_009",
+        "chapter_010",
+        "chapter_011",
+        "chapter_012",
+        "chapter_013",
+        "chapter_014"
+      ],
+      "derivativeStage": [
+        "inactive",
+        "setup",
+        "active"
+      ]
+    },
+    "transitionRules": [],
+    "invariants": [],
+    "narrativeAssertions": [
+      {
+        "id": "assertion_0e6d48f5fd02",
+        "when": {
+          "storyScope": {
+            "equals": "source"
+          },
+          "sourceProgress": {
+            "oneOf": [
+              "chapter_001",
+              "chapter_002",
+              "chapter_003",
+              "chapter_004",
+              "chapter_005",
+              "chapter_006",
+              "chapter_007",
+              "chapter_008",
+              "chapter_009",
+              "chapter_010",
+              "chapter_011",
+              "chapter_012",
+              "chapter_013",
+              "chapter_014"
+            ]
+          }
+        },
+        "instruction": "已确认事实：末班列车停在那里，车窗里一排排空座位浮在湿漉漉的夜色中，车门紧闭，像一条没有开口的鱼。在没有状态变更前，不能写其已经离开、驶离、开走、发车或已离站。",
+        "message": "剧情正文与已确认的交通状态矛盾。",
+        "forbiddenPatterns": [
+          "(?:列车|火车|班车|客车|货车|船只|轮船)[^。！？\\\\n]{0,20}(?:离开|驶离|开走|(?:已经|已|正在|开始|随即|终于)发车|已离站|已经离站|刚过|刚刚离站)"
+        ]
+      },
+      {
+        "id": "assertion_e51f380e629e",
+        "when": {
+          "storyScope": {
+            "equals": "source"
+          },
+          "sourceProgress": {
+            "oneOf": [
+              "chapter_003",
+              "chapter_004",
+              "chapter_005",
+              "chapter_006",
+              "chapter_007",
+              "chapter_008",
+              "chapter_009",
+              "chapter_010",
+              "chapter_011",
+              "chapter_012",
+              "chapter_013",
+              "chapter_014"
+            ]
+          }
+        },
+        "instruction": "已确认事实：调度台上的屏幕亮着，画面停在列车放行记录。在没有状态变更前，不能写其已经离开、驶离、开走、发车或已离站。",
+        "message": "剧情正文与已确认的交通状态矛盾。",
+        "forbiddenPatterns": [
+          "(?:列车|火车|班车|客车|货车|船只|轮船)[^。！？\\\\n]{0,20}(?:离开|驶离|开走|(?:已经|已|正在|开始|随即|终于)发车|已离站|已经离站|刚过|刚刚离站)"
+        ]
+      }
+    ],
+    "mockFollowups": []
+  }
+}

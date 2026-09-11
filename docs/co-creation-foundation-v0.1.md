@@ -27,7 +27,7 @@ StoryPackage + 进入节点 + 继承范围 + 角色
 - `continuityScope`、`persona`、`direction`：继承范围、玩家角色和高层故事目标。
 - `provenance`：每个契约自身如何来自原著或用户设定。
 
-初版默认从 `node_arrival` 进入，并代入原著角色许川；schema 已支持 `new_character`，但尚未提供角色创建流程。
+入口由 `story.entryModel` 声明。CLI 已提供“既有主要角色或新建角色 -> 可进入的关键剧情节点”的最小流程，选择结果会冻结为契约中的 `persona`、`entryPointId`、`entryBeatId`、`entryNodeId`、`entryChapterTitle` 与 `canonicalTimelineRefs`。故事包未声明入口模型时仍兼容原有单一 `startNodeId`。新建角色只属于会话契约；它不会成为原包 `characters` 的隐式写入，也不能绕过包声明的世界观和状态规则。
 
 ## `BranchNode`
 
@@ -79,21 +79,21 @@ Planner 不输出或决定 `BranchState`。它只获得已确认的 `resolvedSta
 
 当前 `MockBranchPlanner` 只为《雨夜候车室》提供固定测试内容，用于验证树的生长和分叉。它的输入是：
 
-- `ContextBuilder` 从不可变 `SessionStoryContract`、父节点祖先链、当前原著节点局部窗口和叙事约束组装出的只读上下文；
+- `ContextBuilder` 从不可变 `SessionStoryContract`、入口允许的压缩时间线摘要、父节点摘要和已确认分支正文组装出的只读上下文；
 - 玩家选择的方向 ID；
 - 可选的玩家方向原文。
 
 它输出 `PlannerResult`：剧情正文、摘要、事实增量、后续方向、与原著的关系，以及规划引用、置信度和状态变更建议。状态建议只用于审计和后续规则映射；Planner 不得直接修改 `GameState`。SQLite 在确认父子关系后才会赋予节点 ID、时间和顺序。
 
-`ContextBuilder` 只携带本回合需要的原著不可变事实、规范前史、当前父节点的祖先链、当前节点场景、已确认的 `BranchState` 和相关实体；不会把整棵分支树、完整原著或其他会话数据交给 Planner。若方向的 `statePatch.playerLocationId` 改变许川地点，服务层只依据故事包中 `sceneRoutes` 声明的“当前节点 + 当前地点 -> 目标地点 -> 目标节点”路线切换下一回合场景窗口；路线不存在时拒绝该方向。Planner 不输出或决定 `sourceNodeRef`。`PlannerResult` 的每个引用必须位于这份上下文的 `availableReferences` 中，否则拒绝写入。`openThreads` 是面向读者的叙事文本，不是稳定的机器主键：汇合目标仍以其声明的未解事项为前提，但会以 `BranchState` 中对应的证据、救援、水位、信号室或列车状态确认该事项是否仍开放，避免模型同义改写导致合法分支无法汇合。
+`ContextBuilder` 只携带本回合需要的原著不可变事实、由当前入口 `canonicalTimelineRefs` 选出的压缩前史、当前父节点摘要、已确认的 `BranchState` 和相关实体；不会把整棵分支树、完整原著、`sourceExcerpt` 原文或其他会话数据交给 Planner。规范原著节点在上下文中只以故事包摘要出现。若方向的 `statePatch.playerLocationId` 改变焦点人物地点，服务层只依据故事包中 `sceneRoutes` 声明的“当前节点 + 当前地点 -> 目标地点 -> 目标节点”路线切换下一回合场景窗口；路线不存在时拒绝该方向。Planner 不输出或决定 `sourceNodeRef`。`PlannerResult` 的每个引用必须位于这份上下文的 `availableReferences` 中，否则拒绝写入。`openThreads` 是面向读者的叙事文本，不是稳定的机器主键：汇合目标仍以其声明的未解事项为前提，但会以 `BranchState` 中对应的证据、救援、水位、信号室或列车状态确认该事项是否仍开放，避免模型同义改写导致合法分支无法汇合。
 
-`LlmPlanner` 通过 `OpenAICompatibleGateway` 接入 OpenAI-compatible `/chat/completions`，但 CLI 默认仍为 Mock。Python 入口为 `python3 -m open_story_engine co-create`，其 `open_story_engine.llm` 使用标准库 HTTP。只有 `.env` 设置 `STORY_PLANNER=openai`、`STORY_LLM_BASE_URL`、`STORY_LLM_API_KEY` 和 `STORY_LLM_MODEL` 后才会发起外部调用。`.env` 被 Git 忽略，`.env.example` 只保存无密钥模板。共创 CLI 默认让正文 Planner 请求 SSE（`STORY_LLM_STREAM=true`）：网关把每个内容块交给 Planner，Planner 只从首字段 `narrativeText` 抽取完整字符交给 CLI 作为“尚未提交”的正文草稿。完整 JSON 仍必须通过 schema、引用范围、叙事事实与技术安全上限校验并落库，CLI 才显示“剧情已确认”和后续方向；因此预览不等同于已发生剧情。自由文本方向判定固定使用普通 JSON，因为其结构化结果不会直接显示给玩家。SSE 缺少正文或超时时，已展示的草稿会标记为未采纳，网关只以同一逻辑回合的普通 JSON 传输回退；它不会把校验失败的正文交给模型重写。可设置 `STORY_LLM_STREAM=false` 排查不可靠的中转站。网关兼容常规 `delta.content` 与个别中转站在 SSE 事件中直接给出的 `message.content`。不再以固定文学字数拒绝可用章节。普通回合以约 2,000 至 2,500 个中文字符的场景正文为质量目标，要求写出承接、行动、阻力、细节和新压力；强悬念或自然收束可明显更短，且不会因为长度被拒绝。Mock 同样应输出多段可阅读场景，而非状态补丁的单句扩写。`storyArc` 让模型持续看见当前宏观目标，并要求它只展开可交互的当前阶段，待自然收束时才标记“本章完”。每个后续方向的 `statePatch` 还必须至少推进一项已确认状态；衍生范围还必须将 `derivedTurn` 精确推进一回合，防止正文已经完成某个行动却把同一行动再次交给玩家选择。叙事事实校验会拒绝正文提前宣称信号室已穿过、证据已取得、唐栖已离开隧道、水位已下降或列车已移动；LLM Planner 与服务层都会执行它，确保 Mock 与外部模型共享相同状态边界。它是对 `BranchState` 可表达事实的确定性补充，不试图替代通用语义理解。规范方向的原文复用不调用外部模型。`STORY_LLM_QUALITY_REVIEW=true` 时，Python 在这些确定性校验之后调用只读审阅器；意见只写入 audit，不会影响状态、场景路线、原始故事包或触发自动重写。模型 JSON 不完整、超过技术安全上限或 schema 校验失败时，Planner 可做本地安全归一化；无法安全归一化则拒绝单次草稿，不创建分支。调用请求摘要、原始模型输出或错误保存到 `llm_audits`，密钥不写入数据库或审计。
+`LlmPlanner` 通过 `OpenAICompatibleGateway` 接入 OpenAI-compatible `/chat/completions`，但 CLI 默认仍为 Mock。Python 入口为 `python3 -m open_story_engine co-create`，其 `open_story_engine.llm` 使用标准库 HTTP。只有 `.env` 设置 `STORY_PLANNER=openai`、`STORY_LLM_BASE_URL`、`STORY_LLM_API_KEY` 和 `STORY_LLM_MODEL` 后才会发起外部调用。`.env` 被 Git 忽略，`.env.example` 只保存无密钥模板。正文 Planner 只接收并输出小说文字，网关的每个正文内容块都会显示为“尚未提交”的草稿；模型返回 JSON 会被明确拒绝。方向判定固定在本地运行，章节名、摘要、后续菜单与状态变化由脚本从已选择方向、`StoryPackage` 和 `resolvedState` 推导。SSE 缺少正文或超时时，已展示的草稿会标记为未采纳，网关只以同一逻辑回合的普通 JSON 传输回退；它不会把校验失败的正文交给模型重写。可设置 `STORY_LLM_STREAM=false` 排查不可靠的中转站。网关兼容常规 `delta.content` 与个别中转站在 SSE 事件中直接给出的 `message.content`。普通回合的硬下限为 2,000 个非空白字符，提示目标为 2,200 至 2,800；首次不足时只允许一次纯正文续写。`storyArc` 由运行时保持当前宏观目标和本章阶段；每个后续方向的 `statePatch` 来自已声明的内容包，衍生范围还必须将 `derivedTurn` 精确推进一回合，防止正文已经完成某个行动却把同一行动再次交给玩家选择。叙事事实校验会拒绝正文提前宣称未发生的状态变化，确保 Mock 与外部模型共享相同状态边界。它是对 `BranchState` 可表达事实的确定性补充，不试图替代通用语义理解。规范方向的原文复用不调用外部模型。`STORY_LLM_QUALITY_REVIEW=true` 时，Python 在这些确定性校验之后调用只读审阅器；意见只写入 audit，不会影响状态、场景路线、原始故事包或触发自动重写。调用请求摘要、原始模型输出或错误保存到 `llm_audits`，密钥不写入数据库或审计。
 
 ## 自由文本方向判定
 
 `DirectionEvaluator` 只负责把玩家的自然语言意图锚定到父节点已经公布的高层方向，不能创建方向、状态补丁、场景路线或叙事正文。对于“先 X，再 Y”的多阶段目标，它选择能落实 X 的最早合法方向，并保留完整输入供 Planner 逐章推进；只有当前行动确实无法判定时才要求澄清。判定器从当前方向的标题、摘要和建议输入提取匹配词，并从当前 StoryPackage 的不可变事实读取拒绝依据，不保存任何示例故事的方向 ID 或关键词表。即使 `STORY_PLANNER=openai`，方向判定仍在本地运行，以保证模型只承担正文生成；接受结果的 `directionId` 必须属于父节点的 `nextDirections`，拒绝结果的不可变事实引用必须在当前上下文中。
 
-模型 JSON、引用或方向 ID 不合格时，评估器会携带失败原因重试一次；仍失败则降级为澄清提示，不创建分支。服务层会再次校验评估结果后才调用 Planner，因此模型不能借自由文本绕过内容包、地点路由、`RuleEngine` 约束或受控汇合检查。
+本地方向判定无法锚定时会返回澄清或拒绝提示，不创建分支。服务层会再次校验判定结果后才调用 Planner，因此自由文本不能绕过内容包、地点路由、`RuleEngine` 约束或受控汇合检查。
 
 每次自由文本方向判定都会写入 `direction_evaluations`，无论结果是接受、澄清还是拒绝。记录保存原始输入、父分支、结构化判定和时间，不修改 `GameState`。LLM 判定的受限请求摘要、原始输出和错误另存入 `direction_evaluator_audits`；`audits` 查看判定历史，`llm-audits` 同时显示规划与方向判定调用。
 
@@ -109,4 +109,4 @@ STORY_DATABASE_PATH=/private/tmp/open-story-engine-python-manual.sqlite \
 python3 -m open_story_engine co-create
 ```
 
-该命令创建一个独立会话，显示当前 Planner 的方向编号；也可输入自然语言方向，`history` 可查看本次生成的分支节点。当前分支结束后，`derive <后续目标>` 会从该叶节点创建独立的 `DerivedStoryPackage`，而非续写或改写原始故事包。默认配置使用 Mock 验证数据流；设置 `STORY_PLANNER=openai` 后，方向评估与动态正文都会通过受限 LLM 路径运行。Python CLI 会读取根目录 `.env`，但命令行显式变量优先。它仍不是正式玩家界面，也不开放模型自行创造原著状态、场景路线或剧情方向。
+该命令先选择故事包声明的身份和关键剧情节点，再创建独立会话、显示所选章节和当前大方向；也可输入自然语言方向，`history` 可查看本次生成的分支节点。当前分支结束后，`derive <后续目标>` 会从该叶节点创建独立的 `DerivedStoryPackage`，而非续写或改写原始故事包。默认配置使用 Mock 验证数据流；设置 `STORY_PLANNER=openai` 后，只有动态正文通过受限 LLM 路径生成。Python CLI 会读取根目录 `.env`，但命令行显式变量优先。它仍不是正式玩家界面，也不开放模型自行创造原著状态、场景路线或剧情方向。

@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
+from .branch_ledger import BRANCH_LEDGER_KEY, validate_branch_ledger
 from .state import apply_patch, create_patch
 
 
@@ -47,6 +48,7 @@ class SessionStore:
         self.connection.executescript("""
         CREATE TABLE IF NOT EXISTS game_sessions (
           id TEXT PRIMARY KEY, story_package_id TEXT NOT NULL, story_package_version TEXT NOT NULL,
+          story_package_module_index_sha256 TEXT,
           state_version INTEGER NOT NULL, status TEXT NOT NULL, current_state_json TEXT NOT NULL,
           created_at TEXT NOT NULL, updated_at TEXT NOT NULL
         );
@@ -65,6 +67,10 @@ class SessionStore:
         CREATE TABLE IF NOT EXISTS session_story_contracts (
           session_id TEXT PRIMARY KEY REFERENCES game_sessions(id), contract_json TEXT NOT NULL, created_at TEXT NOT NULL
         );
+        CREATE TABLE IF NOT EXISTS session_play_preferences (
+          session_id TEXT PRIMARY KEY REFERENCES game_sessions(id), title TEXT,
+          ended_branches_json TEXT NOT NULL DEFAULT '{}'
+        );
         CREATE TABLE IF NOT EXISTS session_derived_story_packages (
           session_id TEXT PRIMARY KEY REFERENCES game_sessions(id), package_json TEXT NOT NULL, created_at TEXT NOT NULL
         );
@@ -81,7 +87,8 @@ class SessionStore:
         CREATE TABLE IF NOT EXISTS llm_audits (
           id INTEGER PRIMARY KEY AUTOINCREMENT, session_id TEXT NOT NULL REFERENCES game_sessions(id),
           operation TEXT NOT NULL, model TEXT NOT NULL, prompt_version TEXT NOT NULL,
-          request_summary TEXT NOT NULL, raw_response TEXT, error TEXT, call_observations_json TEXT, created_at TEXT NOT NULL
+          request_summary TEXT NOT NULL, raw_response TEXT, error TEXT, call_observations_json TEXT,
+          prompt_context_json TEXT, created_at TEXT NOT NULL
         );
         CREATE TABLE IF NOT EXISTS direction_evaluator_audits (
           id INTEGER PRIMARY KEY AUTOINCREMENT, session_id TEXT NOT NULL REFERENCES game_sessions(id),
@@ -91,24 +98,83 @@ class SessionStore:
         CREATE UNIQUE INDEX IF NOT EXISTS branch_nodes_request_id_unique ON branch_nodes(session_id, request_id) WHERE request_id IS NOT NULL;
         CREATE UNIQUE INDEX IF NOT EXISTS direction_evaluations_request_id_unique ON direction_evaluations(session_id, request_id) WHERE request_id IS NOT NULL;
         """)
+        audit_columns = {
+            row["name"]
+            for row in self.connection.execute("PRAGMA table_info(llm_audits)")
+        }
+        if "prompt_context_json" not in audit_columns:
+            self.connection.execute("ALTER TABLE llm_audits ADD COLUMN prompt_context_json TEXT")
+        session_columns = {
+            row["name"]
+            for row in self.connection.execute("PRAGMA table_info(game_sessions)")
+        }
+        if "story_package_module_index_sha256" not in session_columns:
+            self.connection.execute(
+                "ALTER TABLE game_sessions ADD COLUMN story_package_module_index_sha256 TEXT"
+            )
         self.connection.commit()
 
-    def create_session(self, package: Dict[str, Any], session_id: Optional[str] = None) -> Dict[str, Any]:
+    def create_session(
+        self, package: Dict[str, Any], session_id: Optional[str] = None, initial_state: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
         session_id = session_id or str(uuid.uuid4())
-        state = copy.deepcopy(package["initialState"])
+        state = copy.deepcopy(initial_state if initial_state is not None else package["initialState"])
+        module_index_sha256 = package.get("moduleIndexSha256")
+        if module_index_sha256 is not None and not isinstance(module_index_sha256, str):
+            raise ValueError("StoryPackage 的 moduleIndexSha256 必须是字符串或空值")
         timestamp = now()
         with self.connection:
             self.connection.execute(
-                "INSERT INTO game_sessions VALUES (?, ?, ?, 0, 'active', ?, ?, ?)",
-                (session_id, package["id"], package["version"], dump(state), timestamp, timestamp),
+                "INSERT INTO game_sessions("
+                "id,story_package_id,story_package_version,story_package_module_index_sha256,"
+                "state_version,status,current_state_json,created_at,updated_at"
+                ") VALUES (?, ?, ?, ?, 0, 'active', ?, ?, ?)",
+                (
+                    session_id, package["id"], package["version"], module_index_sha256,
+                    dump(state), timestamp, timestamp,
+                ),
             )
         return self.get_session(session_id)
+
+    def delete_session(self, session_id: str) -> bool:
+        """Delete one save and its dependent records atomically, leaving packages intact."""
+        with self.connection:
+            if self.connection.execute("SELECT 1 FROM game_sessions WHERE id = ?", (session_id,)).fetchone() is None:
+                return False
+            # Evaluations reference branches; remove them before the branch tree.
+            for table in (
+                "direction_evaluator_audits", "direction_evaluations", "llm_audits",
+                "event_narrations", "game_events", "session_derived_story_packages",
+                "session_story_contracts", "session_play_preferences", "branch_nodes",
+            ):
+                self.connection.execute(f"DELETE FROM {table} WHERE session_id = ?", (session_id,))
+            self.connection.execute("DELETE FROM game_sessions WHERE id = ?", (session_id,))
+        return True
 
     def get_session(self, session_id: str) -> Dict[str, Any]:
         row = self.connection.execute("SELECT * FROM game_sessions WHERE id = ?", (session_id,)).fetchone()
         if row is None:
             raise ValueError(f"会话不存在: {session_id}")
-        return {"id": row["id"], "storyPackageId": row["story_package_id"], "storyPackageVersion": row["story_package_version"], "stateVersion": row["state_version"], "status": row["status"], "currentState": load(row["current_state_json"])}
+        return {
+            "id": row["id"], "storyPackageId": row["story_package_id"],
+            "storyPackageVersion": row["story_package_version"],
+            "storyPackageModuleIndexSha256": row["story_package_module_index_sha256"],
+            "stateVersion": row["state_version"], "status": row["status"],
+            "currentState": load(row["current_state_json"]),
+        }
+
+    def assert_session_package(self, session_id: str, package: Dict[str, Any]) -> None:
+        """Reject a resumed session if its fixed StoryPackage projection changed."""
+        session = self.get_session(session_id)
+        expected = (
+            session["storyPackageId"], session["storyPackageVersion"],
+            session.get("storyPackageModuleIndexSha256"),
+        )
+        actual = (package.get("id"), package.get("version"), package.get("moduleIndexSha256"))
+        if expected[:2] != actual[:2]:
+            raise ValueError("会话绑定的 StoryPackage ID 或版本与当前运行包不一致")
+        if expected[2] is not None and expected[2] != actual[2]:
+            raise ValueError("会话绑定的 StoryPackage 模块索引已变化，不能混用运行时规则")
 
     def commit_turn(self, session_id: str, request_id: str, base_state: Dict[str, Any], base_version: int, player_input: str, action: Dict[str, Any], resolution: Dict[str, Any]) -> Dict[str, Any]:
         with self.connection:
@@ -174,6 +240,7 @@ class SessionStore:
         return load(row[0])
 
     def save_derived(self, package: Dict[str, Any]) -> None:
+        validate_branch_ledger(package.get(BRANCH_LEDGER_KEY))
         with self.connection:
             self.connection.execute("INSERT INTO session_derived_story_packages VALUES(?,?,?)", (package["sessionId"], dump(package), package["createdAt"]))
 
@@ -185,8 +252,22 @@ class SessionStore:
         existing = self.derived(package["sessionId"])
         if existing is None:
             raise ValueError("衍生故事包不存在")
+        validate_branch_ledger(package.get(BRANCH_LEDGER_KEY))
         immutable = ("id", "sourcePackageRef", "forkBranchId", "title", "goal", "createdAt")
-        if any(existing[key] != package[key] for key in immutable) or len(package["revisions"]) != len(existing["revisions"]) + 1 or package["revisions"][:-1] != existing["revisions"]:
+        existing_ledger = existing.get(BRANCH_LEDGER_KEY)
+        if existing_ledger is not None:
+            validate_branch_ledger(existing_ledger)
+            old_entries = existing_ledger["entries"]
+            new_entries = package[BRANCH_LEDGER_KEY]["entries"]
+            ledger_rewritten = len(new_entries) < len(old_entries) or new_entries[:len(old_entries)] != old_entries
+        else:
+            ledger_rewritten = False
+        if (
+            any(existing[key] != package[key] for key in immutable)
+            or len(package["revisions"]) != len(existing["revisions"]) + 1
+            or package["revisions"][:-1] != existing["revisions"]
+            or ledger_rewritten
+        ):
             raise ValueError("衍生故事包只能追加修订，不能改写来源或既有内容")
         with self.connection:
             self.connection.execute("UPDATE session_derived_story_packages SET package_json=? WHERE session_id=?", (dump(package), package["sessionId"]))
@@ -206,7 +287,17 @@ class SessionStore:
 
     def append_branch(self, session_id: str, parent_id: str, node: Dict[str, Any]) -> Dict[str, Any]:
         parent = self.branch(session_id, parent_id)
-        if node.get("selectedDirectionId") not in {direction["id"] for direction in parent["nextDirections"]}:
+        published = node.get("selectedDirectionId") in {direction["id"] for direction in parent["nextDirections"]}
+        selected = node.get("selectedDirection")
+        custom = (
+            isinstance(selected, dict)
+            and selected.get("isFreeText") is True
+            and selected.get("id") == node.get("selectedDirectionId")
+            and isinstance(selected.get("statePatch"), dict)
+            and isinstance(node.get("playerDirection"), str)
+            and bool(node["playerDirection"].strip())
+        )
+        if not published and not custom:
             raise ValueError("共创子节点必须来自父节点已公布的剧情方向")
         node = copy.deepcopy(node)
         node.setdefault("id", "branch_" + str(uuid.uuid4()))
@@ -262,6 +353,11 @@ class SessionStore:
     def branches(self, session_id: str) -> List[Dict[str, Any]]:
         return [self.branch(session_id, row["id"]) for row in self.connection.execute("SELECT id FROM branch_nodes WHERE session_id=? ORDER BY sequence", (session_id,))]
 
+    def has_branches(self, session_id: str) -> bool:
+        return self.connection.execute(
+            "SELECT 1 FROM branch_nodes WHERE session_id=? LIMIT 1", (session_id,),
+        ).fetchone() is not None
+
     def lineage(self, session_id: str, node_id: str) -> List[Dict[str, Any]]:
         result: List[Dict[str, Any]] = []
         current = self.branch(session_id, node_id)
@@ -289,11 +385,11 @@ class SessionStore:
             if table == "direction_evaluator_audits":
                 self.connection.execute("INSERT INTO direction_evaluator_audits(session_id,parent_branch_id,model,prompt_version,request_summary,raw_response,error,call_observations_json,created_at) VALUES(?,?,?,?,?,?,?,?,?)", (session_id, parent_id, audit["model"], audit["promptVersion"], audit["requestSummary"], audit.get("rawResponse"), audit.get("error"), dump(audit.get("callObservations", [])), now()))
             else:
-                self.connection.execute("INSERT INTO llm_audits(session_id,operation,model,prompt_version,request_summary,raw_response,error,call_observations_json,created_at) VALUES(?,?,?,?,?,?,?,?,?)", (session_id, audit["operation"], audit["model"], audit["promptVersion"], audit["requestSummary"], audit.get("rawResponse"), audit.get("error"), dump(audit.get("callObservations", [])), now()))
+                self.connection.execute("INSERT INTO llm_audits(session_id,operation,model,prompt_version,request_summary,raw_response,error,call_observations_json,prompt_context_json,created_at) VALUES(?,?,?,?,?,?,?,?,?,?)", (session_id, audit["operation"], audit["model"], audit["promptVersion"], audit["requestSummary"], audit.get("rawResponse"), audit.get("error"), dump(audit.get("callObservations", [])), dump(audit.get("promptContext", {})), now()))
 
     def llm_audits(self, session_id: str) -> List[Dict[str, Any]]:
         rows = self.connection.execute("SELECT * FROM llm_audits WHERE session_id=? ORDER BY id", (session_id,))
-        return [{"id": row["id"], "operation": row["operation"], "model": row["model"], "error": row["error"], "callObservations": load(row["call_observations_json"]) if row["call_observations_json"] else []} for row in rows]
+        return [{"id": row["id"], "operation": row["operation"], "model": row["model"], "error": row["error"], "callObservations": load(row["call_observations_json"]) if row["call_observations_json"] else [], "promptContext": load(row["prompt_context_json"]) if row["prompt_context_json"] else {}} for row in rows]
 
     def direction_evaluator_audits(self, session_id: str) -> List[Dict[str, Any]]:
         rows = self.connection.execute("SELECT * FROM direction_evaluator_audits WHERE session_id=? ORDER BY id", (session_id,))

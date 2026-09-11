@@ -51,6 +51,8 @@ class OpenAICompatibleGateway:
         self.max_tokens = max_tokens
         self.allow_transport_fallback = allow_transport_fallback
         self.reasoning_effort = reasoning_effort
+        # Only the fixed JSON, no-fallback live evaluation sets this budget.
+        self.remaining_calls: Optional[int] = None
 
     def _first_sse_delta_timeout_seconds(self) -> int:
         """Allow compatible endpoints time to start prose or reasoning events."""
@@ -109,6 +111,10 @@ class OpenAICompatibleGateway:
         on_delta: Optional[Callable[[str], None]],
         on_reset: Optional[Callable[[str], None]],
     ) -> Completion:
+        if self.remaining_calls is not None:
+            if self.remaining_calls <= 0:
+                raise LlmError("已达到真实模型验收调用上限", "model_call_limit")
+            self.remaining_calls -= 1
         request_body = {
             "model": self.model,
             "messages": messages,
@@ -191,6 +197,7 @@ class OpenAICompatibleGateway:
                     content=content,
                     raw_response=raw,
                     observations=[self._observation(1, "completed", "sse", start)],
+                    body_was_streamed=on_delta is not None,
                 )
             try:
                 content, raw = self._stream(
@@ -202,6 +209,7 @@ class OpenAICompatibleGateway:
                     content=content,
                     raw_response=raw,
                     observations=[self._observation(1, "completed", "sse", start)],
+                    body_was_streamed=on_delta is not None,
                 )
             except (LlmError, TimeoutError, socket.timeout) as error:
                 # Some compatible gateways accept SSE but never provide delta.content.
@@ -495,22 +503,30 @@ class OpenAICompatibleGateway:
 
 def parse_json_content(content: str) -> Dict[str, Any]:
     normalized = content.strip()
+    if "</think>" in normalized:
+        normalized = normalized.rsplit("</think>", 1)[1].strip()
+    elif "<think>" in normalized:
+        raise LlmError("LLM 仅返回未结束的推理内容，缺少最终 JSON")
     if normalized.startswith("```"):
         first_newline = normalized.find("\n")
         normalized = normalized[first_newline + 1:] if first_newline >= 0 else normalized
         if normalized.rstrip().endswith("```"):
             normalized = normalized.rstrip()[:-3].rstrip()
-    try:
-        # Some OpenAI-compatible endpoints prepend a short explanation or append
-        # a completion marker despite response_format=json_object. Accept exactly
-        # one complete object and leave surrounding transport noise out of the
-        # planner contract. An incomplete object still fails closed.
-        opening = normalized.find("{")
-        if opening < 0:
-            raise json.JSONDecodeError("missing object", normalized, 0)
-        parsed, _ = json.JSONDecoder().raw_decode(normalized[opening:])
-    except json.JSONDecodeError as error:
-        raise LlmError("LLM 未返回有效 JSON") from error
-    if not isinstance(parsed, dict):
-        raise LlmError("LLM JSON 根节点必须是对象")
-    return parsed
+    if normalized.endswith("[DONE]"):
+        normalized = normalized[:-6].rstrip()
+    if normalized.endswith("```"):
+        normalized = normalized[:-3].rstrip()
+    # Only a terminal object is eligible. An example in reasoning or a preface
+    # must never substitute for a missing/malformed final response.
+    opening = normalized.find("{")
+    decoder = json.JSONDecoder()
+    while opening >= 0:
+        try:
+            parsed, end = decoder.raw_decode(normalized[opening:])
+        except json.JSONDecodeError:
+            pass
+        else:
+            if isinstance(parsed, dict) and not normalized[opening + end:].strip():
+                return parsed
+        opening = normalized.find("{", opening + 1)
+    raise LlmError("LLM 未返回有效的最终 JSON 对象")

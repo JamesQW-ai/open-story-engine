@@ -5,6 +5,8 @@ from __future__ import annotations
 import copy
 from typing import Any, Dict, Iterable, List
 
+from .content import story_node_by_id
+
 
 def matches_condition(state: Dict[str, Any], condition: str) -> bool:
     if condition.startswith("has:"):
@@ -90,7 +92,7 @@ def resolve_turn(package: Dict[str, Any], state: Dict[str, Any], action: Dict[st
     for terminal_rule in package["rules"].get("terminalRules", []):
         if all(matches_condition(next_state, condition) for condition in terminal_rule["when"]):
             apply_effects(next_state, terminal_rule["set"])
-    node = next((node for node in package["story"]["nodes"] if node["id"] == next_state["currentNodeId"]), None)
+    node = story_node_by_id(package, next_state["currentNodeId"])
     transition = next((item for item in (node or {}).get("transitions", []) if all(matches_condition(next_state, condition) for condition in item["when"])), None)
     if transition:
         next_state["currentNodeId"] = transition["toNodeId"]

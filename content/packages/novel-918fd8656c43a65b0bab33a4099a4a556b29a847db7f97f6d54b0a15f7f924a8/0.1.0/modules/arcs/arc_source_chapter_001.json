@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "novel-918fd8656c43a65b0bab33a4099a4a556b29a847db7f97f6d54b0a15f7f924a8",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_001",
+    "title": "推进：二十三点十分",
+    "summary": "十五分钟后，许川赶到临潮站，唐栖的电话已经无法接通。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_001",
+          "chapter_002"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_003"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_001_to_002",
+      "direction_chapter_002_to_003"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_002"
+    ]
+  }
+}
