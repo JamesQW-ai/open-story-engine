@@ -1,0 +1,78 @@
+{
+  "schema": "nq001-scenarios/0.1",
+  "route_id": "nq001-longform-route-a",
+  "scenarios": [
+    {
+      "id": "inform-ask-wait",
+      "label": "告知、询问、等待",
+      "steps": [
+        {"kind": "custom", "text": "先把我已经知道的情况告诉在场的人，然后停下来听他们的回答。"},
+        {"kind": "custom", "text": "我只询问眼前能确认的事实，不替任何人下结论。"},
+        {"kind": "custom", "text": "我留在原地等待片刻，不移动，不开始新的行动。"}
+      ]
+    },
+    {
+      "id": "preset-route",
+      "label": "预设方向连续路线",
+      "steps": [
+        {"kind": "preset", "index": 0},
+        {"kind": "preset", "index": 0},
+        {"kind": "preset", "index": 0}
+      ]
+    },
+    {
+      "id": "custom-route",
+      "label": "自定义方向连续路线",
+      "steps": [
+        {"kind": "custom", "text": "我提出一个与当前目标相关、但不改变已经确认事实的行动。"},
+        {"kind": "custom", "text": "我解释这个行动的理由，并等待角色回应。"},
+        {"kind": "custom", "text": "我根据刚才确认的结果选择下一步。"}
+      ]
+    },
+    {
+      "id": "permanent-consequence",
+      "label": "重大永久后果",
+      "steps": [
+        {"kind": "custom", "text": "我接受这条路线可能让一名关键人物永久离场，并明确承担后果。"},
+        {"kind": "custom", "text": "在后果已经确认后，我只按当前状态继续行动。"},
+        {"kind": "custom", "text": "我回看刚才的决定，再选择一条不会让已离场人物复归的行动。"}
+      ]
+    },
+    {
+      "id": "restore-and-review",
+      "label": "刷新、回看与恢复",
+      "steps": [
+        {"kind": "custom", "text": "我完成一个可验证的小行动，然后停下。"},
+        {"kind": "refresh"},
+        {"kind": "review"}
+      ]
+    },
+    {
+      "id": "deviation-route",
+      "label": "偏离路线",
+      "steps": [
+        {"kind": "custom", "text": "我明确选择偏离原著预设路线，但保留当前已经发生的事实。"},
+        {"kind": "custom", "text": "我沿着这条偏离路线处理眼前冲突，不强行回到原著。"},
+        {"kind": "custom", "text": "我检查偏离路线留下的未解事项，并做出下一步决定。"}
+      ]
+    },
+    {
+      "id": "failure-route",
+      "label": "失败路线",
+      "steps": [
+        {"kind": "custom", "text": "我尝试一个明显缺少前置条件的行动，并接受系统拒绝。"},
+        {"kind": "custom", "text": "失败后我读取当前状态，确认没有把未提交结果写入分支。"},
+        {"kind": "custom", "text": "我改用一个满足当前条件的保守行动继续。"}
+      ]
+    },
+    {
+      "id": "automatic-ending",
+      "label": "自动结局",
+      "steps": [
+        {"kind": "custom", "text": "我完成当前目标，并让所有关键冲突得到明确收束。"},
+        {"kind": "custom", "text": "我确认已经没有需要继续推进的目标。"},
+        {"kind": "ending"}
+      ]
+    }
+  ]
+}
