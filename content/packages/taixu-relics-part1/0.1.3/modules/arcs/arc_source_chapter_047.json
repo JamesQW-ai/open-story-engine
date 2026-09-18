@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "arc": {
+    "id": "arc_source_chapter_047",
+    "title": "推进：人间留白",
+    "summary": "叶观澜带着守灯人巡查城门，发现远处云层压出一道阶梯。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_305",
+          "chapter_306",
+          "chapter_307",
+          "chapter_308",
+          "chapter_309",
+          "chapter_310",
+          "chapter_311"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_312"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_305_to_306",
+      "direction_chapter_306_to_307",
+      "direction_chapter_307_to_308",
+      "direction_chapter_308_to_309",
+      "direction_chapter_309_to_310",
+      "direction_chapter_310_to_311",
+      "direction_chapter_311_to_312"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_048"
+    ]
+  }
+}

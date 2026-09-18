@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "arc": {
+    "id": "arc_source_chapter_043",
+    "title": "推进：伏笔回收",
+    "summary": "沈砚秋走到木牌旁，伸指沾了一点牌面上的墨，“日期不是结论，只是被某个人写下的可能。”",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_275",
+          "chapter_276",
+          "chapter_277",
+          "chapter_278",
+          "chapter_279",
+          "chapter_280",
+          "chapter_281"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_282"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_275_to_276",
+      "direction_chapter_276_to_277",
+      "direction_chapter_277_to_278",
+      "direction_chapter_278_to_279",
+      "direction_chapter_279_to_280",
+      "direction_chapter_280_to_281",
+      "direction_chapter_281_to_282"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_044"
+    ]
+  }
+}

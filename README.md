@@ -66,7 +66,7 @@ cd web && npm test && npm run build
 ```dotenv
 STORY_PLANNER=openai
 STORY_PACKAGE_ID=taixu-relics-part1
-STORY_PACKAGE_VERSION=0.1.2
+STORY_PACKAGE_VERSION=0.1.3
 STORY_LLM_API_KEY=...
 STORY_LLM_MODEL=...
 STORY_LLM_BASE_URL=https://你的中转站地址/v1
@@ -84,6 +84,6 @@ STORY_LLM_MAX_TOKENS=8192
 STORY_LLM_QUALITY_REVIEW=false
 ```
 
-`STORY_PACKAGE_ID` 与 `STORY_PACKAGE_VERSION` 固定本次运行加载的内容包，当前默认分别为 `taixu-relics-part1` 与 `0.1.2`；新规则必须新建包版本。运行目录仅保存用户实际导入或构建的故事，回归测试独立读取测试专用样本。CLI 试玩前须先构建故事包，或指定已导入包的 ID 与版本。`STORY_LLM_BASE_URL` 必须是 OpenAI-compatible API 前缀，不要包含 `/chat/completions`。正文 Planner 默认使用 SSE 展示未提交草稿，首段等待上限由 `STORY_LLM_FIRST_DELTA_TIMEOUT_SECONDS` 控制，传输失败时可按剩余时间回退到 JSON；每次请求默认 30 秒超时，正文最大 token 预算默认 8192。互动场景规划目标为 80 至 1,500 个中文字符，短而完整的行动不以填充文字满足最低长度；空正文、超长正文、状态事实冲突或未登记命名因果都会被拒绝且不会写入分支。可用 `llm-audits` 查看模型调用和拒绝记录。
+`STORY_PACKAGE_ID` 与 `STORY_PACKAGE_VERSION` 固定本次运行加载的内容包，当前默认分别为 `taixu-relics-part1` 与 `0.1.3`；新规则必须新建包版本。运行目录仅保存用户实际导入或构建的故事，回归测试独立读取测试专用样本。CLI 试玩前须先构建故事包，或指定已导入包的 ID 与版本。`STORY_LLM_BASE_URL` 必须是 OpenAI-compatible API 前缀，不要包含 `/chat/completions`。正文 Planner 默认使用 SSE 展示未提交草稿，首段等待上限由 `STORY_LLM_FIRST_DELTA_TIMEOUT_SECONDS` 控制，传输失败时可按剩余时间回退到 JSON；每次请求默认 30 秒超时，正文最大 token 预算默认 8192。互动场景规划目标为 80 至 1,500 个中文字符，短而完整的行动不以填充文字满足最低长度；空正文、超长正文、状态事实冲突或未登记命名因果都会被拒绝且不会写入分支。可用 `llm-audits` 查看模型调用和拒绝记录。
 
 以下 `evaluate-live` 是旧短篇评估命令，已停用，不再执行。历史配置记录：显式设置 `STORY_LIVE_EVALUATION=1` 后运行 `python3 -m open_story_engine evaluate-live --output /private/tmp/open-story-engine-python-live.json`，它会以受限调用次数在隔离内存会话中运行六个场景；真实模型场景固定使用 JSON、60 秒超时且不发生 JSON/SSE 传输降级。详见[真实 LLM 评估 v0.1](docs/live-llm-evaluation-v0.1.md)。

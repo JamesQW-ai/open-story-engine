@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class OfficialOpeningApiTests(unittest.TestCase):
     def test_rejected_opening_is_rewritten_and_cannot_silently_pass(self):
-        package = load_runtime_story_package(ROOT / 'content/packages/taixu-relics-part1/0.1.2/package.json', lazy=True)
+        package = load_runtime_story_package(ROOT / 'content/packages/taixu-relics-part1/0.1.3/package.json', lazy=True)
         package = player_package(package, 'character_ae4cb42b9b49')
         root = entry_node(package, create_contract(package, 'test'))
         gateway = Mock()
@@ -47,7 +47,7 @@ class OfficialOpeningApiTests(unittest.TestCase):
                 patch.object(PlayerNarrativePlanner, 'opening', opening):
             database = Path(directory) / 'sessions.sqlite'
             with TestClient(create_app(ROOT / 'content/packages', database, play=True)) as client:
-                payload = dict(package={'package_id': 'taixu-relics-part1', 'version': '0.1.2'},
+                payload = dict(package={'package_id': 'taixu-relics-part1', 'version': '0.1.3'},
                                entry_point_id='entry_lu_gate', source_character_id='character_ae4cb42b9b49',
                                identity_opening=True, request_id='stable-opening-request')
                 good = client.post('/api/v1/sessions/stream', json=payload)
@@ -63,15 +63,18 @@ class OfficialOpeningApiTests(unittest.TestCase):
     def test_catalog_creation_reload_and_rejected_cross_role_entry(self):
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {'STORY_PLANNER': 'mock'}):
             with TestClient(create_app(ROOT / 'content/packages', Path(directory) / 'sessions.sqlite', play=True)) as client:
-                catalog = client.get('/api/v1/packages/taixu-relics-part1/0.1.2').json()
+                catalog = client.get('/api/v1/packages/taixu-relics-part1/0.1.3').json()
                 self.assertTrue(catalog['package']['context_preview']['available'])
-                self.assertEqual(len(catalog['characters']), 3)
+                self.assertEqual(len(catalog['characters']), 7)
                 expected_art = {'陆照临': 'gate-detail-v1', '顾长离': 'trial-detail-v1', '叶观澜': 'gallery-detail-v1'}
                 for character in catalog['characters']:
                     entry = next(e for e in catalog['entries'] if e['id'] == character['defaultEntryPointId'])
-                    self.assertEqual(entry['opening_image']['id'], expected_art[character['name']])
-                    self.assertEqual(client.get(entry['opening_image']['url']).status_code, 200)
-                    payload = {'package': {'package_id': 'taixu-relics-part1', 'version': '0.1.2'},
+                    if character['name'] in expected_art:
+                        self.assertEqual(entry['opening_image']['id'], expected_art[character['name']])
+                        self.assertEqual(client.get(entry['opening_image']['url']).status_code, 200)
+                    else:
+                        self.assertIsNone(entry['opening_image'])
+                    payload = {'package': {'package_id': 'taixu-relics-part1', 'version': '0.1.3'},
                                'entry_point_id': character['defaultEntryPointId'],
                                'source_character_id': character['id'], 'identity_opening': True, 'request_id': 'opening-' + character['id']}
                     response = client.post('/api/v1/sessions', json=payload)

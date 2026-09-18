@@ -29,7 +29,7 @@ def update(tid='new-1', title='敲门的人是谁', status='open'):
 class ReaderThreadTests(unittest.TestCase):
     def setUp(self):
         self.package = player_package(load_runtime_story_package(
-            ROOT / 'content/packages/taixu-relics-part1/0.1.2/package.json', lazy=True), GU)
+            ROOT / 'content/packages/taixu-relics-part1/0.1.3/package.json', lazy=True), GU)
         self.contract = create_contract(self.package, 'fixture', dict(
             kind='source_character', sourceCharacterId=GU, entryPointId='entry_gu_trial'))
         self.root = entry_node(self.package, self.contract)
@@ -147,7 +147,7 @@ class ReaderThreadTests(unittest.TestCase):
             read = ReadService(ROOT / 'content/packages', Path(tmp) / 'sessions.sqlite')
             play = PlayService(read, Path(tmp))
             self.addCleanup(play.drafts.close)
-            start = play.create_session('taixu-relics-part1', '0.1.2', 'entry_gu_trial', GU, identity_opening=True)
+            start = play.create_session('taixu-relics-part1', '0.1.3', 'entry_gu_trial', GU, identity_opening=True)
             sid, root = start['session']['id'], start['branch']
             gateway = Mock(model='fixture')
             responses, texts = [], []

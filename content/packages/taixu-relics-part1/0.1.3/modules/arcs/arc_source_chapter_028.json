@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "arc": {
+    "id": "arc_source_chapter_028",
+    "title": "推进：一纸封天令",
+    "summary": "没有一方愿意承担回川城的代价，却都承认这是共同决定。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_151",
+          "chapter_152",
+          "chapter_153",
+          "chapter_154",
+          "chapter_155"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_156"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_151_to_152",
+      "direction_chapter_152_to_153",
+      "direction_chapter_153_to_154",
+      "direction_chapter_154_to_155",
+      "direction_chapter_155_to_156"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_029"
+    ]
+  }
+}

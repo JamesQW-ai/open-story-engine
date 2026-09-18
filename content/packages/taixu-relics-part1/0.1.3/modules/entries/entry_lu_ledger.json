@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "story-package-entry-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "entryPoint": {
+    "id": "entry_lu_ledger",
+    "title": "石碑下的无名令",
+    "summary": "你在石碑旁看完被抄录的无名诏书，陆照临留下的空白正等着一句回答。",
+    "chapterTitle": "无人签名的诏书",
+    "sourceChapterId": "chapter-040",
+    "nodeId": "node_source_continuity",
+    "beatId": "beat_chapter_261",
+    "sourceCharacterIds": [
+      "character_37531636ecf5"
+    ],
+    "timelineRefs": [],
+    "availableToNewCharacter": false,
+    "sourceCharacterNarratives": {
+      "character_37531636ecf5": "你站在石碑旁，手指压住刚被抄下的无名诏书。纸上没有日期、玺印和签名，只有一条要求停止追问的命令。陆照临把它带回火堆，没有替任何人补上落款。\n\n三年前押送引路灯后，你的名字从宗门记录里消失过；如今它又被写回这段不肯安静的旧事。眼前的人想知道命令从哪里来，而你只能先判断这页纸是否会再次把人交给一个没有名字的权力。\n\n你看完陆照临留下的抄本，石碑下的风掀动纸角。你可以承认这份空白值得保存，也可以先把它藏起来，免得下一盏灯沿着无名命令找到活人。"
+    },
+    "openingSummary": "你在石碑旁看完被抄录的无名诏书，陆照临留下的空白正等着一句回答。",
+    "openingThreads": [
+      "无名诏书为何没有签名",
+      "陆照临是否应继续公开抄本"
+    ],
+    "openingActions": [
+      {
+        "title": "确认抄本与原令一致",
+        "summary": "逐行核对石碑下的诏书，不擅自补写签名或解释命令来源。"
+      },
+      {
+        "title": "让陆照临保留空白",
+        "summary": "告诉他无名命令不能替后来者决定答案，先留下地点与见证。"
+      }
+    ],
+    "openingClues": [
+      "无名诏书被压在石碑下，没有日期、玺印和签名。",
+      "陆照临把诏书带回火堆，并将每一行抄进《太虚遗录》。",
+      "这份抄本记录了发现地点和日期，尚未替命令补上主人。"
+    ],
+    "openingState": {
+      "playerLocationId": "location_open_inscription",
+      "characterLocationIds": {
+        "character_37531636ecf5": "location_open_inscription",
+        "character_ae4cb42b9b49": "location_open_inscription"
+      },
+      "itemOwnerCharacterIds": {},
+      "itemLocationIds": {
+        "item_open_unsigned_edict": "location_open_inscription"
+      },
+      "characterOutcomeStates": {}
+    },
+    "sourceCharacterLocationIds": {
+      "character_37531636ecf5": "location_open_inscription"
+    },
+    "openingContext": {
+      "identity": "陆沉舟，陆照临的父亲，曾为玄霄宗押送引路灯的引灯人。",
+      "appearance": "站在石碑旁的旧引灯人，手边只有被压在石碑下的无名诏书。",
+      "knownFacts": [
+        "无名诏书被压在石碑下，没有日期、玺印和签名。",
+        "陆照临把诏书带回火堆，并将每一行抄进《太虚遗录》。",
+        "这份抄本记录了发现地点和日期，尚未替命令补上主人。"
+      ],
+      "unknownBoundaries": [
+        "无名命令真正的签署者和下一扇门的位置尚未确认。",
+        "不能把抄录之后的选择、天门新变化或后来者反应当作已经发生。"
+      ],
+      "relationships": [
+        {
+          "name": "陆照临",
+          "relation": "儿子，正在共同保留无名诏书的见证。"
+        },
+        {
+          "name": "无名诏书",
+          "relation": "你曾见过其命令造成的后果，但尚未确认签署者。"
+        }
+      ],
+      "visibleItems": [
+        "无名诏书仍在石碑下，未被带走。",
+        "陆照临的抄本已记录地点、日期和空白落款。"
+      ],
+      "evidence": [
+        "无人签名的诏书被压在石碑下面，纸上只写着“停止追问”。",
+        "陆照临将诏书带回火堆，却没有烧掉。",
+        "他把每一行字抄在《太虚遗录》末页，再写上发现它的地点和日期。",
+        "陆沉舟看完说，这才是对无名命令最好的回答。"
+      ],
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "sourceCutoff": 101838,
+      "sourceCutoffLine": 7616
+    }
+  }
+}

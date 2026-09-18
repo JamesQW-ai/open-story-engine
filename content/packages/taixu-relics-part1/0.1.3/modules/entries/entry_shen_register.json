@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "story-package-entry-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "entryPoint": {
+    "id": "entry_shen_register",
+    "title": "名册上的空白",
+    "summary": "你在登记堂替新弟子写下名字，三行被裁掉的记录仍压在名册最后一页。",
+    "chapterTitle": "入门登记",
+    "sourceChapterId": "chapter-002",
+    "nodeId": "node_source_continuity",
+    "beatId": "beat_chapter_005",
+    "sourceCharacterIds": [
+      "character_aa4580d38571"
+    ],
+    "timelineRefs": [],
+    "availableToNewCharacter": false,
+    "sourceCharacterNarratives": {
+      "character_aa4580d38571": "你坐在登记堂的长桌后，登记簿摊开在手边。新来的陆照临刚说完山门外的伤者、空灯和封山钟，你没有把疑问写进名册，只把他的名字落在纸上。\n\n三行新裁的纸口藏在最后一页，边缘没有积灰。你知道这不是普通的缺页，却还不能在一个刚入门的弟子面前解释它属于谁。\n\n你把登记簿合上一半，桌角的测灵石仍留着一缕已经散去的灰光。门规要求你登记，值房的旧记录要求你保持沉默；两件事都在等你先作出一个可以被追问的决定。"
+    },
+    "openingSummary": "你在登记堂替新弟子写下名字，三行被裁掉的记录仍压在名册最后一页。",
+    "openingThreads": [
+      "登记簿被裁掉的三行记录",
+      "陆照临带来的空灯与山门伤者"
+    ],
+    "openingActions": [
+      {
+        "title": "先完成入门登记",
+        "summary": "按现行门规写下新弟子的身份，暂不把未确认的空灯来历写成事实。"
+      },
+      {
+        "title": "追问山门见闻",
+        "summary": "只询问陆照临亲眼看见的钟声与灯，不替他补出伤者身份或后续结论。"
+      }
+    ],
+    "openingClues": [
+      "陆照临来自北河城，持柳氏荐书，准入外门。",
+      "他亲眼看见山门外的伤者和没有点燃的引路灯。",
+      "登记簿最后一页有三行新近裁掉的记录。"
+    ],
+    "openingState": {
+      "playerLocationId": "location_open_registry",
+      "characterLocationIds": {
+        "character_aa4580d38571": "location_open_registry",
+        "character_ae4cb42b9b49": "location_open_registry"
+      },
+      "itemOwnerCharacterIds": {
+        "item_open_registry_book": "character_aa4580d38571"
+      },
+      "itemLocationIds": {},
+      "characterOutcomeStates": {}
+    },
+    "sourceCharacterLocationIds": {
+      "character_aa4580d38571": "location_open_registry"
+    },
+    "openingContext": {
+      "identity": "沈砚秋，玄霄宗外门执事，负责入门登记与名册。",
+      "appearance": "青袍、木簪束发，长期握笔留下的薄茧仍在拇指内侧。",
+      "knownFacts": [
+        "陆照临来自北河城，持柳氏荐书，准入外门。",
+        "他亲眼看见山门外的伤者和没有点燃的引路灯。",
+        "登记簿最后一页有三行新近裁掉的记录。"
+      ],
+      "unknownBoundaries": [
+        "伤者的真实身份、空灯的来历和被裁掉的名字尚未确认。",
+        "不能把后续西坡失踪、灵脉城或天门记录当作此刻已经发生的事实。"
+      ],
+      "relationships": [
+        {
+          "name": "陆照临",
+          "relation": "正在登记的新弟子，尚未建立私人信任。"
+        },
+        {
+          "name": "玄霄宗名册",
+          "relation": "由你负责保管与填写，旧记录的改动仍需证据。"
+        }
+      ],
+      "visibleItems": [
+        "登记簿在你面前，最后一页的三行裁口清晰可见。",
+        "测灵石在桌角，陆照临的灰光已经消散。"
+      ],
+      "evidence": [
+        "登记堂悬在半山腰的石台上。",
+        "我叫沈砚秋，外门执事。把手放到测灵石上。",
+        "沈砚秋等了片刻，低头在登记簿上写下他的名字。",
+        "入了玄霄宗，先学会分辨什么该问，什么该等别人告诉你。"
+      ],
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "sourceCutoff": 4071,
+      "sourceCutoffLine": 223
+    }
+  }
+}

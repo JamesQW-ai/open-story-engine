@@ -23,7 +23,7 @@ from open_story_engine.storage import SessionStore
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_ID = "taixu-relics-part1"
-VERSION = "0.1.2"
+VERSION = "0.1.3"
 
 
 class ReadApiTests(unittest.TestCase):
@@ -59,7 +59,7 @@ class ReadApiTests(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response.json()["packages"][0]["beat_count"], len(self.package["story"]["narrativeGraph"]["beats"]))
             catalog = self.client.get(f"/api/v1/packages/{PACKAGE_ID}/{VERSION}").json()
-        self.assertEqual(len(catalog["entries"]), 3)
+        self.assertEqual(len(catalog["entries"]), 7)
         self.assertNotIn("sourceExcerpt", json.dumps(catalog))
         self.assertFalse(self.database.exists())
 
@@ -70,19 +70,19 @@ class ReadApiTests(unittest.TestCase):
         people = catalog["characters"] + catalog["supporting_characters"]
         self.assertEqual(
             [person["name"] for person in people],
-            ["陆照临", "顾长离", "叶观澜", "陆沉舟", "沈砚秋", "萧问蝉", "叶青冥"],
+            ["陆照临", "陆沉舟", "沈砚秋", "顾长离", "叶观澜", "萧问蝉", "叶青冥"],
         )
         self.assertTrue(all(person.get("portraitAsset", "").startswith("/images/") for person in people))
         self.assertNotIn("sourceDescriptions", json.dumps(catalog["supporting_characters"]))
 
-    def test_unreviewed_public_identity_gets_a_session_opening_without_mutating_package(self):
+    def test_reviewed_supporting_identity_uses_authored_opening_without_mutating_package(self):
         from open_story_engine.api_openings import identity_opening_package
         from open_story_engine.cocreation import create_contract, entry_node, normalize_entry_selection
 
-        entry = next(iter(self.package["story"]["entryModel"]["entryPoints"]))
+        entry = next(e for e in self.package["story"]["entryModel"]["entryPoints"] if e["id"] == "entry_shen_register")
         selection = normalize_entry_selection(
             self.package,
-            {"kind": "source_character", "sourceCharacterId": "character_37531636ecf5", "entryPointId": entry["id"]},
+            {"kind": "source_character", "sourceCharacterId": "character_aa4580d38571", "entryPointId": entry["id"]},
             allow_any_source_character=True,
         )
         overlay = identity_opening_package(self.package, selection)
@@ -91,9 +91,10 @@ class ReadApiTests(unittest.TestCase):
             create_contract(overlay, "identity-card-test", selection, allow_any_source_character=True),
             allow_any_source_character=True,
         )
-        self.assertEqual(root["branchState"]["playerCharacterId"], "character_37531636ecf5")
-        self.assertIn("你停下脚步", root["narrativeText"])
-        self.assertEqual(next(iter(self.package["story"]["entryModel"]["entryPoints"]))["sourceCharacterIds"], ["character_ae4cb42b9b49"])
+        self.assertEqual(root["branchState"]["playerCharacterId"], "character_aa4580d38571")
+        self.assertNotIn("你停下脚步", root["narrativeText"])
+        self.assertIn("登记堂", root["narrativeText"])
+        self.assertEqual(entry["sourceCharacterIds"], ["character_aa4580d38571"])
 
     def test_missing_database_and_unavailable_writes_are_explicit(self):
         self.assertEqual(self.client.get("/api/v1/sessions").json(), {"available": False, "sessions": []})

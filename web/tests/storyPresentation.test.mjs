@@ -25,7 +25,7 @@ test('other novels select the earliest declared entry led by the chosen characte
 })
 
 test('long novel prologue preserves its scene and fallback summary stays bounded', () => {
-  const {metadata} = JSON.parse(readFileSync(new URL('../../content/packages/taixu-relics-part1/0.1.2/package.json', import.meta.url), 'utf8'))
+  const {metadata} = JSON.parse(readFileSync(new URL('../../content/packages/taixu-relics-part1/0.1.3/package.json', import.meta.url), 'utf8'))
   const text = prologueText({package:metadata})
   assert.ok(text.includes('玄霄宗的山门'))
   assert.ok(text.endsWith('还是守住门规？'))

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "arc": {
+    "id": "arc_source_chapter_013",
+    "title": "推进：镇中借宿",
+    "summary": "客舍外的脚印没有继续靠近，也没有离开。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_066",
+          "chapter_067",
+          "chapter_068",
+          "chapter_069",
+          "chapter_070",
+          "chapter_071",
+          "chapter_072"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_073"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_066_to_067",
+      "direction_chapter_067_to_068",
+      "direction_chapter_068_to_069",
+      "direction_chapter_069_to_070",
+      "direction_chapter_070_to_071",
+      "direction_chapter_071_to_072",
+      "direction_chapter_072_to_073"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_014"
+    ]
+  }
+}

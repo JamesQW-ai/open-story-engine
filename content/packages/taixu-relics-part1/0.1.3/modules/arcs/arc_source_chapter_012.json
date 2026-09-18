@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "arc": {
+    "id": "arc_source_chapter_012",
+    "title": "推进：无灯镇",
+    "summary": "老妇没有回答，端起空碗离开。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_063",
+          "chapter_064",
+          "chapter_065"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_066"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_063_to_064",
+      "direction_chapter_064_to_065",
+      "direction_chapter_065_to_066"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_013"
+    ]
+  }
+}

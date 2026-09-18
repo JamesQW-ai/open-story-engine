@@ -180,7 +180,7 @@ class TurnDraftTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.packages = self.root / 'packages'
-        ref = 'taixu-relics-part1/0.1.2'
+        ref = 'taixu-relics-part1/0.1.3'
         shutil.copytree(ROOT / 'content/packages' / ref, self.packages / ref)
         package = load_runtime_story_package(self.packages / ref / 'package.json', lazy=True)
         self.entry = next(iter(package['story']['entryModel']['entryPoints']))

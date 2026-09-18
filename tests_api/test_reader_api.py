@@ -15,7 +15,7 @@ from open_story_engine.storage import SessionStore
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_ID = "taixu-relics-part1"
-VERSION = "0.1.2"
+VERSION = "0.1.3"
 
 
 class ReaderApiTests(unittest.TestCase):

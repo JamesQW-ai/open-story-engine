@@ -1,0 +1,798 @@
+{
+  "schemaVersion": "official-opening-review/1",
+  "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+  "reviewScope": "P0 七名可玩角色开局，按冻结母本逐场核对；不代表全书文学审校完成。",
+  "cast": [
+    {
+      "sourceCharacterId": "character_ae4cb42b9b49",
+      "name": "陆照临",
+      "roleGroup": "protagonist_group",
+      "playable": true,
+      "identitySummary": "初入玄霄宗、追查父亲陆沉舟去向的年轻修行者。",
+      "portraitAsset": "/images/taixu-lu-zhaolin-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_e663361ab1c7",
+      "name": "顾长离",
+      "roleGroup": "protagonist_group",
+      "playable": true,
+      "identitySummary": "玄霄宗的新弟子，观察细致，话语冷淡。第一次外门试炼将开始，你却先发现了木牌上的异样。",
+      "portraitAsset": "/images/taixu-gu-changli-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_aa4580d38571",
+      "name": "沈砚秋",
+      "sourceImportance": "major",
+      "roleGroup": "key_supporting",
+      "playable": true,
+      "identitySummary": "玄霄宗外门执事，负责入门登记与名册，站在门规与追问真相的新弟子之间。",
+      "rosterVisible": true,
+      "portraitAsset": "/images/taixu-shen-yanqiu-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_37531636ecf5",
+      "name": "陆沉舟",
+      "sourceImportance": "major",
+      "roleGroup": "key_supporting",
+      "playable": true,
+      "identitySummary": "陆照临的父亲，三年前为宗门押送引路灯后失踪。他的去向是陆照临踏入玄霄宗的缘由。",
+      "rosterVisible": true,
+      "portraitAsset": "/images/taixu-lu-chenzhou-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_766c4e16f65d",
+      "name": "叶观澜",
+      "roleGroup": "key_supporting",
+      "playable": true,
+      "identitySummary": "归墟盟来客，与沈执事相识。你带着一盏无芯灯闯入玄霄宗，准备追问一份对不上的旧记录。",
+      "portraitAsset": "/images/taixu-ye-guanlan-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_b96c85e62843",
+      "name": "萧问蝉",
+      "sourceImportance": "major",
+      "roleGroup": "antagonist_group",
+      "playable": true,
+      "identitySummary": "太虚秩序巡界使，奉诏追缉持有残印之人。她以天命为准绳，与追查真相的众人立场相对。",
+      "rosterVisible": true,
+      "portraitAsset": "/images/taixu-xiao-wenchun-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_2cf2b083593b",
+      "name": "叶青冥",
+      "sourceImportance": "major",
+      "roleGroup": "key_supporting",
+      "playable": true,
+      "identitySummary": "玄霄宗掌门，肩负宗门秩序与传承。面对旧事的追问，他必须以掌门身份作出回应。",
+      "rosterVisible": true,
+      "portraitAsset": "/images/taixu-ye-qingming-v1.png"
+    }
+  ],
+  "locations": [
+    {
+      "id": "location_open_gate",
+      "name": "玄霄宗山门",
+      "description": "玄霄宗的山门就在前方。",
+      "exits": [],
+      "discoverableItemIds": [],
+      "tags": [
+        "source",
+        "reviewed_opening"
+      ],
+      "sourceDescriptions": [
+        "玄霄宗的山门就在前方。"
+      ]
+    },
+    {
+      "id": "location_open_trial",
+      "name": "半山试炼场",
+      "description": "试炼场在半山腰，四面是削平的石壁。",
+      "exits": [],
+      "discoverableItemIds": [],
+      "tags": [
+        "source",
+        "reviewed_opening"
+      ],
+      "sourceDescriptions": [
+        "试炼场在半山腰，四面是削平的石壁。"
+      ]
+    },
+    {
+      "id": "location_open_gallery",
+      "name": "登记堂雨廊",
+      "description": "陆照临和顾长离从旧库房出来，沿雨廊返回登记堂。",
+      "exits": [],
+      "discoverableItemIds": [],
+      "tags": [
+        "source",
+        "reviewed_opening"
+      ],
+      "sourceDescriptions": [
+        "陆照临和顾长离从旧库房出来，沿雨廊返回登记堂。"
+      ]
+    },
+    {
+      "id": "location_open_registry",
+      "name": "玄霄宗登记堂",
+      "description": "登记堂悬在半山腰的石台上。",
+      "exits": [],
+      "discoverableItemIds": [],
+      "tags": [
+        "source",
+        "reviewed_opening"
+      ],
+      "sourceDescriptions": [
+        "登记堂悬在半山腰的石台上。"
+      ]
+    },
+    {
+      "id": "location_open_inscription",
+      "name": "石碑旁",
+      "description": "无人签名的诏书被压在石碑下面，纸上只写着“停止追问”。",
+      "exits": [],
+      "discoverableItemIds": [],
+      "tags": [
+        "source",
+        "reviewed_opening"
+      ],
+      "sourceDescriptions": [
+        "无人签名的诏书被压在石碑下面，纸上只写着“停止追问”。"
+      ]
+    },
+    {
+      "id": "location_open_edict_square",
+      "name": "天门废墟广场",
+      "description": "盟主站在废墟中央，胸口只剩一道空洞。他没有死，甚至还在呼吸，可那些曾经寄托于他身上的名字已经全部消失。",
+      "exits": [],
+      "discoverableItemIds": [],
+      "tags": [
+        "source",
+        "reviewed_opening"
+      ],
+      "sourceDescriptions": [
+        "盟主站在废墟中央，胸口只剩一道空洞。他没有死，甚至还在呼吸，可那些曾经寄托于他身上的名字已经全部消失。"
+      ]
+    },
+    {
+      "id": "location_open_ancestral_hall",
+      "name": "玄霄宗祖师殿",
+      "description": "祖师殿前，掌门叶青冥坐在最高的石阶上。",
+      "exits": [],
+      "discoverableItemIds": [],
+      "tags": [
+        "source",
+        "reviewed_opening"
+      ],
+      "sourceDescriptions": [
+        "祖师殿前，掌门叶青冥坐在最高的石阶上。"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "item_open_letter",
+      "name": "引荐文书",
+      "portable": true,
+      "effects": [
+        "陆照临摸了摸怀里的引荐文书。"
+      ],
+      "availableFromSourceChapterId": "chapter-001",
+      "sourceFirstSeenLocationId": "location_open_gate",
+      "sourceDescriptions": [
+        "陆照临摸了摸怀里的引荐文书。"
+      ]
+    },
+    {
+      "id": "item_open_empty_lamp",
+      "name": "山门空灯",
+      "portable": true,
+      "effects": [
+        "那人半边肩膀被雨水浸透，衣服颜色与夜色混在一起，手边却抓着一盏没有点燃的引路灯。"
+      ],
+      "availableFromSourceChapterId": "chapter-001",
+      "sourceFirstSeenLocationId": "location_open_gate",
+      "sourceDescriptions": [
+        "那人半边肩膀被雨水浸透，衣服颜色与夜色混在一起，手边却抓着一盏没有点燃的引路灯。"
+      ]
+    },
+    {
+      "id": "item_open_gu_token",
+      "name": "顾长离的试炼木牌",
+      "portable": true,
+      "effects": [
+        "她身旁站着一个穿月白短袍的少女，长发束成高马尾，神情冷淡，手里把木牌翻来覆去看了三遍。"
+      ],
+      "availableFromSourceChapterId": "chapter-003",
+      "sourceFirstSeenLocationId": "location_open_trial",
+      "sourceDescriptions": [
+        "她身旁站着一个穿月白短袍的少女，长发束成高马尾，神情冷淡，手里把木牌翻来覆去看了三遍。"
+      ]
+    },
+    {
+      "id": "item_open_gold_paper",
+      "name": "包着金屑的纸片",
+      "portable": true,
+      "effects": [
+        "她用指甲刮下一粒，包进纸里。"
+      ],
+      "availableFromSourceChapterId": "chapter-003",
+      "sourceFirstSeenLocationId": "location_open_trial",
+      "sourceDescriptions": [
+        "她用指甲刮下一粒，包进纸里。"
+      ]
+    },
+    {
+      "id": "item_open_ye_lamp",
+      "name": "叶观澜的无芯灯",
+      "portable": true,
+      "effects": [
+        "他从袖中取出一只小灯盏。灯盏没有灯芯，罩内却浮着一层青白雾气。"
+      ],
+      "availableFromSourceChapterId": "chapter-007",
+      "sourceFirstSeenLocationId": "location_open_gallery",
+      "sourceDescriptions": [
+        "他从袖中取出一只小灯盏。灯盏没有灯芯，罩内却浮着一层青白雾气。"
+      ]
+    },
+    {
+      "id": "item_open_ye_ring",
+      "name": "叶观澜的半圈铜环",
+      "portable": true,
+      "effects": [
+        "叶观澜从腰间解下铜环，放在廊柱上：“等你找到第二个矛盾，再决定要不要相信我。”"
+      ],
+      "availableFromSourceChapterId": "chapter-007",
+      "sourceFirstSeenLocationId": "location_open_gallery",
+      "sourceDescriptions": [
+        "叶观澜从腰间解下铜环，放在廊柱上：“等你找到第二个矛盾，再决定要不要相信我。”"
+      ]
+    },
+    {
+      "id": "item_open_registry_book",
+      "name": "玄霄宗登记簿",
+      "portable": false,
+      "effects": [
+        "沈砚秋等了片刻，低头在登记簿上写下他的名字。"
+      ],
+      "availableFromSourceChapterId": "chapter-002",
+      "sourceFirstSeenLocationId": "location_open_registry",
+      "sourceDescriptions": [
+        "沈砚秋等了片刻，低头在登记簿上写下他的名字。"
+      ]
+    },
+    {
+      "id": "item_open_unsigned_edict",
+      "name": "无名诏书",
+      "portable": false,
+      "effects": [
+        "无人签名的诏书被压在石碑下面，纸上只写着“停止追问”。"
+      ],
+      "availableFromSourceChapterId": "chapter-040",
+      "sourceFirstSeenLocationId": "location_open_inscription",
+      "sourceDescriptions": [
+        "无人签名的诏书被压在石碑下面，纸上只写着“停止追问”。"
+      ]
+    },
+    {
+      "id": "item_open_gold_edict",
+      "name": "金色诏书",
+      "portable": true,
+      "effects": [
+        "萧问蝉展开金色诏书，“天庭只承认统一的过去。”"
+      ],
+      "availableFromSourceChapterId": "chapter-040",
+      "sourceFirstSeenLocationId": "location_open_edict_square",
+      "sourceDescriptions": [
+        "萧问蝉展开金色诏书，“天庭只承认统一的过去。”"
+      ]
+    },
+    {
+      "id": "item_open_broken_sword",
+      "name": "掌门的断剑",
+      "portable": true,
+      "effects": [
+        "他比陆照临记忆中苍老许多，手边放着一柄断剑。"
+      ],
+      "availableFromSourceChapterId": "chapter-050",
+      "sourceFirstSeenLocationId": "location_open_ancestral_hall",
+      "sourceDescriptions": [
+        "他比陆照临记忆中苍老许多，手边放着一柄断剑。"
+      ]
+    }
+  ],
+  "openings": [
+    {
+      "characterId": "character_ae4cb42b9b49",
+      "id": "entry_lu_gate",
+      "baseEntryPointId": "entry_chapter-001-event-001",
+      "title": "山门将闭",
+      "summary": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+      "cutoffQuote": "铁链又响了一声。",
+      "narrative": "雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\n\n眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\n\n你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。",
+      "threads": [
+        "陌生伤者是否能得到救助",
+        "空灯与父亲失踪是否有关"
+      ],
+      "actions": [
+        {
+          "title": "请守门弟子救人",
+          "summary": "指出伤者尚有呼吸，争取在落锁前让他得到救助。"
+        },
+        {
+          "title": "查看封山石的裂纹",
+          "summary": "留在封山线外，观察青白光退去后的水痕与空灯。"
+        }
+      ],
+      "state": {
+        "playerLocationId": "location_open_gate",
+        "characterLocationIds": {
+          "character_ae4cb42b9b49": "location_open_gate"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_letter": "character_ae4cb42b9b49"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {}
+      },
+      "context": {
+        "identity": "陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。",
+        "appearance": "斗笠被雨打湿，手上有长途跋涉留下的冻裂。",
+        "knownFacts": [
+          "父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。",
+          "老人让你到玄霄宗问山门的灯。",
+          "伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。"
+        ],
+        "unknownBoundaries": [
+          "伤者身份、父亲下落、空灯与青光成因均未知。",
+          "尚未认识其他主角团成员；不得写成已有残印、功法、修为突破或领过药瓶。"
+        ],
+        "relationships": [
+          {
+            "name": "陆沉舟",
+            "relation": "父亲，失踪，生死未确认。"
+          },
+          {
+            "name": "守门弟子",
+            "relation": "初遇，只知道其守门职责，不知姓名。"
+          },
+          {
+            "name": "陌生伤者",
+            "relation": "初遇，不知身份。"
+          }
+        ],
+        "visibleItems": [
+          "引荐文书在你手中，尚未交出。",
+          "空灯仍在伤者手边，不能写进你的持有物；未登记人物持物只记为场景事实。"
+        ],
+        "evidence": [
+          "陆照临摸了摸怀里的引荐文书。",
+          "三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。",
+          "陆照临取出文书，却没有递过去。",
+          "倒地的人猛地睁开眼。",
+          "铁链又响了一声。"
+        ]
+      }
+    },
+    {
+      "characterId": "character_e663361ab1c7",
+      "id": "entry_gu_trial",
+      "baseEntryPointId": "entry_chapter-003-event-002",
+      "title": "木牌中的金屑",
+      "summary": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+      "cutoffQuote": "“听过北河城，不认识你。”",
+      "narrative": "你把木牌翻到背面。日落前取回青露草，越过白线便取消资格——规矩刻得清楚，刻痕里的黑泥却夹着一点金屑。你已刮下一粒，用纸包好。\n\n这里是玄霄宗半山的试炼场，石壁上留着旧剑痕。负责试炼的执事刚说完：不许争抢，不许伤人，不许进入封闭区域。围在场边的新弟子正等着钟响。\n\n有人问你是否认识这块木头。你回了一句反问，才报上自己的名字：顾长离。他叫陆照临。你听过北河城，却不认识他；这只是第一次互通姓名，他为何来到这里，你还不知道。\n\n纸里的金屑很轻，规矩的分量却未必如此。陆照临还站在眼前，石径通向后坡药圃。钟声随时会响，你可以先把疑点问清，也可以带着木牌参加试炼。",
+      "threads": [
+        "木牌刻痕里为何有金屑",
+        "如何完成第一场外门试炼"
+      ],
+      "actions": [
+        {
+          "title": "追问木牌的来历",
+          "summary": "向场边执事询问木牌刻痕里的黑泥与金屑，不擅自给出结论。"
+        },
+        {
+          "title": "与陆照临商量试炼",
+          "summary": "询问他如何看待试炼规矩，再决定是否同行。"
+        }
+      ],
+      "state": {
+        "playerLocationId": "location_open_trial",
+        "characterLocationIds": {
+          "character_e663361ab1c7": "location_open_trial",
+          "character_ae4cb42b9b49": "location_open_trial"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_gu_token": "character_e663361ab1c7",
+          "item_open_gold_paper": "character_e663361ab1c7"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {}
+      },
+      "context": {
+        "identity": "顾长离，第一次参加玄霄宗外门试炼的新弟子。",
+        "appearance": "月白短袍，高马尾，神情冷淡。铜针属于旁边另一名青衣女弟子，不能移到你身上。",
+        "knownFacts": [
+          "你已看过木牌三遍，刮出一粒金屑并包进纸里。",
+          "试炼要求日落前取回青露草，另有白线、禁止争抢伤人和进入封闭区域的规定。",
+          "你听过北河城，刚与陆照临互通姓名。"
+        ],
+        "unknownBoundaries": [
+          "陆照临前两章的山门遭遇、父亲失踪、掌心青痕不是你的已知往事。",
+          "尚未经历救助、取药、对质或获奖，不持有烧焦账单或奖励灵石。"
+        ],
+        "relationships": [
+          {
+            "name": "陆照临",
+            "relation": "刚认识姓名，没有共同调查或过命交情。"
+          },
+          {
+            "name": "试炼执事",
+            "relation": "负责本场试炼，未获知姓名。"
+          }
+        ],
+        "visibleItems": [
+          "木牌与包金屑的纸由你持有。"
+        ],
+        "evidence": [
+          "她用指甲刮下一粒，包进纸里。",
+          "“顾长离。”她说，“你呢？”",
+          "“陆照临。”",
+          "“听过北河城，不认识你。”",
+          "试炼场在半山腰，四面是削平的石壁。"
+        ]
+      }
+    },
+    {
+      "characterId": "character_766c4e16f65d",
+      "id": "entry_ye_gallery",
+      "baseEntryPointId": "entry_chapter-007-event-003",
+      "title": "对不上的旧记录",
+      "summary": "你已将无芯灯与铜环放在雨廊，旧记录的时间矛盾刚被说破。",
+      "cutoffQuote": "叶观澜从腰间解下铜环，放在廊柱上：“等你找到第二个矛盾，再决定要不要相信我。”",
+      "narrative": "雨打湿了你的青衫，衣摆的泥还没干。归墟盟的人不许进入玄霄宗，而你已经站在登记堂的雨廊里。沈砚秋认出了你，脸色冷下来；你也认得这位沈执事。\n\n你带来的小灯已放在廊柱边。它没有灯芯，罩内却浮着青白雾气。你刚把一条旧线索说给眼前的年轻人听：陆沉舟曾替归墟盟送信，最后有人在玄霄宗西坡见过他，时间是三年前冬至前七日。\n\n那年轻人说，值房名册写的是三年前春末。沈执事说你记错了。你反问，是自己记错，还是名册被改过？廊中长明灯晃了一下。\n\n你已解下腰间的半圈铜环，把它放在廊柱上，让对方找到第二个矛盾后再决定是否相信你。灯与铜环都不在你身上了。沈执事就在面前，这场对质还没有结束。",
+      "threads": [
+        "冬至前七日与春末为何对不上",
+        "如何应对私入玄霄宗的追问"
+      ],
+      "actions": [
+        {
+          "title": "请沈执事解释日期",
+          "summary": "追问值房记录为何与已说出的时间不同，不先认定谁在撒谎。"
+        },
+        {
+          "title": "与眼前人确认查证方法",
+          "summary": "询问如何核对那份名册，争取继续对话的机会。"
+        }
+      ],
+      "state": {
+        "playerLocationId": "location_open_gallery",
+        "characterLocationIds": {
+          "character_766c4e16f65d": "location_open_gallery",
+          "character_ae4cb42b9b49": "location_open_gallery",
+          "character_e663361ab1c7": "location_open_gallery",
+          "character_aa4580d38571": "location_open_gallery"
+        },
+        "itemOwnerCharacterIds": {},
+        "itemLocationIds": {
+          "item_open_ye_lamp": "location_open_gallery",
+          "item_open_ye_ring": "location_open_gallery"
+        },
+        "characterOutcomeStates": {}
+      },
+      "context": {
+        "identity": "叶观澜，归墟盟来客，与沈砚秋相识；正因未经许可入宗而被质问。",
+        "appearance": "洗得发白的青衫，衣摆沾泥；铜环已从腰间解下。",
+        "knownFacts": [
+          "你知道自己刚说出的送信、西坡与冬至前七日线索，但这些是你的说法，不是全知真相。",
+          "眼前年轻人刚说值房名册记载春末，沈执事否认你的记忆。",
+          "沈砚秋认得你，明确表示归墟盟的人不能进玄霄宗。"
+        ],
+        "unknownBoundaries": [
+          "眼前两名年轻弟子的姓名和各自秘密尚无当面介绍依据，称眼前人或年轻弟子。",
+          "不知陆照临掌心残印、失忆细节、两人昨夜藏身处；不预知接下来的拘押、旧驿站追查或逃离。"
+        ],
+        "relationships": [
+          {
+            "name": "沈砚秋",
+            "relation": "互相认识，对归墟盟入宗有公开冲突，未证明为盟友。"
+          },
+          {
+            "name": "两名年轻弟子",
+            "relation": "正在交谈，未建立信任，姓名尚未当面确认。"
+          }
+        ],
+        "visibleItems": [
+          "无芯灯在廊柱边，半圈铜环在廊柱上；均已放下，不能仍写成袖中持灯、腰挂铜环。"
+        ],
+        "evidence": [
+          "沈砚秋的脸色冷了下来：“叶观澜。”",
+          "青衫人笑了笑：“沈执事还记得我。”",
+          "“归墟盟的人不能进玄霄宗。”",
+          "“值房名册写的是三年前春末。”",
+          "叶观澜从腰间解下铜环，放在廊柱上：“等你找到第二个矛盾，再决定要不要相信我。”"
+        ]
+      }
+    },
+    {
+      "characterId": "character_aa4580d38571",
+      "id": "entry_shen_register",
+      "baseEntryPointId": "entry_chapter-002-event-002",
+      "title": "名册上的空白",
+      "summary": "你在登记堂替新弟子写下名字，三行被裁掉的记录仍压在名册最后一页。",
+      "cutoffQuote": "入了玄霄宗，先学会分辨什么该问，什么该等别人告诉你。",
+      "narrative": "你坐在登记堂的长桌后，登记簿摊开在手边。新来的陆照临刚说完山门外的伤者、空灯和封山钟，你没有把疑问写进名册，只把他的名字落在纸上。\n\n三行新裁的纸口藏在最后一页，边缘没有积灰。你知道这不是普通的缺页，却还不能在一个刚入门的弟子面前解释它属于谁。\n\n你把登记簿合上一半，桌角的测灵石仍留着一缕已经散去的灰光。门规要求你登记，值房的旧记录要求你保持沉默；两件事都在等你先作出一个可以被追问的决定。",
+      "threads": [
+        "登记簿被裁掉的三行记录",
+        "陆照临带来的空灯与山门伤者"
+      ],
+      "actions": [
+        {
+          "title": "先完成入门登记",
+          "summary": "按现行门规写下新弟子的身份，暂不把未确认的空灯来历写成事实。"
+        },
+        {
+          "title": "追问山门见闻",
+          "summary": "只询问陆照临亲眼看见的钟声与灯，不替他补出伤者身份或后续结论。"
+        }
+      ],
+      "state": {
+        "playerLocationId": "location_open_registry",
+        "characterLocationIds": {
+          "character_aa4580d38571": "location_open_registry",
+          "character_ae4cb42b9b49": "location_open_registry"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_registry_book": "character_aa4580d38571"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {}
+      },
+      "context": {
+        "identity": "沈砚秋，玄霄宗外门执事，负责入门登记与名册。",
+        "appearance": "青袍、木簪束发，长期握笔留下的薄茧仍在拇指内侧。",
+        "knownFacts": [
+          "陆照临来自北河城，持柳氏荐书，准入外门。",
+          "他亲眼看见山门外的伤者和没有点燃的引路灯。",
+          "登记簿最后一页有三行新近裁掉的记录。"
+        ],
+        "unknownBoundaries": [
+          "伤者的真实身份、空灯的来历和被裁掉的名字尚未确认。",
+          "不能把后续西坡失踪、灵脉城或天门记录当作此刻已经发生的事实。"
+        ],
+        "relationships": [
+          {
+            "name": "陆照临",
+            "relation": "正在登记的新弟子，尚未建立私人信任。"
+          },
+          {
+            "name": "玄霄宗名册",
+            "relation": "由你负责保管与填写，旧记录的改动仍需证据。"
+          }
+        ],
+        "visibleItems": [
+          "登记簿在你面前，最后一页的三行裁口清晰可见。",
+          "测灵石在桌角，陆照临的灰光已经消散。"
+        ],
+        "evidence": [
+          "登记堂悬在半山腰的石台上。",
+          "我叫沈砚秋，外门执事。把手放到测灵石上。",
+          "沈砚秋等了片刻，低头在登记簿上写下他的名字。",
+          "入了玄霄宗，先学会分辨什么该问，什么该等别人告诉你。"
+        ]
+      }
+    },
+    {
+      "characterId": "character_37531636ecf5",
+      "id": "entry_lu_ledger",
+      "baseEntryPointId": "entry_chapter-040-event-007",
+      "title": "石碑下的无名令",
+      "summary": "你在石碑旁看完被抄录的无名诏书，陆照临留下的空白正等着一句回答。",
+      "cutoffQuote": "陆沉舟看完说，这才是对无名命令最好的回答。",
+      "narrative": "你站在石碑旁，手指压住刚被抄下的无名诏书。纸上没有日期、玺印和签名，只有一条要求停止追问的命令。陆照临把它带回火堆，没有替任何人补上落款。\n\n三年前押送引路灯后，你的名字从宗门记录里消失过；如今它又被写回这段不肯安静的旧事。眼前的人想知道命令从哪里来，而你只能先判断这页纸是否会再次把人交给一个没有名字的权力。\n\n你看完陆照临留下的抄本，石碑下的风掀动纸角。你可以承认这份空白值得保存，也可以先把它藏起来，免得下一盏灯沿着无名命令找到活人。",
+      "threads": [
+        "无名诏书为何没有签名",
+        "陆照临是否应继续公开抄本"
+      ],
+      "actions": [
+        {
+          "title": "确认抄本与原令一致",
+          "summary": "逐行核对石碑下的诏书，不擅自补写签名或解释命令来源。"
+        },
+        {
+          "title": "让陆照临保留空白",
+          "summary": "告诉他无名命令不能替后来者决定答案，先留下地点与见证。"
+        }
+      ],
+      "state": {
+        "playerLocationId": "location_open_inscription",
+        "characterLocationIds": {
+          "character_37531636ecf5": "location_open_inscription",
+          "character_ae4cb42b9b49": "location_open_inscription"
+        },
+        "itemOwnerCharacterIds": {},
+        "itemLocationIds": {
+          "item_open_unsigned_edict": "location_open_inscription"
+        },
+        "characterOutcomeStates": {}
+      },
+      "context": {
+        "identity": "陆沉舟，陆照临的父亲，曾为玄霄宗押送引路灯的引灯人。",
+        "appearance": "站在石碑旁的旧引灯人，手边只有被压在石碑下的无名诏书。",
+        "knownFacts": [
+          "无名诏书被压在石碑下，没有日期、玺印和签名。",
+          "陆照临把诏书带回火堆，并将每一行抄进《太虚遗录》。",
+          "这份抄本记录了发现地点和日期，尚未替命令补上主人。"
+        ],
+        "unknownBoundaries": [
+          "无名命令真正的签署者和下一扇门的位置尚未确认。",
+          "不能把抄录之后的选择、天门新变化或后来者反应当作已经发生。"
+        ],
+        "relationships": [
+          {
+            "name": "陆照临",
+            "relation": "儿子，正在共同保留无名诏书的见证。"
+          },
+          {
+            "name": "无名诏书",
+            "relation": "你曾见过其命令造成的后果，但尚未确认签署者。"
+          }
+        ],
+        "visibleItems": [
+          "无名诏书仍在石碑下，未被带走。",
+          "陆照临的抄本已记录地点、日期和空白落款。"
+        ],
+        "evidence": [
+          "无人签名的诏书被压在石碑下面，纸上只写着“停止追问”。",
+          "陆照临将诏书带回火堆，却没有烧掉。",
+          "他把每一行字抄在《太虚遗录》末页，再写上发现它的地点和日期。",
+          "陆沉舟看完说，这才是对无名命令最好的回答。"
+        ]
+      }
+    },
+    {
+      "characterId": "character_b96c85e62843",
+      "id": "entry_xiao_edict",
+      "baseEntryPointId": "entry_chapter-040-event-004",
+      "title": "没有签名的诏书",
+      "summary": "你奉无名诏令抵达天门废墟，金色诏书要求你追缉持有残印的人。",
+      "cutoffQuote": "”萧问蝉展开金色诏书，“天庭只承认统一的过去。",
+      "narrative": "你站在天门废墟的广场中央，三百名黑底银纹修士已经列在身后。手里的金色诏书没有签名，却要求你缉拿陆照临、顾长离、叶观澜，并收回归墟残印。\n\n归墟盟主质问你的主上是谁。你回答天庭；他继续追问天帝的名字，你只能说不可问。诏书上的字仍然沉重，像有一套不需要落款的秩序在等你替它开口。\n\n记忆水珠还悬在广场各处。你可以按诏书毁掉它们，也可以先查清这条命令是否值得由一个巡界使执行。没有人替你回答签名在哪里。",
+      "threads": [
+        "无名诏令的签署者",
+        "记忆水珠是否应被毁掉"
+      ],
+      "actions": [
+        {
+          "title": "宣读诏书的明确范围",
+          "summary": "只按纸面确认追缉对象和收回残印的任务，不替天庭补出隐藏命令。"
+        },
+        {
+          "title": "先查看记忆水珠",
+          "summary": "在拔剑前确认水珠记录了什么，判断统一过去的说法是否有证据。"
+        }
+      ],
+      "state": {
+        "playerLocationId": "location_open_edict_square",
+        "characterLocationIds": {
+          "character_b96c85e62843": "location_open_edict_square",
+          "character_ae4cb42b9b49": "location_open_edict_square",
+          "character_e663361ab1c7": "location_open_edict_square",
+          "character_766c4e16f65d": "location_open_edict_square"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_gold_edict": "character_b96c85e62843"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {}
+      },
+      "context": {
+        "identity": "萧问蝉，太虚秩序巡界使，奉无名诏令执行追缉。",
+        "appearance": "三十余岁，眉目冷峻，手持尚未收起的金色诏书。",
+        "knownFacts": [
+          "你奉命缉拿陆照临、顾长离、叶观澜，并收回归墟残印。",
+          "诏书没有签名，却写着天庭只承认统一的过去。",
+          "记忆水珠仍在广场上，三百名修士已列阵。"
+        ],
+        "unknownBoundaries": [
+          "天庭的具体签署者、诏书为何没有落款以及水珠的完整来历均未知。",
+          "不能预知诏书是否会被拒绝、修士是否会改变立场或天门之后的结果。"
+        ],
+        "relationships": [
+          {
+            "name": "陆照临、顾长离、叶观澜",
+            "relation": "诏书列出的追缉对象，尚未完成当面审问。"
+          },
+          {
+            "name": "归墟盟主",
+            "relation": "正在质疑诏书与天庭，不是你的授权者。"
+          }
+        ],
+        "visibleItems": [
+          "金色诏书由你持有，纸面没有日期、玺印和签名。",
+          "广场周围的记忆水珠仍未被处理。"
+        ],
+        "evidence": [
+          "太虚秩序巡界使，萧问蝉。",
+          "奉无名诏令，缉拿陆照临、顾长离、叶观澜，并收回归墟残印。",
+          "不可问。",
+          "”萧问蝉展开金色诏书，“天庭只承认统一的过去。"
+        ]
+      }
+    },
+    {
+      "characterId": "character_2cf2b083593b",
+      "id": "entry_ye_qingming_hall",
+      "baseEntryPointId": "entry_chapter-050-event-003",
+      "title": "掌门的回应",
+      "summary": "你坐在祖师殿前听见对旧档案的追问，掌门身份要求你先面对被删去的名字。",
+      "cutoffQuote": "叶青冥看向她：“你就是当年删去陆沉舟记录的人。",
+      "narrative": "你坐在祖师殿前最高的石阶上，手边放着断剑。山门外的人要求玄霄宗交代最初的残印、天门记录和陆照临的名字从何处走出；殿中的长老仍想用一套统一档案重新建立秩序。\n\n沈砚秋捧着《太虚遗录》走进来，承认自己曾删去旧记录。你知道掌门的第一句话会决定众人是否把责难继续推给一个人，也决定宗门是否承认自己曾经参与过错误。\n\n你看向她，问出那句必须由掌门确认的话。断剑没有替你作答，祖师殿里也没有人能先替你承担。",
+      "threads": [
+        "沈砚秋删去陆沉舟记录的责任",
+        "玄霄宗是否承认旧档案的错误"
+      ],
+      "actions": [
+        {
+          "title": "要求沈砚秋说明删记录的范围",
+          "summary": "先确认她承认的事实与记录依据，不把宗门责任扩大成未经证明的结论。"
+        },
+        {
+          "title": "让长老暂缓接管档案",
+          "summary": "指出统一记忆的提议仍未经过公开核验，先保留不同证词。"
+        }
+      ],
+      "state": {
+        "playerLocationId": "location_open_ancestral_hall",
+        "characterLocationIds": {
+          "character_2cf2b083593b": "location_open_ancestral_hall",
+          "character_aa4580d38571": "location_open_ancestral_hall",
+          "character_ae4cb42b9b49": "location_open_ancestral_hall",
+          "character_e663361ab1c7": "location_open_ancestral_hall",
+          "character_766c4e16f65d": "location_open_ancestral_hall"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_broken_sword": "character_2cf2b083593b"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {}
+      },
+      "context": {
+        "identity": "叶青冥，玄霄宗掌门，肩负宗门秩序与传承。",
+        "appearance": "坐在祖师殿前最高石阶，手边放着一柄断剑。",
+        "knownFacts": [
+          "玄霄宗山门外站满了要求说法的人。",
+          "宗门最初的残印、最早的天门记录和陆照临的名字都曾从山门中走出去。",
+          "沈砚秋已经捧着《太虚遗录》进入祖师殿，并承认删去旧记录。"
+        ],
+        "unknownBoundaries": [
+          "长老会是否接受公开档案、宗门之后的安排和山门石匾的改刻尚未发生。",
+          "不能把后续公开旧档案或新的守门规约当作已经完成的决定。"
+        ],
+        "relationships": [
+          {
+            "name": "沈砚秋",
+            "relation": "玄霄宗执事，正被追问删去陆沉舟记录的责任。"
+          },
+          {
+            "name": "玄霄宗长老",
+            "relation": "在祖师殿内等待掌门对档案接管提议作出回应。"
+          }
+        ],
+        "visibleItems": [
+          "断剑在你手边，祖师殿前的长老和来客都在场。",
+          "《太虚遗录》由沈砚秋捧着，尚未完成公开决定。"
+        ],
+        "evidence": [
+          "祖师殿前，掌门叶青冥坐在最高的石阶上。",
+          "他比陆照临记忆中苍老许多，手边放着一柄断剑。",
+          "沈砚秋捧着《太虚遗录》走入殿中：“天下已经乱过一次。乱的不是记忆，而是有人相信自己有权替所有人决定记忆。”",
+          "叶青冥看向她：“你就是当年删去陆沉舟记录的人。"
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "summary": "山门将闭，一盏没有点燃的灯，把七个各自背负疑问的身份引向玄霄宗不肯承认的旧事。",
+    "visualPrompt": "古典修仙，雨夜玄霄宗山门、青石封山线、无火引路灯与青白灵光，无现代物品。"
+  }
+}

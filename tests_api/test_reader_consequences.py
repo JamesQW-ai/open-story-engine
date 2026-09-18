@@ -101,7 +101,7 @@ class ConsequenceTests(unittest.TestCase):
                 ]}, self.requirements, closing)
 
     def setUp(self):
-        self.package = player_package(load_runtime_story_package(ROOT / 'content/packages/taixu-relics-part1/0.1.2/package.json', lazy=True), GU)
+        self.package = player_package(load_runtime_story_package(ROOT / 'content/packages/taixu-relics-part1/0.1.3/package.json', lazy=True), GU)
         self.contract = create_contract(self.package, 'fixture', {'kind': 'source_character', 'sourceCharacterId': GU, 'entryPointId': 'entry_gu_trial'})
         self.root = entry_node(self.package, self.contract)
         self.context = dict(package=self.package, contract=self.contract, parent=self.root, lineage=[self.root], playerDirection='本回合杀死陆照临')
@@ -165,7 +165,7 @@ class ConsequenceTests(unittest.TestCase):
         for entry in self.package['story']['entryModel']['entryPoints']:
             contract = {**self.contract, 'entryPointId': entry['id']}
             titles.add(tuple(g['title'] for g in rc.initial_goals(self.package, contract)))
-        self.assertEqual(len(titles), 3)
+        self.assertEqual(len(titles), 7)
         result = self.reviewed_result()
         old = goals[0]
         overwrite = dict(id=old['id'], title='新的求生目标', status='active', dependencies=[], reason='目标改变', successor='')
@@ -284,7 +284,7 @@ class ConsequenceTests(unittest.TestCase):
             read = ReadService(ROOT / 'content/packages', Path(tmp) / 'sessions.sqlite')
             play = PlayService(read, Path(tmp))
             self.addCleanup(play.drafts.close)
-            start = play.create_session('taixu-relics-part1', '0.1.2', 'entry_gu_trial', GU, identity_opening=True)
+            start = play.create_session('taixu-relics-part1', '0.1.3', 'entry_gu_trial', GU, identity_opening=True)
             sid, root = start['session']['id'], start['branch']
             gateway = Mock(model='fixture')
             gateway.complete_json.return_value = Completion(json.dumps({'decision': 'clarification_needed', 'message': '你希望陆照临死亡，还是永久离队？'}, ensure_ascii=False), '{}', [])
@@ -350,7 +350,7 @@ class ConsequenceTests(unittest.TestCase):
             read = ReadService(ROOT / 'content/packages', Path(tmp) / 'sessions.sqlite')
             play = PlayService(read, Path(tmp))
             self.addCleanup(play.drafts.close)
-            start = play.create_session('taixu-relics-part1', '0.1.2', 'entry_gu_trial', GU, identity_opening=True)
+            start = play.create_session('taixu-relics-part1', '0.1.3', 'entry_gu_trial', GU, identity_opening=True)
             sid, root = start['session']['id'], start['branch']
             self.assertNotEqual(read.journey(sid, root['id'])['goal'], '探索这段故事，走到属于你的结局')
             responses = []

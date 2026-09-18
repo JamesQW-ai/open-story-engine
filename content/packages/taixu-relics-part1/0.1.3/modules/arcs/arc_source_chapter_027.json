@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "arc": {
+    "id": "arc_source_chapter_027",
+    "title": "推进：无相镜",
+    "summary": "她推开门。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_146",
+          "chapter_147",
+          "chapter_148",
+          "chapter_149",
+          "chapter_150"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_151"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_146_to_147",
+      "direction_chapter_147_to_148",
+      "direction_chapter_148_to_149",
+      "direction_chapter_149_to_150",
+      "direction_chapter_150_to_151"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_028"
+    ]
+  }
+}

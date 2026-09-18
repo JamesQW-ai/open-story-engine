@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "arc": {
+    "id": "arc_source_chapter_031",
+    "title": "推进：天门初鸣",
+    "summary": "“记忆里的人不会再离开，人间的人不会再保持原样。”",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_171",
+          "chapter_172",
+          "chapter_173",
+          "chapter_174",
+          "chapter_175"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_176"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_171_to_172",
+      "direction_chapter_172_to_173",
+      "direction_chapter_173_to_174",
+      "direction_chapter_174_to_175",
+      "direction_chapter_175_to_176"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_032"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "arc": {
+    "id": "arc_source_chapter_029",
+    "title": "推进：失去的童年",
+    "summary": "梦境随即变暗，树后的屋门被人推开，沈砚秋提着青色灯火走出来。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_156",
+          "chapter_157",
+          "chapter_158",
+          "chapter_159",
+          "chapter_160",
+          "chapter_161"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_162"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_156_to_157",
+      "direction_chapter_157_to_158",
+      "direction_chapter_158_to_159",
+      "direction_chapter_159_to_160",
+      "direction_chapter_160_to_161",
+      "direction_chapter_161_to_162"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_030"
+    ]
+  }
+}

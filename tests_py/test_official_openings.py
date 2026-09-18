@@ -13,7 +13,7 @@ from open_story_engine.package_builder import audit_story_package_modules, read_
 from open_story_engine.cli import choose_co_creation_entry
 
 ROOT = Path(__file__).resolve().parents[1]
-DIRECTORY = ROOT / 'content/packages/taixu-relics-part1/0.1.2'
+DIRECTORY = ROOT / 'content/packages/taixu-relics-part1/0.1.3'
 SOURCE = ROOT / 'docs/太虚遗录-第一部/太虚遗录-第一部-合并.txt'
 
 
@@ -29,8 +29,9 @@ class OfficialOpeningTests(unittest.TestCase):
                 if character != other:
                     with self.assertRaises(ValueError):
                         normalize_entry_selection(self.package, {**selection, 'sourceCharacterId': other}, True)
-        with self.assertRaises(ValueError):
-            normalize_entry_selection(self.package, {'kind': 'source_character', 'sourceCharacterId': 'character_aa4580d38571'}, True)
+        for character in ('character_aa4580d38571', 'character_37531636ecf5', 'character_b96c85e62843', 'character_2cf2b083593b'):
+            selection = normalize_entry_selection(self.package, {'kind': 'source_character', 'sourceCharacterId': character}, True)
+            self.assertEqual(selection['sourceCharacterId'], character)
         with self.assertRaises(ValueError):
             normalize_entry_selection(self.package, {'kind': 'new_character', 'name': '新来者'}, True)
 
@@ -45,6 +46,10 @@ class OfficialOpeningTests(unittest.TestCase):
             'character_ae4cb42b9b49': ('location_open_gate', {'item_open_letter'}),
             'character_e663361ab1c7': ('location_open_trial', {'item_open_gu_token', 'item_open_gold_paper'}),
             'character_766c4e16f65d': ('location_open_gallery', set()),
+            'character_aa4580d38571': ('location_open_registry', {'item_open_registry_book'}),
+            'character_37531636ecf5': ('location_open_inscription', set()),
+            'character_b96c85e62843': ('location_open_edict_square', {'item_open_gold_edict'}),
+            'character_2cf2b083593b': ('location_open_ancestral_hall', {'item_open_broken_sword'}),
         }
         for character, (location, held) in expected.items():
             selection = {'kind': 'source_character', 'sourceCharacterId': character}

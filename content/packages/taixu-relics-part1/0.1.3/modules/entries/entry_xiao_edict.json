@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "story-package-entry-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "entryPoint": {
+    "id": "entry_xiao_edict",
+    "title": "没有签名的诏书",
+    "summary": "你奉无名诏令抵达天门废墟，金色诏书要求你追缉持有残印的人。",
+    "chapterTitle": "无人签名的诏书",
+    "sourceChapterId": "chapter-040",
+    "nodeId": "node_source_continuity",
+    "beatId": "beat_chapter_258",
+    "sourceCharacterIds": [
+      "character_b96c85e62843"
+    ],
+    "timelineRefs": [],
+    "availableToNewCharacter": false,
+    "sourceCharacterNarratives": {
+      "character_b96c85e62843": "你站在天门废墟的广场中央，三百名黑底银纹修士已经列在身后。手里的金色诏书没有签名，却要求你缉拿陆照临、顾长离、叶观澜，并收回归墟残印。\n\n归墟盟主质问你的主上是谁。你回答天庭；他继续追问天帝的名字，你只能说不可问。诏书上的字仍然沉重，像有一套不需要落款的秩序在等你替它开口。\n\n记忆水珠还悬在广场各处。你可以按诏书毁掉它们，也可以先查清这条命令是否值得由一个巡界使执行。没有人替你回答签名在哪里。"
+    },
+    "openingSummary": "你奉无名诏令抵达天门废墟，金色诏书要求你追缉持有残印的人。",
+    "openingThreads": [
+      "无名诏令的签署者",
+      "记忆水珠是否应被毁掉"
+    ],
+    "openingActions": [
+      {
+        "title": "宣读诏书的明确范围",
+        "summary": "只按纸面确认追缉对象和收回残印的任务，不替天庭补出隐藏命令。"
+      },
+      {
+        "title": "先查看记忆水珠",
+        "summary": "在拔剑前确认水珠记录了什么，判断统一过去的说法是否有证据。"
+      }
+    ],
+    "openingClues": [
+      "你奉命缉拿陆照临、顾长离、叶观澜，并收回归墟残印。",
+      "诏书没有签名，却写着天庭只承认统一的过去。",
+      "记忆水珠仍在广场上，三百名修士已列阵。"
+    ],
+    "openingState": {
+      "playerLocationId": "location_open_edict_square",
+      "characterLocationIds": {
+        "character_b96c85e62843": "location_open_edict_square",
+        "character_ae4cb42b9b49": "location_open_edict_square",
+        "character_e663361ab1c7": "location_open_edict_square",
+        "character_766c4e16f65d": "location_open_edict_square"
+      },
+      "itemOwnerCharacterIds": {
+        "item_open_gold_edict": "character_b96c85e62843"
+      },
+      "itemLocationIds": {},
+      "characterOutcomeStates": {}
+    },
+    "sourceCharacterLocationIds": {
+      "character_b96c85e62843": "location_open_edict_square"
+    },
+    "openingContext": {
+      "identity": "萧问蝉，太虚秩序巡界使，奉无名诏令执行追缉。",
+      "appearance": "三十余岁，眉目冷峻，手持尚未收起的金色诏书。",
+      "knownFacts": [
+        "你奉命缉拿陆照临、顾长离、叶观澜，并收回归墟残印。",
+        "诏书没有签名，却写着天庭只承认统一的过去。",
+        "记忆水珠仍在广场上，三百名修士已列阵。"
+      ],
+      "unknownBoundaries": [
+        "天庭的具体签署者、诏书为何没有落款以及水珠的完整来历均未知。",
+        "不能预知诏书是否会被拒绝、修士是否会改变立场或天门之后的结果。"
+      ],
+      "relationships": [
+        {
+          "name": "陆照临、顾长离、叶观澜",
+          "relation": "诏书列出的追缉对象，尚未完成当面审问。"
+        },
+        {
+          "name": "归墟盟主",
+          "relation": "正在质疑诏书与天庭，不是你的授权者。"
+        }
+      ],
+      "visibleItems": [
+        "金色诏书由你持有，纸面没有日期、玺印和签名。",
+        "广场周围的记忆水珠仍未被处理。"
+      ],
+      "evidence": [
+        "太虚秩序巡界使，萧问蝉。",
+        "奉无名诏令，缉拿陆照临、顾长离、叶观澜，并收回归墟残印。",
+        "不可问。",
+        "”萧问蝉展开金色诏书，“天庭只承认统一的过去。"
+      ],
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "sourceCutoff": 100617,
+      "sourceCutoffLine": 7546
+    }
+  }
+}

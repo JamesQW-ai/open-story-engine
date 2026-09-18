@@ -987,7 +987,7 @@ def entity_name(package: Dict[str, Any], entity_id: str) -> Optional[str]:
 def package_path_from_root(root: Optional[Path] = None, version: Optional[str] = None) -> Path:
     project_root = root or Path(__file__).resolve().parents[1]
     package_id = os.environ.get("STORY_PACKAGE_ID", "taixu-relics-part1").strip()
-    selected_version = version or os.environ.get("STORY_PACKAGE_VERSION", "0.1.2")
+    selected_version = version or os.environ.get("STORY_PACKAGE_VERSION", "0.1.3")
     if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", package_id):
         raise StoryPackageError("STORY_PACKAGE_ID 必须是小写 kebab-case 内容包标识")
     if not re.fullmatch(r"\d+\.\d+\.\d+", selected_version):

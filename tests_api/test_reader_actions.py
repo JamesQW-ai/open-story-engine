@@ -590,7 +590,7 @@ class GeneralActionTests(unittest.TestCase):
             read = ReadService(fixtures.ROOT / 'content/packages', Path(tmp) / 'sessions.sqlite')
             play = PlayService(read, Path(tmp))
             self.addCleanup(play.drafts.close)
-            start = play.create_session('taixu-relics-part1', '0.1.2', 'entry_gu_trial', GU, identity_opening=True)
+            start = play.create_session('taixu-relics-part1', '0.1.3', 'entry_gu_trial', GU, identity_opening=True)
             sid, root = start['session']['id'], start['branch']
             responses, texts = [], []
             menus = []
