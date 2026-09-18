@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_009",
+    "title": "推进：旧档无名",
+    "summary": "陆照临找到第三架，最底层只有七卷，封皮上的“西坡”二字大多被水浸过。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_044",
+          "chapter_045",
+          "chapter_046",
+          "chapter_047",
+          "chapter_048",
+          "chapter_049",
+          "chapter_050",
+          "chapter_051"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_052"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_044_to_045",
+      "direction_chapter_045_to_046",
+      "direction_chapter_046_to_047",
+      "direction_chapter_047_to_048",
+      "direction_chapter_048_to_049",
+      "direction_chapter_049_to_050",
+      "direction_chapter_050_to_051",
+      "direction_chapter_051_to_052"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_010"
+    ]
+  }
+}

@@ -1,0 +1,543 @@
+{
+  "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+  "request": {
+    "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+    "text": "我把木牌沿着中间折断，确认它已经成为两截，把两截都收在自己手里；不再用这块牌参加试炼，但暂时不离开这里。",
+    "request_id": "general-actions-v3-alter_item"
+  },
+  "seconds": 86.51,
+  "response": {
+    "status": "written",
+    "request_id": "general-actions-v3-alter_item",
+    "deduplicated": false,
+    "branch": {
+      "id": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+      "sessionId": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "sequence": 32,
+      "parentId": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "kind": "generated",
+      "sourceNodeRef": "node_source_continuity",
+      "narrativeText": "木牌在你手里并不厚，边缘被掌温焐得发潮。你两手各握一端，指节抵住中间那道刻着“青露草”的凹痕，向下一折。木质先是一弯，随即“啪”地裂开，断口斜过半个字，露出浅色木茬。两截都还带着原来的绳孔，一截稍长，一截稍短，确实已经分开了。\n\n你没有把它们丢下，只将两截并在一起，收进掌心。断口对着虎口，有些刺，但还握得住。旁边几个新弟子听见响动，有人回头看了一眼，又转过去等钟声。陆照临仍站在你面前，目光从你手上抬起来，没有立刻说话。\n\n“你不打算用它了？”他问。\n\n你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+      "summary": "自定行动：我把木牌沿着中间折断，确已推进，新的风险和选择仍然存在。",
+      "branchState": {
+        "playerLocationId": "location_open_trial",
+        "playerCharacterId": "character_e663361ab1c7",
+        "characterLocationIds": {
+          "character_e663361ab1c7": "location_open_trial",
+          "character_ae4cb42b9b49": "location_open_trial"
+        },
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_df3fb46de272",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_f27c315f38ab",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000002_2f57ccde6ef1",
+              "sequence": 2,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:goalLedger",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": null,
+              "after": [
+                {
+                  "id": "opening-goal-1",
+                  "title": "木牌刻痕里为何有金屑",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                },
+                {
+                  "id": "opening-goal-2",
+                  "title": "如何完成第一场外门试炼",
+                  "status": "transformed",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "player_branch",
+                  "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+                  "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                  "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+                  "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法"
+                },
+                {
+                  "id": "goal-0eab10d79f952cf7",
+                  "title": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+                  "status": "active",
+                  "dependencies": [],
+                  "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+                  "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+                  "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+                  "characterId": "character_e663361ab1c7",
+                  "source": "player_branch",
+                  "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                  "previousGoalId": "opening-goal-2"
+                }
+              ],
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000003_e0bf8bb05639",
+              "sequence": 3,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:readerEntityStates",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": null,
+              "after": {
+                "item_open_gu_token": {
+                  "完整性": "断成两截"
+                },
+                "character_e663361ab1c7": {
+                  "对试炼木牌的态度": "不再用它参加试炼"
+                }
+              },
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "sourceProgress": "chapter_011",
+        "freeTextProgress": 1,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "itemOwnerCharacterIds": {
+          "item_open_gu_token": "character_e663361ab1c7",
+          "item_open_gold_paper": "character_e663361ab1c7"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {},
+        "readerEntityStates": {
+          "item_open_gu_token": {
+            "完整性": "断成两截"
+          },
+          "character_e663361ab1c7": {
+            "对试炼木牌的态度": "不再用它参加试炼"
+          }
+        },
+        "goalLedger": [
+          {
+            "id": "opening-goal-1",
+            "title": "木牌刻痕里为何有金屑",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          },
+          {
+            "id": "opening-goal-2",
+            "title": "如何完成第一场外门试炼",
+            "status": "transformed",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "player_branch",
+            "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+            "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+            "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+            "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法"
+          },
+          {
+            "id": "goal-0eab10d79f952cf7",
+            "title": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+            "status": "active",
+            "dependencies": [],
+            "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+            "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+            "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+            "characterId": "character_e663361ab1c7",
+            "source": "player_branch",
+            "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+            "previousGoalId": "opening-goal-2"
+          }
+        ]
+      },
+      "nextDirections": [
+        {
+          "id": "goal-direction-opening-goal-1-2",
+          "title": "推进目标：木牌刻痕里为何有金屑",
+          "summary": "围绕“木牌刻痕里为何有金屑”，依据眼前条件采取下一步行动，不恢复已放下的目标。",
+          "statePatch": {
+            "freeTextProgress": 2
+          },
+          "isFreeText": true
+        },
+        {
+          "id": "goal-direction-goal-0eab10d79f952cf7-2",
+          "title": "推进目标：在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+          "summary": "围绕“在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法”，依据眼前条件采取下一步行动，不恢复已放下的目标。",
+          "statePatch": {
+            "freeTextProgress": 2
+          },
+          "isFreeText": true
+        }
+      ],
+      "openThreads": [
+        "木牌刻痕里为何有金屑",
+        "如何完成第一场外门试炼",
+        "尚未完成的当前目标"
+      ],
+      "createdAt": "2026-09-15T08:46:33.922Z",
+      "canonicalRelation": "diverged",
+      "factDeltas": [],
+      "storyArc": {
+        "activeGoal": "自定行动：我把木牌沿着中间折断，确",
+        "currentPhase": "自定行动：我把木牌沿着中间折断，确",
+        "goalDisposition": "continued",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "continuing"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "actionIntent": {
+        "input": "我把木牌沿着中间折断，确认它已经成为两截，把两截都收在自己手里；不再用这块牌参加试炼，但暂时不离开这里。",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "顾长离把试炼木牌沿中间折断。"
+          },
+          "A2": {
+            "mode": "result",
+            "summary": "顾长离确认木牌已经成为两截。"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "顾长离把两截木牌都收在自己手里。"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "顾长离不再用这块木牌参加试炼。"
+          },
+          "A5": {
+            "mode": "constraint",
+            "summary": "顾长离暂时不离开半山试炼场。"
+          }
+        }
+      },
+      "consequenceUpdate": {
+        "decision": "ready",
+        "message": "",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "顾长离把试炼木牌沿中间折断。"
+          },
+          "A2": {
+            "mode": "result",
+            "summary": "顾长离确认木牌已经成为两截。"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "顾长离把两截木牌都收在自己手里。"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "顾长离不再用这块木牌参加试炼。"
+          },
+          "A5": {
+            "mode": "constraint",
+            "summary": "顾长离暂时不离开半山试炼场。"
+          }
+        },
+        "method": "顾长离双手握住试炼木牌两端，沿中间发力折断。木牌是普通木质令牌，厚度有限，以试炼弟子体力可以徒手折断。折断后她查看手中两截，确认已分离，随后将两截都握在手中。她不再把此牌作为参加试炼的凭证，但留在原地，不离开半山试炼场。代价是失去完整试炼木牌，可能影响试炼资格认定，并可能引起执事或其他弟子注意。",
+        "outcomes": [],
+        "goalUpdates": [
+          {
+            "id": "opening-goal-2",
+            "title": "如何完成第一场外门试炼",
+            "status": "transformed",
+            "dependencies": [],
+            "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+            "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+            "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。"
+          }
+        ],
+        "steps": [
+          {
+            "id": "S1",
+            "actorId": "character_e663361ab1c7",
+            "action": "顾长离双手握住试炼木牌两端，沿中间折断。",
+            "requirementIds": [
+              "A1"
+            ],
+            "authority": "player",
+            "causeStepId": null
+          },
+          {
+            "id": "S2",
+            "actorId": "character_e663361ab1c7",
+            "action": "顾长离查看手中木牌，确认它已经分成两截。",
+            "requirementIds": [
+              "A2"
+            ],
+            "authority": "player",
+            "causeStepId": "S1"
+          },
+          {
+            "id": "S3",
+            "actorId": "character_e663361ab1c7",
+            "action": "顾长离把两截木牌都收在自己手里，不放下。",
+            "requirementIds": [
+              "A3"
+            ],
+            "authority": "player",
+            "causeStepId": "S2"
+          },
+          {
+            "id": "S4",
+            "actorId": "character_e663361ab1c7",
+            "action": "顾长离决定不再用这块木牌参加试炼，并暂时留在半山试炼场。",
+            "requirementIds": [
+              "A4",
+              "A5"
+            ],
+            "authority": "player",
+            "causeStepId": "S3"
+          }
+        ],
+        "introductions": {
+          "characters": [],
+          "items": [],
+          "locations": []
+        },
+        "stateChanges": [
+          {
+            "id": "C1",
+            "entityId": "item_open_gu_token",
+            "attribute": "完整性",
+            "before": null,
+            "value": "断成两截",
+            "stepId": "S1",
+            "reason": "顾长离徒手沿中间折断试炼木牌。",
+            "evidence": "木牌在你手里并不厚，边缘被掌温焐得发潮。你两手各握一端，指节抵住中间那道刻着“青露草”的凹痕，向下一折。木质先是一弯，随即“啪”地裂开，断口斜过半个字，露出浅色木茬。两截都还带着原来的绳孔，一截稍长，一截稍短，确实已经分开了。"
+          },
+          {
+            "id": "C2",
+            "entityId": "character_e663361ab1c7",
+            "attribute": "对试炼木牌的态度",
+            "before": null,
+            "value": "不再用它参加试炼",
+            "stepId": "S4",
+            "reason": "顾长离主动决定放弃以这块木牌作为试炼凭证。",
+            "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。"
+          }
+        ]
+      },
+      "consequenceReview": "reader-consequences/2",
+      "reviewedNarrativeSha256": "30ea851ee2a313c671a24372f2175e31ac932e61bf3ecde6ccc3049013c4ac65",
+      "observedEvents": [
+        {
+          "id": "O1",
+          "paragraphId": "P1",
+          "quote": "你两手各握一端，指节抵住中间那道刻着“青露草”的凹痕，向下一折。木质先是一弯，随即“啪”地裂开",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离将试炼木牌折成两截。",
+          "changes": [
+            {
+              "entityId": "item_open_gu_token",
+              "attribute": "完整性",
+              "value": "断裂成两截"
+            }
+          ],
+          "introduced": []
+        },
+        {
+          "id": "O2",
+          "paragraphId": "P2",
+          "quote": "你没有把它们丢下，只将两截并在一起，收进掌心。",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离将两截断木并拢握在掌心。",
+          "changes": [
+            {
+              "entityId": "item_open_gu_token",
+              "attribute": "ownerCharacterId",
+              "value": "character_e663361ab1c7"
+            }
+          ],
+          "introduced": []
+        },
+        {
+          "id": "O3",
+          "paragraphId": "P3",
+          "quote": "“你不打算用它了？”他问。",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "speech",
+          "summary": "陆照临询问顾长离是否不再使用木牌。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O4",
+          "paragraphId": "P4",
+          "quote": "你点头。",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离点头确认不再使用木牌。",
+          "changes": [],
+          "introduced": []
+        }
+      ],
+      "eventChecks": [
+        {
+          "id": "O1",
+          "verdict": "supported",
+          "reason": "P1明确写出顾长离将木牌折裂成两截，与原始输入一致。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [
+            "C1"
+          ],
+          "introductionIds": []
+        },
+        {
+          "id": "O2",
+          "verdict": "supported",
+          "reason": "P2明确写出顾长离将两截断木收进掌心，与原始输入一致。",
+          "stepIds": [
+            "S3"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O3",
+          "verdict": "supported",
+          "reason": "P3中陆照临询问是否不再使用木牌，属于对顾长离行为的回应，与上下文一致。",
+          "stepIds": [],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O4",
+          "verdict": "supported",
+          "reason": "P4中顾长离点头确认不再使用木牌，与原始输入一致。",
+          "stepIds": [
+            "S4"
+          ],
+          "changeIds": [
+            "C2"
+          ],
+          "introductionIds": []
+        }
+      ],
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "我把木牌沿着中间折断",
+            "status": "performed",
+            "summary": "顾长离双手握住试炼木牌两端，沿中间刻痕发力折断，木牌裂成两截。",
+            "evidence": "木牌在你手里并不厚，边缘被掌温焐得发潮。你两手各握一端，指节抵住中间那道刻着“青露草”的凹痕，向下一折。木质先是一弯，随即“啪”地裂开，断口斜过半个字，露出浅色木茬。两截都还带着原来的绳孔，一截稍长，一截稍短，确实已经分开了。"
+          },
+          {
+            "id": "A2",
+            "requirement": "确认它已经成为两截",
+            "status": "performed",
+            "summary": "顾长离查看断口，确认两截已经分开，一截稍长一截稍短。",
+            "evidence": "木牌在你手里并不厚，边缘被掌温焐得发潮。你两手各握一端，指节抵住中间那道刻着“青露草”的凹痕，向下一折。木质先是一弯，随即“啪”地裂开，断口斜过半个字，露出浅色木茬。两截都还带着原来的绳孔，一截稍长，一截稍短，确实已经分开了。"
+          },
+          {
+            "id": "A3",
+            "requirement": "把两截都收在自己手里",
+            "status": "performed",
+            "summary": "顾长离把两截断木并在一起收进掌心，没有丢下。",
+            "evidence": "你没有把它们丢下，只将两截并在一起，收进掌心。断口对着虎口，有些刺，但还握得住。旁边几个新弟子听见响动，有人回头看了一眼，又转过去等钟声。陆照临仍站在你面前，目光从你手上抬起来，没有立刻说话。"
+          },
+          {
+            "id": "A4",
+            "requirement": "不再用这块牌参加试炼",
+            "status": "performed",
+            "summary": "顾长离点头确认不再用这块木牌参加试炼。",
+            "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。"
+          },
+          {
+            "id": "A5",
+            "requirement": "但暂时不离开这里",
+            "status": "performed",
+            "summary": "顾长离留在半山试炼场，没有离开。",
+            "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "你的目标已有变化，可在故事手记中查看",
+          "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "selectedDirectionId": "direction_free_f27c315f38ab",
+      "selectedDirection": {
+        "id": "direction_free_f27c315f38ab",
+        "title": "自定行动：我把木牌沿着中间折断，确",
+        "summary": "我把木牌沿着中间折断，确认它已经成为两截，把两截都收在自己手里；不再用这块牌参加试炼，但暂时不离开这里。",
+        "statePatch": {
+          "freeTextProgress": 1
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "我把木牌沿着中间折断，确认它已经成为两截，把两截都收在自己手里；不再用这块牌参加试炼，但暂时不离开这里。",
+      "requestId": "general-actions-v3-alter_item",
+      "turnInput": {
+        "text": "我把木牌沿着中间折断，确认它已经成为两截，把两截都收在自己手里；不再用这块牌参加试炼，但暂时不离开这里。"
+      },
+      "preparedTurnKey": "11db431a7c12f9282068ad9ab2563140ed573435b42a6855cee392645699cf5b"
+    },
+    "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+  }
+}

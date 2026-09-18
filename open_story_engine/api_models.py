@@ -66,7 +66,15 @@ class PackageList(BaseModel):
     issues: list[PackageIssue]
 
 
+class PublishedScene(BaseModel):
+    id: str
+    url: str
+    alt: str
+    source: Literal["published"]
+
+
 class EntrySummary(BaseModel):
+    opening_image: PublishedScene | None = None
     id: str
     title: str
     chapter_title: str
@@ -242,6 +250,7 @@ class ContextData(CoreObject):
 
 
 class PackageCatalog(BaseModel):
+    supporting_characters: list[EntityCard] = Field(default_factory=list)
     package: PackageSummary
     new_character: NewCharacterOption | None = None
     entries: list[EntrySummary]
@@ -272,6 +281,31 @@ class EndRouteRequest(RequestModel):
     branch_id: str = Field(min_length=1, max_length=200)
 
 
+class RouteClosureIntentRequest(EndRouteRequest):
+    intended_type: Literal['normal', 'deviation', 'failure'] | None
+
+
+class EndingProposalRequest(EndRouteRequest):
+    request_id: str = Field(min_length=1, max_length=200)
+    outcome_summary: str = Field(min_length=1, max_length=2000)
+    ending_quote: str = Field(min_length=1, max_length=6000)
+
+
+class EndingProposalView(BaseModel):
+    id: str
+    branch_id: str
+    request_id: str
+    binding_digest: str
+    ending_type: Literal['normal', 'deviation', 'failure']
+    outcome_summary: str
+    ending_quote: str
+    status: Literal['pending', 'approved', 'rejected', 'failed', 'stale', 'committed', 'cancelled']
+    can_cancel: bool = False
+    created_at: str
+    review: dict[str, Any] | None
+    audit: dict[str, Any] | None
+
+
 class SessionList(BaseModel):
     available: bool
     sessions: list[SessionSummary]
@@ -294,6 +328,181 @@ class StateView(BaseModel):
     state_version: int
     state: StoryState
     ledger: BranchLedger
+
+
+class RouteMonitorItem(BaseModel):
+    id: str
+    title: str
+    status: str
+
+
+class RouteClosureView(BaseModel):
+    goal_coverage: Literal['recorded', 'unknown']
+    thread_coverage: Literal['recorded', 'unknown']
+    active_goals: list[RouteMonitorItem]
+    unknown_goals: list[RouteMonitorItem]
+    open_threads: list[RouteMonitorItem]
+    unknown_threads: list[RouteMonitorItem]
+    ending_eligibility: Literal['unknown']
+
+
+class RouteTurnView(BaseModel):
+    branch_id: str
+    parent_branch_id: str | None
+    turn: int
+    changed: list[str] | None
+    unchanged_state_turns: int
+    repeated_action_turns: int
+    repeated_body_from: str | None
+
+
+class RouteMonitorView(BaseModel):
+    version: str
+    branch_id: str
+    root_branch_id: str
+    status: str
+    turns: int
+    recent_turns: list[RouteTurnView]
+    coverage: Literal['recorded', 'unknown']
+    unknown_state_branches: list[str]
+    signals: list[Literal['unchanged_tracked_state', 'repeated_action', 'repeated_body', 'source_progress_stalled', 'source_progress_regressed']]
+    review_recommended: bool
+    window: int
+    unchanged_state_turns: int
+    repeated_action_turns: int
+    source_progress_streak: int
+    closure: RouteClosureView
+
+
+class OutlineEvidence(BaseModel):
+    kind: Literal['opening', 'narrative']
+    branch_id: str
+    ref: str
+    quote: str
+
+
+class OutlineCompletion(BaseModel):
+    ledger: Literal['goalLedger', 'threadLedger']
+    target_id: str
+    target_statuses: list[str]
+    met: bool | None
+    requires_narrative_evidence: Literal[True]
+
+
+class OutlineObligation(BaseModel):
+    id: str
+    title: str
+    status: str
+    evidence: OutlineEvidence | None
+    completion: OutlineCompletion
+
+
+class OutlineStep(BaseModel):
+    id: str
+    kind: Literal['verify_status', 'review_dependency', 'pursue_goal', 'address_thread']
+    target_id: str
+    title: str
+    blockers: list[str]
+    evidence: OutlineEvidence | None
+    completion: OutlineCompletion
+
+
+class OutlineConflict(BaseModel):
+    id: str
+    goal_id: str
+    character_id: str
+    status: Literal['dead', 'departed', 'missing']
+    evidence: OutlineEvidence
+
+
+class OutlineItemConflict(BaseModel):
+    id: str
+    target_kind: Literal['goal', 'thread']
+    target_id: str
+    item_id: str
+    status: Literal['destroyed', 'unknown']
+    evidence: OutlineEvidence | None
+
+
+class RouteOutline(BaseModel):
+    version: str
+    branch_id: str
+    root_branch_id: str
+    binding_digest: str
+    structure: dict[str, str | None]
+    goals: list[OutlineObligation]
+    threads: list[OutlineObligation]
+    conflicts: list[OutlineConflict | OutlineItemConflict]
+    steps: list[OutlineStep]
+
+
+class RouteOutlineView(BaseModel):
+    outline: RouteOutline
+    storage: Literal['saved', 'reconstructed']
+    status: str
+    actionable: bool
+
+
+class ClosureItem(BaseModel):
+    id: str
+    kind: Literal['goal', 'thread', 'dependency']
+    target_id: str
+    title: str
+    reason: str
+    required_disclosure: bool
+    blockers: list[str]
+    evidence: OutlineEvidence | None
+
+
+class ClosureCoverage(BaseModel):
+    goals: Literal['recorded', 'unknown']
+    threads: Literal['recorded', 'unknown']
+    state: Literal['recorded', 'unknown']
+
+
+class EarlyEndingReceipt(BaseModel):
+    ending_type: Literal['early']
+    branch_id: str
+    closed_at: str
+    readiness: str
+    coverage: ClosureCoverage
+    outstanding: list[ClosureItem]
+    cleared: list[ClosureItem]
+    ending_written: Literal[False]
+
+
+class NaturalEndingReceipt(EarlyEndingReceipt):
+    ending_type: Literal['normal', 'deviation', 'failure']
+    ending_written: Literal[True]
+    proposal_id: str
+    binding_digest: str
+
+
+class RouteLifecycle(BaseModel):
+    phase: Literal['active', 'preparing', 'closing', 'ended']
+    intended_type: Literal['normal', 'deviation', 'failure'] | None
+    intent_branch_id: str | None
+    ending_type: Literal['early', 'normal', 'deviation', 'failure'] | None
+    receipt: EarlyEndingReceipt | NaturalEndingReceipt | None
+    requires_ending_evidence: Literal[True]
+    ending_written: bool
+
+
+class RouteClosurePreparation(BaseModel):
+    version: str
+    branch_id: str
+    root_branch_id: str
+    status: str
+    structure: dict[str, str | None]
+    coverage: ClosureCoverage
+    outstanding: list[ClosureItem]
+    cleared: list[ClosureItem]
+    outstanding_count: int
+    cleared_count: int
+    readiness: Literal['ended', 'blocked_unknown', 'blocked_dependency', 'needs_explanation', 'checklist_clear']
+    ending_written: bool
+    note: str
+    lifecycle: RouteLifecycle | None = None
 
 
 class ContextView(BaseModel):
@@ -336,7 +545,21 @@ class PlayCreateResponse(BaseModel):
     branch: BranchView
 
 
+class PrepareChoicesRequest(RequestModel):
+    parent_branch_id: str = Field(min_length=1, max_length=200)
+    subscriber_id: str = Field(min_length=1, max_length=100)
+    history_id: str | None = Field(default=None, min_length=1, max_length=200)
+
+
+class ReadingReceiptRequest(RequestModel):
+    branch_id: str = Field(min_length=1, max_length=200)
+
+
 class PlayContinueRequest(RequestModel):
+    history_id: str | None = Field(default=None, min_length=1, max_length=200)
+    draft_id: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
+    choice_id: str | None = Field(default=None, min_length=1, max_length=200)
+    subscriber_id: str | None = Field(default=None, min_length=1, max_length=100)
     parent_branch_id: str = Field(min_length=1, max_length=200)
     direction_id: str | None = Field(default=None, min_length=1, max_length=200)
     text: str | None = Field(default=None, min_length=1, max_length=2000)
@@ -364,19 +587,3 @@ class SourceChapterView(BaseModel):
 class CharacterProfileRequest(RequestModel):
     branch_id: str = Field(min_length=1, max_length=200)
     character_id: str = Field(min_length=1, max_length=200)
-
-
-class ImportNovelRequest(RequestModel):
-    package_id: str | None = Field(default=None, min_length=1, max_length=100, pattern=r"^[a-zA-Z0-9_-]+$")
-    version: str = Field(default="0.1.0", pattern=r"^\d+\.\d+\.\d+$", max_length=30)
-    file_name: str = Field(default="source.txt", min_length=1, max_length=255)
-    source_text: str = Field(min_length=100, max_length=10_000_000)
-
-
-class ImportNovelResponse(BaseModel):
-    package_id: str
-    version: str
-    title: str
-    beat_count: int
-    character_count: int
-    chapter_count: int

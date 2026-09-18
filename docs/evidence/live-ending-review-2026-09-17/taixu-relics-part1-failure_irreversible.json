@@ -1,0 +1,143 @@
+{
+  "id": "eed32d7391234badbfadd73159ec3ab6",
+  "branch_id": "ending-live-failure_irreversible",
+  "request_id": "failure_irreversible",
+  "payload_digest": "a3c05873f9732b222390afd6cadb7d1c4396de53672a4c371b60e76bf9c00a60",
+  "binding_digest": "a0f9f0bc18b7b8c6750cbfb590df7058d00754a7724ff5b57b078f92c6e85a1f",
+  "ending_type": "failure",
+  "outcome_summary": "救助和追查遭遇已发生的不可逆失败，正文交代后停止路线。",
+  "ending_quote": "你没能救回他，也没能确认空灯与父亲失踪的关系。",
+  "status": "rejected",
+  "created_at": "2026-09-17T01:22:57.493Z",
+  "review": {
+    "decision": "reject",
+    "checks": {
+      "ending_type_supported": {
+        "passed": false,
+        "evidence": "你终于把伤者拖进门房时，他的呼吸已经停止。你与执事轮流施救，直到执事确认再也无法挽回，你才松开按在伤口上的手。",
+        "reason": "正文只交代伤者死亡和施救无效，未提供账本或既有目标中确立的失败原因与结果；提案将目标状态标为 abandoned，但 failure 需要正文确立失败原因与结果，不能仅凭主动标记失败成立。"
+      },
+      "threads_accounted_for": {
+        "passed": false,
+        "evidence": "空灯在门闸坠落时被碾成碎屑，灯底唯一的押运刻字彻底磨毁；伤者生前没有说出灯的来历，也没有留下可供追索的记录。",
+        "reason": "正文虽说明查证途径消失，但未显示这些已知问题在账本中被有依据地关闭或放下；提案将 thread 状态标为 abandoned，却未提供账本中允许 abandoned 的逐项依据，不能通过遗漏关闭。"
+      },
+      "no_new_unresolved_conflict": {
+        "passed": false,
+        "evidence": "你把两项目标记为失败后停止，把尚未得到的答案如实留空。",
+        "reason": "正文明确留下尚未得到的答案，且没有说明这些未解问题为何不再需要本路线立即处理；这构成未解决冲突，不能视为无新增未解决冲突。"
+      },
+      "ending_present": {
+        "passed": false,
+        "evidence": "安葬伤者并收起碎屑后，你完成了最后的善后，不再等待新的线索或继续此路。灯光照着合拢的记录，这段失败的经历到此结束。",
+        "reason": "该句是叙述性收束，但正文同时说“把尚未得到的答案如实留空”，且未提供账本依据证明目标与线索已被正式关闭，因此不能确认本段确实收尾而非仅以叙述宣告结束。"
+      }
+    }
+  },
+  "audit": {
+    "model": "deepseek-v4-pro:cloud",
+    "prompt_version": "prompt-catalog/1:91e7126adf495e369d20ae57d788dabf28355210cc080f9235aeedfc5331cf99",
+    "input": {
+      "ending_type": "failure",
+      "outcome_summary": "救助和追查遭遇已发生的不可逆失败，正文交代后停止路线。",
+      "ending_quote": "你没能救回他，也没能确认空灯与父亲失踪的关系。",
+      "narrative": "你终于把伤者拖进门房时，他的呼吸已经停止。你与执事轮流施救，直到执事确认再也无法挽回，你才松开按在伤口上的手。空灯在门闸坠落时被碾成碎屑，灯底唯一的押运刻字彻底磨毁；伤者生前没有说出灯的来历，也没有留下可供追索的记录。你没能救回他，也没能确认空灯与父亲失踪的关系。这不是你事先决定放弃，而是救助已经失败，眼前仅有的查证途径也已消失。你把两项目标记为失败后停止，把尚未得到的答案如实留空。安葬伤者并收起碎屑后，你完成了最后的善后，不再等待新的线索或继续此路。灯光照着合拢的记录，这段失败的经历到此结束。",
+      "goals": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-failure_irreversible",
+            "ref": "opening-goal-1",
+            "quote": "你终于把伤者拖进门房时，他的呼吸已经停止。你与执事轮流施救，直到执事确认再也无法挽回，你才松开按在伤口上的手。空灯在门闸坠落时被碾成碎屑，灯底唯一的押运刻字彻底磨毁；伤者生前没有说出灯的来历，也没有留下可供追索的记录。你没能救回他，也没能确认空灯与父亲失踪的关系。这不是你事先决定放弃，而是救助已经失败，眼前仅有的查证途径也已消失。你把两项目标记为失败后停止，把尚未得到的答案如实留空。安葬伤者并收起碎屑后，你完成了最后的善后，不再等待新的线索或继续此路。灯光照着合拢的记录，这段失败的经历到此结束。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-failure_irreversible",
+            "ref": "opening-goal-2",
+            "quote": "你终于把伤者拖进门房时，他的呼吸已经停止。你与执事轮流施救，直到执事确认再也无法挽回，你才松开按在伤口上的手。空灯在门闸坠落时被碾成碎屑，灯底唯一的押运刻字彻底磨毁；伤者生前没有说出灯的来历，也没有留下可供追索的记录。你没能救回他，也没能确认空灯与父亲失踪的关系。这不是你事先决定放弃，而是救助已经失败，眼前仅有的查证途径也已消失。你把两项目标记为失败后停止，把尚未得到的答案如实留空。安葬伤者并收起碎屑后，你完成了最后的善后，不再等待新的线索或继续此路。灯光照着合拢的记录，这段失败的经历到此结束。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-failure_irreversible",
+            "ref": "opening-thread-1",
+            "quote": "你终于把伤者拖进门房时，他的呼吸已经停止。你与执事轮流施救，直到执事确认再也无法挽回，你才松开按在伤口上的手。空灯在门闸坠落时被碾成碎屑，灯底唯一的押运刻字彻底磨毁；伤者生前没有说出灯的来历，也没有留下可供追索的记录。你没能救回他，也没能确认空灯与父亲失踪的关系。这不是你事先决定放弃，而是救助已经失败，眼前仅有的查证途径也已消失。你把两项目标记为失败后停止，把尚未得到的答案如实留空。安葬伤者并收起碎屑后，你完成了最后的善后，不再等待新的线索或继续此路。灯光照着合拢的记录，这段失败的经历到此结束。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-failure_irreversible",
+            "ref": "opening-thread-2",
+            "quote": "你终于把伤者拖进门房时，他的呼吸已经停止。你与执事轮流施救，直到执事确认再也无法挽回，你才松开按在伤口上的手。空灯在门闸坠落时被碾成碎屑，灯底唯一的押运刻字彻底磨毁；伤者生前没有说出灯的来历，也没有留下可供追索的记录。你没能救回他，也没能确认空灯与父亲失踪的关系。这不是你事先决定放弃，而是救助已经失败，眼前仅有的查证途径也已消失。你把两项目标记为失败后停止，把尚未得到的答案如实留空。安葬伤者并收起碎屑后，你完成了最后的善后，不再等待新的线索或继续此路。灯光照着合拢的记录，这段失败的经历到此结束。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "conflicts": [],
+      "character_outcomes": []
+    },
+    "raw_response": "{\"id\":\"resp_634130\",\"object\":\"chat.completion\",\"created\":1789608181,\"model\":\"deepseek-v4-pro:cloud\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"reject\\\",\\n  \\\"checks\\\": {\\n    \\\"ending_type_supported\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你终于把伤者拖进门房时，他的呼吸已经停止。你与执事轮流施救，直到执事确认再也无法挽回，你才松开按在伤口上的手。\\\",\\n      \\\"reason\\\": \\\"正文只交代伤者死亡和施救无效，未提供账本或既有目标中确立的失败原因与结果；提案将目标状态标为 abandoned，但 failure 需要正文确立失败原因与结果，不能仅凭主动标记失败成立。\\\"\\n    },\\n    \\\"threads_accounted_for\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"空灯在门闸坠落时被碾成碎屑，灯底唯一的押运刻字彻底磨毁；伤者生前没有说出灯的来历，也没有留下可供追索的记录。\\\",\\n      \\\"reason\\\": \\\"正文虽说明查证途径消失，但未显示这些已知问题在账本中被有依据地关闭或放下；提案将 thread 状态标为 abandoned，却未提供账本中允许 abandoned 的逐项依据，不能通过遗漏关闭。\\\"\\n    },\\n    \\\"no_new_unresolved_conflict\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你把两项目标记为失败后停止，把尚未得到的答案如实留空。\\\",\\n      \\\"reason\\\": \\\"正文明确留下尚未得到的答案，且没有说明这些未解问题为何不再需要本路线立即处理；这构成未解决冲突，不能视为无新增未解决冲突。\\\"\\n    },\\n    \\\"ending_present\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"安葬伤者并收起碎屑后，你完成了最后的善后，不再等待新的线索或继续此路。灯光照着合拢的记录，这段失败的经历到此结束。\\\",\\n      \\\"reason\\\": \\\"该句是叙述性收束，但正文同时说“把尚未得到的答案如实留空”，且未提供账本依据证明目标与线索已被正式关闭，因此不能确认本段确实收尾而非仅以叙述宣告结束。\\\"\\n    }\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1800,\"completion_tokens\":458,\"total_tokens\":2258},\"service_tier\":\"default\"}",
+    "failure": null,
+    "metrics": {
+      "calls": 1,
+      "reported_tokens": 2258,
+      "unreported_calls": 0,
+      "elapsed_ms": 3354
+    }
+  }
+}

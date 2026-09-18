@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.2"
+  },
+  "arc": {
+    "id": "arc_source_chapter_042",
+    "title": "推进：没有胜者的盟约",
+    "summary": "三方都带着旧仇与兵刃，却承认天门后遗症已波及凡人。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_270",
+          "chapter_271",
+          "chapter_272",
+          "chapter_273",
+          "chapter_274"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_275"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_270_to_271",
+      "direction_chapter_271_to_272",
+      "direction_chapter_272_to_273",
+      "direction_chapter_273_to_274",
+      "direction_chapter_274_to_275"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_043"
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "status": "completed",
+  "scope": "official_openings_and_authored_departure_not_continuous_play",
+  "prompt_version": "prompt-catalog/1:0d7965c294c8f3ea23c2810403154cba028f2d9bc75693575f112ff2b1f0eda3",
+  "dependency_version": "reader-choice-dependencies/3",
+  "provider_calls": 3,
+  "max_calls": 3,
+  "novels": [
+    {
+      "package_id": "taixu-relics-part1",
+      "version": "0.1.2",
+      "cjk": 102610,
+      "sha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "model": "deepseek-v4-pro:cloud",
+      "checks": [
+        {
+          "id": "entry_lu_gate",
+          "status": "passed",
+          "usage": [
+            1790,
+            false
+          ],
+          "elapsed_ms": 3224,
+          "artifact": "taixu-relics-part1-entry_lu_gate.json"
+        },
+        {
+          "id": "entry_gu_trial",
+          "status": "passed",
+          "usage": [
+            1865,
+            false
+          ],
+          "elapsed_ms": 2784,
+          "artifact": "taixu-relics-part1-entry_gu_trial.json"
+        },
+        {
+          "id": "entry_ye_gallery",
+          "status": "failed",
+          "usage": [
+            1795,
+            false
+          ],
+          "code": "ValueError",
+          "reason": "没有通过公开依据与角色可用性检查的方向",
+          "elapsed_ms": 2765,
+          "artifact": "taixu-relics-part1-entry_ye_gallery.json"
+        }
+      ]
+    }
+  ],
+  "passed": false
+}

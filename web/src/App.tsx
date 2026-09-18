@@ -11,7 +11,6 @@ import { PackagesPage } from './pages/PackagesPage'
 import { PackageDetailPage } from './pages/PackageDetailPage'
 import { SessionsPage } from './pages/SessionsPage'
 import { SessionPage } from './pages/SessionPage'
-import { ImportPage } from './pages/ImportPage'
 
 function Shell() {
   const location = useLocation()
@@ -31,7 +30,7 @@ function Shell() {
     }
   }, [theme])
   useEffect(() => {
-    window.scrollTo(0, 0)
+    if (!(location.state as { preserveScroll?: boolean } | null)?.preserveScroll) window.scrollTo(0, 0)
   }, [location.pathname])
   return (
     <div className="app-shell">
@@ -65,11 +64,10 @@ function Shell() {
           path="/packages/:packageId/:version"
           element={<PackageDetailPage key={location.pathname} />}
         />
-        <Route path="/import" element={<ImportPage />} />
         <Route path="/sessions" element={<SessionsPage />} />
         <Route
           path="/sessions/:sessionId"
-          element={<SessionPage key={location.pathname} />}
+          element={<SessionPage key={(location.state as { openingKey?: string } | null)?.openingKey ?? location.pathname} />}
         />
         <Route path="*" element={<Navigate to="/packages" replace />} />
       </Routes>

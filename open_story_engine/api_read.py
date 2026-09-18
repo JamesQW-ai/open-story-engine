@@ -17,6 +17,7 @@ from .cocreation import create_contract, entry_node
 from .content import load_runtime_story_package, validate_story_package
 from .module_context import ModuleContextError, ModuleContextResolver
 from .storage import SessionStore
+from .scene_library import SceneLibrary
 
 
 class ReadError(Exception):
@@ -74,6 +75,7 @@ class ReadService:
         return {
             "package_id": package["id"], "version": package["version"],
             "title": package["metadata"]["title"], "summary": package["metadata"].get("summary", ""),
+            "visual_prompt": package["metadata"].get("visualPrompt", ""),
             "modular": bool(package.get("moduleIndexSha256")),
             "module_index_sha256": package.get("moduleIndexSha256"),
             "beat_count": len(package["story"]["narrativeGraph"]["beats"]),
@@ -87,6 +89,8 @@ class ReadService:
             package_id, version = path.parent.parent.name, path.parent.name
             try:
                 package_path, package = self.load_package(package_id, version)
+                if package['story'].get('entryModel', {}).get('policy') != 'official_unknown_reader/1':
+                    continue
                 packages.append(self.summary(package, package_path))
             except ReadError as error:
                 issues.append({"package_id": package_id, "version": version, "code": error.code, "message": error.message})
@@ -94,8 +98,10 @@ class ReadService:
         return {"packages": packages, "issues": issues}
 
     def catalog(self, package: dict[str, Any], path: Path | None = None) -> dict[str, Any]:
-        entries = package["story"].get("entryModel", {}).get("entryPoints", [])
-        new_character = package["story"].get("entryModel", {}).get("newCharacter")
+        entry_model = package["story"].get("entryModel", {})
+        entries = entry_model.get("entryPoints", [])
+        new_character = entry_model.get("newCharacter")
+        playable_ids = set(entry_model.get("sourceCharacterIds", []))
         return {
             "package": self.summary(package, path),
             "entries": [{
@@ -104,6 +110,7 @@ class ReadService:
                 "node_id": item["nodeId"], "summary": item["summary"],
                 "source_character_ids": item["sourceCharacterIds"],
                 "available_to_new_character": bool(item.get("availableToNewCharacter")),
+                "opening_image": SceneLibrary().opening(package, item),
             } for item in entries],
             **({
                 "new_character": {
@@ -113,7 +120,25 @@ class ReadService:
             } if isinstance(new_character, dict) and new_character.get("enabled") else {}),
             "beats": [{"id": beat["id"], "node_id": beat["nodeId"], "summary": beat["summary"]}
                       for beat in package["story"]["narrativeGraph"]["beats"]],
-            "characters": package["characters"], "locations": package["locations"], "items": package["items"],
+            # Keep the reviewed opening list separate from the full public
+            # roster. The desktop identity picker merges both lists, while
+            # read-only consumers can still distinguish reviewed openings.
+            "characters": [character for character in package["characters"] if character.get("id") in playable_ids],
+            "supporting_characters": [
+                {key: character[key] for key in (
+                    "id", "name", "description", "menuDescription", "role", "tags",
+                    "roleGroup", "identitySummary", "motivation", "openingHook",
+                    "defaultEntryPointId", "portraitAsset", "rosterVisible",
+                ) if key in character}
+                for character in package["characters"]
+                if character.get("rosterVisible") and character.get("id") not in playable_ids
+            ],
+            # Keep catalog cards usable for UI location labels while omitting
+            # source descriptions and other future-state details.
+            "locations": [{key: entity[key] for key in ("id", "name") if key in entity}
+                          for entity in package["locations"]],
+            "items": [{key: entity[key] for key in ("id", "name") if key in entity}
+                      for entity in package["items"]],
         }
 
     def parse(self, package: dict[str, Any]) -> dict[str, Any]:
@@ -226,6 +251,91 @@ class ReadService:
             _, package = self.load_package(session['storyPackageId'], session['storyPackageVersion'])
             return journey(store, session_id, branch_id, package)
 
+    def route_monitor(self, session_id, branch_id):
+        from .route_monitor import monitor
+        from .api_journey import route_status
+        with self.store() as store:
+            session = self.session(store, session_id)
+            self.branch_state(self.branch(store, session_id, branch_id))
+            _, package = self.load_package(session['storyPackageId'], session['storyPackageVersion'])
+            try:
+                store.assert_session_package(session_id, package)
+                nodes = store.lineage(session_id, branch_id)
+            except ValueError as error:
+                raise ReadError(409, 'route_history_unavailable', '路线历史或故事包绑定不一致，无法生成监测记录') from error
+            try:
+                return monitor(nodes, package, store.contract(session_id),
+                               route_status(store, session_id, nodes, package))
+            except (ValueError, TypeError, KeyError, AttributeError) as error:
+                raise ReadError(409, 'route_history_unavailable', '路线记录不完整或格式无效，无法生成监测记录') from error
+
+    def route_outline(self, session_id, branch_id):
+        from .route_outline import outline_view
+        from .api_journey import route_status
+        with self.store() as store:
+            session = self.session(store, session_id)
+            self.branch_state(self.branch(store, session_id, branch_id))
+            _, package = self.load_package(session['storyPackageId'], session['storyPackageVersion'])
+            try:
+                store.assert_session_package(session_id, package)
+                nodes = store.lineage(session_id, branch_id)
+                return outline_view(package, store.contract(session_id), nodes,
+                                    route_status(store, session_id, nodes, package))
+            except (ValueError, TypeError, KeyError, AttributeError) as error:
+                raise ReadError(409, 'route_history_unavailable', '路线记录或故事包绑定无效，无法读取局部大纲') from error
+
+    def route_closure(self, session_id, branch_id):
+        from .route_closure import preparation
+        from .route_lifecycle import view
+        from .api_journey import route_status
+        with self.store() as store:
+            session = self.session(store, session_id)
+            self.branch_state(self.branch(store, session_id, branch_id))
+            _, package = self.load_package(session['storyPackageId'], session['storyPackageVersion'])
+            try:
+                store.assert_session_package(session_id, package)
+                nodes = store.lineage(session_id, branch_id)
+                result = preparation(package, store.contract(session_id), nodes,
+                                     route_status(store, session_id, nodes, package))
+                result['lifecycle'] = view(store, session_id, nodes, result)
+                result['ending_written'] = result['lifecycle']['ending_written']
+                return result
+            except (ValueError, TypeError, KeyError, AttributeError) as error:
+                raise ReadError(409, 'route_history_unavailable', '路线记录或故事包绑定无效，无法生成收束准备清单') from error
+
+    def ending_proposals(self, session_id, branch_id):
+        from .route_endings import local_record, context, eligible
+        with self.store() as store:
+            self.session(store, session_id)
+            self.branch(store, session_id, branch_id)
+            try:
+                proposals = list(local_record(store, session_id, branch_id).get('endingProposals', {}).values())
+                if not proposals:
+                    return []
+                binding = None
+                try:
+                    ctx = context(self, store, session_id, branch_id)
+                    eligible(ctx)
+                    binding = ctx['binding']
+                except ReadError:
+                    pass
+                # Recent proposals only; compute the branch binding once per read.
+                return [dict(p, can_cancel=p['status'] == 'pending', status='stale' if p['status'] in ('pending', 'approved') and
+                             p['binding_digest'] != binding else p['status']) for p in reversed(proposals[-10:])]
+            except (ValueError, TypeError, KeyError, AttributeError) as error:
+                raise ReadError(409, 'route_history_unavailable', '终局提案记录无效') from error
+
+    def ending_proposal(self, session_id, branch_id, proposal_id):
+        from .route_endings import find_proposal, proposal_view
+        with self.store() as store:
+            self.session(store, session_id)
+            self.branch(store, session_id, branch_id)
+            try:
+                proposal = find_proposal(store, session_id, branch_id, proposal_id)
+                return proposal_view(self, store, session_id, branch_id, proposal)
+            except (ValueError, TypeError, KeyError, AttributeError) as error:
+                raise ReadError(409, 'route_history_unavailable', '终局提案记录无效') from error
+
     @staticmethod
     def session(store: SessionStore, session_id: str) -> dict[str, Any]:
         try:
@@ -281,8 +391,8 @@ class ReadService:
             self.session(store, session_id)
             action_column = (
                 ", COALESCE(NULLIF(json_extract(node_json,'$.playerDirection'),''), "
-                "NULLIF(json_extract(node_json,'$.selectedDirection.summary'),''), "
                 "NULLIF(json_extract(node_json,'$.selectedDirection.title'),''), "
+                "NULLIF(json_extract(node_json,'$.selectedDirection.summary'),''), "
                 "CASE WHEN parent_id IS NULL THEN '故事开篇' ELSE json_extract(node_json,'$.summary') END) AS action"
             ) if include_actions else ""
             rows = store.connection.execute(

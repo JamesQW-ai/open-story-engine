@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.2"
+  },
+  "arc": {
+    "id": "arc_source_chapter_007",
+    "title": "推进：雨廊来客",
+    "summary": "断灯芯和陆照临藏起来的那截一模一样，铜片却比他们找到的更完整。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_033",
+          "chapter_034",
+          "chapter_035",
+          "chapter_036",
+          "chapter_037",
+          "chapter_038"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_039"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_033_to_034",
+      "direction_chapter_034_to_035",
+      "direction_chapter_035_to_036",
+      "direction_chapter_036_to_037",
+      "direction_chapter_037_to_038",
+      "direction_chapter_038_to_039"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_008"
+    ]
+  }
+}

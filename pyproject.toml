@@ -21,3 +21,6 @@ open-story-evaluate-live = "open_story_engine.entrypoints:evaluate_live"
 
 [tool.setuptools.packages.find]
 include = ["open_story_engine*"]
+
+[tool.setuptools.package-data]
+"open_story_engine.prompts" = ["manifest.json", "*/*.md"]

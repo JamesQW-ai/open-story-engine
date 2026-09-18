@@ -1,0 +1,629 @@
+{
+  "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+  "request": {
+    "parent_branch_id": "branch_8d54594c-4392-4593-aec1-6c8b9b21d1c2",
+    "text": "我先不去找执事，也不答应任何新安排，只把两截断牌都收进袖里，继续拿好纸包。",
+    "request_id": "general-followups-v2-2"
+  },
+  "seconds": 44.02,
+  "response": {
+    "status": "written",
+    "request_id": "general-followups-v2-2",
+    "deduplicated": false,
+    "branch": {
+      "id": "branch_4433800a-d22b-45f7-9002-2094fa113ede",
+      "sessionId": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "sequence": 36,
+      "parentId": "branch_8d54594c-4392-4593-aec1-6c8b9b21d1c2",
+      "kind": "generated",
+      "sourceNodeRef": "node_source_continuity",
+      "narrativeText": "你没有再往执事那边看。两截断牌并拢，木茬互相咬住一点，又滑开。你把它收进左袖，贴着腕侧放稳，断口朝里，不再让旁人看见那道裂成两半的“青露草”刻痕。纸包仍握在右手里，纸角被掌心潮气浸软，里面的金屑没有散。\n\n陆照临等了一会儿，见你不答，也没有催。他偏过头，目光从你袖口移向白线外。执事仍低头翻着名册，山风把纸页掀起一角，又按下去。远处几个新弟子压着声说话，偶尔有人朝石径尽头的药圃张望。\n\n“你既不问，也不走，”陆照临说，“那就先这么站着。钟响之前，这里不会有人来查你的牌。”\n\n他说完退开半步，不再提同去的事，只把视线放回试炼场中央。你仍站在原地，袖中断牌贴着小臂，纸包在指间慢慢转了一下。",
+      "summary": "自定行动：我先不去找执事，也不答应已推进，新的风险和选择仍然存在。",
+      "branchState": {
+        "playerLocationId": "location_open_trial",
+        "playerCharacterId": "character_e663361ab1c7",
+        "characterLocationIds": {
+          "character_e663361ab1c7": "location_open_trial",
+          "character_ae4cb42b9b49": "location_open_trial"
+        },
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_df3fb46de272",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_f27c315f38ab",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000002_2f57ccde6ef1",
+              "sequence": 2,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:goalLedger",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": null,
+              "after": [
+                {
+                  "id": "opening-goal-1",
+                  "title": "木牌刻痕里为何有金屑",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                },
+                {
+                  "id": "opening-goal-2",
+                  "title": "如何完成第一场外门试炼",
+                  "status": "transformed",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "player_branch",
+                  "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+                  "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                  "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+                  "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法"
+                },
+                {
+                  "id": "goal-0eab10d79f952cf7",
+                  "title": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+                  "status": "active",
+                  "dependencies": [],
+                  "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+                  "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+                  "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+                  "characterId": "character_e663361ab1c7",
+                  "source": "player_branch",
+                  "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                  "previousGoalId": "opening-goal-2"
+                }
+              ],
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000003_e0bf8bb05639",
+              "sequence": 3,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:readerEntityStates",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": null,
+              "after": {
+                "item_open_gu_token": {
+                  "完整性": "断成两截"
+                },
+                "character_e663361ab1c7": {
+                  "对试炼木牌的态度": "不再用它参加试炼"
+                }
+              },
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000004_3dba1c76085e",
+              "sequence": 4,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 1,
+              "after": 2,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_3f1c14c28df9",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000005_8a3fc45aee4d",
+              "sequence": 5,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 2,
+              "after": 3,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_891462073d9e",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000006_d6caaf9bc779",
+              "sequence": 6,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:readerEntityStates",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": {
+                "item_open_gu_token": {
+                  "完整性": "断成两截"
+                },
+                "character_e663361ab1c7": {
+                  "对试炼木牌的态度": "不再用它参加试炼"
+                }
+              },
+              "after": {
+                "item_open_gu_token": {
+                  "完整性": "断成两截",
+                  "位置": "顾长离袖中"
+                },
+                "character_e663361ab1c7": {
+                  "对试炼木牌的态度": "不再用它参加试炼",
+                  "对陆照临提议的态度": "暂不答应"
+                },
+                "item_open_gold_paper": {
+                  "位置": "顾长离手中"
+                }
+              },
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_4433800a-d22b-45f7-9002-2094fa113ede",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "sourceProgress": "chapter_011",
+        "freeTextProgress": 3,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "itemOwnerCharacterIds": {
+          "item_open_gu_token": "character_e663361ab1c7",
+          "item_open_gold_paper": "character_e663361ab1c7"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {},
+        "readerEntityStates": {
+          "item_open_gu_token": {
+            "完整性": "断成两截",
+            "位置": "顾长离袖中"
+          },
+          "character_e663361ab1c7": {
+            "对试炼木牌的态度": "不再用它参加试炼",
+            "对陆照临提议的态度": "暂不答应"
+          },
+          "item_open_gold_paper": {
+            "位置": "顾长离手中"
+          }
+        },
+        "goalLedger": [
+          {
+            "id": "opening-goal-1",
+            "title": "木牌刻痕里为何有金屑",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          },
+          {
+            "id": "opening-goal-2",
+            "title": "如何完成第一场外门试炼",
+            "status": "transformed",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "player_branch",
+            "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+            "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+            "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+            "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法"
+          },
+          {
+            "id": "goal-0eab10d79f952cf7",
+            "title": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+            "status": "active",
+            "dependencies": [],
+            "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+            "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+            "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+            "characterId": "character_e663361ab1c7",
+            "source": "player_branch",
+            "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+            "previousGoalId": "opening-goal-2"
+          }
+        ]
+      },
+      "nextDirections": [
+        {
+          "id": "goal-direction-opening-goal-1-4",
+          "title": "推进目标：木牌刻痕里为何有金屑",
+          "summary": "围绕“木牌刻痕里为何有金屑”，依据眼前条件采取下一步行动，不恢复已放下的目标。",
+          "statePatch": {
+            "freeTextProgress": 4
+          },
+          "isFreeText": true
+        },
+        {
+          "id": "goal-direction-goal-0eab10d79f952cf7-4",
+          "title": "推进目标：在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+          "summary": "围绕“在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法”，依据眼前条件采取下一步行动，不恢复已放下的目标。",
+          "statePatch": {
+            "freeTextProgress": 4
+          },
+          "isFreeText": true
+        }
+      ],
+      "openThreads": [
+        "木牌刻痕里为何有金屑",
+        "如何完成第一场外门试炼",
+        "尚未完成的当前目标"
+      ],
+      "createdAt": "2026-09-15T08:56:08.215Z",
+      "canonicalRelation": "diverged",
+      "factDeltas": [],
+      "storyArc": {
+        "activeGoal": "自定行动：我把木牌沿着中间折断，确",
+        "currentPhase": "自定行动：我先不去找执事，也不答应",
+        "goalDisposition": "continued",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "continuing"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_8d54594c-4392-4593-aec1-6c8b9b21d1c2",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "actionIntent": {
+        "input": "我先不去找执事，也不答应任何新安排，只把两截断牌都收进袖里，继续拿好纸包。",
+        "requirements": {
+          "A1": {
+            "mode": "constraint",
+            "summary": "本回合不走向执事，不向执事询问断牌或试炼资格。"
+          },
+          "A2": {
+            "mode": "constraint",
+            "summary": "本回合不接受陆照临或其他人提出的任何新安排，不承诺后续行动。"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "把两截断牌都收进袖中。"
+          },
+          "A4": {
+            "mode": "result",
+            "summary": "继续拿好包着金屑的纸包。"
+          }
+        }
+      },
+      "consequenceUpdate": {
+        "decision": "ready",
+        "message": "",
+        "requirements": {
+          "A1": {
+            "mode": "constraint",
+            "summary": "本回合不走向执事，不向执事询问断牌或试炼资格。"
+          },
+          "A2": {
+            "mode": "constraint",
+            "summary": "本回合不接受陆照临或其他人提出的任何新安排，不承诺后续行动。"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "把两截断牌都收进袖中。"
+          },
+          "A4": {
+            "mode": "result",
+            "summary": "继续拿好包着金屑的纸包。"
+          }
+        },
+        "method": "顾长离已持有两截断牌和纸包，无需新增能力或物品。她将两截断牌并拢后放入袖中，纸包仍握在手里。陆照临已表示可以同去，但顾长离不采纳，也不作任何新承诺，只留在原地。",
+        "steps": [
+          {
+            "id": "S1",
+            "actorId": "character_e663361ab1c7",
+            "action": "把两截断牌并拢收进袖中，纸包继续拿在手里，不走向执事，不回应陆照临的提议，留在原地。",
+            "requirementIds": [
+              "A1",
+              "A2",
+              "A3",
+              "A4"
+            ],
+            "authority": "player",
+            "causeStepId": null
+          }
+        ],
+        "introductions": {
+          "characters": [],
+          "items": [],
+          "locations": []
+        },
+        "stateChanges": [
+          {
+            "id": "C2",
+            "entityId": "item_open_gu_token",
+            "attribute": "位置",
+            "before": null,
+            "value": "顾长离袖中",
+            "stepId": "S1",
+            "reason": "顾长离将两截断牌并拢后收进袖中。",
+            "evidence": "你没有再往执事那边看。两截断牌并拢，木茬互相咬住一点，又滑开。你把它收进左袖，贴着腕侧放稳，断口朝里，不再让旁人看见那道裂成两半的“青露草”刻痕。纸包仍握在右手里，纸角被掌心潮气浸软，里面的金屑没有散。"
+          },
+          {
+            "id": "C4",
+            "entityId": "item_open_gold_paper",
+            "attribute": "位置",
+            "before": null,
+            "value": "顾长离手中",
+            "stepId": "S1",
+            "reason": "顾长离继续拿好纸包。",
+            "evidence": "你没有再往执事那边看。两截断牌并拢，木茬互相咬住一点，又滑开。你把它收进左袖，贴着腕侧放稳，断口朝里，不再让旁人看见那道裂成两半的“青露草”刻痕。纸包仍握在右手里，纸角被掌心潮气浸软，里面的金屑没有散。"
+          },
+          {
+            "id": "C5",
+            "entityId": "character_e663361ab1c7",
+            "attribute": "对陆照临提议的态度",
+            "before": null,
+            "value": "暂不答应",
+            "stepId": "S1",
+            "reason": "顾长离决定不采纳陆照临同去询问执事的提议，也不接受任何新安排。",
+            "evidence": "“你既不问，也不走，”陆照临说，“那就先这么站着。钟响之前，这里不会有人来查你的牌。”"
+          }
+        ],
+        "outcomes": [],
+        "goalUpdates": []
+      },
+      "consequenceReview": "reader-consequences/2",
+      "reviewedNarrativeSha256": "d7a0230cbfb309293cb01683cb31ca6dca36ea876bf5dc2dfab7bf0034017816",
+      "authorityReview": {
+        "decision": "allow",
+        "issues": [],
+        "checks": [
+          {
+            "stepId": "S1",
+            "authorized": true,
+            "basis": "player_input",
+            "quote": "只把两截断牌都收进袖里，继续拿好纸包",
+            "reason": "玩家明确指示将两截断牌收进袖中并继续拿好纸包，且不走向执事、不回应陆照临提议，属于对自身持有物和位置的直接控制。"
+          }
+        ],
+        "stateChecks": [
+          {
+            "changeId": "C2",
+            "authorized": true,
+            "reason": "玩家明确指示将两截断牌收进袖中，位置变化由该动作直接产生。"
+          },
+          {
+            "changeId": "C4",
+            "authorized": true,
+            "reason": "玩家明确指示继续拿好纸包，纸包保持在手中是维持既有持有状态。"
+          },
+          {
+            "changeId": "C5",
+            "authorized": true,
+            "reason": "玩家明确表示不答应任何新安排，暂不答应陆照临提议是对当前态度的直接表达，未执行额外动作。"
+          }
+        ]
+      },
+      "observedEvents": [
+        {
+          "id": "O1",
+          "paragraphId": "P1",
+          "quote": "你把它收进左袖，贴着腕侧放稳，断口朝里，不再让旁人看见那道裂成两半的“青露草”刻痕。",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离将两截断牌收进左袖，断口朝里放稳。",
+          "changes": [
+            {
+              "entityId": "item_open_gu_token",
+              "attribute": "位置",
+              "value": "左袖内"
+            },
+            {
+              "entityId": "item_open_gu_token",
+              "attribute": "ownerCharacterId",
+              "value": "character_e663361ab1c7"
+            }
+          ],
+          "introduced": []
+        },
+        {
+          "id": "O2",
+          "paragraphId": "P1",
+          "quote": "纸包仍握在右手里，纸角被掌心潮气浸软，里面的金屑没有散。",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离仍将包着金屑的纸片握在右手中。",
+          "changes": [
+            {
+              "entityId": "item_open_gold_paper",
+              "attribute": "位置",
+              "value": "右手中"
+            },
+            {
+              "entityId": "item_open_gold_paper",
+              "attribute": "ownerCharacterId",
+              "value": "character_e663361ab1c7"
+            }
+          ],
+          "introduced": []
+        },
+        {
+          "id": "O3",
+          "paragraphId": "P2",
+          "quote": "执事仍低头翻着名册，山风把纸页掀起一角，又按下去。",
+          "actor": "character_aa4580d38571",
+          "mode": "actual",
+          "summary": "沈砚秋仍低头翻着名册。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O4",
+          "paragraphId": "P3",
+          "quote": "“你既不问，也不走，”陆照临说，“那就先这么站着。钟响之前，这里不会有人来查你的牌。”",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "speech",
+          "summary": "陆照临说钟响之前不会有人来查顾长离的牌。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O5",
+          "paragraphId": "P4",
+          "quote": "他说完退开半步，不再提同去的事，只把视线放回试炼场中央。",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "actual",
+          "summary": "陆照临退开半步，不再提同去问执事的事。",
+          "changes": [],
+          "introduced": []
+        }
+      ],
+      "eventChecks": [
+        {
+          "id": "O1",
+          "verdict": "supported",
+          "reason": "P1明确写出顾长离将两截断牌收进左袖，断口朝里放稳，与原始输入和S1一致。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [
+            "C2"
+          ],
+          "introductionIds": []
+        },
+        {
+          "id": "O2",
+          "verdict": "supported",
+          "reason": "P1明确写出纸包仍握在右手中，金屑没有散，与原始输入和S1一致。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [
+            "C4"
+          ],
+          "introductionIds": []
+        },
+        {
+          "id": "O3",
+          "verdict": "supported",
+          "reason": "P2写执事仍低头翻名册，属于场景内既有事实，无矛盾。",
+          "stepIds": [],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O4",
+          "verdict": "supported",
+          "reason": "P3为陆照临对顾长离不行动状态的描述，符合顾长离不询问、不离开的选择。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O5",
+          "verdict": "supported",
+          "reason": "P4写陆照临退开半步，不再提同去之事，与顾长离不接受新安排的结果一致。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        }
+      ],
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "我先不去找执事",
+            "status": "performed",
+            "summary": "顾长离没有走向执事，也没有向执事询问断牌或试炼资格。",
+            "evidence": "你没有再往执事那边看。两截断牌并拢，木茬互相咬住一点，又滑开。你把它收进左袖，贴着腕侧放稳，断口朝里，不再让旁人看见那道裂成两半的“青露草”刻痕。纸包仍握在右手里，纸角被掌心潮气浸软，里面的金屑没有散。"
+          },
+          {
+            "id": "A2",
+            "requirement": "也不答应任何新安排",
+            "status": "performed",
+            "summary": "顾长离没有答应陆照临同去问执事的提议，也没有接受任何新安排。",
+            "evidence": "“你既不问，也不走，”陆照临说，“那就先这么站着。钟响之前，这里不会有人来查你的牌。”"
+          },
+          {
+            "id": "A3",
+            "requirement": "只把两截断牌都收进袖里",
+            "status": "performed",
+            "summary": "顾长离把两截断牌并拢收进左袖，断口朝里放稳。",
+            "evidence": "你没有再往执事那边看。两截断牌并拢，木茬互相咬住一点，又滑开。你把它收进左袖，贴着腕侧放稳，断口朝里，不再让旁人看见那道裂成两半的“青露草”刻痕。纸包仍握在右手里，纸角被掌心潮气浸软，里面的金屑没有散。"
+          },
+          {
+            "id": "A4",
+            "requirement": "继续拿好纸包",
+            "status": "performed",
+            "summary": "顾长离继续把包着金屑的纸包握在右手中，金屑没有散。",
+            "evidence": "你没有再往执事那边看。两截断牌并拢，木茬互相咬住一点，又滑开。你把它收进左袖，贴着腕侧放稳，断口朝里，不再让旁人看见那道裂成两半的“青露草”刻痕。纸包仍握在右手里，纸角被掌心潮气浸软，里面的金屑没有散。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "顾长离没有走向执事，也没有向执事询问断牌或试炼资格。；顾长离没有答应陆照临同去问执事的提议，也没有接受任何新安排。；顾长离把两截断牌并拢收进左袖，断口朝里放稳。；顾长离继续把包着金屑的纸包握在右手中，金屑没有散。",
+          "evidence": "你没有再往执事那边看。两截断牌并拢，木茬互相咬住一点，又滑开。你把它收进左袖，贴着腕侧放稳，断口朝里，不再让旁人看见那道裂成两半的“青露草”刻痕。纸包仍握在右手里，纸角被掌心潮气浸软，里面的金屑没有散。"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "selectedDirectionId": "direction_free_891462073d9e",
+      "selectedDirection": {
+        "id": "direction_free_891462073d9e",
+        "title": "自定行动：我先不去找执事，也不答应",
+        "summary": "我先不去找执事，也不答应任何新安排，只把两截断牌都收进袖里，继续拿好纸包。",
+        "statePatch": {
+          "freeTextProgress": 3
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "我先不去找执事，也不答应任何新安排，只把两截断牌都收进袖里，继续拿好纸包。",
+      "requestId": "general-followups-v2-2",
+      "turnInput": {
+        "text": "我先不去找执事，也不答应任何新安排，只把两截断牌都收进袖里，继续拿好纸包。"
+      },
+      "preparedTurnKey": "4c0445b917c34cdffa268a61d3e7f18429e65423640946c659d044532b0c918c"
+    },
+    "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+  }
+}

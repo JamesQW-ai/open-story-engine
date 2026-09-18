@@ -1,0 +1,134 @@
+{
+  "decision": "ready",
+  "message": "",
+  "requirements": {
+    "A1": {
+      "mode": "result",
+      "summary": "陆照临放弃当前所有追查目标"
+    },
+    "A2": {
+      "mode": "result",
+      "summary": "今后只以保护自身安全为目标"
+    },
+    "A3": {
+      "mode": "constraint",
+      "summary": "本回合留在原地"
+    },
+    "A4": {
+      "mode": "constraint",
+      "summary": "不询问、不移动"
+    }
+  },
+  "method": "陆照临在内心作出放弃追查的决定，不再把陌生伤者能否获救、空灯与父亲失踪是否有关当作行动目标；身体停在封山石外原地，不开口询问，也不迈步。守门弟子和伤者仍按当前状态存在，但本回合不因玩家静止而推进救助、押送或关门后的新流程。",
+  "outcomes": [],
+  "goalUpdates": [
+    {
+      "id": "opening-goal-1",
+      "status": "abandoned",
+      "title": "陌生伤者是否能得到救助",
+      "dependencies": [],
+      "reason": "玩家明确决定放弃当前所有追查目标，不再追查陌生伤者能否得到救助。",
+      "successor": ""
+    },
+    {
+      "id": "opening-goal-2",
+      "status": "abandoned",
+      "title": "空灯与父亲失踪是否有关",
+      "dependencies": [],
+      "reason": "玩家明确决定放弃当前所有追查目标，不再追查空灯与父亲失踪的关联。",
+      "successor": ""
+    },
+    {
+      "id": "new",
+      "status": "active",
+      "title": "保护自身安全",
+      "dependencies": [],
+      "reason": "玩家明确表示今后只以保护自身安全为目标。",
+      "successor": ""
+    }
+  ],
+  "steps": [
+    {
+      "id": "S1",
+      "actorId": "character_ae4cb42b9b49",
+      "action": "陆照临在封山石外原地站定，放弃追查目标，不询问、不移动。",
+      "requirementIds": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "authority": "player",
+      "causeStepId": null
+    }
+  ],
+  "introductions": {
+    "characters": [],
+    "items": [],
+    "locations": []
+  },
+  "stateChanges": [
+    {
+      "id": "C1",
+      "entityId": "character_ae4cb42b9b49",
+      "attribute": "当前目标",
+      "before": null,
+      "value": "保护自身安全",
+      "stepId": "S1",
+      "reason": "玩家明确决定放弃追查，今后只以保护自身安全为目标。"
+    },
+    {
+      "id": "C2",
+      "entityId": "character_ae4cb42b9b49",
+      "attribute": "追查意愿",
+      "before": null,
+      "value": "已放弃",
+      "stepId": "S1",
+      "reason": "玩家明确决定放弃当前所有追查目标。"
+    }
+  ],
+  "threadUpdates": [
+    {
+      "id": "opening-thread-1",
+      "title": "陌生伤者是否能得到救助",
+      "status": "abandoned",
+      "reason": "玩家明确放弃追查该问题，不再以陌生伤者能否得到救助为行动目标。",
+      "stepIds": [
+        "S1"
+      ]
+    },
+    {
+      "id": "opening-thread-2",
+      "title": "空灯与父亲失踪是否有关",
+      "status": "abandoned",
+      "reason": "玩家明确放弃追查该问题，不再以空灯与父亲失踪的关联为行动目标。",
+      "stepIds": [
+        "S1"
+      ]
+    }
+  ],
+  "scenePlan": {
+    "start": "陆照临仍站在封山石外，雨水顺着斗笠滴落，没有迈步，也没有再开口。",
+    "beats": [
+      {
+        "purpose": "呈现玩家放弃追查后的静止状态，让外部雨声、山门铁链声和伤者处境继续存在，但不推动救助或押送。",
+        "stepIds": [
+          "S1"
+        ]
+      }
+    ],
+    "outcome": "陆照临留在原地，放弃追查目标，未询问、未移动；陌生伤者与守门弟子仍维持原状，本回合没有新的救助或冲突结果。",
+    "stop": "保留给玩家的下一步决定：是否继续留在原地，或之后自行选择离开、开口、靠近等。",
+    "targetCjk": [
+      200,
+      300
+    ],
+    "lengthReason": "本回合是明确的静止与放弃决定，没有信息交锋或新冲突，篇幅宜短，只承接现场并确认玩家选择。",
+    "knowledge": [],
+    "observationLimits": [
+      "陆照临未移动，无法获得新的近距离观察信息。",
+      "伤者是否会被他人救助、山门是否关闭，本回合未发生，不能写成已发生。",
+      "守门弟子是否改变态度，本回合无依据。"
+    ]
+  }
+}

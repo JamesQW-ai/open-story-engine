@@ -1,0 +1,39 @@
+{
+  "coreTestsPassed": 202,
+  "apiTestsPassed": 184,
+  "promptCatalogTestsPassed": 5,
+  "finalDialogueTestsPassed": 30,
+  "diffCheckPassed": true,
+  "promptVersion": "prompt-catalog/1:d0bed95f7d78f627cc025c10d606a34ea13754520bc6f1e11baba7e7d55856da",
+  "filesSha256": {
+    "open_story_engine/api_narrative.py": "92902914dda6d03e88a6f43759cb965a0e1ad024b1ca0ef5ee1b65c43d6f955f",
+    "open_story_engine/prompts/reader/narrative.md": "6e31335ac37416997a58bebe9477f4e2a96e5d1829e78747abcb61e5ee7f2675",
+    "open_story_engine/prompts/reader/narrative_repair.md": "ef6d54f976c544784cee8613cd7d073d2e17a96701e68b893f9a48b572effb4f",
+    "open_story_engine/prompts/reader/scene_expand.md": "d771f547d1cc38bd26d1f7d2baeb9ac6a186eb6b682209dadcc7b7d11c11992f",
+    "open_story_engine/prompts/reader/scene_grounding.md": "360c007f301770294af131df9498a0f1810ff70bebbad1a428294e40e1bc1546",
+    "open_story_engine/prompts/reader/scene_review.md": "7fbd515aba04ecd8e9d3dac0e07f5a6fe7fa1cb5ae339f97a307906d669255c0",
+    "tests_api/test_reader_actions.py": "44c735a8d403f60b7cb7efea1fd070068c091be601c1146c9dc415cd3327a2f6",
+    "tests_api/test_reader_scene_review.py": "0c58cc89214c4344f0a7c7fe52e99e152f43f59bff676cd9541d6ce2ae363b3c"
+  },
+  "retainedDrafts": {
+    "inform": {
+      "status": "unconfirmed",
+      "cjk": 494
+    },
+    "ask": {
+      "status": "unconfirmed",
+      "cjk": 437
+    }
+  },
+  "mainDatabaseBefore": "3ba2695159f454572bd5c93b27e225a85bb0df8ec8537d1626daab2e5e740eaa",
+  "mainDatabaseAfter": "3ba2695159f454572bd5c93b27e225a85bb0df8ec8537d1626daab2e5e740eaa",
+  "databaseUnchanged": true,
+  "continuousQualityGatePassed": false,
+  "browserAcceptanceRun": false,
+  "imageGenerationCalls": 0,
+  "limits": [
+    "最后补写候选去重提前及说到引文依赖补充在真实批次结束后，仅做离线集成和真实旧稿零调用回放。",
+    "第二批告知及询问失败，未作为已确认前情推进。",
+    "第二批询问18次传输调用，另一次因预算在本地拒绝；包装层计数19，tokens=null，已报告tokens为100217。"
+  ]
+}

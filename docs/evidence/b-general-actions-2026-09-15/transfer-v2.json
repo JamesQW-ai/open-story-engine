@@ -1,0 +1,555 @@
+{
+  "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+  "request": {
+    "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+    "text": "把包着金屑的纸交给陆照临保管，木牌仍由我自己拿着；请他收好纸包，我们暂时不离开这里。",
+    "request_id": "general-actions-v2-transfer"
+  },
+  "seconds": 63.98,
+  "response": {
+    "status": "written",
+    "request_id": "general-actions-v2-transfer",
+    "deduplicated": false,
+    "branch": {
+      "id": "branch_d6f62c2e-1065-4276-8549-1ad754b16b02",
+      "sessionId": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "sequence": 31,
+      "parentId": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "kind": "generated",
+      "sourceNodeRef": "node_source_continuity",
+      "narrativeText": "你把木牌换到左手，右手从袖中取出那张折成小方的纸。纸很薄，金屑裹在里头，轻得几乎没有分量。你朝陆照临递过去，说：“这个先放你身上。木牌我自己拿。”\n\n陆照临没有立刻接。他先看你一眼，又看那张纸，才伸出手来，用两指捏住纸边。纸包没有散开，他也没有打开看，只问：“你信我？”\n\n“不是信不信。”你说，“分开放，比都放在一个人身上稳妥。”\n\n他点点头，把纸包收进外袍内侧，贴着衣襟按了按，确认不会掉出来。石坪上的风从后坡吹来，带着药圃里一点湿土气。你仍站在原地，木牌握在手中，刻痕朝内，没有交给任何人。\n\n陆照临收好纸包后也没有动。他站在你右前方半步，目光扫过石壁上的旧剑痕，又落回你手里的木牌：“钟响之前，我们就在这儿等。若有人问起，木牌是你拿着，纸包不在你身上。”\n\n你“嗯”了一声。远处新弟子们三三两两散在石坪边，没人注意这边。执事立在石阶高处，背对着你们，似乎在看山腰的雾。钟还没响。",
+      "summary": "自定行动：把包着金屑的纸交给陆照临已推进，新的风险和选择仍然存在。",
+      "branchState": {
+        "playerLocationId": "location_open_trial",
+        "playerCharacterId": "character_e663361ab1c7",
+        "characterLocationIds": {
+          "character_e663361ab1c7": "location_open_trial",
+          "character_ae4cb42b9b49": "location_open_trial"
+        },
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_fc7694b13b66",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_6c39eec6eb56",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000002_6dee6a08bafe",
+              "sequence": 2,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:goalLedger",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": null,
+              "after": [
+                {
+                  "id": "opening-goal-1",
+                  "title": "木牌刻痕里为何有金屑",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                },
+                {
+                  "id": "opening-goal-2",
+                  "title": "如何完成第一场外门试炼",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                }
+              ],
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_d6f62c2e-1065-4276-8549-1ad754b16b02",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000003_88b640cf2c52",
+              "sequence": 3,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:itemOwnerCharacterIds",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": {
+                "item_open_gu_token": "character_e663361ab1c7",
+                "item_open_gold_paper": "character_e663361ab1c7"
+              },
+              "after": {
+                "item_open_gu_token": "character_e663361ab1c7",
+                "item_open_gold_paper": "character_ae4cb42b9b49"
+              },
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_d6f62c2e-1065-4276-8549-1ad754b16b02",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "sourceProgress": "chapter_011",
+        "freeTextProgress": 1,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "itemOwnerCharacterIds": {
+          "item_open_gu_token": "character_e663361ab1c7",
+          "item_open_gold_paper": "character_ae4cb42b9b49"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {},
+        "goalLedger": [
+          {
+            "id": "opening-goal-1",
+            "title": "木牌刻痕里为何有金屑",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          },
+          {
+            "id": "opening-goal-2",
+            "title": "如何完成第一场外门试炼",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          }
+        ]
+      },
+      "nextDirections": [
+        {
+          "id": "direction_chapter_011_to_012",
+          "title": "关键推进：发现",
+          "summary": "试炼进入林地深处后，陆照临发现每株药草旁都插着标记木签，木签上的日期与灵气强弱并不相符。",
+          "canonicalBeatId": "beat_chapter_012",
+          "statePatch": {
+            "sourceProgress": "chapter_012",
+            "playerLocationId": "location_9c23a624e6b0"
+          }
+        }
+      ],
+      "openThreads": [
+        "木牌刻痕里为何有金屑",
+        "如何完成第一场外门试炼",
+        "尚未完成的当前目标"
+      ],
+      "createdAt": "2026-09-15T08:40:28.970Z",
+      "canonicalRelation": "diverged",
+      "factDeltas": [],
+      "storyArc": {
+        "activeGoal": "自定行动：把包着金屑的纸交给陆照临",
+        "currentPhase": "自定行动：把包着金屑的纸交给陆照临",
+        "goalDisposition": "continued",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "continuing"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "actionIntent": {
+        "input": "把包着金屑的纸交给陆照临保管，木牌仍由我自己拿着；请他收好纸包，我们暂时不离开这里。",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "把包着金屑的纸交给陆照临保管"
+          },
+          "A2": {
+            "mode": "constraint",
+            "summary": "木牌仍由顾长离自己拿着"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "请陆照临收好纸包"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "两人暂时不离开半山试炼场"
+          }
+        }
+      },
+      "consequenceUpdate": {
+        "decision": "ready",
+        "message": "",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "把包着金屑的纸交给陆照临保管"
+          },
+          "A2": {
+            "mode": "constraint",
+            "summary": "木牌仍由顾长离自己拿着"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "请陆照临收好纸包"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "两人暂时不离开半山试炼场"
+          }
+        },
+        "method": "顾长离把包着金屑的纸片递给陆照临，并开口请他收好。陆照临接过纸包，依言收入衣内。木牌始终留在顾长离手中，没有交给对方。两人都停在半山试炼场原地，不向山门、后坡药圃或其他区域移动。",
+        "steps": [
+          {
+            "id": "S1",
+            "actorId": "character_e663361ab1c7",
+            "action": "顾长离把包着金屑的纸片递给陆照临，并请他收好纸包；木牌仍留在自己手中，不离开原地。",
+            "requirementIds": [
+              "A1",
+              "A2",
+              "A3",
+              "A4"
+            ],
+            "authority": "player",
+            "causeStepId": null
+          },
+          {
+            "id": "S2",
+            "actorId": "character_ae4cb42b9b49",
+            "action": "陆照临接过纸包，依言收入衣内收好，没有离开半山试炼场。",
+            "requirementIds": [
+              "A1",
+              "A3",
+              "A4"
+            ],
+            "authority": "reaction",
+            "causeStepId": "S1"
+          }
+        ],
+        "introductions": {
+          "characters": [],
+          "items": [],
+          "locations": []
+        },
+        "stateChanges": [
+          {
+            "id": "C1",
+            "entityId": "item_open_gold_paper",
+            "attribute": "ownerCharacterId",
+            "before": "character_e663361ab1c7",
+            "value": "character_ae4cb42b9b49",
+            "stepId": "S2",
+            "reason": "顾长离把纸包交给陆照临，陆照临接过并收入衣内。",
+            "evidence": "他点点头，把纸包收进外袍内侧，贴着衣襟按了按，确认不会掉出来。石坪上的风从后坡吹来，带着药圃里一点湿土气。你仍站在原地，木牌握在手中，刻痕朝内，没有交给任何人。"
+          }
+        ],
+        "outcomes": [],
+        "goalUpdates": []
+      },
+      "consequenceReview": "reader-consequences/2",
+      "reviewedNarrativeSha256": "2b06734cb4d0093cec1048659fbc5a4385d1a0d7c03b99d1646de81b4405d956",
+      "observedEvents": [
+        {
+          "id": "O1",
+          "paragraphId": "P1",
+          "quote": "这个先放你身上。木牌我自己拿。",
+          "actor": "character_e663361ab1c7",
+          "mode": "speech",
+          "summary": "顾长离提出把包着金屑的纸包交给陆照临保管，木牌自己拿。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O2",
+          "paragraphId": "P1",
+          "quote": "你把木牌换到左手，右手从袖中取出那张折成小方的纸。",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离将木牌换到左手，从袖中取出包着金屑的纸包。",
+          "changes": [
+            {
+              "entityId": "item_open_gu_token",
+              "attribute": "ownerCharacterId",
+              "value": "character_e663361ab1c7"
+            }
+          ],
+          "introduced": []
+        },
+        {
+          "id": "O3",
+          "paragraphId": "P2",
+          "quote": "你信我？",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "speech",
+          "summary": "陆照临没有立刻接纸包，反问顾长离是否信任自己。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O4",
+          "paragraphId": "P2",
+          "quote": "才伸出手来，用两指捏住纸边。",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "actual",
+          "summary": "陆照临伸手用两指捏住纸包边缘，但尚未完全接过。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O5",
+          "paragraphId": "P3",
+          "quote": "分开放，比都放在一个人身上稳妥。",
+          "actor": "character_e663361ab1c7",
+          "mode": "speech",
+          "summary": "顾长离解释分开保管更稳妥。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O6",
+          "paragraphId": "P4",
+          "quote": "把纸包收进外袍内侧，贴着衣襟按了按，确认不会掉出来。",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "actual",
+          "summary": "陆照临将纸包收进外袍内侧并按压确认不会掉落。",
+          "changes": [
+            {
+              "entityId": "item_open_gold_paper",
+              "attribute": "ownerCharacterId",
+              "value": "character_ae4cb42b9b49"
+            }
+          ],
+          "introduced": []
+        },
+        {
+          "id": "O7",
+          "paragraphId": "P4",
+          "quote": "木牌握在手中，刻痕朝内，没有交给任何人。",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离继续握着木牌，刻痕朝内，未交给他人。",
+          "changes": [
+            {
+              "entityId": "item_open_gu_token",
+              "attribute": "ownerCharacterId",
+              "value": "character_e663361ab1c7"
+            }
+          ],
+          "introduced": []
+        },
+        {
+          "id": "O8",
+          "paragraphId": "P5",
+          "quote": "钟响之前，我们就在这儿等。若有人问起，木牌是你拿着，纸包不在你身上。",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "speech",
+          "summary": "陆照临提议钟响前原地等待，并约定对外说法：木牌由顾长离拿着，纸包不在顾长离身上。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O9",
+          "paragraphId": "P6",
+          "quote": "你“嗯”了一声。",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离应了一声，表示同意。",
+          "changes": [],
+          "introduced": []
+        }
+      ],
+      "eventChecks": [
+        {
+          "id": "O1",
+          "verdict": "supported",
+          "reason": "P1中顾长离说出把纸包放陆照临身上、木牌自己拿，符合原始输入。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O2",
+          "verdict": "supported",
+          "reason": "P1中顾长离换手木牌并从袖中取出纸包，木牌仍由顾长离持有。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [
+            "C1"
+          ],
+          "introductionIds": []
+        },
+        {
+          "id": "O3",
+          "verdict": "supported",
+          "reason": "P2中陆照临反问是否信任，属于对交托请求的正常反应。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O4",
+          "verdict": "supported",
+          "reason": "P2中陆照临伸手捏住纸边，承接交托过程。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O5",
+          "verdict": "supported",
+          "reason": "P3中顾长离解释分开保管更稳妥，与请求收好纸包一致。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O6",
+          "verdict": "supported",
+          "reason": "P4中陆照临将纸包收进外袍内侧并按压确认，完成保管。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [
+            "C1"
+          ],
+          "introductionIds": []
+        },
+        {
+          "id": "O7",
+          "verdict": "supported",
+          "reason": "P4中顾长离仍握着木牌，未交给任何人，符合约束。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [
+            "C1"
+          ],
+          "introductionIds": []
+        },
+        {
+          "id": "O8",
+          "verdict": "supported",
+          "reason": "P5中陆照临提议钟响前原地等待，并约定说法，未离开。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O9",
+          "verdict": "supported",
+          "reason": "P6中顾长离应声同意，仍留在原地。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        }
+      ],
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "把包着金屑的纸交给陆照临保管",
+            "status": "performed",
+            "summary": "顾长离把包着金屑的纸片递给陆照临，陆照临接过并收入外袍内侧。",
+            "evidence": "他点点头，把纸包收进外袍内侧，贴着衣襟按了按，确认不会掉出来。石坪上的风从后坡吹来，带着药圃里一点湿土气。你仍站在原地，木牌握在手中，刻痕朝内，没有交给任何人。"
+          },
+          {
+            "id": "A2",
+            "requirement": "木牌仍由我自己拿着",
+            "status": "performed",
+            "summary": "木牌始终由顾长离自己握着，没有交给任何人。",
+            "evidence": "他点点头，把纸包收进外袍内侧，贴着衣襟按了按，确认不会掉出来。石坪上的风从后坡吹来，带着药圃里一点湿土气。你仍站在原地，木牌握在手中，刻痕朝内，没有交给任何人。"
+          },
+          {
+            "id": "A3",
+            "requirement": "请他收好纸包",
+            "status": "performed",
+            "summary": "顾长离开口请陆照临收好纸包，陆照临依言收好并按压确认。",
+            "evidence": "他点点头，把纸包收进外袍内侧，贴着衣襟按了按，确认不会掉出来。石坪上的风从后坡吹来，带着药圃里一点湿土气。你仍站在原地，木牌握在手中，刻痕朝内，没有交给任何人。"
+          },
+          {
+            "id": "A4",
+            "requirement": "我们暂时不离开这里",
+            "status": "performed",
+            "summary": "两人都留在半山试炼场原地，没有离开。",
+            "evidence": "他点点头，把纸包收进外袍内侧，贴着衣襟按了按，确认不会掉出来。石坪上的风从后坡吹来，带着药圃里一点湿土气。你仍站在原地，木牌握在手中，刻痕朝内，没有交给任何人。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "顾长离把包着金屑的纸片递给陆照临，陆照临接过并收入外袍内侧。；木牌始终由顾长离自己握着，没有交给任何人。；顾长离开口请陆照临收好纸包，陆照临依言收好并按压确认。；两人都留在半山试炼场原地，没有离开。",
+          "evidence": "他点点头，把纸包收进外袍内侧，贴着衣襟按了按，确认不会掉出来。石坪上的风从后坡吹来，带着药圃里一点湿土气。你仍站在原地，木牌握在手中，刻痕朝内，没有交给任何人。"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "selectedDirectionId": "direction_free_6c39eec6eb56",
+      "selectedDirection": {
+        "id": "direction_free_6c39eec6eb56",
+        "title": "自定行动：把包着金屑的纸交给陆照临",
+        "summary": "把包着金屑的纸交给陆照临保管，木牌仍由我自己拿着；请他收好纸包，我们暂时不离开这里。",
+        "statePatch": {
+          "freeTextProgress": 1
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "把包着金屑的纸交给陆照临保管，木牌仍由我自己拿着；请他收好纸包，我们暂时不离开这里。",
+      "requestId": "general-actions-v2-transfer",
+      "turnInput": {
+        "text": "把包着金屑的纸交给陆照临保管，木牌仍由我自己拿着；请他收好纸包，我们暂时不离开这里。"
+      },
+      "preparedTurnKey": "8c46af179bf65370992a1cfc5825393117b0e3e589ad6e6dfaa845ccc5dfb6e6"
+    },
+    "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+  }
+}

@@ -1,0 +1,3 @@
+
+独立复核threadUpdates：逐项对照原始输入、授权步骤、当前threads及整篇正文；threadUpdates不是证据。新问题必须实际建立，resolved必须回答原问题，abandoned必须有玩家明确决定和正文交代；NPC回答不知道、仅问过一次、角色不在场、物品破坏或目标结束，都不能自动视为问题解决/放下。priority和recoveryWindow必须有正文或公开账本依据；没有依据应为unknown，不得把模型猜测当成事实。未确认信息保留unknown，不泄漏未知背景；发现正文已明确建立/结束问题却漏记时写入issues，不能默默通过。任何问题写入issues。
+返回threadEvidence数组，顺序与threadUpdates精确对应，无变化为[]。每项为证明该变化的段号或最多5个段号组成的数组，与其他后果证据规则相同。引用必须实际支持title/status/reason，不接受提及、打算、假设或猜测。checkedConsequences同时表示完整核对剧情问题变化。

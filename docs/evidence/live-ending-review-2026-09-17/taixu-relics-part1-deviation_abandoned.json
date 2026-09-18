@@ -1,0 +1,143 @@
+{
+  "id": "f3cfebb343404d12bf7948069451f7a8",
+  "branch_id": "ending-live-deviation_abandoned",
+  "request_id": "deviation_abandoned",
+  "payload_digest": "a08c9f9ccb075d0862d50214bb7152142274e952571b44d133c8f3057473960a",
+  "binding_digest": "b18954ef31f77007431fc7a12ae4b58d3a544c6b7c3c3e0b07e2cf54c31a4cff",
+  "ending_type": "deviation",
+  "outcome_summary": "主动放下救助与空灯追查，把路线停在离开山门的选择及结果上。",
+  "ending_quote": "从停步到离开，你已经完成自己选择的退场，没有留下还要实施的行动。",
+  "status": "rejected",
+  "created_at": "2026-09-17T01:22:53.070Z",
+  "review": {
+    "decision": "unknown",
+    "checks": {
+      "ending_type_supported": {
+        "passed": false,
+        "evidence": "你明确决定放下这两个目标，不把伤者的命运写成已经获救，也不替父亲的去向编造答案。你将两件事记作未获答案、由自己主动停止追查。",
+        "reason": "正文确实写出目标改变为主动放下，但作为 deviation 结局，还需有目标改变后的后续结果。当前只写到决定放下并离开，没有提供离开后的实际结果或状态，因此不足以确认 deviation 结局成立。"
+      },
+      "threads_accounted_for": {
+        "passed": false,
+        "evidence": "你将两件事记作未获答案、由自己主动停止追查。你的选择是离开山门，不再参与此处的救助或调查，也不向任何人许下返回的约定。",
+        "reason": "正文对两个已知问题均写明主动停止追查，并明确不再参与，属于有依据地放下，而非遗漏关闭。但仅凭主动放弃本身，尚不足以证明这些线索在路线层面已被充分交代或收束，证据强度不足。"
+      },
+      "no_new_unresolved_conflict": {
+        "passed": false,
+        "evidence": "你沿石阶走回山脚，把没有使用的引荐文书收进箱底。从停步到离开，你已经完成自己选择的退场，没有留下还要实施的行动。",
+        "reason": "正文没有新增需要立即处理的冲突，也未写出未兑现行动。但该判断依赖叙述中的自我总结，缺少可独立验证的具体结果，证据不够充分。"
+      },
+      "ending_present": {
+        "passed": false,
+        "evidence": "这条偏离原目标的路线在此收尾。未知仍旧未知，但你不再以解开它们作为此路的终点。",
+        "reason": "正文明确写出路线收尾，并停止以原目标为终点，具有收束意图。但结尾主要落在放弃和不再追查上，没有提供足以确认本段已实际收尾的结果性内容，因此不能确认结局已经成立。"
+      }
+    }
+  },
+  "audit": {
+    "model": "deepseek-v4-pro:cloud",
+    "prompt_version": "prompt-catalog/1:91e7126adf495e369d20ae57d788dabf28355210cc080f9235aeedfc5331cf99",
+    "input": {
+      "ending_type": "deviation",
+      "outcome_summary": "主动放下救助与空灯追查，把路线停在离开山门的选择及结果上。",
+      "ending_quote": "从停步到离开，你已经完成自己选择的退场，没有留下还要实施的行动。",
+      "narrative": "你把引荐文书收回怀里，停在封山石外。你没有救助伤者，也没有查清空灯与父亲失踪的关系。你明确决定放下这两个目标，不把伤者的命运写成已经获救，也不替父亲的去向编造答案。你将两件事记作未获答案、由自己主动停止追查。你的选择是离开山门，不再参与此处的救助或调查，也不向任何人许下返回的约定。你沿石阶走回山脚，把没有使用的引荐文书收进箱底。从停步到离开，你已经完成自己选择的退场，没有留下还要实施的行动。这条偏离原目标的路线在此收尾。未知仍旧未知，但你不再以解开它们作为此路的终点。",
+      "goals": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-deviation_abandoned",
+            "ref": "opening-goal-1",
+            "quote": "你把引荐文书收回怀里，停在封山石外。你没有救助伤者，也没有查清空灯与父亲失踪的关系。你明确决定放下这两个目标，不把伤者的命运写成已经获救，也不替父亲的去向编造答案。你将两件事记作未获答案、由自己主动停止追查。你的选择是离开山门，不再参与此处的救助或调查，也不向任何人许下返回的约定。你沿石阶走回山脚，把没有使用的引荐文书收进箱底。从停步到离开，你已经完成自己选择的退场，没有留下还要实施的行动。这条偏离原目标的路线在此收尾。未知仍旧未知，但你不再以解开它们作为此路的终点。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-deviation_abandoned",
+            "ref": "opening-goal-2",
+            "quote": "你把引荐文书收回怀里，停在封山石外。你没有救助伤者，也没有查清空灯与父亲失踪的关系。你明确决定放下这两个目标，不把伤者的命运写成已经获救，也不替父亲的去向编造答案。你将两件事记作未获答案、由自己主动停止追查。你的选择是离开山门，不再参与此处的救助或调查，也不向任何人许下返回的约定。你沿石阶走回山脚，把没有使用的引荐文书收进箱底。从停步到离开，你已经完成自己选择的退场，没有留下还要实施的行动。这条偏离原目标的路线在此收尾。未知仍旧未知，但你不再以解开它们作为此路的终点。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-deviation_abandoned",
+            "ref": "opening-thread-1",
+            "quote": "你把引荐文书收回怀里，停在封山石外。你没有救助伤者，也没有查清空灯与父亲失踪的关系。你明确决定放下这两个目标，不把伤者的命运写成已经获救，也不替父亲的去向编造答案。你将两件事记作未获答案、由自己主动停止追查。你的选择是离开山门，不再参与此处的救助或调查，也不向任何人许下返回的约定。你沿石阶走回山脚，把没有使用的引荐文书收进箱底。从停步到离开，你已经完成自己选择的退场，没有留下还要实施的行动。这条偏离原目标的路线在此收尾。未知仍旧未知，但你不再以解开它们作为此路的终点。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-deviation_abandoned",
+            "ref": "opening-thread-2",
+            "quote": "你把引荐文书收回怀里，停在封山石外。你没有救助伤者，也没有查清空灯与父亲失踪的关系。你明确决定放下这两个目标，不把伤者的命运写成已经获救，也不替父亲的去向编造答案。你将两件事记作未获答案、由自己主动停止追查。你的选择是离开山门，不再参与此处的救助或调查，也不向任何人许下返回的约定。你沿石阶走回山脚，把没有使用的引荐文书收进箱底。从停步到离开，你已经完成自己选择的退场，没有留下还要实施的行动。这条偏离原目标的路线在此收尾。未知仍旧未知，但你不再以解开它们作为此路的终点。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "conflicts": [],
+      "character_outcomes": []
+    },
+    "raw_response": "{\"id\":\"resp_771909\",\"object\":\"chat.completion\",\"created\":1789608177,\"model\":\"deepseek-v4-pro:cloud\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"unknown\\\",\\n  \\\"checks\\\": {\\n    \\\"ending_type_supported\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你明确决定放下这两个目标，不把伤者的命运写成已经获救，也不替父亲的去向编造答案。你将两件事记作未获答案、由自己主动停止追查。\\\",\\n      \\\"reason\\\": \\\"正文确实写出目标改变为主动放下，但作为 deviation 结局，还需有目标改变后的后续结果。当前只写到决定放下并离开，没有提供离开后的实际结果或状态，因此不足以确认 deviation 结局成立。\\\"\\n    },\\n    \\\"threads_accounted_for\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你将两件事记作未获答案、由自己主动停止追查。你的选择是离开山门，不再参与此处的救助或调查，也不向任何人许下返回的约定。\\\",\\n      \\\"reason\\\": \\\"正文对两个已知问题均写明主动停止追查，并明确不再参与，属于有依据地放下，而非遗漏关闭。但仅凭主动放弃本身，尚不足以证明这些线索在路线层面已被充分交代或收束，证据强度不足。\\\"\\n    },\\n    \\\"no_new_unresolved_conflict\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你沿石阶走回山脚，把没有使用的引荐文书收进箱底。从停步到离开，你已经完成自己选择的退场，没有留下还要实施的行动。\\\",\\n      \\\"reason\\\": \\\"正文没有新增需要立即处理的冲突，也未写出未兑现行动。但该判断依赖叙述中的自我总结，缺少可独立验证的具体结果，证据不够充分。\\\"\\n    },\\n    \\\"ending_present\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"这条偏离原目标的路线在此收尾。未知仍旧未知，但你不再以解开它们作为此路的终点。\\\",\\n      \\\"reason\\\": \\\"正文明确写出路线收尾，并停止以原目标为终点，具有收束意图。但结尾主要落在放弃和不再追查上，没有提供足以确认本段已实际收尾的结果性内容，因此不能确认结局已经成立。\\\"\\n    }\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1737,\"completion_tokens\":462,\"total_tokens\":2199},\"service_tier\":\"default\"}",
+    "failure": null,
+    "metrics": {
+      "calls": 1,
+      "reported_tokens": 2199,
+      "unreported_calls": 0,
+      "elapsed_ms": 4352
+    }
+  }
+}

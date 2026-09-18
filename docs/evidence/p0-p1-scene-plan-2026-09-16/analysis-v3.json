@@ -1,0 +1,744 @@
+[
+  {
+    "kind": "inform",
+    "status": "written",
+    "elapsedSeconds": 87.03,
+    "firstTextMs": 12641,
+    "actualCjk": 226,
+    "metrics": {
+      "first_text_ms": 12629,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 86982,
+      "reported_tokens": 58860,
+      "calls": 13,
+      "unreported_calls": 1,
+      "tokens": null,
+      "commit_ms": 20,
+      "committed": true,
+      "selection_to_complete_ms": 87026
+    },
+    "scenePlans": [
+      {
+        "generationStage": "scene_plan",
+        "plan": {
+          "start": "钟声未响，陆照临仍站在青石外，顾长离把木牌和纸片带在身边，开口说出自己的打算。",
+          "beats": [
+            {
+              "purpose": "兑现顾长离告知打算并听取回应的要求，同时保留金屑来历的不确定",
+              "stepIds": [
+                "S1",
+                "S2"
+              ]
+            }
+          ],
+          "outcome": "顾长离已把打算告诉陆照临，陆照临给出回应，但金屑来处仍无定论；两人仍留在原地，等待下一步决定。",
+          "stop": "顾长离是否接话、是否继续等待钟响或另作安排，留待玩家决定。",
+          "targetCjk": [
+            260,
+            420
+          ],
+          "lengthReason": "这是一次简短告知与回应，没有实际调查或冲突，篇幅控制在中等偏短，重点写清陆照临对金屑来历无法断定的态度。",
+          "knowledge": [
+            {
+              "speakerId": "character_ae4cb42b9b49",
+              "statement": "陆照临听见顾长离要带着金屑和木牌进后坡，在取青露草时一并查金屑来处；他只能就当前所见回应，不能断定金屑的来历。",
+              "status": "reported",
+              "sources": [
+                {
+                  "id": "history-branch_f85ea073-75e9-42c9-894c-d1f17bbed4de-P3",
+                  "quote": "你听过北河城，却不认识他；这只是第一次互通姓名，他为何来到这里，你还不知道。"
+                }
+              ]
+            },
+            {
+              "speakerId": "character_e663361ab1c7",
+              "statement": "顾长离打算带着这粒金屑和木牌进后坡，在试炼途中留意金屑的来处，日落前取青露草时一并查。",
+              "status": "fact",
+              "sources": [
+                {
+                  "id": "history-branch_f85ea073-75e9-42c9-894c-d1f17bbed4de-P1",
+                  "quote": "刻痕里的黑泥却夹着一点金屑。你已刮下一粒，用纸包好。"
+                }
+              ]
+            }
+          ],
+          "observationLimits": [
+            "顾长离能看见陆照临的当场反应，但不能据此知道他过去的经历。",
+            "金屑的来处尚未查证，陆照临与顾长离都不能仅凭木牌刻痕断定来源。",
+            "钟声尚未响起，后坡药圃还未进入。"
+          ]
+        }
+      }
+    ],
+    "drafts": [
+      {
+        "generationStage": "scene_draft_metrics",
+        "revision": 0,
+        "actualCjk": 241,
+        "paragraphs": 7,
+        "pacing": {
+          "level": "dynamic",
+          "targetCjk": [
+            260,
+            420
+          ],
+          "reason": "这是一次简短告知与回应，没有实际调查或冲突，篇幅控制在中等偏短，重点写清陆照临对金屑来历无法断定的态度。",
+          "hardMinimum": false,
+          "lengthPolicy": "plan_before_writing_no_expansion"
+        }
+      },
+      {
+        "generationStage": "scene_draft_metrics",
+        "revision": 1,
+        "actualCjk": 226,
+        "paragraphs": 7,
+        "pacing": {
+          "level": "dynamic",
+          "targetCjk": [
+            260,
+            420
+          ],
+          "reason": "这是一次简短告知与回应，没有实际调查或冲突，篇幅控制在中等偏短，重点写清陆照临对金屑来历无法断定的态度。",
+          "hardMinimum": false,
+          "lengthPolicy": "plan_before_writing_no_expansion"
+        }
+      }
+    ],
+    "failures": [
+      {
+        "generationStage": "validation",
+        "revision": 0,
+        "outcome": "failed",
+        "error": "场景审查未通过：P6：“后坡不小”是地点范围断言，公开来源只有石径通向后坡药圃，未提供后坡大小依据。",
+        "repairIssues": {
+          "issues": [
+            {
+              "paragraphId": "P6",
+              "type": "background",
+              "reason": "“后坡不小”是地点范围断言，公开来源只有石径通向后坡药圃，未提供后坡大小依据。"
+            }
+          ],
+          "unlocatedIssues": []
+        }
+      }
+    ],
+    "repairs": [
+      {
+        "generationStage": "local_repair_record",
+        "revision": 0,
+        "beforeBody": "钟声还没响。你握着木牌，纸包在指间压得轻而实，抬头看向陆照临。\n\n“我打算带着这粒金屑和木牌进后坡。”你说，“试炼途中留意金屑的来处，日落前取青露草时一并查。”\n\n陆照临没有立刻接话。他先看了一眼你手里的木牌，又看向那包着金屑的纸，目光停了一瞬。\n\n“金屑嵌在刻痕的泥里，未必是木牌本身的。”他慢慢说，“也可能是后来沾上去的。现在只凭这一粒，我判断不了来处。”\n\n他语气不重，像在提醒，又像只是把眼前能确定和不能确定的分开。\n\n“你带着查，可以。”陆照临说，“但后坡不小，试炼时间又卡在日落前。若金屑的线索不出现，先取青露草，别误了规矩。”\n\n他说完便不再多言，仍站在原处，似乎等你决定下一步。",
+        "afterBody": "钟声还没响。你握着木牌，纸包在指间压得轻而实，抬头看向陆照临。\n\n“我打算带着这粒金屑和木牌进后坡。”你说，“试炼途中留意金屑的来处，日落前取青露草时一并查。”\n\n陆照临没有立刻接话。他先看了一眼你手里的木牌，又看向那包着金屑的纸，目光停了一瞬。\n\n“金屑嵌在刻痕的泥里，未必是木牌本身的。”他慢慢说，“也可能是后来沾上去的。现在只凭这一粒，我判断不了来处。”\n\n他语气不重，像在提醒，又像只是把眼前能确定和不能确定的分开。\n\n“你带着查，可以。”他顿了顿，“若金屑的线索不出现，先取青露草，别误了规矩。”\n\n他说完便不再多言，仍站在原处，似乎等你决定下一步。",
+        "issues": {
+          "issues": [
+            {
+              "paragraphId": "P6",
+              "type": "background",
+              "reason": "“后坡不小”是地点范围断言，公开来源只有石径通向后坡药圃，未提供后坡大小依据。"
+            }
+          ],
+          "unlocatedIssues": []
+        },
+        "outcome": "passed_full_review",
+        "failureReason": null
+      }
+    ],
+    "stages": [
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 8139
+        },
+        "generationStage": "result_contract",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 2830
+        },
+        "generationStage": "action_authority",
+        "evidenceAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 3521
+        },
+        "generationStage": "chapter",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 4646
+        },
+        "generationStage": "fact_extraction",
+        "revision": 0,
+        "extractionAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 11434
+        },
+        "generationStage": "action_review",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 8312
+        },
+        "generationStage": "scene_grounding",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 1338
+        },
+        "generationStage": "scope_review",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 1444
+        },
+        "generationStage": "local_repair",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 4467
+        },
+        "generationStage": "fact_extraction",
+        "revision": 1,
+        "extractionAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 6262
+        },
+        "generationStage": "action_review",
+        "revision": 1
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 18152
+        },
+        "generationStage": "scene_grounding",
+        "revision": 1
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 1297
+        },
+        "generationStage": "scope_review",
+        "revision": 1
+      },
+      {
+        "attempt": 1,
+        "outcome": "failed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": null,
+          "durationMs": 15006
+        },
+        "error": "SSE 连接或首段正文返回前超时"
+      }
+    ]
+  },
+  {
+    "kind": "ask",
+    "status": "failed",
+    "elapsedSeconds": 90.06,
+    "firstTextMs": 13578,
+    "actualCjk": 0,
+    "metrics": {
+      "first_text_ms": 13566,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 90033,
+      "reported_tokens": 53132,
+      "calls": 11,
+      "unreported_calls": 2,
+      "tokens": null
+    },
+    "scenePlans": [
+      {
+        "generationStage": "scene_plan",
+        "plan": {
+          "start": "钟声未响，顾长离仍站在陆照临面前，木牌和纸包都在她手里。",
+          "beats": [
+            {
+              "purpose": "顾长离把发现说清，并限定陆照临只看纸包，不交出物品。",
+              "stepIds": [
+                "S1"
+              ]
+            },
+            {
+              "purpose": "陆照临依据眼前所见回应，区分能确定与不能确定，不补造依据。",
+              "stepIds": [
+                "S2"
+              ]
+            },
+            {
+              "purpose": "顾长离听完回应，保持原地与物品持有状态，把下一步留给玩家。",
+              "stepIds": [
+                "S3"
+              ]
+            }
+          ],
+          "outcome": "陆照临表示只看这一粒金屑无法判断来处，并说明可能的方向；顾长离未交出物品，也未离开原地。",
+          "stop": "顾长离听完陆照临的回应，仍握着木牌和纸包，是否追问、是否等钟响出发，由玩家决定。",
+          "targetCjk": [
+            260,
+            380
+          ],
+          "lengthReason": "本回合是一次有信息边界的询问与回应，需要展开陆照临对金屑来处的判断依据与不确定处，但不涉及新冲突或行动，篇幅适中。",
+          "knowledge": [
+            {
+              "speakerId": "character_ae4cb42b9b49",
+              "statement": "只看纸包里这一粒金屑，无法判断它来自木牌本身还是后来沾上。",
+              "status": "reported",
+              "sources": [
+                {
+                  "id": "history-branch_4cbbfa2a-d8b7-44d8-a24f-cd4bf43ad5be-P4",
+                  "quote": "“金屑嵌在刻痕的泥里，未必是木牌本身的。”他慢慢说，“也可能是后来沾上去的。现在只凭这一粒，我判断不了来处。”"
+                }
+              ]
+            },
+            {
+              "speakerId": "character_ae4cb42b9b49",
+              "statement": "若金屑线索不出现，应先取青露草，别误试炼规矩。",
+              "status": "reported",
+              "sources": [
+                {
+                  "id": "history-branch_4cbbfa2a-d8b7-44d8-a24f-cd4bf43ad5be-P6",
+                  "quote": "“若金屑的线索不出现，先取青露草，别误了规矩。”"
+                }
+              ]
+            }
+          ],
+          "observationLimits": [
+            "陆照临只能看到顾长离托在掌心的纸包，未接过木牌或纸包，不能查看刻痕细节。",
+            "顾长离未打开纸包，陆照临只能看到纸包外形或顾长离展示的程度，不能确认金屑具体形状。",
+            "钟声尚未响起，试炼未开始。"
+          ]
+        }
+      }
+    ],
+    "drafts": [
+      {
+        "generationStage": "scene_draft_metrics",
+        "revision": 0,
+        "actualCjk": 368,
+        "paragraphs": 7,
+        "pacing": {
+          "level": "dynamic",
+          "targetCjk": [
+            260,
+            380
+          ],
+          "reason": "本回合是一次有信息边界的询问与回应，需要展开陆照临对金屑来处的判断依据与不确定处，但不涉及新冲突或行动，篇幅适中。",
+          "hardMinimum": false,
+          "lengthPolicy": "plan_before_writing_no_expansion"
+        }
+      },
+      {
+        "generationStage": "scene_draft_metrics",
+        "revision": 1,
+        "actualCjk": 348,
+        "paragraphs": 7,
+        "pacing": {
+          "level": "dynamic",
+          "targetCjk": [
+            260,
+            380
+          ],
+          "reason": "本回合是一次有信息边界的询问与回应，需要展开陆照临对金屑来处的判断依据与不确定处，但不涉及新冲突或行动，篇幅适中。",
+          "hardMinimum": false,
+          "lengthPolicy": "plan_before_writing_no_expansion"
+        }
+      }
+    ],
+    "failures": [
+      {
+        "generationStage": "validation",
+        "revision": 0,
+        "outcome": "failed",
+        "error": "场景审查未通过：P6：提出若木牌原先嵌金则刻痕边缘应有残留或泥下有更细碎屑，属推测，但无公开来源支持该因果判断。；P6：提出后来沾上的金屑只浮在表面、不会吃进木纹，属新增物性推测，无公开依据。",
+        "repairIssues": {
+          "issues": [
+            {
+              "paragraphId": "P6",
+              "type": "background",
+              "reason": "提出若木牌原先嵌金则刻痕边缘应有残留或泥下有更细碎屑，属推测，但无公开来源支持该因果判断。"
+            },
+            {
+              "paragraphId": "P6",
+              "type": "background",
+              "reason": "提出后来沾上的金屑只浮在表面、不会吃进木纹，属新增物性推测，无公开依据。"
+            }
+          ],
+          "unlocatedIssues": []
+        }
+      }
+    ],
+    "repairs": [
+      {
+        "generationStage": "local_repair_record",
+        "revision": 0,
+        "beforeBody": "你仍站在原地，木牌握在左手里，包着金屑的纸包托在右掌心，朝陆照临那边略略递近一点，却没有松手。\n\n“金屑是从木牌背面刻痕的黑泥里刮出来的。”你说，“你先只看我手里这个纸包。就这一粒，你怎么看？有什么依据？”\n\n陆照临没有接。他垂下目光，看着你掌心的纸包，纸面微微鼓起，看不出里面金屑的形状。片刻后，他抬起眼。\n\n“我只能看见这包东西，不能拆开，也不能拿过去对着木牌比。”他说，“所以我现在能确定的很少：你说它是在刻痕的泥里刮出来的，我信你这句话。但这一粒金屑本身，我看不出它原本属于木牌，还是后来沾进泥里的。”\n\n他停了一下，像在把话分清楚。\n\n“如果木牌原先就嵌着金，刻痕边缘应当还有残留，或者泥下会有更细的碎屑。如果只是后来沾上，那金屑多半只浮在表面，不会吃进木纹里。可这些都要把木牌翻过来细看，或者再刮一点泥对照。现在只看纸包，我没有依据下判断。”\n\n他没有再往前靠近，也没有伸手。风从半山石径上扫过来，纸包在你掌心轻轻一颤，你仍握着木牌，没有把任何一样东西交出去。",
+        "afterBody": "你仍站在原地，木牌握在左手里，包着金屑的纸包托在右掌心，朝陆照临那边略略递近一点，却没有松手。\n\n“金屑是从木牌背面刻痕的黑泥里刮出来的。”你说，“你先只看我手里这个纸包。就这一粒，你怎么看？有什么依据？”\n\n陆照临没有接。他垂下目光，看着你掌心的纸包，纸面微微鼓起，看不出里面金屑的形状。片刻后，他抬起眼。\n\n“我只能看见这包东西，不能拆开，也不能拿过去对着木牌比。”他说，“所以我现在能确定的很少：你说它是在刻痕的泥里刮出来的，我信你这句话。但这一粒金屑本身，我看不出它原本属于木牌，还是后来沾进泥里的。”\n\n他停了一下，像在把话分清楚。\n\n“若它原先就嵌在木牌里，刻痕边缘或许会留下痕迹；若只是后来沾上，也可能只浮在泥面。可这些都要把木牌翻过来细看，或者再刮一点泥对照。现在只看纸包，我没有依据下判断。”\n\n他没有再往前靠近，也没有伸手。风从半山石径上扫过来，纸包在你掌心轻轻一颤，你仍握着木牌，没有把任何一样东西交出去。",
+        "issues": {
+          "issues": [
+            {
+              "paragraphId": "P6",
+              "type": "background",
+              "reason": "提出若木牌原先嵌金则刻痕边缘应有残留或泥下有更细碎屑，属推测，但无公开来源支持该因果判断。"
+            },
+            {
+              "paragraphId": "P6",
+              "type": "background",
+              "reason": "提出后来沾上的金屑只浮在表面、不会吃进木纹，属新增物性推测，无公开依据。"
+            }
+          ],
+          "unlocatedIssues": []
+        },
+        "outcome": "failed",
+        "failureReason": "SSE 连接或首段正文返回前超时"
+      }
+    ],
+    "stages": [
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 8850
+        },
+        "generationStage": "result_contract",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 3097
+        },
+        "generationStage": "action_authority",
+        "evidenceAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 4848
+        },
+        "generationStage": "chapter",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 5961
+        },
+        "generationStage": "fact_extraction",
+        "revision": 0,
+        "extractionAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 9021
+        },
+        "generationStage": "action_review",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 18012
+        },
+        "generationStage": "scene_grounding",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 2182
+        },
+        "generationStage": "scope_review",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 1843
+        },
+        "generationStage": "local_repair",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 6147
+        },
+        "generationStage": "fact_extraction",
+        "revision": 1,
+        "extractionAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "failed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": null,
+          "durationMs": 15006
+        },
+        "error": "SSE 连接或首段正文返回前超时",
+        "retryReason": "transient_provider_failure"
+      },
+      {
+        "attempt": 1,
+        "outcome": "failed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": null,
+          "durationMs": 15007
+        },
+        "error": "SSE 连接或首段正文返回前超时"
+      }
+    ]
+  },
+  {
+    "kind": "wait",
+    "status": "written",
+    "elapsedSeconds": 32.02,
+    "firstTextMs": 13267,
+    "actualCjk": 84,
+    "metrics": {
+      "first_text_ms": 13248,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 2,
+      "complete_ms": 31961,
+      "reported_tokens": 43616,
+      "calls": 8,
+      "unreported_calls": 0,
+      "tokens": 43616,
+      "commit_ms": 26,
+      "committed": true,
+      "selection_to_complete_ms": 32013
+    },
+    "scenePlans": [
+      {
+        "generationStage": "scene_plan",
+        "plan": {
+          "start": "陆照临说完后仍站在原处，钟声未响。",
+          "beats": [
+            {
+              "purpose": "兑现留在原地、握好纸包、暂不行动的简短要求，并保留下一步决定。",
+              "stepIds": [
+                "S1"
+              ]
+            }
+          ],
+          "outcome": "顾长离留在原地，纸包握在手中，没有出发，也没有再问。",
+          "stop": "钟声未响，是否继续等待或转向后坡由玩家决定。",
+          "targetCjk": [
+            80,
+            140
+          ],
+          "lengthReason": "用户明确要求简短，且本回合只有静态动作，无新信息交锋。",
+          "knowledge": [],
+          "observationLimits": [
+            "钟声尚未响起，试炼未开始。",
+            "陆照临没有进一步动作。"
+          ]
+        }
+      }
+    ],
+    "drafts": [
+      {
+        "generationStage": "scene_draft_metrics",
+        "revision": 0,
+        "actualCjk": 84,
+        "paragraphs": 2,
+        "pacing": {
+          "level": "dynamic",
+          "targetCjk": [
+            80,
+            140
+          ],
+          "reason": "用户明确要求简短，且本回合只有静态动作，无新信息交锋。",
+          "hardMinimum": false,
+          "lengthPolicy": "plan_before_writing_no_expansion"
+        }
+      }
+    ],
+    "failures": [],
+    "repairs": [],
+    "stages": [
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 5908
+        },
+        "generationStage": "result_contract",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 4173
+        },
+        "generationStage": "result_contract",
+        "revision": 1
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 1683
+        },
+        "generationStage": "action_authority",
+        "evidenceAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 2035
+        },
+        "generationStage": "chapter",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 2851
+        },
+        "generationStage": "fact_extraction",
+        "revision": 0,
+        "extractionAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 6558
+        },
+        "generationStage": "action_review",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 6308
+        },
+        "generationStage": "scene_grounding",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 2377
+        },
+        "generationStage": "reader_choices"
+      }
+    ]
+  }
+]

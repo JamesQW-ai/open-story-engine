@@ -1,0 +1,100 @@
+{
+  "decision": "ready",
+  "message": "",
+  "requirements": {
+    "A1": {
+      "mode": "result",
+      "summary": "陆照临用指甲在左手背划出浅伤"
+    },
+    "A2": {
+      "mode": "result",
+      "summary": "确认破皮后用衣袖按住伤口"
+    },
+    "A3": {
+      "mode": "constraint",
+      "summary": "留在原地"
+    },
+    "A4": {
+      "mode": "constraint",
+      "summary": "不做别的事"
+    }
+  },
+  "method": "陆照临以右手拇指甲缘在左手背划压，造成表皮破损；确认破皮后，用已湿的衣袖按压止血。动作限于原地，不移动、不触碰他人或物品。",
+  "outcomes": [
+    {
+      "characterId": "character_ae4cb42b9b49",
+      "status": "injured",
+      "permanence": "temporary",
+      "requirementId": "A1",
+      "cause": "用指甲划破左手背皮肤"
+    }
+  ],
+  "goalUpdates": [],
+  "scenePlan": {
+    "start": "你仍站在封山石外，雨水顺着斗笠滴落。",
+    "beats": [
+      {
+        "purpose": "呈现玩家自伤的细微动作与原地不动的克制，同时让周围雨声、铁链声和守门弟子的注视形成压力，但不推进任何额外事件。",
+        "stepIds": [
+          "S1"
+        ]
+      }
+    ],
+    "outcome": "陆照临左手背多出一道浅伤，衣袖按在伤口上；人未离开原地，也未做其他事。",
+    "stop": "留给玩家决定下一步是否继续等待、开口或采取其他行动。",
+    "targetCjk": [
+      120,
+      220
+    ],
+    "lengthReason": "本回合是单一自伤动作与原地等待，没有信息交锋或新冲突，只需写出动作、触感与现场氛围，篇幅宜短。",
+    "knowledge": [],
+    "observationLimits": [
+      "伤口为玩家自己造成，深浅以玩家确认破皮为准。",
+      "衣袖已湿，按压后可能渗出血水，但未检查前不能断定止血效果。",
+      "守门弟子是否注意到此动作、作何反应，本回合未观察确认。"
+    ]
+  },
+  "steps": [
+    {
+      "id": "S1",
+      "actorId": "character_ae4cb42b9b49",
+      "action": "用指甲划破左手背，确认破皮后用衣袖按住伤口，留在原地，不做别的事",
+      "requirementIds": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "authority": "player",
+      "causeStepId": null,
+      "usedItemIds": []
+    }
+  ],
+  "introductions": {
+    "characters": [],
+    "items": [],
+    "locations": []
+  },
+  "stateChanges": [
+    {
+      "id": "C1",
+      "entityId": "character_ae4cb42b9b49",
+      "attribute": "leftHandInjury",
+      "before": null,
+      "value": "浅表破皮伤",
+      "stepId": "S1",
+      "reason": "陆照临用指甲划破左手背皮肤"
+    },
+    {
+      "id": "C2",
+      "entityId": "character_ae4cb42b9b49",
+      "attribute": "leftHandWoundPressed",
+      "before": null,
+      "value": "用衣袖按住",
+      "stepId": "S1",
+      "reason": "确认破皮后以衣袖按压伤口"
+    }
+  ],
+  "threadUpdates": [],
+  "readingIntent": "brief"
+}

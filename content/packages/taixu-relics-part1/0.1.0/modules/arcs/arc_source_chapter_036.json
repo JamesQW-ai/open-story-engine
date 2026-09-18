@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_036",
+    "title": "推进：天门之下",
+    "summary": "太虚秩序启动，试图将所有灵脉重新接回世界。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_222",
+          "chapter_223",
+          "chapter_224",
+          "chapter_225",
+          "chapter_226",
+          "chapter_227",
+          "chapter_228"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_229"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_222_to_223",
+      "direction_chapter_223_to_224",
+      "direction_chapter_224_to_225",
+      "direction_chapter_225_to_226",
+      "direction_chapter_226_to_227",
+      "direction_chapter_227_to_228",
+      "direction_chapter_228_to_229"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_037"
+    ]
+  }
+}

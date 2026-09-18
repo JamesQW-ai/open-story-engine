@@ -89,6 +89,8 @@ Planner 不输出或决定 `BranchState`。它只获得已确认的 `resolvedSta
 
 `LlmPlanner` 通过 `OpenAICompatibleGateway` 接入 OpenAI-compatible `/chat/completions`，但 CLI 默认仍为 Mock。Python 入口为 `python3 -m open_story_engine co-create`，其 `open_story_engine.llm` 使用标准库 HTTP。只有 `.env` 设置 `STORY_PLANNER=openai`、`STORY_LLM_BASE_URL`、`STORY_LLM_API_KEY` 和 `STORY_LLM_MODEL` 后才会发起外部调用。`.env` 被 Git 忽略，`.env.example` 只保存无密钥模板。正文 Planner 只接收并输出小说文字，网关的每个正文内容块都会显示为“尚未提交”的草稿；模型返回 JSON 会被明确拒绝。方向判定固定在本地运行，章节名、摘要、后续菜单与状态变化由脚本从已选择方向、`StoryPackage` 和 `resolvedState` 推导。SSE 缺少正文或超时时，已展示的草稿会标记为未采纳，网关只以同一逻辑回合的普通 JSON 传输回退；它不会把校验失败的正文交给模型重写。可设置 `STORY_LLM_STREAM=false` 排查不可靠的中转站。网关兼容常规 `delta.content` 与个别中转站在 SSE 事件中直接给出的 `message.content`。普通回合的硬下限为 2,000 个非空白字符，提示目标为 2,200 至 2,800；首次不足时只允许一次纯正文续写。`storyArc` 由运行时保持当前宏观目标和本章阶段；每个后续方向的 `statePatch` 来自已声明的内容包，衍生范围还必须将 `derivedTurn` 精确推进一回合，防止正文已经完成某个行动却把同一行动再次交给玩家选择。叙事事实校验会拒绝正文提前宣称未发生的状态变化，确保 Mock 与外部模型共享相同状态边界。它是对 `BranchState` 可表达事实的确定性补充，不试图替代通用语义理解。规范方向的原文复用不调用外部模型。`STORY_LLM_QUALITY_REVIEW=true` 时，Python 在这些确定性校验之后调用只读审阅器；意见只写入 audit，不会影响状态、场景路线、原始故事包或触发自动重写。调用请求摘要、原始模型输出或错误保存到 `llm_audits`，密钥不写入数据库或审计。
 
+结构化规划请求固定使用非流式 JSON，正文请求才按配置使用 SSE；正文 SSE 首段等待可用 `STORY_LLM_FIRST_DELTA_TIMEOUT_SECONDS` 调整，CLI/API 默认 30 秒。
+
 ## 自由文本方向判定
 
 `DirectionEvaluator` 只负责把玩家的自然语言意图锚定到父节点已经公布的高层方向，不能创建方向、状态补丁、场景路线或叙事正文。对于“先 X，再 Y”的多阶段目标，它选择能落实 X 的最早合法方向，并保留完整输入供 Planner 逐章推进；只有当前行动确实无法判定时才要求澄清。判定器从当前方向的标题、摘要和建议输入提取匹配词，并从当前 StoryPackage 的不可变事实读取拒绝依据，不保存任何示例故事的方向 ID 或关键词表。即使 `STORY_PLANNER=openai`，方向判定仍在本地运行，以保证模型只承担正文生成；接受结果的 `directionId` 必须属于父节点的 `nextDirections`，拒绝结果的不可变事实引用必须在当前上下文中。

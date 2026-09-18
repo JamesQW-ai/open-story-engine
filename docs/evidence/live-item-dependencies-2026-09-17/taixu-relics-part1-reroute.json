@@ -1,0 +1,157 @@
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是互动小说本回合结果规划器。玩家未读原著，原著未来不是必须发生的事实。\n逐项保留用户请求的行动、禁止事项和指定结果。明确要求杀死某人/永久离队必须在本回合实现，不能偷换成尝试、重伤、昏迷、暂时离场、打算以后执行或原著还需要此人。仅“尝试/设法”等不保证结果的措辞可标为attempt。否定、假设、引述、条件尚未满足不是杀人授权。“永久下线”若死亡和离队不能确定，返回clarification_needed，提出一个简短问题。\n依据当前能力、距离、已知道具和在场人物安排有因果的实现方法及代价，不凭空增加能力、物品、物品的有利属性或幕后历史。现有物品若要折断、磨尖等，必须有本回合可行的实际过程，不能假装原本就有断口或刃口。死亡须在正文明确确认呼吸脉搏停止等不可逆结果，不能只写倒地不动。门规、法律、阵营利益是可违背但会付出代价的社会规则，不是物理铁律。不得以守卫阻挡、道德说教、主线需要、人物受保护为借口吞掉指定结果。确实与世界铁律或已发生事实冲突且无合理方法时返回conflict并具体说明，不冒充成功。死亡不可复活，永久离队不可重新参与现场行动；回忆、遗物、既有证人可以承接线索，不能凭空造替身。\n目标是引导而非强迫回主线。只有用户明确改变目标，或本回合证据证明目标完成/受阻，才更新目标。目标被改变或放弃时保留旧记录；transformed可用successor新增后续目标；不要强制恢复原目标，不泄漏角色未知秘密。只有单次询问不得自动视为长线目标完成。dependencies只列目标必须依靠其活着亲自参与的人物；提及死者、追究其死因或承担杀害他的后果，不代表依赖死者继续行动，应省略死者ID。\n仅返回JSON：{\"decision\":\"ready|clarification_needed|conflict\",\"message\":\"非ready说明\",\"requirements\":{\"A1\":{\"mode\":\"result|attempt|constraint\",\"summary\":\"本回合必须发生的具体结果\"}},\"method\":\"能力、道具、实施步骤和代价的因果说明\",\"outcomes\":[{\"characterId\":\"输入中的ID\",\"status\":\"dead|departed|alive|missing|injured\",\"permanence\":\"permanent|temporary\",\"requirementId\":\"A1\",\"cause\":\"具体原因\"}],\"goalUpdates\":[{\"id\":\"已有目标ID；全新目标用new\",\"status\":\"active|completed|transformed|abandoned\",\"title\":\"目标文字\",\"dependencies\":[\"人物ID\"],\"reason\":\"改变原因\",\"successor\":\"转化后的目标；不转化用空字符串\"}]}。\nrequirements的ID须与输入完全一致。outcomes只登记本回合确定发生的人物生死/离队变化，普通对话不必登记。用户要求的结果不得被漏记。不要登记未执行分支，不改过去。留在原地等限制须贯穿本段，不能在回应后擅自押走玩家或执行下一行动；接受处置只授权眼前回应，不授权立即新增押送流程。已发生结果只继承，不重复登记outcomes；目标title/status/dependencies不变时不登记goalUpdates。\nready时必须在同一JSON增加scenePlan，在正文生成前组织场景，不新增模型调用：\n{\"start\":\"承接前一回合的终点，不重演前情\",\"beats\":[{\"purpose\":\"这一段过程的独立叙事作用与要兑现的回应\",\"stepIds\":[\"S1\"]}],\"outcome\":\"本回合实际产生的结果，未知回答也可成为完整结果\",\"stop\":\"保留给玩家的下一步决定，不替玩家回答NPC新问题\",\"targetCjk\":[200,450],\"lengthReason\":\"根据实际交锋、信息、冲突与情绪变化说明篇幅需要\",\"knowledge\":[{\"speakerId\":\"已登记人物ID\",\"statement\":\"本次准备表达的知识或未知边界\",\"status\":\"fact|reported|inference|unknown|pending\",\"sources\":[{\"id\":\"knowledge.publicEvidence中的键\",\"quote\":\"逐字短引文\"}]}],\"observationLimits\":[\"影响判断的可观察条件及未知项\"]}\n示例区间不是默认值。动态选择50至2000内的区间：简单确认、等待或一次告知可以短；有实际信息辨析、冲突交锋或重要情绪转变时才充分展开。不要根据step数量、是否转场、用户输入长短机械分档；不要为了预算发明冲突。beats覆盖已授权steps，每个过程有不同作用，没有必要的过程不添加。明确要求简短时优先压缩。完成当前事情就停，不留待正文不足后扩写。\nknowledge.publicEvidence与sourceKinds区分开局事实和历史场景。fact必须有支持具体断言的公开依据；已发生动作可承接，历史中的人物说法用reported，不将旧台词自动当客观规律。内部权威状态仅用于避免矛盾，不能泄漏尚未向人物公开的信息。inference引用真实前提，结论明确不确定，不能新增前提；unknown可以sources=[]。普通当场语气和姿态不是历史知识，不必塞入knowledge。需要NPC回答的问题须在knowledge准备可说的内容或明确的unknown，不能一边不知道一边补造依据。对白可拒绝、表达意愿，不因此获准新增世界事实。\nobservationLimits沿用当前状态和公开条件：拥有物品不代表看清内部，物品打开、翻转、递交等变化须有授权步骤；状态未确认时说明unknown，不为形成推断补造纹理、内部颜色或来历。NPC可以明确不配合请求，不能把越出请求范围写成依言照做。场景计划是待校验的写作安排，不是新增事实来源。\nknowledge只列既有知识或未知边界，不把本回合即将说的话伪装成已经知道的事实。对NPC逐项查获取路径：开场的玩家独自经历不是NPC知识；没有明确听见、见到或此前自述的来源就标unknown。若玩家这次将要告知，在beats安排先告知再转述，不编造历史引文证明尚未发生的获知。不知道时的完整结果可以很简短，不用物性/因果推测凑出“有依据”的回答。\n\n本回合即将告知的信息用status=pending、sources=[]、afterStepId=\"S1\"列入knowledge，明确依赖哪个授权步骤，正文在这个告知真正发生之前NPC仍不知道；完成后也只能按听说的转述。pending不是已发生事实，不能用于补造往事或检验结论。reported只用于已有公开来源证明已经发生过的转述，不能用于尚未写出的未来对话。\n\n人物状态补充：missing 只用于本回合明确确认失踪且有正文证据，不能由暂未露面、缺席或未知地点推断；登记后地点变为未知。injured 只用于明确发生或确认的伤势，不能仅由疲劳推断。二者使用 temporary，不推断死亡或永久离队。伤愈或失踪者重现须有新的正文依据并登记 alive（仍受伤则 injured）；重现地点另经 stateChanges 核对，不能恢复旧位置。永久死亡／永久离队不能经这些状态绕过。\n\n如果输入 closing 非空，按 intended_type 理解正常、偏离或失败收束意图，并逐项参考 closure.outstanding 安排本回合可交代的事项。收束意图不代替本回合玩家行动授权，不得擅自执行额外行动、放弃目标、制造死亡或推进时间。preparing 阶段先处理已授权且可核实的待办；closing 仅表示账本清单已交代，不表示结局成立。ending_check.unmet_conditions 中仍有条件时不得假称已满足；ledger_ready=true 也不是结局审核通过。主动放弃不等于被迫失败，旧目标转化不等于新目标完成，未知事实不能靠收束需要补造。不得自行写入任何结束状态、终局回执或结束权限；本回合只提交既有契约允许且有正文证据的结果变化，实际结束由独立的程序流程决定。\n\n目标可增加itemDependencies数组，列出完成目标实际需要使用的已登记道具ID，与人物dependencies分开。仅提及物品、调查其损毁原因不等于依赖原物可用。新目标没有道具依赖时用[]；更新旧目标时省略表示继承，只有明确给出[]才解除依赖。已永久损毁的原物不能成为新增或更新后active目标、transformed后继目标的依赖。可以保留既有受阻目标等待玩家决定，不强迫在损毁当回合放弃；改换途径、解除依赖仍须本回合已授权的行动和正文依据，不能静默清空。依赖调整可保持active，但原目标标题和历史不可改写。损毁本身不代表目标完成，消耗道具完成目标也必须有真实完成证据。\n\n在同一JSON中返回threadUpdates数组，无变化时为[]，不增加额外规划调用。threads是当前路线已公开的剧情问题账本，不是目标清单或历史线索；旧存档中unknown表示处理状态未确认，不能据目标完成、人物缺席、菜单变化或未再提到就推断问题已解决或放下。\n每项格式：{\"id\":\"已有问题ID；新问题用new-1至new-8中不同ID\",\"title\":\"已有问题原文或新问题的简短中文\",\"status\":\"open|resolved|abandoned\",\"reason\":\"本回合为何建立、确认或结束此问题\",\"stepIds\":[\"S1\"]}。最多8项，仅登记已授权步骤本回合真正导致的变化。新问题必须open，且有当前事件的具体疑问，不为每次动作、下一方向或已知事实创建问题。resolved需要真正回答该问题；询问过、回答不知道、目标完成、人物死亡均不自动等于解决。abandoned需要玩家明确放下并在正文交代原因；无法追问仍可能是未解，不擅自替玩家放弃。unknown仅在当前正文明确确认后可变为open/resolved/abandoned。未变项不重复输出；已resolved/abandoned的问题不能重置，同名问题不能以new重新加入。问题改变时先交代旧问题的处理再登记不同的新问题，不改写旧标题。不要引用角色尚未知晓的秘密，不因记录账本而延长或偏离当前行动。\n\n剧情问题可增加itemDependencies数组，列出追查路径实际需要使用的已登记道具ID。只讨论已损毁物品或调查损毁原因不要求原物可用，不列作依赖。更新旧问题时省略字段表示继承；以本回合正文证据改换追查路径时可显式修改数组（[]解除依赖），允许status仍为open。新建或修改后的open问题不能依赖已永久损毁原物；可以保留既有受阻问题等待玩家决定，不能因依赖失效自动resolved或abandoned。\n\n所有自由输入共用行动解释流程，不以预定义场景、名字、关键词判断能否响应。完整理解原始输入中的指代、否定、引述、条件和先后关系；requirements里的逗号分句不是独立授权，必须结合整句。条件未满足的行为不能执行。要求描述结果与仅提出尝试不同；询问、拒绝、等待、解释、交易、制作、破坏、关系改变等同样必须落实对应回应。输入含糊才澄清，有确定的世界事实冲突才说明冲突，不因不在选项列表而拒绝。\n在原JSON中增加以下三个必填字段，空数组也须返回：\nsteps:[{id:\"S1\",actorId:\"已登记人物ID或environment\",action:\"这一回合实际执行的动作及停止边界\",requirementIds:[\"A1\"],authority:\"player或reaction\",causeStepId:null,usedItemIds:[]}]\nintroductions:{characters:[],items:[],locations:[]}，每个新增实体含id（character_/item_/location_开头的英文ID）、name、summary（实际来源与形成过程），sourceStepId。不得仅为推动剧情凭空授予关键工具；现有实体、角色身上既有物品或背景服饰不重新引入。\nstateChanges:[{id:\"C1\",entityId:\"已登记或本段引入的实体ID\",attribute:\"属性名\",before:null,value:\"新的值\",stepId:\"S1\",reason:\"变化因果\"}]\nplayer步骤只能来自用户授权的实际行为，NPC命令/建议不是授权；reaction步骤必须由本回合较早的步骤引起，causeStepId指向该步骤。不可替玩家接受NPC新建议、执行下一决定；只问处置不意味着已经服从处置。所有步骤requirementIds须追溯到原输入。内心的重大决定也属于玩家步骤。\n父分支中永久死亡或永久离队的人物不能成为本回合steps的actorId，也不能继续发言、带路或履行旧职责；可由玩家或仍可行动的人物处理其遗留影响。人物后果只由outcomes更新，不能用通用属性outcome或goal绕过人物后果与目标账本。\nstateChanges记所有持续影响后续行动的变化，不是有限事件类型清单。属性可动态命名，如姿态、双手活动、完整性、对某人的态度、已知某事、承诺等；使用已有属性名称和值，避免同义词另起字段。locationId表示人物或物品所在地点，ownerCharacterId表示物品持有人（值为ID，放下为null）。人物的死亡/离队沿用outcomes，目标沿用goalUpdates，不能另建同义字段覆盖其权威结果。before必须等于当前已登记值，未知用null。不变的属性不要登记，null新值表示解除该属性。\n引入实体必须有实际来源，状态改变必须有支持它的步骤；NPC反应引起束缚、伤势等也须提前登记，不能只写在正文。若没有发生该结果，不能借登记假造成功。原著未来可变化，已发生前史不可改写。结束正文时保留未授权决定给下一回合。\n可增加readingIntent，值为brief或normal，仅表达用户的简短偏好，不按动作数量设置长度。实际长度由scenePlan在写作前根据剧情需要给出。\n\n状态变化的entityId对应实际获知者或受影响者，不总是步骤说话者。说出自己的打算不代表说话者重新获得该知识；听者明确得知才可登记听者知识。普通交流不强制创造新的知识属性；确实影响后续行动的披露仍须记入接收者状态，不能丢失信息差。\n\n每个步骤的usedItemIds列出实际作为工具使用、交付、携带或破坏的已登记道具ID（没有则[]）；仅回忆原物或查看遗留影响不算继续使用原物。道具确定永久毁灭且不能修复时，必须登记stateChanges属性destroyedPermanently、value:true；普通破损不自动等同永久毁灭，未知不能推断。此标记只属于道具，登记后不可撤销；后续不能恢复原ID、再次持有、移动或使用。执行损毁的当步可以使用该物，后续步骤不可再用。同回合损毁不要同时赋予非空ownerCharacterId或locationId，程序会清除原物归属和位置。需要保留残片或制作替代物时，依据正文来源登记为不同的新实体，不能用它恢复原物身份。\n"
+    },
+    {
+      "role": "user",
+      "content": "{\"player\": {\"kind\": \"source_character\", \"sourceCharacterId\": \"character_ae4cb42b9b49\", \"name\": \"陆照临\"}, \"state\": {\"playerLocationId\": \"location_open_gate\", \"sourceProgress\": \"chapter_001\", \"freeTextProgress\": 0, \"storyScope\": \"source\", \"derivativeStage\": \"inactive\", \"derivedTurn\": 0, \"derivedLocations\": [], \"derivedCharacters\": [], \"derivedItems\": [], \"derivedCharacterReveals\": [], \"derivedRelationships\": [], \"derivedClues\": [], \"derivedEvents\": [], \"playerCharacterId\": \"character_ae4cb42b9b49\", \"characterLocationIds\": {\"character_ae4cb42b9b49\": \"location_open_gate\"}, \"itemOwnerCharacterIds\": {}, \"itemLocationIds\": {}, \"characterOutcomeStates\": {}, \"threadLedger\": [{\"id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\"}, {\"id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\"}, {\"id\": \"thread-1bd574db4000f013\", \"title\": \"引荐文书是否曾被改动\", \"status\": \"open\", \"itemDependencies\": [\"item_open_letter\"], \"stepIds\": [\"S1\"], \"reason\": \"隔离样本中的待查问题\", \"evidence\": \"你将手中的引荐文书收好，决定查清它是否有异常，准备以查阅这份原件作为核查途径。文书是否曾被改动，目前仍不知道；你把这个问题记在心里，没有展开查阅，也没有改变其他目标。\", \"source\": \"player_branch\", \"openedBranchId\": \"item-contract-established\", \"causeBranchId\": \"item-contract-established\"}], \"goalLedger\": [{\"id\": \"opening-goal-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}, {\"id\": \"opening-goal-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}, {\"id\": \"goal-1bd574db4000f013\", \"title\": \"查清引荐文书是否有异常\", \"status\": \"active\", \"dependencies\": [], \"itemDependencies\": [\"item_open_letter\"], \"reason\": \"隔离样本中的明确计划\", \"evidence\": \"你将手中的引荐文书收好，决定查清它是否有异常，准备以查阅这份原件作为核查途径。文书是否曾被改动，目前仍不知道；你把这个问题记在心里，没有展开查阅，也没有改变其他目标。\", \"source\": \"player_branch\", \"causeBranchId\": \"item-contract-established\"}], \"readerEntityStates\": {\"item_open_letter\": {\"destroyedPermanently\": true}}}, \"goals\": [{\"id\": \"opening-goal-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}, {\"id\": \"opening-goal-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}, {\"id\": \"goal-1bd574db4000f013\", \"title\": \"查清引荐文书是否有异常\", \"status\": \"active\", \"dependencies\": [], \"itemDependencies\": [\"item_open_letter\"], \"reason\": \"隔离样本中的明确计划\", \"evidence\": \"你将手中的引荐文书收好，决定查清它是否有异常，准备以查阅这份原件作为核查途径。文书是否曾被改动，目前仍不知道；你把这个问题记在心里，没有展开查阅，也没有改变其他目标。\", \"source\": \"player_branch\", \"causeBranchId\": \"item-contract-established\"}], \"threads\": [{\"id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\"}, {\"id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\"}, {\"id\": \"thread-1bd574db4000f013\", \"title\": \"引荐文书是否曾被改动\", \"status\": \"open\", \"itemDependencies\": [\"item_open_letter\"], \"stepIds\": [\"S1\"], \"reason\": \"隔离样本中的待查问题\", \"evidence\": \"你将手中的引荐文书收好，决定查清它是否有异常，准备以查阅这份原件作为核查途径。文书是否曾被改动，目前仍不知道；你把这个问题记在心里，没有展开查阅，也没有改变其他目标。\", \"source\": \"player_branch\", \"openedBranchId\": \"item-contract-established\", \"causeBranchId\": \"item-contract-established\"}], \"closure\": {\"readiness\": \"blocked_dependency\", \"outstanding\": [{\"kind\": \"goal\", \"target_id\": \"opening-goal-1\", \"title\": \"陌生伤者是否能得到救助\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"goal\", \"target_id\": \"opening-goal-2\", \"title\": \"空灯与父亲失踪是否有关\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"goal\", \"target_id\": \"goal-1bd574db4000f013\", \"title\": \"查清引荐文书是否有异常\", \"reason\": \"依赖人物或道具受阻，须核实可行路径或交代条目去向\", \"required_disclosure\": true, \"blockers\": [\"item-dependency:goal:goal-1bd574db4000f013:item_open_letter\"]}, {\"kind\": \"thread\", \"target_id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"thread\", \"target_id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"thread\", \"target_id\": \"thread-1bd574db4000f013\", \"title\": \"引荐文书是否曾被改动\", \"reason\": \"依赖人物或道具受阻，须核实可行路径或交代条目去向\", \"required_disclosure\": true, \"blockers\": [\"item-dependency:thread:thread-1bd574db4000f013:item_open_letter\"]}, {\"kind\": \"dependency\", \"target_id\": \"item-dependency:goal:goal-1bd574db4000f013:item_open_letter\", \"title\": \"goal-1bd574db4000f013\", \"reason\": \"依赖原道具已永久损毁，收束前须交代替代路径或条目去向\", \"required_disclosure\": true, \"blockers\": [\"item_open_letter\"]}, {\"kind\": \"dependency\", \"target_id\": \"item-dependency:thread:thread-1bd574db4000f013:item_open_letter\", \"title\": \"thread-1bd574db4000f013\", \"reason\": \"依赖原道具已永久损毁，收束前须交代替代路径或条目去向\", \"required_disclosure\": true, \"blockers\": [\"item_open_letter\"]}], \"note\": \"清单通过仅表示当前路线没有未交代的目标、开放问题或受阻依赖；不表示自然结局已写成，也不构成叙事质量验收。\"}, \"closing\": null, \"characters\": [{\"id\": \"character_ae4cb42b9b49\", \"name\": \"陆照临\"}, {\"id\": \"character_37531636ecf5\", \"name\": \"陆沉舟\"}, {\"id\": \"character_aa4580d38571\", \"name\": \"沈砚秋\"}, {\"id\": \"character_e663361ab1c7\", \"name\": \"顾长离\"}, {\"id\": \"character_766c4e16f65d\", \"name\": \"叶观澜\"}, {\"id\": \"character_b96c85e62843\", \"name\": \"萧问蝉\"}, {\"id\": \"character_2cf2b083593b\", \"name\": \"叶青冥\"}], \"locations\": [{\"id\": \"location_9c23a624e6b0\", \"name\": \"宗门\"}, {\"id\": \"location_a4c763e9e948\", \"name\": \"北河城\"}, {\"id\": \"location_d64e2fd77ac8\", \"name\": \"山谷\"}, {\"id\": \"location_56743bc7676f\", \"name\": \"质疑宗门\"}, {\"id\": \"location_d28b0de92f60\", \"name\": \"无灯镇\"}, {\"id\": \"location_e4d6fa44ae00\", \"name\": \"灵脉城\"}, {\"id\": \"location_cd726168695e\", \"name\": \"这座城\"}, {\"id\": \"location_79cec9a2e9bc\", \"name\": \"旧城\"}, {\"id\": \"location_d471f52f614f\", \"name\": \"归墟灵城\"}, {\"id\": \"location_6d41222b90d5\", \"name\": \"无相寺\"}, {\"id\": \"location_ca1d922b4ca3\", \"name\": \"北侧山谷\"}, {\"id\": \"location_ba2b04a8ffda\", \"name\": \"灵城\"}, {\"id\": \"location_6dd528960716\", \"name\": \"回川城\"}, {\"id\": \"location_7648a6f48355\", \"name\": \"了城\"}, {\"id\": \"location_ab176f232dbc\", \"name\": \"倒置城\"}, {\"id\": \"location_821575987121\", \"name\": \"地底通道\"}, {\"id\": \"location_d67997bbfcc5\", \"name\": \"各处村\"}, {\"id\": \"location_131af4c29f48\", \"name\": \"客栈\"}, {\"id\": \"location_946b020d2eb8\", \"name\": \"那座没有城\"}, {\"id\": \"location_7ceda19491a8\", \"name\": \"雪城\"}, {\"id\": \"location_532adbb05cc2\", \"name\": \"于无相寺\"}, {\"id\": \"location_6f61e7f39c2d\", \"name\": \"附近村\"}, {\"id\": \"location_open_gate\", \"name\": \"玄霄宗山门\"}, {\"id\": \"location_open_trial\", \"name\": \"半山试炼场\"}, {\"id\": \"location_open_gallery\", \"name\": \"登记堂雨廊\"}], \"items\": [{\"id\": \"item_3a6ead65e722\", \"name\": \"药瓶\"}, {\"id\": \"item_c43ec97746bb\", \"name\": \"残印\"}, {\"id\": \"item_e5c73fb30826\", \"name\": \"信件\"}, {\"id\": \"item_187e6e6d8bb4\", \"name\": \"钥匙\"}, {\"id\": \"item_13887dbf8fa1\", \"name\": \"账本\"}, {\"id\": \"item_3ca928cd4078\", \"name\": \"档案\"}, {\"id\": \"item_3b811588971b\", \"name\": \"令牌\"}, {\"id\": \"item_3e496eab047e\", \"name\": \"铜牌\"}, {\"id\": \"item_22e503a8a555\", \"name\": \"无相镜\"}, {\"id\": \"item_open_letter\", \"name\": \"引荐文书\"}, {\"id\": \"item_open_empty_lamp\", \"name\": \"山门空灯\"}, {\"id\": \"item_open_gu_token\", \"name\": \"顾长离的试炼木牌\"}, {\"id\": \"item_open_gold_paper\", \"name\": \"包着金屑的纸片\"}, {\"id\": \"item_open_ye_lamp\", \"name\": \"叶观澜的无芯灯\"}, {\"id\": \"item_open_ye_ring\", \"name\": \"叶观澜的半圈铜环\"}], \"criticalHistory\": [\"你将手中的引荐文书收好，决定查清它是否有异常，准备以查阅这份原件作为核查途径。文书是否曾被改动，目前仍不知道；你把这个问题记在心里，没有展开查阅，也没有改变其他目标。\", \"你把手中的引荐文书撕成细屑，又将纸屑碾得稀烂，直到原有字迹再也无法辨读。这份原物已经彻底毁去，无法修复，你手中不再有可使用的文书。\\n\\n你仍留在原地。查清文书是否有异常的目标还在，文书是否曾被改动也没有答案，只是原先查阅原件的办法已行不通。你还没有决定放弃或改换查证路径。\"], \"opening\": {\"identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"appearance\": \"斗笠被雨打湿，手上有长途跋涉留下的冻裂。\", \"knownFacts\": [\"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"老人让你到玄霄宗问山门的灯。\", \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\"], \"unknownBoundaries\": [\"伤者身份、父亲下落、空灯与青光成因均未知。\", \"尚未认识其他主角团成员；不得写成已有残印、功法、修为突破或领过药瓶。\"], \"relationships\": [{\"name\": \"陆沉舟\", \"relation\": \"父亲，失踪，生死未确认。\"}, {\"name\": \"守门弟子\", \"relation\": \"初遇，只知道其守门职责，不知姓名。\"}, {\"name\": \"陌生伤者\", \"relation\": \"初遇，不知身份。\"}], \"visibleItems\": [\"引荐文书在你手中，尚未交出。\", \"空灯仍在伤者手边，不能写进你的持有物；未登记人物持物只记为场景事实。\"], \"evidence\": [\"陆照临摸了摸怀里的引荐文书。\", \"三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。\", \"陆照临取出文书，却没有递过去。\", \"倒地的人猛地睁开眼。\", \"铁链又响了一声。\"], \"sourceSha256\": \"61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904\", \"sourceCutoff\": 1256, \"sourceCutoffLine\": 61}, \"hardRules\": [\"运行时模型只能承接 StoryPackage 的压缩上下文，不读取母本全文。\"], \"lockedHistory\": [{\"id\": \"fact_40e04aa649d1\", \"text\": \"他走近了两步，却停在青石外。\", \"sourceChapterId\": \"chapter-001\", \"sourceProgress\": \"chapter_002\", \"lineRange\": {\"start\": 37, \"end\": 37}}], \"history\": [{\"text\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\\n\\n眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\\n\\n你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\", \"outcome\": null}, {\"text\": \"你将手中的引荐文书收好，决定查清它是否有异常，准备以查阅这份原件作为核查途径。文书是否曾被改动，目前仍不知道；你把这个问题记在心里，没有展开查阅，也没有改变其他目标。\", \"outcome\": null}, {\"text\": \"你把手中的引荐文书撕成细屑，又将纸屑碾得稀烂，直到原有字迹再也无法辨读。这份原物已经彻底毁去，无法修复，你手中不再有可使用的文书。\\n\\n你仍留在原地。查清文书是否有异常的目标还在，文书是否曾被改动也没有答案，只是原先查阅原件的办法已行不通。你还没有决定放弃或改换查证路径。\", \"outcome\": null}], \"input\": \"原先查清文书异常的目标和文书是否被改动的问题都保留；我决定今后改为询问知情者来查证，不再依赖已经毁去的原件。本回合只确定这个替代途径，暂不实际发问、不移动、不拿出或修复文书，也不宣告已有答案。\", \"requirements\": {\"A1\": \"原先查清文书异常的目标和文书是否被改动的问题都保留\", \"A2\": \"我决定今后改为询问知情者来查证\", \"A3\": \"不再依赖已经毁去的原件\", \"A4\": \"本回合只确定这个替代途径\", \"A5\": \"暂不实际发问、不移动、不拿出或修复文书\", \"A6\": \"也不宣告已有答案\"}, \"knowledge\": {\"publicEvidence\": {\"opening-1\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"opening-2\": \"老人让你到玄霄宗问山门的灯。\", \"opening-3\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"opening-identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"history-item-contract-destroyed-P2\": \"你仍留在原地。查清文书是否有异常的目标还在，文书是否曾被改动也没有答案，只是原先查阅原件的办法已行不通。你还没有决定放弃或改换查证路径。\", \"history-item-contract-destroyed-P1\": \"你把手中的引荐文书撕成细屑，又将纸屑碾得稀烂，直到原有字迹再也无法辨读。这份原物已经彻底毁去，无法修复，你手中不再有可使用的文书。\", \"history-item-contract-established-P1\": \"你将手中的引荐文书收好，决定查清它是否有异常，准备以查阅这份原件作为核查途径。文书是否曾被改动，目前仍不知道；你把这个问题记在心里，没有展开查阅，也没有改变其他目标。\", \"history-branch_40db70e0-0bab-47c7-ad1a-a48b04acddfe-P3\": \"你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\", \"history-branch_40db70e0-0bab-47c7-ad1a-a48b04acddfe-P2\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\", \"history-branch_40db70e0-0bab-47c7-ad1a-a48b04acddfe-P1\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\"}, \"sourceKinds\": {\"opening-1\": \"opening_fact\", \"opening-2\": \"opening_fact\", \"opening-3\": \"opening_fact\", \"opening-identity\": \"opening_fact\", \"history-item-contract-destroyed-P2\": \"history_scene\", \"history-item-contract-destroyed-P1\": \"history_scene\", \"history-item-contract-established-P1\": \"history_scene\", \"history-branch_40db70e0-0bab-47c7-ad1a-a48b04acddfe-P3\": \"history_scene\", \"history-branch_40db70e0-0bab-47c7-ad1a-a48b04acddfe-P2\": \"history_scene\", \"history-branch_40db70e0-0bab-47c7-ad1a-a48b04acddfe-P1\": \"history_scene\"}, \"unresolvedQuestions\": [], \"evidenceBoundary\": \"资料未说明的经历、依据、规则条件均为 unknown；不从缺席推断没有或不可能。历史中的已发生动作可承接；人物说法只证明曾如此声称，不自动升级为客观规律或可靠知识。内部权威状态用于约束矛盾，不代表玩家或NPC已知。\", \"allowedNewContent\": \"本回合授权行动与当场反应；新说出的台词不能使其中的旧事自动成为事实。\", \"speakerBoundary\": \"开场已知信息属于玩家知识，不能默认NPC也知道。NPC获知必须有其听到、见到或曾明确说过的资料；本回合玩家先告知后，NPC可注明你说的而转述，不能升级为亲眼见证。没有获取路径就不知道。\", \"answerBoundary\": \"询问依据但资料没有依据时，NPC明确说不知道或尚不能判断；可以说明当前看见什么与无法据此断定什么，不补造亲历、传闻、检测或规律。\"}}"
+    }
+  ],
+  "scope": "authored_state_contract_probe",
+  "raw_response": "{\"id\":\"resp_192553\",\"object\":\"chat.completion\",\"created\":1789613912,\"model\":\"deepseek-v4-pro:cloud\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"ready\\\",\\n  \\\"message\\\": \\\"\\\",\\n  \\\"requirements\\\": {\\n    \\\"A1\\\": {\\n      \\\"mode\\\": \\\"constraint\\\",\\n      \\\"summary\\\": \\\"保留查清引荐文书是否有异常的目标，不宣告完成或放弃\\\"\\n    },\\n    \\\"A2\\\": {\\n      \\\"mode\\\": \\\"result\\\",\\n      \\\"summary\\\": \\\"确定今后改为询问知情者来查证文书是否曾被改动\\\"\\n    },\\n    \\\"A3\\\": {\\n      \\\"mode\\\": \\\"result\\\",\\n      \\\"summary\\\": \\\"解除对已毁原件 item_open_letter 的依赖\\\"\\n    },\\n    \\\"A4\\\": {\\n      \\\"mode\\\": \\\"constraint\\\",\\n      \\\"summary\\\": \\\"本回合只确定替代途径，不展开实际查证\\\"\\n    },\\n    \\\"A5\\\": {\\n      \\\"mode\\\": \\\"constraint\\\",\\n      \\\"summary\\\": \\\"不实际发问、不移动、不拿出或修复文书\\\"\\n    },\\n    \\\"A6\\\": {\\n      \\\"mode\\\": \\\"constraint\\\",\\n      \\\"summary\\\": \\\"不宣告已有答案\\\"\\n    }\\n  },\\n  \\\"method\\\": \\\"玩家在内心重新规划查证路径：不再以已毁原件为凭，改为今后向可能知情的守门弟子、执事或其他经手文书者询问。本回合不移动、不取物、不修复、不发问，只完成这一决定。原目标与问题保持 active，依赖项解除。\\\",\\n  \\\"outcomes\\\": [],\\n  \\\"goalUpdates\\\": [\\n    {\\n      \\\"id\\\": \\\"goal-1bd574db4000f013\\\",\\n      \\\"status\\\": \\\"active\\\",\\n      \\\"title\\\": \\\"查清引荐文书是否有异常\\\",\\n      \\\"dependencies\\\": [],\\n      \\\"itemDependencies\\\": [],\\n      \\\"reason\\\": \\\"玩家明确改换查证路径，不再依赖已毁原件；目标本身保留，未宣告完成或放弃。\\\",\\n      \\\"successor\\\": \\\"\\\"\\n    }\\n  ],\\n  \\\"threadUpdates\\\": [\\n    {\\n      \\\"id\\\": \\\"thread-1bd574db4000f013\\\",\\n      \\\"title\\\": \\\"引荐文书是否曾被改动\\\",\\n      \\\"status\\\": \\\"open\\\",\\n      \\\"itemDependencies\\\": [],\\n      \\\"reason\\\": \\\"玩家明确改为询问知情者查证，不再依赖已毁原件；问题仍未解决。\\\",\\n      \\\"stepIds\\\": [\\n        \\\"S1\\\"\\n      ]\\n    }\\n  ],\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"S1\\\",\\n      \\\"actorId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"action\\\": \\\"留在原地，内心确定今后改为询问知情者查证文书异常，不实际发问、不移动、不拿出或修复文书，也不宣告已有答案\\\",\\n      \\\"requirementIds\\\": [\\n        \\\"A1\\\",\\n        \\\"A2\\\",\\n        \\\"A3\\\",\\n        \\\"A4\\\",\\n        \\\"A5\\\",\\n        \\\"A6\\\"\\n      ],\\n      \\\"authority\\\": \\\"player\\\",\\n      \\\"causeStepId\\\": null,\\n      \\\"usedItemIds\\\": []\\n    }\\n  ],\\n  \\\"introductions\\\": {\\n    \\\"characters\\\": [],\\n    \\\"items\\\": [],\\n    \\\"locations\\\": []\\n  },\\n  \\\"stateChanges\\\": [\\n    {\\n      \\\"id\\\": \\\"C1\\\",\\n      \\\"entityId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"attribute\\\": \\\"查证文书异常的替代途径\\\",\\n      \\\"before\\\": null,\\n      \\\"value\\\": \\\"今后询问知情者\\\",\\n      \\\"stepId\\\": \\\"S1\\\",\\n      \\\"reason\\\": \\\"玩家本回合明确决定改换查证方式，不再依赖已毁原件。\\\"\\n    }\\n  ],\\n  \\\"scenePlan\\\": {\\n    \\\"start\\\": \\\"你仍站在封山石外，雨势未歇，手中没有文书。\\\",\\n    \\\"beats\\\": [\\n      {\\n        \\\"purpose\\\": \\\"承接已毁原件的事实，写出玩家在雨中重新确定查证方向，但不展开行动\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S1\\\"\\n        ]\\n      }\\n    ],\\n    \\\"outcome\\\": \\\"查清文书异常的目标和问题都保留，但今后改为询问知情者；本回合没有发问、移动、取物或修复，也没有得出答案。\\\",\\n    \\\"stop\\\": \\\"保留下一步是否实际找人询问、询问谁、以及是否继续处理山门前的伤者与空灯等决定。\\\",\\n    \\\"targetCjk\\\": [\\n      180,\\n      260\\n    ],\\n    \\\"lengthReason\\\": \\\"本回合只有内心决定，无实际交锋或新信息，篇幅宜短，避免扩写未发生的查证。\\\",\\n    \\\"knowledge\\\": [\\n      {\\n        \\\"speakerId\\\": \\\"character_ae4cb42b9b49\\\",\\n        \\\"statement\\\": \\\"引荐文书已毁，无法再以原件查证；今后改为询问知情者。\\\",\\n        \\\"status\\\": \\\"fact\\\",\\n        \\\"sources\\\": [\\n          {\\n            \\\"id\\\": \\\"history-item-contract-destroyed-P1\\\",\\n            \\\"quote\\\": \\\"你把手中的引荐文书撕成细屑，又将纸屑碾得稀烂，直到原有字迹再也无法辨读。\\\"\\n          }\\n        ]\\n      },\\n      {\\n        \\\"speakerId\\\": \\\"character_ae4cb42b9b49\\\",\\n        \\\"statement\\\": \\\"文书是否曾被改动仍不知道，不宣告已有答案。\\\",\\n        \\\"status\\\": \\\"unknown\\\",\\n        \\\"sources\\\": []\\n      }\\n    ],\\n    \\\"observationLimits\\\": [\\n      \\\"玩家仍留在原地，未移动、未取物、未修复文书。\\\",\\n      \\\"守门弟子与伤者仍在场，但本回合未发生新的观察或对话。\\\",\\n      \\\"已毁文书无法再被拿出或辨读。\\\"\\n    ]\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":8335,\"completion_tokens\":1187,\"total_tokens\":9522},\"service_tier\":\"default\"}",
+  "response": "{\n  \"decision\": \"ready\",\n  \"message\": \"\",\n  \"requirements\": {\n    \"A1\": {\n      \"mode\": \"constraint\",\n      \"summary\": \"保留查清引荐文书是否有异常的目标，不宣告完成或放弃\"\n    },\n    \"A2\": {\n      \"mode\": \"result\",\n      \"summary\": \"确定今后改为询问知情者来查证文书是否曾被改动\"\n    },\n    \"A3\": {\n      \"mode\": \"result\",\n      \"summary\": \"解除对已毁原件 item_open_letter 的依赖\"\n    },\n    \"A4\": {\n      \"mode\": \"constraint\",\n      \"summary\": \"本回合只确定替代途径，不展开实际查证\"\n    },\n    \"A5\": {\n      \"mode\": \"constraint\",\n      \"summary\": \"不实际发问、不移动、不拿出或修复文书\"\n    },\n    \"A6\": {\n      \"mode\": \"constraint\",\n      \"summary\": \"不宣告已有答案\"\n    }\n  },\n  \"method\": \"玩家在内心重新规划查证路径：不再以已毁原件为凭，改为今后向可能知情的守门弟子、执事或其他经手文书者询问。本回合不移动、不取物、不修复、不发问，只完成这一决定。原目标与问题保持 active，依赖项解除。\",\n  \"outcomes\": [],\n  \"goalUpdates\": [\n    {\n      \"id\": \"goal-1bd574db4000f013\",\n      \"status\": \"active\",\n      \"title\": \"查清引荐文书是否有异常\",\n      \"dependencies\": [],\n      \"itemDependencies\": [],\n      \"reason\": \"玩家明确改换查证路径，不再依赖已毁原件；目标本身保留，未宣告完成或放弃。\",\n      \"successor\": \"\"\n    }\n  ],\n  \"threadUpdates\": [\n    {\n      \"id\": \"thread-1bd574db4000f013\",\n      \"title\": \"引荐文书是否曾被改动\",\n      \"status\": \"open\",\n      \"itemDependencies\": [],\n      \"reason\": \"玩家明确改为询问知情者查证，不再依赖已毁原件；问题仍未解决。\",\n      \"stepIds\": [\n        \"S1\"\n      ]\n    }\n  ],\n  \"steps\": [\n    {\n      \"id\": \"S1\",\n      \"actorId\": \"character_ae4cb42b9b49\",\n      \"action\": \"留在原地，内心确定今后改为询问知情者查证文书异常，不实际发问、不移动、不拿出或修复文书，也不宣告已有答案\",\n      \"requirementIds\": [\n        \"A1\",\n        \"A2\",\n        \"A3\",\n        \"A4\",\n        \"A5\",\n        \"A6\"\n      ],\n      \"authority\": \"player\",\n      \"causeStepId\": null,\n      \"usedItemIds\": []\n    }\n  ],\n  \"introductions\": {\n    \"characters\": [],\n    \"items\": [],\n    \"locations\": []\n  },\n  \"stateChanges\": [\n    {\n      \"id\": \"C1\",\n      \"entityId\": \"character_ae4cb42b9b49\",\n      \"attribute\": \"查证文书异常的替代途径\",\n      \"before\": null,\n      \"value\": \"今后询问知情者\",\n      \"stepId\": \"S1\",\n      \"reason\": \"玩家本回合明确决定改换查证方式，不再依赖已毁原件。\"\n    }\n  ],\n  \"scenePlan\": {\n    \"start\": \"你仍站在封山石外，雨势未歇，手中没有文书。\",\n    \"beats\": [\n      {\n        \"purpose\": \"承接已毁原件的事实，写出玩家在雨中重新确定查证方向，但不展开行动\",\n        \"stepIds\": [\n          \"S1\"\n        ]\n      }\n    ],\n    \"outcome\": \"查清文书异常的目标和问题都保留，但今后改为询问知情者；本回合没有发问、移动、取物或修复，也没有得出答案。\",\n    \"stop\": \"保留下一步是否实际找人询问、询问谁、以及是否继续处理山门前的伤者与空灯等决定。\",\n    \"targetCjk\": [\n      180,\n      260\n    ],\n    \"lengthReason\": \"本回合只有内心决定，无实际交锋或新信息，篇幅宜短，避免扩写未发生的查证。\",\n    \"knowledge\": [\n      {\n        \"speakerId\": \"character_ae4cb42b9b49\",\n        \"statement\": \"引荐文书已毁，无法再以原件查证；今后改为询问知情者。\",\n        \"status\": \"fact\",\n        \"sources\": [\n          {\n            \"id\": \"history-item-contract-destroyed-P1\",\n            \"quote\": \"你把手中的引荐文书撕成细屑，又将纸屑碾得稀烂，直到原有字迹再也无法辨读。\"\n          }\n        ]\n      },\n      {\n        \"speakerId\": \"character_ae4cb42b9b49\",\n        \"statement\": \"文书是否曾被改动仍不知道，不宣告已有答案。\",\n        \"status\": \"unknown\",\n        \"sources\": []\n      }\n    ],\n    \"observationLimits\": [\n      \"玩家仍留在原地，未移动、未取物、未修复文书。\",\n      \"守门弟子与伤者仍在场，但本回合未发生新的观察或对话。\",\n      \"已毁文书无法再被拿出或辨读。\"\n    ]\n  }\n}",
+  "observations": [
+    {
+      "attempt": 1,
+      "outcome": "completed",
+      "transport": {
+        "responseMode": "json",
+        "httpStatus": 200,
+        "durationMs": 7990
+      }
+    }
+  ],
+  "validated": {
+    "decision": "ready",
+    "message": "",
+    "requirements": {
+      "A1": {
+        "mode": "constraint",
+        "summary": "保留查清引荐文书是否有异常的目标，不宣告完成或放弃"
+      },
+      "A2": {
+        "mode": "result",
+        "summary": "确定今后改为询问知情者来查证文书是否曾被改动"
+      },
+      "A3": {
+        "mode": "result",
+        "summary": "解除对已毁原件 item_open_letter 的依赖"
+      },
+      "A4": {
+        "mode": "constraint",
+        "summary": "本回合只确定替代途径，不展开实际查证"
+      },
+      "A5": {
+        "mode": "constraint",
+        "summary": "不实际发问、不移动、不拿出或修复文书"
+      },
+      "A6": {
+        "mode": "constraint",
+        "summary": "不宣告已有答案"
+      }
+    },
+    "method": "玩家在内心重新规划查证路径：不再以已毁原件为凭，改为今后向可能知情的守门弟子、执事或其他经手文书者询问。本回合不移动、不取物、不修复、不发问，只完成这一决定。原目标与问题保持 active，依赖项解除。",
+    "outcomes": [],
+    "goalUpdates": [
+      {
+        "id": "goal-1bd574db4000f013",
+        "status": "active",
+        "title": "查清引荐文书是否有异常",
+        "dependencies": [],
+        "itemDependencies": [],
+        "reason": "玩家明确改换查证路径，不再依赖已毁原件；目标本身保留，未宣告完成或放弃。",
+        "successor": ""
+      }
+    ],
+    "threadUpdates": [
+      {
+        "id": "thread-1bd574db4000f013",
+        "title": "引荐文书是否曾被改动",
+        "status": "open",
+        "itemDependencies": [],
+        "reason": "玩家明确改为询问知情者查证，不再依赖已毁原件；问题仍未解决。",
+        "stepIds": [
+          "S1"
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "id": "S1",
+        "actorId": "character_ae4cb42b9b49",
+        "action": "留在原地，内心确定今后改为询问知情者查证文书异常，不实际发问、不移动、不拿出或修复文书，也不宣告已有答案",
+        "requirementIds": [
+          "A1",
+          "A2",
+          "A3",
+          "A4",
+          "A5",
+          "A6"
+        ],
+        "authority": "player",
+        "causeStepId": null,
+        "usedItemIds": []
+      }
+    ],
+    "introductions": {
+      "characters": [],
+      "items": [],
+      "locations": []
+    },
+    "stateChanges": [
+      {
+        "id": "C1",
+        "entityId": "character_ae4cb42b9b49",
+        "attribute": "查证文书异常的替代途径",
+        "before": null,
+        "value": "今后询问知情者",
+        "stepId": "S1",
+        "reason": "玩家本回合明确决定改换查证方式，不再依赖已毁原件。"
+      }
+    ],
+    "scenePlan": {
+      "start": "你仍站在封山石外，雨势未歇，手中没有文书。",
+      "beats": [
+        {
+          "purpose": "承接已毁原件的事实，写出玩家在雨中重新确定查证方向，但不展开行动",
+          "stepIds": [
+            "S1"
+          ]
+        }
+      ],
+      "outcome": "查清文书异常的目标和问题都保留，但今后改为询问知情者；本回合没有发问、移动、取物或修复，也没有得出答案。",
+      "stop": "保留下一步是否实际找人询问、询问谁、以及是否继续处理山门前的伤者与空灯等决定。",
+      "targetCjk": [
+        180,
+        260
+      ],
+      "lengthReason": "本回合只有内心决定，无实际交锋或新信息，篇幅宜短，避免扩写未发生的查证。",
+      "knowledge": [
+        {
+          "speakerId": "character_ae4cb42b9b49",
+          "statement": "引荐文书已毁，无法再以原件查证；今后改为询问知情者。",
+          "status": "fact",
+          "sources": [
+            {
+              "id": "history-item-contract-destroyed-P1",
+              "quote": "你把手中的引荐文书撕成细屑，又将纸屑碾得稀烂，直到原有字迹再也无法辨读。"
+            }
+          ]
+        },
+        {
+          "speakerId": "character_ae4cb42b9b49",
+          "statement": "文书是否曾被改动仍不知道，不宣告已有答案。",
+          "status": "unknown",
+          "sources": []
+        }
+      ],
+      "observationLimits": [
+        "玩家仍留在原地，未移动、未取物、未修复文书。",
+        "守门弟子与伤者仍在场，但本回合未发生新的观察或对话。",
+        "已毁文书无法再被拿出或辨读。"
+      ]
+    }
+  }
+}

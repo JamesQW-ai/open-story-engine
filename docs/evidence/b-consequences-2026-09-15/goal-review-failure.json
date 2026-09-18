@@ -1,0 +1,120 @@
+{
+  "error": "后果或目标证据未逐项闭合",
+  "observations": [
+    {
+      "attempt": 1,
+      "outcome": "completed",
+      "transport": {
+        "responseMode": "sse",
+        "httpStatus": 200,
+        "durationMs": 4669
+      },
+      "generationStage": "result_contract"
+    },
+    {
+      "attempt": 1,
+      "outcome": "completed",
+      "transport": {
+        "responseMode": "sse",
+        "httpStatus": 200,
+        "durationMs": 7399
+      },
+      "generationStage": "chapter",
+      "revision": 0
+    },
+    {
+      "attempt": 1,
+      "outcome": "completed",
+      "transport": {
+        "responseMode": "sse",
+        "httpStatus": 200,
+        "durationMs": 3146
+      },
+      "generationStage": "action_review",
+      "revision": 0
+    },
+    {
+      "generationStage": "validation",
+      "revision": 0,
+      "outcome": "failed",
+      "error": "后果或目标证据未逐项闭合"
+    },
+    {
+      "attempt": 1,
+      "outcome": "completed",
+      "transport": {
+        "responseMode": "sse",
+        "httpStatus": 200,
+        "durationMs": 2751
+      },
+      "generationStage": "local_repair",
+      "revision": 0
+    },
+    {
+      "attempt": 1,
+      "outcome": "completed",
+      "transport": {
+        "responseMode": "sse",
+        "httpStatus": 200,
+        "durationMs": 3656
+      },
+      "generationStage": "action_review",
+      "revision": 1
+    },
+    {
+      "generationStage": "validation",
+      "revision": 1,
+      "outcome": "failed",
+      "error": "后果或目标证据未逐项闭合"
+    },
+    {
+      "attempt": 1,
+      "outcome": "completed",
+      "transport": {
+        "responseMode": "sse",
+        "httpStatus": 200,
+        "durationMs": 2207
+      },
+      "generationStage": "local_repair",
+      "revision": 1
+    },
+    {
+      "attempt": 1,
+      "outcome": "completed",
+      "transport": {
+        "responseMode": "sse",
+        "httpStatus": 200,
+        "durationMs": 9014
+      },
+      "generationStage": "chapter",
+      "revision": 2
+    },
+    {
+      "attempt": 1,
+      "outcome": "completed",
+      "transport": {
+        "responseMode": "sse",
+        "httpStatus": 200,
+        "durationMs": 5092
+      },
+      "generationStage": "action_review",
+      "revision": 2
+    },
+    {
+      "generationStage": "validation",
+      "revision": 2,
+      "outcome": "failed",
+      "error": "后果或目标证据未逐项闭合"
+    }
+  ],
+  "outputs": [
+    "{\n  \"decision\": \"ready\",\n  \"message\": \"\",\n  \"requirements\": {\n    \"A1\": {\n      \"mode\": \"constraint\",\n      \"summary\": \"本回合不再追查木牌刻痕里的金屑。\"\n    },\n    \"A2\": {\n      \"mode\": \"constraint\",\n      \"summary\": \"本回合不参加外门试炼。\"\n    },\n    \"A3\": {\n      \"mode\": \"result\",\n      \"summary\": \"将当前目标改为承担杀死陆照临的后果。\"\n    },\n    \"A4\": {\n      \"mode\": \"result\",\n      \"summary\": \"顾长离留在原地，向试炼执事承认自己杀了陆照临。\"\n    },\n    \"A5\": {\n      \"mode\": \"result\",\n      \"summary\": \"顾长离表示愿意接受处置。\"\n    }\n  },\n  \"method\": \"顾长离已亲手确认陆照临死亡，尸体仍在试炼场石壁下。试炼执事就在现场附近，已有旁人喊叫、后退，执事的声音也从远处传来。顾长离不离开原地，不参与试炼，直接向赶来的执事说明陆照临是被自己扼喉杀死，并表明愿意接受门规处置。代价是可能被取消试炼资格、被押走或受到宗门惩处，但这是顾长离主动选择承担的社会后果。\",\n  \"outcomes\": [],\n  \"goalUpdates\": [\n    {\n      \"id\": \"opening-goal-1\",\n      \"status\": \"abandoned\",\n      \"title\": \"木牌刻痕里为何有金屑\",\n      \"dependencies\": [],\n      \"reason\": \"顾长离明确表示不再追查金屑。\",\n      \"successor\": \"\"\n    },\n    {\n      \"id\": \"opening-goal-2\",\n      \"status\": \"abandoned\",\n      \"title\": \"如何完成第一场外门试炼\",\n      \"dependencies\": [],\n      \"reason\": \"顾长离明确表示不参加试炼。\",\n      \"successor\": \"\"\n    },\n    {\n      \"id\": \"new\",\n      \"status\": \"active\",\n      \"title\": \"承担杀死陆照临的后果\",\n      \"dependencies\": [\n        \"character_e663361ab1c7\",\n        \"character_ae4cb42b9b49\"\n      ],\n      \"reason\": \"顾长离主动改变目标，不再追查金屑、不参加试炼，选择留在原地承认杀人并接受处置。\",\n      \"successor\": \"\"\n    }\n  ]\n}",
+    "你松开手，陆照临顺着石壁滑坐下去，头歪向一边。山风从试炼场上方压下来，把他领口吹得贴住颈侧，那几道被你掐出的红痕慢慢转成青紫。你站在原地，没去看旁边退开的人，也没去管远处还在断续传来的喊声。\n\n执事的脚步声很快近了。先是一阵碎石被靴底碾过的响，接着有人拨开侧边矮松，灰袍下摆扫过草叶。他停在离你五步远的地方，先看石壁下的陆照临，再看你。旁边几个新弟子已经不敢出声，只远远站着。\n\n“人是你杀的？”执事问。\n\n你点头，声音比预想中稳：“是我。我扼住他喉咙，一直压到他没气。没别人动手。”\n\n执事没有立刻说话。他蹲下去，两指按在陆照临颈侧，又掀开眼皮看了一眼，才慢慢起身。灰袍袖口沾了一点石壁上的苔泥。他转向你，目光从你手上扫过，你手背有陆照临抓出的红痕，指节还泛着用力过后的白。\n\n“为什么？”他问。\n\n“不为什么。”你说，“我杀了他，愿意接受处置。”\n\n旁边有个弟子小声说了句什么，被执事抬手止住。执事朝身后的人吩咐：“试炼暂停。把这里围起来，谁都不许动尸体。”然后重新看向你，“你叫什么？”\n\n“顾长离。”\n\n“顾长离，你可知在试炼场杀人是什么罪？”\n\n“不知道。”你仍站着没动，“但我不逃，也不参加试炼。该怎么处置，我认。”\n\n执事沉默片刻，从腰间取下一枚铜牌，朝你走近一步。他没有碰你，只把铜牌举到你面前，让你看清上面的刻纹。“这是执事令。我现在以玄霄宗外门试炼执事的身份，将你当场扣下。日落前，你不得离开我视线。待山门刑律堂的人来，再定你的事。”\n\n你看见铜牌边缘磨得发亮，中间一个“试”字。山风又起，把陆照临散开的衣摆吹动一下，像他还活着似的。你移开目光，把两只手垂在身侧，没有辩解，也没有再去看那具尸体。",
+    "{\n  \"issues\": [],\n  \"actions\": [\n    {\n      \"id\": \"A1\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离不再追查木牌刻痕里的金屑，整回合未再查看或追问金屑。\",\n      \"paragraphId\": \"P1\"\n    },\n    {\n      \"id\": \"A2\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离没有参加试炼，并在执事宣布试炼暂停后仍表示不参加。\",\n      \"paragraphId\": \"P11\"\n    },\n    {\n      \"id\": \"A3\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离将目标改为承担杀死陆照临的后果，主动认罪并接受扣下。\",\n      \"paragraphId\": \"P7\"\n    },\n    {\n      \"id\": \"A4\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离留在原地，向赶来的执事承认自己扼死陆照临，并说明没有别人动手。\",\n      \"paragraphId\": \"P4\"\n    },\n    {\n      \"id\": \"A5\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离明确表示愿意接受处置，不逃也不参加试炼。\",\n      \"paragraphId\": \"P7\"\n    }\n  ],\n  \"outcomeEvidence\": [],\n  \"goalEvidence\": [\"P7\", \"P11\"],\n  \"checkedConsequences\": true\n}",
+    "```json\n{\n  \"replacements\": [\n    {\n      \"paragraphId\": \"P1\",\n      \"text\": \"你松开手，陆照临顺着石壁滑坐下去，头歪向一边。山风从试炼场上方压下来，把他领口吹得贴住颈侧，那几道被你掐出的红痕慢慢转成青紫。你站在原地，没去看旁边退开的人，也没去管远处还在断续传来的喊声。木牌刻痕里的金屑还包在纸中，贴在衣襟内，你没有再碰。试炼钟声已经响过，你也没有朝试炼入口迈一步。\"\n    },\n    {\n      \"paragraphId\": \"P7\",\n      \"text\": \"“不为什么。”你说，“我杀了他，愿意接受处置。试炼我不参加了，金屑的事也不再查。”\"\n    },\n    {\n      \"paragraphId\": \"P11\",\n      \"text\": \"“不知道。”你仍站着没动，“但我不逃，也不参加试炼。该怎么处置，我认。要押要罚，都行。”\"\n    }\n  ]\n}\n```",
+    "{\n  \"issues\": [],\n  \"actions\": [\n    {\n      \"id\": \"A1\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离没有再碰衣襟内包着金屑的纸，也没有继续查看木牌刻痕，停止追查金屑。\",\n      \"paragraphId\": \"P1\"\n    },\n    {\n      \"id\": \"A2\",\n      \"status\": \"performed\",\n      \"summary\": \"试炼钟声已经响过，顾长离没有朝试炼入口迈一步，未参加试炼。\",\n      \"paragraphId\": \"P1\"\n    },\n    {\n      \"id\": \"A3\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离明确表示不再查金屑、不参加试炼，选择认罪并接受处置，将目标转为承担杀人后果。\",\n      \"paragraphId\": \"P7\"\n    },\n    {\n      \"id\": \"A4\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离留在原地，向赶来的执事承认陆照临是被自己扼喉杀死，并说明没有别人动手。\",\n      \"paragraphId\": \"P4\"\n    },\n    {\n      \"id\": \"A5\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离表示愿意接受处置，不逃、不参加试炼，要押要罚都认。\",\n      \"paragraphId\": \"P7\"\n    }\n  ],\n  \"outcomeEvidence\": [],\n  \"goalEvidence\": [\"P7\"],\n  \"checkedConsequences\": true\n}",
+    "```json\n{\n  \"replacements\": [\n    {\n      \"paragraphId\": \"P1\",\n      \"text\": \"你松开手，陆照临顺着石壁滑坐下去，头歪向一边。山风从试炼场上方压下来，把他领口吹得贴住颈侧，那几道被你掐出的红痕慢慢转成青紫。你站在原地，没去看旁边退开的人，也没去管远处还在断续传来的喊声。木牌刻痕里的金屑还包在纸中，贴在衣襟内，你没有再碰。试炼钟声已经响过，你也没有朝试炼入口迈一步。\"\n    },\n    {\n      \"paragraphId\": \"P7\",\n      \"text\": \"“不为什么。”你说，“我杀了他，愿意接受处置。试炼我不参加了，金屑的事也不再查。”\"\n    },\n    {\n      \"paragraphId\": \"P11\",\n      \"text\": \"“不知道。”你仍站着没动，“但我不逃，也不参加试炼。该怎么处置，我认。要押要罚，都行。”\"\n    }\n  ]\n}\n```",
+    "你站在原地，手还维持着方才松开陆照临喉咙的姿势。山风从石壁后翻上来，把你手背上的抓痕吹得发凉。四周的脚步声乱过一阵，有人往山道下跑，有人停在几丈外不敢靠近，只压着嗓子互相问“死了没有”。\n\n执事拨开人群走过来。他先看石壁下歪坐着的陆照临，再看你。你没有避开他的目光。\n\n“人是我杀的。”你说。\n\n执事脚步停住，离你三步远。他脸上没有立刻浮出怒色，只是把视线从陆照临颈间那几道发紫的指痕移到你手上。你的指节还泛着用力后的白，手背有三道被指甲刮破的红痕，血已经凝成细线。\n\n“我扼住他喉咙，一直没松手。”你继续说，“他没了气息，也没了脉搏。我确认过。”\n\n旁边有个弟子倒吸一口气，退到执事身后。执事没回头，只抬手止住后面的人再说话。他问你：“你知不知道这是什么地方？”\n\n“半山试炼场。”你说，“我不参加试炼了。”\n\n执事盯着你，像在等你改口。你仍站在原地，没有去碰木牌，也没有去拿包着金屑的纸。那两样东西还在你身上，但你已经不打算再为它们找答案。\n\n“我愿意接受处置。”你说。\n\n执事沉默片刻，朝身后两名守场弟子点了下头。那两人迟疑一瞬，才上前来。他们没有立刻动手，只一左一右站到你身侧。执事说：“先把他带下去，别让他离开试炼场。钟声未响，试炼照旧。”\n\n你听见“试炼照旧”四个字，没有反驳。那两名弟子伸手按住你的上臂，力道不重，像怕你突然再动。你由他们带着往试炼场边沿走。经过陆照临身边时，他的头仍歪在石壁上，瞳孔映着天光，已经不会再看你。\n\n执事在你身后吩咐人去抬尸，又命人把这一带围住。你没有回头，只感到山道上的风越来越硬。走到试炼场边沿时，你停下脚步，带你的弟子也跟着停住。\n\n“我不走。”你说，“我留在这里等处置。”\n\n执事从后面跟上来，看了你一眼，对那两名弟子说：“让他站着。”",
+    "{\n  \"issues\": [],\n  \"actions\": [\n    {\n      \"id\": \"A1\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离不再追查木牌刻痕里的金屑，没有去碰木牌或包着金屑的纸。\",\n      \"paragraphId\": \"P8\"\n    },\n    {\n      \"id\": \"A2\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离明确表示不参加试炼，并留在原地。\",\n      \"paragraphId\": \"P7\"\n    },\n    {\n      \"id\": \"A3\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离将当前目标改为承担杀死陆照临的后果，不再为金屑和试炼找答案。\",\n      \"paragraphId\": \"P8\"\n    },\n    {\n      \"id\": \"A4\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离留在原地，向赶来的执事承认自己杀了陆照临，并说明扼喉至其无气息无脉搏。\",\n      \"paragraphId\": \"P3\"\n    },\n    {\n      \"id\": \"A5\",\n      \"status\": \"performed\",\n      \"summary\": \"顾长离向执事表示愿意接受处置，并在被带离时坚持留在原地等待处置。\",\n      \"paragraphId\": \"P9\"\n    }\n  ],\n  \"outcomeEvidence\": [],\n  \"goalEvidence\": [\"P8\"],\n  \"checkedConsequences\": true\n}"
+  ]
+}

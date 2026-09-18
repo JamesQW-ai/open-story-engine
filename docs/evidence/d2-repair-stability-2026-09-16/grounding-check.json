@@ -1,0 +1,41 @@
+{
+  "cases": {
+    "new_action": {
+      "claim": "你说：“我打算去后坡。”他低头看着纸包，退开半步。",
+      "evidence": [
+        "你手里拿着纸包。"
+      ]
+    },
+    "mixed_false_past": {
+      "claim": "你说打算去后坡，他退开半步，说：“我去年就在那片药圃采过草。”",
+      "evidence": [
+        "你们刚刚互通姓名。"
+      ]
+    },
+    "mixed_false_rule": {
+      "claim": "他看着你说：“日落前取回青露草，必须越过白线才能完成。”",
+      "evidence": [
+        "日落前取回青露草，越过白线取消资格。"
+      ]
+    },
+    "mixed_valid_rule": {
+      "claim": "他朝你点头，说：“日落前取回青露草，别越过白线。”",
+      "evidence": [
+        "日落前取回青露草，越过白线取消资格。"
+      ]
+    }
+  },
+  "response": "{\"checks\":[{\"id\":\"new_action\",\"verdict\":\"supported\",\"reason\":\"没有需要前情证明的既有背景\"},{\"id\":\"mixed_false_past\",\"verdict\":\"unsupported\",\"reason\":\"“我去年就在那片药圃采过草”是对人物经历的既有背景断言，前情只给出你们刚刚互通姓名，没有给出他去年在那片药圃采过草的信息\"},{\"id\":\"mixed_false_rule\",\"verdict\":\"contradicted\",\"reason\":\"“必须越过白线才能完成”与已生效规则“越过白线取消资格”矛盾\"},{\"id\":\"mixed_valid_rule\",\"verdict\":\"supported\",\"reason\":\"“别越过白线”与已给出规则“越过白线取消资格”一致，没有缺证或矛盾的既有背景\"}]}",
+  "elapsedSeconds": 7.77,
+  "observations": [
+    {
+      "attempt": 1,
+      "outcome": "completed",
+      "transport": {
+        "responseMode": "sse",
+        "httpStatus": 200,
+        "durationMs": 7765
+      }
+    }
+  ]
+}

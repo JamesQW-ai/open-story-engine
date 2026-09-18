@@ -1,0 +1,143 @@
+{
+  "id": "3d556c5a344b418aa9d2db440bcbefe2",
+  "branch_id": "ending-live-normal_resolved",
+  "request_id": "normal_resolved",
+  "payload_digest": "4719db2ce4796cd0b72bb8b6c3a40db9256f4a7422856cd82ee1c45bb76d35cc",
+  "binding_digest": "bc40a8dabe5280f83177aecff0766570d077227bb469fbc0d1c4754903929d80",
+  "ending_type": "normal",
+  "outcome_summary": "伤者得救，空灯与父亲失踪的关系已查清，本段追查结束。",
+  "ending_quote": "你曾追问的两件事都有了回答：伤者已经脱险，空灯确是父亲失踪前交出的信物。",
+  "status": "approved",
+  "created_at": "2026-09-17T01:22:46.441Z",
+  "review": {
+    "decision": "allow",
+    "checks": {
+      "ending_type_supported": {
+        "passed": true,
+        "evidence": "他已经止住血，喝下温水，能够自己起身；救助的事至此办妥。你把空灯底座的编号与父亲留下的押运底册逐项核对，编号、交接日期和签名完全相合。伤者交还的收据写明，陆沉舟把这盏空灯交给了他，随后为躲避追捕隐去姓名，因此没有回家。",
+        "reason": "正文明确写出救助办妥，并通过编号、日期、签名及收据确认空灯是父亲失踪前交出的信物，两个 normal 目标均已在当前正文中达成。"
+      },
+      "threads_accounted_for": {
+        "passed": true,
+        "evidence": "你曾追问的两件事都有了回答：伤者已经脱险，空灯确是父亲失踪前交出的信物。你将核对过的原件封存，不再有待验证的约定或等待兑现的救助。",
+        "reason": "两个已知问题均有正文交代结果，且明确表示不再有待验证的约定或等待兑现的救助，没有通过遗漏关闭线索。"
+      },
+      "no_new_unresolved_conflict": {
+        "passed": true,
+        "evidence": "你将核对过的原件封存，不再有待验证的约定或等待兑现的救助。你决定把这一段追查留在这本记录的末页。",
+        "reason": "正文没有新增需要本路线立即处理的冲突或未兑现行动，并明确封存原件、结束追查。"
+      },
+      "ending_present": {
+        "passed": true,
+        "evidence": "门房的灯安稳地燃着，你放下笔，合上册子。这条路线在此结束。",
+        "reason": "当前正文以合上册子、路线在此结束收束，不是未来打算、愿望或假设，而是本段实际收尾。"
+      }
+    }
+  },
+  "audit": {
+    "model": "deepseek-v4-pro:cloud",
+    "prompt_version": "prompt-catalog/1:91e7126adf495e369d20ae57d788dabf28355210cc080f9235aeedfc5331cf99",
+    "input": {
+      "ending_type": "normal",
+      "outcome_summary": "伤者得救，空灯与父亲失踪的关系已查清，本段追查结束。",
+      "ending_quote": "你曾追问的两件事都有了回答：伤者已经脱险，空灯确是父亲失踪前交出的信物。",
+      "narrative": "你坐在门房的木凳上，听伤者清楚地答完最后一个问题。他已经止住血，喝下温水，能够自己起身；救助的事至此办妥。你把空灯底座的编号与父亲留下的押运底册逐项核对，编号、交接日期和签名完全相合。伤者交还的收据写明，陆沉舟把这盏空灯交给了他，随后为躲避追捕隐去姓名，因此没有回家。你曾追问的两件事都有了回答：伤者已经脱险，空灯确是父亲失踪前交出的信物。你将核对过的原件封存，不再有待验证的约定或等待兑现的救助。你决定把这一段追查留在这本记录的末页。门房的灯安稳地燃着，你放下笔，合上册子。这条路线在此结束。",
+      "goals": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "completed",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-normal_resolved",
+            "ref": "opening-goal-1",
+            "quote": "你坐在门房的木凳上，听伤者清楚地答完最后一个问题。他已经止住血，喝下温水，能够自己起身；救助的事至此办妥。你把空灯底座的编号与父亲留下的押运底册逐项核对，编号、交接日期和签名完全相合。伤者交还的收据写明，陆沉舟把这盏空灯交给了他，随后为躲避追捕隐去姓名，因此没有回家。你曾追问的两件事都有了回答：伤者已经脱险，空灯确是父亲失踪前交出的信物。你将核对过的原件封存，不再有待验证的约定或等待兑现的救助。你决定把这一段追查留在这本记录的末页。门房的灯安稳地燃着，你放下笔，合上册子。这条路线在此结束。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "completed",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-normal_resolved",
+            "ref": "opening-goal-2",
+            "quote": "你坐在门房的木凳上，听伤者清楚地答完最后一个问题。他已经止住血，喝下温水，能够自己起身；救助的事至此办妥。你把空灯底座的编号与父亲留下的押运底册逐项核对，编号、交接日期和签名完全相合。伤者交还的收据写明，陆沉舟把这盏空灯交给了他，随后为躲避追捕隐去姓名，因此没有回家。你曾追问的两件事都有了回答：伤者已经脱险，空灯确是父亲失踪前交出的信物。你将核对过的原件封存，不再有待验证的约定或等待兑现的救助。你决定把这一段追查留在这本记录的末页。门房的灯安稳地燃着，你放下笔，合上册子。这条路线在此结束。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "resolved",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-normal_resolved",
+            "ref": "opening-thread-1",
+            "quote": "你坐在门房的木凳上，听伤者清楚地答完最后一个问题。他已经止住血，喝下温水，能够自己起身；救助的事至此办妥。你把空灯底座的编号与父亲留下的押运底册逐项核对，编号、交接日期和签名完全相合。伤者交还的收据写明，陆沉舟把这盏空灯交给了他，随后为躲避追捕隐去姓名，因此没有回家。你曾追问的两件事都有了回答：伤者已经脱险，空灯确是父亲失踪前交出的信物。你将核对过的原件封存，不再有待验证的约定或等待兑现的救助。你决定把这一段追查留在这本记录的末页。门房的灯安稳地燃着，你放下笔，合上册子。这条路线在此结束。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "resolved",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-normal_resolved",
+            "ref": "opening-thread-2",
+            "quote": "你坐在门房的木凳上，听伤者清楚地答完最后一个问题。他已经止住血，喝下温水，能够自己起身；救助的事至此办妥。你把空灯底座的编号与父亲留下的押运底册逐项核对，编号、交接日期和签名完全相合。伤者交还的收据写明，陆沉舟把这盏空灯交给了他，随后为躲避追捕隐去姓名，因此没有回家。你曾追问的两件事都有了回答：伤者已经脱险，空灯确是父亲失踪前交出的信物。你将核对过的原件封存，不再有待验证的约定或等待兑现的救助。你决定把这一段追查留在这本记录的末页。门房的灯安稳地燃着，你放下笔，合上册子。这条路线在此结束。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "conflicts": [],
+      "character_outcomes": []
+    },
+    "raw_response": "{\"id\":\"resp_863556\",\"object\":\"chat.completion\",\"created\":1789608173,\"model\":\"deepseek-v4-pro:cloud\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"allow\\\",\\n  \\\"checks\\\": {\\n    \\\"ending_type_supported\\\": {\\n      \\\"passed\\\": true,\\n      \\\"evidence\\\": \\\"他已经止住血，喝下温水，能够自己起身；救助的事至此办妥。你把空灯底座的编号与父亲留下的押运底册逐项核对，编号、交接日期和签名完全相合。伤者交还的收据写明，陆沉舟把这盏空灯交给了他，随后为躲避追捕隐去姓名，因此没有回家。\\\",\\n      \\\"reason\\\": \\\"正文明确写出救助办妥，并通过编号、日期、签名及收据确认空灯是父亲失踪前交出的信物，两个 normal 目标均已在当前正文中达成。\\\"\\n    },\\n    \\\"threads_accounted_for\\\": {\\n      \\\"passed\\\": true,\\n      \\\"evidence\\\": \\\"你曾追问的两件事都有了回答：伤者已经脱险，空灯确是父亲失踪前交出的信物。你将核对过的原件封存，不再有待验证的约定或等待兑现的救助。\\\",\\n      \\\"reason\\\": \\\"两个已知问题均有正文交代结果，且明确表示不再有待验证的约定或等待兑现的救助，没有通过遗漏关闭线索。\\\"\\n    },\\n    \\\"no_new_unresolved_conflict\\\": {\\n      \\\"passed\\\": true,\\n      \\\"evidence\\\": \\\"你将核对过的原件封存，不再有待验证的约定或等待兑现的救助。你决定把这一段追查留在这本记录的末页。\\\",\\n      \\\"reason\\\": \\\"正文没有新增需要本路线立即处理的冲突或未兑现行动，并明确封存原件、结束追查。\\\"\\n    },\\n    \\\"ending_present\\\": {\\n      \\\"passed\\\": true,\\n      \\\"evidence\\\": \\\"门房的灯安稳地燃着，你放下笔，合上册子。这条路线在此结束。\\\",\\n      \\\"reason\\\": \\\"当前正文以合上册子、路线在此结束收束，不是未来打算、愿望或假设，而是本段实际收尾。\\\"\\n    }\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1810,\"completion_tokens\":424,\"total_tokens\":2234},\"service_tier\":\"default\"}",
+    "failure": null,
+    "metrics": {
+      "calls": 1,
+      "reported_tokens": 2234,
+      "unreported_calls": 0,
+      "elapsed_ms": 6519
+    }
+  }
+}

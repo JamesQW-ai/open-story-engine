@@ -6,6 +6,22 @@ from .cocreation import narration_outside_dialogue
 def known_relationships(nodes, people, player_name):
     # Do not read the package relationship catalog: it may describe future scenes.
     links = {}
+    if nodes:
+        root = nodes[0]
+        known = {p['name']: p['id'] for p in people if p['first_page'] <= root['sequence'] + 1}
+        # Only the saved, reviewed opening context is public here, not the
+        # package's full relationship catalog or another character's opening.
+        for item in (root.get('openingContext') or {}).get('relationships', []):
+            name, relation = item.get('name'), item.get('relation')
+            if (player_name not in known or name not in known or name == player_name
+                    or name not in root.get('narrativeText', '') or not isinstance(relation, str) or not relation.strip()):
+                continue
+            source, target = known[player_name], known[name]
+            label = re.split(r'[，。；]', relation)[0]
+            links[tuple(sorted((source, target)))] = {
+                'source': source, 'target': target, 'label': label if len(label) <= 10 else '已知关系',
+                'evidence': relation, 'page': root['sequence'] + 1, 'origin': 'opening',
+            }
     for node in nodes:
         prose = narration_outside_dialogue(node.get('narrativeText', ''))
         for sentence in re.split(r'[。！？\n]', prose):
@@ -45,4 +61,25 @@ def known_relationships(nodes, people, player_name):
                         continue
                     links[key] = {'source': left[2], 'target': right[2], 'label': label,
                                   'evidence': sentence.strip(), 'page': node['sequence'] + 1}
+        # A direct accusation can live in dialogue, which the conservative
+        # narration pass above intentionally excludes.
+        names = {p['name']: p['id'] for p in people if p['first_page'] <= node['sequence'] + 1}
+        if player_name in names:
+            names['你'] = names[player_name]
+        if names:
+            actor = '(?:' + '|'.join(map(re.escape, names)) + ')'
+            for paragraph in node.get('narrativeText', '').split('\n\n'):
+                match = re.search('(' + actor + r')[^。！？“]{0,16}(?:看|问|质问|质疑)(' + actor + r')[：:，,]', paragraph)
+                if match and names[match[1]] != names[match[2]] and re.search(r'“[^”]*(?:你改过|你还要|为什么|你早知道|你把)', paragraph):
+                    key = tuple(sorted((names[match[1]], names[match[2]])))
+                    links[key] = {'source': names[match[1]], 'target': names[match[2]], 'label': '质疑',
+                                  'evidence': paragraph, 'page': node['sequence'] + 1}
+        # Apply notes in chronological order, so an older note cannot overwrite
+        # a newer encounter. Both endpoints must already be known on this route.
+        known = {p['name']: p['id'] for p in people if p['first_page'] <= node['sequence'] + 1}
+        for item in node.get('readerOutcome', {}).get('relationships', []):
+            if (item.get('source') in known and item.get('target') in known and item['source'] != item['target']
+                    and item.get('evidence') and item['evidence'] in node.get('narrativeText', '')):
+                source, target = known[item['source']], known[item['target']]
+                links[tuple(sorted((source, target)))] = {**item, 'source': source, 'target': target, 'page': node['sequence'] + 1}
     return list(links.values())

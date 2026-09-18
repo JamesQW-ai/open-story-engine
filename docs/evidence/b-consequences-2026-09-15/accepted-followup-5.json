@@ -1,0 +1,479 @@
+{
+  "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+  "request": {
+    "parent_branch_id": "branch_5c8afebb-e81e-4016-b9ea-c5c9af06376f",
+    "text": "我继续留在原地，观察在场众人的反应，不重提试炼和金屑，也不改变承担后果的目标。",
+    "request_id": "batch-b-accepted-followup-5"
+  },
+  "seconds": 13.55,
+  "response": {
+    "status": "written",
+    "request_id": "batch-b-accepted-followup-5",
+    "deduplicated": false,
+    "branch": {
+      "id": "branch_a0bf0e85-871d-4485-ae21-0767461b7b16",
+      "sessionId": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "sequence": 29,
+      "parentId": "branch_5c8afebb-e81e-4016-b9ea-c5c9af06376f",
+      "kind": "generated",
+      "sourceNodeRef": "node_source_continuity",
+      "narrativeText": "你仍跪着，没有动。风从崖口翻上来，把盖在陆照临身上的外袍掀起一角，又落回去。执事仍站在斜前方两步外，目光越过你，扫向试炼场边那些被拦住的弟子。你顺着他的视线看过去，几个新弟子挤在石阶上方，有人伸着脖子，有人被前面的人挡住，只露出半张脸。他们没再往前，也没人说话，像被那声铜铃定在原地。\n\n拿绳的弟子退开半步后，手仍垂在身侧，指节无意识地捏着绳尾。你看他时，他先移开眼，又转回来，嘴唇动了动，到底没出声。你再看执事，他正抬手按了按腰侧令牌，指腹在木牌边缘停了一瞬，才放下。远处试炼场里，铜铃的尾音已经散尽，只剩山风擦过石壁的细响。\n\n你跪着，膝下尖石往肉里陷。腕上细绳随呼吸收紧，像要把脉搏勒得更慢。你没有低头，只把目光从执事脸上移向盖尸外袍旁。外袍下只露出一只鞋尖，鞋底沾着灰白的碎石。旁边一名弟子背对着你，肩背绷着，像在等什么命令。更远处，有人把试炼用的木牌抱在胸前，牌面朝内，看不见刻痕。\n\n执事忽然开口，声音不高，却让近处几人都看过来：“都别围在这里。试炼场外的人，往石阶上退。”他顿了顿，又补一句，“没叫你们散，只是退后。”\n\n那些弟子慢慢往后退，脚步很轻，像怕踩碎什么。你仍跪在原地，看他们退到石阶上方，只剩几道影子斜斜落下来。拿绳的弟子没动，仍站在能看住你的位置。执事也没走，只侧过身，像在听山道方向。山道上还没有人声，也没有脚步声。",
+      "summary": "自定行动：我继续留在原地，观察在场已推进，新的风险和选择仍然存在。",
+      "branchState": {
+        "playerLocationId": "location_open_trial",
+        "playerCharacterId": "character_e663361ab1c7",
+        "characterLocationIds": {
+          "character_e663361ab1c7": "location_open_trial",
+          "character_ae4cb42b9b49": "location_open_trial"
+        },
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_f18c06827e35",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_9a99ed4286f9",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000002_17924f34d212",
+              "sequence": 2,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:characterOutcomeStates",
+              "summary": "已核对正文的角色后果或目标变化",
+              "before": {},
+              "after": {
+                "character_ae4cb42b9b49": {
+                  "characterId": "character_ae4cb42b9b49",
+                  "status": "dead",
+                  "permanence": "permanent",
+                  "requirementId": "A1",
+                  "cause": "顾长离趁陆照临没有防备近身扼喉，持续压制至呼吸脉搏停止。",
+                  "evidence": "你腾出另一只手，按在他颈侧。没有脉搏。又探鼻息，没有气。你松开手，他顺着石壁滑坐下去，头歪向一边，瞳孔定着，不再动。",
+                  "causeBranchId": "branch_940e51e9-0a7d-4cab-869e-7fe197e45f22"
+                }
+              },
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_940e51e9-0a7d-4cab-869e-7fe197e45f22",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000003_f4c670c5ba52",
+              "sequence": 3,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:goalLedger",
+              "summary": "已核对正文的角色后果或目标变化",
+              "before": null,
+              "after": [
+                {
+                  "id": "opening-goal-1",
+                  "title": "木牌刻痕里为何有金屑",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                },
+                {
+                  "id": "opening-goal-2",
+                  "title": "如何完成第一场外门试炼",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                }
+              ],
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_940e51e9-0a7d-4cab-869e-7fe197e45f22",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000004_c1bbf590db7d",
+              "sequence": 4,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 1,
+              "after": 2,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_bad44a4b425f",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000005_18c5ddba6015",
+              "sequence": 5,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:goalLedger",
+              "summary": "已核对正文的角色后果或目标变化",
+              "before": [
+                {
+                  "id": "opening-goal-1",
+                  "title": "木牌刻痕里为何有金屑",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                },
+                {
+                  "id": "opening-goal-2",
+                  "title": "如何完成第一场外门试炼",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                }
+              ],
+              "after": [
+                {
+                  "id": "opening-goal-1",
+                  "title": "木牌刻痕里为何有金屑",
+                  "status": "abandoned",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "player_branch",
+                  "evidence": "“我不追查金屑，也不参加试炼。”你说，“我留在这里，愿意接受处置。”",
+                  "causeBranchId": "branch_acf7de0d-197e-418a-b143-a643e4629d08",
+                  "reason": "顾长离明确表示不再追查金屑。",
+                  "successor": ""
+                },
+                {
+                  "id": "opening-goal-2",
+                  "title": "如何完成第一场外门试炼",
+                  "status": "abandoned",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "player_branch",
+                  "evidence": "“我不追查金屑，也不参加试炼。”你说，“我留在这里，愿意接受处置。”",
+                  "causeBranchId": "branch_acf7de0d-197e-418a-b143-a643e4629d08",
+                  "reason": "顾长离明确表示不参加试炼。",
+                  "successor": ""
+                },
+                {
+                  "id": "goal-0904de162d638a62",
+                  "status": "active",
+                  "title": "承担杀害陆照临的后果",
+                  "dependencies": [],
+                  "reason": "顾长离在杀死陆照临后，主动放弃追查金屑和参加试炼，改为承担杀人后果。",
+                  "successor": "",
+                  "evidence": "“我不追查金屑，也不参加试炼。”你说，“我留在这里，愿意接受处置。”",
+                  "characterId": "character_e663361ab1c7",
+                  "source": "player_branch",
+                  "causeBranchId": "branch_acf7de0d-197e-418a-b143-a643e4629d08"
+                }
+              ],
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_acf7de0d-197e-418a-b143-a643e4629d08",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000006_77582551394d",
+              "sequence": 6,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 2,
+              "after": 3,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_48ab052e319d",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000007_71bea2c7c88e",
+              "sequence": 7,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 3,
+              "after": 4,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_d0b21cadecae",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000008_c553f22b50dd",
+              "sequence": 8,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 4,
+              "after": 5,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_990246b7d297",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000009_01f1cd04e6ba",
+              "sequence": 9,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 5,
+              "after": 6,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_ec7dfc7f3f4c",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "sourceProgress": "chapter_011",
+        "freeTextProgress": 6,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "itemOwnerCharacterIds": {
+          "item_open_gu_token": "character_e663361ab1c7",
+          "item_open_gold_paper": "character_e663361ab1c7"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {
+          "character_ae4cb42b9b49": {
+            "characterId": "character_ae4cb42b9b49",
+            "status": "dead",
+            "permanence": "permanent",
+            "requirementId": "A1",
+            "cause": "顾长离趁陆照临没有防备近身扼喉，持续压制至呼吸脉搏停止。",
+            "evidence": "你腾出另一只手，按在他颈侧。没有脉搏。又探鼻息，没有气。你松开手，他顺着石壁滑坐下去，头歪向一边，瞳孔定着，不再动。",
+            "causeBranchId": "branch_940e51e9-0a7d-4cab-869e-7fe197e45f22"
+          }
+        },
+        "goalLedger": [
+          {
+            "id": "opening-goal-1",
+            "title": "木牌刻痕里为何有金屑",
+            "status": "abandoned",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "player_branch",
+            "evidence": "“我不追查金屑，也不参加试炼。”你说，“我留在这里，愿意接受处置。”",
+            "causeBranchId": "branch_acf7de0d-197e-418a-b143-a643e4629d08",
+            "reason": "顾长离明确表示不再追查金屑。",
+            "successor": ""
+          },
+          {
+            "id": "opening-goal-2",
+            "title": "如何完成第一场外门试炼",
+            "status": "abandoned",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "player_branch",
+            "evidence": "“我不追查金屑，也不参加试炼。”你说，“我留在这里，愿意接受处置。”",
+            "causeBranchId": "branch_acf7de0d-197e-418a-b143-a643e4629d08",
+            "reason": "顾长离明确表示不参加试炼。",
+            "successor": ""
+          },
+          {
+            "id": "goal-0904de162d638a62",
+            "status": "active",
+            "title": "承担杀害陆照临的后果",
+            "dependencies": [],
+            "reason": "顾长离在杀死陆照临后，主动放弃追查金屑和参加试炼，改为承担杀人后果。",
+            "successor": "",
+            "evidence": "“我不追查金屑，也不参加试炼。”你说，“我留在这里，愿意接受处置。”",
+            "characterId": "character_e663361ab1c7",
+            "source": "player_branch",
+            "causeBranchId": "branch_acf7de0d-197e-418a-b143-a643e4629d08"
+          }
+        ]
+      },
+      "nextDirections": [
+        {
+          "id": "goal-direction-goal-0904de162d638a62-7",
+          "title": "推进目标：承担杀害陆照临的后果",
+          "summary": "围绕“承担杀害陆照临的后果”，依据眼前条件采取下一步行动，不恢复已放下的目标。",
+          "statePatch": {
+            "freeTextProgress": 7
+          },
+          "isFreeText": true
+        }
+      ],
+      "openThreads": [
+        "木牌刻痕里为何有金屑",
+        "如何完成第一场外门试炼",
+        "尚未完成的当前目标"
+      ],
+      "createdAt": "2026-09-15T08:10:31.027Z",
+      "canonicalRelation": "diverged",
+      "factDeltas": [],
+      "storyArc": {
+        "activeGoal": "自定行动：在这一段中趁陆照临没有防",
+        "currentPhase": "自定行动：我继续留在原地，观察在场",
+        "goalDisposition": "completed",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "complete"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_5c8afebb-e81e-4016-b9ea-c5c9af06376f",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "actionIntent": {
+        "input": "我继续留在原地，观察在场众人的反应，不重提试炼和金屑，也不改变承担后果的目标。",
+        "requirements": {
+          "A1": {
+            "mode": "constraint",
+            "summary": "顾长离继续留在原地，不移动。"
+          },
+          "A2": {
+            "mode": "result",
+            "summary": "顾长离观察在场众人的反应。"
+          },
+          "A3": {
+            "mode": "constraint",
+            "summary": "顾长离不重提试炼和金屑。"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "顾长离不改变承担杀害陆照临后果的目标。"
+          }
+        }
+      },
+      "consequenceUpdate": {
+        "decision": "ready",
+        "message": "",
+        "requirements": {
+          "A1": {
+            "mode": "constraint",
+            "summary": "顾长离继续留在原地，不移动。"
+          },
+          "A2": {
+            "mode": "result",
+            "summary": "顾长离观察在场众人的反应。"
+          },
+          "A3": {
+            "mode": "constraint",
+            "summary": "顾长离不重提试炼和金屑。"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "顾长离不改变承担杀害陆照临后果的目标。"
+          }
+        },
+        "method": "顾长离仍被细绳缚住双腕、跪在原地，执事就在斜前方两步外，周围有负责看管的弟子和远处被挡住视线的新弟子。他只需保持跪姿，用目光依次扫过执事、持绳弟子、盖尸外袍旁的人以及远处新弟子，观察他们的神情和动作，不开口、不移动。代价是膝下尖石继续压迫，腕上绳勒持续带来疼痛，并继续暴露在众人注视下。",
+        "outcomes": [],
+        "goalUpdates": []
+      },
+      "consequenceReview": "reader-consequences/1",
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "我继续留在原地",
+            "status": "performed",
+            "summary": "顾长离始终跪在原地，未起身、未移动，直到本段结束仍留在半山试炼场。",
+            "evidence": "你仍跪着，没有动。风从崖口翻上来，把盖在陆照临身上的外袍掀起一角，又落回去。执事仍站在斜前方两步外，目光越过你，扫向试炼场边那些被拦住的弟子。你顺着他的视线看过去，几个新弟子挤在石阶上方，有人伸着脖子，有人被前面的人挡住，只露出半张脸。他们没再往前，也没人说话，像被那声铜铃定在原地。"
+          },
+          {
+            "id": "A2",
+            "requirement": "观察在场众人的反应",
+            "status": "performed",
+            "summary": "顾长离依次观察执事、持绳弟子、盖尸外袍旁弟子及远处新弟子的神情与动作，没有开口。",
+            "evidence": "你仍跪着，没有动。风从崖口翻上来，把盖在陆照临身上的外袍掀起一角，又落回去。执事仍站在斜前方两步外，目光越过你，扫向试炼场边那些被拦住的弟子。你顺着他的视线看过去，几个新弟子挤在石阶上方，有人伸着脖子，有人被前面的人挡住，只露出半张脸。他们没再往前，也没人说话，像被那声铜铃定在原地。"
+          },
+          {
+            "id": "A3",
+            "requirement": "不重提试炼和金屑",
+            "status": "performed",
+            "summary": "顾长离本段未开口，也未提及试炼和金屑。",
+            "evidence": "你仍跪着，没有动。风从崖口翻上来，把盖在陆照临身上的外袍掀起一角，又落回去。执事仍站在斜前方两步外，目光越过你，扫向试炼场边那些被拦住的弟子。你顺着他的视线看过去，几个新弟子挤在石阶上方，有人伸着脖子，有人被前面的人挡住，只露出半张脸。他们没再往前，也没人说话，像被那声铜铃定在原地。"
+          },
+          {
+            "id": "A4",
+            "requirement": "也不改变承担后果的目标",
+            "status": "performed",
+            "summary": "顾长离仍跪地等候处置，未作出任何改变承担杀害陆照临后果目标的言行。",
+            "evidence": "你仍跪着，没有动。风从崖口翻上来，把盖在陆照临身上的外袍掀起一角，又落回去。执事仍站在斜前方两步外，目光越过你，扫向试炼场边那些被拦住的弟子。你顺着他的视线看过去，几个新弟子挤在石阶上方，有人伸着脖子，有人被前面的人挡住，只露出半张脸。他们没再往前，也没人说话，像被那声铜铃定在原地。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "顾长离始终跪在原地，未起身、未移动，直到本段结束仍留在半山试炼场。；顾长离依次观察执事、持绳弟子、盖尸外袍旁弟子及远处新弟子的神情与动作，没有开口。；顾长离本段未开口，也未提及试炼和金屑。；顾长离仍跪地等候处置，未作出任何改变承担杀害陆照临后果目标的言行。",
+          "evidence": "你仍跪着，没有动。风从崖口翻上来，把盖在陆照临身上的外袍掀起一角，又落回去。执事仍站在斜前方两步外，目光越过你，扫向试炼场边那些被拦住的弟子。你顺着他的视线看过去，几个新弟子挤在石阶上方，有人伸着脖子，有人被前面的人挡住，只露出半张脸。他们没再往前，也没人说话，像被那声铜铃定在原地。"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "selectedDirectionId": "direction_free_ec7dfc7f3f4c",
+      "selectedDirection": {
+        "id": "direction_free_ec7dfc7f3f4c",
+        "title": "自定行动：我继续留在原地，观察在场",
+        "summary": "我继续留在原地，观察在场众人的反应，不重提试炼和金屑，也不改变承担后果的目标。",
+        "statePatch": {
+          "freeTextProgress": 6
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "我继续留在原地，观察在场众人的反应，不重提试炼和金屑，也不改变承担后果的目标。",
+      "requestId": "batch-b-accepted-followup-5",
+      "turnInput": {
+        "text": "我继续留在原地，观察在场众人的反应，不重提试炼和金屑，也不改变承担后果的目标。"
+      },
+      "preparedTurnKey": "71ea593d4996ce9d54b03c75e2919c5de1970aa1347c57764a6e6372b2966737"
+    },
+    "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+  }
+}

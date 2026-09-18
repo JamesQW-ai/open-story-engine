@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_020",
+    "title": "推进：旧墟落雪",
+    "summary": "“宗门从未承认它存在。”",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_107",
+          "chapter_108",
+          "chapter_109"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_110"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_107_to_108",
+      "direction_chapter_108_to_109",
+      "direction_chapter_109_to_110"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_021"
+    ]
+  }
+}

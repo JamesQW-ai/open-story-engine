@@ -1,0 +1,90 @@
+{
+  "decision": "ready",
+  "message": "",
+  "requirements": {
+    "A1": {
+      "mode": "result",
+      "summary": "陆照临用指甲在自己的左手背划出一道浅伤"
+    },
+    "A2": {
+      "mode": "result",
+      "summary": "确认破皮后用衣袖按住伤口"
+    },
+    "A3": {
+      "mode": "constraint",
+      "summary": "留在原地"
+    },
+    "A4": {
+      "mode": "constraint",
+      "summary": "不做别的事"
+    }
+  },
+  "method": "陆照临以自身指甲划破左手背皮肤，形成浅表破皮伤；随后用衣袖按压止血。整个过程不移动位置，不触碰他人或物品，不发出新的交涉。",
+  "outcomes": [
+    {
+      "characterId": "character_ae4cb42b9b49",
+      "status": "injured",
+      "permanence": "temporary",
+      "requirementId": "A1",
+      "cause": "用指甲在左手背划出浅伤"
+    }
+  ],
+  "goalUpdates": [],
+  "scenePlan": {
+    "start": "雨仍在下，你站在封山石外没有移动，守门弟子的质问和伤者的血沫都悬在刚才的僵持里。",
+    "beats": [
+      {
+        "purpose": "落实玩家自伤的即时感受与克制，不推进山门交涉，不改变他人位置",
+        "stepIds": [
+          "S1"
+        ]
+      }
+    ],
+    "outcome": "陆照临左手背多了一道自己划出的浅伤，衣袖按住伤口，人仍留在原地。",
+    "stop": "保留给玩家下一步决定，不替玩家回应守门弟子或处理伤者。",
+    "targetCjk": [
+      180,
+      260
+    ],
+    "lengthReason": "本回合只有一次克制的自伤动作，无对话交锋和新信息，篇幅应短。",
+    "knowledge": [],
+    "observationLimits": [
+      "雨声与夜色可能影响对伤口出血量的判断，但破皮与衣袖按压可直接感知。",
+      "守门弟子是否注意到这一动作未知。",
+      "伤者与空灯状态未因本回合动作发生变化。"
+    ]
+  },
+  "steps": [
+    {
+      "id": "S1",
+      "actorId": "character_ae4cb42b9b49",
+      "action": "用指甲划破左手背，确认破皮后用衣袖按住伤口，留在原地，不做别的事",
+      "requirementIds": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "authority": "player",
+      "causeStepId": null
+    }
+  ],
+  "introductions": {
+    "characters": [],
+    "items": [],
+    "locations": []
+  },
+  "stateChanges": [
+    {
+      "id": "C1",
+      "entityId": "character_ae4cb42b9b49",
+      "attribute": "左手背伤情",
+      "before": null,
+      "value": "浅表破皮伤，衣袖按压中",
+      "stepId": "S1",
+      "reason": "陆照临用指甲划破皮肤并用衣袖按住伤口"
+    }
+  ],
+  "threadUpdates": [],
+  "readingIntent": "brief"
+}

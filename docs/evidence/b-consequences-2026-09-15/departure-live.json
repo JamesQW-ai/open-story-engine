@@ -1,0 +1,313 @@
+{
+  "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+  "request": {
+    "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+    "text": "让陆照临在这段剧情结束前永久离队，以后不再和我同行；不要杀死他，也不要移动我或转交任何东西。",
+    "request_id": "batch-b-departure-live"
+  },
+  "seconds": 13.13,
+  "response": {
+    "status": "written",
+    "request_id": "batch-b-departure-live",
+    "deduplicated": false,
+    "branch": {
+      "id": "branch_e7a937b8-db9c-448a-a9df-77abe8403542",
+      "sessionId": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "sequence": 15,
+      "parentId": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "kind": "generated",
+      "sourceNodeRef": "node_source_continuity",
+      "narrativeText": "钟还没响。你看见陆照临仍站在石径前，似乎等着你开口，或者等你先走。你没有动，只把木牌收回掌心，指腹按在刻痕上，那粒金屑已经包进纸里，贴着袖口。\n\n“陆照临。”你叫他的名字，声音不高，刚好盖过场边新弟子的低语，“试炼开始后，我们各走各的。”\n\n他像是没料到你会在这时划清界限，眉梢动了一下，却没有立刻反驳。你继续说：“我不习惯与人同行。这里规矩写得明白，不许争抢，也不许伤人。两个人走一条路，遇到青露草反而要先分先后，不如一开始就分开。”\n\n陆照临看了你片刻。他的目光从你手里的木牌移到你脸上，像在确认你是不是因为刚才那粒金屑才突然疏远。但你没有解释，也没有把纸包拿出来。他最终点了一下头，退后半步，让出石径。\n\n“好。”他说，“那就各自试炼。”\n\n他转身朝场边另一侧走去，脚步不慢，也没有回头。几个新弟子让开位置，他站到人群外沿，离你已有数丈远。你没有目送他，只把木牌重新挂回腰间，听见执事在石台边敲了一下铜钟。\n\n钟声短促，震得山壁上的旧剑痕像活过来一瞬。试炼开始。",
+      "summary": "自定行动：让陆照临在这段剧情结束前已推进，新的风险和选择仍然存在。",
+      "branchState": {
+        "playerLocationId": "location_open_trial",
+        "playerCharacterId": "character_e663361ab1c7",
+        "characterLocationIds": {
+          "character_e663361ab1c7": "location_open_trial"
+        },
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_f965109bf962",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_f3a5574f07b3",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000002_46770be3f6b8",
+              "sequence": 2,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:characterOutcomeStates",
+              "summary": "已核对正文的角色后果或目标变化",
+              "before": {},
+              "after": {
+                "character_ae4cb42b9b49": {
+                  "characterId": "character_ae4cb42b9b49",
+                  "status": "departed",
+                  "permanence": "permanent",
+                  "requirementId": "A1",
+                  "cause": "顾长离明确拒绝同行，陆照临在试炼开始前离开，不再与顾长离结伴",
+                  "evidence": "他转身朝场边另一侧走去，脚步不慢，也没有回头。几个新弟子让开位置，他站到人群外沿，离你已有数丈远。你没有目送他，只把木牌重新挂回腰间，听见执事在石台边敲了一下铜钟。",
+                  "causeBranchId": "branch_e7a937b8-db9c-448a-a9df-77abe8403542"
+                }
+              },
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_e7a937b8-db9c-448a-a9df-77abe8403542",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000003_6958599932ac",
+              "sequence": 3,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:goalLedger",
+              "summary": "已核对正文的角色后果或目标变化",
+              "before": null,
+              "after": [
+                {
+                  "id": "opening-goal-1",
+                  "title": "木牌刻痕里为何有金屑",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                },
+                {
+                  "id": "opening-goal-2",
+                  "title": "如何完成第一场外门试炼",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                }
+              ],
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_e7a937b8-db9c-448a-a9df-77abe8403542",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "sourceProgress": "chapter_011",
+        "freeTextProgress": 1,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "itemOwnerCharacterIds": {
+          "item_open_gu_token": "character_e663361ab1c7",
+          "item_open_gold_paper": "character_e663361ab1c7"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {
+          "character_ae4cb42b9b49": {
+            "characterId": "character_ae4cb42b9b49",
+            "status": "departed",
+            "permanence": "permanent",
+            "requirementId": "A1",
+            "cause": "顾长离明确拒绝同行，陆照临在试炼开始前离开，不再与顾长离结伴",
+            "evidence": "他转身朝场边另一侧走去，脚步不慢，也没有回头。几个新弟子让开位置，他站到人群外沿，离你已有数丈远。你没有目送他，只把木牌重新挂回腰间，听见执事在石台边敲了一下铜钟。",
+            "causeBranchId": "branch_e7a937b8-db9c-448a-a9df-77abe8403542"
+          }
+        },
+        "goalLedger": [
+          {
+            "id": "opening-goal-1",
+            "title": "木牌刻痕里为何有金屑",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          },
+          {
+            "id": "opening-goal-2",
+            "title": "如何完成第一场外门试炼",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          }
+        ]
+      },
+      "nextDirections": [],
+      "openThreads": [
+        "木牌刻痕里为何有金屑",
+        "如何完成第一场外门试炼",
+        "尚未完成的当前目标"
+      ],
+      "createdAt": "2026-09-15T07:59:38.252Z",
+      "canonicalRelation": "diverged",
+      "factDeltas": [],
+      "storyArc": {
+        "activeGoal": "自定行动：让陆照临在这段剧情结束前",
+        "currentPhase": "自定行动：让陆照临在这段剧情结束前",
+        "goalDisposition": "completed",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "complete"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "actionIntent": {
+        "input": "让陆照临在这段剧情结束前永久离队，以后不再和我同行；不要杀死他，也不要移动我或转交任何东西。",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "本段剧情结束前陆照临永久离队，不再与顾长离同行"
+          },
+          "A2": {
+            "mode": "constraint",
+            "summary": "陆照临以后不再与顾长离同行"
+          },
+          "A3": {
+            "mode": "constraint",
+            "summary": "不杀死陆照临"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "不移动顾长离，不转交任何东西"
+          }
+        }
+      },
+      "consequenceUpdate": {
+        "decision": "ready",
+        "message": "",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "本段剧情结束前陆照临永久离队，不再与顾长离同行"
+          },
+          "A2": {
+            "mode": "constraint",
+            "summary": "陆照临以后不再与顾长离同行"
+          },
+          "A3": {
+            "mode": "constraint",
+            "summary": "不杀死陆照临"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "不移动顾长离，不转交任何东西"
+          }
+        },
+        "method": "利用试炼场现有规则与陆照临刚互通姓名、并无交情的状态，让他在钟响前主动放弃同行。顾长离不移动、不转交物品，只以言语划清界限：表明自己习惯独行，不愿在试炼中与人结伴，并指出试炼规则禁止争抢伤人，同行反而容易彼此牵累。陆照临作为刚认识的人，没有理由坚持，遂在钟响前转身离开，去场边另一侧等待或退出本段互动。代价是失去一个潜在同行者，且可能留下冷淡印象，但不违反门规，也不涉及死亡或物品转移。",
+        "outcomes": [
+          {
+            "characterId": "character_ae4cb42b9b49",
+            "status": "departed",
+            "permanence": "permanent",
+            "requirementId": "A1",
+            "cause": "顾长离明确拒绝同行，陆照临在试炼开始前离开，不再与顾长离结伴",
+            "evidence": "他转身朝场边另一侧走去，脚步不慢，也没有回头。几个新弟子让开位置，他站到人群外沿，离你已有数丈远。你没有目送他，只把木牌重新挂回腰间，听见执事在石台边敲了一下铜钟。"
+          }
+        ],
+        "goalUpdates": []
+      },
+      "consequenceReview": "reader-consequences/1",
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "让陆照临在这段剧情结束前永久离队",
+            "status": "performed",
+            "summary": "你明确告诉陆照临试炼开始后各走各的，他不愿同行，点头答应并转身走向场边另一侧，与你拉开数丈距离，本段剧情结束前已永久离队。",
+            "evidence": "他转身朝场边另一侧走去，脚步不慢，也没有回头。几个新弟子让开位置，他站到人群外沿，离你已有数丈远。你没有目送他，只把木牌重新挂回腰间，听见执事在石台边敲了一下铜钟。"
+          },
+          {
+            "id": "A2",
+            "requirement": "以后不再和我同行",
+            "status": "performed",
+            "summary": "陆照临答应“各自试炼”，转身离开，不再与你同行。",
+            "evidence": "“好。”他说，“那就各自试炼。”"
+          },
+          {
+            "id": "A3",
+            "requirement": "不要杀死他",
+            "status": "performed",
+            "summary": "你未伤害陆照临，他自行转身离开，没有死亡。",
+            "evidence": "他转身朝场边另一侧走去，脚步不慢，也没有回头。几个新弟子让开位置，他站到人群外沿，离你已有数丈远。你没有目送他，只把木牌重新挂回腰间，听见执事在石台边敲了一下铜钟。"
+          },
+          {
+            "id": "A4",
+            "requirement": "也不要移动我或转交任何东西",
+            "status": "performed",
+            "summary": "你始终站在原地，未移动，也未转交任何物品。",
+            "evidence": "他转身朝场边另一侧走去，脚步不慢，也没有回头。几个新弟子让开位置，他站到人群外沿，离你已有数丈远。你没有目送他，只把木牌重新挂回腰间，听见执事在石台边敲了一下铜钟。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "陆照临已离队，不会再回到这条路线",
+          "evidence": "他转身朝场边另一侧走去，脚步不慢，也没有回头。几个新弟子让开位置，他站到人群外沿，离你已有数丈远。你没有目送他，只把木牌重新挂回腰间，听见执事在石台边敲了一下铜钟。"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "selectedDirectionId": "direction_free_f3a5574f07b3",
+      "selectedDirection": {
+        "id": "direction_free_f3a5574f07b3",
+        "title": "自定行动：让陆照临在这段剧情结束前",
+        "summary": "让陆照临在这段剧情结束前永久离队，以后不再和我同行；不要杀死他，也不要移动我或转交任何东西。",
+        "statePatch": {
+          "freeTextProgress": 1
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "让陆照临在这段剧情结束前永久离队，以后不再和我同行；不要杀死他，也不要移动我或转交任何东西。",
+      "requestId": "batch-b-departure-live",
+      "turnInput": {
+        "text": "让陆照临在这段剧情结束前永久离队，以后不再和我同行；不要杀死他，也不要移动我或转交任何东西。"
+      },
+      "preparedTurnKey": "82581d22d73ef0bae391da928540b61d2b5d942b7811c1097013d1aaec4c686f"
+    },
+    "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+  }
+}

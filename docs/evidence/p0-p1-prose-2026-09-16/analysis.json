@@ -1,0 +1,694 @@
+[
+  {
+    "kind": "inform",
+    "status": "written",
+    "elapsedSeconds": 126.46,
+    "firstTextMs": 7897,
+    "actualCjk": 1007,
+    "metrics": {
+      "first_text_ms": 7886,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 126388,
+      "reported_tokens": 74539,
+      "calls": 14,
+      "unreported_calls": 0,
+      "tokens": 74539,
+      "commit_ms": 30,
+      "committed": true,
+      "selection_to_complete_ms": 126447
+    },
+    "drafts": [
+      {
+        "generationStage": "scene_draft_metrics",
+        "revision": 0,
+        "actualCjk": 965,
+        "paragraphs": 15,
+        "pacing": {
+          "level": "standard",
+          "targetCjk": [
+            700,
+            1100
+          ],
+          "authorizedSteps": 1,
+          "locationChanged": false,
+          "hardMinimum": false
+        }
+      },
+      {
+        "generationStage": "scene_draft_metrics",
+        "revision": 1,
+        "actualCjk": 1007,
+        "paragraphs": 15,
+        "pacing": {
+          "level": "standard",
+          "targetCjk": [
+            700,
+            1100
+          ],
+          "authorizedSteps": 1,
+          "locationChanged": false,
+          "hardMinimum": false
+        }
+      }
+    ],
+    "failures": [
+      {
+        "generationStage": "validation",
+        "revision": 0,
+        "outcome": "failed",
+        "error": "场景审查未通过：P5：玩家原始输入只要求告诉陆照临打算并听回应，明确不再问新问题。陆照临在P3提出反问后，P5中顾长离回答“是”，属于替玩家回应了NPC的反问，超出授权范围。；P9：陆照临陈述“青露草又长在背阴处”和“后坡不小”，这两项关于试炼场地与草药生长规律的事实断言在sceneEvidence中没有依据，不能仅因NPC说出就视为已公开事实。；P5：顾长离回答陆照临的反问“是”，原始输入未授权回答新问题。；P7：陆照临陈述“后坡不小，青露草又长在背阴处”，sceneEvidence中没有相关依据。；P5：顾长离回答“是”，原始输入明确不再问新问题，也未授权回答陆照临的反问。；P7：陆照临陈述青露草长在背阴处、后坡不小，属于背景事实断言，sceneEvidence中没有相关依据。；P9：本句判断陆照临的话不是劝阻也不是应和，属于对NPC话语性质的推断，但缺乏公开前情支持这一判断。",
+        "repairIssues": {
+          "issues": [
+            {
+              "paragraphId": "P5",
+              "type": "action",
+              "reason": "玩家原始输入只要求告诉陆照临打算并听回应，明确不再问新问题。陆照临在P3提出反问后，P5中顾长离回答“是”，属于替玩家回应了NPC的反问，超出授权范围。"
+            },
+            {
+              "paragraphId": "P9",
+              "type": "background",
+              "reason": "陆照临陈述“青露草又长在背阴处”和“后坡不小”，这两项关于试炼场地与草药生长规律的事实断言在sceneEvidence中没有依据，不能仅因NPC说出就视为已公开事实。"
+            },
+            {
+              "paragraphId": "P5",
+              "type": "action",
+              "reason": "顾长离回答陆照临的反问“是”，原始输入未授权回答新问题。"
+            },
+            {
+              "paragraphId": "P7",
+              "type": "background",
+              "reason": "陆照临陈述“后坡不小，青露草又长在背阴处”，sceneEvidence中没有相关依据。"
+            },
+            {
+              "paragraphId": "P5",
+              "type": "state",
+              "reason": "顾长离回答“是”，原始输入明确不再问新问题，也未授权回答陆照临的反问。"
+            },
+            {
+              "paragraphId": "P7",
+              "type": "state",
+              "reason": "陆照临陈述青露草长在背阴处、后坡不小，属于背景事实断言，sceneEvidence中没有相关依据。"
+            },
+            {
+              "paragraphId": "P9",
+              "type": "background",
+              "reason": "本句判断陆照临的话不是劝阻也不是应和，属于对NPC话语性质的推断，但缺乏公开前情支持这一判断。"
+            }
+          ],
+          "unlocatedIssues": []
+        }
+      }
+    ],
+    "repairs": [
+      {
+        "generationStage": "local_repair_record",
+        "revision": 0,
+        "beforeBody": "你朝陆照临走近一步，把包着金屑的纸片托在掌心，另一手仍握着木牌。山风从石径口倒灌上来，吹得纸角轻轻翘起，你没有按住它，只把话说到明处：“这粒金屑和木牌，我会带进后坡。试炼途中我留意金屑的来处，日落前取青露草时一并查。”\n\n纸片折出的棱角抵着掌心，金屑在薄纸下鼓起一点极轻的硬粒。你没有急着合拢手指，只让那阵风把纸角掀了又落，目光仍停在陆照临脸上，等他把你说的次序听进去。\n\n陆照临的目光先落在你掌心的纸包上，又移向你手中的木牌。他没有立刻伸手，也没有退开，只是微微偏过头，像在确认你话里的次序。片刻后他开口：“你是说，不在这里查，也不等钟响前问清楚，就带着它进试炼场？”\n\n他说“不在这里查”时，尾音压得比前一句低，像把“这里”二字单独掂了掂。偏头的动作不大，却让他的视线从纸包转到木牌时多停了一瞬，仿佛要看清那两样东西是否真如你所说会一并带进去。\n\n“是。”你答得简短。\n\n你没有补别的字，只把纸包往掌心收了收，纸角擦过指腹，发出极细的窸窣声。木牌仍握在另一只手里，指节没有松开。\n\n他点点头，视线从木牌背面刻痕处掠过，那里还留着刮去金屑后的浅痕。他说：“后坡不小，青露草又长在背阴处。你既要赶在日落前取草，又要分神找金屑的来处，时间会紧。”\n\n他说话时不紧不慢，每个字都像顺着石径口的风送过来，落到你面前时已经凉了半分。提到“分神”时，他的目光从木牌背面抬起，与你对了一瞬，又落回那几道浅痕上。\n\n这话不是劝阻，也不是应和。他停了一下，像把什么话咽回去，才继续道：“我听见了。你打算带着这两样进去，途中留意，取草时一并查。”\n\n他重复你的打算时，语速比先前慢，像要把“带着这两样进去”“途中留意”“取草时一并查”逐件点过，免得哪一处被风吹散了。说完“我听见了”四个字，他的喉结轻轻动了一下，到底没再添别的话。\n\n你等他再说下去。他却只看着石径尽头的白线，那里离试炼场入口还有一段距离，几个新弟子已经朝那边张望。钟声仍未响，执事站在高处，手里握着一截未燃尽的香。\n\n你顺着他目光看去，那几个新弟子还站在白线外，有人把手拢在袖里，有人回头朝钟楼方向望。执事手里的香只剩短短一截，灰白的香灰弯着，还没落下来。\n\n陆照临转回脸来，语气比刚才低了些：“我不拦你。只是你既然把打算告诉我，我也把话说在前头——若你在后坡真查到什么，回来时若还愿意说，我在这里等你一句。”\n\n他转回脸时，山风正好从你身后推来，把你掌心的纸片压向木牌，纸角擦过牌面，轻得几乎听不见。他说“若你在后坡真查到什么”时，目光没有躲开，语气却比前几句更沉，像把“若”字说得很窄。\n\n他说完便不再开口，也没有替你决定是否同行。你仍站在原地，纸包在掌心被风吹得微微发颤，木牌边缘贴着指节，后坡的方向就在石径那端。",
+        "afterBody": "你朝陆照临走近一步，把包着金屑的纸片托在掌心，另一手仍握着木牌。山风从石径口倒灌上来，吹得纸角轻轻翘起，你没有按住它，只把话说到明处：“这粒金屑和木牌，我会带进后坡。试炼途中我留意金屑的来处，日落前取青露草时一并查。”\n\n纸片折出的棱角抵着掌心，金屑在薄纸下鼓起一点极轻的硬粒。你没有急着合拢手指，只让那阵风把纸角掀了又落，目光仍停在陆照临脸上，等他把你说的次序听进去。\n\n陆照临的目光先落在你掌心的纸包上，又移向你手中的木牌。他没有立刻伸手，也没有退开，只是微微偏过头，像在确认你话里的次序。片刻后他开口：“你是说，不在这里查，也不等钟响前问清楚，就带着它进试炼场？”\n\n他说“不在这里查”时，尾音压得比前一句低，像把“这里”二字单独掂了掂。偏头的动作不大，却让他的视线从纸包转到木牌时多停了一瞬，仿佛要看清那两样东西是否真如你所说会一并带进去。\n\n你没有接他这句反问，也没有点头或摇头。纸包仍托在掌心，山风从指缝间穿过，把纸角吹得贴向木牌，又轻轻弹开。你只等他继续说下去。\n\n你没有补别的字，只把纸包往掌心收了收，纸角擦过指腹，发出极细的窸窣声。木牌仍握在另一只手里，指节没有松开。\n\n陆照临见你不答，也没有再追着问。他收回偏着的头，目光从你掌心移向石径尽头的白线，停了一瞬才说：“后坡的路不短，你带着这两样进去，自己多留神。”\n\n他说话时不紧不慢，每个字都像顺着石径口的风送过来，落到你面前时已经凉了半分。提到“分神”时，他的目光从木牌背面抬起，与你对了一瞬，又落回那几道浅痕上。\n\n他的语气不重，像只是把你刚才的话接过去，又添了一句提醒。说完后，他不再看那纸包，只把视线放回你脸上，像在等你自己定夺。\n\n他重复你的打算时，语速比先前慢，像要把“带着这两样进去”“途中留意”“取草时一并查”逐件点过，免得哪一处被风吹散了。说完“我听见了”四个字，他的喉结轻轻动了一下，到底没再添别的话。\n\n你等他再说下去。他却只看着石径尽头的白线，那里离试炼场入口还有一段距离，几个新弟子已经朝那边张望。钟声仍未响，执事站在高处，手里握着一截未燃尽的香。\n\n你顺着他目光看去，那几个新弟子还站在白线外，有人把手拢在袖里，有人回头朝钟楼方向望。执事手里的香只剩短短一截，灰白的香灰弯着，还没落下来。\n\n陆照临转回脸来，语气比刚才低了些：“我不拦你。只是你既然把打算告诉我，我也把话说在前头——若你在后坡真查到什么，回来时若还愿意说，我在这里等你一句。”\n\n他转回脸时，山风正好从你身后推来，把你掌心的纸片压向木牌，纸角擦过牌面，轻得几乎听不见。他说“若你在后坡真查到什么”时，目光没有躲开，语气却比前几句更沉，像把“若”字说得很窄。\n\n他说完便不再开口，也没有替你决定是否同行。你仍站在原地，纸包在掌心被风吹得微微发颤，木牌边缘贴着指节，后坡的方向就在石径那端。",
+        "issues": {
+          "issues": [
+            {
+              "paragraphId": "P5",
+              "type": "action",
+              "reason": "玩家原始输入只要求告诉陆照临打算并听回应，明确不再问新问题。陆照临在P3提出反问后，P5中顾长离回答“是”，属于替玩家回应了NPC的反问，超出授权范围。"
+            },
+            {
+              "paragraphId": "P9",
+              "type": "background",
+              "reason": "陆照临陈述“青露草又长在背阴处”和“后坡不小”，这两项关于试炼场地与草药生长规律的事实断言在sceneEvidence中没有依据，不能仅因NPC说出就视为已公开事实。"
+            },
+            {
+              "paragraphId": "P5",
+              "type": "action",
+              "reason": "顾长离回答陆照临的反问“是”，原始输入未授权回答新问题。"
+            },
+            {
+              "paragraphId": "P7",
+              "type": "background",
+              "reason": "陆照临陈述“后坡不小，青露草又长在背阴处”，sceneEvidence中没有相关依据。"
+            },
+            {
+              "paragraphId": "P5",
+              "type": "state",
+              "reason": "顾长离回答“是”，原始输入明确不再问新问题，也未授权回答陆照临的反问。"
+            },
+            {
+              "paragraphId": "P7",
+              "type": "state",
+              "reason": "陆照临陈述青露草长在背阴处、后坡不小，属于背景事实断言，sceneEvidence中没有相关依据。"
+            },
+            {
+              "paragraphId": "P9",
+              "type": "background",
+              "reason": "本句判断陆照临的话不是劝阻也不是应和，属于对NPC话语性质的推断，但缺乏公开前情支持这一判断。"
+            }
+          ],
+          "unlocatedIssues": []
+        },
+        "outcome": "passed_full_review",
+        "failureReason": null
+      }
+    ],
+    "stages": [
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 4662
+        },
+        "generationStage": "result_contract",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 1965
+        },
+        "generationStage": "action_authority",
+        "evidenceAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 5562
+        },
+        "generationStage": "chapter",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 7660
+        },
+        "generationStage": "scene_expand"
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 14985
+        },
+        "generationStage": "fact_extraction",
+        "revision": 0,
+        "extractionAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 14844
+        },
+        "generationStage": "action_review",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 25276
+        },
+        "generationStage": "scene_grounding",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 4896
+        },
+        "generationStage": "scope_review",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 3006
+        },
+        "generationStage": "local_repair",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 11226
+        },
+        "generationStage": "fact_extraction",
+        "revision": 1,
+        "extractionAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 13325
+        },
+        "generationStage": "action_review",
+        "revision": 1
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 12606
+        },
+        "generationStage": "scene_grounding",
+        "revision": 1
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 2668
+        },
+        "generationStage": "scope_review",
+        "revision": 1
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 3572
+        },
+        "generationStage": "reader_choices"
+      }
+    ]
+  },
+  {
+    "kind": "ask",
+    "status": "written",
+    "elapsedSeconds": 109.54,
+    "firstTextMs": 12513,
+    "actualCjk": 969,
+    "metrics": {
+      "first_text_ms": 12500,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 109475,
+      "reported_tokens": 88132,
+      "calls": 14,
+      "unreported_calls": 0,
+      "tokens": 88132,
+      "commit_ms": 24,
+      "committed": true,
+      "selection_to_complete_ms": 109526
+    },
+    "drafts": [
+      {
+        "generationStage": "scene_draft_metrics",
+        "revision": 0,
+        "actualCjk": 976,
+        "paragraphs": 11,
+        "pacing": {
+          "level": "standard",
+          "targetCjk": [
+            700,
+            1100
+          ],
+          "authorizedSteps": 2,
+          "locationChanged": false,
+          "hardMinimum": false
+        }
+      },
+      {
+        "generationStage": "scene_draft_metrics",
+        "revision": 1,
+        "actualCjk": 969,
+        "paragraphs": 11,
+        "pacing": {
+          "level": "standard",
+          "targetCjk": [
+            700,
+            1100
+          ],
+          "authorizedSteps": 2,
+          "locationChanged": false,
+          "hardMinimum": false
+        }
+      }
+    ],
+    "failures": [
+      {
+        "generationStage": "validation",
+        "revision": 0,
+        "outcome": "failed",
+        "error": "场景审查未通过：P7：让他只看我手里的纸包：原话要求陆照临只看纸包，P7明确描写他目光从纸包移向木牌，属于越出限定对象，虽随后收回，但已违反“只看”的排他范围。",
+        "repairIssues": {
+          "issues": [
+            {
+              "paragraphId": "P7",
+              "type": "action",
+              "reason": "让他只看我手里的纸包：原话要求陆照临只看纸包，P7明确描写他目光从纸包移向木牌，属于越出限定对象，虽随后收回，但已违反“只看”的排他范围。"
+            }
+          ],
+          "unlocatedIssues": []
+        }
+      }
+    ],
+    "repairs": [
+      {
+        "generationStage": "local_repair_record",
+        "revision": 0,
+        "beforeBody": "你仍站在石径口，纸包托在掌心，木牌握在另一只手里。陆照临刚才的话已经说完，山风把纸角吹得贴向你的指节，又翻起来。你没有把东西递过去，只把纸包朝他的方向略略一抬，让那粒金屑在薄纸下显出一点硬粒的轮廓：“这粒金屑是从木牌刻痕里刮出来的。你先只看我手里的纸包，别接。你对此怎么看，有什么依据？”\n\n你说话时没有把纸包再往前送，只让那点硬粒的轮廓停在两人之间。陆照临的目光顺着你的动作落下来，没有立刻接话，也没有问你为什么突然提起刻痕。纸角被风掀动，你感到金屑在纸下轻轻一滚，又落回折痕里。\n\n陆照临没有伸手。他的视线先在你脸上停了一瞬，才落到纸包上，像在确认你确实只让他看，不让他碰。纸片被风吹得轻轻起伏，金屑在折痕间时隐时现，他看得很慢，从纸包鼓起的棱角看到纸边折进去的角，最后才说：“我只能看见纸里包着一点金色，很小，看不出成色，也看不出它原本嵌在木牌哪一道刻痕里。”\n\n他的声音不高，每个字都落得清楚，像在替你划出一条线：他看见的只是纸包，不是木牌，也不是刻痕。说完后，他仍微微低着头，目光没有从纸包上移开，像要把那点金色在折痕里的位置记住。\n\n他说这话时没有凑近，也没有让你把纸打开。山风从石径下方卷上来，把纸包吹得贴向木牌，他仍站在原地，目光随着纸包移动，却始终没越过你手掌的边界。片刻后他补了一句：“你说是从刻痕里刮出来的，我听见了。但只凭这一眼，我没有依据判断它是什么来路，也不知道它为什么会在木牌上。”\n\n风势稍缓，纸包不再贴向木牌，重新在你掌心摊平。陆照临没有借机靠近，也没有抬手指点，只把目光停在纸包上，像在等你确认他是否说完了。你感到木牌在另一只手里被风吹得有些凉。\n\n他的语气不重，像把“没有依据”四个字说得很清楚，没有用别的话去填。说完后，他抬起眼，目光从纸包移向你手中的木牌，又很快收回来，像想起你只让他看纸包，便不再多看。远处执事手里的香灰又弯下一小截，几个新弟子朝白线外挪了挪，钟声仍没有响。\n\n你没有合拢手指，也没有把纸包收回袖中。陆照临的回答停在“不知道”上，没有替你决定下一步，也没有再问你要不要打开纸包。他仍面对你站着，山风把他衣摆吹向石径一侧，他的影子斜斜落在地上，与你之间隔着一步多宽的距离。\n\n他的沉默并不逼人，只是把刚才的话留在原处，没有收回去，也没有再补一句。你仍能感到纸包下金屑的棱角，那点重量很轻，却让你没有把手指松开。\n\n“你让我只看纸包，我就只能说到这里。”他停了一下，目光重新落回你脸上，“若你要我判断金屑和木牌的关系，得让我看木牌，或者至少把纸打开。但你不递，我不碰。”\n\n他说完便不再开口，只安静地等你。纸包仍在你掌心，金屑在纸下轻轻硌着，木牌边缘贴着指节，后坡的方向还在石径那端。",
+        "afterBody": "你仍站在石径口，纸包托在掌心，木牌握在另一只手里。陆照临刚才的话已经说完，山风把纸角吹得贴向你的指节，又翻起来。你没有把东西递过去，只把纸包朝他的方向略略一抬，让那粒金屑在薄纸下显出一点硬粒的轮廓：“这粒金屑是从木牌刻痕里刮出来的。你先只看我手里的纸包，别接。你对此怎么看，有什么依据？”\n\n你说话时没有把纸包再往前送，只让那点硬粒的轮廓停在两人之间。陆照临的目光顺着你的动作落下来，没有立刻接话，也没有问你为什么突然提起刻痕。纸角被风掀动，你感到金屑在纸下轻轻一滚，又落回折痕里。\n\n陆照临没有伸手。他的视线先在你脸上停了一瞬，才落到纸包上，像在确认你确实只让他看，不让他碰。纸片被风吹得轻轻起伏，金屑在折痕间时隐时现，他看得很慢，从纸包鼓起的棱角看到纸边折进去的角，最后才说：“我只能看见纸里包着一点金色，很小，看不出成色，也看不出它原本嵌在木牌哪一道刻痕里。”\n\n他的声音不高，每个字都落得清楚，像在替你划出一条线：他看见的只是纸包，不是木牌，也不是刻痕。说完后，他仍微微低着头，目光没有从纸包上移开，像要把那点金色在折痕里的位置记住。\n\n他说这话时没有凑近，也没有让你把纸打开。山风从石径下方卷上来，把纸包吹得贴向木牌，他仍站在原地，目光随着纸包移动，却始终没越过你手掌的边界。片刻后他补了一句：“你说是从刻痕里刮出来的，我听见了。但只凭这一眼，我没有依据判断它是什么来路，也不知道它为什么会在木牌上。”\n\n风势稍缓，纸包不再贴向木牌，重新在你掌心摊平。陆照临没有借机靠近，也没有抬手指点，只把目光停在纸包上，像在等你确认他是否说完了。你感到木牌在另一只手里被风吹得有些凉。\n\n他的语气不重，像把“没有依据”四个字说得很清楚，没有用别的话去填。说完后，他仍只看着你掌心的纸包，视线没有越过纸包去寻木牌，也没有朝别处张望。远处执事手里的香灰又弯下一小截，几个新弟子朝白线外挪了挪，钟声仍没有响。\n\n你没有合拢手指，也没有把纸包收回袖中。陆照临的回答停在“不知道”上，没有替你决定下一步，也没有再问你要不要打开纸包。他仍面对你站着，山风把他衣摆吹向石径一侧，他的影子斜斜落在地上，与你之间隔着一步多宽的距离。\n\n他的沉默并不逼人，只是把刚才的话留在原处，没有收回去，也没有再补一句。你仍能感到纸包下金屑的棱角，那点重量很轻，却让你没有把手指松开。\n\n“你让我只看纸包，我就只能说到这里。”他停了一下，目光重新落回你脸上，“若你要我判断金屑和木牌的关系，得让我看木牌，或者至少把纸打开。但你不递，我不碰。”\n\n他说完便不再开口，只安静地等你。纸包仍在你掌心，金屑在纸下轻轻硌着，木牌边缘贴着指节，后坡的方向还在石径那端。",
+        "issues": {
+          "issues": [
+            {
+              "paragraphId": "P7",
+              "type": "action",
+              "reason": "让他只看我手里的纸包：原话要求陆照临只看纸包，P7明确描写他目光从纸包移向木牌，属于越出限定对象，虽随后收回，但已违反“只看”的排他范围。"
+            }
+          ],
+          "unlocatedIssues": []
+        },
+        "outcome": "passed_full_review",
+        "failureReason": null
+      }
+    ],
+    "stages": [
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 7997
+        },
+        "generationStage": "result_contract",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 2743
+        },
+        "generationStage": "action_authority",
+        "evidenceAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 6015
+        },
+        "generationStage": "chapter",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 3225
+        },
+        "generationStage": "scene_expand"
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 13982
+        },
+        "generationStage": "fact_extraction",
+        "revision": 0,
+        "extractionAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 7343
+        },
+        "generationStage": "action_review",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 24938
+        },
+        "generationStage": "scene_grounding",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 1577
+        },
+        "generationStage": "scope_review",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 1733
+        },
+        "generationStage": "local_repair",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 5573
+        },
+        "generationStage": "fact_extraction",
+        "revision": 1,
+        "extractionAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 9398
+        },
+        "generationStage": "action_review",
+        "revision": 1
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 19238
+        },
+        "generationStage": "scene_grounding",
+        "revision": 1
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 1788
+        },
+        "generationStage": "scope_review",
+        "revision": 1
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 3817
+        },
+        "generationStage": "reader_choices"
+      }
+    ]
+  },
+  {
+    "kind": "wait",
+    "status": "written",
+    "elapsedSeconds": 39.8,
+    "firstTextMs": 13857,
+    "actualCjk": 345,
+    "metrics": {
+      "first_text_ms": 13843,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 2,
+      "complete_ms": 39751,
+      "reported_tokens": 59603,
+      "calls": 8,
+      "unreported_calls": 0,
+      "tokens": 59603,
+      "commit_ms": 26,
+      "committed": true,
+      "selection_to_complete_ms": 39797
+    },
+    "drafts": [
+      {
+        "generationStage": "scene_draft_metrics",
+        "revision": 0,
+        "actualCjk": 345,
+        "paragraphs": 5,
+        "pacing": {
+          "level": "brief",
+          "targetCjk": [
+            400,
+            650
+          ],
+          "authorizedSteps": 1,
+          "locationChanged": false,
+          "hardMinimum": false
+        }
+      }
+    ],
+    "failures": [],
+    "repairs": [],
+    "stages": [
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 6314
+        },
+        "generationStage": "result_contract",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 3447
+        },
+        "generationStage": "result_contract",
+        "revision": 1
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 1803
+        },
+        "generationStage": "action_authority",
+        "evidenceAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 4297
+        },
+        "generationStage": "chapter",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 6273
+        },
+        "generationStage": "fact_extraction",
+        "revision": 0,
+        "extractionAttempt": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 5739
+        },
+        "generationStage": "action_review",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 9216
+        },
+        "generationStage": "scene_grounding",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 2603
+        },
+        "generationStage": "reader_choices"
+      }
+    ]
+  }
+]

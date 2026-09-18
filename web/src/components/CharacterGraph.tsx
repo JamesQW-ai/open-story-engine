@@ -1,6 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
 import type { JournalPerson, JournalRelationship } from '../api/types'
 import { relationshipLayout } from './relationshipLayout'
+import { GraphPortrait } from './GraphPortrait'
+import { relationshipLabelPosition } from './relationshipGeometry'
 
 export function CharacterGraph({ people, relationships, onSelect }: {
   people: JournalPerson[]
@@ -49,31 +51,35 @@ export function CharacterGraph({ people, relationships, onSelect }: {
         {layout.edges.map((edge) => {
           const a = point(nodes.get(edge.source)!), b = point(nodes.get(edge.target)!)
           const active = !focus || edge.source === focus || edge.target === focus
+          const label = relationshipLabelPosition(a, b)
           return <g key={[edge.source, edge.target].sort().join(':')} className={`graph-edge ${active ? '' : 'dim'}`}>
-            <title>{edge.evidence}（第 {edge.page} 页）</title>
-            <line x1={a.x} y1={a.y} x2={b.x} y2={b.y} />
-            <text x={(a.x + b.x) / 2} y={(a.y + b.y) / 2 - 8}>{edge.label}</text>
+            <title>{edge.evidence}（{edge.origin === 'opening' ? '开局前情 · ' : ''}第 {edge.page} 页）</title>
+            <path d={`M ${a.x} ${a.y} L ${b.x} ${b.y}`} />
+            <text x={label.x} y={label.y} dominantBaseline="middle">{edge.label}</text>
           </g>
         })}
         {layout.nodes.map((person) => {
           const p = point(person)
           return <g key={person.id} transform={`translate(${p.x} ${p.y})`}
+            data-character-status={person.status?.code ?? 'unknown'}
             className={`graph-node ${person.is_player ? 'player' : ''} ${focus && focus !== person.id && !adjacent.has(person.id) ? 'dim' : ''}`}
             role="button" tabIndex={0} aria-label={`查看${person.name}的人物卡`}
+            aria-description={person.status?.label ?? '状态未确认'}
             onFocus={() => setFocus(person.id)} onBlur={() => setFocus(null)}
             onMouseEnter={() => setFocus(person.id)} onMouseLeave={() => setFocus(null)}
             onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onSelect(person) } }}
             onPointerDown={(event) => { event.stopPropagation(); drag.current = { id: person.id, x: event.clientX, y: event.clientY, moved: false }; event.currentTarget.setPointerCapture(event.pointerId) }}
             onPointerUp={() => { const moved = drag.current?.moved; drag.current = null; if (!moved) onSelect(person) }}>
-            <circle className="graph-node-halo" r={person.is_player ? 35 : 30} />
-            <circle className="graph-node-dot" r={person.is_player ? 25 : 21} />
-            <text className="graph-initial" y="6">{person.name.slice(0, 1)}</text>
-            <text className="graph-name" y="48">{person.name}{person.is_player ? ' · 你' : ''}</text>
+            <title>{person.name}：{person.status?.label ?? '状态未确认'}</title>
+            <circle className="graph-node-halo" r={person.is_player ? 40 : 36} />
+            <GraphPortrait portrait={person.portrait} radius={person.is_player ? 34 : 30} />
+            <circle className="graph-node-frame" r={person.is_player ? 34 : 30} />
+            <text className="graph-name" y="54">{person.name}{person.is_player ? ' · 你' : ''}</text>
+            {person.status && person.status.code !== 'unknown' && <text className="graph-status" y="70">{person.status.label}</text>}
           </g>
         })}
       </g>
     </svg>
-    <p className="graph-caption">拖动整理关系，点击人物查看身份卡。</p>
-    {!layout.edges.length && <p className="graph-caption">已知的联系，会随着故事逐渐显现。</p>}
+    {!layout.edges.length && <p className="graph-caption">暂无已确认关系</p>}
   </div>
 }

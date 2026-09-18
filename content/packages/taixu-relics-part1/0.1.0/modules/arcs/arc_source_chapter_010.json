@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_010",
+    "title": "推进：下山旧路",
+    "summary": "“也可以离开？”",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_052",
+          "chapter_053",
+          "chapter_054",
+          "chapter_055",
+          "chapter_056",
+          "chapter_057",
+          "chapter_058",
+          "chapter_059"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_060"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_052_to_053",
+      "direction_chapter_053_to_054",
+      "direction_chapter_054_to_055",
+      "direction_chapter_055_to_056",
+      "direction_chapter_056_to_057",
+      "direction_chapter_057_to_058",
+      "direction_chapter_058_to_059",
+      "direction_chapter_059_to_060"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_011"
+    ]
+  }
+}

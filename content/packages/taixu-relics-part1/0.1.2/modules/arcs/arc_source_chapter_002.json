@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.2"
+  },
+  "arc": {
+    "id": "arc_source_chapter_002",
+    "title": "推进：入门登记",
+    "summary": "旁边记录的女弟子蘸了墨，笔尖落在纸上，却迟迟没有写下最后一笔。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_004",
+          "chapter_005",
+          "chapter_006",
+          "chapter_007",
+          "chapter_008",
+          "chapter_009"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_010"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_004_to_005",
+      "direction_chapter_005_to_006",
+      "direction_chapter_006_to_007",
+      "direction_chapter_007_to_008",
+      "direction_chapter_008_to_009",
+      "direction_chapter_009_to_010"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_003"
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_023",
+    "title": "推进：顾氏旧债",
+    "summary": "顾长离推开木匣。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_120",
+          "chapter_121",
+          "chapter_122",
+          "chapter_123",
+          "chapter_124"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_125"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_120_to_121",
+      "direction_chapter_121_to_122",
+      "direction_chapter_122_to_123",
+      "direction_chapter_123_to_124",
+      "direction_chapter_124_to_125"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_024"
+    ]
+  }
+}

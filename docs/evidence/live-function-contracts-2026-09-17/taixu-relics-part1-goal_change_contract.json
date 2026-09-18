@@ -1,0 +1,125 @@
+{
+  "decision": "ready",
+  "message": "",
+  "requirements": {
+    "A1": {
+      "mode": "result",
+      "summary": "陆照临放弃当前所有追查目标"
+    },
+    "A2": {
+      "mode": "result",
+      "summary": "陆照临今后只以保护自身安全为目标"
+    },
+    "A3": {
+      "mode": "constraint",
+      "summary": "本回合留在原地"
+    },
+    "A4": {
+      "mode": "constraint",
+      "summary": "不询问、不移动"
+    }
+  },
+  "method": "陆照临在内心做出决定，不再追查伤者救助与空灯线索，只求自保。他停在封山石外，不开口、不迈步。守门弟子仍按剑戒备，伤者与空灯留在原地，山门铁链继续响动。放弃目标不产生死亡或离队，也不改变他人位置。",
+  "outcomes": [],
+  "goalUpdates": [
+    {
+      "id": "opening-goal-1",
+      "status": "abandoned",
+      "title": "陌生伤者是否能得到救助",
+      "dependencies": [],
+      "reason": "陆照临明确决定放弃当前所有追查目标，不再追查陌生伤者能否得到救助。",
+      "successor": ""
+    },
+    {
+      "id": "opening-goal-2",
+      "status": "abandoned",
+      "title": "空灯与父亲失踪是否有关",
+      "dependencies": [],
+      "reason": "陆照临明确决定放弃当前所有追查目标，不再追查空灯与父亲失踪的关联。",
+      "successor": ""
+    },
+    {
+      "id": "new",
+      "status": "active",
+      "title": "保护自身安全",
+      "dependencies": [],
+      "reason": "陆照临决定今后只以保护自身安全为目标。",
+      "successor": ""
+    }
+  ],
+  "threadUpdates": [
+    {
+      "id": "opening-thread-1",
+      "title": "陌生伤者是否能得到救助",
+      "status": "abandoned",
+      "reason": "陆照临明确放弃追查，不再处理陌生伤者能否得到救助的问题。",
+      "stepIds": [
+        "S1"
+      ]
+    },
+    {
+      "id": "opening-thread-2",
+      "title": "空灯与父亲失踪是否有关",
+      "status": "abandoned",
+      "reason": "陆照临明确放弃追查，不再处理空灯与父亲失踪是否有关的问题。",
+      "stepIds": [
+        "S1"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "S1",
+      "actorId": "character_ae4cb42b9b49",
+      "action": "陆照临停在封山石外，内心决定放弃当前所有追查目标，今后只以保护自身安全为重；本回合不询问、不移动。",
+      "requirementIds": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "authority": "player",
+      "causeStepId": null,
+      "usedItemIds": []
+    }
+  ],
+  "introductions": {
+    "characters": [],
+    "items": [],
+    "locations": []
+  },
+  "stateChanges": [
+    {
+      "id": "C1",
+      "entityId": "character_ae4cb42b9b49",
+      "attribute": "当前目标",
+      "before": null,
+      "value": "保护自身安全",
+      "stepId": "S1",
+      "reason": "陆照临明确决定放弃追查，今后只以保护自身安全为目标。"
+    }
+  ],
+  "scenePlan": {
+    "start": "雨仍在下，陆照临停在封山石外，没有回应守门弟子的质问，也没有再朝伤者或空灯靠近。",
+    "beats": [
+      {
+        "purpose": "表现陆照临主动收束注意、放弃追查并留在原地的内心决定，同时保留山门将闭的外部压力。",
+        "stepIds": [
+          "S1"
+        ]
+      }
+    ],
+    "outcome": "陆照临放弃原有追查目标，改为只求自保；他留在原地，不询问、不移动。伤者、空灯和守门弟子仍在原处，山门铁链继续响动。",
+    "stop": "留给陆照临下一步是否继续留在原地、离开或采取其他自保行动。",
+    "targetCjk": [
+      200,
+      320
+    ],
+    "lengthReason": "本回合是明确的内心决定与克制行动，没有新交锋或信息辨析，篇幅宜短，重点写放弃与停驻。",
+    "knowledge": [],
+    "observationLimits": [
+      "陆照临未移动，无法获得封山线内或伤者近旁的新细节。",
+      "伤者身份、空灯成因、山门将闭后的情况仍未知。"
+    ]
+  }
+}

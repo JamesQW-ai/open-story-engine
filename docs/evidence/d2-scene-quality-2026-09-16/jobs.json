@@ -1,0 +1,1331 @@
+[
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:c4e803066cf57ff277d9350e0eab13124a518de2384a9f424474144fbf7dc42b",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-intent-2",
+      "input_digest": "583f14f8fdf6d4d994bd00ac595db097895e5e98837534e6f8d151409df306d4"
+    },
+    "status": "ready",
+    "metrics": {
+      "first_text_ms": 7267,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 31038,
+      "reported_tokens": 30027,
+      "calls": 7,
+      "unreported_calls": 0,
+      "tokens": 30027,
+      "commit_ms": 29,
+      "committed": true,
+      "selection_to_complete_ms": 31091
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:c4e803066cf57ff277d9350e0eab13124a518de2384a9f424474144fbf7dc42b",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4127
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1918
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4532
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4296
+            },
+            "generationStage": "scene_expand"
+          },
+          {
+            "generationStage": "scene_expand",
+            "outcome": "discarded",
+            "error": "场景补写越过开篇或结尾边界"
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 455,
+            "paragraphs": 5,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 1,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5292
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 8119
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我告诉陆照临，我打算带着",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 1,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      },
+      {
+        "operation": "reader_choices",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "prompt-catalog/1:c4e803066cf57ff277d9350e0eab13124a518de2384a9f424474144fbf7dc42b",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2649
+            },
+            "generationStage": "reader_choices"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:ac122f2ace36be6cc525b94adfc561269f8f3d3c6df6462f576394302fdc3443",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-intent-1",
+      "input_digest": "583f14f8fdf6d4d994bd00ac595db097895e5e98837534e6f8d151409df306d4"
+    },
+    "status": "expired",
+    "metrics": {
+      "first_text_ms": 9166,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 2,
+      "complete_ms": 30037,
+      "reported_tokens": 27017,
+      "calls": 6,
+      "unreported_calls": 0,
+      "tokens": 27017,
+      "commit_ms": 24,
+      "committed": true,
+      "selection_to_complete_ms": 30078
+    },
+    "audits": []
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:ac122f2ace36be6cc525b94adfc561269f8f3d3c6df6462f576394302fdc3443",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-explain-1",
+      "input_digest": "1fff7cbb722146a83c33383816f0033c22fa920c3462c7d62b116ff9b2973e4d"
+    },
+    "status": "expired",
+    "metrics": {
+      "first_text_ms": null,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 17395,
+      "reported_tokens": 12471,
+      "calls": 4,
+      "unreported_calls": 0,
+      "tokens": 12471
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:ac122f2ace36be6cc525b94adfc561269f8f3d3c6df6462f576394302fdc3443",
+        "error": "行动授权引文不在原输入或前文中",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5846
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3750
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4853
+            },
+            "generationStage": "result_contract",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2926
+            },
+            "generationStage": "action_authority"
+          }
+        ],
+        "promptContext": {
+          "mode": "package"
+        }
+      }
+    ]
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:c4e803066cf57ff277d9350e0eab13124a518de2384a9f424474144fbf7dc42b",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-explain-2",
+      "input_digest": "1fff7cbb722146a83c33383816f0033c22fa920c3462c7d62b116ff9b2973e4d"
+    },
+    "status": "failed",
+    "metrics": {
+      "first_text_ms": 7745,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 89630,
+      "reported_tokens": 82056,
+      "calls": 14,
+      "unreported_calls": 0,
+      "tokens": 82056
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:c4e803066cf57ff277d9350e0eab13124a518de2384a9f424474144fbf7dc42b",
+        "error": "行动或连续性未闭合：P5中顾长离追问“依据就这些？”超出原始输入A3的询问范围。原始输入只要求询问“对此怎么看、有什么依据”，陆照临已在P4给出看法和依据；P5的追问是新的追问，属于玩家未授权的额外决策。；P8中顾长离总结“所以你认为，刻字的时候就有金器在旁边”是对陆照临回应的推断性总结，原始输入未授权玩家作出这一总结性发言。；P10中陆照临提议“可以只把木牌转个方向，让我看背面”，这是NPC主动提出的新建议，涉及后续行动选择。原始输入A4要求听完回应再决定，但正文未让玩家选择是否接受该提议，而是直接结束在NPC提议上，未替玩家决定，但该提议本身作为NPC主动建议是允许的，不构成overreach。",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3490
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3127
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5207
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 9658
+            },
+            "generationStage": "scene_expand"
+          },
+          {
+            "generationStage": "scene_expand",
+            "outcome": "discarded",
+            "error": "场景补写越过开篇或结尾边界"
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 557,
+            "paragraphs": 11,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 13051
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 10584
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "generationStage": "validation",
+            "revision": 0,
+            "outcome": "failed",
+            "error": "场景越界 P6：陆照临陈述“新木牌刻字，边缘会翻出浅色木丝”以及“黑泥填进去，又夹着金屑，说明这牌子在泥里埋过，或者被人用混了金粉的东西抹过”，这些关于木牌刻痕和黑泥金屑的规律性断言在sceneEvidence中没有依据。"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1741
+            },
+            "generationStage": "local_repair",
+            "revision": 0
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 1,
+            "actualCjk": 555,
+            "paragraphs": 11,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 6639
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 8668
+            },
+            "generationStage": "action_review",
+            "revision": 1
+          },
+          {
+            "generationStage": "validation",
+            "revision": 1,
+            "outcome": "failed",
+            "error": "场景越界 P6：陆照临断言新刻的痕边会毛、黑泥已结在木纹里等判断依据，属于对木牌刻痕状态的客观事实推断，sceneEvidence中没有相应依据。"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1203
+            },
+            "generationStage": "local_repair",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4221
+            },
+            "generationStage": "chapter",
+            "revision": 2
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 2,
+            "actualCjk": 505,
+            "paragraphs": 11,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 6311
+            },
+            "generationStage": "fact_extraction",
+            "revision": 2,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5189
+            },
+            "generationStage": "fact_extraction",
+            "revision": 2,
+            "extractionAttempt": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 10481
+            },
+            "generationStage": "action_review",
+            "revision": 2
+          },
+          {
+            "generationStage": "validation",
+            "revision": 2,
+            "outcome": "failed",
+            "error": "行动或连续性未闭合：P5中顾长离追问“依据就这些？”超出原始输入A3的询问范围。原始输入只要求询问“对此怎么看、有什么依据”，陆照临已在P4给出看法和依据；P5的追问是新的追问，属于玩家未授权的额外决策。；P8中顾长离总结“所以你认为，刻字的时候就有金器在旁边”是对陆照临回应的推断性总结，原始输入未授权玩家作出这一总结性发言。；P10中陆照临提议“可以只把木牌转个方向，让我看背面”，这是NPC主动提出的新建议，涉及后续行动选择。原始输入A4要求听完回应再决定，但正文未让玩家选择是否接受该提议，而是直接结束在NPC提议上，未替玩家决定，但该提议本身作为NPC主动建议是允许的，不构成overreach。"
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我向陆照临说明木牌刻痕里",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 2,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:c64d1e18e23f21804476f2fcdcf418d4df73e45c8b967a42fe97f5f5bcc61645",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-brief-3",
+      "input_digest": "01ccfa2f5eae05b2abaa389c01732287785ced784bb538cfd358a1baeffa071b"
+    },
+    "status": "ready",
+    "metrics": {
+      "first_text_ms": 8123,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 2,
+      "complete_ms": 20642,
+      "reported_tokens": 24035,
+      "calls": 6,
+      "unreported_calls": 0,
+      "tokens": 24035,
+      "commit_ms": 34,
+      "committed": true,
+      "selection_to_complete_ms": 20695
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:c64d1e18e23f21804476f2fcdcf418d4df73e45c8b967a42fe97f5f5bcc61645",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4037
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2760
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3667
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 248,
+            "paragraphs": 3,
+            "pacing": {
+              "level": "brief",
+              "targetCjk": [
+                400,
+                650
+              ],
+              "authorizedSteps": 1,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3448
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3877
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我留在原地，把手里的纸包",
+          "pacing": {
+            "level": "brief",
+            "targetCjk": [
+              400,
+              650
+            ],
+            "authorizedSteps": 1,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      },
+      {
+        "operation": "reader_choices",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "prompt-catalog/1:c64d1e18e23f21804476f2fcdcf418d4df73e45c8b967a42fe97f5f5bcc61645",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2773
+            },
+            "generationStage": "reader_choices"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:c64d1e18e23f21804476f2fcdcf418d4df73e45c8b967a42fe97f5f5bcc61645",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-intent-3",
+      "input_digest": "583f14f8fdf6d4d994bd00ac595db097895e5e98837534e6f8d151409df306d4"
+    },
+    "status": "ready",
+    "metrics": {
+      "first_text_ms": 8271,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 49008,
+      "reported_tokens": 38256,
+      "calls": 7,
+      "unreported_calls": 0,
+      "tokens": 38256,
+      "commit_ms": 24,
+      "committed": true,
+      "selection_to_complete_ms": 49065
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:c64d1e18e23f21804476f2fcdcf418d4df73e45c8b967a42fe97f5f5bcc61645",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5331
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1729
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5508
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 8169
+            },
+            "generationStage": "scene_expand"
+          },
+          {
+            "generationStage": "scene_expand_metrics",
+            "beforeCjk": 597,
+            "afterCjk": 1434
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 1434,
+            "paragraphs": 13,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 1,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 10678
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 13768
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我告诉陆照临，我打算带着",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 1,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      },
+      {
+        "operation": "reader_choices",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "prompt-catalog/1:c64d1e18e23f21804476f2fcdcf418d4df73e45c8b967a42fe97f5f5bcc61645",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3769
+            },
+            "generationStage": "reader_choices"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:48ccfed43a8733376193a9c3922f32a7f40b8888fd20857173d7bcda52db6907",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-explain-3",
+      "input_digest": "1fff7cbb722146a83c33383816f0033c22fa920c3462c7d62b116ff9b2973e4d"
+    },
+    "status": "failed",
+    "metrics": {
+      "first_text_ms": 29295,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 2,
+      "complete_ms": 96538,
+      "reported_tokens": 62826,
+      "calls": 10,
+      "unreported_calls": 1,
+      "tokens": null
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:48ccfed43a8733376193a9c3922f32a7f40b8888fd20857173d7bcda52db6907",
+        "error": "事实提取必须覆盖每个正文段落",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "failed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": null,
+              "durationMs": 15000
+            },
+            "error": "SSE 连接或首段正文返回前超时",
+            "retryReason": "transient_provider_failure",
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 10292
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2707
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5200
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 11607
+            },
+            "generationStage": "scene_expand"
+          },
+          {
+            "generationStage": "scene_expand_metrics",
+            "beforeCjk": 610,
+            "afterCjk": 1081
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 1081,
+            "paragraphs": 17,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 3,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 11993
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 11197
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 15996
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "generationStage": "validation",
+            "revision": 0,
+            "outcome": "failed",
+            "error": "场景越界 P7：陆照临断言“玄霄宗外门试炼的木牌，通常只用朱砂或墨填字。金粉填字，不是给新弟子看的规矩。”这是关于宗门规矩的客观背景断言，sceneEvidence中没有依据。"
+          },
+          {
+            "generationStage": "scene_expand",
+            "outcome": "reverted"
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 1,
+            "actualCjk": 610,
+            "paragraphs": 9,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 3,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 7346
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5158
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 1
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我向陆照临说明木牌刻痕里",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 3,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:48ccfed43a8733376193a9c3922f32a7f40b8888fd20857173d7bcda52db6907",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-intent-4",
+      "input_digest": "583f14f8fdf6d4d994bd00ac595db097895e5e98837534e6f8d151409df306d4"
+    },
+    "status": "failed",
+    "metrics": {
+      "first_text_ms": 10127,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 137337,
+      "reported_tokens": 90150,
+      "calls": 14,
+      "unreported_calls": 0,
+      "tokens": 90150
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:48ccfed43a8733376193a9c3922f32a7f40b8888fd20857173d7bcda52db6907",
+        "error": "背景断言须带当前原句、解释及独立依据：P5",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5979
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2868
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4257
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2902
+            },
+            "generationStage": "scene_expand"
+          },
+          {
+            "generationStage": "scene_expand_metrics",
+            "beforeCjk": 427,
+            "afterCjk": 662
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 662,
+            "paragraphs": 6,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 6130
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 24337
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2740
+            },
+            "generationStage": "scene_grounding",
+            "revision": 0
+          },
+          {
+            "generationStage": "validation",
+            "revision": 0,
+            "outcome": "failed",
+            "error": "背景依据不足：木牌还拿在另一只手里；原文只提到你已看过木牌三遍并刮下金屑，没有说明木牌当前是否还拿在另一只手里。"
+          },
+          {
+            "generationStage": "scene_expand",
+            "outcome": "reverted"
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 1,
+            "actualCjk": 427,
+            "paragraphs": 4,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5875
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 18414
+            },
+            "generationStage": "action_review",
+            "revision": 1
+          },
+          {
+            "generationStage": "validation",
+            "revision": 1,
+            "outcome": "failed",
+            "error": "正文存在未登记的持续状态变化：{'entityId': 'character_e663361ab1c7', 'attribute': '已知顾长离的打算', 'value': '带金屑与木牌进后坡，试炼途中查金屑来源，日落前取青露草时一并查'}"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2558
+            },
+            "generationStage": "local_repair",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 11277
+            },
+            "generationStage": "chapter",
+            "revision": 2
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 2,
+            "actualCjk": 484,
+            "paragraphs": 8,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 21164
+            },
+            "generationStage": "fact_extraction",
+            "revision": 2,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 12934
+            },
+            "generationStage": "action_review",
+            "revision": 2
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 15777
+            },
+            "generationStage": "consequence_evidence_repair",
+            "revision": 2
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我告诉陆照临，我打算带着",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 2,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      }
+    ]
+  }
+]

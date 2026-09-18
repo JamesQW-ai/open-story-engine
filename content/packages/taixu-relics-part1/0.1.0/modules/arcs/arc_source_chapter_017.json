@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_017",
+    "title": "推进：顾氏旧印",
+    "summary": "她把清单递给他。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_086",
+          "chapter_087",
+          "chapter_088",
+          "chapter_089",
+          "chapter_090",
+          "chapter_091",
+          "chapter_092",
+          "chapter_093"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_094"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_086_to_087",
+      "direction_chapter_087_to_088",
+      "direction_chapter_088_to_089",
+      "direction_chapter_089_to_090",
+      "direction_chapter_090_to_091",
+      "direction_chapter_091_to_092",
+      "direction_chapter_092_to_093",
+      "direction_chapter_093_to_094"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_018"
+    ]
+  }
+}

@@ -20,7 +20,7 @@ class ScenePlanner(MockPlanner):
     def plan(self, context, selected, resolved_state, *args, **kwargs):
         name = api_routes.role_name(context['package'], resolved_state)
         step = api_routes.completed_steps(resolved_state)
-        narrative = '你停下脚步，确认刚才行动的结果。' + api_routes.OUTCOMES[name][step-1]
+        narrative = '你停下脚步，确认刚才行动的结果。' + ('' if selected.get('readerInterlude') else api_routes.OUTCOMES[name][step-1])
         result = plan_result(context, selected, narrative, selected['title'],
                              api_routes.directions(context['package'], resolved_state), 'high')
         result['openThreads'] = [d['title'] for d in result['nextDirections']]
@@ -98,7 +98,7 @@ class PlayerRouteTests(unittest.TestCase):
         self.assertEqual(len(self.client.get(f'/api/v1/sessions/{sid}/branches').json()['branches']), 1)
         response = self.client.post(f'/api/v1/sessions/{sid}/branches', json=payload)
         self.assertEqual(response.status_code, 200, response.text)
-        self.assertEqual(self.journal(sid, response.json()['branch'])['progress'], 25)
+        self.assertEqual(self.journal(sid, response.json()['branch'])['progress'], 0)
         self.assertEqual(len(self.client.get(f'/api/v1/sessions/{sid}/branches').json()['branches']), 2)
 
     def test_short_complete_story_streams_and_saves_without_padding(self):
@@ -110,25 +110,96 @@ class PlayerRouteTests(unittest.TestCase):
         for oversized in (False, True):
             with self.subTest(oversized=oversized):
                 gateway = Mock(model='short-story')
+                # Isolated gateway instances share test spies, not transport state.
+                gateway.__deepcopy__ = lambda memo: Mock(model=gateway.model, complete_text=gateway.complete_text, complete_json=gateway.complete_json)
                 gateway.complete_text.side_effect = ([Completion('你'+('雨'*3500), '{}', [])] if oversized else []) + [Completion(body, '{}', [])]
                 gateway.complete_json.side_effect = ([Completion('{"removable":[]}', '{}', [])] if oversized else []) + [
                     Completion(json.dumps({'final_location': '维修隧道', 'tang_safe': True, 'door_open': True,
                         'handoff_confirmed': False, 'evidence': body.split('。')[-2]+'。'}, ensure_ascii=False), '{}', []),
-                    Completion('{"issues":[]}', '{}', []),
+                    Completion(json.dumps({'issues': [], 'action': {'status': 'performed', 'summary': '你配合许川开门并安全脱困。', 'evidence': body.split('。')[0]+'。'}}, ensure_ascii=False), '{}', []),
                 ]
                 service = PlayService(ReadService(self.fixture.packages, self.fixture.database), self.fixture.root)
                 service._planner = PlayerNarrativePlanner(gateway)
                 chunks = []
-                result = service.continue_turn(sid, root['id'], text='敲门求助', request_id='short-turn-'+str(oversized), stream=chunks.append, stream_reset=lambda _: chunks.clear())
+                result = service.continue_turn(sid, root['id'], direction_id=root['nextDirections'][0]['id'], request_id='short-turn-'+str(oversized), stream=chunks.append, stream_reset=lambda _: chunks.clear())
                 self.assertEqual(result['branch']['narrativeText'], body)
                 self.assertEqual(''.join(chunks), body)
                 self.assertEqual(self.journal(sid, result['branch'])['progress'], 25)
                 self.assertEqual(gateway.complete_text.call_count, 2 if oversized else 1)
                 self.assertEqual(gateway.complete_json.call_count, 3 if oversized else 2)
 
+    def test_free_action_is_answered_recorded_and_does_not_skip_a_milestone(self):
+        from unittest.mock import Mock
+        from open_story_engine.api_play import PlayService
+        from open_story_engine.api_read import ReadService
+        sid, root = self.start('唐栖')
+        body = '你在信号室门边拨打报警电话，手机没有信号，呼叫未能接通。你把手机收好，仍站在锁住的门边，决定先听清外面的动静。'
+        gateway = Mock(model='action-review')
+        gateway.__deepcopy__ = lambda memo: Mock(model=gateway.model, complete_text=gateway.complete_text, complete_json=gateway.complete_json)
+        gateway.complete_text.return_value = Completion(body, '{}', [])
+        gateway.complete_json.side_effect = [
+            Completion(json.dumps({'final_location': '信号室', 'tang_safe': False,
+                'evidence': body.split('。')[0]+'。'}, ensure_ascii=False), '{}', []),
+            Completion(json.dumps({'issues': [], 'action': {'status': 'blocked',
+                'summary': '报警呼叫因手机无信号未能接通。', 'evidence': body.split('。')[0]+'。'}}, ensure_ascii=False), '{}', []),
+        ]
+        read = ReadService(self.fixture.packages, self.fixture.database)
+        service = PlayService(read, self.fixture.root)
+        service._planner = PlayerNarrativePlanner(gateway)
+        result = service.continue_turn(sid, root['id'], text='拨打报警电话', request_id='blocked-call')
+        node = result['branch']
+        self.assertEqual(self.journal(sid, node)['progress'], 0)
+        self.assertEqual(node['selectedDirection']['title'], '拨打报警电话')
+        self.assertEqual(node['selectedDirection']['summary'], '拨打报警电话')
+        self.assertEqual(read.branch_view(sid, node['id'])['readerOutcome']['action']['status'], 'blocked')
+        self.assertGreaterEqual(len(node['nextDirections']), 2)
+        self.assertIn('无信号', str(self.journal(sid, node)['feedback']))
+        replay = service.continue_turn(sid, root['id'], text='拨打报警电话', request_id='blocked-call')
+        self.assertEqual(replay['branch']['id'], node['id'])
+        self.assertEqual(gateway.complete_text.call_count, 1)
+
+    def test_free_text_can_complete_current_stage_without_granting_unrelated_stages(self):
+        sid, root = self.start('陈砚')
+        parent = root
+        for i, action in enumerate(('询问年轻人唐栖的去向', '进入维修隧道，配合救人',
+                                    '回到候车厅核对材料', '配合后续核查，交出现场处置')):
+            response = self.client.post(f'/api/v1/sessions/{sid}/branches', json={
+                'parent_branch_id': parent['id'], 'text': action, 'request_id': 'typed-stage-'+str(i)})
+            self.assertEqual(response.status_code, 200, response.text)
+            parent = response.json()['branch']
+            self.assertEqual(self.journal(sid, parent)['progress'], (i+1)*25)
+            self.assertEqual(parent['selectedDirection']['title'], action)
+        self.assertEqual(self.journal(sid, root)['progress'], 0)
+
 
 
 class SceneEvidenceTests(unittest.TestCase):
+    def test_action_and_notes_require_literal_evidence(self):
+        from open_story_engine.api_reader_quality import validate_outcome
+        body = '你向姜序说明了后续撤离分工，他点头同意。'
+        review = {'action': {'status': 'performed', 'summary': '分工得到回应。', 'evidence': body},
+                  'clues': [{'summary': '警方已经到了。', 'evidence': '警方已经到了。'}]}
+        with self.assertRaisesRegex(ValueError, '报警'):
+            validate_outcome(review, body, '先报警，组织后续计划', ['陈砚', '姜序'])
+        self.assertEqual(validate_outcome(review, body, '安排撤离分工', ['陈砚', '姜序'])['clues'], [])
+        review['action']['evidence'] = '“你向姜序说明了后续撤离分工”'
+        self.assertIn(validate_outcome(review, body, '安排撤离分工', ['陈砚', '姜序'])['action']['evidence'], body)
+        review['action']['evidence'] = '你拿起电话报警，警员回应。'
+        with self.assertRaises(ValueError):
+            validate_outcome(review, body, '安排撤离分工', ['陈砚', '姜序'])
+
+    def test_role_history_chronology_and_record_name_regressions(self):
+        from open_story_engine.api_reader_quality import continuity_check
+        for text in ('唐栖问你：“你下午追维修档案时怎么不说？”', '你在日志写下23:55发现受困。', '你核对禁记录。'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                continuity_check(text, '陈砚', '你抬眼，时钟显示23:58。')
+        continuity_check('你核对门禁记录，按故障、救援、上报的先后留下经过。', '陈砚')
+        continuity_check('你核对二十二点五十五分的求助语音。', '陈砚')
+        with self.assertRaisesRegex(ValueError, '陈砚修改'):
+            continuity_check('“门禁记录我改过。”姜序说，“防火门切手动，是我做的。”', '陈砚')
+        continuity_check('“门禁记录我改过。”你说。', '陈砚')
+        continuity_check('“门禁记录不是我改的，防火门不是我做的。”姜序说。', '陈砚')
+
     def test_local_repair_preserves_unaffected_text_and_rejects_wholesale_rewrite(self):
         paragraphs = ['甲' * 300, '乙' * 300, '丙' * 300, '丁' * 300]
         body = '\n\n'.join(paragraphs)
@@ -197,7 +268,11 @@ class SceneEvidenceTests(unittest.TestCase):
         for claim in ['许川还没听过录音。', '你下午发的那条语音。', '姜序把日志放进抽屉。']:
             with self.subTest(claim=claim), self.assertRaises(ValueError):
                 api_routes.check_scene_result(package, state, '列车停站，日志和事故上报已经交代。'+claim)
-        api_routes.check_scene_result(package, state, '列车停站，姜序保管日志，司机负责事故上报。')
+        api_routes.check_scene_result(package, state, '你把日志交给姜序。列车停站，姜序保管日志，司机负责事故上报。')
+        api_routes.check_scene_result(package, state, '你从长椅边拿起日志，递过去。日志有些潮。姜序接住，写下故障。列车停站，司机负责事故上报。')
+        api_routes.check_scene_result(package, state, '姜序从你手里接过日志本，翻开写下故障。列车停站，司机负责事故上报。')
+        with self.assertRaises(ValueError):
+            api_routes.check_scene_result(package, state, '你没有把日志交给姜序。列车停站，司机负责事故上报。')
 
     def test_length_edit_protects_first_and_final_outcome_paragraphs(self):
         paragraphs = ['你来到门边。' + '甲' * 498, '乙' * 500, '丙' * 500, '丁' * 500, '戊' * 500, '众人获救，留下真实记录。' + '己' * 498]
@@ -228,10 +303,17 @@ class SceneEvidenceTests(unittest.TestCase):
             with self.subTest(bad=bad), self.assertRaises(ValueError):
                 api_routes.check_reviewed_ending(package, state, quote, bad)
         later = {**state, 'derivedEvents': [{'id': api_routes.PREFIX+'1'}]}
-        later_quote = '你终于走进候车厅，把文件袋抱在怀里，靠着长椅坐下来。'
+        later_quote = '你终于走进候车厅，许川把录音笔交还给你，你接过后与文件袋一起抱在怀里。'
         # No demand to re-open or re-describe a door left behind last chapter.
         api_routes.check_reviewed_ending(package, later, later_quote,
-            {'final_location': '候车厅', 'door_open': None, 'tang_safe': None, 'evidence': later_quote})
+            {'final_location': '候车厅', 'door_open': None, 'tang_safe': None, 'recorder_holder': '唐栖',
+             'recorder_handoff_evidence': later_quote, 'evidence': later_quote})
+        for wrong in ({'recording_speaker': '姜序'}, {'archive_investigator': '陈砚'},
+                      {'record_editor': '姜序'}, {'recorder_handoff_evidence': None}):
+            with self.subTest(wrong=wrong), self.assertRaises(ValueError):
+                api_routes.check_reviewed_ending(package, later, later_quote,
+                    {'final_location': '候车厅', 'recorder_holder': '唐栖', 'recorder_handoff_evidence': later_quote,
+                     'evidence': later_quote, **wrong})
 
 
 if __name__ == '__main__':

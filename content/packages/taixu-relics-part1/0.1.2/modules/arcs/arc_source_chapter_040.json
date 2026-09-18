@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.2"
+  },
+  "arc": {
+    "id": "arc_source_chapter_040",
+    "title": "推进：无人签名的诏书",
+    "summary": "它们不再强行进入谁的神识，只在修士身前短暂停留。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_255",
+          "chapter_256",
+          "chapter_257",
+          "chapter_258",
+          "chapter_259",
+          "chapter_260",
+          "chapter_261"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_262"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_255_to_256",
+      "direction_chapter_256_to_257",
+      "direction_chapter_257_to_258",
+      "direction_chapter_258_to_259",
+      "direction_chapter_259_to_260",
+      "direction_chapter_260_to_261",
+      "direction_chapter_261_to_262"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_041"
+    ]
+  }
+}

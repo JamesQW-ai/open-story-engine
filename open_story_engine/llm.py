@@ -7,7 +7,7 @@ import socket
 import time
 from dataclasses import dataclass
 from queue import Empty, Queue
-from threading import Lock, Thread
+from threading import Lock, Thread, local
 from typing import Any, Callable, Dict, List, Optional
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
@@ -42,6 +42,7 @@ class OpenAICompatibleGateway:
         max_tokens: int = 8192,
         allow_transport_fallback: bool = True,
         reasoning_effort: Optional[str] = None,
+        first_delta_timeout_seconds: Optional[int] = None,
     ) -> None:
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
@@ -51,15 +52,51 @@ class OpenAICompatibleGateway:
         self.max_tokens = max_tokens
         self.allow_transport_fallback = allow_transport_fallback
         self.reasoning_effort = reasoning_effort
+        self.first_delta_timeout_seconds = first_delta_timeout_seconds
+        self._transport_local = local()
         # Only the fixed JSON, no-fallback live evaluation sets this budget.
         self.remaining_calls: Optional[int] = None
+
+    def __getstate__(self):
+        """Keep planner isolation compatible with per-thread gateway metrics."""
+        state = self.__dict__.copy()
+        # ``threading.local`` owns interpreter thread state and cannot be
+        # pickled/deep-copied.  A copied gateway must start with fresh metrics;
+        # the request configuration and live call budget remain shared values.
+        state.pop("_transport_local", None)
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+        self._transport_local = local()
+
+    def _reset_transport_metrics(self) -> Dict[str, Any]:
+        metrics: Dict[str, Any] = {"_started": time.monotonic()}
+        self._transport_local.metrics = metrics
+        return metrics
+
+    def _mark_transport_metric(self, name: str) -> None:
+        metrics = getattr(self._transport_local, "metrics", None)
+        if metrics is not None and name not in metrics:
+            metrics[name] = round((time.monotonic() - metrics["_started"]) * 1000)
+
+    def _transport_snapshot(self) -> Dict[str, int]:
+        metrics = getattr(self._transport_local, "metrics", {})
+        return {
+            key: value
+            for key, value in metrics.items()
+            if key != "_started" and isinstance(value, int)
+        }
 
     def _first_sse_delta_timeout_seconds(self) -> int:
         """Allow compatible endpoints time to start prose or reasoning events."""
         # A player cannot distinguish a silent connection from a stalled one.
         # Reserve most of a turn's budget for the transport that can expose
         # prose, instead of spending half the turn waiting with no feedback.
-        return min(self.timeout_seconds, min(15, max(5, self.timeout_seconds // 4)))
+        configured = self.first_delta_timeout_seconds
+        if configured is None:
+            configured = min(15, max(5, self.timeout_seconds // 4))
+        return min(self.timeout_seconds, max(5, configured))
 
     def _fallback_json_timeout_seconds(self) -> int:
         """Reserve the remainder of one turn for JSON after a silent SSE start."""
@@ -93,6 +130,7 @@ class OpenAICompatibleGateway:
             {"type": "json_object"},
             on_delta,
             on_reset,
+            stream_override=False,
         )
 
     def complete_text(
@@ -110,7 +148,9 @@ class OpenAICompatibleGateway:
         response_format: Optional[Dict[str, str]],
         on_delta: Optional[Callable[[str], None]],
         on_reset: Optional[Callable[[str], None]],
+        stream_override: Optional[bool] = None,
     ) -> Completion:
+        request_stream = self.stream if stream_override is None else stream_override
         if self.remaining_calls is not None:
             if self.remaining_calls <= 0:
                 raise LlmError("已达到真实模型验收调用上限", "model_call_limit")
@@ -120,7 +160,7 @@ class OpenAICompatibleGateway:
             "messages": messages,
             "temperature": 0.35,
             "max_tokens": self.max_tokens,
-            "stream": self.stream,
+            "stream": request_stream,
         }
         if response_format is not None:
             request_body["response_format"] = response_format
@@ -129,16 +169,17 @@ class OpenAICompatibleGateway:
         start = time.monotonic()
         deadline = start + self.timeout_seconds
         try:
-            if not self.stream:
+            if not request_stream:
                 if not self.allow_transport_fallback:
                     content, raw = self._json(
                         request_body,
                         self._remaining_until(deadline, "LLM 请求总超时"),
                     )
+                    transport_metrics = self._transport_snapshot()
                     return Completion(
                         content=content,
                         raw_response=raw,
-                        observations=[self._observation(1, "completed", "json", start)],
+                        observations=[self._observation(1, "completed", "json", start, transport_metrics=transport_metrics)],
                     )
                 try:
                     content, raw = self._json(
@@ -148,10 +189,11 @@ class OpenAICompatibleGateway:
                             self._remaining_until(deadline, "LLM 请求总超时"),
                         ),
                     )
+                    transport_metrics = self._transport_snapshot()
                     return Completion(
                         content=content,
                         raw_response=raw,
-                        observations=[self._observation(1, "completed", "json", start)],
+                        observations=[self._observation(1, "completed", "json", start, transport_metrics=transport_metrics)],
                     )
                 except (TimeoutError, socket.timeout) as error:
                     # JSON responses often remain completely silent until a long
@@ -160,6 +202,7 @@ class OpenAICompatibleGateway:
                     if on_reset:
                         on_reset("json_transport_fallback")
                     fallback_started = time.monotonic()
+                    first_transport_metrics = self._transport_snapshot()
                     try:
                         content, raw = self._stream(
                             {**request_body, "stream": True},
@@ -170,18 +213,20 @@ class OpenAICompatibleGateway:
                             ),
                         )
                     except (HTTPError, URLError, TimeoutError, socket.timeout, LlmError) as fallback_error:
+                        second_transport_metrics = self._transport_snapshot()
                         failure = LlmError(str(fallback_error), getattr(fallback_error, "code", "transport_error"))
                         failure.observations = [
-                            self._observation(1, "failed", "json", start, str(error)),
-                            self._observation(2, "failed", "sse", fallback_started, str(fallback_error), retry_reason="json_transport_fallback"),
+                            self._observation(1, "failed", "json", start, str(error), transport_metrics=first_transport_metrics),
+                            self._observation(2, "failed", "sse", fallback_started, str(fallback_error), retry_reason="json_transport_fallback", transport_metrics=second_transport_metrics),
                         ]
                         raise failure from fallback_error
+                    second_transport_metrics = self._transport_snapshot()
                     return Completion(
                         content=content,
                         raw_response=raw,
                         observations=[
-                            self._observation(1, "failed", "json", start, str(error)),
-                            self._observation(2, "completed", "sse", fallback_started, retry_reason="json_transport_fallback"),
+                            self._observation(1, "failed", "json", start, str(error), transport_metrics=first_transport_metrics),
+                            self._observation(2, "completed", "sse", fallback_started, retry_reason="json_transport_fallback", transport_metrics=second_transport_metrics),
                         ],
                         used_transport_fallback=True,
                         body_was_streamed=True,
@@ -193,10 +238,11 @@ class OpenAICompatibleGateway:
                     on_delta,
                     self._remaining_until(deadline, "LLM 请求总超时"),
                 )
+                transport_metrics = self._transport_snapshot()
                 return Completion(
                     content=content,
                     raw_response=raw,
-                    observations=[self._observation(1, "completed", "sse", start)],
+                    observations=[self._observation(1, "completed", "sse", start, transport_metrics=transport_metrics)],
                     body_was_streamed=on_delta is not None,
                 )
             try:
@@ -205,10 +251,11 @@ class OpenAICompatibleGateway:
                     on_delta,
                     self._remaining_until(deadline, "LLM 请求总超时"),
                 )
+                transport_metrics = self._transport_snapshot()
                 return Completion(
                     content=content,
                     raw_response=raw,
-                    observations=[self._observation(1, "completed", "sse", start)],
+                    observations=[self._observation(1, "completed", "sse", start, transport_metrics=transport_metrics)],
                     body_was_streamed=on_delta is not None,
                 )
             except (LlmError, TimeoutError, socket.timeout) as error:
@@ -220,6 +267,7 @@ class OpenAICompatibleGateway:
                 if on_reset:
                     on_reset("transport_fallback")
                 fallback_started = time.monotonic()
+                first_transport_metrics = self._transport_snapshot()
                 fallback_body = {**request_body, "stream": False}
                 try:
                     content, raw = self._json(
@@ -230,18 +278,20 @@ class OpenAICompatibleGateway:
                         ),
                     )
                 except (HTTPError, URLError, TimeoutError, socket.timeout, LlmError) as fallback_error:
+                    second_transport_metrics = self._transport_snapshot()
                     failure = LlmError(str(fallback_error), getattr(fallback_error, "code", "transport_error"))
                     failure.observations = [
-                        self._observation(1, "failed", "sse", start, str(error)),
-                        self._observation(2, "failed", "json", fallback_started, str(fallback_error), retry_reason="transport_fallback"),
+                        self._observation(1, "failed", "sse", start, str(error), transport_metrics=first_transport_metrics),
+                        self._observation(2, "failed", "json", fallback_started, str(fallback_error), retry_reason="transport_fallback", transport_metrics=second_transport_metrics),
                     ]
                     raise failure from fallback_error
+                second_transport_metrics = self._transport_snapshot()
                 return Completion(
                     content=content,
                     raw_response=raw,
                     observations=[
-                        self._observation(1, "failed", "sse", start, str(error)),
-                        self._observation(2, "completed", "json", fallback_started, retry_reason="transport_fallback"),
+                        self._observation(1, "failed", "sse", start, str(error), transport_metrics=first_transport_metrics),
+                        self._observation(2, "completed", "json", fallback_started, retry_reason="transport_fallback", transport_metrics=second_transport_metrics),
                     ],
                     used_transport_fallback=True,
                 )
@@ -255,6 +305,7 @@ class OpenAICompatibleGateway:
                         start,
                         str(error),
                         failure_kind=error.code,
+                        transport_metrics=self._transport_snapshot(),
                     )
                 ]
             raise
@@ -267,6 +318,7 @@ class OpenAICompatibleGateway:
                     "sse" if request_body["stream"] else "json",
                     start,
                     str(error),
+                    transport_metrics=self._transport_snapshot(),
                 )
             ]
             raise failure from error
@@ -279,6 +331,7 @@ class OpenAICompatibleGateway:
                     "sse" if request_body["stream"] else "json",
                     start,
                     str(error),
+                    transport_metrics=self._transport_snapshot(),
                 )
             ]
             raise failure from error
@@ -293,15 +346,19 @@ class OpenAICompatibleGateway:
         retry_reason: Optional[str] = None,
         failure_kind: Optional[str] = None,
         http_status: Optional[int] = None,
+        transport_metrics: Optional[Dict[str, int]] = None,
     ) -> Dict[str, Any]:
+        transport = {
+            "responseMode": mode,
+            "httpStatus": 200 if outcome == "completed" else http_status,
+            "durationMs": round((time.monotonic() - started) * 1000),
+        }
+        if transport_metrics:
+            transport.update(transport_metrics)
         observation: Dict[str, Any] = {
             "attempt": attempt,
             "outcome": outcome,
-            "transport": {
-                "responseMode": mode,
-                "httpStatus": 200 if outcome == "completed" else http_status,
-                "durationMs": round((time.monotonic() - started) * 1000),
-            },
+            "transport": transport,
         }
         if error:
             observation["error"] = error
@@ -329,7 +386,6 @@ class OpenAICompatibleGateway:
         result: Queue[tuple[str, Any]] = Queue()
         cancelled = [False]
         lock = Lock()
-
         def open_response() -> None:
             try:
                 response = urlopen(request, timeout=timeout)
@@ -360,11 +416,13 @@ class OpenAICompatibleGateway:
             raise socket.timeout(message) from error
         if kind == "error":
             raise value
+        self._mark_transport_metric("responseHeadersMs")
         return value
 
     def _json(self, body: Dict[str, Any], timeout_seconds: Optional[int] = None) -> tuple[str, str]:
         timeout = timeout_seconds if timeout_seconds is not None else self.timeout_seconds
         deadline = time.monotonic() + timeout
+        self._reset_transport_metrics()
         response = self._request(body, self._remaining_until(deadline, "JSON 响应连接超时"))
         try:
             raw_bytes = self._read_all(
@@ -372,6 +430,7 @@ class OpenAICompatibleGateway:
                 self._remaining_until(deadline, "JSON 响应超时"),
                 "JSON 响应超时",
             )
+            self._mark_transport_metric("completeBodyMs")
         finally:
             response.close()
         raw = raw_bytes.decode("utf-8")
@@ -402,6 +461,7 @@ class OpenAICompatibleGateway:
     ) -> tuple[str, str]:
         chunks: List[str] = []
         raw_events: List[str] = []
+        self._reset_transport_metrics()
         total_timeout = timeout_seconds if timeout_seconds is not None else self.timeout_seconds
         deadline = time.monotonic() + total_timeout
         first_delta_timeout = min(self._first_sse_delta_timeout_seconds(), total_timeout)
@@ -426,6 +486,7 @@ class OpenAICompatibleGateway:
         reader.start()
         first_delta_deadline = min(deadline, time.monotonic() + first_delta_timeout)
         close_asynchronously = False
+        completed_body = False
         try:
             while True:
                 wait_seconds = (deadline if chunks else first_delta_deadline) - time.monotonic()
@@ -448,6 +509,7 @@ class OpenAICompatibleGateway:
                 data = line[5:].strip()
                 if data == "[DONE]":
                     break
+                self._mark_transport_metric("firstEventMs")
                 raw_events.append(data)
                 try:
                     payload = json.loads(data)
@@ -459,9 +521,11 @@ class OpenAICompatibleGateway:
                 if not isinstance(delta, str):
                     delta = (choice.get("message") or {}).get("content")
                 if isinstance(delta, str) and delta:
+                    self._mark_transport_metric("firstContentMs")
                     chunks.append(delta)
                     if on_delta:
                         on_delta(delta)
+            completed_body = True
         except BaseException:
             # Some compatible servers leave the response iterator blocked even
             # after a caller times out. Closing that socket synchronously can
@@ -474,6 +538,8 @@ class OpenAICompatibleGateway:
                 Thread(target=response.close, daemon=True).start()
             else:
                 response.close()
+            if completed_body:
+                self._mark_transport_metric("completeBodyMs")
         content = "".join(chunks)
         if not content.strip():
             raise LlmError("LLM 响应缺少 choices[0].delta.content 或 choices[0].message.content", "empty_stream")

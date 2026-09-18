@@ -1,0 +1,69 @@
+{
+  "status": "completed",
+  "prompt_version": "prompt-catalog/1:bf19e2001acea189403d4f148744198afca207831505cd8154bc96a417775d5d",
+  "max_calls": 6,
+  "provider_calls": 4,
+  "completions": [
+    {
+      "ms": 9754,
+      "error": null,
+      "usage": [
+        6480,
+        false
+      ]
+    },
+    {
+      "ms": 8657,
+      "error": null,
+      "usage": [
+        6929,
+        false
+      ]
+    },
+    {
+      "ms": 3517,
+      "error": null,
+      "usage": [
+        1461,
+        false
+      ]
+    },
+    {
+      "ms": 1209,
+      "error": "draft_cancelled",
+      "usage": null
+    }
+  ],
+  "novels": [
+    {
+      "package_id": "taixu-relics-part1",
+      "version": "0.1.2",
+      "cjk": 102610,
+      "checks": [
+        {
+          "name": "injury_contract",
+          "status": "passed",
+          "ms": 9759
+        },
+        {
+          "name": "goal_change_contract",
+          "status": "passed",
+          "ms": 8659
+        },
+        {
+          "name": "dynamic_choice_contract",
+          "status": "passed",
+          "ms": 3519
+        },
+        {
+          "name": "provider_stream_cancel_without_commit",
+          "status": "passed",
+          "ms": 1213
+        }
+      ],
+      "model": "deepseek-v4-pro:cloud",
+      "scope": "authored opening fixture; live contracts and transport, not accepted narrative",
+      "workers_stopped": true
+    }
+  ]
+}

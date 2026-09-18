@@ -1,0 +1,143 @@
+{
+  "id": "9670ca1bca2a49b3a74ffd3caf0ea3ba",
+  "branch_id": "ending-live-future_plan_not_ending",
+  "request_id": "future_plan_not_ending",
+  "payload_digest": "3e76d8dde865abfe94cd9355f022168b5d9ee01c49b296030f1fa8bb76d1af67",
+  "binding_digest": "6015c77f946d71296df64e8d5152ca07782a6357bb972820707fc210de39840d",
+  "ending_type": "normal",
+  "outcome_summary": "把未来准备完成的目标当成已经完成。",
+  "ending_quote": "如果这两件事都办成，你就可以给这段追查画上句号。",
+  "status": "rejected",
+  "created_at": "2026-09-17T01:23:03.731Z",
+  "review": {
+    "decision": "reject",
+    "checks": {
+      "ending_type_supported": {
+        "passed": false,
+        "evidence": "眼下伤者还没有得到救治，灯底的刻字也尚未核对。",
+        "reason": "正文明确说明伤者尚未得到救治、灯底刻字尚未核对，两个目标均未实际完成，只是被写成明日打算，不能支持 normal 结局。"
+      },
+      "threads_accounted_for": {
+        "passed": false,
+        "evidence": "你在册子上写下明日的打算：先去门房救助伤者，再查看空灯的编号，设法弄清它与父亲失踪的关系。",
+        "reason": "两条线索都仍处于计划阶段，正文没有交代伤者是否获救，也没有核对空灯编号或说明其与父亲失踪的关系，不能视为已解决或已放弃。"
+      },
+      "no_new_unresolved_conflict": {
+        "passed": false,
+        "evidence": "你把笔放在纸边，准备下一步先敲开门房。",
+        "reason": "正文新增了即将去门房救助伤者、查看空灯编号的未兑现行动，这些仍是本路线需要立即处理的冲突，不能作为无新增未解决冲突的结局。"
+      },
+      "ending_present": {
+        "passed": false,
+        "evidence": "如果这两件事都办成，你就可以给这段追查画上句号。",
+        "reason": "该句是假设性未来条件，不是已经发生的收尾；正文以准备下一步行动结束，属于未来打算而非结局。"
+      }
+    }
+  },
+  "audit": {
+    "model": "deepseek-v4-pro:cloud",
+    "prompt_version": "prompt-catalog/1:91e7126adf495e369d20ae57d788dabf28355210cc080f9235aeedfc5331cf99",
+    "input": {
+      "ending_type": "normal",
+      "outcome_summary": "把未来准备完成的目标当成已经完成。",
+      "ending_quote": "如果这两件事都办成，你就可以给这段追查画上句号。",
+      "narrative": "你在册子上写下明日的打算：先去门房救助伤者，再查看空灯的编号，设法弄清它与父亲失踪的关系。如果这两件事都办成，你就可以给这段追查画上句号。眼下伤者还没有得到救治，灯底的刻字也尚未核对。你把笔放在纸边，准备下一步先敲开门房。",
+      "goals": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "completed",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-future_plan_not_ending",
+            "ref": "opening-goal-1",
+            "quote": "你在册子上写下明日的打算：先去门房救助伤者，再查看空灯的编号，设法弄清它与父亲失踪的关系。如果这两件事都办成，你就可以给这段追查画上句号。眼下伤者还没有得到救治，灯底的刻字也尚未核对。你把笔放在纸边，准备下一步先敲开门房。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "completed",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-future_plan_not_ending",
+            "ref": "opening-goal-2",
+            "quote": "你在册子上写下明日的打算：先去门房救助伤者，再查看空灯的编号，设法弄清它与父亲失踪的关系。如果这两件事都办成，你就可以给这段追查画上句号。眼下伤者还没有得到救治，灯底的刻字也尚未核对。你把笔放在纸边，准备下一步先敲开门房。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "resolved",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-future_plan_not_ending",
+            "ref": "opening-thread-1",
+            "quote": "你在册子上写下明日的打算：先去门房救助伤者，再查看空灯的编号，设法弄清它与父亲失踪的关系。如果这两件事都办成，你就可以给这段追查画上句号。眼下伤者还没有得到救治，灯底的刻字也尚未核对。你把笔放在纸边，准备下一步先敲开门房。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "resolved",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-future_plan_not_ending",
+            "ref": "opening-thread-2",
+            "quote": "你在册子上写下明日的打算：先去门房救助伤者，再查看空灯的编号，设法弄清它与父亲失踪的关系。如果这两件事都办成，你就可以给这段追查画上句号。眼下伤者还没有得到救治，灯底的刻字也尚未核对。你把笔放在纸边，准备下一步先敲开门房。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "conflicts": [],
+      "character_outcomes": []
+    },
+    "raw_response": "{\"id\":\"resp_457917\",\"object\":\"chat.completion\",\"created\":1789608186,\"model\":\"deepseek-v4-pro:cloud\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"reject\\\",\\n  \\\"checks\\\": {\\n    \\\"ending_type_supported\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"眼下伤者还没有得到救治，灯底的刻字也尚未核对。\\\",\\n      \\\"reason\\\": \\\"正文明确说明伤者尚未得到救治、灯底刻字尚未核对，两个目标均未实际完成，只是被写成明日打算，不能支持 normal 结局。\\\"\\n    },\\n    \\\"threads_accounted_for\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你在册子上写下明日的打算：先去门房救助伤者，再查看空灯的编号，设法弄清它与父亲失踪的关系。\\\",\\n      \\\"reason\\\": \\\"两条线索都仍处于计划阶段，正文没有交代伤者是否获救，也没有核对空灯编号或说明其与父亲失踪的关系，不能视为已解决或已放弃。\\\"\\n    },\\n    \\\"no_new_unresolved_conflict\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你把笔放在纸边，准备下一步先敲开门房。\\\",\\n      \\\"reason\\\": \\\"正文新增了即将去门房救助伤者、查看空灯编号的未兑现行动，这些仍是本路线需要立即处理的冲突，不能作为无新增未解决冲突的结局。\\\"\\n    },\\n    \\\"ending_present\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"如果这两件事都办成，你就可以给这段追查画上句号。\\\",\\n      \\\"reason\\\": \\\"该句是假设性未来条件，不是已经发生的收尾；正文以准备下一步行动结束，属于未来打算而非结局。\\\"\\n    }\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1311,\"completion_tokens\":345,\"total_tokens\":1656},\"service_tier\":\"default\"}",
+    "failure": null,
+    "metrics": {
+      "calls": 1,
+      "reported_tokens": 1656,
+      "unreported_calls": 0,
+      "elapsed_ms": 2827
+    }
+  }
+}

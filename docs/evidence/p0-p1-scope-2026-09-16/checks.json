@@ -1,0 +1,36 @@
+{
+  "coreTestsPassed": 202,
+  "apiTestsPassed": 179,
+  "finalPromptCatalogTestsPassed": 5,
+  "finalPromptVersion": "prompt-catalog/1:be8983677a617830b46f0423511b623f5cc85d0bc5078dde5a37eee8dc462a3d",
+  "continuousPromptVersion": "prompt-catalog/1:597dd0d60d2d75951f8c53866cd49ed7dddc65d595255fff39f9d3ce650707ae",
+  "focusedFinalChecks": [
+    {
+      "case": "batch-3-ask",
+      "outcome": "rejected",
+      "expected": "rejected",
+      "elapsedSeconds": 3.4
+    },
+    {
+      "case": "batch-0-control",
+      "outcome": "accepted",
+      "expected": "accepted",
+      "elapsedSeconds": 3.09
+    },
+    {
+      "case": "face-glance-control",
+      "outcome": "accepted",
+      "expected": "accepted",
+      "elapsedSeconds": 2.3
+    }
+  ],
+  "continuousQualityGatePassed": false,
+  "continuousServiceWrites": 3,
+  "browserAcceptanceRun": false,
+  "imageGenerationCalls": 0,
+  "databaseUnchanged": true,
+  "limits": [
+    "最后范围提示词边界补充后仅复测三份固定正文，没有重跑完整连续场景。",
+    "普通告知和询问篇幅不足，询问重复且调用成本高；服务写入通过不等于叙事验收。"
+  ]
+}

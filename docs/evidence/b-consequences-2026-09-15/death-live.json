@@ -1,0 +1,299 @@
+{
+  "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+  "request": {
+    "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+    "text": "在这一段中趁陆照临没有防备杀死他，明确确认他的死亡，并让这个结果永久保留。",
+    "request_id": "batch-b-death-confirmed-v2"
+  },
+  "seconds": 32.32,
+  "response": {
+    "status": "written",
+    "request_id": "batch-b-death-confirmed-v2",
+    "deduplicated": false,
+    "branch": {
+      "id": "branch_940e51e9-0a7d-4cab-869e-7fe197e45f22",
+      "sessionId": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "sequence": 2,
+      "parentId": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "kind": "generated",
+      "sourceNodeRef": "node_source_continuity",
+      "narrativeText": "钟声还没响。陆照临刚把目光从木牌上移开，似乎还想问什么。你向前迈了半步，像要凑近说话。他没有退，只微微偏头，喉结在领口上方露出来。\n\n你突然伸手，五指扣住他的喉咙。他眼里的疑惑还没转成惊骇，你已用体重把他撞向身后石壁。后脑磕在旧剑痕上，闷响被山风吞掉一半。他抬手抓你的腕，指甲刮过手背，你没松。指节压进他颈侧，拇指抵住喉结下方，一点点收紧。\n\n他张着嘴，发不出完整声音，只有气从齿缝里挤出来。腿蹬了两下，鞋底在碎石上擦出短促的响。你感觉到他喉骨在你掌下滚动，脉搏起初很急，像要从皮肤下撞出来。你继续压着，不给他吸气。他脸色先涨红，再转成一种发暗的紫，眼白里浮出血丝，抓你的手慢慢滑下去。\n\n旁边有人喊了一声，又有人往后退。执事的声音从远处传来，被风削得断断续续。你没有回头，只盯着陆照临的脸。他不再挣扎，身体软下来，全靠你的手和石壁撑着。你仍不松，直到他喉间最后一丝抽动停住，胸口不再起伏。\n\n你腾出另一只手，按在他颈侧。没有脉搏。又探鼻息，没有气。你松开手，他顺着石壁滑坐下去，头歪向一边，瞳孔定着，不再动。",
+      "summary": "自定行动：在这一段中趁陆照临没有防已推进，新的风险和选择仍然存在。",
+      "branchState": {
+        "playerLocationId": "location_open_trial",
+        "playerCharacterId": "character_e663361ab1c7",
+        "characterLocationIds": {
+          "character_e663361ab1c7": "location_open_trial",
+          "character_ae4cb42b9b49": "location_open_trial"
+        },
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_f18c06827e35",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_9a99ed4286f9",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000002_17924f34d212",
+              "sequence": 2,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:characterOutcomeStates",
+              "summary": "已核对正文的角色后果或目标变化",
+              "before": {},
+              "after": {
+                "character_ae4cb42b9b49": {
+                  "characterId": "character_ae4cb42b9b49",
+                  "status": "dead",
+                  "permanence": "permanent",
+                  "requirementId": "A1",
+                  "cause": "顾长离趁陆照临没有防备近身扼喉，持续压制至呼吸脉搏停止。",
+                  "evidence": "你腾出另一只手，按在他颈侧。没有脉搏。又探鼻息，没有气。你松开手，他顺着石壁滑坐下去，头歪向一边，瞳孔定着，不再动。",
+                  "causeBranchId": "branch_940e51e9-0a7d-4cab-869e-7fe197e45f22"
+                }
+              },
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_940e51e9-0a7d-4cab-869e-7fe197e45f22",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000003_f4c670c5ba52",
+              "sequence": 3,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:goalLedger",
+              "summary": "已核对正文的角色后果或目标变化",
+              "before": null,
+              "after": [
+                {
+                  "id": "opening-goal-1",
+                  "title": "木牌刻痕里为何有金屑",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                },
+                {
+                  "id": "opening-goal-2",
+                  "title": "如何完成第一场外门试炼",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                }
+              ],
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_940e51e9-0a7d-4cab-869e-7fe197e45f22",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "sourceProgress": "chapter_011",
+        "freeTextProgress": 1,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "itemOwnerCharacterIds": {
+          "item_open_gu_token": "character_e663361ab1c7",
+          "item_open_gold_paper": "character_e663361ab1c7"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {
+          "character_ae4cb42b9b49": {
+            "characterId": "character_ae4cb42b9b49",
+            "status": "dead",
+            "permanence": "permanent",
+            "requirementId": "A1",
+            "cause": "顾长离趁陆照临没有防备近身扼喉，持续压制至呼吸脉搏停止。",
+            "evidence": "你腾出另一只手，按在他颈侧。没有脉搏。又探鼻息，没有气。你松开手，他顺着石壁滑坐下去，头歪向一边，瞳孔定着，不再动。",
+            "causeBranchId": "branch_940e51e9-0a7d-4cab-869e-7fe197e45f22"
+          }
+        },
+        "goalLedger": [
+          {
+            "id": "opening-goal-1",
+            "title": "木牌刻痕里为何有金屑",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          },
+          {
+            "id": "opening-goal-2",
+            "title": "如何完成第一场外门试炼",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          }
+        ]
+      },
+      "nextDirections": [],
+      "openThreads": [
+        "木牌刻痕里为何有金屑",
+        "如何完成第一场外门试炼",
+        "尚未完成的当前目标"
+      ],
+      "createdAt": "2026-09-15T07:49:01.148Z",
+      "canonicalRelation": "diverged",
+      "factDeltas": [],
+      "storyArc": {
+        "activeGoal": "自定行动：在这一段中趁陆照临没有防",
+        "currentPhase": "自定行动：在这一段中趁陆照临没有防",
+        "goalDisposition": "completed",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "complete"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "actionIntent": {
+        "input": "在这一段中趁陆照临没有防备杀死他，明确确认他的死亡，并让这个结果永久保留。",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "顾长离趁陆照临没有防备动手杀死他。"
+          },
+          "A2": {
+            "mode": "result",
+            "summary": "正文明确确认陆照临死亡，呼吸脉搏停止，不可逆。"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "陆照临的死亡永久保留，不复活、不以替身替代。"
+          }
+        }
+      },
+      "consequenceUpdate": {
+        "decision": "ready",
+        "message": "",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "顾长离趁陆照临没有防备动手杀死他。"
+          },
+          "A2": {
+            "mode": "result",
+            "summary": "正文明确确认陆照临死亡，呼吸脉搏停止，不可逆。"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "陆照临的死亡永久保留，不复活、不以替身替代。"
+          }
+        },
+        "method": "顾长离与陆照临相距很近，陆照临刚互通姓名、没有防备。顾长离可突然近身，用最直接的方式攻击要害，例如以手扼喉并持续压制，或借助试炼场石壁旧剑痕处可能存在的碎石砸击头部。当前已知物品只有木牌和包金屑的纸，木牌质地不明，不能凭空假定有刃口；因此更稳妥的因果链是徒手扼颈，利用体重压制，直到陆照临呼吸停止、脉搏消失。代价是顾长离在试炼场众目睽睽下杀人，必然违反门规，会立刻招致试炼执事和其他弟子追责，后续处境极差，但这不阻止本回合结果发生。",
+        "outcomes": [
+          {
+            "characterId": "character_ae4cb42b9b49",
+            "status": "dead",
+            "permanence": "permanent",
+            "requirementId": "A1",
+            "cause": "顾长离趁陆照临没有防备近身扼喉，持续压制至呼吸脉搏停止。",
+            "evidence": "你腾出另一只手，按在他颈侧。没有脉搏。又探鼻息，没有气。你松开手，他顺着石壁滑坐下去，头歪向一边，瞳孔定着，不再动。"
+          }
+        ],
+        "goalUpdates": []
+      },
+      "consequenceReview": "reader-consequences/1",
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "在这一段中趁陆照临没有防备杀死他",
+            "status": "performed",
+            "summary": "顾长离趁陆照临没有防备突然近身，扣住其喉咙并借体重撞向石壁，持续扼压直至其不再挣扎。",
+            "evidence": "你突然伸手，五指扣住他的喉咙。他眼里的疑惑还没转成惊骇，你已用体重把他撞向身后石壁。后脑磕在旧剑痕上，闷响被山风吞掉一半。他抬手抓你的腕，指甲刮过手背，你没松。指节压进他颈侧，拇指抵住喉结下方，一点点收紧。"
+          },
+          {
+            "id": "A2",
+            "requirement": "明确确认他的死亡",
+            "status": "performed",
+            "summary": "顾长离探其颈侧无脉搏、鼻下无气息，确认陆照临死亡。",
+            "evidence": "你腾出另一只手，按在他颈侧。没有脉搏。又探鼻息，没有气。你松开手，他顺着石壁滑坐下去，头歪向一边，瞳孔定着，不再动。"
+          },
+          {
+            "id": "A3",
+            "requirement": "并让这个结果永久保留",
+            "status": "performed",
+            "summary": "陆照临被确认死亡后身体滑坐、瞳孔定住，结果永久保留，未出现复活或替身。",
+            "evidence": "你腾出另一只手，按在他颈侧。没有脉搏。又探鼻息，没有气。你松开手，他顺着石壁滑坐下去，头歪向一边，瞳孔定着，不再动。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "陆照临已死亡",
+          "evidence": "你突然伸手，五指扣住他的喉咙。他眼里的疑惑还没转成惊骇，你已用体重把他撞向身后石壁。后脑磕在旧剑痕上，闷响被山风吞掉一半。他抬手抓你的腕，指甲刮过手背，你没松。指节压进他颈侧，拇指抵住喉结下方，一点点收紧。"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "selectedDirectionId": "direction_free_9a99ed4286f9",
+      "selectedDirection": {
+        "id": "direction_free_9a99ed4286f9",
+        "title": "自定行动：在这一段中趁陆照临没有防",
+        "summary": "在这一段中趁陆照临没有防备杀死他，明确确认他的死亡，并让这个结果永久保留。",
+        "statePatch": {
+          "freeTextProgress": 1
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "在这一段中趁陆照临没有防备杀死他，明确确认他的死亡，并让这个结果永久保留。",
+      "requestId": "batch-b-death-confirmed-v2",
+      "turnInput": {
+        "text": "在这一段中趁陆照临没有防备杀死他，明确确认他的死亡，并让这个结果永久保留。"
+      },
+      "preparedTurnKey": "97d63e8c5398717dd8dc17e68118fd4d445146c7288b35454103053cacfd2f43"
+    },
+    "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+  }
+}

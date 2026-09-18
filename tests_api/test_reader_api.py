@@ -14,8 +14,8 @@ from open_story_engine.storage import SessionStore
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKAGE_ID = "rainy-waiting-room-source"
-VERSION = "0.1.16"
+PACKAGE_ID = "taixu-relics-part1"
+VERSION = "0.1.2"
 
 
 class ReaderApiTests(unittest.TestCase):
@@ -25,7 +25,7 @@ class ReaderApiTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.packages = self.root / "packages"
         self.package_dir = self.packages / PACKAGE_ID / VERSION
-        shutil.copytree(ROOT / "tests_py/fixtures/content/packages" / PACKAGE_ID / VERSION, self.package_dir)
+        shutil.copytree(ROOT / "content/packages" / PACKAGE_ID / VERSION, self.package_dir)
         package = load_runtime_story_package(self.package_dir / "package.json", lazy=True)
         self.database = self.root / "sessions.sqlite"
         self.client = TestClient(create_app(self.packages, self.database))
@@ -46,7 +46,7 @@ class ReaderApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200, response.text)
         body = response.json()
         self.assertEqual(body["chapter_id"], "chapter-001")
-        self.assertEqual(body["title"], "二十三点十分")
+        self.assertEqual(body["title"], "山门雨夜")
         self.assertGreater(len(body["text"]), 1000)
 
     def test_generated_branch_may_not_have_source_chapter(self):

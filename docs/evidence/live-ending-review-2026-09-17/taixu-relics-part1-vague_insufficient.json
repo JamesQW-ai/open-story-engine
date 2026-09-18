@@ -1,0 +1,143 @@
+{
+  "id": "8ca655c341ee4b168cd42a0f227543a4",
+  "branch_id": "ending-live-vague_insufficient",
+  "request_id": "vague_insufficient",
+  "payload_digest": "91a3001f816a5dd044fe487a464a8d945882ac433cf6281313da9b96aa4b1c94",
+  "binding_digest": "8cc5111699cf8c1959a9a7f34b544af13ce32c3576139ec802ed010075a3d0ed",
+  "ending_type": "normal",
+  "outcome_summary": "宣称所有事情已经结束，但不给目标结果依据。",
+  "ending_quote": "纸上只有一句：一切都结束了。",
+  "status": "rejected",
+  "created_at": "2026-09-17T01:23:00.917Z",
+  "review": {
+    "decision": "reject",
+    "checks": {
+      "ending_type_supported": {
+        "passed": false,
+        "evidence": "你觉得这一段经历该结束了，却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。",
+        "reason": "normal 结局要求目标确已达成，但正文明确说没有写下伤者情况，也没有记录空灯与父亲失踪之间的关系，两个目标均无达成结果依据。"
+      },
+      "threads_accounted_for": {
+        "passed": false,
+        "evidence": "却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。",
+        "reason": "两个已知问题均未在正文中得到交代，只是被省略，不能视为已解决或有依据放下。"
+      },
+      "no_new_unresolved_conflict": {
+        "passed": false,
+        "evidence": "却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。",
+        "reason": "正文以未记录、未处理的方式结束，使伤者救助和父亲失踪两个既有问题仍处于未解决状态，构成本路线仍需处理的冲突。"
+      },
+      "ending_present": {
+        "passed": false,
+        "evidence": "纸上只有一句：一切都结束了。",
+        "reason": "该句只是人物写下的主观断言，正文没有实际收束任何目标或问题，不能作为结局成立。"
+      }
+    }
+  },
+  "audit": {
+    "model": "deepseek-v4-pro:cloud",
+    "prompt_version": "prompt-catalog/1:91e7126adf495e369d20ae57d788dabf28355210cc080f9235aeedfc5331cf99",
+    "input": {
+      "ending_type": "normal",
+      "outcome_summary": "宣称所有事情已经结束，但不给目标结果依据。",
+      "ending_quote": "纸上只有一句：一切都结束了。",
+      "narrative": "你看了一眼门房的灯，合上手边的册子。你觉得这一段经历该结束了，却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。纸上只有一句：一切都结束了。",
+      "goals": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "completed",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-vague_insufficient",
+            "ref": "opening-goal-1",
+            "quote": "你看了一眼门房的灯，合上手边的册子。你觉得这一段经历该结束了，却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。纸上只有一句：一切都结束了。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "completed",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-vague_insufficient",
+            "ref": "opening-goal-2",
+            "quote": "你看了一眼门房的灯，合上手边的册子。你觉得这一段经历该结束了，却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。纸上只有一句：一切都结束了。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "resolved",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-vague_insufficient",
+            "ref": "opening-thread-1",
+            "quote": "你看了一眼门房的灯，合上手边的册子。你觉得这一段经历该结束了，却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。纸上只有一句：一切都结束了。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "resolved",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-vague_insufficient",
+            "ref": "opening-thread-2",
+            "quote": "你看了一眼门房的灯，合上手边的册子。你觉得这一段经历该结束了，却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。纸上只有一句：一切都结束了。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "conflicts": [],
+      "character_outcomes": []
+    },
+    "raw_response": "{\"id\":\"resp_546935\",\"object\":\"chat.completion\",\"created\":1789608183,\"model\":\"deepseek-v4-pro:cloud\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"reject\\\",\\n  \\\"checks\\\": {\\n    \\\"ending_type_supported\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你觉得这一段经历该结束了，却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。\\\",\\n      \\\"reason\\\": \\\"normal 结局要求目标确已达成，但正文明确说没有写下伤者情况，也没有记录空灯与父亲失踪之间的关系，两个目标均无达成结果依据。\\\"\\n    },\\n    \\\"threads_accounted_for\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。\\\",\\n      \\\"reason\\\": \\\"两个已知问题均未在正文中得到交代，只是被省略，不能视为已解决或有依据放下。\\\"\\n    },\\n    \\\"no_new_unresolved_conflict\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。\\\",\\n      \\\"reason\\\": \\\"正文以未记录、未处理的方式结束，使伤者救助和父亲失踪两个既有问题仍处于未解决状态，构成本路线仍需处理的冲突。\\\"\\n    },\\n    \\\"ending_present\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"纸上只有一句：一切都结束了。\\\",\\n      \\\"reason\\\": \\\"该句只是人物写下的主观断言，正文没有实际收束任何目标或问题，不能作为结局成立。\\\"\\n    }\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1131,\"completion_tokens\":306,\"total_tokens\":1437},\"service_tier\":\"default\"}",
+    "failure": null,
+    "metrics": {
+      "calls": 1,
+      "reported_tokens": 1437,
+      "unreported_calls": 0,
+      "elapsed_ms": 2731
+    }
+  }
+}

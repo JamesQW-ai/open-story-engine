@@ -1,0 +1,4 @@
+
+独立核对observedEvents中的每条事实与原始用户输入、前文、steps、当前状态的关系。不能因规划器登记了步骤就认为用户授权。对每个事件返回eventChecks:[{id:"O1",verdict:"supported|unsupported",reason:"具体依据或矛盾",stepIds:["S1"],changeIds:["C1"],introductionIds:["item_x"]}]，不得遗漏。
+实际发生的持续变化必须有语义完全对应的stateChanges；人物生死/离队可对应outcomes，目标对应goalUpdates。stateChanges对应的实体、属性和值必须与提取事实等义，不能拿无关变化凑数。新增影响行动的实体必须对应introductions及真实来源，否则unsupported。发出要求不能当成玩家已经服从；前文未执行的命令在本段被承接成既成事实属于unsupported。玩家未选择的决定、条件未满足的动作、偷偷省略的要求均为unsupported，不以推进剧情为理由放行。
+额外返回changeEvidence:["P1"]与introductionEvidence:["P2"]，依次对应stateChanges及introductions的characters/items/locations展平顺序，每项也可为段号数组。必须证明对应变化或引入已在本回合实际发生，不能仅是计划。没有变化返回空数组。按语义而非特定词语判断死亡、永久离队和其他结果；不能只靠含有某个词就认定兑现。若正文存在规划未登记、但确实由本回合获准行动引起的持续后果，可提出additionalChanges数组（字段同stateChanges，ID须与原契约不同）。只能补登记已发生、有正文证据的因果后果，不能用它掩盖玩家未授权决定、篡改原计划结果或创造未登记实体。新增后果仍须通过独立授权与父状态校验。changeEvidence与eventChecks应覆盖原stateChanges加additionalChanges的完整顺序。不需要补记时返回空数组。

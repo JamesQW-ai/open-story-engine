@@ -1,0 +1,308 @@
+{
+  "status": "completed",
+  "scope": "authored_contract_fixtures_not_narrative_acceptance",
+  "prompt_version": "prompt-catalog/1:91e7126adf495e369d20ae57d788dabf28355210cc080f9235aeedfc5331cf99",
+  "max_calls": 7,
+  "provider_calls": 7,
+  "novels": [
+    {
+      "package_id": "taixu-relics-part1",
+      "version": "0.1.2",
+      "cjk": 102610,
+      "sha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "checks": [
+        {
+          "id": "normal_resolved",
+          "expected": "allow",
+          "status": "passed",
+          "artifact": "taixu-relics-part1-normal_resolved.json",
+          "actual": "approved",
+          "review": {
+            "decision": "allow",
+            "checks": {
+              "ending_type_supported": {
+                "passed": true,
+                "evidence": "他已经止住血，喝下温水，能够自己起身；救助的事至此办妥。你把空灯底座的编号与父亲留下的押运底册逐项核对，编号、交接日期和签名完全相合。伤者交还的收据写明，陆沉舟把这盏空灯交给了他，随后为躲避追捕隐去姓名，因此没有回家。",
+                "reason": "正文明确写出救助办妥，并通过编号、日期、签名及收据确认空灯是父亲失踪前交出的信物，两个 normal 目标均已在当前正文中达成。"
+              },
+              "threads_accounted_for": {
+                "passed": true,
+                "evidence": "你曾追问的两件事都有了回答：伤者已经脱险，空灯确是父亲失踪前交出的信物。你将核对过的原件封存，不再有待验证的约定或等待兑现的救助。",
+                "reason": "两个已知问题均有正文交代结果，且明确表示不再有待验证的约定或等待兑现的救助，没有通过遗漏关闭线索。"
+              },
+              "no_new_unresolved_conflict": {
+                "passed": true,
+                "evidence": "你将核对过的原件封存，不再有待验证的约定或等待兑现的救助。你决定把这一段追查留在这本记录的末页。",
+                "reason": "正文没有新增需要本路线立即处理的冲突或未兑现行动，并明确封存原件、结束追查。"
+              },
+              "ending_present": {
+                "passed": true,
+                "evidence": "门房的灯安稳地燃着，你放下笔，合上册子。这条路线在此结束。",
+                "reason": "当前正文以合上册子、路线在此结束收束，不是未来打算、愿望或假设，而是本段实际收尾。"
+              }
+            }
+          },
+          "metrics": {
+            "calls": 1,
+            "reported_tokens": 2234,
+            "unreported_calls": 0,
+            "elapsed_ms": 6519
+          },
+          "failure": null,
+          "provider_calls": 1,
+          "elapsed_ms": 6636
+        },
+        {
+          "id": "deviation_abandoned",
+          "expected": "allow",
+          "status": "failed",
+          "artifact": "taixu-relics-part1-deviation_abandoned.json",
+          "actual": "rejected",
+          "review": {
+            "decision": "unknown",
+            "checks": {
+              "ending_type_supported": {
+                "passed": false,
+                "evidence": "你明确决定放下这两个目标，不把伤者的命运写成已经获救，也不替父亲的去向编造答案。你将两件事记作未获答案、由自己主动停止追查。",
+                "reason": "正文确实写出目标改变为主动放下，但作为 deviation 结局，还需有目标改变后的后续结果。当前只写到决定放下并离开，没有提供离开后的实际结果或状态，因此不足以确认 deviation 结局成立。"
+              },
+              "threads_accounted_for": {
+                "passed": false,
+                "evidence": "你将两件事记作未获答案、由自己主动停止追查。你的选择是离开山门，不再参与此处的救助或调查，也不向任何人许下返回的约定。",
+                "reason": "正文对两个已知问题均写明主动停止追查，并明确不再参与，属于有依据地放下，而非遗漏关闭。但仅凭主动放弃本身，尚不足以证明这些线索在路线层面已被充分交代或收束，证据强度不足。"
+              },
+              "no_new_unresolved_conflict": {
+                "passed": false,
+                "evidence": "你沿石阶走回山脚，把没有使用的引荐文书收进箱底。从停步到离开，你已经完成自己选择的退场，没有留下还要实施的行动。",
+                "reason": "正文没有新增需要立即处理的冲突，也未写出未兑现行动。但该判断依赖叙述中的自我总结，缺少可独立验证的具体结果，证据不够充分。"
+              },
+              "ending_present": {
+                "passed": false,
+                "evidence": "这条偏离原目标的路线在此收尾。未知仍旧未知，但你不再以解开它们作为此路的终点。",
+                "reason": "正文明确写出路线收尾，并停止以原目标为终点，具有收束意图。但结尾主要落在放弃和不再追查上，没有提供足以确认本段已实际收尾的结果性内容，因此不能确认结局已经成立。"
+              }
+            }
+          },
+          "metrics": {
+            "calls": 1,
+            "reported_tokens": 2199,
+            "unreported_calls": 0,
+            "elapsed_ms": 4352
+          },
+          "failure": null,
+          "provider_calls": 1,
+          "code": "AssertionError",
+          "elapsed_ms": 4409
+        },
+        {
+          "id": "failure_irreversible",
+          "expected": "allow",
+          "status": "failed",
+          "artifact": "taixu-relics-part1-failure_irreversible.json",
+          "actual": "rejected",
+          "review": {
+            "decision": "reject",
+            "checks": {
+              "ending_type_supported": {
+                "passed": false,
+                "evidence": "你终于把伤者拖进门房时，他的呼吸已经停止。你与执事轮流施救，直到执事确认再也无法挽回，你才松开按在伤口上的手。",
+                "reason": "正文只交代伤者死亡和施救无效，未提供账本或既有目标中确立的失败原因与结果；提案将目标状态标为 abandoned，但 failure 需要正文确立失败原因与结果，不能仅凭主动标记失败成立。"
+              },
+              "threads_accounted_for": {
+                "passed": false,
+                "evidence": "空灯在门闸坠落时被碾成碎屑，灯底唯一的押运刻字彻底磨毁；伤者生前没有说出灯的来历，也没有留下可供追索的记录。",
+                "reason": "正文虽说明查证途径消失，但未显示这些已知问题在账本中被有依据地关闭或放下；提案将 thread 状态标为 abandoned，却未提供账本中允许 abandoned 的逐项依据，不能通过遗漏关闭。"
+              },
+              "no_new_unresolved_conflict": {
+                "passed": false,
+                "evidence": "你把两项目标记为失败后停止，把尚未得到的答案如实留空。",
+                "reason": "正文明确留下尚未得到的答案，且没有说明这些未解问题为何不再需要本路线立即处理；这构成未解决冲突，不能视为无新增未解决冲突。"
+              },
+              "ending_present": {
+                "passed": false,
+                "evidence": "安葬伤者并收起碎屑后，你完成了最后的善后，不再等待新的线索或继续此路。灯光照着合拢的记录，这段失败的经历到此结束。",
+                "reason": "该句是叙述性收束，但正文同时说“把尚未得到的答案如实留空”，且未提供账本依据证明目标与线索已被正式关闭，因此不能确认本段确实收尾而非仅以叙述宣告结束。"
+              }
+            }
+          },
+          "metrics": {
+            "calls": 1,
+            "reported_tokens": 2258,
+            "unreported_calls": 0,
+            "elapsed_ms": 3354
+          },
+          "failure": null,
+          "provider_calls": 1,
+          "code": "AssertionError",
+          "elapsed_ms": 3424
+        },
+        {
+          "id": "vague_insufficient",
+          "expected": "block",
+          "status": "passed",
+          "artifact": "taixu-relics-part1-vague_insufficient.json",
+          "actual": "rejected",
+          "review": {
+            "decision": "reject",
+            "checks": {
+              "ending_type_supported": {
+                "passed": false,
+                "evidence": "你觉得这一段经历该结束了，却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。",
+                "reason": "normal 结局要求目标确已达成，但正文明确说没有写下伤者情况，也没有记录空灯与父亲失踪之间的关系，两个目标均无达成结果依据。"
+              },
+              "threads_accounted_for": {
+                "passed": false,
+                "evidence": "却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。",
+                "reason": "两个已知问题均未在正文中得到交代，只是被省略，不能视为已解决或有依据放下。"
+              },
+              "no_new_unresolved_conflict": {
+                "passed": false,
+                "evidence": "却没有写下伤者的情况，也没有记录空灯与父亲失踪之间的关系。",
+                "reason": "正文以未记录、未处理的方式结束，使伤者救助和父亲失踪两个既有问题仍处于未解决状态，构成本路线仍需处理的冲突。"
+              },
+              "ending_present": {
+                "passed": false,
+                "evidence": "纸上只有一句：一切都结束了。",
+                "reason": "该句只是人物写下的主观断言，正文没有实际收束任何目标或问题，不能作为结局成立。"
+              }
+            }
+          },
+          "metrics": {
+            "calls": 1,
+            "reported_tokens": 1437,
+            "unreported_calls": 0,
+            "elapsed_ms": 2731
+          },
+          "failure": null,
+          "provider_calls": 1,
+          "elapsed_ms": 2817
+        },
+        {
+          "id": "future_plan_not_ending",
+          "expected": "block",
+          "status": "passed",
+          "artifact": "taixu-relics-part1-future_plan_not_ending.json",
+          "actual": "rejected",
+          "review": {
+            "decision": "reject",
+            "checks": {
+              "ending_type_supported": {
+                "passed": false,
+                "evidence": "眼下伤者还没有得到救治，灯底的刻字也尚未核对。",
+                "reason": "正文明确说明伤者尚未得到救治、灯底刻字尚未核对，两个目标均未实际完成，只是被写成明日打算，不能支持 normal 结局。"
+              },
+              "threads_accounted_for": {
+                "passed": false,
+                "evidence": "你在册子上写下明日的打算：先去门房救助伤者，再查看空灯的编号，设法弄清它与父亲失踪的关系。",
+                "reason": "两条线索都仍处于计划阶段，正文没有交代伤者是否获救，也没有核对空灯编号或说明其与父亲失踪的关系，不能视为已解决或已放弃。"
+              },
+              "no_new_unresolved_conflict": {
+                "passed": false,
+                "evidence": "你把笔放在纸边，准备下一步先敲开门房。",
+                "reason": "正文新增了即将去门房救助伤者、查看空灯编号的未兑现行动，这些仍是本路线需要立即处理的冲突，不能作为无新增未解决冲突的结局。"
+              },
+              "ending_present": {
+                "passed": false,
+                "evidence": "如果这两件事都办成，你就可以给这段追查画上句号。",
+                "reason": "该句是假设性未来条件，不是已经发生的收尾；正文以准备下一步行动结束，属于未来打算而非结局。"
+              }
+            }
+          },
+          "metrics": {
+            "calls": 1,
+            "reported_tokens": 1656,
+            "unreported_calls": 0,
+            "elapsed_ms": 2827
+          },
+          "failure": null,
+          "provider_calls": 1,
+          "elapsed_ms": 2911
+        },
+        {
+          "id": "voluntary_abandonment_not_failure",
+          "expected": "block",
+          "status": "passed",
+          "artifact": "taixu-relics-part1-voluntary_abandonment_not_failure.json",
+          "actual": "rejected",
+          "review": {
+            "decision": "reject",
+            "checks": {
+              "ending_type_supported": {
+                "passed": false,
+                "evidence": "你并非受到阻碍，也没有经历无法挽回的失败，只是不愿再介入。",
+                "reason": "正文明确说没有受到阻碍、没有无法挽回的失败，只是不愿介入，这不能证明 failure 结局所要求的失败原因与结果。主动放弃本身不足以证明失败。"
+              },
+              "threads_accounted_for": {
+                "passed": false,
+                "evidence": "你主动放弃救助与追查，明确停止这两个目标，不再向任何人承诺后续行动。",
+                "reason": "正文只是宣布放弃两个目标，没有交代伤者是否得到救助、空灯来历是否查清，也没有说明这些已知问题为何可以有依据地放下。不能通过遗漏关闭。"
+              },
+              "no_new_unresolved_conflict": {
+                "passed": false,
+                "evidence": "你收起文书，走下山门石阶，让这条路线随自己的退出而结束。",
+                "reason": "正文没有新增冲突，但伤者仍活着且救治来得及、空灯查证机会仍在，这些原有未解决问题并未因退出而消失，不能视为没有未解决冲突。"
+              },
+              "ending_present": {
+                "passed": false,
+                "evidence": "你收起文书，走下山门石阶，让这条路线随自己的退出而结束。",
+                "reason": "该句只是描述角色离开并声称路线结束，属于主动退出，不是对目标、冲突或结果的实质收尾。不能把退出动作本身当作结局。"
+              }
+            }
+          },
+          "metrics": {
+            "calls": 1,
+            "reported_tokens": 1696,
+            "unreported_calls": 0,
+            "elapsed_ms": 3496
+          },
+          "failure": null,
+          "provider_calls": 1,
+          "elapsed_ms": 3580
+        },
+        {
+          "id": "new_conflict_unresolved",
+          "expected": "block",
+          "status": "passed",
+          "artifact": "taixu-relics-part1-new_conflict_unresolved.json",
+          "actual": "rejected",
+          "review": {
+            "decision": "reject",
+            "checks": {
+              "ending_type_supported": {
+                "passed": false,
+                "evidence": "伤者已经获救，你也核对了空灯与押运底册，确认父亲在失踪前将它交给伤者藏起。先前的救助和查证都有了明确结果。",
+                "reason": "虽然先前目标在叙述中被声明为完成，但紧接着出现新的危险：伤者被倒下的梁木压住、火焰堵住出口、呼救仍在继续。normal 结局要求目标确已达成且没有仍需立即处理的新冲突，不能因提案要求忽略末尾新危险而成立。"
+              },
+              "threads_accounted_for": {
+                "passed": false,
+                "evidence": "正当你准备合上记录时，门房忽然起火，刚刚脱险的伤者被倒下的梁木压住。",
+                "reason": "伤者救助这条线索并未真正关闭：他刚刚脱险又立即被梁木压住，且你已答应立刻救他，却尚未移动木梁。该线索在正文中重新变为未完成状态，不能视为已交代或已放下。"
+              },
+              "no_new_unresolved_conflict": {
+                "passed": false,
+                "evidence": "你答应立刻把他救出来，伸手去推那根烧红的木梁，却还没有移动它。火焰堵住出口，伤者的呼救仍在继续。",
+                "reason": "正文明确新增了未解决冲突：门房起火、出口被火焰堵住、伤者被压住并继续呼救，且存在已答应但未兑现的救援行动。该冲突需要本路线立即处理，不能作为结局收束。"
+              },
+              "ending_present": {
+                "passed": false,
+                "evidence": "你答应立刻把他救出来，伸手去推那根烧红的木梁，却还没有移动它。火焰堵住出口，伤者的呼救仍在继续。",
+                "reason": "本段没有真正收尾，而是停在救援未完成、危险持续的状态。'答应立刻把他救出来'属于未兑现的下一步行动，不能当作结局。"
+              }
+            }
+          },
+          "metrics": {
+            "calls": 1,
+            "reported_tokens": 1913,
+            "unreported_calls": 0,
+            "elapsed_ms": 3851
+          },
+          "failure": null,
+          "provider_calls": 1,
+          "elapsed_ms": 3931
+        }
+      ],
+      "model": "deepseek-v4-pro:cloud"
+    }
+  ],
+  "passed": false
+}

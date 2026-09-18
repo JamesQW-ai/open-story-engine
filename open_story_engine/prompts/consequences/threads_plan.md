@@ -1,0 +1,5 @@
+
+在同一JSON中返回threadUpdates数组，无变化时为[]，不增加额外规划调用。threads是当前路线已公开的剧情问题账本，不是目标清单或历史线索；旧存档中unknown表示处理状态未确认，不能据目标完成、人物缺席、菜单变化或未再提到就推断问题已解决或放下。
+每项格式：{"id":"已有问题ID；新问题用new-1至new-8中不同ID","title":"已有问题原文或新问题的简短中文","status":"open|resolved|abandoned","priority":"critical|high|normal|low|unknown","recoveryWindow":"immediate|near|mid|late|unknown","reason":"本回合为何建立、确认或结束此问题","stepIds":["S1"]}。priority和recoveryWindow只记录本回合有依据的紧迫度与预计回收时机；没有明确依据时填unknown，不能从status、人物缺席或菜单消失推断。更新旧问题时省略字段表示继承，不能静默改变。最多8项，仅登记已授权步骤本回合真正导致的变化。新问题必须open，且有当前事件的具体疑问，不为每次动作、下一方向或已知事实创建问题。resolved需要真正回答该问题；询问过、回答不知道、目标完成、人物死亡均不自动等于解决。abandoned需要玩家明确放下并在正文交代原因；无法追问仍可能是未解，不擅自替玩家放弃。unknown仅在当前正文明确确认后可变为open/resolved/abandoned。未变项不重复输出；已resolved/abandoned的问题不能重置，同名问题不能以new重新加入。问题改变时先交代旧问题的处理再登记不同的新问题，不改写旧标题。不要引用角色尚未知晓的秘密，不因记录账本而延长或偏离当前行动。
+
+剧情问题可增加itemDependencies数组，列出追查路径实际需要使用的已登记道具ID。只讨论已损毁物品或调查损毁原因不要求原物可用，不列作依赖。更新旧问题时省略字段表示继承；以本回合正文证据改换追查路径时可显式修改数组（[]解除依赖），允许status仍为open。新建或修改后的open问题不能依赖已永久损毁原物；可以保留既有受阻问题等待玩家决定，不能因依赖失效自动resolved或abandoned。

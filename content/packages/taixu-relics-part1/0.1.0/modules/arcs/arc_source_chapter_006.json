@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_006",
+    "title": "推进：半枚残印",
+    "summary": "她离开后，陆照临独自回到屋内。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_027",
+          "chapter_028",
+          "chapter_029",
+          "chapter_030",
+          "chapter_031",
+          "chapter_032"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_033"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_027_to_028",
+      "direction_chapter_028_to_029",
+      "direction_chapter_029_to_030",
+      "direction_chapter_030_to_031",
+      "direction_chapter_031_to_032",
+      "direction_chapter_032_to_033"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_007"
+    ]
+  }
+}

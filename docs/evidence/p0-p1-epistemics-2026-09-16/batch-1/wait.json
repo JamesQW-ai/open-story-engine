@@ -1,0 +1,560 @@
+{
+  "input": {
+    "parent_branch_id": "branch_8f835480-c804-4944-99c8-8afcfff3ead4",
+    "text": "我留在原地，把手里的纸包握好，暂不行动。请简短写完。",
+    "request_id": "epistemics-v1-wait"
+  },
+  "elapsedSeconds": 38.05,
+  "firstTextMs": 7479,
+  "result": {
+    "status": "written",
+    "request_id": "epistemics-v1-wait",
+    "deduplicated": false,
+    "branch": {
+      "narrativeText": "你收回手，将纸包从掌心收拢，五指合上，纸角贴住指腹。\n\n陆照临仍站在原处，没有追问，也没有再靠近。山风从石壁那边压过来，吹得你袖口微动。\n\n钟声还没响。",
+      "summary": "自定行动：我留在原地，把手里的纸包已推进，新的风险和选择仍然存在。",
+      "factDeltas": [],
+      "openThreads": [
+        "木牌刻痕里为何有金屑",
+        "如何完成第一场外门试炼",
+        "尚未完成的当前目标"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_011_to_012",
+          "title": "关键推进：发现",
+          "summary": "试炼进入林地深处后，陆照临发现每株药草旁都插着标记木签，木签上的日期与灵气强弱并不相符。",
+          "canonicalBeatId": "beat_chapter_012",
+          "statePatch": {
+            "sourceProgress": "chapter_012",
+            "playerLocationId": "location_9c23a624e6b0"
+          }
+        }
+      ],
+      "storyArc": {
+        "activeGoal": "自定行动：我向陆照临说明木牌刻痕里",
+        "currentPhase": "自定行动：我留在原地，把手里的纸包",
+        "goalDisposition": "continued",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "continuing"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_8f835480-c804-4944-99c8-8afcfff3ead4",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "readingProfile": {
+        "level": "dynamic",
+        "targetCjk": [
+          80,
+          140
+        ],
+        "reason": "用户明确要求简短，本回合只有握好纸包和等待，没有新的信息交锋。",
+        "hardMinimum": false,
+        "lengthPolicy": "plan_before_writing_no_expansion",
+        "actualCjk": 62,
+        "expansionApplied": false
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "sceneChecks": [
+        {
+          "paragraphId": "P1",
+          "playerDecision": "none",
+          "background": "none",
+          "sources": [],
+          "quote": "",
+          "issue": ""
+        },
+        {
+          "paragraphId": "P2",
+          "playerDecision": "none",
+          "background": "none",
+          "sources": [],
+          "quote": "",
+          "issue": ""
+        },
+        {
+          "paragraphId": "P3",
+          "playerDecision": "none",
+          "background": "none",
+          "sources": [],
+          "quote": "",
+          "issue": ""
+        }
+      ],
+      "actionIntent": {
+        "input": "我留在原地，把手里的纸包握好，暂不行动。请简短写完。",
+        "requirements": {
+          "A1": {
+            "mode": "constraint",
+            "summary": "顾长离留在原地，不移动位置。"
+          },
+          "A2": {
+            "mode": "result",
+            "summary": "顾长离把手里包着金屑的纸包握好。"
+          },
+          "A3": {
+            "mode": "constraint",
+            "summary": "顾长离暂不采取下一步行动。"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "本回合简短写完。"
+          }
+        }
+      },
+      "consequenceUpdate": {
+        "decision": "ready",
+        "message": "",
+        "requirements": {
+          "A1": {
+            "mode": "constraint",
+            "summary": "顾长离留在原地，不移动位置。"
+          },
+          "A2": {
+            "mode": "result",
+            "summary": "顾长离把手里包着金屑的纸包握好。"
+          },
+          "A3": {
+            "mode": "constraint",
+            "summary": "顾长离暂不采取下一步行动。"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "本回合简短写完。"
+          }
+        },
+        "method": "顾长离仍站在青石外，只将掌心纸包收拢握好，不迈步、不开口追问，也不把纸包交给陆照临。陆照临没有新的动作，只保持原处。",
+        "outcomes": [],
+        "goalUpdates": [],
+        "steps": [
+          {
+            "id": "S1",
+            "actorId": "character_e663361ab1c7",
+            "action": "留在原地，把掌心纸包握好，暂不行动。",
+            "requirementIds": [
+              "A1",
+              "A2",
+              "A3"
+            ],
+            "authority": "player",
+            "causeStepId": null
+          }
+        ],
+        "introductions": {
+          "characters": [],
+          "items": [],
+          "locations": []
+        },
+        "stateChanges": [
+          {
+            "id": "C1",
+            "entityId": "character_e663361ab1c7",
+            "attribute": "纸包握持状态",
+            "before": null,
+            "value": "握在手中",
+            "stepId": "S1",
+            "reason": "顾长离将原本托在掌心的纸包收拢握好。",
+            "evidence": "你收回手，将纸包从掌心收拢，五指合上，纸角贴住指腹。"
+          }
+        ],
+        "scenePlan": {
+          "start": "钟声仍未响，顾长离站在青石外，陆照临也没有动。",
+          "beats": [
+            {
+              "purpose": "兑现留在原地、握好纸包、暂不行动的简短要求，并保留下一步决定。",
+              "stepIds": [
+                "S1"
+              ]
+            }
+          ],
+          "outcome": "顾长离握好纸包，留在原地，没有继续追问或行动。",
+          "stop": "钟声是否响起，或顾长离下一步如何决定。",
+          "targetCjk": [
+            80,
+            140
+          ],
+          "lengthReason": "用户明确要求简短，本回合只有握好纸包和等待，没有新的信息交锋。",
+          "knowledge": [],
+          "observationLimits": [
+            "陆照临是否还有未说出口的判断，当前不可知。",
+            "钟声何时响起，当前不可知。"
+          ]
+        },
+        "readingIntent": "brief"
+      },
+      "consequenceReview": "reader-consequences/2",
+      "reviewedNarrativeSha256": "ee1659d6398b849cb256be1cccff57d464b72d6b731ba6a736be5f04b033b5d5",
+      "authorityReview": {
+        "decision": "allow",
+        "issues": [],
+        "checks": [
+          {
+            "stepId": "S1",
+            "authorized": true,
+            "basis": "player_input",
+            "quote": "我留在原地，把手里的纸包握好，暂不行动。",
+            "reason": "玩家明确要求留在原地、握好纸包并暂不行动，步骤完全对应此输入。"
+          }
+        ],
+        "stateChecks": [
+          {
+            "changeId": "C1",
+            "authorized": true,
+            "reason": "玩家输入明确要求把手里的纸包握好，因此将纸包从托在掌心变为握在手中是直接执行玩家指令。"
+          }
+        ]
+      },
+      "observedEvents": [
+        {
+          "id": "O1",
+          "paragraphId": "P1",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离收回手，将纸包从掌心收拢，五指合上，纸角贴住指腹。",
+          "changes": [
+            {
+              "entityId": "character_e663361ab1c7",
+              "attribute": "纸包握持状态",
+              "value": "收拢握持"
+            }
+          ],
+          "introduced": [],
+          "quote": "你收回手，将纸包从掌心收拢，五指合上，纸角贴住指腹。"
+        },
+        {
+          "id": "O2",
+          "paragraphId": "P2",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "actual",
+          "summary": "陆照临仍站在原处，没有追问，也没有再靠近。",
+          "changes": [
+            {
+              "entityId": "character_ae4cb42b9b49",
+              "attribute": "locationId",
+              "value": "location_open_trial"
+            }
+          ],
+          "introduced": [],
+          "quote": "陆照临仍站在原处，没有追问，也没有再靠近。山风从石壁那边压过来，吹得你袖口微动。"
+        },
+        {
+          "id": "O3",
+          "paragraphId": "P3",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "钟声还没响。",
+          "changes": [],
+          "introduced": [],
+          "quote": "钟声还没响。"
+        }
+      ],
+      "eventChecks": [
+        {
+          "id": "O1",
+          "verdict": "supported",
+          "reason": "顾长离收回手并合拢五指握住纸包，符合玩家要求握好纸包。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [
+            "C1"
+          ],
+          "introductionIds": []
+        },
+        {
+          "id": "O2",
+          "verdict": "supported",
+          "reason": "陆照临保持原处，没有追问或靠近，符合暂不行动的限制。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O3",
+          "verdict": "supported",
+          "reason": "钟声未响是当前场景状态，与观察限制一致。",
+          "stepIds": [],
+          "changeIds": [],
+          "introductionIds": []
+        }
+      ],
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "我留在原地",
+            "status": "performed",
+            "summary": "顾长离留在原地，没有移动位置。",
+            "evidence": "你收回手，将纸包从掌心收拢，五指合上，纸角贴住指腹。"
+          },
+          {
+            "id": "A2",
+            "requirement": "把手里的纸包握好",
+            "status": "performed",
+            "summary": "顾长离将纸包从掌心收拢，五指合上握好。",
+            "evidence": "你收回手，将纸包从掌心收拢，五指合上，纸角贴住指腹。"
+          },
+          {
+            "id": "A3",
+            "requirement": "暂不行动",
+            "status": "performed",
+            "summary": "顾长离没有继续追问或采取下一步行动。",
+            "evidence": "你收回手，将纸包从掌心收拢，五指合上，纸角贴住指腹。"
+          },
+          {
+            "id": "A4",
+            "requirement": "请简短写完",
+            "status": "performed",
+            "summary": "本回合仅三段，简短写完。",
+            "evidence": "你收回手，将纸包从掌心收拢，五指合上，纸角贴住指腹。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "顾长离留在原地，没有移动位置。；顾长离将纸包从掌心收拢，五指合上握好。；顾长离没有继续追问或采取下一步行动。；本回合仅三段，简短写完。",
+          "evidence": "你收回手，将纸包从掌心收拢，五指合上，纸角贴住指腹。"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "id": "branch_abde7b2f-c895-4110-bb41-b1e61b23a1b3",
+      "sourceNodeRef": "node_source_continuity",
+      "branchState": {
+        "playerLocationId": "location_open_trial",
+        "sourceProgress": "chapter_011",
+        "freeTextProgress": 2,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_4ca66faa36d5",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_5d7e0ae78e8a",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000002_d08896628df5",
+              "sequence": 2,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:goalLedger",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": null,
+              "after": [
+                {
+                  "id": "opening-goal-1",
+                  "title": "木牌刻痕里为何有金屑",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                },
+                {
+                  "id": "opening-goal-2",
+                  "title": "如何完成第一场外门试炼",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                }
+              ],
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_8f835480-c804-4944-99c8-8afcfff3ead4",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000003_5a9ef0682d1b",
+              "sequence": 3,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:readerEntityStates",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": null,
+              "after": {
+                "character_ae4cb42b9b49": {
+                  "已知顾长离木牌刻痕里有金屑": "顾长离说木牌刻痕里刮出一粒金屑，并让他看了纸包里的金粒"
+                }
+              },
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_8f835480-c804-4944-99c8-8afcfff3ead4",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000004_99f0224ac741",
+              "sequence": 4,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 1,
+              "after": 2,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_0e37f64a8ee5",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000005_dd63bcdff3e2",
+              "sequence": 5,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:readerEntityStates",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": {
+                "character_ae4cb42b9b49": {
+                  "已知顾长离木牌刻痕里有金屑": "顾长离说木牌刻痕里刮出一粒金屑，并让他看了纸包里的金粒"
+                }
+              },
+              "after": {
+                "character_ae4cb42b9b49": {
+                  "已知顾长离木牌刻痕里有金屑": "顾长离说木牌刻痕里刮出一粒金屑，并让他看了纸包里的金粒"
+                },
+                "character_e663361ab1c7": {
+                  "纸包握持状态": "握在手中"
+                }
+              },
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_abde7b2f-c895-4110-bb41-b1e61b23a1b3",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "playerCharacterId": "character_e663361ab1c7",
+        "characterLocationIds": {
+          "character_e663361ab1c7": "location_open_trial",
+          "character_ae4cb42b9b49": "location_open_trial"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_gu_token": "character_e663361ab1c7",
+          "item_open_gold_paper": "character_e663361ab1c7"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {},
+        "readerEntityStates": {
+          "character_ae4cb42b9b49": {
+            "已知顾长离木牌刻痕里有金屑": "顾长离说木牌刻痕里刮出一粒金屑，并让他看了纸包里的金粒"
+          },
+          "character_e663361ab1c7": {
+            "纸包握持状态": "握在手中"
+          }
+        },
+        "goalLedger": [
+          {
+            "id": "opening-goal-1",
+            "title": "木牌刻痕里为何有金屑",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          },
+          {
+            "id": "opening-goal-2",
+            "title": "如何完成第一场外门试炼",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          }
+        ]
+      },
+      "canonicalRelation": "diverged",
+      "selectedDirectionId": "direction_free_0e37f64a8ee5",
+      "selectedDirection": {
+        "id": "direction_free_0e37f64a8ee5",
+        "title": "自定行动：我留在原地，把手里的纸包",
+        "summary": "我留在原地，把手里的纸包握好，暂不行动。请简短写完。",
+        "statePatch": {
+          "freeTextProgress": 2
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "我留在原地，把手里的纸包握好，暂不行动。请简短写完。",
+      "requestId": "epistemics-v1-wait",
+      "createdAt": "2026-09-16T04:50:11.611Z",
+      "kind": "generated",
+      "parentId": "branch_8f835480-c804-4944-99c8-8afcfff3ead4",
+      "readerChoices": [
+        {
+          "id": "reader-ee8696d9bc70d0cd",
+          "title": "向陆照临确认纸包与试炼的关系",
+          "summary": "我转向陆照临，把纸包托在掌心，直接问他这纸包是否与第一场外门试炼有关，并等他给出明确答复。",
+          "evidence": [
+            "你收回手，将纸包从掌心收拢，五指合上，纸角贴住指腹。",
+            "陆照临仍站在原处，没有追问，也没有再靠近。山风从石壁那边压过来，吹得你袖口微动。"
+          ]
+        },
+        {
+          "id": "reader-92626f8d80b9bee6",
+          "title": "先不解释，观察陆照临的反应",
+          "summary": "我不开口，只把纸包收在掌心，站在原地观察陆照临的神情和动作，看他是否会主动说明或离开。",
+          "evidence": [
+            "你收回手，将纸包从掌心收拢，五指合上，纸角贴住指腹。",
+            "陆照临仍站在原处，没有追问，也没有再靠近。山风从石壁那边压过来，吹得你袖口微动。"
+          ]
+        }
+      ],
+      "turnInput": {
+        "text": "我留在原地，把手里的纸包握好，暂不行动。请简短写完。"
+      },
+      "preparedTurnKey": "b27f6a521408ce0e85dd1f6d7225944cc368aa1082b590b10518128fa1d71dcb",
+      "sessionId": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "sequence": 41
+    },
+    "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+  },
+  "visibleTextOnFailure": null
+}

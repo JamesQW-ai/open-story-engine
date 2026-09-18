@@ -19,6 +19,7 @@ export interface PackageSummary {
   version: string
   title: string
   summary: string
+  visual_prompt?: string
   modular: boolean
   module_index_sha256?: string | null
   beat_count: number
@@ -38,7 +39,15 @@ export interface PackageList {
   issues: PackageIssue[]
 }
 
+export interface PublishedScene {
+  id: string
+  url: string
+  alt: string
+  source: 'published'
+}
+
 export interface EntrySummary {
+  opening_image?: PublishedScene | null
   id: string
   title: string
   chapter_title: string
@@ -79,6 +88,12 @@ export interface EntityCard {
   menuDescription?: string | null
   role?: string | null
   tags?: string[] | null
+  roleGroup?: string | null
+  identitySummary?: string | null
+  motivation?: string | null
+  openingHook?: string | null
+  defaultEntryPointId?: string | null
+  portraitAsset?: string | null
   exits?: string[] | null
   portable?: boolean | null
   [key: string]: unknown
@@ -140,6 +155,7 @@ export interface BranchView {
   nextDirections: DirectionView[]
   openThreads: string[]
   openingActions?: { title: string; summary: string }[]
+  readerChoices?: { id: string; title: string; summary: string; evidence: string[] }[]
   createdAt: string
   canonicalRelation?: string | null
   [key: string]: unknown
@@ -222,6 +238,7 @@ export interface ContextData {
 }
 
 export interface PackageCatalog {
+  supporting_characters?: EntityCard[]
   package: PackageSummary
   new_character?: NewCharacterOption | null
   entries: EntrySummary[]
@@ -307,7 +324,20 @@ export interface PlayCreateResponse {
   branch: BranchView
 }
 
+export interface PreparedChoice {
+  image_prefetch_url?: string
+  id: string
+  title: string
+  summary: string
+  draft_id: string
+  status: 'queued' | 'generating' | 'validating' | 'ready' | 'failed' | 'expired'
+}
+
 export interface PlayContinueRequest {
+  history_id?: string
+  draft_id?: string
+  choice_id?: string
+  subscriber_id?: string
   parent_branch_id: string
   direction_id?: string
   text?: string
@@ -333,10 +363,15 @@ export interface SourceChapterView {
 }
 
 export interface Journey {
+  branch_id: string
+  threads?: { id: string; title: string; status: 'open' | 'resolved' | 'abandoned' | 'unknown'; reason: string; evidence: string; causeBranchId: string | null }[]
+  goals?: { id: string; title: string; status: 'active' | 'completed' | 'transformed' | 'abandoned'; reason?: string; causeBranchId?: string | null }[]
+  ledger_coverage?: { goals: 'recorded' | 'unknown'; threads: 'recorded' | 'unknown' }
   role_name: string
   goal: string
-  progress: number
+  progress: number | null
   progress_label: string
+  choices_made: number
   current_task: string
   status: 'active' | 'completed' | 'abandoned'
   location: string | null
@@ -347,7 +382,26 @@ export interface Journey {
   lineage: string[]
   milestones: { label: string; complete: boolean }[]
   recap: { branch_id: string; action: string; effects: string[] }[]
+  route_health?: {
+    signals: RouteHealthSignal[]
+    review_recommended: boolean
+    window: number | null
+    unchanged_state_turns: number | null
+    repeated_action_turns: number | null
+    source_progress_streak: number | null
+    closure_readiness: 'ended' | 'blocked_unknown' | 'blocked_dependency' | 'needs_explanation' | 'checklist_clear' | 'unknown'
+    closure_outstanding_count: number | null
+    ending_written: boolean
+    note: string
+  }
 }
+
+export type RouteHealthSignal =
+  | 'unchanged_tracked_state'
+  | 'repeated_action'
+  | 'repeated_body'
+  | 'source_progress_stalled'
+  | 'source_progress_regressed'
 
 export interface JournalPerson {
   id: string
@@ -358,6 +412,25 @@ export interface JournalPerson {
   summary: string
   identity: string
   summarized: boolean
+  name_evidence: CharacterEvidence | null
+  portrait: {
+    url: string | null
+    source: 'published' | 'preset'
+    fallback_key: string
+  }
+  status: {
+    code: 'unknown' | 'alive' | 'dead' | 'departed' | 'missing' | 'injured'
+    label: string
+    permanence: 'temporary' | 'permanent' | null
+    evidence: CharacterEvidence | null
+  }
+}
+
+export interface CharacterEvidence {
+  branch_id: string
+  page: number
+  quote: string
+  source: 'narrative' | 'consequence'
 }
 
 export interface JournalRelationship {
@@ -366,9 +439,43 @@ export interface JournalRelationship {
   label: string
   evidence: string
   page: number
+  origin?: 'opening'
 }
 
 export interface SceneIllustrations {
   available: boolean
-  items: { index: number; status: 'idle' | 'pending' | 'ready' | 'failed'; url?: string; alt: string }[]
+  can_generate: boolean
+  items: { id?: string; index: number; status: 'idle' | 'queued' | 'generating' | 'ready' | 'failed' | 'cancelled'; reason?: string; url?: string; alt: string; source: 'published' | 'private' }[]
 }
+
+export interface OpeningNavigation {
+  request: PlayCreateRequest & { request_id: string }
+  catalog: PackageCatalog
+}
+export type EndingType = 'normal' | 'deviation' | 'failure'
+export type ClosureItem = { id: string; title: string; reason: string }
+export type RouteClosure = {
+  branch_id: string
+  status: string
+  readiness: 'ended' | 'blocked_unknown' | 'blocked_dependency' | 'needs_explanation' | 'checklist_clear'
+  outstanding: ClosureItem[]
+  cleared: ClosureItem[]
+  lifecycle: {
+    phase: 'active' | 'preparing' | 'closing' | 'ended'
+    intended_type: EndingType | null
+    ending_type: EndingType | 'early' | null
+    receipt: { ending_type: EndingType | 'early'; outstanding: ClosureItem[] } | null
+  } | null
+}
+export type EndingProposal = {
+  id: string
+  branch_id: string
+  request_id: string
+  ending_type: EndingType
+  outcome_summary: string
+  ending_quote: string
+  status: 'pending' | 'approved' | 'rejected' | 'failed' | 'stale' | 'committed' | 'cancelled'
+  can_cancel: boolean
+  review: { decision: string; checks: Record<string, { passed: boolean; reason: string; evidence: string }> } | null
+}
+export type EndingAttempt = { request_id: string; outcome_summary: string; ending_quote: string }

@@ -1,0 +1,77 @@
+{
+  "batch-1": {
+    "accepted": false,
+    "reason": "连续写入不代表质量通过；告知与询问均存在依据漏检，等待还延续了询问中虚构的可见金芒。",
+    "turns": {
+      "inform": {
+        "accepted": false,
+        "issues": [
+          "无公开依据补出后坡路杂、人散得快",
+          "将玩家曾刮取金屑升级为陆照临亲眼见过，见证关系缺证"
+        ]
+      },
+      "ask": {
+        "accepted": false,
+        "issues": [
+          "未打开纸包，却通过新造折缝金芒观察金屑颜色"
+        ]
+      },
+      "wait": {
+        "accepted": false,
+        "issues": [
+          "继承前一轮虚构的金芒可见状态，不能作为独立正确样例"
+        ]
+      }
+    }
+  },
+  "batch-2": {
+    "accepted": false,
+    "reason": "告知局部修复成功，但询问仍漏检额外展示对象与工具来源。",
+    "turns": {
+      "inform": {
+        "accepted": true,
+        "issues": [],
+        "notes": "删去没有依据的NPC态度结论；NPC反问后未替玩家作答。"
+      },
+      "ask": {
+        "accepted": false,
+        "issues": [
+          "首段主动展示木牌刻痕，与只看纸包的输入边界不符",
+          "用针尖挑出金屑没有来源；刮出不等于指定了工具",
+          "木牌发放时间未由审核引用直接支持"
+        ]
+      },
+      "wait": {
+        "accepted": null,
+        "issues": [],
+        "notes": "依赖未通过质量验收的父回合，不计为连续合格。"
+      }
+    }
+  },
+  "reviewer": "Codex逐段复读；不是用户桌面试玩，也不替代独立人工验收",
+  "batch-3": {
+    "accepted": false,
+    "reason": "询问未完成复核，未写入；后续等待直接接在告知之后，不能算告知→询问→等待连续通过。",
+    "turns": {
+      "inform": {
+        "accepted": null,
+        "issues": [],
+        "notes": "审查抓住后坡大小缺证并局部修复，当前动作与停止点正确。NPC直接使用金屑位于刻痕泥中的信息，但其获得该信息的路径未被本轮证明；角色知识边界仍待验证。"
+      },
+      "ask": {
+        "accepted": false,
+        "issues": [
+          "修复仍用或许、可能保留先前被否定的金屑痕迹与物性推断",
+          "修复后的完整复核遇到两次SSE首段超时，无法验收"
+        ],
+        "retainedCjk": 348,
+        "savedBranches": 0
+      },
+      "wait": {
+        "accepted": true,
+        "issues": [],
+        "notes": "84汉字简短等待，未新增决定或出发；父节点为告知，不是失败的询问。"
+      }
+    }
+  }
+}

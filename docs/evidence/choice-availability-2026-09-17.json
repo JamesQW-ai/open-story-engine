@@ -1,0 +1,89 @@
+{
+  "scope": "offline_replay_of_saved_model_responses",
+  "provider_calls": 0,
+  "dependency_version": "reader-choice-dependencies/3",
+  "prompt_version": "prompt-catalog/1:0d7965c294c8f3ea23c2810403154cba028f2d9bc75693575f112ff2b1f0eda3",
+  "novels": [
+    {
+      "package_id": "taixu-relics-part1",
+      "cjk": 102610,
+      "source_sha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "input_artifact": "docs/evidence/live-item-dependencies-2026-09-17/taixu-relics-part1-choices_after_destruction.json",
+      "input_sha256": "0038cd6b448bbe1464ccdbb52c0ef39875a0ea614da0fd866fe0b0c206de37a5",
+      "original_unchanged": true,
+      "people": [
+        {
+          "id": "character_ae4cb42b9b49",
+          "name": "陆照临",
+          "status": "unknown",
+          "permanence": "unknown",
+          "available": true,
+          "interactionBasis": "same_location"
+        },
+        {
+          "id": "character_37531636ecf5",
+          "name": "陆沉舟",
+          "status": "unknown",
+          "permanence": "unknown",
+          "available": false,
+          "interactionBasis": "contact_unconfirmed"
+        }
+      ],
+      "raw_count": 3,
+      "retained_count": 2,
+      "rejected": [
+        {
+          "title": "向陆沉舟说明文书已毁并询问他是否知情",
+          "action": "找到陆沉舟，告诉他引荐文书已被我亲手毁去，并问他是否知道文书原本的内容、是否曾被改动，或是否还有别的办法查证。",
+          "paragraphIds": [
+            "P2"
+          ],
+          "interactWith": [
+            "character_37531636ecf5"
+          ],
+          "mentionOnly": [],
+          "useItems": []
+        }
+      ],
+      "choices": [
+        {
+          "id": "reader-40fe7001b55b680d",
+          "title": "放弃查证文书，转查空灯与父亲失踪",
+          "summary": "不再追查已毁去的引荐文书，把注意力转向空灯与父亲失踪的线索，先回忆或寻找与空灯有关的人或地点。",
+          "evidence": [
+            "你仍留在原地。查清文书是否有异常的目标还在，文书是否曾被改动也没有答案，只是原先查阅原件的办法已行不通。你还没有决定放弃或改换查证路径。"
+          ],
+          "dependencies": {
+            "version": "reader-choice-dependencies/3",
+            "contextDigest": "2d499375d65db2d93a00e0dd45f96d938b27bf55610d0018c3168ea65c6c296b",
+            "paragraphIds": [
+              "P2"
+            ],
+            "interactWith": [],
+            "mentionOnly": []
+          }
+        },
+        {
+          "id": "reader-bdd36975ceaad28e",
+          "title": "检查纸屑残迹，看能否从痕迹中判断改动",
+          "summary": "蹲下检查被碾碎的纸屑残迹，尝试从墨迹深浅、纸面压痕或残余笔画判断文书是否曾被改动，但不试图复原原文。",
+          "evidence": [
+            "你把手中的引荐文书撕成细屑，又将纸屑碾得稀烂，直到原有字迹再也无法辨读。这份原物已经彻底毁去，无法修复，你手中不再有可使用的文书。",
+            "你仍留在原地。查清文书是否有异常的目标还在，文书是否曾被改动也没有答案，只是原先查阅原件的办法已行不通。你还没有决定放弃或改换查证路径。"
+          ],
+          "dependencies": {
+            "version": "reader-choice-dependencies/3",
+            "contextDigest": "2d499375d65db2d93a00e0dd45f96d938b27bf55610d0018c3168ea65c6c296b",
+            "paragraphIds": [
+              "P1",
+              "P2"
+            ],
+            "interactWith": [],
+            "mentionOnly": []
+          }
+        }
+      ],
+      "legacy_restored_count": 0
+    }
+  ]
+}

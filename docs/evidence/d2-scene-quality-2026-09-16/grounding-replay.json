@@ -1,0 +1,53 @@
+{
+  "claims": {
+    "C1": {
+      "claim": "青露草多生在石根背阴处，近水汽的地方才找得到",
+      "evidence": [
+        "试炼要求日落前取回青露草，另有白线、禁止争抢伤人和进入封闭区域的规定。"
+      ]
+    },
+    "C2": {
+      "claim": "日落前取青露草，本就要过白线",
+      "evidence": [
+        "日落前取回青露草，越过白线便取消资格。"
+      ]
+    },
+    "C3": {
+      "claim": "日落前取回青露草",
+      "evidence": [
+        "日落前取回青露草，越过白线便取消资格。"
+      ]
+    }
+  },
+  "response": {
+    "checks": [
+      {
+        "id": "C1",
+        "verdict": "unsupported",
+        "reason": "原文只提到试炼要求日落前取回青露草及白线、禁止争抢伤人和进入封闭区域的规定，没有给出青露草生长在石根背阴处或近水汽处的信息。"
+      },
+      {
+        "id": "C2",
+        "verdict": "unsupported",
+        "reason": "原文只说明日落前取回青露草和越过白线便取消资格，没有说明取青露草本就要过白线。"
+      },
+      {
+        "id": "C3",
+        "verdict": "supported",
+        "reason": "原文明确写出日落前取回青露草。"
+      }
+    ]
+  },
+  "seconds": 1.33,
+  "observations": [
+    {
+      "attempt": 1,
+      "outcome": "completed",
+      "transport": {
+        "responseMode": "sse",
+        "httpStatus": 200,
+        "durationMs": 1330
+      }
+    }
+  ]
+}

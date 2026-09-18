@@ -80,8 +80,12 @@ def identity_opening_package(package, selection):
     if not script_generated_package(package):
         return package
     entry = copy.deepcopy(entry_point_by_id(package, selection["entryPointId"]))
-    beat = find_beat(package, entry["beatId"])
     character_id = selection.get("sourceCharacterId")
+    approved_ids = set(entry.get("sourceCharacterIds", []))
+    if (package["story"]["entryModel"].get("policy") == "official_unknown_reader/1"
+            and character_id in approved_ids):
+        return package
+    beat = find_beat(package, entry["beatId"])
     character = next((c for c in package["characters"] if c["id"] == character_id), None)
     name = character["name"] if character else selection["name"]
     profile = None
@@ -106,6 +110,15 @@ def identity_opening_package(package, selection):
                                              "眼前的故事还在继续。你会如何面对接下来的事？"] if p)
         entry["openingSummary"] = f"{name}：{entry['summary']}"
     if character:
+        if character_id not in approved_ids:
+            # The selected persona is allowed to enter any declared opening
+            # in the web player. Bind the session-only view to that persona
+            # without changing the frozen StoryPackage on disk.
+            entry["sourceCharacterIds"] = [character_id]
+            entry["sourceCharacterLocationIds"] = {
+                character_id: entry.get("openingState", {}).get("playerLocationId")
+            }
+            entry["sourceCharacterNarratives"] = {}
         entry["sourceCharacterNarratives"] = {character_id: narrative}
     else:
         entry["newCharacterNarrative"] = narrative

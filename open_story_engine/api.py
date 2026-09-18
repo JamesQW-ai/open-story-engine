@@ -18,10 +18,11 @@ from pydantic import ValidationError
 from starlette.exceptions import HTTPException
 
 from .api_models import (
-    BranchPage, BranchView, ContextRequest, ContextView, ErrorResponse, HealthResponse, PackageCatalog,
+    ReadingReceiptRequest, PrepareChoicesRequest, BranchPage, BranchView, ContextRequest, ContextView, ErrorResponse, HealthResponse, PackageCatalog,
     PackageList, ParseRequest, PlayContinueRequest, PlayContinueResponse, PlayCreateRequest,
-    ImportNovelRequest, ImportNovelResponse, PlayCreateResponse, SessionList, SessionView,
-    SourceChapterView, StateView, RenameRequest, EndRouteRequest, CharacterProfileRequest,
+    PlayCreateResponse, SessionList, SessionView,
+    SourceChapterView, StateView, RenameRequest, EndRouteRequest, RouteClosureIntentRequest, EndingProposalRequest, EndingProposalView, CharacterProfileRequest, RouteMonitorView, RouteOutlineView,
+    RouteClosurePreparation,
 )
 from .api_read import ReadError, ReadService
 from .content import StoryPackageError
@@ -46,6 +47,8 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
         finally:
             if illustrations is not None:
                 illustrations.close()
+            if play_service is not None:
+                play_service.drafts.close()
 
     app = FastAPI(
         lifespan=lifespan,
@@ -85,12 +88,9 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
         return JSONResponse(status_code=409, content={"error": {"code": "invalid_package", "message": "故事包或上下文模块校验失败"}})
 
     play_service = None
-    import_service = None
     if play:
-        from .api_import import ImportService
         from .api_play import PlayService
         play_service = PlayService(service, root)
-        import_service = ImportService(service, play_service._lock)
 
     @app.get("/api/v1/health", response_model=HealthResponse)
     def health():
@@ -151,6 +151,26 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
     def player_journey(session_id: str, branch_id: str):
         return service.journey(session_id, branch_id)
 
+    @app.get('/api/v1/sessions/{session_id}/route-monitor', response_model=RouteMonitorView)
+    def route_monitor(session_id: str, branch_id: str):
+        return service.route_monitor(session_id, branch_id)
+
+    @app.get('/api/v1/sessions/{session_id}/route-outline', response_model=RouteOutlineView)
+    def route_outline(session_id: str, branch_id: str):
+        return service.route_outline(session_id, branch_id)
+
+    @app.get('/api/v1/sessions/{session_id}/route-closure', response_model=RouteClosurePreparation)
+    def route_closure(session_id: str, branch_id: str):
+        return service.route_closure(session_id, branch_id)
+
+    @app.get('/api/v1/sessions/{session_id}/ending-proposals', response_model=list[EndingProposalView])
+    def ending_proposals(session_id: str, branch_id: str):
+        return service.ending_proposals(session_id, branch_id)
+
+    @app.get('/api/v1/sessions/{session_id}/ending-proposals/{proposal_id}', response_model=EndingProposalView)
+    def ending_proposal(session_id: str, proposal_id: str, branch_id: str):
+        return service.ending_proposal(session_id, branch_id, proposal_id)
+
     if play_service is not None:
         from .api_illustrations import IllustrationService
         illustrations = IllustrationService(service, service.database_path.parent / 'illustrations')
@@ -160,8 +180,26 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
             return illustrations.view(session_id, branch_id)
 
         @app.post('/api/v1/sessions/{session_id}/branches/{branch_id}/illustrations')
-        def generate_illustrations(session_id: str, branch_id: str, retry: bool = False):
-            return illustrations.ensure(session_id, branch_id, retry)
+        def generate_illustrations(session_id: str, branch_id: str, retry: bool = False,
+                                  subscriber: str = Query(..., min_length=1, max_length=100), draw: bool = False):
+            return illustrations.ensure(session_id, branch_id, retry, subscriber, draw)
+
+        @app.post('/api/v1/sessions/{session_id}/branches/{branch_id}/illustrations/release')
+        def release_illustrations(session_id: str, branch_id: str, subscriber: str = Query(..., min_length=1, max_length=100)):
+            return illustrations.release(session_id, branch_id, subscriber)
+
+        @app.post('/api/v1/sessions/{session_id}/branches/{branch_id}/illustrations/shown')
+        def shown_illustrations(session_id: str, branch_id: str, subscriber: str = Query(..., min_length=1, max_length=100),
+                               display_ms: int = Query(..., ge=0, le=3600000)):
+            return illustrations.shown(session_id, branch_id, subscriber, display_ms)
+
+        @app.get('/api/v1/scene-assets/{package_id}/{version}/{asset_id}')
+        def published_scene_image(package_id: str, version: str, asset_id: str):
+            try:
+                path = illustrations.library.asset(package_id, version, asset_id)
+            except (ValueError, OSError):
+                raise ReadError(404, 'scene_asset_not_found', '插图不存在')
+            return FileResponse(path, media_type='image/png', headers={'Cache-Control': 'public, max-age=86400'})
 
         @app.get('/api/v1/sessions/{session_id}/branches/{branch_id}/illustrations/{index}/image')
         def scene_image(session_id: str, branch_id: str, index: int):
@@ -193,6 +231,23 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
         def end_route(session_id: str, request: EndRouteRequest):
             return _play().end_route(session_id, request.branch_id)
 
+        @app.post('/api/v1/sessions/{session_id}/route-closure', response_model=RouteClosurePreparation)
+        def plan_route_closure(session_id: str, request: RouteClosureIntentRequest):
+            return _play().plan_route_closure(session_id, request.branch_id, request.intended_type)
+
+        @app.post('/api/v1/sessions/{session_id}/ending-proposals', response_model=EndingProposalView)
+        def propose_ending(session_id: str, request: EndingProposalRequest):
+            return _play().propose_ending(session_id, request.branch_id, request.request_id,
+                                          request.outcome_summary, request.ending_quote)
+
+        @app.post('/api/v1/sessions/{session_id}/ending-proposals/{proposal_id}/commit')
+        def commit_ending(session_id: str, proposal_id: str, request: EndRouteRequest):
+            return _play().commit_ending(session_id, request.branch_id, proposal_id)
+
+        @app.post('/api/v1/sessions/{session_id}/ending-proposals/{proposal_id}/cancel', response_model=EndingProposalView)
+        def cancel_ending(session_id: str, proposal_id: str, request: EndRouteRequest):
+            return _play().cancel_ending(session_id, request.branch_id, proposal_id)
+
         @app.post('/api/v1/sessions/stream')
         async def opening_stream(request: PlayCreateRequest):
             return stream_response(lambda stream, reset: _play().create_session(
@@ -200,11 +255,28 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
                 request.source_character_id, request.new_character, request.identity_opening,
                 request.request_id, stream, reset), PlayCreateResponse)
 
+        @app.post('/api/v1/sessions/{session_id}/choices/prepare')
+        def prepare_choices(session_id: str, request: PrepareChoicesRequest):
+            return _play().prepare_choices(session_id, request.parent_branch_id, request.subscriber_id, request.history_id)
+
+        @app.post('/api/v1/sessions/{session_id}/reading-receipts')
+        def reading_receipt(session_id: str, request: ReadingReceiptRequest):
+            return _play().record_display(session_id, request.branch_id)
+
+        @app.get('/api/v1/sessions/{session_id}/turn-usage')
+        def turn_usage(session_id: str):
+            return _play().turn_usage(session_id)
+
+        @app.post('/api/v1/sessions/{session_id}/choices/release')
+        def release_choices(session_id: str, request: PrepareChoicesRequest):
+            _play().drafts.release(session_id, request.parent_branch_id, request.subscriber_id, retire=True)
+            return {'released': True}
+
         @app.post("/api/v1/sessions/{session_id}/branches/stream")
         async def play_stream(session_id: str, request: PlayContinueRequest):
             return stream_response(lambda stream, reset: _play().continue_turn(
                 session_id, request.parent_branch_id, request.direction_id, request.text,
-                request.request_id, stream, reset), PlayContinueResponse)
+                request.request_id, stream, reset, request.choice_id, request.subscriber_id, request.draft_id, request.history_id), PlayContinueResponse)
 
         def stream_response(operation, response_model):
             # Keep SQLite and the synchronous planner in one worker thread.
@@ -245,6 +317,7 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
                             yield ": heartbeat\n\n"
                             continue
                         yield "event: " + event + "\ndata: " + json.dumps(data, ensure_ascii=False) + "\n\n"
+                        await asyncio.sleep(0)
                         if event in ("done", "error"):
                             break
                 finally:
@@ -259,18 +332,13 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
             return _play().continue_turn(
                 session_id, request.parent_branch_id,
                 direction_id=request.direction_id, text=request.text,
-                request_id=request.request_id,
+                request_id=request.request_id, choice_id=request.choice_id, subscriber_id=request.subscriber_id, draft_id=request.draft_id,
+                history_id=request.history_id,
             )
 
     def _play():
         assert play_service is not None
         return play_service
-
-    if import_service is not None:
-        @app.post("/api/v1/import/novel", response_model=ImportNovelResponse, status_code=201)
-        def import_novel(request: ImportNovelRequest):
-            assert import_service is not None
-            return import_service.import_novel(request.package_id, request.version, request.source_text, request.file_name)
 
     # Return explicit JSON errors for API capabilities that are not available yet.
     @app.api_route("/api/{path:path}", methods=["GET", "POST", "PUT", "PATCH", "DELETE"], include_in_schema=False)

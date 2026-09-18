@@ -1,0 +1,2 @@
+上次独立核对的输出格式或证据映射无效：{{ error }}。
+保持正文原样，只重新核对并返回完整审核JSON，所有编号仍需覆盖。sources只能逐字引用sceneEvidence；本轮听到的话仅通过knowledgeChecks.accessSources表达获取渠道，不能把draft-P混入公开事实来源。不能为修格式将缺证背景降为current、将语义拒绝改成通过或删除旧修复问题；有事实错误仍明确判unsupported。有依据就引用对应资料原文；资料不支持时承认缺证，不补造引文。

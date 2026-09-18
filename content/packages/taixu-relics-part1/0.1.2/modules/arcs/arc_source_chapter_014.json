@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.2"
+  },
+  "arc": {
+    "id": "arc_source_chapter_014",
+    "title": "推进：第二盏灯",
+    "summary": "守灯人把完整的引路灯递给陆照临：“第二盏灯照活人。你若点亮它，镇上所有仍活着的人都会看见自己忘掉的东西。”",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_073",
+          "chapter_074",
+          "chapter_075"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_076"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_073_to_074",
+      "direction_chapter_074_to_075",
+      "direction_chapter_075_to_076"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_015"
+    ]
+  }
+}

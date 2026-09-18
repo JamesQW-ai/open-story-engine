@@ -1,0 +1,719 @@
+{
+  "payload": {
+    "text": "我向陆照临说明木牌刻痕里发现了金屑，让他只看我手里的纸包，询问他对此怎么看、有什么依据。听完他的回应再决定，暂不交出物品，也不离开原地。"
+  },
+  "status": "ready",
+  "metrics": {
+    "first_text_ms": 18352,
+    "ready_hit": false,
+    "selection_count": 1,
+    "ready_hits": 0,
+    "queue_ms": 2,
+    "complete_ms": 82889,
+    "reported_tokens": 47557,
+    "calls": 10,
+    "unreported_calls": 0,
+    "tokens": 47557,
+    "commit_ms": 29,
+    "committed": true,
+    "selection_to_complete_ms": 82941
+  },
+  "branch": {
+    "narrativeText": "你把手里的纸包托到陆照临眼前，指腹压着折角，没让他碰。纸面薄得透光，那一粒金屑在灰白纸纹间像被谁按进去的碎星。你压低声音，把木牌背面刻痕里夹着黑泥、刮下来时带出金屑的经过说了一遍，只说事实，不提猜测。\n\n陆照临没有立刻接话。他先看你的手，再看你另一只手里那面木牌，目光在“日落前取回青露草”那行字上停了一瞬，才说：“金屑不是木纹里该有的东西。若只是试炼牌，刻字时用不上金粉，更不会填进刻痕底。”他顿了顿，像在等你自己把话接下去。\n\n你问他怎么看，有什么依据。他往石壁方向偏了偏头，语气不重，但很稳：“玄霄宗外门试炼的木牌，我见过几面。刻痕都是素底，最多上过一层防潮漆。金屑若只在字底，不在牌面，说明有人后来把什么东西压进过刻痕，或者这面牌被人动过手脚。”他说完又补了一句：“也可能只是哪件金器刮过，留下的碎末。单凭这一粒，定不了来处。”\n\n你注意到他说“见过几面”时没有解释在何处见过，也没有伸手要纸包。他仍站在原处，山风从石径下方卷上来，把他袖口吹得贴住手腕。远处新弟子里有人朝这边张望，钟还没响。\n\n陆照临看着你，像在判断你会不会把纸包递过去。他忽然问：“你是在试炼开始前查这个，还是想带着它进后坡？”",
+    "summary": "自定行动：我向陆照临说明木牌刻痕里已推进，新的风险和选择仍然存在。",
+    "factDeltas": [],
+    "openThreads": [
+      "木牌刻痕里为何有金屑",
+      "如何完成第一场外门试炼",
+      "尚未完成的当前目标"
+    ],
+    "nextDirections": [
+      {
+        "id": "direction_chapter_011_to_012",
+        "title": "关键推进：发现",
+        "summary": "试炼进入林地深处后，陆照临发现每株药草旁都插着标记木签，木签上的日期与灵气强弱并不相符。",
+        "canonicalBeatId": "beat_chapter_012",
+        "statePatch": {
+          "sourceProgress": "chapter_012",
+          "playerLocationId": "location_9c23a624e6b0"
+        }
+      }
+    ],
+    "storyArc": {
+      "activeGoal": "自定行动：我向陆照临说明木牌刻痕里",
+      "currentPhase": "自定行动：我向陆照临说明木牌刻痕里",
+      "goalDisposition": "continued",
+      "chapter": {
+        "title": "《太虚遗录》·共创篇",
+        "status": "continuing"
+      }
+    },
+    "planning": {
+      "citations": [
+        {
+          "kind": "branch_node",
+          "ref": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+          "rationale": "承接已确认的上一节点。"
+        }
+      ],
+      "confidence": "medium",
+      "stateChangeProposals": []
+    },
+    "readingProfile": {
+      "level": "standard",
+      "targetCjk": [
+        700,
+        1100
+      ],
+      "authorizedSteps": 3,
+      "locationChanged": false,
+      "hardMinimum": false,
+      "actualCjk": 432
+    },
+    "branchAdditions": {
+      "locations": [],
+      "characters": [],
+      "items": [],
+      "relationships": [],
+      "clues": [],
+      "events": [],
+      "characterReveals": [],
+      "changes": []
+    },
+    "actionIntent": {
+      "input": "我向陆照临说明木牌刻痕里发现了金屑，让他只看我手里的纸包，询问他对此怎么看、有什么依据。听完他的回应再决定，暂不交出物品，也不离开原地。",
+      "requirements": {
+        "A1": {
+          "mode": "result",
+          "summary": "顾长离向陆照临说明木牌刻痕里发现了金屑。"
+        },
+        "A2": {
+          "mode": "result",
+          "summary": "顾长离只让陆照临看自己手里的纸包，不把物品交给他。"
+        },
+        "A3": {
+          "mode": "result",
+          "summary": "顾长离询问陆照临对此怎么看、有什么依据。"
+        },
+        "A4": {
+          "mode": "constraint",
+          "summary": "顾长离听完陆照临的回应后再决定，本回合不执行后续决定。"
+        },
+        "A5": {
+          "mode": "constraint",
+          "summary": "顾长离暂不交出木牌和包金屑的纸片。"
+        },
+        "A6": {
+          "mode": "constraint",
+          "summary": "顾长离不离开半山试炼场原地。"
+        }
+      }
+    },
+    "consequenceUpdate": {
+      "decision": "ready",
+      "message": "",
+      "requirements": {
+        "A1": {
+          "mode": "result",
+          "summary": "顾长离向陆照临说明木牌刻痕里发现了金屑。"
+        },
+        "A2": {
+          "mode": "result",
+          "summary": "顾长离只让陆照临看自己手里的纸包，不把物品交给他。"
+        },
+        "A3": {
+          "mode": "result",
+          "summary": "顾长离询问陆照临对此怎么看、有什么依据。"
+        },
+        "A4": {
+          "mode": "constraint",
+          "summary": "顾长离听完陆照临的回应后再决定，本回合不执行后续决定。"
+        },
+        "A5": {
+          "mode": "constraint",
+          "summary": "顾长离暂不交出木牌和包金屑的纸片。"
+        },
+        "A6": {
+          "mode": "constraint",
+          "summary": "顾长离不离开半山试炼场原地。"
+        }
+      },
+      "method": "顾长离已持有木牌和包金屑的纸片，且与陆照临同在半山试炼场。她可以原地开口说明，并只将纸包托在掌中让陆照临看，不递出。陆照临作为在场人物，可以依据自己的见识或对试炼规矩的了解作出回应；若他不知情，也会如实表示没有依据。此过程不需要新增能力或物品，不改变位置，不转移物品所有权。",
+      "steps": [
+        {
+          "id": "S1",
+          "actorId": "character_e663361ab1c7",
+          "action": "顾长离原地向陆照临说明木牌刻痕里发现金屑，并只把包金屑的纸片托在掌中让他看，不递出。",
+          "requirementIds": [
+            "A1",
+            "A2",
+            "A5",
+            "A6"
+          ],
+          "authority": "player",
+          "causeStepId": null
+        },
+        {
+          "id": "S2",
+          "actorId": "character_e663361ab1c7",
+          "action": "顾长离询问陆照临对此怎么看、有什么依据。",
+          "requirementIds": [
+            "A3"
+          ],
+          "authority": "player",
+          "causeStepId": null
+        },
+        {
+          "id": "S3",
+          "actorId": "character_ae4cb42b9b49",
+          "action": "陆照临只就顾长离掌中的纸包和木牌刻痕金屑作出回应，说明自己的看法或承认没有依据。",
+          "requirementIds": [
+            "A4"
+          ],
+          "authority": "reaction",
+          "causeStepId": "S2"
+        }
+      ],
+      "introductions": {
+        "characters": [],
+        "items": [],
+        "locations": []
+      },
+      "stateChanges": [
+        {
+          "id": "C1",
+          "entityId": "character_ae4cb42b9b49",
+          "attribute": "已知木牌刻痕中有金屑",
+          "before": null,
+          "value": "顾长离已向他说明，并看到纸包中的金屑",
+          "stepId": "S1",
+          "reason": "顾长离当面说明并展示纸包。",
+          "evidence": "你把手里的纸包托到陆照临眼前，指腹压着折角，没让他碰。纸面薄得透光，那一粒金屑在灰白纸纹间像被谁按进去的碎星。你压低声音，把木牌背面刻痕里夹着黑泥、刮下来时带出金屑的经过说了一遍，只说事实，不提猜测。"
+        }
+      ],
+      "outcomes": [],
+      "goalUpdates": []
+    },
+    "consequenceReview": "reader-consequences/2",
+    "reviewedNarrativeSha256": "e2ef3ae5bc9ec8d96bc0b4b7f47e880e8aa045884c3fa11f9a6545b7e40870be",
+    "authorityReview": {
+      "decision": "allow",
+      "issues": [],
+      "checks": [
+        {
+          "stepId": "S1",
+          "authorized": true,
+          "basis": "player_input",
+          "quote": "我向陆照临说明木牌刻痕里发现了金屑，让他只看我手里的纸包",
+          "reason": "玩家明确要求原地说明并只展示纸包，不递出，符合输入中的限制。"
+        },
+        {
+          "stepId": "S2",
+          "authorized": true,
+          "basis": "player_input",
+          "quote": "询问他对此怎么看、有什么依据",
+          "reason": "玩家明确要求询问陆照临的看法和依据。"
+        },
+        {
+          "stepId": "S3",
+          "authorized": true,
+          "basis": "causal_reaction",
+          "quote": "听完他的回应再决定，暂不交出物品，也不离开原地",
+          "reason": "陆照临作为被询问对象，对已展示的金屑和问题作出回应属于合理因果反应；玩家未要求提前执行后续决定。"
+        }
+      ],
+      "stateChecks": [
+        {
+          "changeId": "C1",
+          "authorized": true,
+          "reason": "顾长离当面说明并展示纸包，陆照临因此得知木牌刻痕中有金屑，属于由玩家明确行动产生的合理状态变化。"
+        }
+      ]
+    },
+    "observedEvents": [
+      {
+        "id": "O1",
+        "paragraphId": "P1",
+        "actor": "character_e663361ab1c7",
+        "mode": "actual",
+        "summary": "顾长离将包着金屑的纸包托到陆照临眼前，指腹压着折角，不让陆照临碰，并低声讲述木牌背面刻痕里夹着黑泥、刮下时带出金屑的经过。",
+        "changes": [
+          {
+            "entityId": "item_open_gold_paper",
+            "attribute": "ownerCharacterId",
+            "value": "character_e663361ab1c7"
+          }
+        ],
+        "introduced": [],
+        "quote": "你把手里的纸包托到陆照临眼前，指腹压着折角，没让他碰。纸面薄得透光，那一粒金屑在灰白纸纹间像被谁按进去的碎星。你压低声音，把木牌背面刻痕里夹着黑泥、刮下来时带出金屑的经过说了一遍，只说事实，不提猜测。"
+      },
+      {
+        "id": "O2",
+        "paragraphId": "P2",
+        "actor": "character_ae4cb42b9b49",
+        "mode": "speech",
+        "summary": "陆照临观察顾长离的手和木牌后，指出金屑不是木纹里该有的东西，试炼牌刻字用不上金粉，更不会填进刻痕底。",
+        "changes": [],
+        "introduced": [],
+        "quote": "陆照临没有立刻接话。他先看你的手，再看你另一只手里那面木牌，目光在“日落前取回青露草”那行字上停了一瞬，才说：“金屑不是木纹里该有的东西。若只是试炼牌，刻字时用不上金粉，更不会填进刻痕底。”他顿了顿，像在等你自己把话接下去。"
+      },
+      {
+        "id": "O3",
+        "paragraphId": "P3",
+        "actor": "character_ae4cb42b9b49",
+        "mode": "speech",
+        "summary": "陆照临说明玄霄宗外门试炼木牌刻痕通常为素底，最多上防潮漆，金屑只在字底不在牌面说明有人后来压进过东西或木牌被动过手脚，但也可能只是金器刮过留下的碎末，单凭一粒定不了来处。",
+        "changes": [],
+        "introduced": [],
+        "quote": "你问他怎么看，有什么依据。他往石壁方向偏了偏头，语气不重，但很稳：“玄霄宗外门试炼的木牌，我见过几面。刻痕都是素底，最多上过一层防潮漆。金屑若只在字底，不在牌面，说明有人后来把什么东西压进过刻痕，或者这面牌被人动过手脚。”他说完又补了一句：“也可能只是哪件金器刮过，留下的碎末。单凭这一粒，定不了来处。”"
+      },
+      {
+        "id": "O4",
+        "paragraphId": "P4",
+        "actor": "character_e663361ab1c7",
+        "mode": "actual",
+        "summary": "顾长离注意到陆照临说“见过几面”时没有解释在何处见过，也没有伸手要纸包。",
+        "changes": [],
+        "introduced": [],
+        "quote": "你注意到他说“见过几面”时没有解释在何处见过，也没有伸手要纸包。他仍站在原处，山风从石径下方卷上来，把他袖口吹得贴住手腕。远处新弟子里有人朝这边张望，钟还没响。"
+      },
+      {
+        "id": "O5",
+        "paragraphId": "P5",
+        "actor": "character_ae4cb42b9b49",
+        "mode": "speech",
+        "summary": "陆照临问顾长离是在试炼开始前查这个，还是想带着它进后坡。",
+        "changes": [],
+        "introduced": [],
+        "quote": "陆照临看着你，像在判断你会不会把纸包递过去。他忽然问：“你是在试炼开始前查这个，还是想带着它进后坡？”"
+      }
+    ],
+    "eventChecks": [
+      {
+        "id": "O1",
+        "verdict": "supported",
+        "reason": "与用户要求说明金屑、只让看纸包且不交出物品一致，纸包仍由顾长离持有。",
+        "stepIds": [
+          "S1"
+        ],
+        "changeIds": [],
+        "introductionIds": []
+      },
+      {
+        "id": "O2",
+        "verdict": "supported",
+        "reason": "陆照临作为在场人物对金屑来源作出回应，符合反应步骤。",
+        "stepIds": [
+          "S3"
+        ],
+        "changeIds": [],
+        "introductionIds": []
+      },
+      {
+        "id": "O3",
+        "verdict": "supported",
+        "reason": "陆照临进一步说明依据，回应顾长离的询问。",
+        "stepIds": [
+          "S3"
+        ],
+        "changeIds": [],
+        "introductionIds": []
+      },
+      {
+        "id": "O4",
+        "verdict": "supported",
+        "reason": "顾长离观察陆照临未解释见过几面、未要纸包，属于原地观察，未违反限制。",
+        "stepIds": [],
+        "changeIds": [],
+        "introductionIds": []
+      },
+      {
+        "id": "O5",
+        "verdict": "supported",
+        "reason": "陆照临继续询问顾长离的打算，未替玩家作决定，顾长离尚未回应后续。",
+        "stepIds": [
+          "S3"
+        ],
+        "changeIds": [],
+        "introductionIds": []
+      }
+    ],
+    "readerOutcome": {
+      "actions": [
+        {
+          "id": "A1",
+          "requirement": "我向陆照临说明木牌刻痕里发现了金屑",
+          "status": "performed",
+          "summary": "顾长离向陆照临说明木牌刻痕里发现金屑，并只把包金屑的纸片托在掌中让他看，未递出。",
+          "evidence": "你把手里的纸包托到陆照临眼前，指腹压着折角，没让他碰。纸面薄得透光，那一粒金屑在灰白纸纹间像被谁按进去的碎星。你压低声音，把木牌背面刻痕里夹着黑泥、刮下来时带出金屑的经过说了一遍，只说事实，不提猜测。"
+        },
+        {
+          "id": "A2",
+          "requirement": "让他只看我手里的纸包",
+          "status": "performed",
+          "summary": "顾长离只让陆照临看手中纸包，指腹压着折角，没让他碰。",
+          "evidence": "你把手里的纸包托到陆照临眼前，指腹压着折角，没让他碰。纸面薄得透光，那一粒金屑在灰白纸纹间像被谁按进去的碎星。你压低声音，把木牌背面刻痕里夹着黑泥、刮下来时带出金屑的经过说了一遍，只说事实，不提猜测。"
+        },
+        {
+          "id": "A3",
+          "requirement": "询问他对此怎么看、有什么依据",
+          "status": "performed",
+          "summary": "顾长离询问陆照临对此怎么看、有什么依据。",
+          "evidence": "你问他怎么看，有什么依据。他往石壁方向偏了偏头，语气不重，但很稳：“玄霄宗外门试炼的木牌，我见过几面。刻痕都是素底，最多上过一层防潮漆。金屑若只在字底，不在牌面，说明有人后来把什么东西压进过刻痕，或者这面牌被人动过手脚。”他说完又补了一句：“也可能只是哪件金器刮过，留下的碎末。单凭这一粒，定不了来处。”"
+        },
+        {
+          "id": "A4",
+          "requirement": "听完他的回应再决定",
+          "status": "performed",
+          "summary": "陆照临已就金屑来源作出回应，顾长离本回合未作后续决定。",
+          "evidence": "陆照临看着你，像在判断你会不会把纸包递过去。他忽然问：“你是在试炼开始前查这个，还是想带着它进后坡？”"
+        },
+        {
+          "id": "A5",
+          "requirement": "暂不交出物品",
+          "status": "performed",
+          "summary": "顾长离未交出木牌和包金屑的纸片，纸包仍由她持有。",
+          "evidence": "你把手里的纸包托到陆照临眼前，指腹压着折角，没让他碰。纸面薄得透光，那一粒金屑在灰白纸纹间像被谁按进去的碎星。你压低声音，把木牌背面刻痕里夹着黑泥、刮下来时带出金屑的经过说了一遍，只说事实，不提猜测。"
+        },
+        {
+          "id": "A6",
+          "requirement": "也不离开原地",
+          "status": "performed",
+          "summary": "顾长离始终留在半山试炼场原地，未离开。",
+          "evidence": "你把手里的纸包托到陆照临眼前，指腹压着折角，没让他碰。纸面薄得透光，那一粒金屑在灰白纸纹间像被谁按进去的碎星。你压低声音，把木牌背面刻痕里夹着黑泥、刮下来时带出金屑的经过说了一遍，只说事实，不提猜测。"
+        }
+      ],
+      "action": {
+        "status": "performed",
+        "summary": "顾长离向陆照临说明木牌刻痕里发现金屑，并只把包金屑的纸片托在掌中让他看，未递出。；顾长离只让陆照临看手中纸包，指腹压着折角，没让他碰。；顾长离询问陆照临对此怎么看、有什么依据。；陆照临已就金屑来源作出回应，顾长离本回合未作后续决定。；顾长离未交出木牌和包金屑的纸片，纸包仍由她持有。；顾长离始终留在半山试炼场原地，未离开",
+        "evidence": "你把手里的纸包托到陆照临眼前，指腹压着折角，没让他碰。纸面薄得透光，那一粒金屑在灰白纸纹间像被谁按进去的碎星。你压低声音，把木牌背面刻痕里夹着黑泥、刮下来时带出金屑的经过说了一遍，只说事实，不提猜测。"
+      },
+      "clues": [],
+      "relationships": []
+    },
+    "id": "branch_0087d070-ca39-4dd2-ae02-c0877a113ebf",
+    "sourceNodeRef": "node_source_continuity",
+    "branchState": {
+      "playerLocationId": "location_open_trial",
+      "sourceProgress": "chapter_011",
+      "freeTextProgress": 1,
+      "storyScope": "source",
+      "derivativeStage": "inactive",
+      "derivedTurn": 0,
+      "derivedLocations": [],
+      "derivedCharacters": [],
+      "derivedItems": [],
+      "derivedCharacterReveals": [],
+      "derivedRelationships": [],
+      "derivedClues": [],
+      "derivedEvents": [],
+      "branchLedger": {
+        "schemaVersion": "branch-state-ledger/0.1",
+        "entries": [
+          {
+            "id": "ledger_000001_4ca66faa36d5",
+            "sequence": 1,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:freeTextProgress",
+            "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+            "before": 0,
+            "after": 1,
+            "source": {
+              "kind": "player_direction",
+              "ref": "direction_free_5d7e0ae78e8a",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000002_ad92b8530339",
+            "sequence": 2,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:goalLedger",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": null,
+            "after": [
+              {
+                "id": "opening-goal-1",
+                "title": "木牌刻痕里为何有金屑",
+                "status": "active",
+                "characterId": "character_e663361ab1c7",
+                "dependencies": [],
+                "source": "opening",
+                "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                "causeBranchId": null
+              },
+              {
+                "id": "opening-goal-2",
+                "title": "如何完成第一场外门试炼",
+                "status": "active",
+                "characterId": "character_e663361ab1c7",
+                "dependencies": [],
+                "source": "opening",
+                "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                "causeBranchId": null
+              }
+            ],
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_0087d070-ca39-4dd2-ae02-c0877a113ebf",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000003_f1c3dbdac1ed",
+            "sequence": 3,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:readerEntityStates",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": null,
+            "after": {
+              "character_ae4cb42b9b49": {
+                "已知木牌刻痕中有金屑": "顾长离已向他说明，并看到纸包中的金屑"
+              }
+            },
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_0087d070-ca39-4dd2-ae02-c0877a113ebf",
+              "nodeRef": "node_source_continuity"
+            }
+          }
+        ]
+      },
+      "playerCharacterId": "character_e663361ab1c7",
+      "characterLocationIds": {
+        "character_e663361ab1c7": "location_open_trial",
+        "character_ae4cb42b9b49": "location_open_trial"
+      },
+      "itemOwnerCharacterIds": {
+        "item_open_gu_token": "character_e663361ab1c7",
+        "item_open_gold_paper": "character_e663361ab1c7"
+      },
+      "itemLocationIds": {},
+      "characterOutcomeStates": {},
+      "readerEntityStates": {
+        "character_ae4cb42b9b49": {
+          "已知木牌刻痕中有金屑": "顾长离已向他说明，并看到纸包中的金屑"
+        }
+      },
+      "goalLedger": [
+        {
+          "id": "opening-goal-1",
+          "title": "木牌刻痕里为何有金屑",
+          "status": "active",
+          "characterId": "character_e663361ab1c7",
+          "dependencies": [],
+          "source": "opening",
+          "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+          "causeBranchId": null
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "如何完成第一场外门试炼",
+          "status": "active",
+          "characterId": "character_e663361ab1c7",
+          "dependencies": [],
+          "source": "opening",
+          "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+          "causeBranchId": null
+        }
+      ]
+    },
+    "canonicalRelation": "diverged",
+    "selectedDirectionId": "direction_free_5d7e0ae78e8a",
+    "selectedDirection": {
+      "id": "direction_free_5d7e0ae78e8a",
+      "title": "自定行动：我向陆照临说明木牌刻痕里",
+      "summary": "我向陆照临说明木牌刻痕里发现了金屑，让他只看我手里的纸包，询问他对此怎么看、有什么依据。听完他的回应再决定，暂不交出物品，也不离开原地。",
+      "statePatch": {
+        "freeTextProgress": 1
+      },
+      "isFreeText": true
+    },
+    "playerDirection": "我向陆照临说明木牌刻痕里发现了金屑，让他只看我手里的纸包，询问他对此怎么看、有什么依据。听完他的回应再决定，暂不交出物品，也不离开原地。",
+    "requestId": null,
+    "createdAt": "2026-09-15T10:34:00.031Z",
+    "kind": "generated",
+    "parentId": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+    "readerChoices": [
+      {
+        "id": "reader-8fe53e68e6d7cf4a",
+        "title": "把纸包递给他，请他再验",
+        "summary": "我把包着金屑的纸包递向陆照临，说既然他见过外门试炼木牌，就请他再验一验这粒金屑的成色与压痕，看能不能辨出是金器刮落还是有人填进去的。",
+        "evidence": [
+          "你问他怎么看，有什么依据。他往石壁方向偏了偏头，语气不重，但很稳：“玄霄宗外门试炼的木牌，我见过几面。刻痕都是素底，最多上过一层防潮漆。金屑若只在字底，不在牌面，说明有人后来把什么东西压进过刻痕，或者这面牌被人动过手脚。”他说完又补了一句：“也可能只是哪件金器刮过，留下的碎末。单凭这一粒，定不了来处。”",
+          "陆照临看着你，像在判断你会不会把纸包递过去。他忽然问：“你是在试炼开始前查这个，还是想带着它进后坡？”"
+        ]
+      },
+      {
+        "id": "reader-1e17c46a98976531",
+        "title": "先不给他，只问试炼牌来处",
+        "summary": "我收回纸包，不递过去，只问他既见过几面外门试炼木牌，是在何处、因何缘故见到的，这面牌与寻常试炼牌还有什么不同。",
+        "evidence": [
+          "你问他怎么看，有什么依据。他往石壁方向偏了偏头，语气不重，但很稳：“玄霄宗外门试炼的木牌，我见过几面。刻痕都是素底，最多上过一层防潮漆。金屑若只在字底，不在牌面，说明有人后来把什么东西压进过刻痕，或者这面牌被人动过手脚。”他说完又补了一句：“也可能只是哪件金器刮过，留下的碎末。单凭这一粒，定不了来处。”",
+          "你注意到他说“见过几面”时没有解释在何处见过，也没有伸手要纸包。他仍站在原处，山风从石径下方卷上来，把他袖口吹得贴住手腕。远处新弟子里有人朝这边张望，钟还没响。"
+        ]
+      },
+      {
+        "id": "reader-beb676cf4b198e05",
+        "title": "表明要带进后坡再查",
+        "summary": "我告诉他，我打算带着这粒金屑和木牌进后坡，在试炼途中留意有没有金器或金粉的来处，日落前取青露草时一并查。",
+        "evidence": [
+          "陆照临看着你，像在判断你会不会把纸包递过去。他忽然问：“你是在试炼开始前查这个，还是想带着它进后坡？”"
+        ]
+      }
+    ]
+  },
+  "audits": [
+    {
+      "operation": "branch_planner",
+      "model": "deepseek-v4-pro:cloud",
+      "promptVersion": "web-player-v3+prompt-catalog/1:26e32ad00349ea0730bc1852654c7a9bbe0f8d21d4461d603d710467f695cb1f",
+      "error": null,
+      "callObservations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 15184
+          },
+          "generationStage": "result_contract",
+          "revision": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 2030
+          },
+          "generationStage": "action_authority"
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 5940
+          },
+          "generationStage": "chapter",
+          "revision": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 8675
+          },
+          "generationStage": "fact_extraction",
+          "revision": 0,
+          "extractionAttempt": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 22699
+          },
+          "generationStage": "action_review",
+          "revision": 0
+        },
+        {
+          "generationStage": "validation",
+          "revision": 0,
+          "outcome": "failed",
+          "error": "正文存在未登记的持续状态变化：{'entityId': 'character_aa4580d38571', 'attribute': 'locationId', 'value': 'location_open_trial'}"
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 1652
+          },
+          "generationStage": "local_repair",
+          "revision": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 4830
+          },
+          "generationStage": "chapter",
+          "revision": 1
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 4813
+          },
+          "generationStage": "fact_extraction",
+          "revision": 1,
+          "extractionAttempt": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 7820
+          },
+          "generationStage": "action_review",
+          "revision": 1
+        }
+      ],
+      "promptContext": {
+        "mode": "player_history",
+        "perspective": "second_person_limited",
+        "scene": "自定行动：我向陆照临说明木牌刻痕里",
+        "pacing": {
+          "level": "standard",
+          "targetCjk": [
+            700,
+            1100
+          ],
+          "authorizedSteps": 3,
+          "locationChanged": false,
+          "hardMinimum": false
+        }
+      }
+    },
+    {
+      "operation": "reader_choices",
+      "model": "deepseek-v4-pro:cloud",
+      "promptVersion": "prompt-catalog/1:26e32ad00349ea0730bc1852654c7a9bbe0f8d21d4461d603d710467f695cb1f",
+      "error": null,
+      "callObservations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 9117
+          },
+          "generationStage": "reader_choices"
+        }
+      ],
+      "promptContext": null
+    }
+  ]
+}

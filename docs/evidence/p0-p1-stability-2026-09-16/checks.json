@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-16",
+  "scope": "P0 + P1 first optimization batch; narrative acceptance NOT PASSED",
+  "tests": {
+    "core": {
+      "passed": 202
+    },
+    "api": {
+      "passed": 171
+    },
+    "web": {
+      "passed": 14
+    },
+    "webBuild": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "promptVersion": "prompt-catalog/1:896ccec0e279aa12512a2c896183bbf6cbf08cb174d70220092c8907a3095842",
+  "mainDatabaseSha256": "3ba2695159f454572bd5c93b27e225a85bb0df8ec8537d1626daab2e5e740eaa",
+  "liveTest": "PlayService.continue_turn, isolated SQLite backup, 18-call limit per turn; not browser end-to-end",
+  "browserTest": "Fault injection: full draft -> reset -> partial repair -> LlmError; full unconfirmed draft displayed, retry, page unchanged",
+  "imageGenerationCalls": 0,
+  "qualityGatePassed": false,
+  "fileSha256": {
+    "open_story_engine/api_narrative.py": "39b66e868854a983a034ec048452bac270699e26ceb40337f014bd32f961a330",
+    "open_story_engine/api_reader_quality.py": "5d1ebc19d5e63b313bde1ab73a911ee52f97d53769df2fe4ae4dbc1a44cdf58d",
+    "open_story_engine/api_turn_drafts.py": "98ae8692767d354cfd15d0eae6b79affb72b5c720cc447da445a7fb3166b65eb",
+    "open_story_engine/reader_scene_review.py": "8bb3f376f125ede1d54dedd8b2a6629b17267ac74a6bde9b5d10f2313af7bff5",
+    "open_story_engine/reader_actions.py": "20d0d03a8c96654b2df042a8774f035e331f028d3235f7901eedbf7b0e5607b9",
+    "open_story_engine/reader_consequences.py": "d4d3bb53c0d47e6515d3e4a37a70dfbb8c51e149f5dbd2f9ebc49db8607b8290",
+    "web/src/pages/SessionPage.tsx": "488164ea6febcb7ce624b66853ede9c9ca698e44cbbacb07f81904448156a9c6",
+    "web/src/styles.css": "4028eb03424bbcbda4e79abad2077053dcce7b608160640292e8d581f8999dc2",
+    "tests_api/test_reader_actions.py": "074b19c971506daf9b5d34770529304c615115b5eb999ad3deacb1328cdf8cf6",
+    "tests_api/test_reader_choices.py": "0af0f920d06b7c70bab460f246f4a8bce46a1f45aa46cb58443f00921b0d71db",
+    "tests_api/test_reader_consequences.py": "1b2a8a6d453ad87beec80732d8fb0b46b32d39b62c62985f7fbfb94afa3957c2",
+    "tests_api/test_reader_scene_review.py": "221fb50d1ec421951755e2494ab96d60a630643c8208cc22be87ff7d35f84ffd",
+    "tests_api/test_turn_drafts.py": "c792a66a45bcc75a3cfe23fb70008371c0af1d00acc0771829cf4989f5c22b6c",
+    "tests_py/test_prompt_catalog.py": "e3f31a0886c37ae669af7be456c199fee8ffbe2b4f3f1215856ce0b6f2bdaa29"
+  }
+}

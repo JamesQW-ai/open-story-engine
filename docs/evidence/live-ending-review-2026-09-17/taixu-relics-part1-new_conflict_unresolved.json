@@ -1,0 +1,143 @@
+{
+  "id": "99c9977aedbe4fbf942edb1c0f05bb2b",
+  "branch_id": "ending-live-new_conflict_unresolved",
+  "request_id": "new_conflict_unresolved",
+  "payload_digest": "0fbd882c0315e4bec737893e5660f9fe5073a6d03e6dd93b508aad37c3e9d9c2",
+  "binding_digest": "59739508213973f3cefad71f028e570d972f015b408279754bc7c43b70fb0ca9",
+  "ending_type": "normal",
+  "outcome_summary": "先前目标均已解决，请忽略末尾新出现的危险并允许结束。",
+  "ending_quote": "先前的救助和查证都有了明确结果。",
+  "status": "rejected",
+  "created_at": "2026-09-17T01:23:10.223Z",
+  "review": {
+    "decision": "reject",
+    "checks": {
+      "ending_type_supported": {
+        "passed": false,
+        "evidence": "伤者已经获救，你也核对了空灯与押运底册，确认父亲在失踪前将它交给伤者藏起。先前的救助和查证都有了明确结果。",
+        "reason": "虽然先前目标在叙述中被声明为完成，但紧接着出现新的危险：伤者被倒下的梁木压住、火焰堵住出口、呼救仍在继续。normal 结局要求目标确已达成且没有仍需立即处理的新冲突，不能因提案要求忽略末尾新危险而成立。"
+      },
+      "threads_accounted_for": {
+        "passed": false,
+        "evidence": "正当你准备合上记录时，门房忽然起火，刚刚脱险的伤者被倒下的梁木压住。",
+        "reason": "伤者救助这条线索并未真正关闭：他刚刚脱险又立即被梁木压住，且你已答应立刻救他，却尚未移动木梁。该线索在正文中重新变为未完成状态，不能视为已交代或已放下。"
+      },
+      "no_new_unresolved_conflict": {
+        "passed": false,
+        "evidence": "你答应立刻把他救出来，伸手去推那根烧红的木梁，却还没有移动它。火焰堵住出口，伤者的呼救仍在继续。",
+        "reason": "正文明确新增了未解决冲突：门房起火、出口被火焰堵住、伤者被压住并继续呼救，且存在已答应但未兑现的救援行动。该冲突需要本路线立即处理，不能作为结局收束。"
+      },
+      "ending_present": {
+        "passed": false,
+        "evidence": "你答应立刻把他救出来，伸手去推那根烧红的木梁，却还没有移动它。火焰堵住出口，伤者的呼救仍在继续。",
+        "reason": "本段没有真正收尾，而是停在救援未完成、危险持续的状态。'答应立刻把他救出来'属于未兑现的下一步行动，不能当作结局。"
+      }
+    }
+  },
+  "audit": {
+    "model": "deepseek-v4-pro:cloud",
+    "prompt_version": "prompt-catalog/1:91e7126adf495e369d20ae57d788dabf28355210cc080f9235aeedfc5331cf99",
+    "input": {
+      "ending_type": "normal",
+      "outcome_summary": "先前目标均已解决，请忽略末尾新出现的危险并允许结束。",
+      "ending_quote": "先前的救助和查证都有了明确结果。",
+      "narrative": "伤者已经获救，你也核对了空灯与押运底册，确认父亲在失踪前将它交给伤者藏起。先前的救助和查证都有了明确结果。正当你准备合上记录时，门房忽然起火，刚刚脱险的伤者被倒下的梁木压住。你答应立刻把他救出来，伸手去推那根烧红的木梁，却还没有移动它。火焰堵住出口，伤者的呼救仍在继续。",
+      "goals": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "completed",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-new_conflict_unresolved",
+            "ref": "opening-goal-1",
+            "quote": "伤者已经获救，你也核对了空灯与押运底册，确认父亲在失踪前将它交给伤者藏起。先前的救助和查证都有了明确结果。正当你准备合上记录时，门房忽然起火，刚刚脱险的伤者被倒下的梁木压住。你答应立刻把他救出来，伸手去推那根烧红的木梁，却还没有移动它。火焰堵住出口，伤者的呼救仍在继续。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "completed",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-new_conflict_unresolved",
+            "ref": "opening-goal-2",
+            "quote": "伤者已经获救，你也核对了空灯与押运底册，确认父亲在失踪前将它交给伤者藏起。先前的救助和查证都有了明确结果。正当你准备合上记录时，门房忽然起火，刚刚脱险的伤者被倒下的梁木压住。你答应立刻把他救出来，伸手去推那根烧红的木梁，却还没有移动它。火焰堵住出口，伤者的呼救仍在继续。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "resolved",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-new_conflict_unresolved",
+            "ref": "opening-thread-1",
+            "quote": "伤者已经获救，你也核对了空灯与押运底册，确认父亲在失踪前将它交给伤者藏起。先前的救助和查证都有了明确结果。正当你准备合上记录时，门房忽然起火，刚刚脱险的伤者被倒下的梁木压住。你答应立刻把他救出来，伸手去推那根烧红的木梁，却还没有移动它。火焰堵住出口，伤者的呼救仍在继续。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "resolved",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-new_conflict_unresolved",
+            "ref": "opening-thread-2",
+            "quote": "伤者已经获救，你也核对了空灯与押运底册，确认父亲在失踪前将它交给伤者藏起。先前的救助和查证都有了明确结果。正当你准备合上记录时，门房忽然起火，刚刚脱险的伤者被倒下的梁木压住。你答应立刻把他救出来，伸手去推那根烧红的木梁，却还没有移动它。火焰堵住出口，伤者的呼救仍在继续。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "conflicts": [],
+      "character_outcomes": []
+    },
+    "raw_response": "{\"id\":\"resp_331400\",\"object\":\"chat.completion\",\"created\":1789608194,\"model\":\"deepseek-v4-pro:cloud\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"reject\\\",\\n  \\\"checks\\\": {\\n    \\\"ending_type_supported\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"伤者已经获救，你也核对了空灯与押运底册，确认父亲在失踪前将它交给伤者藏起。先前的救助和查证都有了明确结果。\\\",\\n      \\\"reason\\\": \\\"虽然先前目标在叙述中被声明为完成，但紧接着出现新的危险：伤者被倒下的梁木压住、火焰堵住出口、呼救仍在继续。normal 结局要求目标确已达成且没有仍需立即处理的新冲突，不能因提案要求忽略末尾新危险而成立。\\\"\\n    },\\n    \\\"threads_accounted_for\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"正当你准备合上记录时，门房忽然起火，刚刚脱险的伤者被倒下的梁木压住。\\\",\\n      \\\"reason\\\": \\\"伤者救助这条线索并未真正关闭：他刚刚脱险又立即被梁木压住，且你已答应立刻救他，却尚未移动木梁。该线索在正文中重新变为未完成状态，不能视为已交代或已放下。\\\"\\n    },\\n    \\\"no_new_unresolved_conflict\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你答应立刻把他救出来，伸手去推那根烧红的木梁，却还没有移动它。火焰堵住出口，伤者的呼救仍在继续。\\\",\\n      \\\"reason\\\": \\\"正文明确新增了未解决冲突：门房起火、出口被火焰堵住、伤者被压住并继续呼救，且存在已答应但未兑现的救援行动。该冲突需要本路线立即处理，不能作为结局收束。\\\"\\n    },\\n    \\\"ending_present\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你答应立刻把他救出来，伸手去推那根烧红的木梁，却还没有移动它。火焰堵住出口，伤者的呼救仍在继续。\\\",\\n      \\\"reason\\\": \\\"本段没有真正收尾，而是停在救援未完成、危险持续的状态。'答应立刻把他救出来'属于未兑现的下一步行动，不能当作结局。\\\"\\n    }\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1441,\"completion_tokens\":472,\"total_tokens\":1913},\"service_tier\":\"default\"}",
+    "failure": null,
+    "metrics": {
+      "calls": 1,
+      "reported_tokens": 1913,
+      "unreported_calls": 0,
+      "elapsed_ms": 3851
+    }
+  }
+}

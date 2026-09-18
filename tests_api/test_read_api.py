@@ -22,8 +22,8 @@ from open_story_engine.storage import SessionStore
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKAGE_ID = "rainy-waiting-room-source"
-VERSION = "0.1.16"
+PACKAGE_ID = "taixu-relics-part1"
+VERSION = "0.1.2"
 
 
 class ReadApiTests(unittest.TestCase):
@@ -33,7 +33,7 @@ class ReadApiTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.packages = self.root / "packages"
         self.package_dir = self.packages / PACKAGE_ID / VERSION
-        shutil.copytree(ROOT / "tests_py/fixtures/content/packages" / PACKAGE_ID / VERSION, self.package_dir)
+        shutil.copytree(ROOT / "content/packages" / PACKAGE_ID / VERSION, self.package_dir)
         self.package = load_runtime_story_package(self.package_dir / "package.json", lazy=True)
         self.entry = next(iter(self.package["story"]["entryModel"]["entryPoints"]))
         self.character = self.entry["sourceCharacterIds"][0]
@@ -57,11 +57,43 @@ class ReadApiTests(unittest.TestCase):
         with patch.object(SessionStore, "_initialize", side_effect=AssertionError("migration")):
             response = self.client.get("/api/v1/packages")
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(response.json()["packages"][0]["beat_count"], 14)
+            self.assertEqual(response.json()["packages"][0]["beat_count"], len(self.package["story"]["narrativeGraph"]["beats"]))
             catalog = self.client.get(f"/api/v1/packages/{PACKAGE_ID}/{VERSION}").json()
-        self.assertEqual(len(catalog["entries"]), 14)
+        self.assertEqual(len(catalog["entries"]), 3)
         self.assertNotIn("sourceExcerpt", json.dumps(catalog))
         self.assertFalse(self.database.exists())
+
+    def test_catalog_exposes_every_public_identity_card_and_portrait(self):
+        from open_story_engine.api_read import ReadService
+
+        catalog = ReadService(self.packages, self.database).catalog(self.package)
+        people = catalog["characters"] + catalog["supporting_characters"]
+        self.assertEqual(
+            [person["name"] for person in people],
+            ["陆照临", "顾长离", "叶观澜", "陆沉舟", "沈砚秋", "萧问蝉", "叶青冥"],
+        )
+        self.assertTrue(all(person.get("portraitAsset", "").startswith("/images/") for person in people))
+        self.assertNotIn("sourceDescriptions", json.dumps(catalog["supporting_characters"]))
+
+    def test_unreviewed_public_identity_gets_a_session_opening_without_mutating_package(self):
+        from open_story_engine.api_openings import identity_opening_package
+        from open_story_engine.cocreation import create_contract, entry_node, normalize_entry_selection
+
+        entry = next(iter(self.package["story"]["entryModel"]["entryPoints"]))
+        selection = normalize_entry_selection(
+            self.package,
+            {"kind": "source_character", "sourceCharacterId": "character_37531636ecf5", "entryPointId": entry["id"]},
+            allow_any_source_character=True,
+        )
+        overlay = identity_opening_package(self.package, selection)
+        root = entry_node(
+            overlay,
+            create_contract(overlay, "identity-card-test", selection, allow_any_source_character=True),
+            allow_any_source_character=True,
+        )
+        self.assertEqual(root["branchState"]["playerCharacterId"], "character_37531636ecf5")
+        self.assertIn("你停下脚步", root["narrativeText"])
+        self.assertEqual(next(iter(self.package["story"]["entryModel"]["entryPoints"]))["sourceCharacterIds"], ["character_ae4cb42b9b49"])
 
     def test_missing_database_and_unavailable_writes_are_explicit(self):
         self.assertEqual(self.client.get("/api/v1/sessions").json(), {"available": False, "sessions": []})
@@ -72,11 +104,33 @@ class ReadApiTests(unittest.TestCase):
         self.assertFalse(self.client.get("/api/v1/health").json()["generation_available"])
         self.assertFalse(self.database.exists())
 
+    def test_supporting_roster_is_opt_in_public_and_not_a_playable_identity(self):
+        from open_story_engine.api_models import PackageCatalog
+        from open_story_engine.api_read import ReadService
+
+        for person in self.package["characters"]:
+            person["rosterVisible"] = False
+        npc = self.package["characters"][-1]
+        npc.update({"rosterVisible": True, "roleGroup": "key_supporting",
+                    "identitySummary": "只展示公开身份", "secret": "不可泄漏的后文"})
+        self.package["story"]["entryModel"]["sourceCharacterIds"] = [self.character]
+        service = ReadService(self.packages, self.database)
+        result = PackageCatalog.model_validate(service.catalog(self.package)).model_dump()
+        self.assertEqual([c["id"] for c in result["characters"]], [self.character])
+        self.assertEqual(result["supporting_characters"][0]["id"], npc["id"])
+        self.assertEqual(result["supporting_characters"][0]["identitySummary"], "只展示公开身份")
+        self.assertNotIn("不可泄漏的后文", json.dumps(result["supporting_characters"]))
+        npc["rosterVisible"] = False
+        self.assertEqual(service.catalog(self.package)["supporting_characters"], [])
+
     def test_preview_capability_distinguishes_legacy_and_unregistered_packages(self):
-        shutil.copytree(ROOT / "tests_api/fixtures/legacy-source-package",
-                        self.packages / PACKAGE_ID / "0.1.8")
-        shutil.copytree(ROOT / "tests_py/fixtures/content/packages/rainy-waiting-room/0.1.2",
-                        self.packages / "rainy-waiting-room" / "0.1.2")
+        # An unmodularized copy of this same long novel stays browsable.
+        target = self.packages / PACKAGE_ID / "0.1.0"
+        target.mkdir(parents=True)
+        package = json.loads((self.package_dir / "package.json").read_text())
+        package["version"] = "0.1.0"
+        package.pop("moduleIndexSha256", None)
+        (target / "package.json").write_text(json.dumps(package, ensure_ascii=False))
         read_text = Path.read_text
 
         def indexes_only(path, *args, **kwargs):
@@ -90,8 +144,7 @@ class ReadApiTests(unittest.TestCase):
         capabilities = {(p["package_id"], p["version"]): p["context_preview"] for p in data["packages"]}
         self.assertEqual(data["issues"], [])  # Browsable historical packages are not corrupt.
         self.assertTrue(capabilities[(PACKAGE_ID, VERSION)]["available"])
-        self.assertEqual(capabilities[(PACKAGE_ID, "0.1.8")]["code"], "context_modules_unavailable")
-        self.assertEqual(capabilities[("rainy-waiting-room", "0.1.2")]["code"], "modular_context_required")
+        self.assertEqual(capabilities[(PACKAGE_ID, "0.1.0")]["code"], "modular_context_required")
         package = json.loads((self.package_dir / "package.json").read_text())
         parsed = self.client.post("/api/v1/package/parse", json={"package": package}).json()
         self.assertEqual(parsed["package"]["context_preview"]["code"], "package_not_registered")

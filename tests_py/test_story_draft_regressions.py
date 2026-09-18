@@ -1037,6 +1037,10 @@ class StoryDraftRegressions(unittest.TestCase):
 
     def test_clothing_detail_is_not_a_new_evidence_trace(self):
         guard_narrative("口袋里的铜牌贴着大腿，边缘的刻痕隔着布料也能辨认出数字的轮廓。", self.state, [], package=self.package)
+        guard_narrative("四个人的影子被通道尽头的光拉长。", self.state, [], package=self.package)
+        guard_narrative("许川没有再走回隧道，仍留在候车厅。", self.state, [], package=self.package)
+        with self.assertRaisesRegex(ValueError, '可进入地点'):
+            guard_narrative("许川发现了新的地下室入口。", self.state, [], package=self.package)
         with self.assertRaisesRegex(ValueError, "可取证痕迹.*布料"):
             guard_narrative("许川发现铁门边挂着一块布料，这块布料成了追踪的线索。", self.state, [], package=self.package)
 
@@ -1045,11 +1049,14 @@ class StoryDraftRegressions(unittest.TestCase):
             "唐栖的号码已经拨出去第七次，每一次都是忙音。候车厅里的电子钟一动不动。他记得自己进站时看过手表。",
             "唐栖的名字还亮在屏幕上。陈砚背对着众人。姜序的伞尖轻轻点着地砖，发出细碎的声响。",
             "许川提起唐栖，陈砚说他刚刚进站。",
+            "许川收好唐栖的录音笔。姜序在长椅旁，唐栖问姜序：“你改过记录没有？”",
+            "许川看着唐栖手里的录音笔，对她说：“今晚的事，我不替你解释。”",
             "唐栖的号码还亮在那里，像一扇没有回应的门。",
             "唐栖刚才发了一条语音。许川又听了一遍电话里的留言。",
             "唐栖给你留了语音，不代表她说的每一句都是真的。",
             "许川想起唐栖的语音里最后那个“人”字，像她来不及说完就被什么打断了。",
             "许川想起唐栖语音里最后那声金属门合上的巨响。他问：“她和你说了什么？”",
+            "许川收好唐栖的录音笔。许川站在长椅旁，朝门口望了一眼，说：“司机还在车上，我去叫他。”",
         ]
         for text in valid:
             with self.subTest(text=text):
@@ -1076,6 +1083,12 @@ class StoryDraftRegressions(unittest.TestCase):
                      "唐栖的语音响起：\n\n“去后门等我。”"):
             with self.subTest(text=text), self.assertRaisesRegex(ValueError, "通信状态"):
                 guard_narrative(text, self.state, [], package=self.package)
+        from open_story_engine.cocreation import _communication_fact_conflict
+        assertion = {'communicationTimestamp': {'characterName': '唐栖', 'knownMessageTexts': ['别让陈砚拿到储物柜里的录音。']}}
+        self.assertIsNone(_communication_fact_conflict('唐栖按下录音笔。你的声音先出现：“工程做没做完，不影响列车按时跑。”',
+            assertion, '陈砚', ['陈砚', '唐栖']))
+        self.assertIsNotNone(_communication_fact_conflict('唐栖按下语音。唐栖的声音先出现：“临时新编的求助。”',
+            assertion, '陈砚', ['陈砚', '唐栖']))
 
     def test_json_and_sse_show_complete_chapter_once(self):
         for streamed in (False, True):

@@ -347,6 +347,8 @@ class ModuleContextResolver:
         contract = context.get("contract", {})
         if not isinstance(contract, dict):
             contract = {}
+        if contract.get("openingContext") and context.get("parent", {}).get("kind") == "source_entry":
+            return self._opening_context(contract, context["parent"], state)
         current = self._current_beat(state, contract)
         if not isinstance(current.get("path"), str):
             raise ModuleContextError("当前剧情节点缺少模块路径。")
@@ -401,12 +403,13 @@ class ModuleContextResolver:
         ]
         branch_history: List[str] = []
         for node in context.get("lineage", [])[-2:]:
-            if node.get("canonicalRelation") == "on_line" and node.get("summary"):
-                branch_history.append(str(node["summary"]))
-            elif node.get("narrativeText"):
-                excerpt = self._branch_excerpt(str(node["narrativeText"]))
-                if excerpt:
-                    branch_history.append(excerpt)
+            summary = node.get("summary")
+            if not summary:
+                outcome = node.get("readerOutcome") or {}
+                action = outcome.get("action") or {}
+                summary = action.get("summary") if isinstance(action, dict) else None
+            if isinstance(summary, str) and summary.strip():
+                branch_history.append(summary.strip()[:700])
         branch_history = list(dict.fromkeys(branch_history))
         current_summary = str(current_beat.get("summary", ""))
         current_line = current_beat.get("sourceEvidence", {}).get("lineRange", {}).get("end", 0)
@@ -472,4 +475,32 @@ class ModuleContextResolver:
                 "已确认分支承接：" + ("\n\n".join(branch_history) if branch_history else "无"),
                 "当前相关物品（不代表已取得或可用）：" + ("；".join(item["name"] for item in items) if items else "无"),
             ]),
+        }
+
+    def _opening_context(self, contract, parent, state):
+        """The first turn must not inherit whole-book cards or another POV's history."""
+        entry = self._read("entries/" + contract["entryPointId"] + ".json")["entryPoint"]
+        opening = entry["openingContext"]
+        if opening != contract["openingContext"]:
+            raise ModuleContextError("会话开局知识与官方入口不匹配")
+        world = copy.deepcopy(self._read("world.json")["world"])
+        world["immutableFacts"] = [f for f in world.get("immutableFacts", []) if "sourceChapterId" not in f]
+        player = contract["persona"]
+        place_ids = self._location_ids(state, {})
+        locations = self._load_entities(self._index_entries("locations", "locations"), place_ids, "location")
+        item_ids = set(state.get("itemOwnerCharacterIds", {})) | set(state.get("itemLocationIds", {}))
+        items = self._load_entities(self._index_entries("items", "items"), item_ids, "item")
+        return {
+            "world": world, "currentChapter": {"id": entry["sourceChapterId"], "title": entry["chapterTitle"]},
+            "currentBeat": {"id": entry["beatId"], "summary": entry["openingSummary"]},
+            "narrativeBrief": [], "priorNarrativeBrief": [], "previousBeatSummaries": [],
+            "previousSourceLine": opening["sourceCutoffLine"], "actionContract": {},
+            "openingContext": copy.deepcopy(opening), "continuityContract": copy.deepcopy(contract["continuityContract"]),
+            "characters": [{"id": player["sourceCharacterId"], "name": player["name"], "description": opening["identity"]}],
+            "characterDetails": [{"name": player["name"], "detail": opening["identity"]}],
+            "characterIdentityEvidence": [], "sourceDialogueContext": [], "locations": locations, "items": items,
+            "modulePaths": sorted(set(self.last_resolved_paths)),
+            "continuityText": "\n".join(["角色知识边界：" + json.dumps(opening, ensure_ascii=False),
+                                         "已发生开场：" + parent["narrativeText"],
+                                         "当前分支状态：" + json.dumps(state, ensure_ascii=False)]),
         }

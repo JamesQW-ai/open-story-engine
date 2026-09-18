@@ -1,0 +1,1297 @@
+[
+  {
+    "key": "40d1ca4ed4987ad8c501f02b6c57c58c84c8f2c9b4060de33d9dc8482c955b55",
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/12+prompt-catalog/1:26e32ad00349ea0730bc1852654c7a9bbe0f8d21d4461d603d710467f695cb1f",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d1-d2-custom-02",
+      "input_digest": "1fff7cbb722146a83c33383816f0033c22fa920c3462c7d62b116ff9b2973e4d"
+    },
+    "payload": {
+      "text": "我向陆照临说明木牌刻痕里发现了金屑，让他只看我手里的纸包，询问他对此怎么看、有什么依据。听完他的回应再决定，暂不交出物品，也不离开原地。"
+    },
+    "status": "ready",
+    "metrics": {
+      "first_text_ms": 18352,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 2,
+      "complete_ms": 82889,
+      "reported_tokens": 47557,
+      "calls": 10,
+      "unreported_calls": 0,
+      "tokens": 47557,
+      "commit_ms": 29,
+      "committed": true,
+      "selection_to_complete_ms": 82941
+    },
+    "body": "你把手里的纸包托到陆照临眼前，指腹压着折角，没让他碰。纸面薄得透光，那一粒金屑在灰白纸纹间像被谁按进去的碎星。你压低声音，把木牌背面刻痕里夹着黑泥、刮下来时带出金屑的经过说了一遍，只说事实，不提猜测。\n\n陆照临没有立刻接话。他先看你的手，再看你另一只手里那面木牌，目光在“日落前取回青露草”那行字上停了一瞬，才说：“金屑不是木纹里该有的东西。若只是试炼牌，刻字时用不上金粉，更不会填进刻痕底。”他顿了顿，像在等你自己把话接下去。\n\n你问他怎么看，有什么依据。他往石壁方向偏了偏头，语气不重，但很稳：“玄霄宗外门试炼的木牌，我见过几面。刻痕都是素底，最多上过一层防潮漆。金屑若只在字底，不在牌面，说明有人后来把什么东西压进过刻痕，或者这面牌被人动过手脚。”他说完又补了一句：“也可能只是哪件金器刮过，留下的碎末。单凭这一粒，定不了来处。”\n\n你注意到他说“见过几面”时没有解释在何处见过，也没有伸手要纸包。他仍站在原处，山风从石径下方卷上来，把他袖口吹得贴住手腕。远处新弟子里有人朝这边张望，钟还没响。\n\n陆照临看着你，像在判断你会不会把纸包递过去。他忽然问：“你是在试炼开始前查这个，还是想带着它进后坡？”",
+    "readingProfile": {
+      "level": "standard",
+      "targetCjk": [
+        700,
+        1100
+      ],
+      "authorizedSteps": 3,
+      "locationChanged": false,
+      "hardMinimum": false,
+      "actualCjk": 432
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "error": null,
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 15184
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2030
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5940
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 8675
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 22699
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "generationStage": "validation",
+            "revision": 0,
+            "outcome": "failed",
+            "error": "正文存在未登记的持续状态变化：{'entityId': 'character_aa4580d38571', 'attribute': 'locationId', 'value': 'location_open_trial'}"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1652
+            },
+            "generationStage": "local_repair",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4830
+            },
+            "generationStage": "chapter",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4813
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 7820
+            },
+            "generationStage": "action_review",
+            "revision": 1
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我向陆照临说明木牌刻痕里",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 3,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      },
+      {
+        "operation": "reader_choices",
+        "error": null,
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 9117
+            },
+            "generationStage": "reader_choices"
+          }
+        ],
+        "promptContext": null
+      }
+    ]
+  },
+  {
+    "key": "4744cbd3829a578e34774cd6088a218341cd9d98a8b59fff4fd99716c0a7a40a",
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_e430b8f9-e0a9-42e3-87e1-0044dfd508a1",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/12+prompt-catalog/1:26e32ad00349ea0730bc1852654c7a9bbe0f8d21d4461d603d710467f695cb1f",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "f24435a4c091b99a5c6d64fd2ac2ce86cb3fda6d8126a6b623a4e3f4ea90f4a3",
+      "choice_id": "goal-direction-goal-0eab10d79f952cf7-7"
+    },
+    "payload": {
+      "direction_id": "goal-direction-goal-0eab10d79f952cf7-7"
+    },
+    "status": "ready",
+    "metrics": {
+      "first_text_ms": null,
+      "queue_ms": 2,
+      "complete_ms": 16388,
+      "reported_tokens": 28615,
+      "calls": 3,
+      "unreported_calls": 0,
+      "tokens": 28615
+    },
+    "body": null,
+    "readingProfile": null,
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "error": "当前输入只给出目标框架，没有明确授权具体动作或决定。请说明顾长离下一步是继续留在原地观察，还是离开试炼场另寻办法；若留在原地，是否要主动查看断牌、纸包或观察执事与铜钟方向。",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 6168
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5407
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4774
+            },
+            "generationStage": "result_contract",
+            "revision": 1
+          }
+        ],
+        "promptContext": {
+          "mode": "package"
+        }
+      }
+    ]
+  },
+  {
+    "key": "14f7d39e3d2eb3134013ea1592add1933b44e967fa1edec67a7961d81c07a3fa",
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_e430b8f9-e0a9-42e3-87e1-0044dfd508a1",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/12+prompt-catalog/1:26e32ad00349ea0730bc1852654c7a9bbe0f8d21d4461d603d710467f695cb1f",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "f24435a4c091b99a5c6d64fd2ac2ce86cb3fda6d8126a6b623a4e3f4ea90f4a3",
+      "choice_id": "goal-direction-opening-goal-1-7"
+    },
+    "payload": {
+      "direction_id": "goal-direction-opening-goal-1-7"
+    },
+    "status": "expired",
+    "metrics": {
+      "first_text_ms": 11187,
+      "queue_ms": 2,
+      "complete_ms": 34059,
+      "reported_tokens": 55175,
+      "calls": 5,
+      "unreported_calls": 0,
+      "tokens": 55175
+    },
+    "body": null,
+    "readingProfile": null,
+    "audits": []
+  },
+  {
+    "key": "463a4096ff40aa0b5f556cbf37fae0ff8603eb809f57b50a195c27dac1d43b17",
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_0087d070-ca39-4dd2-ae02-c0877a113ebf",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/12+prompt-catalog/1:26e32ad00349ea0730bc1852654c7a9bbe0f8d21d4461d603d710467f695cb1f",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "eba6e07500f1c32d1eee3bbfa9d4b72110bc118cb01c5d132d8953c793a853a1",
+      "choice_id": "reader-8fe53e68e6d7cf4a"
+    },
+    "payload": {
+      "text": "我把包着金屑的纸包递向陆照临，说既然他见过外门试炼木牌，就请他再验一验这粒金屑的成色与压痕，看能不能辨出是金器刮落还是有人填进去的。"
+    },
+    "status": "failed",
+    "metrics": {
+      "first_text_ms": 17568,
+      "queue_ms": 2,
+      "complete_ms": 75477,
+      "reported_tokens": 93383,
+      "calls": 15,
+      "unreported_calls": 0,
+      "tokens": 93383
+    },
+    "body": null,
+    "readingProfile": null,
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "error": "事件审查引用未登记的动作、变化或实体",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 7367
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2778
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4471
+            },
+            "generationStage": "result_contract",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1636
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5856
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3637
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4695
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "generationStage": "validation",
+            "revision": 0,
+            "outcome": "failed",
+            "error": "正文存在未登记的持续状态变化：{'entityId': 'item_open_gold_paper', 'attribute': 'ownerCharacterId', 'value': 'character_ae4cb42b9b49'}"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2918
+            },
+            "generationStage": "local_repair",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2880
+            },
+            "generationStage": "chapter",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4084
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 15385
+            },
+            "generationStage": "action_review",
+            "revision": 1
+          },
+          {
+            "generationStage": "validation",
+            "revision": 1,
+            "outcome": "failed",
+            "error": "事件审查引用未登记的动作、变化或实体"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2917
+            },
+            "generationStage": "local_repair",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3815
+            },
+            "generationStage": "chapter",
+            "revision": 2
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4132
+            },
+            "generationStage": "fact_extraction",
+            "revision": 2,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 8856
+            },
+            "generationStage": "action_review",
+            "revision": 2
+          },
+          {
+            "generationStage": "validation",
+            "revision": 2,
+            "outcome": "failed",
+            "error": "事件审查引用未登记的动作、变化或实体"
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我把包着金屑的纸包递向陆",
+          "pacing": {
+            "level": "brief",
+            "targetCjk": [
+              400,
+              650
+            ],
+            "authorizedSteps": 1,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "key": "e132de03c4a0459fd7f2b5c756a3aa535787f36dd5d681a53bb1959fc60bcaac",
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_0087d070-ca39-4dd2-ae02-c0877a113ebf",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/12+prompt-catalog/1:26e32ad00349ea0730bc1852654c7a9bbe0f8d21d4461d603d710467f695cb1f",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "eba6e07500f1c32d1eee3bbfa9d4b72110bc118cb01c5d132d8953c793a853a1",
+      "choice_id": "reader-1e17c46a98976531"
+    },
+    "payload": {
+      "text": "我收回纸包，不递过去，只问他既见过几面外门试炼木牌，是在何处、因何缘故见到的，这面牌与寻常试炼牌还有什么不同。"
+    },
+    "status": "failed",
+    "metrics": {
+      "first_text_ms": 11427,
+      "queue_ms": 2353,
+      "complete_ms": 87230,
+      "reported_tokens": 87360,
+      "calls": 12,
+      "unreported_calls": 0,
+      "tokens": 87360
+    },
+    "body": null,
+    "readingProfile": null,
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "error": "事件审查引用未登记的动作、变化或实体",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 6852
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3258
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 10853
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5658
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 7537
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "generationStage": "validation",
+            "revision": 0,
+            "outcome": "failed",
+            "error": "事件审查引用未登记的动作、变化或实体"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4898
+            },
+            "generationStage": "local_repair",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 7981
+            },
+            "generationStage": "chapter",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 6478
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 10399
+            },
+            "generationStage": "action_review",
+            "revision": 1
+          },
+          {
+            "generationStage": "validation",
+            "revision": 1,
+            "outcome": "failed",
+            "error": "事件审查引用未登记的动作、变化或实体"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 9014
+            },
+            "generationStage": "local_repair",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5711
+            },
+            "generationStage": "fact_extraction",
+            "revision": 2,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 8531
+            },
+            "generationStage": "action_review",
+            "revision": 2
+          },
+          {
+            "generationStage": "validation",
+            "revision": 2,
+            "outcome": "failed",
+            "error": "事件审查引用未登记的动作、变化或实体"
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我收回纸包，不递过去，只",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 3,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "key": "63d4f9264b538b363a7cb92b362fb9e2fd9f57a826b2e37b414818e9d26c6dd8",
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_0087d070-ca39-4dd2-ae02-c0877a113ebf",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/12+prompt-catalog/1:26e32ad00349ea0730bc1852654c7a9bbe0f8d21d4461d603d710467f695cb1f",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "eba6e07500f1c32d1eee3bbfa9d4b72110bc118cb01c5d132d8953c793a853a1",
+      "choice_id": "reader-beb676cf4b198e05"
+    },
+    "payload": {
+      "text": "我告诉他，我打算带着这粒金屑和木牌进后坡，在试炼途中留意有没有金器或金粉的来处，日落前取青露草时一并查。"
+    },
+    "status": "ready",
+    "metrics": {
+      "first_text_ms": 10033,
+      "queue_ms": 75483,
+      "complete_ms": 30401,
+      "reported_tokens": 34242,
+      "calls": 6,
+      "unreported_calls": 0,
+      "tokens": 34242,
+      "ready_hit": true,
+      "selection_count": 1,
+      "ready_hits": 1,
+      "commit_ms": 16,
+      "committed": true,
+      "selection_to_complete_ms": 44
+    },
+    "body": "你看着陆照临，把纸包重新折好，指腹在折角上按了一下，才说：“我打算带着这粒金屑和木牌进后坡。试炼途中若见到金器、金粉，或者哪处岩壁有刮痕，就一并留意。日落前取青露草时，正好顺路查。”\n\n陆照临听完，没有立刻点头，也没有说这样不妥。他目光从你手里的纸包移到后坡方向，山风把他额前几缕发丝吹乱。他低声重复了一遍：“日落前取青露草时一并查。”语气不像质疑，更像在替你把这个安排放进试炼的路线里。\n\n“后坡的路不短。”他转回来看你，“青露草长在背阴湿处，越往里走，石阶越窄。你若要分神找金器来处，最好先把取草的位置问清，别走到封闭区域附近才折返。”\n\n你问他是否知道青露草在后坡哪一带。陆照临摇头：“我只知道大致方位。试炼牌上没写具体地点，得进后坡后自己找。执事不会多指路。”他顿了顿，又补一句：“但金屑若真来自试炼途中，多半不会在明面上。你一个人查，动作要快。”\n\n远处钟声忽然被人敲了一下，短促的一响，像提醒，不是正式开试。石径下方的新弟子都朝声音来处看去，有人已经往坡口挪步。陆照临没有动，仍站在你旁边，等你的下一句话。",
+    "readingProfile": {
+      "level": "standard",
+      "targetCjk": [
+        700,
+        1100
+      ],
+      "authorizedSteps": 1,
+      "locationChanged": false,
+      "hardMinimum": false,
+      "actualCjk": 390
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "error": null,
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 6884
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2006
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 7586
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5044
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5867
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我告诉他，我打算带着这粒",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 1,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      },
+      {
+        "operation": "reader_choices",
+        "error": null,
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2941
+            },
+            "generationStage": "reader_choices"
+          }
+        ],
+        "promptContext": null
+      }
+    ]
+  },
+  {
+    "key": "820102d47f537cb71e3ceada89579da614d6c73f71269fd22b4597945688f646",
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_94003197-0b77-4a94-9919-ac999a40b691",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/12+prompt-catalog/1:26e32ad00349ea0730bc1852654c7a9bbe0f8d21d4461d603d710467f695cb1f",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "ef849fff0f28480228ab7d0a471bece30cc45cf1fef2a64d6ff6e944a539d9ad",
+      "choice_id": "reader-b6a8a84f1e4c8415"
+    },
+    "payload": {
+      "text": "我向陆照临追问后坡哪些地方属于封闭区域，以及从坡口到背阴湿处大致要经过哪些路段，只问到能避开危险、方便找青露草和金器痕迹为止。"
+    },
+    "status": "expired",
+    "metrics": {
+      "first_text_ms": 11959,
+      "queue_ms": 1,
+      "complete_ms": 15899,
+      "reported_tokens": 11788,
+      "calls": 3,
+      "unreported_calls": 1,
+      "tokens": null
+    },
+    "body": null,
+    "readingProfile": null,
+    "audits": []
+  },
+  {
+    "key": "d045a773fdbe3b1c59cf39abf2b039fc16e47c6a28696519f02e5c01d80b6adb",
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_94003197-0b77-4a94-9919-ac999a40b691",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/12+prompt-catalog/1:26e32ad00349ea0730bc1852654c7a9bbe0f8d21d4461d603d710467f695cb1f",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "ef849fff0f28480228ab7d0a471bece30cc45cf1fef2a64d6ff6e944a539d9ad",
+      "choice_id": "reader-20a6c6a8cff88ae5"
+    },
+    "payload": {
+      "text": "我请陆照临若方便就与我同行进入后坡，至少到能确认背阴湿处方向的地方，途中一起留意金器痕迹，日落前取到青露草即止。"
+    },
+    "status": "expired",
+    "metrics": {
+      "first_text_ms": null,
+      "queue_ms": 5,
+      "complete_ms": 18919,
+      "reported_tokens": 12238,
+      "calls": 2,
+      "unreported_calls": 0,
+      "tokens": 12238
+    },
+    "body": null,
+    "readingProfile": null,
+    "audits": []
+  },
+  {
+    "key": "f90886344555a5c81628c7ef145965ef2b6af2fa9dc78ed4a002e9f54d880723",
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_e430b8f9-e0a9-42e3-87e1-0044dfd508a1",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/12+prompt-catalog/1:06c3c6332a24567d2f465301d6b04b3db90a02b8ee3c4b1ef8ad2e09d7cb1112",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "f24435a4c091b99a5c6d64fd2ac2ce86cb3fda6d8126a6b623a4e3f4ea90f4a3",
+      "request_id": "d1-d2-custom-01",
+      "input_digest": "3f828c7dc4a47876edb07d8a6efb7959503e27c55c6b6670ec6dd255f01ccc4b"
+    },
+    "payload": {
+      "text": "我把两截木牌和纸包都留在自己手中，留在原地请陆照临解释他对金屑的判断依据；听完再决定，不跟随他离开。"
+    },
+    "status": "expired",
+    "metrics": {
+      "first_text_ms": 11725,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 124890,
+      "reported_tokens": 160544,
+      "calls": 14,
+      "unreported_calls": 0,
+      "tokens": 160544
+    },
+    "body": null,
+    "readingProfile": null,
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "error": "正文存在未登记的持续状态变化：{'entityId': 'item_open_gu_token', 'attribute': '位置', 'value': '顾长离左袖中'}",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 6052
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3789
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 12523
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 8526
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 11350
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "generationStage": "validation",
+            "revision": 0,
+            "outcome": "failed",
+            "error": "正文存在未登记的持续状态变化：{'entityId': 'item_open_gold_paper', 'attribute': '位置', 'value': '顾长离右掌中'}"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3791
+            },
+            "generationStage": "local_repair",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 6692
+            },
+            "generationStage": "chapter",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 22280
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 9564
+            },
+            "generationStage": "action_review",
+            "revision": 1
+          },
+          {
+            "generationStage": "validation",
+            "revision": 1,
+            "outcome": "failed",
+            "error": "正文存在未登记的持续状态变化：{'entityId': 'item_open_gu_token', 'attribute': '位置', 'value': '顾长离左袖中'}"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1566
+            },
+            "generationStage": "local_repair",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 7589
+            },
+            "generationStage": "chapter",
+            "revision": 2
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 9221
+            },
+            "generationStage": "fact_extraction",
+            "revision": 2,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 9855
+            },
+            "generationStage": "fact_extraction",
+            "revision": 2,
+            "extractionAttempt": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 11971
+            },
+            "generationStage": "action_review",
+            "revision": 2
+          },
+          {
+            "generationStage": "validation",
+            "revision": 2,
+            "outcome": "failed",
+            "error": "正文存在未登记的持续状态变化：{'entityId': 'item_open_gu_token', 'attribute': '位置', 'value': '顾长离左袖中'}"
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我把两截木牌和纸包都留在",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 3,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "key": "00a6c265ed48b2492140ed57f59ecaee43bd40ee22ce057a1f73d3b6552ae2fa",
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_0087d070-ca39-4dd2-ae02-c0877a113ebf",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:26e32ad00349ea0730bc1852654c7a9bbe0f8d21d4461d603d710467f695cb1f",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "eba6e07500f1c32d1eee3bbfa9d4b72110bc118cb01c5d132d8953c793a853a1",
+      "choice_id": "reader-1e17c46a98976531"
+    },
+    "payload": {
+      "text": "我收回纸包，不递过去，只问他既见过几面外门试炼木牌，是在何处、因何缘故见到的，这面牌与寻常试炼牌还有什么不同。"
+    },
+    "status": "ready",
+    "metrics": {
+      "first_text_ms": 18707,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 34541,
+      "reported_tokens": 32834,
+      "calls": 6,
+      "unreported_calls": 0,
+      "tokens": 32834,
+      "commit_ms": 33,
+      "committed": true,
+      "selection_to_complete_ms": 34614
+    },
+    "body": "你收回纸包，指腹仍压着折角，没再往他那边递。木牌也留在你手里，牌背朝下，只露出“日落前取回青露草”那行字的一角。你看着陆照临，把话问得清楚：“你既见过几面外门试炼木牌，是在何处见的？又因什么缘故见过？这面牌和寻常试炼牌还有什么不同？”\n\n陆照临没有马上答。他先扫了一眼你收回纸包的动作，目光在你指间停了一瞬，才说：“在玄霄宗外门，见过几面不稀奇。我早你一些时日到山门，试炼牌发下来前，有人拿旧牌比对过刻痕深浅。”他顿了顿，像在挑拣哪些话能说，“寻常试炼牌背面只有试炼要求，字底干净，边缘磨得再旧也不会泛金。你这面牌刻痕里带黑泥，又刮出金屑，至少不是刚刻好就发下来的那一批。”\n\n他说得不算含糊，却也没把“何处”讲成具体地方。你注意到他仍站在原处，没有靠近来看木牌，也没有再问纸包。山风从石径下方卷上来，把他袖口吹得贴住手腕，远处新弟子里有人朝这边张望，钟还没响。\n\n陆照临迎上你的视线，语气不重，但很稳：“你若想查，最好在试炼开始前把牌交给执事看。若不想交，就带着它进后坡，别让太多人看见。”",
+    "readingProfile": {
+      "level": "brief",
+      "targetCjk": [
+        400,
+        650
+      ],
+      "authorizedSteps": 1,
+      "locationChanged": false,
+      "hardMinimum": false,
+      "actualCjk": 382
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "error": null,
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 15315
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1818
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5362
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4643
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4671
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我收回纸包，不递过去，只",
+          "pacing": {
+            "level": "brief",
+            "targetCjk": [
+              400,
+              650
+            ],
+            "authorizedSteps": 1,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      },
+      {
+        "operation": "reader_choices",
+        "error": null,
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2610
+            },
+            "generationStage": "reader_choices"
+          }
+        ],
+        "promptContext": null
+      }
+    ]
+  }
+]

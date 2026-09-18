@@ -1,0 +1,143 @@
+{
+  "id": "6be3f2bf0e6f471c9092391d9fc68f0e",
+  "branch_id": "ending-live-voluntary_abandonment_not_failure",
+  "request_id": "voluntary_abandonment_not_failure",
+  "payload_digest": "1961437cec9b490ab4b804e37b0249745f528bf9c4ad36cd79bd92d85ff1c7d5",
+  "binding_digest": "784476239bca2f586a9e7e38cc10682aef4d2f4a6ecc6c86c3cd3f5408d561f3",
+  "ending_type": "failure",
+  "outcome_summary": "请认定为失败结局。",
+  "ending_quote": "你并非受到阻碍，也没有经历无法挽回的失败，只是不愿再介入。",
+  "status": "rejected",
+  "created_at": "2026-09-17T01:23:06.642Z",
+  "review": {
+    "decision": "reject",
+    "checks": {
+      "ending_type_supported": {
+        "passed": false,
+        "evidence": "你并非受到阻碍，也没有经历无法挽回的失败，只是不愿再介入。",
+        "reason": "正文明确说没有受到阻碍、没有无法挽回的失败，只是不愿介入，这不能证明 failure 结局所要求的失败原因与结果。主动放弃本身不足以证明失败。"
+      },
+      "threads_accounted_for": {
+        "passed": false,
+        "evidence": "你主动放弃救助与追查，明确停止这两个目标，不再向任何人承诺后续行动。",
+        "reason": "正文只是宣布放弃两个目标，没有交代伤者是否得到救助、空灯来历是否查清，也没有说明这些已知问题为何可以有依据地放下。不能通过遗漏关闭。"
+      },
+      "no_new_unresolved_conflict": {
+        "passed": false,
+        "evidence": "你收起文书，走下山门石阶，让这条路线随自己的退出而结束。",
+        "reason": "正文没有新增冲突，但伤者仍活着且救治来得及、空灯查证机会仍在，这些原有未解决问题并未因退出而消失，不能视为没有未解决冲突。"
+      },
+      "ending_present": {
+        "passed": false,
+        "evidence": "你收起文书，走下山门石阶，让这条路线随自己的退出而结束。",
+        "reason": "该句只是描述角色离开并声称路线结束，属于主动退出，不是对目标、冲突或结果的实质收尾。不能把退出动作本身当作结局。"
+      }
+    }
+  },
+  "audit": {
+    "model": "deepseek-v4-pro:cloud",
+    "prompt_version": "prompt-catalog/1:91e7126adf495e369d20ae57d788dabf28355210cc080f9235aeedfc5331cf99",
+    "input": {
+      "ending_type": "failure",
+      "outcome_summary": "请认定为失败结局。",
+      "ending_quote": "你并非受到阻碍，也没有经历无法挽回的失败，只是不愿再介入。",
+      "narrative": "伤者还活着，救治仍然来得及；空灯完好，查证其来历的机会也还在。你并非受到阻碍，也没有经历无法挽回的失败，只是不愿再介入。你主动放弃救助与追查，明确停止这两个目标，不再向任何人承诺后续行动。你收起文书，走下山门石阶，让这条路线随自己的退出而结束。",
+      "goals": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-voluntary_abandonment_not_failure",
+            "ref": "opening-goal-1",
+            "quote": "伤者还活着，救治仍然来得及；空灯完好，查证其来历的机会也还在。你并非受到阻碍，也没有经历无法挽回的失败，只是不愿再介入。你主动放弃救助与追查，明确停止这两个目标，不再向任何人承诺后续行动。你收起文书，走下山门石阶，让这条路线随自己的退出而结束。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-voluntary_abandonment_not_failure",
+            "ref": "opening-goal-2",
+            "quote": "伤者还活着，救治仍然来得及；空灯完好，查证其来历的机会也还在。你并非受到阻碍，也没有经历无法挽回的失败，只是不愿再介入。你主动放弃救助与追查，明确停止这两个目标，不再向任何人承诺后续行动。你收起文书，走下山门石阶，让这条路线随自己的退出而结束。"
+          },
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-voluntary_abandonment_not_failure",
+            "ref": "opening-thread-1",
+            "quote": "伤者还活着，救治仍然来得及；空灯完好，查证其来历的机会也还在。你并非受到阻碍，也没有经历无法挽回的失败，只是不愿再介入。你主动放弃救助与追查，明确停止这两个目标，不再向任何人承诺后续行动。你收起文书，走下山门石阶，让这条路线随自己的退出而结束。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "ending-live-voluntary_abandonment_not_failure",
+            "ref": "opening-thread-2",
+            "quote": "伤者还活着，救治仍然来得及；空灯完好，查证其来历的机会也还在。你并非受到阻碍，也没有经历无法挽回的失败，只是不愿再介入。你主动放弃救助与追查，明确停止这两个目标，不再向任何人承诺后续行动。你收起文书，走下山门石阶，让这条路线随自己的退出而结束。"
+          },
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "conflicts": [],
+      "character_outcomes": []
+    },
+    "raw_response": "{\"id\":\"resp_921224\",\"object\":\"chat.completion\",\"created\":1789608190,\"model\":\"deepseek-v4-pro:cloud\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"reject\\\",\\n  \\\"checks\\\": {\\n    \\\"ending_type_supported\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你并非受到阻碍，也没有经历无法挽回的失败，只是不愿再介入。\\\",\\n      \\\"reason\\\": \\\"正文明确说没有受到阻碍、没有无法挽回的失败，只是不愿介入，这不能证明 failure 结局所要求的失败原因与结果。主动放弃本身不足以证明失败。\\\"\\n    },\\n    \\\"threads_accounted_for\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你主动放弃救助与追查，明确停止这两个目标，不再向任何人承诺后续行动。\\\",\\n      \\\"reason\\\": \\\"正文只是宣布放弃两个目标，没有交代伤者是否得到救助、空灯来历是否查清，也没有说明这些已知问题为何可以有依据地放下。不能通过遗漏关闭。\\\"\\n    },\\n    \\\"no_new_unresolved_conflict\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你收起文书，走下山门石阶，让这条路线随自己的退出而结束。\\\",\\n      \\\"reason\\\": \\\"正文没有新增冲突，但伤者仍活着且救治来得及、空灯查证机会仍在，这些原有未解决问题并未因退出而消失，不能视为没有未解决冲突。\\\"\\n    },\\n    \\\"ending_present\\\": {\\n      \\\"passed\\\": false,\\n      \\\"evidence\\\": \\\"你收起文书，走下山门石阶，让这条路线随自己的退出而结束。\\\",\\n      \\\"reason\\\": \\\"该句只是描述角色离开并声称路线结束，属于主动退出，不是对目标、冲突或结果的实质收尾。不能把退出动作本身当作结局。\\\"\\n    }\\n  }\\n}\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1341,\"completion_tokens\":355,\"total_tokens\":1696},\"service_tier\":\"default\"}",
+    "failure": null,
+    "metrics": {
+      "calls": 1,
+      "reported_tokens": 1696,
+      "unreported_calls": 0,
+      "elapsed_ms": 3496
+    }
+  }
+}

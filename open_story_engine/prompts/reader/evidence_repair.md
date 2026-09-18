@@ -1,0 +1,1 @@
+正文不变。修正证据映射并返回完整审核JSON：{{ error }}。完整契约：{{ candidate_contract_json }}

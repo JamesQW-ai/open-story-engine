@@ -1,0 +1,786 @@
+{
+  "input": {
+    "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+    "text": "我告诉陆照临，我打算带着这粒金屑和木牌进后坡，在试炼途中留意金屑的来处，日落前取青露草时一并查。此刻只告诉他这个打算，听听他的回应，不再问新问题，也不出发。",
+    "request_id": "scene-plan-v1-inform"
+  },
+  "elapsedSeconds": 40.09,
+  "firstTextMs": 11853,
+  "result": {
+    "status": "written",
+    "request_id": "scene-plan-v1-inform",
+    "deduplicated": false,
+    "branch": {
+      "narrativeText": "你仍站在石径前，纸包在指间压得很轻，木牌一角抵着掌心。陆照临没有走开，目光从你手里的纸片移到木牌上，又回到你脸上，像在等你把话说全。\n\n“我打算带着这粒金屑和木牌进后坡。”你开口，声音不高，只够两人听清，“试炼途中留意金屑的来处，日落前取青露草时一并查。”\n\n你说完便不再问，只看着他。\n\n陆照临沉默了一瞬，眉峰微动，像在咀嚼你话里的次序。片刻后他点头，语气不重：“你既已想好，就这么办。只是后坡路杂，试炼钟一响，人散得快，别为查金屑误了取草的时辰。”\n\n他顿了顿，目光落在你包金屑的纸上：“这金屑从木牌刻痕里刮出来，我方才也看见了。可它从哪来，我没有依据，不能替你断。”",
+      "summary": "自定行动：我告诉陆照临，我打算带着已推进，新的风险和选择仍然存在。",
+      "factDeltas": [],
+      "openThreads": [
+        "木牌刻痕里为何有金屑",
+        "如何完成第一场外门试炼",
+        "尚未完成的当前目标"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_011_to_012",
+          "title": "关键推进：发现",
+          "summary": "试炼进入林地深处后，陆照临发现每株药草旁都插着标记木签，木签上的日期与灵气强弱并不相符。",
+          "canonicalBeatId": "beat_chapter_012",
+          "statePatch": {
+            "sourceProgress": "chapter_012",
+            "playerLocationId": "location_9c23a624e6b0"
+          }
+        }
+      ],
+      "storyArc": {
+        "activeGoal": "自定行动：我告诉陆照临，我打算带着",
+        "currentPhase": "自定行动：我告诉陆照临，我打算带着",
+        "goalDisposition": "continued",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "continuing"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "readingProfile": {
+        "level": "dynamic",
+        "targetCjk": [
+          240,
+          360
+        ],
+        "reason": "这是一次简短告知与回应，没有新问题、没有出发，也没有实际冲突，篇幅应控制在一次对话交锋内。",
+        "hardMinimum": false,
+        "lengthPolicy": "plan_before_writing_no_expansion",
+        "actualCjk": 237,
+        "expansionApplied": false
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "sceneChecks": [
+        {
+          "paragraphId": "P1",
+          "playerDecision": "none",
+          "background": "supported",
+          "sources": [
+            {
+              "id": "history-branch_f85ea073-75e9-42c9-894c-d1f17bbed4de-P4",
+              "quote": "陆照临还站在眼前，石径通向后坡药圃。"
+            },
+            {
+              "id": "history-branch_f85ea073-75e9-42c9-894c-d1f17bbed4de-P1",
+              "quote": "你已刮下一粒，用纸包好。"
+            }
+          ],
+          "quote": "",
+          "issue": "",
+          "backgroundClaims": [
+            {
+              "claim": "你仍站在石径前，纸包在指间压得很轻，木牌一角抵着掌心。陆照临没有走开，目光从你手里的纸片移到木牌上，又回到你脸上，像在等你把话说全。",
+              "sources": [
+                {
+                  "id": "history-branch_f85ea073-75e9-42c9-894c-d1f17bbed4de-P4",
+                  "quote": "陆照临还站在眼前，石径通向后坡药圃。"
+                },
+                {
+                  "id": "history-branch_f85ea073-75e9-42c9-894c-d1f17bbed4de-P1",
+                  "quote": "你已刮下一粒，用纸包好。"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "paragraphId": "P2",
+          "playerDecision": "authorized",
+          "background": "none",
+          "sources": [],
+          "quote": "",
+          "issue": ""
+        },
+        {
+          "paragraphId": "P3",
+          "playerDecision": "none",
+          "background": "none",
+          "sources": [],
+          "quote": "",
+          "issue": ""
+        },
+        {
+          "paragraphId": "P4",
+          "playerDecision": "none",
+          "background": "supported",
+          "sources": [
+            {
+              "id": "opening-2",
+              "quote": "试炼要求日落前取回青露草，另有白线、禁止争抢伤人和进入封闭区域的规定。"
+            }
+          ],
+          "quote": "",
+          "issue": "",
+          "backgroundClaims": [
+            {
+              "claim": "陆照临沉默了一瞬，眉峰微动，像在咀嚼你话里的次序。片刻后他点头，语气不重：“你既已想好，就这么办。只是后坡路杂，试炼钟一响，人散得快，别为查金屑误了取草的时辰。”",
+              "sources": [
+                {
+                  "id": "opening-2",
+                  "quote": "试炼要求日落前取回青露草，另有白线、禁止争抢伤人和进入封闭区域的规定。"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "paragraphId": "P5",
+          "playerDecision": "none",
+          "background": "supported",
+          "sources": [
+            {
+              "id": "history-branch_f85ea073-75e9-42c9-894c-d1f17bbed4de-P1",
+              "quote": "刻痕里的黑泥却夹着一点金屑。你已刮下一粒，用纸包好。"
+            }
+          ],
+          "quote": "",
+          "issue": "",
+          "backgroundClaims": [
+            {
+              "claim": "他顿了顿，目光落在你包金屑的纸上：“这金屑从木牌刻痕里刮出来，我方才也看见了。可它从哪来，我没有依据，不能替你断。”",
+              "sources": [
+                {
+                  "id": "history-branch_f85ea073-75e9-42c9-894c-d1f17bbed4de-P1",
+                  "quote": "刻痕里的黑泥却夹着一点金屑。你已刮下一粒，用纸包好。"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "actionIntent": {
+        "input": "我告诉陆照临，我打算带着这粒金屑和木牌进后坡，在试炼途中留意金屑的来处，日落前取青露草时一并查。此刻只告诉他这个打算，听听他的回应，不再问新问题，也不出发。",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "顾长离告诉陆照临自己的打算"
+          },
+          "A2": {
+            "mode": "result",
+            "summary": "顾长离表明打算带着金屑和木牌进后坡"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "顾长离表明会在试炼途中留意金屑来处"
+          },
+          "A4": {
+            "mode": "result",
+            "summary": "顾长离表明日落前取青露草时一并查"
+          },
+          "A5": {
+            "mode": "constraint",
+            "summary": "此刻只告诉陆照临这个打算"
+          },
+          "A6": {
+            "mode": "result",
+            "summary": "顾长离听陆照临的回应"
+          },
+          "A7": {
+            "mode": "constraint",
+            "summary": "顾长离不再问新问题"
+          },
+          "A8": {
+            "mode": "constraint",
+            "summary": "顾长离不出发"
+          }
+        }
+      },
+      "consequenceUpdate": {
+        "decision": "ready",
+        "message": "",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "顾长离告诉陆照临自己的打算"
+          },
+          "A2": {
+            "mode": "result",
+            "summary": "顾长离表明打算带着金屑和木牌进后坡"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "顾长离表明会在试炼途中留意金屑来处"
+          },
+          "A4": {
+            "mode": "result",
+            "summary": "顾长离表明日落前取青露草时一并查"
+          },
+          "A5": {
+            "mode": "constraint",
+            "summary": "此刻只告诉陆照临这个打算"
+          },
+          "A6": {
+            "mode": "result",
+            "summary": "顾长离听陆照临的回应"
+          },
+          "A7": {
+            "mode": "constraint",
+            "summary": "顾长离不再问新问题"
+          },
+          "A8": {
+            "mode": "constraint",
+            "summary": "顾长离不出发"
+          }
+        },
+        "method": "顾长离站在原地，把已包在纸中的金屑和试炼木牌作为既有物品向陆照临说明自己的打算：带着它们进后坡，试炼途中留意金屑来处，日落前取青露草时一并查。说完后不再发问，只等陆照临回应。陆照临可以就这个打算表示看法、提醒或保留，但不会获得新的世界事实授权；他若不知道金屑来历，就明确表示不知道或只能就眼前所见作有限判断。",
+        "outcomes": [],
+        "goalUpdates": [],
+        "scenePlan": {
+          "start": "顾长离与陆照临仍站在半山试炼场，钟声未响，纸里的金屑和木牌都在顾长离手中。",
+          "beats": [
+            {
+              "purpose": "顾长离向陆照临说明自己的打算，不提问、不出发，只等回应",
+              "stepIds": [
+                "S1"
+              ]
+            },
+            {
+              "purpose": "陆照临对这个打算作出回应，或表示无法判断金屑来历，不替顾长离作决定",
+              "stepIds": [
+                "S2"
+              ]
+            }
+          ],
+          "outcome": "顾长离已把打算告诉陆照临，并听到他的回应；两人仍在原地，试炼尚未开始。",
+          "stop": "钟声是否响起、顾长离是否进后坡，留给玩家下一步决定。",
+          "targetCjk": [
+            240,
+            360
+          ],
+          "lengthReason": "这是一次简短告知与回应，没有新问题、没有出发，也没有实际冲突，篇幅应控制在一次对话交锋内。",
+          "knowledge": [
+            {
+              "speakerId": "character_e663361ab1c7",
+              "statement": "顾长离打算带着这粒金屑和木牌进后坡，在试炼途中留意金屑的来处，日落前取青露草时一并查。",
+              "status": "fact",
+              "sources": [
+                {
+                  "id": "opening-1",
+                  "quote": "你已看过木牌三遍，刮出一粒金屑并包进纸里。"
+                },
+                {
+                  "id": "opening-2",
+                  "quote": "试炼要求日落前取回青露草，另有白线、禁止争抢伤人和进入封闭区域的规定。"
+                }
+              ]
+            },
+            {
+              "speakerId": "character_ae4cb42b9b49",
+              "statement": "陆照临对顾长离的打算作出回应；他是否知道金屑来历，资料未说明，因此他若被问及来历，只能表示不知道或尚不能判断，不能补造亲历、传闻或检测依据。",
+              "status": "unknown",
+              "sources": []
+            }
+          ],
+          "observationLimits": [
+            "顾长离能看见陆照临的当场神情和姿态，但不能据此断定他的真实来历或对金屑的隐藏认知。",
+            "纸片包着金屑，未打开时只能确认纸片存在，不能新增金屑的纹理、颜色变化或来源痕迹。",
+            "木牌刻痕中的金屑已刮下一粒，其余刻痕是否还有金屑未再检查，不能凭空断定。"
+          ]
+        },
+        "steps": [
+          {
+            "id": "S1",
+            "actorId": "character_e663361ab1c7",
+            "action": "顾长离站在原地，告诉陆照临自己打算带着金屑和木牌进后坡，在试炼途中留意金屑来处，日落前取青露草时一并查；说完后不再问新问题，也不出发。",
+            "requirementIds": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A7",
+              "A8"
+            ],
+            "authority": "player",
+            "causeStepId": null
+          },
+          {
+            "id": "S2",
+            "actorId": "character_ae4cb42b9b49",
+            "action": "陆照临听完后对顾长离的打算作出回应，不替顾长离决定是否出发，也不新增关于金屑来历的确定事实。",
+            "requirementIds": [
+              "A6"
+            ],
+            "authority": "reaction",
+            "causeStepId": "S1"
+          }
+        ],
+        "introductions": {
+          "characters": [],
+          "items": [],
+          "locations": []
+        },
+        "stateChanges": [
+          {
+            "id": "C1",
+            "entityId": "character_ae4cb42b9b49",
+            "attribute": "已知顾长离的打算",
+            "before": null,
+            "value": "顾长离打算带着金屑和木牌进后坡，试炼途中留意金屑来处，日落前取青露草时一并查",
+            "stepId": "S1",
+            "reason": "顾长离当面告诉陆照临这个打算",
+            "evidence": "“我打算带着这粒金屑和木牌进后坡。”你开口，声音不高，只够两人听清，“试炼途中留意金屑的来处，日落前取青露草时一并查。”"
+          }
+        ],
+        "readingIntent": "normal"
+      },
+      "consequenceReview": "reader-consequences/2",
+      "reviewedNarrativeSha256": "75746f51ab8cef2c0eb2110b04a02b8e235749d82fd45e3456606a7d11803713",
+      "authorityReview": {
+        "decision": "allow",
+        "issues": [],
+        "checks": [
+          {
+            "stepId": "S1",
+            "authorized": true,
+            "basis": "player_input",
+            "quote": "我告诉陆照临，我打算带着这粒金屑和木牌进后坡，在试炼途中留意金屑的来处，日落前取青露草时一并查。此刻只告诉他这个打算，听听他的回应，不再问新问题，也不出发。",
+            "reason": "玩家明确指定顾长离只向陆照临说明打算、等待回应，不提问也不出发；步骤S1仅执行这一告知，未增加额外动作。"
+          },
+          {
+            "stepId": "S2",
+            "authorized": true,
+            "basis": "causal_reaction",
+            "quote": "听听他的回应",
+            "reason": "玩家请求听取陆照临的回应，陆照临对已告知的打算作出反应属于因果回应；步骤S2限定他不替顾长离决定是否出发，也不新增金屑来历的确定事实，未越界。"
+          }
+        ],
+        "stateChecks": [
+          {
+            "changeId": "C1",
+            "authorized": true,
+            "reason": "顾长离当面告知陆照临自己的打算，陆照临因此得知该打算，属于告知行为直接产生的认知状态变化，未把未执行的行动登记为已发生。"
+          }
+        ]
+      },
+      "observedEvents": [
+        {
+          "id": "O1",
+          "paragraphId": "P1",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离仍站在石径前，手中轻压纸包，木牌一角抵着掌心。",
+          "changes": [
+            {
+              "entityId": "character_e663361ab1c7",
+              "attribute": "locationId",
+              "value": "location_open_trial"
+            },
+            {
+              "entityId": "item_open_gold_paper",
+              "attribute": "ownerCharacterId",
+              "value": "character_e663361ab1c7"
+            },
+            {
+              "entityId": "item_open_gu_token",
+              "attribute": "ownerCharacterId",
+              "value": "character_e663361ab1c7"
+            }
+          ],
+          "introduced": [],
+          "quote": "你仍站在石径前，纸包在指间压得很轻，木牌一角抵着掌心。陆照临没有走开，目光从你手里的纸片移到木牌上，又回到你脸上，像在等你把话说全。"
+        },
+        {
+          "id": "O2",
+          "paragraphId": "P1",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "actual",
+          "summary": "陆照临没有走开，目光从顾长离手里的纸片移到木牌，又回到顾长离脸上，像在等顾长离把话说全。",
+          "changes": [
+            {
+              "entityId": "character_ae4cb42b9b49",
+              "attribute": "locationId",
+              "value": "location_open_trial"
+            }
+          ],
+          "introduced": [],
+          "quote": "你仍站在石径前，纸包在指间压得很轻，木牌一角抵着掌心。陆照临没有走开，目光从你手里的纸片移到木牌上，又回到你脸上，像在等你把话说全。"
+        },
+        {
+          "id": "O3",
+          "paragraphId": "P2",
+          "actor": "character_e663361ab1c7",
+          "mode": "speech",
+          "summary": "顾长离告诉陆照临，自己打算带着金屑和木牌进后坡，试炼途中留意金屑来处，日落前取青露草时一并查。",
+          "changes": [
+            {
+              "entityId": "character_ae4cb42b9b49",
+              "attribute": "已知顾长离的打算",
+              "value": "带着金屑和木牌进后坡，试炼途中留意金屑来处，日落前取青露草时一并查"
+            }
+          ],
+          "introduced": [],
+          "quote": "“我打算带着这粒金屑和木牌进后坡。”你开口，声音不高，只够两人听清，“试炼途中留意金屑的来处，日落前取青露草时一并查。”"
+        },
+        {
+          "id": "O4",
+          "paragraphId": "P3",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离说完便不再问，只看着陆照临。",
+          "changes": [],
+          "introduced": [],
+          "quote": "你说完便不再问，只看着他。"
+        },
+        {
+          "id": "O5",
+          "paragraphId": "P4",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "speech",
+          "summary": "陆照临沉默一瞬后点头，表示顾长离既已想好就这么办，并提醒后坡路杂，试炼钟一响人散得快，别为查金屑误了取草时辰。",
+          "changes": [],
+          "introduced": [],
+          "quote": "陆照临沉默了一瞬，眉峰微动，像在咀嚼你话里的次序。片刻后他点头，语气不重：“你既已想好，就这么办。只是后坡路杂，试炼钟一响，人散得快，别为查金屑误了取草的时辰。”"
+        },
+        {
+          "id": "O6",
+          "paragraphId": "P5",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "speech",
+          "summary": "陆照临说自己也看见了金屑从木牌刻痕里刮出来，但金屑从哪来他没有依据，不能替顾长离判断。",
+          "changes": [],
+          "introduced": [],
+          "quote": "他顿了顿，目光落在你包金屑的纸上：“这金屑从木牌刻痕里刮出来，我方才也看见了。可它从哪来，我没有依据，不能替你断。”"
+        }
+      ],
+      "eventChecks": [
+        {
+          "id": "O1",
+          "verdict": "supported",
+          "reason": "顾长离仍站在石径前，持有纸包与木牌，符合前文状态。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [
+            "C1"
+          ],
+          "introductionIds": []
+        },
+        {
+          "id": "O2",
+          "verdict": "supported",
+          "reason": "陆照临未走开，目光观察顾长离手中物品，属于当场反应。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O3",
+          "verdict": "supported",
+          "reason": "顾长离说出打算，内容与原始输入一致。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [
+            "C1"
+          ],
+          "introductionIds": []
+        },
+        {
+          "id": "O4",
+          "verdict": "supported",
+          "reason": "顾长离说完不再问，符合约束。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O5",
+          "verdict": "supported",
+          "reason": "陆照临对打算作出回应并提醒，未替顾长离作决定。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O6",
+          "verdict": "supported",
+          "reason": "陆照临说明自己看见金屑从刻痕刮出，但无依据判断来历，符合资料边界。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        }
+      ],
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "我告诉陆照临",
+            "status": "performed",
+            "summary": "顾长离告诉陆照临自己的打算。",
+            "evidence": "“我打算带着这粒金屑和木牌进后坡。”你开口，声音不高，只够两人听清，“试炼途中留意金屑的来处，日落前取青露草时一并查。”"
+          },
+          {
+            "id": "A2",
+            "requirement": "我打算带着这粒金屑和木牌进后坡",
+            "status": "performed",
+            "summary": "顾长离表明打算带着金屑和木牌进后坡。",
+            "evidence": "“我打算带着这粒金屑和木牌进后坡。”你开口，声音不高，只够两人听清，“试炼途中留意金屑的来处，日落前取青露草时一并查。”"
+          },
+          {
+            "id": "A3",
+            "requirement": "在试炼途中留意金屑的来处",
+            "status": "performed",
+            "summary": "顾长离表明会在试炼途中留意金屑来处。",
+            "evidence": "“我打算带着这粒金屑和木牌进后坡。”你开口，声音不高，只够两人听清，“试炼途中留意金屑的来处，日落前取青露草时一并查。”"
+          },
+          {
+            "id": "A4",
+            "requirement": "日落前取青露草时一并查",
+            "status": "performed",
+            "summary": "顾长离表明日落前取青露草时一并查。",
+            "evidence": "“我打算带着这粒金屑和木牌进后坡。”你开口，声音不高，只够两人听清，“试炼途中留意金屑的来处，日落前取青露草时一并查。”"
+          },
+          {
+            "id": "A5",
+            "requirement": "此刻只告诉他这个打算",
+            "status": "performed",
+            "summary": "此刻只告诉陆照临这个打算，未涉及其他内容。",
+            "evidence": "“我打算带着这粒金屑和木牌进后坡。”你开口，声音不高，只够两人听清，“试炼途中留意金屑的来处，日落前取青露草时一并查。”"
+          },
+          {
+            "id": "A6",
+            "requirement": "听听他的回应",
+            "status": "performed",
+            "summary": "顾长离听完陆照临的回应。",
+            "evidence": "陆照临沉默了一瞬，眉峰微动，像在咀嚼你话里的次序。片刻后他点头，语气不重：“你既已想好，就这么办。只是后坡路杂，试炼钟一响，人散得快，别为查金屑误了取草的时辰。”"
+          },
+          {
+            "id": "A7",
+            "requirement": "不再问新问题",
+            "status": "performed",
+            "summary": "顾长离说完后不再问新问题。",
+            "evidence": "你说完便不再问，只看着他。"
+          },
+          {
+            "id": "A8",
+            "requirement": "也不出发",
+            "status": "performed",
+            "summary": "顾长离未出发，仍站在石径前。",
+            "evidence": "你仍站在石径前，纸包在指间压得很轻，木牌一角抵着掌心。陆照临没有走开，目光从你手里的纸片移到木牌上，又回到你脸上，像在等你把话说全。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "顾长离告诉陆照临自己的打算。；顾长离表明打算带着金屑和木牌进后坡。；顾长离表明会在试炼途中留意金屑来处。；顾长离表明日落前取青露草时一并查。；此刻只告诉陆照临这个打算，未涉及其他内容。；顾长离听完陆照临的回应。；顾长离说完后不再问新问题。；顾长离未出发，仍站在石径前。",
+          "evidence": "“我打算带着这粒金屑和木牌进后坡。”你开口，声音不高，只够两人听清，“试炼途中留意金屑的来处，日落前取青露草时一并查。”"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "id": "branch_db01065e-a7e5-42b5-8cf6-a1e0ef976a44",
+      "sourceNodeRef": "node_source_continuity",
+      "branchState": {
+        "playerLocationId": "location_open_trial",
+        "sourceProgress": "chapter_011",
+        "freeTextProgress": 1,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_d66d62afc35b",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_2fbeadab0bff",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000002_fe5d88104b13",
+              "sequence": 2,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:goalLedger",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": null,
+              "after": [
+                {
+                  "id": "opening-goal-1",
+                  "title": "木牌刻痕里为何有金屑",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                },
+                {
+                  "id": "opening-goal-2",
+                  "title": "如何完成第一场外门试炼",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                }
+              ],
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_db01065e-a7e5-42b5-8cf6-a1e0ef976a44",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000003_90eacf79c9e7",
+              "sequence": 3,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:readerEntityStates",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": null,
+              "after": {
+                "character_ae4cb42b9b49": {
+                  "已知顾长离的打算": "顾长离打算带着金屑和木牌进后坡，试炼途中留意金屑来处，日落前取青露草时一并查"
+                }
+              },
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_db01065e-a7e5-42b5-8cf6-a1e0ef976a44",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "playerCharacterId": "character_e663361ab1c7",
+        "characterLocationIds": {
+          "character_e663361ab1c7": "location_open_trial",
+          "character_ae4cb42b9b49": "location_open_trial"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_gu_token": "character_e663361ab1c7",
+          "item_open_gold_paper": "character_e663361ab1c7"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {},
+        "readerEntityStates": {
+          "character_ae4cb42b9b49": {
+            "已知顾长离的打算": "顾长离打算带着金屑和木牌进后坡，试炼途中留意金屑来处，日落前取青露草时一并查"
+          }
+        },
+        "goalLedger": [
+          {
+            "id": "opening-goal-1",
+            "title": "木牌刻痕里为何有金屑",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          },
+          {
+            "id": "opening-goal-2",
+            "title": "如何完成第一场外门试炼",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          }
+        ]
+      },
+      "canonicalRelation": "diverged",
+      "selectedDirectionId": "direction_free_2fbeadab0bff",
+      "selectedDirection": {
+        "id": "direction_free_2fbeadab0bff",
+        "title": "自定行动：我告诉陆照临，我打算带着",
+        "summary": "我告诉陆照临，我打算带着这粒金屑和木牌进后坡，在试炼途中留意金屑的来处，日落前取青露草时一并查。此刻只告诉他这个打算，听听他的回应，不再问新问题，也不出发。",
+        "statePatch": {
+          "freeTextProgress": 1
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "我告诉陆照临，我打算带着这粒金屑和木牌进后坡，在试炼途中留意金屑的来处，日落前取青露草时一并查。此刻只告诉他这个打算，听听他的回应，不再问新问题，也不出发。",
+      "requestId": "scene-plan-v1-inform",
+      "createdAt": "2026-09-16T04:05:39.438Z",
+      "kind": "generated",
+      "parentId": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "readerChoices": [
+        {
+          "id": "reader-1a2ac5a3c423a7da",
+          "title": "把金屑和木牌收好，先往后坡探路",
+          "summary": "我将金屑重新包好，与木牌一并收入怀中，沿石径向后坡方向走，先观察入坡处的地形、路径分岔和试炼钟可能响起的位置，不深入太远。",
+          "evidence": [
+            "“我打算带着这粒金屑和木牌进后坡。”你开口，声音不高，只够两人听清，“试炼途中留意金屑的来处，日落前取青露草时一并查。”",
+            "陆照临沉默了一瞬，眉峰微动，像在咀嚼你话里的次序。片刻后他点头，语气不重：“你既已想好，就这么办。只是后坡路杂，试炼钟一响，人散得快，别为查金屑误了取草的时辰。”"
+          ]
+        },
+        {
+          "id": "reader-e20bb37738329b56",
+          "title": "请陆照临同行一段，路上分头留意金屑来处",
+          "summary": "我看向陆照临，问他是否愿意先同行至后坡入口，路上各自留意脚下石径、木牌刻痕相似处或金屑可能散落的地方，到坡前再分开行动。",
+          "evidence": [
+            "“我打算带着这粒金屑和木牌进后坡。”你开口，声音不高，只够两人听清，“试炼途中留意金屑的来处，日落前取青露草时一并查。”",
+            "陆照临沉默了一瞬，眉峰微动，像在咀嚼你话里的次序。片刻后他点头，语气不重：“你既已想好，就这么办。只是后坡路杂，试炼钟一响，人散得快，别为查金屑误了取草的时辰。”"
+          ]
+        },
+        {
+          "id": "reader-199c28577330a09f",
+          "title": "先不急着进坡，向陆照临问清试炼钟的规矩",
+          "summary": "我暂不迈步，先问陆照临试炼钟响时人该如何集合、后坡取青露草是否有固定区域或时辰限制，只问与试炼直接相关的事。",
+          "evidence": [
+            "陆照临沉默了一瞬，眉峰微动，像在咀嚼你话里的次序。片刻后他点头，语气不重：“你既已想好，就这么办。只是后坡路杂，试炼钟一响，人散得快，别为查金屑误了取草的时辰。”"
+          ]
+        }
+      ],
+      "turnInput": {
+        "text": "我告诉陆照临，我打算带着这粒金屑和木牌进后坡，在试炼途中留意金屑的来处，日落前取青露草时一并查。此刻只告诉他这个打算，听听他的回应，不再问新问题，也不出发。"
+      },
+      "preparedTurnKey": "91d2c529c925010d126ca862da711fe2e25d1688e13725f114c380d9f8426573",
+      "sessionId": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "sequence": 40
+    },
+    "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+  },
+  "visibleTextOnFailure": null
+}

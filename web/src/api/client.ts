@@ -1,4 +1,9 @@
 import type {
+  RouteClosure,
+  EndingType,
+  EndingProposal,
+  EndingAttempt,
+  PreparedChoice,
   SceneIllustrations,
   Journey,
   JournalPerson,
@@ -18,15 +23,6 @@ import type {
   SourceChapterView,
   StateView,
 } from './types'
-
-export interface ImportNovelResult {
-  package_id: string
-  version: string
-  title: string
-  beat_count: number
-  character_count: number
-  chapter_count: number
-}
 
 const BASE = '/api/v1'
 
@@ -140,9 +136,27 @@ async function streamRequest<T>(
 }
 
 export const api = {
-  illustrations: (sid: string, bid: string, generate = false, retry = false) =>
-    request<SceneIllustrations>(`/sessions/${sid}/branches/${bid}/illustrations${retry ? '?retry=true' : ''}`,
-      { method: generate ? 'POST' : 'GET' }),
+  viewIllustrations: (sid: string, bid: string, signal: AbortSignal) =>
+    request<SceneIllustrations>(`/sessions/${sid}/branches/${bid}/illustrations`, { signal }),
+  illustrations: (sid: string, bid: string, subscriber: string, draw = false) =>
+    request<SceneIllustrations>(`/sessions/${sid}/branches/${bid}/illustrations?subscriber=${encodeURIComponent(subscriber)}&draw=${draw}`,
+      { method: 'POST' }),
+  releaseIllustrations: (sid: string, bid: string, subscriber: string) =>
+    request(`/sessions/${sid}/branches/${bid}/illustrations/release?subscriber=${encodeURIComponent(subscriber)}`,
+      { method: 'POST', keepalive: true }),
+  shownIllustration: (sid: string, bid: string, subscriber: string, ms: number) =>
+    request(`/sessions/${sid}/branches/${bid}/illustrations/shown?subscriber=${encodeURIComponent(subscriber)}&display_ms=${Math.min(3600000, Math.max(0, Math.round(ms)))}`,
+      { method: 'POST', keepalive: true }),
+  prepareChoices: (sessionId: string, parent: string, subscriber: string, history_id?: string) =>
+    request<{ parent_branch_id: string; choices: PreparedChoice[] }>(
+      `/sessions/${encodeURIComponent(sessionId)}/choices/prepare`,
+      { method: 'POST', body: JSON.stringify({ parent_branch_id: parent, subscriber_id: subscriber, history_id }) },
+    ),
+  releaseChoices: (sessionId: string, parent: string, subscriber: string) =>
+    request(`/sessions/${encodeURIComponent(sessionId)}/choices/release`, {
+      method: 'POST', keepalive: true,
+      body: JSON.stringify({ parent_branch_id: parent, subscriber_id: subscriber }),
+    }),
   streamTurn: (
     sid: string,
     payload: PlayContinueRequest,
@@ -189,7 +203,32 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ branch_id }),
     }),
+  routeClosure: (sid: string, bid: string) =>
+    request<RouteClosure>(`/sessions/${encodeURIComponent(sid)}/route-closure?branch_id=${encodeURIComponent(bid)}`),
+  planClosure: (sid: string, branch_id: string, intended_type: EndingType | null) =>
+    request<RouteClosure>(`/sessions/${encodeURIComponent(sid)}/route-closure`, {
+      method: 'POST', body: JSON.stringify({ branch_id, intended_type }),
+    }),
+  endingProposals: (sid: string, bid: string) =>
+    request<EndingProposal[]>(`/sessions/${encodeURIComponent(sid)}/ending-proposals?branch_id=${encodeURIComponent(bid)}`),
+  proposeEnding: (sid: string, branch_id: string, attempt: EndingAttempt) =>
+    request<EndingProposal>(`/sessions/${encodeURIComponent(sid)}/ending-proposals`, {
+      method: 'POST', body: JSON.stringify({ branch_id, ...attempt }),
+    }),
+  commitEnding: (sid: string, branch_id: string, proposal: string) =>
+    request<{ status: string }>(`/sessions/${encodeURIComponent(sid)}/ending-proposals/${encodeURIComponent(proposal)}/commit`, {
+      method: 'POST', body: JSON.stringify({ branch_id }),
+    }),
+  cancelEnding: (sid: string, branch_id: string, proposal: string) =>
+    request<EndingProposal>(`/sessions/${encodeURIComponent(sid)}/ending-proposals/${encodeURIComponent(proposal)}/cancel`, {
+      method: 'POST', body: JSON.stringify({ branch_id }),
+    }),
   health: () => request<HealthResponse>('/health'),
+  recordReadingDisplay: (sid: string, branch_id: string) =>
+    request<{ recorded: boolean; deduplicated?: boolean; reason?: string }>(
+      `/sessions/${encodeURIComponent(sid)}/reading-receipts`, {
+        method: 'POST', body: JSON.stringify({ branch_id }),
+      }),
   listPackages: () => request<PackageList>('/packages'),
   getPackage: (packageId: string, version: string) =>
     request<PackageCatalog>(
@@ -227,11 +266,6 @@ export const api = {
     ),
   createSessionPlay: (payload: PlayCreateRequest) =>
     request<PlayCreateResponse>('/sessions', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-    }),
-  importNovel: (payload: { file_name: string; source_text: string }) =>
-    request<ImportNovelResult>('/import/novel', {
       method: 'POST',
       body: JSON.stringify(payload),
     }),

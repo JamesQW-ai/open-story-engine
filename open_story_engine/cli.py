@@ -250,6 +250,7 @@ def create_cocreation_runtime() -> tuple[Any, Any, NarrativeReviewer, str]:
         raise ValueError("使用 STORY_PLANNER=openai 时必须设置 STORY_LLM_BASE_URL、STORY_LLM_API_KEY 与 STORY_LLM_MODEL")
     stream = environment_bool("STORY_LLM_STREAM", True)
     timeout = environment_integer("STORY_LLM_TIMEOUT_SECONDS", 30, 5, 120)
+    first_delta_timeout = environment_integer("STORY_LLM_FIRST_DELTA_TIMEOUT_SECONDS", 30, 5, 120)
     max_tokens = environment_integer("STORY_LLM_MAX_TOKENS", 8192, 1024, 8192)
     allow_transport_fallback = environment_bool("STORY_LLM_TRANSPORT_FALLBACK", True)
     reasoning_effort = environment_reasoning_effort()
@@ -258,6 +259,7 @@ def create_cocreation_runtime() -> tuple[Any, Any, NarrativeReviewer, str]:
             required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"],
             stream, timeout, max_tokens, allow_transport_fallback=allow_transport_fallback,
             reasoning_effort=reasoning_effort,
+            first_delta_timeout_seconds=first_delta_timeout,
         ),
         minimum_narrative_characters=2000,
         verify_source_facts=True,
@@ -265,7 +267,7 @@ def create_cocreation_runtime() -> tuple[Any, Any, NarrativeReviewer, str]:
     evaluator = DirectionEvaluator()
     reviewer: NarrativeReviewer = NarrativeReviewer()
     if environment_bool("STORY_LLM_QUALITY_REVIEW", False):
-        reviewer = LlmNarrativeReviewer(OpenAICompatibleGateway(required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"], False, timeout, reasoning_effort=reasoning_effort))
+        reviewer = LlmNarrativeReviewer(OpenAICompatibleGateway(required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"], False, timeout, reasoning_effort=reasoning_effort, first_delta_timeout_seconds=first_delta_timeout))
     return planner, evaluator, reviewer, f"LLM Planner（{required['STORY_LLM_MODEL']}，正文 {'SSE' if stream else 'JSON'}）+ 本地方向判定"
 
 
@@ -689,6 +691,8 @@ def choose_co_creation_entry(package: Dict[str, Any]) -> Dict[str, Any]:
             print("身份编号不存在。")
             continue
         entries = entry_points_for_selection(package, selection)
+        if (entry_model or {}).get("policy") == "official_unknown_reader/1":
+            return normalize_entry_selection(package, selection)
         print("\n选择进入的关键剧情节点：")
         for index, entry in enumerate(entries, start=1):
             print(f"{index}. {entry['chapterTitle']} | {entry['title']}：{entry['summary']}")
@@ -964,6 +968,11 @@ def run_build_story_package(args: argparse.Namespace) -> int:
     try:
         analysis = json.loads(Path(args.analysis).read_text(encoding="utf-8"))
         package = build_story_package(Path(args.input), analysis, args.package_id, args.version)
+        review_path = getattr(args, "opening_review", None)
+        if review_path:
+            from .official_openings import apply_opening_review
+            review = json.loads(Path(review_path).read_text(encoding="utf-8"))
+            package = apply_opening_review(package, Path(args.input), review)
         audit = audit_story_package(Path(args.input), analysis, package)
         reader = build_source_reader(Path(args.input), analysis, package)
         modules = build_story_package_modules(Path(args.input), analysis, package, reader)
@@ -979,6 +988,9 @@ def run_build_story_package(args: argparse.Namespace) -> int:
         raise ValueError("StoryPackage 输出文件必须命名为 package.json，并置于 <package-id>/<version>/ 目录。")
     package_output.parent.mkdir(parents=True, exist_ok=True)
     package_output.write_text(json.dumps(package, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if review_path:
+        package_output.with_name("opening-review.json").write_text(
+            json.dumps(review, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     analysis_output = Path(args.analysis_output) if args.analysis_output else package_output.with_name("analysis.json")
     analysis_output.write_text(json.dumps(analysis, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     reader_output = Path(args.reader_output) if args.reader_output else reader_path_from_package_path(package_output)
@@ -1137,6 +1149,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     analysis.add_argument("--output", required=True, help="语义候选 JSON 的输出路径")
     analysis.set_defaults(handler=run_analyze_source)
     builder = commands.add_parser("build-story-package", help="将语义候选编译为完整并经审计的 StoryPackage")
+    builder.add_argument("--opening-review", help="与冻结母本绑定的官方人物开局审核 JSON")
     builder.add_argument("input", help="UTF-8 编码的 .txt 小说母本")
     builder.add_argument("analysis", help="analyze-source 产生的语义候选 JSON")
     builder.add_argument("--id", dest="package_id", required=True, help="目标 StoryPackage 的 kebab-case 标识")

@@ -1,0 +1,556 @@
+{
+  "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+  "request": {
+    "parent_branch_id": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+    "text": "把两截断牌给陆照临看，但不交给他；问他是否愿意与我一起向执事询问不用这块牌还能否参加试炼，先等他的回答，不离开原地。",
+    "request_id": "general-followups-v2-1"
+  },
+  "seconds": 28.59,
+  "response": {
+    "status": "written",
+    "request_id": "general-followups-v2-1",
+    "deduplicated": false,
+    "branch": {
+      "id": "branch_8d54594c-4392-4593-aec1-6c8b9b21d1c2",
+      "sessionId": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "sequence": 34,
+      "parentId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+      "kind": "generated",
+      "sourceNodeRef": "node_source_continuity",
+      "narrativeText": "你把两截断牌并排托在掌中，断口朝外，让陆照临能看清那道“青露草”的刻痕已经斜裂成两半。浅色木茬上还沾着你掌心的潮气，绳孔各剩一个，一长一短，确实再拼不回原来的样子。你的手没有递出去，只停在两人之间。\n\n陆照临低头看了一眼，眉峰微微动了一下，没有伸手来接。他抬起目光，像在等你把话说完。\n\n“你愿不愿意和我一起过去问执事，”你压低声音，朝白线外那个低头翻名册的人抬了抬下巴，“不用这块牌，还能不能参加试炼？”\n\n陆照临没有立刻答。他先看了看你手里的断牌，又看向执事，最后才把视线落回你脸上。山风从石壁那边压下来，把他袖口吹得贴住小臂。\n\n“可以。”他说，语气不重，但也没有犹豫，“不过你最好想清楚，问出来之后，执事未必只当没看见。断牌的事一旦过了他的眼，就不是你和我私下说一句不用它那么简单了。”\n\n他仍站在原地，没有先动，只把选择留给你。",
+      "summary": "自定行动：把两截断牌给陆照临看，但已推进，新的风险和选择仍然存在。",
+      "branchState": {
+        "playerLocationId": "location_open_trial",
+        "playerCharacterId": "character_e663361ab1c7",
+        "characterLocationIds": {
+          "character_e663361ab1c7": "location_open_trial",
+          "character_ae4cb42b9b49": "location_open_trial"
+        },
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_df3fb46de272",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_f27c315f38ab",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000002_2f57ccde6ef1",
+              "sequence": 2,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:goalLedger",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": null,
+              "after": [
+                {
+                  "id": "opening-goal-1",
+                  "title": "木牌刻痕里为何有金屑",
+                  "status": "active",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "opening",
+                  "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                  "causeBranchId": null
+                },
+                {
+                  "id": "opening-goal-2",
+                  "title": "如何完成第一场外门试炼",
+                  "status": "transformed",
+                  "characterId": "character_e663361ab1c7",
+                  "dependencies": [],
+                  "source": "player_branch",
+                  "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+                  "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                  "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+                  "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法"
+                },
+                {
+                  "id": "goal-0eab10d79f952cf7",
+                  "title": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+                  "status": "active",
+                  "dependencies": [],
+                  "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+                  "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+                  "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+                  "characterId": "character_e663361ab1c7",
+                  "source": "player_branch",
+                  "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                  "previousGoalId": "opening-goal-2"
+                }
+              ],
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000003_e0bf8bb05639",
+              "sequence": 3,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:readerEntityStates",
+              "summary": "已核对正文的行动结果与持续状态变化",
+              "before": null,
+              "after": {
+                "item_open_gu_token": {
+                  "完整性": "断成两截"
+                },
+                "character_e663361ab1c7": {
+                  "对试炼木牌的态度": "不再用它参加试炼"
+                }
+              },
+              "source": {
+                "kind": "player_direction",
+                "ref": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000004_3dba1c76085e",
+              "sequence": 4,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 1,
+              "after": 2,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_3f1c14c28df9",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "sourceProgress": "chapter_011",
+        "freeTextProgress": 2,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "itemOwnerCharacterIds": {
+          "item_open_gu_token": "character_e663361ab1c7",
+          "item_open_gold_paper": "character_e663361ab1c7"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {},
+        "readerEntityStates": {
+          "item_open_gu_token": {
+            "完整性": "断成两截"
+          },
+          "character_e663361ab1c7": {
+            "对试炼木牌的态度": "不再用它参加试炼"
+          }
+        },
+        "goalLedger": [
+          {
+            "id": "opening-goal-1",
+            "title": "木牌刻痕里为何有金屑",
+            "status": "active",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "opening",
+            "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+            "causeBranchId": null
+          },
+          {
+            "id": "opening-goal-2",
+            "title": "如何完成第一场外门试炼",
+            "status": "transformed",
+            "characterId": "character_e663361ab1c7",
+            "dependencies": [],
+            "source": "player_branch",
+            "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+            "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+            "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+            "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法"
+          },
+          {
+            "id": "goal-0eab10d79f952cf7",
+            "title": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+            "status": "active",
+            "dependencies": [],
+            "reason": "顾长离主动折断试炼木牌并决定不再用它参加试炼，原目标受阻且被放弃。",
+            "successor": "在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+            "evidence": "你点头。钟还没响，山风从石壁那边压过来，把断木的气味吹得很淡。执事站在白线外，正低头翻名册，似乎没注意这边。陆照临往你手里看了一眼，又看向石径尽头的药圃方向，像在等你先开口。",
+            "characterId": "character_e663361ab1c7",
+            "source": "player_branch",
+            "causeBranchId": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+            "previousGoalId": "opening-goal-2"
+          }
+        ]
+      },
+      "nextDirections": [
+        {
+          "id": "goal-direction-opening-goal-1-3",
+          "title": "推进目标：木牌刻痕里为何有金屑",
+          "summary": "围绕“木牌刻痕里为何有金屑”，依据眼前条件采取下一步行动，不恢复已放下的目标。",
+          "statePatch": {
+            "freeTextProgress": 3
+          },
+          "isFreeText": true
+        },
+        {
+          "id": "goal-direction-goal-0eab10d79f952cf7-3",
+          "title": "推进目标：在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法",
+          "summary": "围绕“在失去试炼木牌后决定是否继续留在试炼场或另寻参加试炼的办法”，依据眼前条件采取下一步行动，不恢复已放下的目标。",
+          "statePatch": {
+            "freeTextProgress": 3
+          },
+          "isFreeText": true
+        }
+      ],
+      "openThreads": [
+        "木牌刻痕里为何有金屑",
+        "如何完成第一场外门试炼",
+        "尚未完成的当前目标"
+      ],
+      "createdAt": "2026-09-15T08:55:24.190Z",
+      "canonicalRelation": "diverged",
+      "factDeltas": [],
+      "storyArc": {
+        "activeGoal": "自定行动：我把木牌沿着中间折断，确",
+        "currentPhase": "自定行动：把两截断牌给陆照临看，但",
+        "goalDisposition": "continued",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "continuing"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_0deea29e-5d20-4fde-a691-0805a1494ccc",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "actionIntent": {
+        "input": "把两截断牌给陆照临看，但不交给他；问他是否愿意与我一起向执事询问不用这块牌还能否参加试炼，先等他的回答，不离开原地。",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "顾长离把两截断牌展示给陆照临看。"
+          },
+          "A2": {
+            "mode": "constraint",
+            "summary": "断牌仍由顾长离持有，不交给陆照临。"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "顾长离询问陆照临是否愿意一起向执事询问不用这块牌还能否参加试炼。"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "顾长离等待陆照临回答，不替他决定，不继续行动。"
+          },
+          "A5": {
+            "mode": "constraint",
+            "summary": "顾长离留在原地，不离开半山试炼场。"
+          }
+        }
+      },
+      "consequenceUpdate": {
+        "decision": "ready",
+        "message": "",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "顾长离把两截断牌展示给陆照临看。"
+          },
+          "A2": {
+            "mode": "constraint",
+            "summary": "断牌仍由顾长离持有，不交给陆照临。"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "顾长离询问陆照临是否愿意一起向执事询问不用这块牌还能否参加试炼。"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "顾长离等待陆照临回答，不替他决定，不继续行动。"
+          },
+          "A5": {
+            "mode": "constraint",
+            "summary": "顾长离留在原地，不离开半山试炼场。"
+          }
+        },
+        "method": "顾长离将掌中两截断牌并排托起，断口朝向陆照临，让他看清木牌已裂成两截，但手仍收在自己掌中，不递出。随后直接问他是否愿意一起向执事询问，不用这块牌还能否参加试炼。此行为只到提问并等待回答为止，不走向执事，不离开原地。",
+        "outcomes": [],
+        "goalUpdates": [],
+        "steps": [
+          {
+            "id": "S1",
+            "actorId": "character_e663361ab1c7",
+            "action": "顾长离把两截断牌并排托在掌中给陆照临看，但不交给他。",
+            "requirementIds": [
+              "A1",
+              "A2"
+            ],
+            "authority": "player",
+            "causeStepId": null
+          },
+          {
+            "id": "S2",
+            "actorId": "character_e663361ab1c7",
+            "action": "顾长离问陆照临是否愿意一起向执事询问，不用这块牌还能否参加试炼，并停在原地等回答。",
+            "requirementIds": [
+              "A3",
+              "A4",
+              "A5"
+            ],
+            "authority": "player",
+            "causeStepId": null
+          }
+        ],
+        "introductions": {
+          "characters": [],
+          "items": [],
+          "locations": []
+        },
+        "stateChanges": []
+      },
+      "consequenceReview": "reader-consequences/2",
+      "reviewedNarrativeSha256": "cc4babc0f599105b84c4e460efc6544cd9a7b0f5371a49a3e37d3e03d1be3760",
+      "authorityReview": {
+        "decision": "allow",
+        "issues": [],
+        "checks": [
+          {
+            "stepId": "S1",
+            "authorized": true,
+            "basis": "player_input",
+            "quote": "把两截断牌给陆照临看，但不交给他",
+            "reason": "玩家明确指示展示两截断牌但不交出，上一段正文也确认两截断牌仍在玩家手中，动作可直接执行。"
+          },
+          {
+            "stepId": "S2",
+            "authorized": true,
+            "basis": "player_input",
+            "quote": "问他是否愿意与我一起向执事询问不用这块牌还能否参加试炼，先等他的回答，不离开原地",
+            "reason": "玩家明确指示向陆照临提问并等待回答，不离开原地；上一段正文中陆照临正在等待玩家开口，具备对话条件。"
+          }
+        ],
+        "stateChecks": []
+      },
+      "observedEvents": [
+        {
+          "id": "O1",
+          "paragraphId": "P1",
+          "quote": "你把两截断牌并排托在掌中，断口朝外，让陆照临能看清那道“青露草”的刻痕已经斜裂成两半。",
+          "actor": "character_e663361ab1c7",
+          "mode": "actual",
+          "summary": "顾长离将两截断牌并排托在掌中，断口朝外展示给陆照临看。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O2",
+          "paragraphId": "P2",
+          "quote": "陆照临低头看了一眼，眉峰微微动了一下，没有伸手来接。",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "actual",
+          "summary": "陆照临低头看了一眼断牌，没有伸手来接。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O3",
+          "paragraphId": "P3",
+          "quote": "“你愿不愿意和我一起过去问执事，”你压低声音，朝白线外那个低头翻名册的人抬了抬下巴，“不用这块牌，还能不能参加试炼？”",
+          "actor": "character_e663361ab1c7",
+          "mode": "speech",
+          "summary": "顾长离询问陆照临是否愿意一起去问执事，不用这块牌能否参加试炼。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O4",
+          "paragraphId": "P4",
+          "quote": "陆照临没有立刻答。他先看了看你手里的断牌，又看向执事，最后才把视线落回你脸上。",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "actual",
+          "summary": "陆照临没有立刻回答，先看断牌，再看执事，最后看向顾长离。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O5",
+          "paragraphId": "P5",
+          "quote": "“可以。”他说，语气不重，但也没有犹豫，“不过你最好想清楚，问出来之后，执事未必只当没看见。断牌的事一旦过了他的眼，就不是你和我私下说一句不用它那么简单了。”",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "speech",
+          "summary": "陆照临同意一起去问执事，但提醒顾长离想清楚，断牌的事被执事知道后可能不会简单了结。",
+          "changes": [],
+          "introduced": []
+        },
+        {
+          "id": "O6",
+          "paragraphId": "P6",
+          "quote": "他仍站在原地，没有先动，只把选择留给你。",
+          "actor": "character_ae4cb42b9b49",
+          "mode": "actual",
+          "summary": "陆照临仍站在原地，没有先动，等待顾长离做决定。",
+          "changes": [],
+          "introduced": []
+        }
+      ],
+      "eventChecks": [
+        {
+          "id": "O1",
+          "verdict": "supported",
+          "reason": "P1明确写出顾长离将两截断牌并排托在掌中展示，符合玩家要求。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O2",
+          "verdict": "supported",
+          "reason": "P2写陆照临低头看断牌且没有伸手来接，与展示但不交出的要求一致。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O3",
+          "verdict": "supported",
+          "reason": "P3的对话内容与玩家要求询问是否一起问执事完全一致。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O4",
+          "verdict": "supported",
+          "reason": "P4写陆照临没有立刻回答，符合先等回答的要求。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O5",
+          "verdict": "supported",
+          "reason": "P5是陆照临对询问的回答，属于等待后得到的回应，未违反约束。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O6",
+          "verdict": "supported",
+          "reason": "P6写陆照临仍站在原地，没有先动，顾长离也未离开，符合不离开原地。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        }
+      ],
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "把两截断牌给陆照临看",
+            "status": "performed",
+            "summary": "顾长离把两截断牌并排托在掌中，断口朝外展示给陆照临看。",
+            "evidence": "你把两截断牌并排托在掌中，断口朝外，让陆照临能看清那道“青露草”的刻痕已经斜裂成两半。浅色木茬上还沾着你掌心的潮气，绳孔各剩一个，一长一短，确实再拼不回原来的样子。你的手没有递出去，只停在两人之间。"
+          },
+          {
+            "id": "A2",
+            "requirement": "但不交给他",
+            "status": "performed",
+            "summary": "断牌仍收在顾长离掌中，没有递出，陆照临也未伸手来接。",
+            "evidence": "你把两截断牌并排托在掌中，断口朝外，让陆照临能看清那道“青露草”的刻痕已经斜裂成两半。浅色木茬上还沾着你掌心的潮气，绳孔各剩一个，一长一短，确实再拼不回原来的样子。你的手没有递出去，只停在两人之间。"
+          },
+          {
+            "id": "A3",
+            "requirement": "问他是否愿意与我一起向执事询问不用这块牌还能否参加试炼",
+            "status": "performed",
+            "summary": "顾长离问陆照临是否愿意一起去问执事，不用这块牌还能否参加试炼。",
+            "evidence": "“你愿不愿意和我一起过去问执事，”你压低声音，朝白线外那个低头翻名册的人抬了抬下巴，“不用这块牌，还能不能参加试炼？”"
+          },
+          {
+            "id": "A4",
+            "requirement": "先等他的回答",
+            "status": "performed",
+            "summary": "顾长离只等陆照临回答，没有替他决定，也没有继续走向执事。",
+            "evidence": "他仍站在原地，没有先动，只把选择留给你。"
+          },
+          {
+            "id": "A5",
+            "requirement": "不离开原地",
+            "status": "performed",
+            "summary": "顾长离留在半山试炼场原地，没有离开。",
+            "evidence": "他仍站在原地，没有先动，只把选择留给你。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "顾长离把两截断牌并排托在掌中，断口朝外展示给陆照临看。；断牌仍收在顾长离掌中，没有递出，陆照临也未伸手来接。；顾长离问陆照临是否愿意一起去问执事，不用这块牌还能否参加试炼。；顾长离只等陆照临回答，没有替他决定，也没有继续走向执事。；顾长离留在半山试炼场原地，没有离开。",
+          "evidence": "你把两截断牌并排托在掌中，断口朝外，让陆照临能看清那道“青露草”的刻痕已经斜裂成两半。浅色木茬上还沾着你掌心的潮气，绳孔各剩一个，一长一短，确实再拼不回原来的样子。你的手没有递出去，只停在两人之间。"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "selectedDirectionId": "direction_free_3f1c14c28df9",
+      "selectedDirection": {
+        "id": "direction_free_3f1c14c28df9",
+        "title": "自定行动：把两截断牌给陆照临看，但",
+        "summary": "把两截断牌给陆照临看，但不交给他；问他是否愿意与我一起向执事询问不用这块牌还能否参加试炼，先等他的回答，不离开原地。",
+        "statePatch": {
+          "freeTextProgress": 2
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "把两截断牌给陆照临看，但不交给他；问他是否愿意与我一起向执事询问不用这块牌还能否参加试炼，先等他的回答，不离开原地。",
+      "requestId": "general-followups-v2-1",
+      "turnInput": {
+        "text": "把两截断牌给陆照临看，但不交给他；问他是否愿意与我一起向执事询问不用这块牌还能否参加试炼，先等他的回答，不离开原地。"
+      },
+      "preparedTurnKey": "4f9eb05cd5c4692d68db80b000e2319570a0195e5dda11335609dfdecce11427"
+    },
+    "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+  }
+}

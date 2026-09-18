@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.2"
+  },
+  "arc": {
+    "id": "arc_source_chapter_004",
+    "title": "推进：夜巡缺席",
+    "summary": "他凑近看，发现灯芯并没有燃尽，反而像被什么东西从中间掐断。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_013",
+          "chapter_014",
+          "chapter_015",
+          "chapter_016",
+          "chapter_017",
+          "chapter_018",
+          "chapter_019"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_020"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_013_to_014",
+      "direction_chapter_014_to_015",
+      "direction_chapter_015_to_016",
+      "direction_chapter_016_to_017",
+      "direction_chapter_017_to_018",
+      "direction_chapter_018_to_019",
+      "direction_chapter_019_to_020"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_005"
+    ]
+  }
+}

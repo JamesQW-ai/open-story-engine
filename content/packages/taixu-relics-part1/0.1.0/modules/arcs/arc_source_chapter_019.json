@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_019",
+    "title": "推进：引灯人现身",
+    "summary": "陆照临问：“你离开那天，给我留下了什么？”",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_101",
+          "chapter_102",
+          "chapter_103",
+          "chapter_104",
+          "chapter_105",
+          "chapter_106"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_107"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_101_to_102",
+      "direction_chapter_102_to_103",
+      "direction_chapter_103_to_104",
+      "direction_chapter_104_to_105",
+      "direction_chapter_105_to_106",
+      "direction_chapter_106_to_107"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_020"
+    ]
+  }
+}

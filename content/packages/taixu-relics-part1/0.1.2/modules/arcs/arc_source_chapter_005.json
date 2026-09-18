@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.2"
+  },
+  "arc": {
+    "id": "arc_source_chapter_005",
+    "title": "推进：废井之下",
+    "summary": "“先别交给沈砚秋。”",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_020",
+          "chapter_021",
+          "chapter_022",
+          "chapter_023",
+          "chapter_024",
+          "chapter_025",
+          "chapter_026"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_027"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_020_to_021",
+      "direction_chapter_021_to_022",
+      "direction_chapter_022_to_023",
+      "direction_chapter_023_to_024",
+      "direction_chapter_024_to_025",
+      "direction_chapter_025_to_026",
+      "direction_chapter_026_to_027"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_006"
+    ]
+  }
+}

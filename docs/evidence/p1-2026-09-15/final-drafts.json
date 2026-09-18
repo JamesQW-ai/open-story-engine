@@ -1,0 +1,640 @@
+[
+  {
+    "draft_id": "12d0f239e129ce4466ee28633cfe205048a1849463e490b73fc8ee14a889a37f",
+    "binding": {
+      "session_id": "16e4415f-5f12-51c5-b2d9-e2fc8c8cdb88",
+      "parent_branch_id": "branch_a0cea00f-d9c7-4398-a29b-d5c6cf787889",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/3",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "3736ea3d752873fb796ed6855e4481c04ba22bde66a2ee2c8e2aeeb8605f7302",
+      "choice_id": "opening-0"
+    },
+    "status": "ready",
+    "payload": {
+      "text": "请守门弟子救人。指出伤者尚有呼吸，争取在落锁前让他得到救助。"
+    },
+    "metrics": {
+      "first_text_ms": 1342,
+      "queue_ms": 1,
+      "complete_ms": 12351,
+      "reported_tokens": 4286,
+      "calls": 2,
+      "unreported_calls": 0,
+      "tokens": 4286
+    },
+    "node": {
+      "narrativeText": "你抢在铁链第二次绞紧之前开口：“他还有气。”声音被雨打得发颤，但足够清楚。你抬手指向石阶下那人，指尖离封山线不过半尺：“喉间还在动，血沫是活的。你们若现在落锁，就是把他关在门外等死。”\n\n近处那名守门弟子没有回头，剑柄上的指节泛白。另一人从石柱后转出半身，目光先扫你，再落到伤者身上，像在判断你的话有几分真假。雨幕里，伤者胸口几乎看不出起伏，只有喉结极轻地抽了一下，混着血水咽出半声气音。\n\n“宗门有规矩，封山之后不得擅纳外人。”转出来的弟子说，语气比先前低了些，却仍不松口，“你既不是本门弟子，凭什么替他作保？”\n\n“凭我手里有引荐文书，凭我站在这里没走。”你把文书往前一递，雨水顺着纸角滴落，“我不认识他，但他手边那盏灯和山门有关。你们若只救人不问灯，我不拦；若连人都不救，等执事来了，我照样会这么说。”\n\n那弟子盯着你，像在衡量一个连山门都进不去的人能翻出什么浪。铁链又响，门缝里的青光已经收成一线。伤者忽然咳起来，不是清醒，是身体被血呛住，整个人在石阶上弓了一下，空灯从指间滑出半寸，滚到封山线外两步远的地方。\n\n“别动。”守门弟子横剑拦住你，剑鞘几乎抵上你胸口。他朝同伴偏了偏头，压低声音：“去探脉，别过线。”\n\n另一人快步上前，蹲下时斗篷下摆浸进积水。他先按伤者颈侧，又掀开半片衣襟，动作很快，像怕沾上什么。片刻后他抬头：“脉还在，但撑不了太久。胸口有旧伤，不是新创，像是被什么东西反震过。”\n\n“能抬进去吗？”你问。\n\n“不能。”站着的弟子答得干脆，“没有执事令，我们只能守门，不能带人入宗。最多把他移到檐下，不让他死在封山线上。”\n\n你还没再开口，山门内传来脚步声，不重，却让两名弟子同时挺直了背。一个穿灰袍的人从门缝后走来，袖口绣着半枚云纹。他先看伤者，又看你，最后落在你手中的文书上。\n\n“谁准你在山门前喧哗？”他问。",
+      "summary": "自定行动：请守门弟子救人。指出伤者已推进，新的风险和选择仍然存在。",
+      "factDeltas": [],
+      "openThreads": [
+        "陌生伤者是否能得到救助",
+        "空灯与父亲失踪是否有关",
+        "尚未完成的当前目标"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_001_to_002",
+          "title": "关键推进：拒绝",
+          "summary": "可眼前这盏灯没有火，灯底的石屑却像一粒凝固的星，贴着泥水，拒绝被冲走。",
+          "canonicalBeatId": "beat_chapter_002",
+          "statePatch": {
+            "sourceProgress": "chapter_002",
+            "playerLocationId": "location_9c23a624e6b0"
+          }
+        }
+      ],
+      "storyArc": {
+        "activeGoal": "自定行动：请守门弟子救人。指出伤者",
+        "currentPhase": "自定行动：请守门弟子救人。指出伤者",
+        "goalDisposition": "continued",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "continuing"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_a0cea00f-d9c7-4398-a29b-d5c6cf787889",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "请守门弟子救人",
+            "status": "performed",
+            "summary": "守门弟子虽未将伤者抬入宗内，但已实际响应救人请求：一人上前探脉、检查伤势，确认脉息尚存并判断撑不了太久，另一人提出可将其移至檐下，避免死在封山线上。",
+            "evidence": "另一人快步上前，蹲下时斗篷下摆浸进积水。他先按伤者颈侧，又掀开半片衣襟，动作很快，像怕沾上什么。片刻后他抬头：“脉还在，但撑不了太久。胸口有旧伤，不是新创，像是被什么东西反震过。”"
+          },
+          {
+            "id": "A2",
+            "requirement": "指出伤者尚有呼吸",
+            "status": "performed",
+            "summary": "你明确喊出“他还有气”，并指出喉间仍在动、血沫是活的，以此证明伤者尚未死亡。守门弟子随后探脉，确认“脉还在”，与你的判断相符。",
+            "evidence": "你抢在铁链第二次绞紧之前开口：“他还有气。”声音被雨打得发颤，但足够清楚。你抬手指向石阶下那人，指尖离封山线不过半尺：“喉间还在动，血沫是活的。你们若现在落锁，就是把他关在门外等死。”"
+          },
+          {
+            "id": "A3",
+            "requirement": "争取在落锁前让他得到救助",
+            "status": "performed",
+            "summary": "你以引荐文书和伤者手边的灯为由继续施压，要求先救人，并警告若落锁就是把人关在门外等死。守门弟子因此未立即落锁，而是探脉并提议先移到檐下，为伤者争取到山门内执事到来前的处置时间。",
+            "evidence": "“凭我手里有引荐文书，凭我站在这里没走。”你把文书往前一递，雨水顺着纸角滴落，“我不认识他，但他手边那盏灯和山门有关。你们若只救人不问灯，我不拦；若连人都不救，等执事来了，我照样会这么说。”"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "守门弟子虽未将伤者抬入宗内，但已实际响应救人请求：一人上前探脉、检查伤势，确认脉息尚存并判断撑不了太久，另一人提出可将其移至檐下，避免死在封山线上。；你明确喊出“他还有气”，并指出喉间仍在动、血沫是活的，以此证明伤者尚未死亡。守门弟子随后探脉，确认“脉还在”，与你的判断相符。；你以引荐文书和伤者手边的灯为由继续施压，要",
+          "evidence": "另一人快步上前，蹲下时斗篷下摆浸进积水。他先按伤者颈侧，又掀开半片衣襟，动作很快，像怕沾上什么。片刻后他抬头：“脉还在，但撑不了太久。胸口有旧伤，不是新创，像是被什么东西反震过。”"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "sourceNodeRef": "node_source_continuity",
+      "branchState": {
+        "playerLocationId": "location_open_gate",
+        "sourceProgress": "chapter_001",
+        "freeTextProgress": 1,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_887e768bad40",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_e5d7e66f4a14",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "playerCharacterId": "character_ae4cb42b9b49",
+        "characterLocationIds": {
+          "character_ae4cb42b9b49": "location_open_gate"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_letter": "character_ae4cb42b9b49"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {}
+      },
+      "canonicalRelation": "diverged",
+      "selectedDirectionId": "direction_free_e5d7e66f4a14",
+      "selectedDirection": {
+        "id": "direction_free_e5d7e66f4a14",
+        "title": "自定行动：请守门弟子救人。指出伤者",
+        "summary": "请守门弟子救人。指出伤者尚有呼吸，争取在落锁前让他得到救助。",
+        "statePatch": {
+          "freeTextProgress": 1
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "请守门弟子救人。指出伤者尚有呼吸，争取在落锁前让他得到救助。",
+      "requestId": null,
+      "createdAt": "2026-09-15T06:07:52.859Z",
+      "id": "branch_d69b9bac-253e-4444-aae8-1d876f4d62c8",
+      "kind": "generated",
+      "parentId": "branch_a0cea00f-d9c7-4398-a29b-d5c6cf787889"
+    },
+    "validation_observations": [
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 9137
+        },
+        "generationStage": "chapter",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 3193
+        },
+        "generationStage": "action_review",
+        "revision": 0
+      }
+    ]
+  },
+  {
+    "draft_id": "1ff07d15928909c8eff583c33a8ac405ee65040fe3eb56f542eb868cb1476292",
+    "binding": {
+      "session_id": "16e4415f-5f12-51c5-b2d9-e2fc8c8cdb88",
+      "parent_branch_id": "branch_a0cea00f-d9c7-4398-a29b-d5c6cf787889",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/3",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "3736ea3d752873fb796ed6855e4481c04ba22bde66a2ee2c8e2aeeb8605f7302",
+      "choice_id": "opening-1"
+    },
+    "status": "ready",
+    "payload": {
+      "text": "查看封山石的裂纹。留在封山线外，观察青白光退去后的水痕与空灯。"
+    },
+    "metrics": {
+      "first_text_ms": 1331,
+      "queue_ms": 8,
+      "complete_ms": 11944,
+      "reported_tokens": 4208,
+      "calls": 2,
+      "unreported_calls": 0,
+      "tokens": 4208,
+      "ready_hit": true,
+      "selection_count": 1,
+      "ready_hits": 1,
+      "commit_ms": 12,
+      "committed": true,
+      "selection_to_complete_ms": 27
+    },
+    "node": {
+      "narrativeText": "你隔着封山线蹲下，雨水从斗笠边沿连成一线。封山石上的裂纹不是旧痕，青白光退去后，石面仍留着几道细如发丝的水线，正沿着裂纹慢慢往外渗。那水不浑，像被光灼过，带着一点极淡的焦味。你不敢伸手去碰，只把身子压低，借山门檐下那点残光看。裂纹从石阶右侧斜上去，止于半人高处，末端分作三岔，像被什么从里面撑开过。\n\n守门弟子仍按着剑柄，见你只是看，没有越线，才把剑柄松了半寸。伤者躺在雨里，喉间又响了一声，像要说话，却只咳出一口血沫。那盏空灯还在他手边，灯身被雨水浇得发亮，里面没有灯芯，也没有油。你注意到灯底压着一小片石阶上的积水，水纹一圈圈荡开，和封山石裂纹里渗出的水痕连成同一种颜色。\n\n“这灯是山门里的？”你问。\n\n守门弟子没答，只盯着那盏灯，像在辨认什么。片刻后，另一个弟子从门后探出半身，低声说：“执事还没到，门不能开。”\n\n你仍蹲在原地，引荐文书已经被雨浸透，边角软得快要烂开。伤者的手指动了一下，不是抓灯，是朝你的方向伸了伸。你看见他指节上有旧伤，虎口裂着，像常年握过重物。那手伸到一半又垂下去，空灯被带得歪了歪，灯口朝向你，里面黑洞洞的，什么也没有。\n\n“他还有气。”你说。\n\n守门弟子没有接话。山门上的铁链又响了一声，比刚才更沉，像门后有人在拉。你抬头，只看见门缝里一线黑，没有光，也没有人影。雨声忽然小下去，封山石上的水痕不再往外渗，裂纹停在原处，像被什么重新按住了。\n\n伤者忽然咳出一句，断在喉咙里，你只听见一个“灯”字。那声音极轻，却让守门弟子同时看向你。你仍站在封山线外，没有动。空灯倒在伤者手边，灯口斜斜对着你，雨水正一滴一滴落进去，又顺着灯沿流出来。",
+      "summary": "自定行动：查看封山石的裂纹。留在封已推进，新的风险和选择仍然存在。",
+      "factDeltas": [],
+      "openThreads": [
+        "陌生伤者是否能得到救助",
+        "空灯与父亲失踪是否有关",
+        "尚未完成的当前目标"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_001_to_002",
+          "title": "关键推进：拒绝",
+          "summary": "可眼前这盏灯没有火，灯底的石屑却像一粒凝固的星，贴着泥水，拒绝被冲走。",
+          "canonicalBeatId": "beat_chapter_002",
+          "statePatch": {
+            "sourceProgress": "chapter_002",
+            "playerLocationId": "location_9c23a624e6b0"
+          }
+        }
+      ],
+      "storyArc": {
+        "activeGoal": "自定行动：查看封山石的裂纹。留在封",
+        "currentPhase": "自定行动：查看封山石的裂纹。留在封",
+        "goalDisposition": "continued",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "continuing"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_a0cea00f-d9c7-4398-a29b-d5c6cf787889",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "查看封山石的裂纹",
+            "status": "performed",
+            "summary": "你隔着封山线蹲下，压低身子查看封山石裂纹，确认裂纹非旧痕，青白光退去后仍有细如发丝的水线沿裂纹外渗，带淡焦味，裂纹从石阶右侧斜上至半人高处，末端分三岔。",
+            "evidence": "你隔着封山线蹲下，雨水从斗笠边沿连成一线。封山石上的裂纹不是旧痕，青白光退去后，石面仍留着几道细如发丝的水线，正沿着裂纹慢慢往外渗。那水不浑，像被光灼过，带着一点极淡的焦味。你不敢伸手去碰，只把身子压低，借山门檐下那点残光看。裂纹从石阶右侧斜上去，止于半人高处，末端分作三岔，像被什么从里面撑开过。"
+          },
+          {
+            "id": "A2",
+            "requirement": "留在封山线外",
+            "status": "performed",
+            "summary": "你始终未越过封山线，守门弟子见你只是看、没有越线，才把剑柄松了半寸；后续你仍蹲在原地、站在封山线外，没有移动。",
+            "evidence": "守门弟子仍按着剑柄，见你只是看，没有越线，才把剑柄松了半寸。伤者躺在雨里，喉间又响了一声，像要说话，却只咳出一口血沫。那盏空灯还在他手边，灯身被雨水浇得发亮，里面没有灯芯，也没有油。你注意到灯底压着一小片石阶上的积水，水纹一圈圈荡开，和封山石裂纹里渗出的水痕连成同一种颜色。"
+          },
+          {
+            "id": "A3",
+            "requirement": "观察青白光退去后的水痕与空灯",
+            "status": "performed",
+            "summary": "你观察到青白光退去后封山石裂纹中渗出的水痕，并注意到空灯底压着一小片石阶积水，水纹与裂纹渗出的水痕连成同一种颜色；灯内无灯芯也无油，雨水落入灯口又顺灯沿流出。",
+            "evidence": "守门弟子仍按着剑柄，见你只是看，没有越线，才把剑柄松了半寸。伤者躺在雨里，喉间又响了一声，像要说话，却只咳出一口血沫。那盏空灯还在他手边，灯身被雨水浇得发亮，里面没有灯芯，也没有油。你注意到灯底压着一小片石阶上的积水，水纹一圈圈荡开，和封山石裂纹里渗出的水痕连成同一种颜色。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "你隔着封山线蹲下，压低身子查看封山石裂纹，确认裂纹非旧痕，青白光退去后仍有细如发丝的水线沿裂纹外渗，带淡焦味，裂纹从石阶右侧斜上至半人高处，末端分三岔。；你始终未越过封山线，守门弟子见你只是看、没有越线，才把剑柄松了半寸；后续你仍蹲在原地、站在封山线外，没有移动。；你观察到青白光退去后封山石裂纹中渗出的水痕，并注意到空",
+          "evidence": "你隔着封山线蹲下，雨水从斗笠边沿连成一线。封山石上的裂纹不是旧痕，青白光退去后，石面仍留着几道细如发丝的水线，正沿着裂纹慢慢往外渗。那水不浑，像被光灼过，带着一点极淡的焦味。你不敢伸手去碰，只把身子压低，借山门檐下那点残光看。裂纹从石阶右侧斜上去，止于半人高处，末端分作三岔，像被什么从里面撑开过。"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "sourceNodeRef": "node_source_continuity",
+      "branchState": {
+        "playerLocationId": "location_open_gate",
+        "sourceProgress": "chapter_001",
+        "freeTextProgress": 1,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_924b41867471",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_b3096cb6ed8d",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "playerCharacterId": "character_ae4cb42b9b49",
+        "characterLocationIds": {
+          "character_ae4cb42b9b49": "location_open_gate"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_letter": "character_ae4cb42b9b49"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {}
+      },
+      "canonicalRelation": "diverged",
+      "selectedDirectionId": "direction_free_b3096cb6ed8d",
+      "selectedDirection": {
+        "id": "direction_free_b3096cb6ed8d",
+        "title": "自定行动：查看封山石的裂纹。留在封",
+        "summary": "查看封山石的裂纹。留在封山线外，观察青白光退去后的水痕与空灯。",
+        "statePatch": {
+          "freeTextProgress": 1
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "查看封山石的裂纹。留在封山线外，观察青白光退去后的水痕与空灯。",
+      "requestId": null,
+      "createdAt": "2026-09-15T06:07:52.463Z",
+      "id": "branch_4598a141-7eda-4404-b95d-792a4f0e841a",
+      "kind": "generated",
+      "parentId": "branch_a0cea00f-d9c7-4398-a29b-d5c6cf787889"
+    },
+    "validation_observations": [
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 6183
+        },
+        "generationStage": "chapter",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 5720
+        },
+        "generationStage": "action_review",
+        "revision": 0
+      }
+    ]
+  },
+  {
+    "draft_id": "d4f5c96eff8009f642b709d5ef22b272c0c4aa20c3dd166f3279a8cf0f14fbf5",
+    "binding": {
+      "session_id": "16e4415f-5f12-51c5-b2d9-e2fc8c8cdb88",
+      "parent_branch_id": "branch_99e5f328-715a-4e4e-b426-07898592a8d3",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/3",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "18dce93833a4feb1f6fe579197185c7268ebef36500263dcbb66f842b36c85b2",
+      "request_id": "79ec420a-2928-423d-8f4c-dba4d7707e8f",
+      "input_digest": "4e02710c6d9ad017c109862f2f6ddba1f39d0b657a9df9d2f83a40ee91b568f4"
+    },
+    "status": "ready",
+    "payload": {
+      "text": "我留在封山线外，检查引荐文书上的字是否还能看清，再向守门弟子询问执事何时到来，不触碰伤者的空灯。"
+    },
+    "metrics": {
+      "first_text_ms": 1315,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 3,
+      "complete_ms": 12545,
+      "reported_tokens": 4836,
+      "calls": 2,
+      "unreported_calls": 0,
+      "tokens": 4836,
+      "commit_ms": 17,
+      "committed": true,
+      "selection_to_complete_ms": 12590
+    },
+    "node": {
+      "narrativeText": "你靠着山岩，把引荐文书从怀里取出来。纸页已经吃进潮气，边角软得几乎要粘在指腹上。你不敢用力，只就着山门前那点残光慢慢展开。墨迹在“陆照临”三个字上晕出一圈淡青，像被雨水从纸纹里重新泡出来，但每一笔仍能辨认。落款处的印文糊了半边，只剩“玄霄”二字还看得清。你把文书斜过来，让雨水不再直打纸面，又用袖口内侧轻轻按了按湿软处，才重新折好，贴着胸口收进衣内。\n\n你朝山门走近一步，仍停在封山线外。雨水从斗笠边沿落下，砸在石阶上。你提高声音：“这位师兄，请问执事什么时候能到？”\n\n门后静了一瞬，传来那守门弟子的声音，比方才近了些：“已经差人去请了。雨大，从半山下来还要两刻。”他顿了顿，像在门后看了你一眼，“你若不进山，就退到岩下等。封山线外不拦人，但别靠门太近。”\n\n你没有再往前。门缝里透出的光忽地晃了一下，像是有人提着灯从雨廊下经过。你听见极轻的脚步声停在门后，又慢慢远了。伤者被抬进去后，外面只剩雨声和山风，空地上那点淡红早被冲净。你低头看了一眼自己的手，指节仍有些僵，手背的红痕被雨水泡得发白，屈伸时像有细刺卡在骨缝里。\n\n你退回山岩下，把斗笠往下压了压。山门上的铁链偶尔被风带起，发出极轻的响。你数着雨声，等那两刻过去。",
+      "summary": "自定行动：我留在封山线外，检查引荐已推进，新的风险和选择仍然存在。",
+      "factDeltas": [],
+      "openThreads": [
+        "陌生伤者是否能得到救助",
+        "空灯与父亲失踪是否有关",
+        "尚未完成的当前目标"
+      ],
+      "nextDirections": [
+        {
+          "id": "direction_chapter_001_to_002",
+          "title": "关键推进：拒绝",
+          "summary": "可眼前这盏灯没有火，灯底的石屑却像一粒凝固的星，贴着泥水，拒绝被冲走。",
+          "canonicalBeatId": "beat_chapter_002",
+          "statePatch": {
+            "sourceProgress": "chapter_002",
+            "playerLocationId": "location_9c23a624e6b0"
+          }
+        }
+      ],
+      "storyArc": {
+        "activeGoal": "自定行动：请守门弟子救人。指出伤者",
+        "currentPhase": "自定行动：我留在封山线外，检查引荐",
+        "goalDisposition": "continued",
+        "chapter": {
+          "title": "《太虚遗录》·共创篇",
+          "status": "continuing"
+        }
+      },
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_99e5f328-715a-4e4e-b426-07898592a8d3",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "branchAdditions": {
+        "locations": [],
+        "characters": [],
+        "items": [],
+        "relationships": [],
+        "clues": [],
+        "events": [],
+        "characterReveals": [],
+        "changes": []
+      },
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "我留在封山线外",
+            "status": "performed",
+            "summary": "你始终未越过封山线，靠近山门时仍停在封山线外，之后又退回山岩下等待。",
+            "evidence": "你朝山门走近一步，仍停在封山线外。雨水从斗笠边沿落下，砸在石阶上。你提高声音：“这位师兄，请问执事什么时候能到？”"
+          },
+          {
+            "id": "A2",
+            "requirement": "检查引荐文书上的字是否还能看清",
+            "status": "performed",
+            "summary": "你取出引荐文书检查，确认“陆照临”三字虽晕墨但每一笔仍能辨认，落款印文糊了半边，只剩“玄霄”二字可辨。",
+            "evidence": "你靠着山岩，把引荐文书从怀里取出来。纸页已经吃进潮气，边角软得几乎要粘在指腹上。你不敢用力，只就着山门前那点残光慢慢展开。墨迹在“陆照临”三个字上晕出一圈淡青，像被雨水从纸纹里重新泡出来，但每一笔仍能辨认。落款处的印文糊了半边，只剩“玄霄”二字还看得清。你把文书斜过来，让雨水不再直打纸面，又用袖口内侧轻轻按了按湿软处，才重新折好，贴着胸口收进衣内。"
+          },
+          {
+            "id": "A3",
+            "requirement": "再向守门弟子询问执事何时到来",
+            "status": "performed",
+            "summary": "你向守门弟子询问执事何时到来，弟子回应已差人去请，因雨大从半山下来还需两刻。",
+            "evidence": "门后静了一瞬，传来那守门弟子的声音，比方才近了些：“已经差人去请了。雨大，从半山下来还要两刻。”他顿了顿，像在门后看了你一眼，“你若不进山，就退到岩下等。封山线外不拦人，但别靠门太近。”"
+          },
+          {
+            "id": "A4",
+            "requirement": "不触碰伤者的空灯",
+            "status": "performed",
+            "summary": "你未触碰伤者的空灯，空灯已被杂役抬进山门，你只是想起灯柄曾有的温热，并未接触。",
+            "evidence": "你没有再往前。门缝里透出的光忽地晃了一下，像是有人提着灯从雨廊下经过。你听见极轻的脚步声停在门后，又慢慢远了。伤者被抬进去后，外面只剩雨声和山风，空地上那点淡红早被冲净。你低头看了一眼自己的手，指节仍有些僵，手背的红痕被雨水泡得发白，屈伸时像有细刺卡在骨缝里。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "你始终未越过封山线，靠近山门时仍停在封山线外，之后又退回山岩下等待。；你取出引荐文书检查，确认“陆照临”三字虽晕墨但每一笔仍能辨认，落款印文糊了半边，只剩“玄霄”二字可辨。；你向守门弟子询问执事何时到来，弟子回应已差人去请，因雨大从半山下来还需两刻。；你未触碰伤者的空灯，空灯已被杂役抬进山门，你只是想起灯柄曾有的温热，",
+          "evidence": "你朝山门走近一步，仍停在封山线外。雨水从斗笠边沿落下，砸在石阶上。你提高声音：“这位师兄，请问执事什么时候能到？”"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "sourceNodeRef": "node_source_continuity",
+      "branchState": {
+        "playerLocationId": "location_open_gate",
+        "sourceProgress": "chapter_001",
+        "freeTextProgress": 3,
+        "storyScope": "source",
+        "derivativeStage": "inactive",
+        "derivedTurn": 0,
+        "derivedLocations": [],
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedCharacterReveals": [],
+        "derivedRelationships": [],
+        "derivedClues": [],
+        "derivedEvents": [],
+        "branchLedger": {
+          "schemaVersion": "branch-state-ledger/0.1",
+          "entries": [
+            {
+              "id": "ledger_000001_887e768bad40",
+              "sequence": 1,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 0,
+              "after": 1,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_e5d7e66f4a14",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000002_e241421167c0",
+              "sequence": 2,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 1,
+              "after": 2,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_ed4c56dbcb43",
+                "nodeRef": "node_source_continuity"
+              }
+            },
+            {
+              "id": "ledger_000003_08ec83cd79a0",
+              "sequence": 3,
+              "kind": "event",
+              "operation": "changed",
+              "entityId": "state:freeTextProgress",
+              "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+              "before": 2,
+              "after": 3,
+              "source": {
+                "kind": "player_direction",
+                "ref": "direction_free_d1091995b850",
+                "nodeRef": "node_source_continuity"
+              }
+            }
+          ]
+        },
+        "playerCharacterId": "character_ae4cb42b9b49",
+        "characterLocationIds": {
+          "character_ae4cb42b9b49": "location_open_gate"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_letter": "character_ae4cb42b9b49"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {}
+      },
+      "canonicalRelation": "diverged",
+      "selectedDirectionId": "direction_free_d1091995b850",
+      "selectedDirection": {
+        "id": "direction_free_d1091995b850",
+        "title": "自定行动：我留在封山线外，检查引荐",
+        "summary": "我留在封山线外，检查引荐文书上的字是否还能看清，再向守门弟子询问执事何时到来，不触碰伤者的空灯。",
+        "statePatch": {
+          "freeTextProgress": 3
+        },
+        "isFreeText": true
+      },
+      "playerDirection": "我留在封山线外，检查引荐文书上的字是否还能看清，再向守门弟子询问执事何时到来，不触碰伤者的空灯。",
+      "requestId": null,
+      "createdAt": "2026-09-15T06:10:31.510Z",
+      "id": "branch_a8c946ec-184d-4166-bba6-202112b3f54b",
+      "kind": "generated",
+      "parentId": "branch_99e5f328-715a-4e4e-b426-07898592a8d3"
+    },
+    "validation_observations": [
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 9760
+        },
+        "generationStage": "chapter",
+        "revision": 0
+      },
+      {
+        "attempt": 1,
+        "outcome": "completed",
+        "transport": {
+          "responseMode": "sse",
+          "httpStatus": 200,
+          "durationMs": 2752
+        },
+        "generationStage": "action_review",
+        "revision": 0
+      }
+    ]
+  }
+]

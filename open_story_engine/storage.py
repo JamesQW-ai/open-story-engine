@@ -26,6 +26,41 @@ def load(value: str) -> Any:
     return json.loads(value)
 
 
+class TransactionConnection(sqlite3.Connection):
+    """Allow a turn to atomically compose the store's existing write methods."""
+
+    depth = 0
+
+    def __enter__(self):
+        self.depth += 1
+        return self
+
+    def __exit__(self, kind, value, traceback):
+        self.depth -= 1
+        if self.depth == 0:
+            return super().__exit__(kind, value, traceback)
+        return False
+
+
+def prepared_branch(parent, parent_id, node):
+    published = node.get("selectedDirectionId") in {d["id"] for d in parent["nextDirections"]}
+    selected = node.get("selectedDirection")
+    custom = (
+        isinstance(selected, dict) and selected.get("isFreeText") is True
+        and selected.get("id") == node.get("selectedDirectionId")
+        and isinstance(selected.get("statePatch"), dict)
+        and isinstance(node.get("playerDirection"), str) and bool(node["playerDirection"].strip())
+    )
+    if not published and not custom:
+        raise ValueError("共创子节点必须来自父节点已公布的剧情方向")
+    node = copy.deepcopy(node)
+    node.setdefault("id", "branch_" + str(uuid.uuid4()))
+    node["kind"] = "generated"
+    node["parentId"] = parent_id
+    node.setdefault("createdAt", now())
+    return node
+
+
 class SessionStore:
     """Persists sessions, normal turns, co-creation nodes and auditable model calls.
 
@@ -36,7 +71,7 @@ class SessionStore:
     def __init__(self, database_path: str) -> None:
         if database_path != ":memory:":
             Path(database_path).parent.mkdir(parents=True, exist_ok=True)
-        self.connection = sqlite3.connect(database_path)
+        self.connection = sqlite3.connect(database_path, factory=TransactionConnection)
         self.connection.row_factory = sqlite3.Row
         self.connection.execute("PRAGMA foreign_keys = ON")
         self._initialize()
@@ -78,6 +113,16 @@ class SessionStore:
           id TEXT PRIMARY KEY, session_id TEXT NOT NULL REFERENCES game_sessions(id), sequence INTEGER NOT NULL,
           parent_id TEXT REFERENCES branch_nodes(id), request_id TEXT, node_json TEXT NOT NULL, created_at TEXT NOT NULL,
           UNIQUE(session_id, sequence)
+        );
+        CREATE TABLE IF NOT EXISTS route_lifecycle (
+          session_id TEXT NOT NULL REFERENCES game_sessions(id),
+          branch_id TEXT NOT NULL REFERENCES branch_nodes(id), record_json TEXT NOT NULL,
+          PRIMARY KEY(session_id, branch_id)
+        );
+        CREATE TABLE IF NOT EXISTS turn_requests (
+          session_id TEXT NOT NULL REFERENCES game_sessions(id), request_id TEXT NOT NULL,
+          parent_id TEXT NOT NULL, input_json TEXT NOT NULL, result_json TEXT NOT NULL,
+          PRIMARY KEY(session_id, request_id)
         );
         CREATE TABLE IF NOT EXISTS direction_evaluations (
           id INTEGER PRIMARY KEY AUTOINCREMENT, session_id TEXT NOT NULL REFERENCES game_sessions(id),
@@ -136,6 +181,10 @@ class SessionStore:
             )
         return self.get_session(session_id)
 
+    def closing_intent(self, session_id, branch_id):
+        from .route_lifecycle import closing_intent
+        return closing_intent(self, session_id, self.lineage(session_id, branch_id))
+
     def delete_session(self, session_id: str) -> bool:
         """Delete one save and its dependent records atomically, leaving packages intact."""
         with self.connection:
@@ -143,9 +192,9 @@ class SessionStore:
                 return False
             # Evaluations reference branches; remove them before the branch tree.
             for table in (
-                "direction_evaluator_audits", "direction_evaluations", "llm_audits",
+                "turn_requests", "direction_evaluator_audits", "direction_evaluations", "llm_audits",
                 "event_narrations", "game_events", "session_derived_story_packages",
-                "session_story_contracts", "session_play_preferences", "branch_nodes",
+                "session_story_contracts", "session_play_preferences", "route_lifecycle", "branch_nodes",
             ):
                 self.connection.execute(f"DELETE FROM {table} WHERE session_id = ?", (session_id,))
             self.connection.execute("DELETE FROM game_sessions WHERE id = ?", (session_id,))
@@ -287,23 +336,7 @@ class SessionStore:
 
     def append_branch(self, session_id: str, parent_id: str, node: Dict[str, Any]) -> Dict[str, Any]:
         parent = self.branch(session_id, parent_id)
-        published = node.get("selectedDirectionId") in {direction["id"] for direction in parent["nextDirections"]}
-        selected = node.get("selectedDirection")
-        custom = (
-            isinstance(selected, dict)
-            and selected.get("isFreeText") is True
-            and selected.get("id") == node.get("selectedDirectionId")
-            and isinstance(selected.get("statePatch"), dict)
-            and isinstance(node.get("playerDirection"), str)
-            and bool(node["playerDirection"].strip())
-        )
-        if not published and not custom:
-            raise ValueError("共创子节点必须来自父节点已公布的剧情方向")
-        node = copy.deepcopy(node)
-        node.setdefault("id", "branch_" + str(uuid.uuid4()))
-        node["kind"] = "generated"
-        node["parentId"] = parent_id
-        node.setdefault("createdAt", now())
+        node = prepared_branch(parent, parent_id, node)
         with self.connection:
             sequence = self.connection.execute("SELECT COALESCE(MAX(sequence),0)+1 FROM branch_nodes WHERE session_id=?", (session_id,)).fetchone()[0]
             self.connection.execute(

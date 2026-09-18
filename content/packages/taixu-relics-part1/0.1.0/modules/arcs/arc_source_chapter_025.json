@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_025",
+    "title": "推进：金丹劫前",
+    "summary": "他们绕过岩石，发现雪坡下立着一座临时营地。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_134",
+          "chapter_135",
+          "chapter_136",
+          "chapter_137",
+          "chapter_138"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_139"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_134_to_135",
+      "direction_chapter_135_to_136",
+      "direction_chapter_136_to_137",
+      "direction_chapter_137_to_138",
+      "direction_chapter_138_to_139"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_026"
+    ]
+  }
+}

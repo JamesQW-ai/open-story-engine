@@ -1,5 +1,9 @@
 # 真实 LLM 评估 v0.1
 
+2026-09-17 终局判断专项入口：`test_support.live_endings`，自动盘点全部达标长篇，固定人工正反例，每例一次真实审查。首轮 5/7 符合预期，偏离／失败正例未通过；见[终局真实模型记录](live-ending-review-2026-09-17.md)。不生成或反复修复正文，不代表连续试玩验收。
+
+2026-09-16 当前入口：使用 `test_support.live_functionality` 自动遍历全部达标长篇，命令和通过边界见 [非叙事功能真实模型记录](non-narrative-functions-2026-09-16.md)。下文保留历史评估方法和结果，其中旧短篇命令已经停用，不能用于当前功能测试或验收。
+
 ## 目的
 
 `python3 -m open_story_engine evaluate-live` 用固定场景验证共创链路的运行时边界。它不是默认测试，也不替代 Python 自动回归、StoryPackage 校验或玩家 CLI 的 SSE 人工阅读验收。

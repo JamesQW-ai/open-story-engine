@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_001",
+    "title": "推进：山门雨夜",
+    "summary": "三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_001",
+          "chapter_002",
+          "chapter_003"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_004"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_001_to_002",
+      "direction_chapter_002_to_003",
+      "direction_chapter_003_to_004"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_002"
+    ]
+  }
+}

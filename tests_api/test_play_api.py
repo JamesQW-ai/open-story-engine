@@ -393,39 +393,6 @@ class PlayApiTests(unittest.TestCase):
         })
         self.assertEqual(response.status_code, 201, response.text)
 
-    def test_import_novel_builds_playable_package(self):
-        packages_dir = self.root / "imported"
-        packages_dir.mkdir()
-        client = TestClient(create_app(packages_dir, self.root / "other.sqlite", play=True))
-        self.addCleanup(client.close)
-        novel = (
-            "潮汐灯塔\n\n"
-            "一、旧码头\n"
-            "林舟在旧码头发现铜钥匙，决定前往灯塔。末班列车仍在旧码头等待放行。"
-            "潮水一点点漫上台阶，苏岚的哨声从远处传来，雾把灯塔顶部的光揉成昏黄的一团。"
-            "林舟把湿透的帆布包放在台阶上，抬头数灯塔的窗。\n\n"
-            "二、灯塔\n"
-            "林舟抵达灯塔，与苏岚核对航海图。铜钥匙在灯下泛着旧光，窗外的潮水已经淹没了来路。"
-            "苏岚把旧登记簿推过来，指尖停在一行被涂改过的日期上，两人同时沉默下来。\n"
-        )
-        response = client.post("/api/v1/import/novel", json={
-            "package_id": "tide-lighthouse", "version": "0.1.0", "source_text": novel,
-        })
-        self.assertEqual(response.status_code, 201, response.text)
-        body = response.json()
-        self.assertEqual(body["title"], "潮汐灯塔")
-        self.assertGreaterEqual(body["chapter_count"], 1)
-        listed = client.get("/api/v1/packages").json()
-        self.assertIn(
-            "tide-lighthouse",
-            [pkg["package_id"] for pkg in listed["packages"]],
-        )
-        again = client.post("/api/v1/import/novel", json={
-            "package_id": "tide-lighthouse", "version": "0.1.0", "source_text": novel,
-        })
-        self.assertEqual(again.status_code, 409)
-        self.assertEqual(again.json()["error"]["code"], "package_exists")
-
     def test_unknown_session_returns_404(self):
         response = self.client.post("/api/v1/sessions/session_missing/branches", json={
             "parent_branch_id": "branch_x", "direction_id": "direction_x",
@@ -512,6 +479,39 @@ class PlayApiTests(unittest.TestCase):
         self.assertIn('姜序', [p['name'] for p in alternative['people']])
         earlier = self.client.get(f'/api/v1/sessions/{sid}/journey?branch_id={root}').json()
         self.assertNotIn('陈砚', [p['name'] for p in earlier['people']])
+
+    def test_journey_character_states_follow_branch_and_read_without_writes(self):
+        import hashlib
+        from open_story_engine.api_read import ReadService
+        result = self.create_session().json()
+        sid, root = result['session']['id'], result['branch']['id']
+        package = load_runtime_story_package(self.package_dir / 'package.json', lazy=True)
+        cid = next(c['id'] for c in package['characters'] if c['name'] == '陈砚')
+        children = [self.client.post(f'/api/v1/sessions/{sid}/branches', json={
+            'parent_branch_id': root, 'text': '留在原地观察', 'request_id': 'person-state-' + str(i)
+        }).json()['branch'] for i in range(2)]
+        with sqlite3.connect(self.database) as connection:
+            for bid, code in [(root, None), (children[0]['id'], 'dead'), (children[1]['id'], 'departed')]:
+                node = json.loads(connection.execute('SELECT node_json FROM branch_nodes WHERE id=?', (bid,)).fetchone()[0])
+                node['narrativeText'] = '你站在门边。陈砚看向你。' if code is None else (
+                    '陈砚已经死亡。' if code == 'dead' else '陈砚已离队，此后不再同行。')
+                if code:
+                    update = {'characterId': cid, 'status': code, 'permanence': 'permanent', 'evidence': node['narrativeText']}
+                    node['consequenceUpdate'] = {'outcomes': [update]}
+                    node['branchState']['characterOutcomeStates'] = {cid: {**update, 'causeBranchId': bid}}
+                connection.execute('UPDATE branch_nodes SET node_json=? WHERE id=?', (json.dumps(node, ensure_ascii=False), bid))
+        before = hashlib.sha256(self.database.read_bytes()).hexdigest()
+        for bid, code in [(children[0]['id'], 'dead'), (children[1]['id'], 'departed'), (root, 'unknown')]:
+            response = self.client.get(f'/api/v1/sessions/{sid}/journey', params={'branch_id': bid})
+            self.assertEqual(response.status_code, 200, response.text)
+            journal = response.json()
+            self.assertEqual(journal['branch_id'], bid)
+            person = next(p for p in journal['people'] if p['id'] == cid)
+            self.assertEqual(person['status']['code'], code)
+            self.assertIn('portrait', person)
+            # A fresh service reads the same persisted projection.
+            self.assertEqual(journal, ReadService(self.packages, self.database).journey(sid, bid))
+        self.assertEqual(hashlib.sha256(self.database.read_bytes()).hexdigest(), before)
 
     def test_character_summary_cache_is_scoped_to_branch_and_does_not_write(self):
         from open_story_engine.api_play import PlayService

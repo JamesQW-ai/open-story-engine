@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.2"
+  },
+  "arc": {
+    "id": "arc_source_chapter_046",
+    "title": "推进：天门前夜",
+    "summary": "顾长离发现倒影中多出一道云门，门后没有修士，只有一条通往北境的阶梯。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_297",
+          "chapter_298",
+          "chapter_299",
+          "chapter_300",
+          "chapter_301",
+          "chapter_302",
+          "chapter_303",
+          "chapter_304"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_305"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_297_to_298",
+      "direction_chapter_298_to_299",
+      "direction_chapter_299_to_300",
+      "direction_chapter_300_to_301",
+      "direction_chapter_301_to_302",
+      "direction_chapter_302_to_303",
+      "direction_chapter_303_to_304",
+      "direction_chapter_304_to_305"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_047"
+    ]
+  }
+}

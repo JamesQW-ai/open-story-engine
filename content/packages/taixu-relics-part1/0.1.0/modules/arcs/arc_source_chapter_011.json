@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "arc": {
+    "id": "arc_source_chapter_011",
+    "title": "推进：旧驿道",
+    "summary": "陆照临走到第三块碑前，发现灰泥下露出一个“归”字。",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_060",
+          "chapter_061",
+          "chapter_062"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_063"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_060_to_061",
+      "direction_chapter_061_to_062",
+      "direction_chapter_062_to_063"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_012"
+    ]
+  }
+}

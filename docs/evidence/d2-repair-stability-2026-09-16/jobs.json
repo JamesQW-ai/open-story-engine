@@ -1,0 +1,1372 @@
+[
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:9d1bf1114e229db8d8ed71e8382828d6ce6a71fe3f554384a0baaebab036926f",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-intent-6",
+      "input_digest": "583f14f8fdf6d4d994bd00ac595db097895e5e98837534e6f8d151409df306d4"
+    },
+    "status": "failed",
+    "metrics": {
+      "first_text_ms": 14845,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 94784,
+      "reported_tokens": 87004,
+      "calls": 16,
+      "unreported_calls": 0,
+      "tokens": 87004
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:9d1bf1114e229db8d8ed71e8382828d6ce6a71fe3f554384a0baaebab036926f",
+        "requestSummary": "自定行动：我告诉陆照临，我打算带着",
+        "error": "行动或连续性未闭合：P1的背景引用使用了不在公开sceneEvidence中的键：opening-2和opening-1。sceneEvidence中实际存在的键为opening-1、opening-2、opening-3、opening-identity及history-branch_f85ea073-75e9-42c9-894c-d1f17bbed4de-P1至P4。P1引用的opening-2内容为试炼场石壁旧剑痕，但sceneEvidence中opening-2实际内容为试炼要求日落前取回青露草及白线规定，不包含石壁旧剑痕。P1引用的opening-1内容为木牌金屑，但sceneEvidence中opening-1实际内容为木牌三遍刮金屑包纸，与石壁旧剑痕无关。P1中'石壁上的旧剑痕被山风吹得发白'这一背景断言在sceneEvidence中无对应依据。",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5188
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 8169
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5466
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3346
+            },
+            "generationStage": "scene_expand"
+          },
+          {
+            "generationStage": "scene_expand_metrics",
+            "beforeCjk": 410,
+            "afterCjk": 712
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 712,
+            "paragraphs": 7,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5108
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "generationStage": "observation_gap_repair",
+            "paragraphIds": [
+              "P4",
+              "P7"
+            ],
+            "retainedEvents": 6,
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4802
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 12647
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4001
+            },
+            "generationStage": "scene_grounding",
+            "revision": 0
+          },
+          {
+            "generationStage": "validation",
+            "revision": 0,
+            "outcome": "failed",
+            "error": "背景依据不足：P1 你仍站在试炼场边，石壁上的旧剑痕被山风吹得发白。陆照临没有走开，目光从你手里的木牌移到那包着金屑的纸片上，又落回你脸上。你先把纸片折好，和木牌并在一处，才开口：“我打算带着这两样进后坡。试炼途中留意金屑的来处，日落前取青露草时一并查。”：前文没有给出陆照临未走开、目光从木牌移到纸片再落回你脸上的具体动作；没有给出你先把纸片折好并与木牌并在一处的动作；没有给出你开口说打算带两样进后坡、留意金屑来处、日落前取青露草时一并查的对话内容。；P2 你说话时没有把纸片举起来，只让它贴着木牌，像怕被山风掀开。陆照临的目光在你指间停了一瞬，又回到你脸上，神情并不意外，也没有立刻点头。他肩背挺得很直，衣摆被风带得轻轻一偏，人却站得稳。你补了一句：“不是现在去，等钟响。”声音不大，刚好够他听清。：前文没有给出你说话时未举纸片、纸片贴木牌、怕被山风掀开的细节；没有给出陆照临目光停在你指间又回到脸上、神情不意外、未点头、肩背挺直、衣摆被风带偏等具体反应；没有给出你补一句'不是现在去，等钟响'的对话。；P3 你说完便不再问，只等他回应。陆照临没有立刻接话，偏头看了一眼通往后坡的石径。钟声还没响，石径上已经有人影往那边移动，大约是等不及的弟子先去看路。他收回视线，声音不高：“你带着木牌进后坡，若被执事看见，未必会拦。但若有人问起，你准备怎么说？”：前文没有给出你说完不再问、只等他回应的行为；没有给出陆照临未立刻接话、偏头看石径、石径上已有人影移动、有人等不及先去看路等场景；没有给出他收回视线并说出关于带木牌进后坡、执事未必拦、若有人问如何说的对话。；P4 他问得并不急，语气里没有责备，倒像在称量你话里的轻重。你看见他眉心极轻地动了一下，像是对“执事未必会拦”这件事并不完全放心。石径上的人影已经走出几步，又有人回头朝这边望了一眼，很快被同伴拉走。陆照临没有看他们，只看着你，等你把话接住。：前文没有给出陆照临问得不急、语气无责备、像在称量你话中轻重的判断；没有给出他眉心轻动、对'执事未必会拦'不完全放心的细节；没有给出石径上人影走出几步、有人回头望、被同伴拉走等场景；没有给出陆照临不看他们只看你等你接话的反应。；P5 这话不是替你决定，倒像在试你的分寸。你听得出他没有反对，也没有说要同行。他顿了顿，又补一句：“金屑太轻，风一吹就散。你既已包好，就别在路上打开。”说完他退开半步，给你让出面向石径的位置，自己仍留在试炼场边。：前文没有给出'这话不是替你决定，倒像在试你的分寸'的判断；没有给出你听出他没有反对、没有说要同行的内容；没有给出他补一句关于金屑太轻、风一吹就散、别在路上打开的对话；没有给出他退开半步让出位置、自己留在试炼场边的动作。；P6 他退开那半步时，鞋底在碎石上轻轻一碾，发出很细的声响。你没有动，仍旧站在原地，木牌和纸片都收在掌中。他让出的位置正对着石径，却并不催你走，只把视线从你手上移开，落到远处白线旁。执事仍背对着这边，像一截沉默的石桩。：前文没有给出陆照临退开时鞋底碾碎石发出细响的细节；没有给出你未动、仍站在原地、木牌和纸片收在掌中的状态；没有给出他让出的位置正对石径、不催你走、视线移到远处白线旁等动作；没有给出执事背对这边、像沉默石桩的描写。；P7 山风从坡上下来，带着一点湿土和草叶的气味。远处有人低声议论钟声为何迟迟不响，执事站在白线旁，背对着你们，似乎并不理会这些新弟子的躁动。你手里的木牌边缘有些粗粝，纸片贴着掌心，没有散开。陆照临的回应到此为止，他没有再问金屑的来历，也没有追问你为何要查。：前文没有给出山风从坡上下来带湿土和草叶气味的环境描写；没有给出远处有人低声议论钟声不响、执事站在白线旁背对众人、不理会躁动的场景；没有给出木牌边缘粗粝、纸片贴掌心未散开的触感细节；没有给出陆照临回应到此为止、未再问金屑来历和为何要查的结论。"
+          },
+          {
+            "generationStage": "scene_expand",
+            "outcome": "reverted"
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 1,
+            "actualCjk": 410,
+            "paragraphs": 4,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5462
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 10161
+            },
+            "generationStage": "action_review",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4115
+            },
+            "generationStage": "scene_grounding",
+            "revision": 1
+          },
+          {
+            "generationStage": "validation",
+            "revision": 1,
+            "outcome": "failed",
+            "error": "背景依据不足：P1 你仍站在试炼场边，石壁上的旧剑痕被山风吹得发白。陆照临没有走开，目光从你手里的木牌移到那包着金屑的纸片上，又落回你脸上。你先把纸片折好，和木牌并在一处，才开口：“我打算带着这两样进后坡。试炼途中留意金屑的来处，日落前取青露草时一并查。”：原文没有给出陆照临目光从木牌移到纸片再落回你脸上的具体动作；没有给出你先把纸片折好和木牌并在一处的动作；没有给出你开口说出打算带两样进后坡、留意金屑来处、日落前取青露草时一并查的具体话语。；P2 你说完便不再问，只等他回应。陆照临没有立刻接话，偏头看了一眼通往后坡的石径。钟声还没响，石径上已经有人影往那边移动，大约是等不及的弟子先去看路。他收回视线，声音不高：“你带着木牌进后坡，若被执事看见，未必会拦。但若有人问起，你准备怎么说？”：原文没有给出陆照临偏头看通往后坡石径的动作；没有给出钟声还没响时石径上已经有人影往那边移动、有弟子先去看路；没有给出他收回视线后说出关于带木牌进后坡、执事未必会拦、若有人问起你准备怎么说的具体话语。；P3 这话不是替你决定，倒像在试你的分寸。你听得出他没有反对，也没有说要同行。他顿了顿，又补一句：“金屑太轻，风一吹就散。你既已包好，就别在路上打开。”说完他退开半步，给你让出面向石径的位置，自己仍留在试炼场边。：原文没有给出陆照临说这话不是替你决定、像在试你的分寸；没有给出你听得出他没有反对也没有说要同行；没有给出他补一句金屑太轻、风一吹就散、既已包好就别在路上打开；没有给出他退开半步给你让出面向石径位置、自己仍留在试炼场边的动作。；P4 山风从坡上下来，带着一点湿土和草叶的气味。远处有人低声议论钟声为何迟迟不响，执事站在白线旁，背对着你们，似乎并不理会这些新弟子的躁动。你手里的木牌边缘有些粗粝，纸片贴着掌心，没有散开。陆照临的回应到此为止，他没有再问金屑的来历，也没有追问你为何要查。：原文没有给出山风从坡上下来带湿土和草叶气味；没有给出远处有人低声议论钟声为何迟迟不响；没有给出执事站在白线旁背对着你们不理会新弟子躁动；没有给出你手里木牌边缘粗粝、纸片贴掌心没有散开；没有给出陆照临回应到此为止、没有再问金屑来历、没有追问你为何要查。"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3027
+            },
+            "generationStage": "local_repair",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3252
+            },
+            "generationStage": "chapter",
+            "revision": 2
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 2,
+            "actualCjk": 426,
+            "paragraphs": 4,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4825
+            },
+            "generationStage": "fact_extraction",
+            "revision": 2,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 7283
+            },
+            "generationStage": "action_review",
+            "revision": 2
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 7805
+            },
+            "generationStage": "consequence_evidence_repair",
+            "revision": 2
+          },
+          {
+            "generationStage": "validation",
+            "revision": 2,
+            "outcome": "failed",
+            "error": "行动或连续性未闭合：P1的背景引用使用了不在公开sceneEvidence中的键：opening-2和opening-1。sceneEvidence中实际存在的键为opening-1、opening-2、opening-3、opening-identity及history-branch_f85ea073-75e9-42c9-894c-d1f17bbed4de-P1至P4。P1引用的opening-2内容为试炼场石壁旧剑痕，但sceneEvidence中opening-2实际内容为试炼要求日落前取回青露草及白线规定，不包含石壁旧剑痕。P1引用的opening-1内容为木牌金屑，但sceneEvidence中opening-1实际内容为木牌三遍刮金屑包纸，与石壁旧剑痕无关。P1中'石壁上的旧剑痕被山风吹得发白'这一背景断言在sceneEvidence中无对应依据。"
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我告诉陆照临，我打算带着",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 2,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:b0164a9acdab8f9fccc101b2269192a46839efcc267ff2bf6eace1d3962c9652",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-explain-5",
+      "input_digest": "1fff7cbb722146a83c33383816f0033c22fa920c3462c7d62b116ff9b2973e4d"
+    },
+    "status": "expired",
+    "metrics": {
+      "first_text_ms": 10199,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 115553,
+      "reported_tokens": 109952,
+      "calls": 15,
+      "unreported_calls": 0,
+      "tokens": 109952
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:b0164a9acdab8f9fccc101b2269192a46839efcc267ff2bf6eace1d3962c9652",
+        "requestSummary": "自定行动：我向陆照临说明木牌刻痕里",
+        "error": "背景断言须带当前原句、解释及独立依据：P8",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5958
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3014
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4905
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3111
+            },
+            "generationStage": "scene_expand"
+          },
+          {
+            "generationStage": "scene_expand_metrics",
+            "beforeCjk": 608,
+            "afterCjk": 874
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 874,
+            "paragraphs": 16,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 3,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 6860
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 16725
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 15799
+            },
+            "generationStage": "consequence_evidence_repair",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4386
+            },
+            "generationStage": "scene_grounding",
+            "revision": 0
+          },
+          {
+            "generationStage": "validation",
+            "revision": 0,
+            "outcome": "failed",
+            "error": "背景依据不足：刻痕是刻规矩的地方，若只是新刻木牌，金屑不该嵌进黑泥里。；原文只说刻痕里的黑泥夹着一点金屑，没有说明刻痕是刻规矩的地方，也没有说明若只是新刻木牌金屑不该嵌进黑泥里。"
+          },
+          {
+            "generationStage": "scene_expand",
+            "outcome": "reverted"
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 1,
+            "actualCjk": 608,
+            "paragraphs": 11,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 3,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5211
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 12215
+            },
+            "generationStage": "action_review",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1792
+            },
+            "generationStage": "scene_grounding",
+            "revision": 1
+          },
+          {
+            "generationStage": "validation",
+            "revision": 1,
+            "outcome": "failed",
+            "error": "背景依据不足：若只是新刻木牌，金屑不该嵌进黑泥里；原文只说刻痕里的黑泥夹着一点金屑，没有说明木牌是否新刻，也没有说明金屑为何不该嵌进黑泥。"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4793
+            },
+            "generationStage": "local_repair",
+            "revision": 1
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 2,
+            "actualCjk": 621,
+            "paragraphs": 11,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 3,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5007
+            },
+            "generationStage": "fact_extraction",
+            "revision": 2,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 10564
+            },
+            "generationStage": "action_review",
+            "revision": 2
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 15067
+            },
+            "generationStage": "consequence_evidence_repair",
+            "revision": 2
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我向陆照临说明木牌刻痕里",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 3,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:e439bf959c4c63f9a0baab91768a0f6e405bde7225e8a43ff9d3d4f1fb5c4659",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-intent-7",
+      "input_digest": "583f14f8fdf6d4d994bd00ac595db097895e5e98837534e6f8d151409df306d4"
+    },
+    "status": "ready",
+    "metrics": {
+      "first_text_ms": 7939,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 31696,
+      "reported_tokens": 30217,
+      "calls": 8,
+      "unreported_calls": 0,
+      "tokens": 30217,
+      "commit_ms": 31,
+      "committed": true,
+      "selection_to_complete_ms": 31765
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:e439bf959c4c63f9a0baab91768a0f6e405bde7225e8a43ff9d3d4f1fb5c4659",
+        "requestSummary": "自定行动：我告诉陆照临，我打算带着",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4572
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2200
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4265
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2191
+            },
+            "generationStage": "scene_expand"
+          },
+          {
+            "generationStage": "scene_expand_metrics",
+            "beforeCjk": 421,
+            "afterCjk": 734
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 734,
+            "paragraphs": 7,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "generationStage": "validation",
+            "revision": 0,
+            "outcome": "failed",
+            "error": "本章重复了已经写过的动作或对话段落；不得再次演出同一段剧情来补足字数"
+          },
+          {
+            "generationStage": "scene_expand",
+            "outcome": "reverted"
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 1,
+            "actualCjk": 421,
+            "paragraphs": 4,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5477
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 8620
+            },
+            "generationStage": "action_review",
+            "revision": 1
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1553
+            },
+            "generationStage": "scene_grounding",
+            "revision": 1
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我告诉陆照临，我打算带着",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 2,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      },
+      {
+        "operation": "reader_choices",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "prompt-catalog/1:e439bf959c4c63f9a0baab91768a0f6e405bde7225e8a43ff9d3d4f1fb5c4659",
+        "requestSummary": "为已确认正文整理下一步行动建议",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2712
+            },
+            "generationStage": "reader_choices"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:b0164a9acdab8f9fccc101b2269192a46839efcc267ff2bf6eace1d3962c9652",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-intent-5",
+      "input_digest": "583f14f8fdf6d4d994bd00ac595db097895e5e98837534e6f8d151409df306d4"
+    },
+    "status": "expired",
+    "metrics": {
+      "first_text_ms": 10377,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 48080,
+      "reported_tokens": 45779,
+      "calls": 7,
+      "unreported_calls": 0,
+      "tokens": 45779
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:b0164a9acdab8f9fccc101b2269192a46839efcc267ff2bf6eace1d3962c9652",
+        "requestSummary": "自定行动：我告诉陆照临，我打算带着",
+        "error": "背景断言须带当前原句、解释及独立依据：P1",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 7078
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2105
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4463
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4220
+            },
+            "generationStage": "scene_expand"
+          },
+          {
+            "generationStage": "scene_expand_metrics",
+            "beforeCjk": 484,
+            "afterCjk": 934
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 934,
+            "paragraphs": 11,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 2,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5758
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 11468
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 12896
+            },
+            "generationStage": "consequence_evidence_repair",
+            "revision": 0
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我告诉陆照临，我打算带着",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 2,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:e439bf959c4c63f9a0baab91768a0f6e405bde7225e8a43ff9d3d4f1fb5c4659",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-explain-7",
+      "input_digest": "1fff7cbb722146a83c33383816f0033c22fa920c3462c7d62b116ff9b2973e4d"
+    },
+    "status": "failed",
+    "metrics": {
+      "first_text_ms": 8421,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 2,
+      "complete_ms": 107632,
+      "reported_tokens": 67357,
+      "calls": 13,
+      "unreported_calls": 0,
+      "tokens": 67357
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:e439bf959c4c63f9a0baab91768a0f6e405bde7225e8a43ff9d3d4f1fb5c4659",
+        "requestSummary": "自定行动：我向陆照临说明木牌刻痕里",
+        "error": "背景依据不足：P4 “像嵌进去的，不是后来抹上去的。”他说得慢，像在边看边想，“泥是湿的，金屑沾在泥里，不会只留在刻痕底部。若有人事后撒上去，该散在木牌表面，不会单卡在刀口里。”：claim 中引入物理规律：金屑若事后撒上去会散在木牌表面，不会单卡在刀口里。前情只给出你已看过木牌三遍并刮出一粒金屑包进纸里，没有给出金屑在湿泥中的分布规律、刻痕底部与木牌表面的区别，也没有给出泥是湿的或金屑只留在刻痕底部的事实。；P8 陆照临摇头：“我没见过这种木牌，今日才拿到。金屑也只在你这里看到。”他顿了顿，像在斟酌该不该把话说满，“刻痕里的黑泥颜色太匀，不像山土。这泥细得发腻，倒像从别处带来的。”：claim 中断言刻痕里的黑泥颜色太匀、不像山土、泥细得发腻、像从别处带来的。前情只给出你已看过木牌三遍并刮出一粒金屑包进纸里，没有给出黑泥颜色均匀、质地细腻或与山土不同的观察事实，也没有给出山土的外观特征作为比较依据。",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5072
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2213
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4907
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4509
+            },
+            "generationStage": "scene_expand"
+          },
+          {
+            "generationStage": "scene_expand_metrics",
+            "beforeCjk": 488,
+            "afterCjk": 769
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 769,
+            "paragraphs": 18,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 3,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 6982
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 19863
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1686
+            },
+            "generationStage": "scene_grounding",
+            "revision": 0
+          },
+          {
+            "generationStage": "validation",
+            "revision": 0,
+            "outcome": "failed",
+            "error": "背景依据不足：P15 陆照临摇头：“没见过。木牌是玄霄宗发的，我今日才拿到。金屑我也只在你这里看到。”他顿了顿，像在斟酌该不该把话说满，“刻痕里的黑泥颜色太匀，不像山土。山土干湿不均，会结块。这泥细得发腻，倒像从别处带来的。”：陆照临断言“木牌是玄霄宗发的，我今日才拿到”属于对物品来历和人物经历的既有背景断言，前情中没有玄霄宗发放木牌或陆照临今日才拿到木牌的信息。同时，他断言“山土干湿不均，会结块”是对山土物理性质的既有事实断言，前情中没有关于山土干湿、结块特性的任何记载。"
+          },
+          {
+            "generationStage": "scene_expand",
+            "outcome": "reverted"
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 1,
+            "actualCjk": 488,
+            "paragraphs": 10,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 3,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 8323
+            },
+            "generationStage": "fact_extraction",
+            "revision": 1,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 33985
+            },
+            "generationStage": "action_review",
+            "revision": 1
+          },
+          {
+            "generationStage": "validation",
+            "revision": 1,
+            "outcome": "failed",
+            "error": "行动或连续性未闭合：O7 将顾长离的追问“你见过这种木牌，还是见过这种金屑？”登记为 speech，但原始输入 A3 只要求询问“对此怎么看、有什么依据”，并未授权追问对方是否见过木牌或金屑。正文 P7 实际执行了这一额外追问，属于未经玩家授权的提问，应列入 issues。；O9 将陆照临关于黑泥颜色、山土干湿、泥质细腻的说明登记为 background，但该段同时包含“没见过木牌、今日才拿到、金屑只在你这里看到”等当前回应内容。背景审查应覆盖整段背景断言，不能只挑其中一句。P8 中“山土干湿不均，会结块”等自然规律断言在 sceneEvidence 中没有依据，应标 unsupported。"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1724
+            },
+            "generationStage": "local_repair",
+            "revision": 1
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 2,
+            "actualCjk": 476,
+            "paragraphs": 10,
+            "pacing": {
+              "level": "standard",
+              "targetCjk": [
+                700,
+                1100
+              ],
+              "authorizedSteps": 3,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 5729
+            },
+            "generationStage": "fact_extraction",
+            "revision": 2,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 9250
+            },
+            "generationStage": "action_review",
+            "revision": 2
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3334
+            },
+            "generationStage": "scene_grounding",
+            "revision": 2
+          },
+          {
+            "generationStage": "validation",
+            "revision": 2,
+            "outcome": "failed",
+            "error": "背景依据不足：P4 “像嵌进去的，不是后来抹上去的。”他说得慢，像在边看边想，“泥是湿的，金屑沾在泥里，不会只留在刻痕底部。若有人事后撒上去，该散在木牌表面，不会单卡在刀口里。”：claim 中引入物理规律：金屑若事后撒上去会散在木牌表面，不会单卡在刀口里。前情只给出你已看过木牌三遍并刮出一粒金屑包进纸里，没有给出金屑在湿泥中的分布规律、刻痕底部与木牌表面的区别，也没有给出泥是湿的或金屑只留在刻痕底部的事实。；P8 陆照临摇头：“我没见过这种木牌，今日才拿到。金屑也只在你这里看到。”他顿了顿，像在斟酌该不该把话说满，“刻痕里的黑泥颜色太匀，不像山土。这泥细得发腻，倒像从别处带来的。”：claim 中断言刻痕里的黑泥颜色太匀、不像山土、泥细得发腻、像从别处带来的。前情只给出你已看过木牌三遍并刮出一粒金屑包进纸里，没有给出黑泥颜色均匀、质地细腻或与山土不同的观察事实，也没有给出山土的外观特征作为比较依据。"
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我向陆照临说明木牌刻痕里",
+          "pacing": {
+            "level": "standard",
+            "targetCjk": [
+              700,
+              1100
+            ],
+            "authorizedSteps": 3,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "binding": {
+      "session_id": "22b9da04-7a01-5489-a7c4-682e88fab80d",
+      "parent_branch_id": "branch_f85ea073-75e9-42c9-894c-d1f17bbed4de",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.2",
+      "rules_version": "prepared-player-turn/13+prompt-catalog/1:e439bf959c4c63f9a0baab91768a0f6e405bde7225e8a43ff9d3d4f1fb5c4659",
+      "model": "deepseek-v4-pro:cloud",
+      "parent_digest": "8bdc91d08ca337c353af4b6c54a2b06cac4af0a58bac730a59ce7525de370c94",
+      "request_id": "d2-quality-brief-7",
+      "input_digest": "01ccfa2f5eae05b2abaa389c01732287785ced784bb538cfd358a1baeffa071b"
+    },
+    "status": "ready",
+    "metrics": {
+      "first_text_ms": 6672,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 32585,
+      "reported_tokens": 25468,
+      "calls": 7,
+      "unreported_calls": 0,
+      "tokens": 25468,
+      "commit_ms": 31,
+      "committed": true,
+      "selection_to_complete_ms": 32637
+    },
+    "audits": [
+      {
+        "operation": "branch_planner",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "web-player-v3+prompt-catalog/1:e439bf959c4c63f9a0baab91768a0f6e405bde7225e8a43ff9d3d4f1fb5c4659",
+        "requestSummary": "自定行动：我留在原地，把手里的纸包",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 3180
+            },
+            "generationStage": "result_contract",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2158
+            },
+            "generationStage": "action_authority"
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 4086
+            },
+            "generationStage": "chapter",
+            "revision": 0
+          },
+          {
+            "generationStage": "scene_draft_metrics",
+            "revision": 0,
+            "actualCjk": 370,
+            "paragraphs": 4,
+            "pacing": {
+              "level": "brief",
+              "targetCjk": [
+                400,
+                650
+              ],
+              "authorizedSteps": 1,
+              "locationChanged": false,
+              "hardMinimum": false
+            }
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 12193
+            },
+            "generationStage": "fact_extraction",
+            "revision": 0,
+            "extractionAttempt": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 7230
+            },
+            "generationStage": "action_review",
+            "revision": 0
+          },
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 1312
+            },
+            "generationStage": "scene_grounding",
+            "revision": 0
+          }
+        ],
+        "promptContext": {
+          "mode": "player_history",
+          "perspective": "second_person_limited",
+          "scene": "自定行动：我留在原地，把手里的纸包",
+          "pacing": {
+            "level": "brief",
+            "targetCjk": [
+              400,
+              650
+            ],
+            "authorizedSteps": 1,
+            "locationChanged": false,
+            "hardMinimum": false
+          }
+        }
+      },
+      {
+        "operation": "reader_choices",
+        "model": "deepseek-v4-pro:cloud",
+        "promptVersion": "prompt-catalog/1:e439bf959c4c63f9a0baab91768a0f6e405bde7225e8a43ff9d3d4f1fb5c4659",
+        "requestSummary": "为已确认正文整理下一步行动建议",
+        "callObservations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "sse",
+              "httpStatus": 200,
+              "durationMs": 2391
+            },
+            "generationStage": "reader_choices"
+          }
+        ]
+      }
+    ]
+  }
+]

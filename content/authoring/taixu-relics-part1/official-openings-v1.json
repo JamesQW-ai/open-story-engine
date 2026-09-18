@@ -1,0 +1,405 @@
+{
+  "schemaVersion": "official-opening-review/1",
+  "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+  "reviewScope": "P0 三名可玩角色开局，按冻结母本逐场核对；不代表全书文学审校完成。",
+  "cast": [
+    {
+      "sourceCharacterId": "character_ae4cb42b9b49",
+      "name": "陆照临",
+      "roleGroup": "protagonist_group",
+      "playable": true,
+      "identitySummary": "初入玄霄宗、追查父亲陆沉舟去向的年轻修行者。",
+      "portraitAsset": "/images/taixu-lu-zhaolin-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_e663361ab1c7",
+      "name": "顾长离",
+      "roleGroup": "protagonist_group",
+      "playable": true,
+      "identitySummary": "玄霄宗的新弟子，观察细致，话语冷淡。第一次外门试炼将开始，你却先发现了木牌上的异样。",
+      "portraitAsset": "/images/taixu-gu-changli-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_aa4580d38571",
+      "name": "沈砚秋",
+      "roleGroup": "key_supporting",
+      "playable": false,
+      "identitySummary": "玄霄宗外门执事，负责入门登记与名册，站在门规与追问真相的新弟子之间。",
+      "rosterVisible": true
+    },
+    {
+      "sourceCharacterId": "character_37531636ecf5",
+      "name": "陆沉舟",
+      "roleGroup": "key_supporting",
+      "playable": false,
+      "identitySummary": "陆照临的父亲，三年前为宗门押送引路灯后失踪。他的去向是陆照临踏入玄霄宗的缘由。",
+      "rosterVisible": true
+    },
+    {
+      "sourceCharacterId": "character_766c4e16f65d",
+      "name": "叶观澜",
+      "roleGroup": "key_supporting",
+      "playable": true,
+      "identitySummary": "归墟盟来客，与沈执事相识。你带着一盏无芯灯闯入玄霄宗，准备追问一份对不上的旧记录。",
+      "portraitAsset": "/images/taixu-ye-guanlan-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_b96c85e62843",
+      "name": "萧问蝉",
+      "roleGroup": "antagonist_group",
+      "playable": false,
+      "identitySummary": "太虚秩序巡界使，奉诏追缉持有残印之人。她以天命为准绳，与追查真相的众人立场相对。",
+      "rosterVisible": true
+    },
+    {
+      "sourceCharacterId": "character_2cf2b083593b",
+      "name": "叶青冥",
+      "roleGroup": "key_supporting",
+      "playable": false,
+      "identitySummary": "玄霄宗掌门，肩负宗门秩序与传承。面对旧事的追问，他必须以掌门身份作出回应。",
+      "rosterVisible": true
+    }
+  ],
+  "locations": [
+    {
+      "id": "location_open_gate",
+      "name": "玄霄宗山门",
+      "description": "玄霄宗的山门就在前方。",
+      "exits": [],
+      "discoverableItemIds": [],
+      "tags": [
+        "source",
+        "reviewed_opening"
+      ],
+      "sourceDescriptions": [
+        "玄霄宗的山门就在前方。"
+      ]
+    },
+    {
+      "id": "location_open_trial",
+      "name": "半山试炼场",
+      "description": "试炼场在半山腰，四面是削平的石壁。",
+      "exits": [],
+      "discoverableItemIds": [],
+      "tags": [
+        "source",
+        "reviewed_opening"
+      ],
+      "sourceDescriptions": [
+        "试炼场在半山腰，四面是削平的石壁。"
+      ]
+    },
+    {
+      "id": "location_open_gallery",
+      "name": "登记堂雨廊",
+      "description": "陆照临和顾长离从旧库房出来，沿雨廊返回登记堂。",
+      "exits": [],
+      "discoverableItemIds": [],
+      "tags": [
+        "source",
+        "reviewed_opening"
+      ],
+      "sourceDescriptions": [
+        "陆照临和顾长离从旧库房出来，沿雨廊返回登记堂。"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "item_open_letter",
+      "name": "引荐文书",
+      "portable": true,
+      "effects": [
+        "陆照临摸了摸怀里的引荐文书。"
+      ],
+      "availableFromSourceChapterId": "chapter-001",
+      "sourceFirstSeenLocationId": "location_open_gate",
+      "sourceDescriptions": [
+        "陆照临摸了摸怀里的引荐文书。"
+      ]
+    },
+    {
+      "id": "item_open_empty_lamp",
+      "name": "山门空灯",
+      "portable": true,
+      "effects": [
+        "那人半边肩膀被雨水浸透，衣服颜色与夜色混在一起，手边却抓着一盏没有点燃的引路灯。"
+      ],
+      "availableFromSourceChapterId": "chapter-001",
+      "sourceFirstSeenLocationId": "location_open_gate",
+      "sourceDescriptions": [
+        "那人半边肩膀被雨水浸透，衣服颜色与夜色混在一起，手边却抓着一盏没有点燃的引路灯。"
+      ]
+    },
+    {
+      "id": "item_open_gu_token",
+      "name": "顾长离的试炼木牌",
+      "portable": true,
+      "effects": [
+        "她身旁站着一个穿月白短袍的少女，长发束成高马尾，神情冷淡，手里把木牌翻来覆去看了三遍。"
+      ],
+      "availableFromSourceChapterId": "chapter-003",
+      "sourceFirstSeenLocationId": "location_open_trial",
+      "sourceDescriptions": [
+        "她身旁站着一个穿月白短袍的少女，长发束成高马尾，神情冷淡，手里把木牌翻来覆去看了三遍。"
+      ]
+    },
+    {
+      "id": "item_open_gold_paper",
+      "name": "包着金屑的纸片",
+      "portable": true,
+      "effects": [
+        "她用指甲刮下一粒，包进纸里。"
+      ],
+      "availableFromSourceChapterId": "chapter-003",
+      "sourceFirstSeenLocationId": "location_open_trial",
+      "sourceDescriptions": [
+        "她用指甲刮下一粒，包进纸里。"
+      ]
+    },
+    {
+      "id": "item_open_ye_lamp",
+      "name": "叶观澜的无芯灯",
+      "portable": true,
+      "effects": [
+        "他从袖中取出一只小灯盏。灯盏没有灯芯，罩内却浮着一层青白雾气。"
+      ],
+      "availableFromSourceChapterId": "chapter-007",
+      "sourceFirstSeenLocationId": "location_open_gallery",
+      "sourceDescriptions": [
+        "他从袖中取出一只小灯盏。灯盏没有灯芯，罩内却浮着一层青白雾气。"
+      ]
+    },
+    {
+      "id": "item_open_ye_ring",
+      "name": "叶观澜的半圈铜环",
+      "portable": true,
+      "effects": [
+        "叶观澜从腰间解下铜环，放在廊柱上：“等你找到第二个矛盾，再决定要不要相信我。”"
+      ],
+      "availableFromSourceChapterId": "chapter-007",
+      "sourceFirstSeenLocationId": "location_open_gallery",
+      "sourceDescriptions": [
+        "叶观澜从腰间解下铜环，放在廊柱上：“等你找到第二个矛盾，再决定要不要相信我。”"
+      ]
+    }
+  ],
+  "openings": [
+    {
+      "characterId": "character_ae4cb42b9b49",
+      "id": "entry_lu_gate",
+      "baseEntryPointId": "entry_chapter-001-event-001",
+      "title": "山门将闭",
+      "summary": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+      "cutoffQuote": "铁链又响了一声。",
+      "narrative": "雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\n\n眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\n\n你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。",
+      "threads": [
+        "陌生伤者是否能得到救助",
+        "空灯与父亲失踪是否有关"
+      ],
+      "actions": [
+        {
+          "title": "请守门弟子救人",
+          "summary": "指出伤者尚有呼吸，争取在落锁前让他得到救助。"
+        },
+        {
+          "title": "查看封山石的裂纹",
+          "summary": "留在封山线外，观察青白光退去后的水痕与空灯。"
+        }
+      ],
+      "state": {
+        "playerLocationId": "location_open_gate",
+        "characterLocationIds": {
+          "character_ae4cb42b9b49": "location_open_gate"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_letter": "character_ae4cb42b9b49"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {}
+      },
+      "context": {
+        "identity": "陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。",
+        "appearance": "斗笠被雨打湿，手上有长途跋涉留下的冻裂。",
+        "knownFacts": [
+          "父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。",
+          "老人让你到玄霄宗问山门的灯。",
+          "伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。"
+        ],
+        "unknownBoundaries": [
+          "伤者身份、父亲下落、空灯与青光成因均未知。",
+          "尚未认识其他主角团成员；不得写成已有残印、功法、修为突破或领过药瓶。"
+        ],
+        "relationships": [
+          {
+            "name": "陆沉舟",
+            "relation": "父亲，失踪，生死未确认。"
+          },
+          {
+            "name": "守门弟子",
+            "relation": "初遇，只知道其守门职责，不知姓名。"
+          },
+          {
+            "name": "陌生伤者",
+            "relation": "初遇，不知身份。"
+          }
+        ],
+        "visibleItems": [
+          "引荐文书在你手中，尚未交出。",
+          "空灯仍在伤者手边，不能写进你的持有物；未登记人物持物只记为场景事实。"
+        ],
+        "evidence": [
+          "陆照临摸了摸怀里的引荐文书。",
+          "三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。",
+          "陆照临取出文书，却没有递过去。",
+          "倒地的人猛地睁开眼。",
+          "铁链又响了一声。"
+        ]
+      }
+    },
+    {
+      "characterId": "character_e663361ab1c7",
+      "id": "entry_gu_trial",
+      "baseEntryPointId": "entry_chapter-003-event-002",
+      "title": "木牌中的金屑",
+      "summary": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+      "cutoffQuote": "“听过北河城，不认识你。”",
+      "narrative": "你把木牌翻到背面。日落前取回青露草，越过白线便取消资格——规矩刻得清楚，刻痕里的黑泥却夹着一点金屑。你已刮下一粒，用纸包好。\n\n这里是玄霄宗半山的试炼场，石壁上留着旧剑痕。负责试炼的执事刚说完：不许争抢，不许伤人，不许进入封闭区域。围在场边的新弟子正等着钟响。\n\n有人问你是否认识这块木头。你回了一句反问，才报上自己的名字：顾长离。他叫陆照临。你听过北河城，却不认识他；这只是第一次互通姓名，他为何来到这里，你还不知道。\n\n纸里的金屑很轻，规矩的分量却未必如此。陆照临还站在眼前，石径通向后坡药圃。钟声随时会响，你可以先把疑点问清，也可以带着木牌参加试炼。",
+      "threads": [
+        "木牌刻痕里为何有金屑",
+        "如何完成第一场外门试炼"
+      ],
+      "actions": [
+        {
+          "title": "追问木牌的来历",
+          "summary": "向场边执事询问木牌刻痕里的黑泥与金屑，不擅自给出结论。"
+        },
+        {
+          "title": "与陆照临商量试炼",
+          "summary": "询问他如何看待试炼规矩，再决定是否同行。"
+        }
+      ],
+      "state": {
+        "playerLocationId": "location_open_trial",
+        "characterLocationIds": {
+          "character_e663361ab1c7": "location_open_trial",
+          "character_ae4cb42b9b49": "location_open_trial"
+        },
+        "itemOwnerCharacterIds": {
+          "item_open_gu_token": "character_e663361ab1c7",
+          "item_open_gold_paper": "character_e663361ab1c7"
+        },
+        "itemLocationIds": {},
+        "characterOutcomeStates": {}
+      },
+      "context": {
+        "identity": "顾长离，第一次参加玄霄宗外门试炼的新弟子。",
+        "appearance": "月白短袍，高马尾，神情冷淡。铜针属于旁边另一名青衣女弟子，不能移到你身上。",
+        "knownFacts": [
+          "你已看过木牌三遍，刮出一粒金屑并包进纸里。",
+          "试炼要求日落前取回青露草，另有白线、禁止争抢伤人和进入封闭区域的规定。",
+          "你听过北河城，刚与陆照临互通姓名。"
+        ],
+        "unknownBoundaries": [
+          "陆照临前两章的山门遭遇、父亲失踪、掌心青痕不是你的已知往事。",
+          "尚未经历救助、取药、对质或获奖，不持有烧焦账单或奖励灵石。"
+        ],
+        "relationships": [
+          {
+            "name": "陆照临",
+            "relation": "刚认识姓名，没有共同调查或过命交情。"
+          },
+          {
+            "name": "试炼执事",
+            "relation": "负责本场试炼，未获知姓名。"
+          }
+        ],
+        "visibleItems": [
+          "木牌与包金屑的纸由你持有。"
+        ],
+        "evidence": [
+          "她用指甲刮下一粒，包进纸里。",
+          "“顾长离。”她说，“你呢？”",
+          "“陆照临。”",
+          "“听过北河城，不认识你。”",
+          "试炼场在半山腰，四面是削平的石壁。"
+        ]
+      }
+    },
+    {
+      "characterId": "character_766c4e16f65d",
+      "id": "entry_ye_gallery",
+      "baseEntryPointId": "entry_chapter-007-event-003",
+      "title": "对不上的旧记录",
+      "summary": "你已将无芯灯与铜环放在雨廊，旧记录的时间矛盾刚被说破。",
+      "cutoffQuote": "叶观澜从腰间解下铜环，放在廊柱上：“等你找到第二个矛盾，再决定要不要相信我。”",
+      "narrative": "雨打湿了你的青衫，衣摆的泥还没干。归墟盟的人不许进入玄霄宗，而你已经站在登记堂的雨廊里。沈砚秋认出了你，脸色冷下来；你也认得这位沈执事。\n\n你带来的小灯已放在廊柱边。它没有灯芯，罩内却浮着青白雾气。你刚把一条旧线索说给眼前的年轻人听：陆沉舟曾替归墟盟送信，最后有人在玄霄宗西坡见过他，时间是三年前冬至前七日。\n\n那年轻人说，值房名册写的是三年前春末。沈执事说你记错了。你反问，是自己记错，还是名册被改过？廊中长明灯晃了一下。\n\n你已解下腰间的半圈铜环，把它放在廊柱上，让对方找到第二个矛盾后再决定是否相信你。灯与铜环都不在你身上了。沈执事就在面前，这场对质还没有结束。",
+      "threads": [
+        "冬至前七日与春末为何对不上",
+        "如何应对私入玄霄宗的追问"
+      ],
+      "actions": [
+        {
+          "title": "请沈执事解释日期",
+          "summary": "追问值房记录为何与已说出的时间不同，不先认定谁在撒谎。"
+        },
+        {
+          "title": "与眼前人确认查证方法",
+          "summary": "询问如何核对那份名册，争取继续对话的机会。"
+        }
+      ],
+      "state": {
+        "playerLocationId": "location_open_gallery",
+        "characterLocationIds": {
+          "character_766c4e16f65d": "location_open_gallery",
+          "character_ae4cb42b9b49": "location_open_gallery",
+          "character_e663361ab1c7": "location_open_gallery",
+          "character_aa4580d38571": "location_open_gallery"
+        },
+        "itemOwnerCharacterIds": {},
+        "itemLocationIds": {
+          "item_open_ye_lamp": "location_open_gallery",
+          "item_open_ye_ring": "location_open_gallery"
+        },
+        "characterOutcomeStates": {}
+      },
+      "context": {
+        "identity": "叶观澜，归墟盟来客，与沈砚秋相识；正因未经许可入宗而被质问。",
+        "appearance": "洗得发白的青衫，衣摆沾泥；铜环已从腰间解下。",
+        "knownFacts": [
+          "你知道自己刚说出的送信、西坡与冬至前七日线索，但这些是你的说法，不是全知真相。",
+          "眼前年轻人刚说值房名册记载春末，沈执事否认你的记忆。",
+          "沈砚秋认得你，明确表示归墟盟的人不能进玄霄宗。"
+        ],
+        "unknownBoundaries": [
+          "眼前两名年轻弟子的姓名和各自秘密尚无当面介绍依据，称眼前人或年轻弟子。",
+          "不知陆照临掌心残印、失忆细节、两人昨夜藏身处；不预知接下来的拘押、旧驿站追查或逃离。"
+        ],
+        "relationships": [
+          {
+            "name": "沈砚秋",
+            "relation": "互相认识，对归墟盟入宗有公开冲突，未证明为盟友。"
+          },
+          {
+            "name": "两名年轻弟子",
+            "relation": "正在交谈，未建立信任，姓名尚未当面确认。"
+          }
+        ],
+        "visibleItems": [
+          "无芯灯在廊柱边，半圈铜环在廊柱上；均已放下，不能仍写成袖中持灯、腰挂铜环。"
+        ],
+        "evidence": [
+          "沈砚秋的脸色冷了下来：“叶观澜。”",
+          "青衫人笑了笑：“沈执事还记得我。”",
+          "“归墟盟的人不能进玄霄宗。”",
+          "“值房名册写的是三年前春末。”",
+          "叶观澜从腰间解下铜环，放在廊柱上：“等你找到第二个矛盾，再决定要不要相信我。”"
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "summary": "山门将闭，一盏没有点燃的灯，把三个各怀疑问的人引向玄霄宗不肯承认的旧事。",
+    "visualPrompt": "古典修仙，雨夜玄霄宗山门、青石封山线、无火引路灯与青白灵光，无现代物品。"
+  }
+}

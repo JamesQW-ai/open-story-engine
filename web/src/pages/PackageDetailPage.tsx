@@ -4,11 +4,17 @@ import {
   prologueText,
   identityText,
   identityEntry,
+  identityCharacters,
 } from '../components/storyPresentation'
 import { api } from '../api/client'
-import { StoryProse } from '../components/StoryProse'
-import type { PackageCatalog, PlayCreateResponse } from '../api/types'
+import type { PackageCatalog } from '../api/types'
 import { Loading, Notice, storyImage } from '../components/StoryUI'
+
+const identityGroups = [
+  { id: 'protagonist_group', label: '主角团' },
+  { id: 'key_supporting', label: '主要配角' },
+  { id: 'antagonist_group', label: '反派与敌对势力' },
+]
 
 export function PackageDetailPage() {
   const { packageId = '', version = '' } = useParams()
@@ -17,13 +23,10 @@ export function PackageDetailPage() {
   const [error, setError] = useState('')
   const [step, setStep] = useState(0)
   const [character, setCharacter] = useState('')
+  const [selectedGroup, setSelectedGroup] = useState('')
   const [mode, setMode] = useState<'source' | 'new'>('source')
   const [profile, setProfile] = useState<Record<string, string | number>>({})
   const [starting, setStarting] = useState(false)
-  const [openingText, setOpeningText] = useState('')
-  const [opened, setOpened] = useState<PlayCreateResponse | null>(null)
-  const controller = useRef<AbortController | null>(null)
-  useEffect(() => () => controller.current?.abort(), [])
   const [playable, setPlayable] = useState(false)
   const attempt = useRef<{ signature: string; id: string } | null>(null)
   const load = () => {
@@ -32,7 +35,9 @@ export function PackageDetailPage() {
       .getPackage(packageId, version)
       .then((c) => {
         setCatalog(c)
-        setCharacter(c.characters[0]?.id ?? '')
+        const people = identityCharacters(c)
+        setCharacter(people[0]?.id ?? '')
+        setSelectedGroup(people[0]?.roleGroup ?? 'key_supporting')
       })
       .catch(() => setError('故事暂时无法打开，请稍后重试。'))
     api
@@ -54,7 +59,18 @@ export function PackageDetailPage() {
         catalog.entries[0])
   const openingAvailable =
     !!entry && (mode === 'source' || entry.available_to_new_character)
-  const person = catalog.characters.find((c) => c.id === character)
+  const people = identityCharacters(catalog)
+  const person = people.find((c) => c.id === character)
+  const groups = identityGroups
+    .map((group) => ({
+      ...group,
+      members: people.filter(
+        (c) => (c.roleGroup ?? 'key_supporting') === group.id,
+      ),
+    }))
+    .filter((group) => group.members.length > 0)
+  const activeGroup =
+    groups.find((group) => group.id === selectedGroup) ?? groups[0]
   const complete =
     mode === 'source'
       ? !!person
@@ -85,29 +101,14 @@ export function PackageDetailPage() {
     if (attempt.current?.signature !== signature)
       attempt.current = { signature, id: crypto.randomUUID() }
     setStarting(true)
-    setStep(2)
-    setOpeningText('')
-    setOpened(null)
-    setError('')
-    controller.current = new AbortController()
-    try {
-      const result = await api.streamOpening(
-        {
-          ...payload,
-          request_id: attempt.current!.id,
-        },
-        (text) => setOpeningText((previous) => previous + text),
-        () => setOpeningText(''),
-        controller.current.signal,
-      )
-      setOpeningText(result.branch.narrativeText)
-      setOpened(result)
-      setStarting(false)
-    } catch (e) {
-      setError('故事暂时无法打开，请稍后重试。')
-      setStarting(false)
-    }
+    navigate('/sessions/new', {
+      state: {
+        openingKey: attempt.current!.id,
+        opening: { request: { ...payload, request_id: attempt.current!.id }, catalog },
+      },
+    })
   }
+
   return (
     <main className="page adventure-setup">
       <button
@@ -117,66 +118,17 @@ export function PackageDetailPage() {
       >
         {step === 1 ? '故事背景' : '书架'}
       </button>
-      {step === 2 ? (
-        <section className="opening-reader">
-          <div className="quiet-heading">
-            <div>
-              <span className="eyebrow">{catalog.package.title}</span>
-              <h1>{person?.name ?? String(profile.name ?? '')}的故事</h1>
-            </div>
-          </div>
-          <div className="story-column" aria-busy={starting}>
-            <StoryProse
-              key={opened?.branch.id ?? 'opening'}
-              text={openingText || '\u200b'}
-              sessionId={opened?.session.id}
-              branchId={opened?.branch.id}
-              title={catalog.package.title}
-              place={
-                catalog.locations.find(
-                  (p) => p.id === opened?.branch.branchState?.playerLocationId,
-                )?.name ??
-                (catalog.package.title.includes('雨夜候车室')
-                  ? (
-                      {
-                        许川: '候车厅',
-                        唐栖: '信号室',
-                        陈砚: '站台',
-                        姜序: '候车厅',
-                      } as Record<string, string>
-                    )[person?.name ?? '']
-                  : undefined)
-              }
-              opening
-              streaming={starting}
-            />
-            {starting && !openingText && <Loading text="故事正在展开…" />}
-            {opened && (
-              <button
-                className="button primary"
-                onClick={() =>
-                  navigate(`/sessions/${opened.session.id}`, {
-                    state: { focus: opened.branch.id },
-                  })
-                }
-              >
-                选择下一步行动
-              </button>
-            )}
-            {!starting && !opened && (
-              <button className="button primary" onClick={start}>
-                重新打开故事
-              </button>
-            )}
-          </div>
-        </section>
-      ) : step === 0 ? (
+      {step === 0 ? (
         <section className="prologue">
           <img src={storyImage(catalog.package.title)} alt="故事背景插画" />
           <div className="prologue-copy">
             <span className="eyebrow">序幕</span>
             <h1>{catalog.package.title}</h1>
-            <p>{prologueText(catalog)}</p>
+            <div className="prologue-passage">
+              {prologueText(catalog).split('\n').map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
+            </div>
             <button className="button primary large" onClick={() => setStep(1)}>
               选择身份
             </button>
@@ -210,21 +162,51 @@ export function PackageDetailPage() {
               )}
           </div>
           {mode === 'source' ? (
-            <div className="identity-deck">
-              {catalog.characters.map((c, i) => (
-                <button
+            <>
+              <div className="identity-categories" role="group" aria-label="身份分类">
+                {groups.map((group) => (
+                  <button
+                    key={group.id}
+                    className="identity-category"
+                    aria-pressed={activeGroup?.id === group.id}
+                    aria-controls="identity-members"
+                    disabled={starting}
+                    onClick={() => {
+                      if (activeGroup?.id !== group.id) {
+                        setSelectedGroup(group.id)
+                        setCharacter(group.members[0]?.id ?? '')
+                      }
+                    }}
+                  >
+                    <span>{group.label}</span>
+                    <small>
+                      {group.members.length} 位可扮演
+                    </small>
+                  </button>
+                ))}
+              </div>
+              <div id="identity-members" className="identity-deck" role="group" aria-label={activeGroup?.label}>
+                <div className="identity-group">
+                  {activeGroup?.members.map((c, i) => (
+                    <button
                   key={c.id}
                   className={`identity-card ${character === c.id ? 'selected' : ''}`}
                   aria-pressed={character === c.id}
                   disabled={starting}
                   onClick={() => setCharacter(c.id)}
                 >
-                  <div
+                  {c.portraitAsset ? (
+                    <img
+                      className="identity-art character-portrait"
+                      src={c.portraitAsset}
+                      alt={`${c.name ?? '故事角色'}肖像`}
+                    />
+                  ) : <div
                     className={`identity-art ${catalog.package.title.includes('雨夜候车室') && ['许川', '唐栖', '陈砚', '姜序'].includes(c.name ?? '') ? 'rainy-portrait' : 'generic-portrait'}`}
                     style={{
                       backgroundPosition: `${(Math.max(0, ['许川', '唐栖', '陈砚', '姜序'].indexOf(c.name ?? '')) * 100) / 3}% top`,
                     }}
-                  />
+                  />}
                   <span className="identity-index" aria-hidden="true">
                     {String(i + 1).padStart(2, '0')}
                   </span>
@@ -233,11 +215,14 @@ export function PackageDetailPage() {
                   </span>
                   <span className="identity-copy">
                     <strong>{c.name ?? '故事角色'}</strong>
-                    <small>{identityText(catalog, c)}</small>
+                    <small>{c.identitySummary ?? identityText(catalog, c)}</small>
+                    {c.openingHook && <em>{c.openingHook}</em>}
                   </span>
-                </button>
-              ))}
-            </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
           ) : (
             <div className="profile-fields new-identity-form">
               {catalog.new_character?.profile_fields.map((f) => (

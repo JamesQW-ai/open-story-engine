@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "story-character-review/0.1",
+  "status": "needs_review",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.0"
+  },
+  "policy": {
+    "playableCharactersOnly": true,
+    "automaticEntryAfterSelection": true,
+    "freeformOriginalCharacter": false
+  },
+  "groups": [
+    {
+      "id": "protagonist_group",
+      "label": "主角团",
+      "description": "处于主线冲突中心、拥有连续行动线的角色。"
+    },
+    {
+      "id": "key_supporting",
+      "label": "主要配角",
+      "description": "掌握关键线索或能改变主线走向的角色。"
+    },
+    {
+      "id": "antagonist_group",
+      "label": "反派与敌对势力",
+      "description": "与主线目标形成直接冲突的角色；需确认其可玩入口后开放。"
+    }
+  ],
+  "characters": [
+    {
+      "sourceCharacterId": "character_ae4cb42b9b49",
+      "name": "陆照临",
+      "roleGroup": "protagonist_group",
+      "playable": true,
+      "reviewStatus": "needs_editorial_review",
+      "identitySummary": "初入玄霄宗、追查父亲陆沉舟去向的年轻修行者。",
+      "motivation": "查明父亲留下的灯与残印之谜。",
+      "defaultEntryPointId": "entry_chapter-001-event-001",
+      "openingHook": "山门雨夜里，父亲留下的线索把你引向一盏没有火的灯。",
+      "portraitPrompt": "古典修仙，年轻男修，雨夜玄霄宗山门，湿透的深色长衣，引荐文书与空灯，冷峻悬疑电影感，拒绝现代物件",
+      "portraitAsset": "/images/taixu-lu-zhaolin-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_e663361ab1c7",
+      "name": "顾长离",
+      "roleGroup": "protagonist_group",
+      "playable": true,
+      "reviewStatus": "needs_editorial_review",
+      "identitySummary": "与陆照临共同追查旧灯与顾氏旧印线索的关键同行者。",
+      "motivation": "查清顾氏旧债与残印之间的联系。",
+      "defaultEntryPointId": "entry_chapter-005-event-005",
+      "openingHook": "你比陆照临更早知道顾氏旧印的危险，却必须决定是否把真相告诉他。",
+      "portraitPrompt": "古典修仙，冷静女修，旧库房与青色灯火，袖中藏铜针，雨雾与残印光芒，东方幻想写实风，拒绝现代物件",
+      "portraitAsset": "/images/taixu-gu-changli-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_aa4580d38571",
+      "name": "沈砚秋",
+      "roleGroup": "key_supporting",
+      "playable": false,
+      "reviewStatus": "needs_editorial_review",
+      "identitySummary": "玄霄宗外门执事，负责入门登记与名册，站在门规与追问真相的新弟子之间。",
+      "motivation": "维持宗门秩序并处理被删改的名册。",
+      "defaultEntryPointId": null,
+      "openingHook": "她知道登记簿最后三行为何被裁掉，却不能公开承认。",
+      "portraitPrompt": "古典修仙，玄霄宗女执事，三盏长明灯与黑漆木盒，克制冷静，青石登记堂，东方幻想写实风",
+      "rosterVisible": true
+    },
+    {
+      "sourceCharacterId": "character_37531636ecf5",
+      "name": "陆沉舟",
+      "roleGroup": "key_supporting",
+      "playable": false,
+      "reviewStatus": "needs_editorial_review",
+      "identitySummary": "陆照临的父亲，三年前为宗门押送引路灯后失踪。他的去向是陆照临踏入玄霄宗的缘由。",
+      "motivation": "Unknown；需依据母本确认其当前立场。",
+      "defaultEntryPointId": null,
+      "openingHook": "他的名字出现在被删去的记录里，也出现在一盏不能点亮的灯中。",
+      "portraitPrompt": "古典修仙，失踪多年的中年男修，旧斗篷与引路灯，半张脸被青色纹路覆盖，雪原遗迹，悬疑东方幻想",
+      "rosterVisible": true
+    },
+    {
+      "sourceCharacterId": "character_766c4e16f65d",
+      "name": "叶观澜",
+      "roleGroup": "key_supporting",
+      "playable": true,
+      "reviewStatus": "needs_editorial_review",
+      "identitySummary": "归墟盟成员，携带无灯引路灯进入玄霄宗，掌握陆沉舟最后一次出现的线索。",
+      "motivation": "查明被改写的名册与引路灯真相。",
+      "defaultEntryPointId": "entry_chapter-007-event-003",
+      "openingHook": "他带来一盏没有灯芯却会带路的灯，并声称陆沉舟最后出现在玄霄宗西坡。",
+      "portraitPrompt": "古典修仙，神秘男修，雪雾城门前展开旧地图，手按刀柄，冷色灵光，东方幻想写实风",
+      "portraitAsset": "/images/taixu-ye-guanlan-v1.png"
+    },
+    {
+      "sourceCharacterId": "character_b96c85e62843",
+      "name": "萧问蝉",
+      "roleGroup": "antagonist_group",
+      "playable": false,
+      "reviewStatus": "needs_editorial_review",
+      "identitySummary": "太虚秩序巡界使，奉诏追缉持有残印之人。她以天命为准绳，与追查真相的众人立场相对。",
+      "motivation": "Unknown。",
+      "defaultEntryPointId": null,
+      "openingHook": "Unknown；需先确认其主线功能。",
+      "portraitPrompt": "古典修仙人物肖像，具体身份与阵营待母本审核后生成，东方幻想写实风",
+      "rosterVisible": true
+    },
+    {
+      "sourceCharacterId": "character_2cf2b083593b",
+      "name": "叶青冥",
+      "roleGroup": "key_supporting",
+      "playable": false,
+      "reviewStatus": "needs_editorial_review",
+      "identitySummary": "玄霄宗掌门，肩负宗门秩序与传承。面对旧事的追问，他必须以掌门身份作出回应。",
+      "motivation": "在承认宗门旧错后重新定义玄霄宗的职责。",
+      "defaultEntryPointId": null,
+      "openingHook": "Unknown；需先确认其主线功能。",
+      "portraitPrompt": "古典修仙人物肖像，具体身份与阵营待母本审核后生成，东方幻想写实风",
+      "rosterVisible": true
+    }
+  ],
+  "notes": [
+    "本次核对依据母本原文：陆照临第一章开场；顾长离在试炼段落首次明确自报姓名；叶观澜在玄霄宗雨廊携灯出现；萧问蝉在后段以太虚秩序巡界使身份出现；叶青冥在后段以玄霄宗掌门身份出现。",
+    "默认入口仍需编辑确认其是否适合玩家首次进入；本清单不直接改变运行包。"
+  ]
+}

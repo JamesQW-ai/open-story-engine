@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.2"
+  },
+  "arc": {
+    "id": "arc_source_chapter_008",
+    "title": "推进：封山钟响",
+    "summary": "沈砚秋继续道：“失踪的夜巡弟子陆沉舟，已登记为擅离职守，暂未归队。宗门会继续寻找。任何弟子不得私自前往西坡、杂木林和废井。”",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_039",
+          "chapter_040",
+          "chapter_041",
+          "chapter_042",
+          "chapter_043"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_044"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_039_to_040",
+      "direction_chapter_040_to_041",
+      "direction_chapter_041_to_042",
+      "direction_chapter_042_to_043",
+      "direction_chapter_043_to_044"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_009"
+    ]
+  }
+}

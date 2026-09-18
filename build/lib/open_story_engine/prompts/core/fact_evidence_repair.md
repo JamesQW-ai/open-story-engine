@@ -1,0 +1,1 @@
+只核对本次提供的段落并返回 checks，不重写正文。checksToRepair 中已标为 conflict 的条目必须保留全部已指出的问题，只修正定位和修订格式，不能撤销或遗漏其中某一条断言。纯疑问使用 non_factual；含有事实前提的疑问仍需核对前提。supported 必须有实际依据；缺乏依据的事实用 conflict，不能填空 evidenceIds 来表示通过。

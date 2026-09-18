@@ -4,7 +4,9 @@ import type { PackageSummary } from '../api/types'
 export const storyImage = (title: string) =>
   title.includes('雨夜候车室')
     ? '/images/rainy-station.png'
-    : '/images/reading-desk.png'
+    : title.includes('太虚遗录')
+      ? '/images/taixu-prologue-v1.png'
+      : '/images/reading-desk.png'
 export const packagePath = (pkg: PackageSummary) =>
   `/packages/${encodeURIComponent(pkg.package_id)}/${encodeURIComponent(pkg.version)}`
 export function messageOf(error: unknown) {

@@ -1,0 +1,1 @@
+正文不变，仅修正提取记录格式，返回events。若提供requiredParagraphIds，只提取这些漏段，contextOnlyDraft仅用于判断称谓和前后关系，不再提取其他段落；程序保留先前有效事件并重编事件ID。没有requiredParagraphIds时返回完整events。必须覆盖所有指定段落，哪怕只是环境描写也记录该段可见事实，不自行补成行动或状态。需修正：{{ error }}

@@ -1,0 +1,112 @@
+{
+  "scope": "registered_character_interaction_only_not_full_quality_acceptance",
+  "provider_calls_after_first_attempts": 0,
+  "overall_accepted": false,
+  "checks": [
+    {
+      "entry_id": "entry_lu_gate",
+      "registered_contact_constraints": "passed_in_this_sample",
+      "note": "陆沉舟只作为往事提及；未安排其当场行动。守门弟子与陌生伤者未登记身份 ID，不计为完整匿名人物依赖验收。"
+    },
+    {
+      "entry_id": "entry_gu_trial",
+      "registered_contact_constraints": "passed_in_this_sample",
+      "note": "向同地的陆照临询问，interactWith 与动作一致；unknown 未被误解为死亡或不可互动。"
+    },
+    {
+      "entry_id": "entry_ye_gallery",
+      "registered_contact_constraints": "failed",
+      "note": "两项要求永久离队的沈砚秋当面答复或取来名册；另一项漏报具名人物 mentionOnly 及道具使用。三项均未通过程序校验。"
+    }
+  ],
+  "context_recheck": [
+    {
+      "package_id": "taixu-relics-part1",
+      "entry_id": "entry_lu_gate",
+      "original_artifact": "taixu-relics-part1-entry_lu_gate.json",
+      "original_sha256": "1197dbe92948d5740fbc6a46ab4806fc1dd48cee5d28045948b63a31481f13ed",
+      "items_before": [
+        {
+          "id": "item_open_letter",
+          "name": "引荐文书",
+          "state": {},
+          "ownerCharacterId": "character_ae4cb42b9b49",
+          "locationId": "unknown"
+        }
+      ],
+      "items_after_fix": [
+        {
+          "id": "item_open_letter",
+          "name": "引荐文书",
+          "state": {},
+          "ownerCharacterId": "character_ae4cb42b9b49",
+          "locationId": "unknown"
+        }
+      ],
+      "original_unchanged": true
+    },
+    {
+      "package_id": "taixu-relics-part1",
+      "entry_id": "entry_gu_trial",
+      "original_artifact": "taixu-relics-part1-entry_gu_trial.json",
+      "original_sha256": "c492f8097f29780f020f82d712fefa5c452128881fcef01920b40f4bbebd596d",
+      "items_before": [
+        {
+          "id": "item_open_gu_token",
+          "name": "顾长离的试炼木牌",
+          "state": {},
+          "ownerCharacterId": "character_e663361ab1c7",
+          "locationId": "unknown"
+        },
+        {
+          "id": "item_open_gold_paper",
+          "name": "包着金屑的纸片",
+          "state": {},
+          "ownerCharacterId": "character_e663361ab1c7",
+          "locationId": "unknown"
+        }
+      ],
+      "items_after_fix": [
+        {
+          "id": "item_open_gu_token",
+          "name": "顾长离的试炼木牌",
+          "state": {},
+          "ownerCharacterId": "character_e663361ab1c7",
+          "locationId": "unknown"
+        },
+        {
+          "id": "item_open_gold_paper",
+          "name": "包着金屑的纸片",
+          "state": {},
+          "ownerCharacterId": "character_e663361ab1c7",
+          "locationId": "unknown"
+        }
+      ],
+      "original_unchanged": true
+    },
+    {
+      "package_id": "taixu-relics-part1",
+      "entry_id": "entry_ye_gallery",
+      "original_artifact": "taixu-relics-part1-entry_ye_gallery.json",
+      "original_sha256": "33c211995cdb71893dbd28ed30e265fbb93cb9159f11d6ab335db27f0f6d0107",
+      "items_before": [],
+      "items_after_fix": [
+        {
+          "id": "item_open_ye_lamp",
+          "name": "叶观澜的无芯灯",
+          "state": {},
+          "ownerCharacterId": "unknown",
+          "locationId": "location_open_gallery"
+        },
+        {
+          "id": "item_open_ye_ring",
+          "name": "叶观澜的半圈铜环",
+          "state": {},
+          "ownerCharacterId": "unknown",
+          "locationId": "location_open_gallery"
+        }
+      ],
+      "original_unchanged": true
+    }
+  ]
+}

@@ -12,3 +12,17 @@ test('graph keeps player central and never renders edges to hidden people', () =
   assert.deepEqual(relationshipLayout([...people].reverse(), edges), layout)
   assert.deepEqual(relationshipLayout([], edges), { nodes: [], edges: [] })
 })
+
+test('graph spreads dense casts across balanced rings', () => {
+  const people = Array.from({ length: 25 }, (_, i) => ({
+    id: `person-${i}`,
+    first_page: i + 1,
+    is_player: i === 0,
+  }))
+  const { nodes } = relationshipLayout(people, [])
+  assert.deepEqual([nodes[0].x, nodes[0].y], [210, 205])
+  assert.equal(new Set(nodes.slice(1).map(({ x, y }) => `${x}:${y}`)).size, 24)
+  assert.ok(nodes.slice(1).every(({ x, y }) => x >= 60 && x <= 360 && y >= 55 && y <= 355))
+  const radii = new Set(nodes.slice(1).map(({ x, y }) => Math.round(Math.hypot(x - 210, y - 205))))
+  assert.deepEqual([...radii].sort((a, b) => a - b), [95, 120, 145])
+})

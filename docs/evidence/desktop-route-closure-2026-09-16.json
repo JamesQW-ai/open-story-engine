@@ -1,0 +1,131 @@
+{
+  "date": "2026-09-16",
+  "kind": "desktop_fixture_only",
+  "source": {
+    "package_id": "taixu-relics-part1",
+    "version": "0.1.2",
+    "title": "《太虚遗录》",
+    "source_sha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+    "source_cjk": 102610
+  },
+  "external_model_calls": 0,
+  "checks": [
+    "待交代事项存在时不提供审查表单，选择收束方向不结束路线",
+    "非当前正文的引用阻止提交",
+    "拒绝结果展示原因和引用，无保存结局入口",
+    "断开响应后浏览器重发相同请求标识，复用同一提案",
+    "刷新恢复提案，不额外提交审查",
+    "保存失败保留未结束状态和重试入口",
+    "改变收束方向后旧提案变为失效并关闭保存入口",
+    "显式确认后正文保留，普通续写和自由行动入口均消失",
+    "刷新后仍为已结束，旧进度提示不再显示"
+  ],
+  "review_http_posts": 4,
+  "distinct_review_requests": 3,
+  "saved_proposals": 3,
+  "final_statuses": [
+    {
+      "id": "proposal-2",
+      "status": "committed"
+    },
+    {
+      "id": "proposal-1",
+      "status": "stale"
+    },
+    {
+      "id": "proposal-0",
+      "status": "rejected"
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/route-closure"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sessions/reader-fixture/route-closure"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/route-closure"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals",
+      "request_id": "a03b2b8c-8da8-4a51-8c75-e9313b0aaa67"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals",
+      "request_id": "409d3242-c3c2-4e1f-bf01-ac87e4ae7a94"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals",
+      "request_id": "409d3242-c3c2-4e1f-bf01-ac87e4ae7a94"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/route-closure"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals/proposal-1/commit"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sessions/reader-fixture/route-closure"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/route-closure"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals",
+      "request_id": "dd73deec-025c-4907-b1b8-1442fd09c008"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals/proposal-2/commit"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/route-closure"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/route-closure"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/sessions/reader-fixture/ending-proposals"
+    }
+  ],
+  "boundary": "长篇正文为阅读负载，审查和清单是显式模拟；不证明自然结局、叙事质量或供应商行为。"
+}

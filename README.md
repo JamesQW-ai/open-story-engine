@@ -2,17 +2,26 @@
 
 基于预置故事包运行的高自由度互动叙事引擎。玩家通过自然语言表达行动；系统在可审计的规则、状态与剧情边界内推进故事，并生成可持续阅读的下一段叙事。
 
-当前处于 MVP 基础实现阶段。首个交付物不是 Web 产品，而是一个本地 CLI MVP，用来验证“上下文装载 -> 玩家行动 -> 权威检定 -> 状态更新 -> 叙事呈现”的完整闭环。
+当前产品为桌面端官方长篇互动阅读：官方先冻结十万汉字及以上小说，玩家以未知原著的视角选择预设身份，通过自然语言行动形成自己的路线。不提供玩家上传、已读节点介入或从零创作整部小说。以 [产品方向](docs/product-direction.md)、[验收标准](docs/mvp-acceptance.md) 和 [开发计划](docs/next-development-plan-2026-09-15.md) 为准。
 
-2026-09-10 产品优先级：**方向 2（已接触原著的用户选择节点与角色介入，改写剧情）是最高优先级 MVP，当前正在完成，开发和验收统一围绕此方向。** 方向 1 面向完全没接触原著的用户，以图片等信息吸引持续游玩，可改写剧情或“全程选 1”读原著；方向 3 面向从零构建全新小说。方向 1、3 保留为后续方向。此前“实现方向 2、验收方向 1”的错位按此修正，详见[产品方向](docs/product-direction.md)与[当前 MVP 验收标准](docs/mvp-acceptance.md)。
+## 当前测试入口（2026-09-16）
+
+功能测试和桌面夹具统一使用十万汉字长篇。《雨夜候车室》已停用，历史测试仅保留追溯，不能执行或计入当前通过数。清单自动扫描所有达标母本，并要求匹配官方运行包；当前唯一达标小说为《太虚遗录》第一部，102610 CJK、50 章。当前包已接通 7 个可玩身份入口；自然结局由故事包终点和场景完成结果自动登记，不需要玩家手动结束。
+
+```sh
+python3 -B -m test_support.run core
+.venv-api/bin/python -B -m test_support.run api
+cd web && npm test && npm run build
+```
+
+测试数据迁移不等于旧用例全部重新验收。当前未迁移模块和完成边界见 [长篇测试与路线结束记录](docs/longform-testing-2026-09-16.md)。不再运行对历史 `tests_py` / `tests_api` 的全目录 `unittest discover`。真实模型和人工阅读仍单独验收。
 
 ## 项目边界
 
-- MVP 只支持一个人工创作或已获授权的预置 `StoryPackage`。
-- 预置故事为原创现代悬疑《雨夜候车室》。它用于验证引擎，不是最终内容题材限制。
-- CLI 是开发和试玩工具；正式玩家端将采用小说阅读器式交互，不复用命令行界面。
-- LLM 可理解玩家意图和生成叙事，但不能直接修改游戏状态或改写世界事实。
-- 图片、多用户和云端部署均不在本次 MVP 范围内。标准 UTF-8 TXT 母本可通过 `inspect-source`、`analyze-source`、`build-story-package` 和 `audit-story-package` 生成带来源证据、经结构审计的独立故事包；运行时不会读取母本 TXT。私有共创树现作为开发试玩能力提供，尚不是正式玩家端功能。
+- 当前玩家界面位于 `web/`，API 和 CLI 复用 Python 业务核心。
+- LLM 理解行动和生成叙事；代码掌管权威状态、事实校验和故事包完整性。
+- 历史存档可读取；书架、开局和续写只接纳当前官方模式。
+- 自动测试使用临时数据库，不修改正式存档或冻结母本。
 
 ## 文档导航
 
@@ -29,13 +38,13 @@
 - [私有共创基础 v0.1](docs/co-creation-foundation-v0.1.md)：共创会话契约、动态分支树与 Mock Planner 边界。
 - [Python 迁移 v0.1](docs/python-migration-v0.1.md)：并行迁移范围、Python CLI 和替换前的验收门槛。
 - [LLM 质量链路 v0.1](docs/llm-quality-pipeline-v0.1.md)：规划、草稿审阅、修订与权威状态边界。
-- [Demo Story 设计：雨夜候车室](docs/demo-story-design.md)：首个预置故事的世界、节点、状态与结局设计。
+- [历史 Demo 设计](docs/demo-story-design.md)：已停用，仅供追溯。
 - [小说母本输入基线 v0.1](docs/source-novel-input-v0.1.md)：标准小说母本与后续异常输入处理边界。
-- [产品方向与演进边界](docs/product-direction.md)：三个用户方向、方向 2 的最高 MVP 优先级，以及故事模式与后续演进边界。
+- [产品方向与演进边界](docs/product-direction.md)：当前唯一产品方向与验收边界。
 - [原著标注](content/annotations/rainy-waiting-room.v0.1.json)：小说母本到规范剧情锚点的可追溯标注。
-- [主线测试样本](tests_py/fixtures/content/packages/rainy-waiting-room/0.1.2/package.json)：包含通用身份与剧情节点入口声明的规范主线故事包；[原著构建测试样本](tests_py/fixtures/content/packages/rainy-waiting-room-source/0.1.16/package.json) 用于原著共创。运行书库已清空，全部预置包仅作为测试样本保存在 `tests_py/fixtures/` 与 `tests_api/fixtures/`，不进入前端书库。用户从网页导入 TXT 开始，样本母本为 `content/source/rainy-waiting-room.v0.1.txt`。
+- [长篇测试清单](test_support/longform.py)：按真实汉字数和冻结来源校验全部长篇，当前测试不加载旧短篇夹具。
 
-## 开发顺序
+## 历史 CLI 开发记录（不作为当前产品操作或测试指引）
 
 1. 将标准小说母本转为标注与可校验的机器可读故事包。已完成候选内容。
 2. 初始化 Python 运行时、故事包校验、确定性规则检定与自动化测试。已完成。
@@ -56,13 +65,15 @@
 
 ```dotenv
 STORY_PLANNER=openai
-STORY_PACKAGE_ID=rainy-waiting-room
+STORY_PACKAGE_ID=taixu-relics-part1
 STORY_PACKAGE_VERSION=0.1.2
 STORY_LLM_API_KEY=...
 STORY_LLM_MODEL=...
 STORY_LLM_BASE_URL=https://你的中转站地址/v1
 # CLI 默认使用 SSE，即时展示尚未提交的正文草稿。
 STORY_LLM_STREAM=true
+# 正文 SSE 首段等待上限，默认 30 秒；结构化 JSON 请求不使用 SSE。
+STORY_LLM_FIRST_DELTA_TIMEOUT_SECONDS=30
 # 保持自动 SSE/JSON 回退；若端点 SSE 不可靠，可与 STREAM=false 配合关闭。
 STORY_LLM_TRANSPORT_FALLBACK=true
 # 单次模型请求的超时上限，默认 30 秒。
@@ -73,6 +84,6 @@ STORY_LLM_MAX_TOKENS=8192
 STORY_LLM_QUALITY_REVIEW=false
 ```
 
-`STORY_PACKAGE_ID` 与 `STORY_PACKAGE_VERSION` 固定本次运行加载的内容包，默认分别为 `rainy-waiting-room` 与 `0.1.2`；新规则必须新建包版本；运行目录仅保存用户实际导入或构建的故事，回归测试独立读取测试专用样本。CLI 试玩前须先构建故事包，或指定已导入包的 ID 与版本。`STORY_LLM_BASE_URL` 必须是 OpenAI-compatible API 前缀，不要包含 `/chat/completions`。共创 CLI 默认让正文 Planner 优先使用 SSE：模型返回的纯小说文本会立即显示为“尚未提交”的剧情草稿；本地脚本将其与已选择方向、受控状态补丁、章节和后续菜单组合，再通过叙事事实校验并落库后显示“剧情已确认”。自由文本输入先执行本地方向判定，CLI 会显示“正在判定自由方向”；判定通过后才显示“正在生成正文草稿”。动态正文提示目标为 2,200 至 2,800 个中文字符；首稿少于 2,000 个非空白字符时，Planner 最多请求一次只追加正文的受控续写，合并后仍不足或违反状态约束才拒绝，且不会写入分支。每次请求默认携带 `max_tokens=8192`，可通过 `STORY_LLM_MAX_TOKENS` 在 1,024 至 8,192 之间调整；降低该值会减少成本，但可能不足以生成 2,000 字正文。若经端点探针确认支持，可设 `STORY_LLM_REASONING_EFFORT=none` 关闭推理输出，避免推理模型耗尽正文预算；默认留空，不向未知兼容端点发送此扩展字段。除短稿的受控续写外，一次成功的正文草稿只会接受一次模型结果；正文若返回结构化 JSON、叙事事实冲突或未登记命名因果，会被拒绝且不会写入分支。每次模型请求默认 30 秒超时，可通过 `STORY_LLM_TIMEOUT_SECONDS` 设置为 5 至 120 秒。`STORY_LLM_STREAM=true` 并非 SSE-only：若 SSE 在连接或首段正文返回前保持静默，CLI 最多等待 15 秒，再以本回合剩余时间改用兼容 JSON 请求；因此一次正文 Planner 回合在传输降级时可能产生一次 SSE 和一次 JSON 模型请求。`STORY_LLM_TRANSPORT_FALLBACK=false` 会关闭这一回退；与 `STORY_LLM_STREAM=false` 一起使用时，单个 JSON 请求可独占全部超时预算，适用于 SSE 不可靠且响应耗时较长的端点。该降级不是对已返回草稿的重写；同一正文 Planner 会熔断失效的 SSE，后续回合直接使用 JSON，避免重复等待。传输失败、SSE 中断或草稿未通过校验时，CLI 会明确标记草稿未采纳；这些草稿不会改变状态或写入分支。可用 `llm-audits` 查看模型调用和拒绝记录。
+`STORY_PACKAGE_ID` 与 `STORY_PACKAGE_VERSION` 固定本次运行加载的内容包，当前默认分别为 `taixu-relics-part1` 与 `0.1.2`；新规则必须新建包版本。运行目录仅保存用户实际导入或构建的故事，回归测试独立读取测试专用样本。CLI 试玩前须先构建故事包，或指定已导入包的 ID 与版本。`STORY_LLM_BASE_URL` 必须是 OpenAI-compatible API 前缀，不要包含 `/chat/completions`。正文 Planner 默认使用 SSE 展示未提交草稿，首段等待上限由 `STORY_LLM_FIRST_DELTA_TIMEOUT_SECONDS` 控制，传输失败时可按剩余时间回退到 JSON；每次请求默认 30 秒超时，正文最大 token 预算默认 8192。互动场景规划目标为 80 至 1,500 个中文字符，短而完整的行动不以填充文字满足最低长度；空正文、超长正文、状态事实冲突或未登记命名因果都会被拒绝且不会写入分支。可用 `llm-audits` 查看模型调用和拒绝记录。
 
-真实模型回归不包含在默认测试中。显式设置 `STORY_LIVE_EVALUATION=1` 后运行 `python3 -m open_story_engine evaluate-live --output /private/tmp/open-story-engine-python-live.json`，它会以受限调用次数在隔离内存会话中运行六个场景；真实模型场景固定使用 JSON、60 秒超时且不发生 JSON/SSE 传输降级。详见[真实 LLM 评估 v0.1](docs/live-llm-evaluation-v0.1.md)。
+以下 `evaluate-live` 是旧短篇评估命令，已停用，不再执行。历史配置记录：显式设置 `STORY_LIVE_EVALUATION=1` 后运行 `python3 -m open_story_engine evaluate-live --output /private/tmp/open-story-engine-python-live.json`，它会以受限调用次数在隔离内存会话中运行六个场景；真实模型场景固定使用 JSON、60 秒超时且不发生 JSON/SSE 传输降级。详见[真实 LLM 评估 v0.1](docs/live-llm-evaluation-v0.1.md)。

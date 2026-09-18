@@ -1,0 +1,217 @@
+{
+  "metrics": {
+    "first_text_ms": 11725,
+    "ready_hit": false,
+    "selection_count": 1,
+    "ready_hits": 0,
+    "queue_ms": 1,
+    "complete_ms": 124890,
+    "reported_tokens": 160544,
+    "calls": 14,
+    "unreported_calls": 0,
+    "tokens": 160544
+  },
+  "payload": {
+    "text": "我把两截木牌和纸包都留在自己手中，留在原地请陆照临解释他对金屑的判断依据；听完再决定，不跟随他离开。"
+  },
+  "audits": [
+    {
+      "operation": "branch_planner",
+      "model": "deepseek-v4-pro:cloud",
+      "promptVersion": "web-player-v3+prompt-catalog/1:06c3c6332a24567d2f465301d6b04b3db90a02b8ee3c4b1ef8ad2e09d7cb1112",
+      "error": "正文存在未登记的持续状态变化：{'entityId': 'item_open_gu_token', 'attribute': '位置', 'value': '顾长离左袖中'}",
+      "callObservations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 6052
+          },
+          "generationStage": "result_contract",
+          "revision": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 3789
+          },
+          "generationStage": "action_authority"
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 12523
+          },
+          "generationStage": "chapter",
+          "revision": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 8526
+          },
+          "generationStage": "fact_extraction",
+          "revision": 0,
+          "extractionAttempt": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 11350
+          },
+          "generationStage": "action_review",
+          "revision": 0
+        },
+        {
+          "generationStage": "validation",
+          "revision": 0,
+          "outcome": "failed",
+          "error": "正文存在未登记的持续状态变化：{'entityId': 'item_open_gold_paper', 'attribute': '位置', 'value': '顾长离右掌中'}"
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 3791
+          },
+          "generationStage": "local_repair",
+          "revision": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 6692
+          },
+          "generationStage": "chapter",
+          "revision": 1
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 22280
+          },
+          "generationStage": "fact_extraction",
+          "revision": 1,
+          "extractionAttempt": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 9564
+          },
+          "generationStage": "action_review",
+          "revision": 1
+        },
+        {
+          "generationStage": "validation",
+          "revision": 1,
+          "outcome": "failed",
+          "error": "正文存在未登记的持续状态变化：{'entityId': 'item_open_gu_token', 'attribute': '位置', 'value': '顾长离左袖中'}"
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 1566
+          },
+          "generationStage": "local_repair",
+          "revision": 1
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 7589
+          },
+          "generationStage": "chapter",
+          "revision": 2
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 9221
+          },
+          "generationStage": "fact_extraction",
+          "revision": 2,
+          "extractionAttempt": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 9855
+          },
+          "generationStage": "fact_extraction",
+          "revision": 2,
+          "extractionAttempt": 1
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 11971
+          },
+          "generationStage": "action_review",
+          "revision": 2
+        },
+        {
+          "generationStage": "validation",
+          "revision": 2,
+          "outcome": "failed",
+          "error": "正文存在未登记的持续状态变化：{'entityId': 'item_open_gu_token', 'attribute': '位置', 'value': '顾长离左袖中'}"
+        }
+      ],
+      "promptContext": {
+        "mode": "player_history",
+        "perspective": "second_person_limited",
+        "scene": "自定行动：我把两截木牌和纸包都留在",
+        "pacing": {
+          "level": "standard",
+          "targetCjk": [
+            700,
+            1100
+          ],
+          "authorizedSteps": 3,
+          "locationChanged": false,
+          "hardMinimum": false
+        }
+      }
+    }
+  ]
+}

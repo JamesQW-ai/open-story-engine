@@ -1,0 +1,367 @@
+{
+  "version": "prompt-catalog/1",
+  "prompts": {
+    "reader.perspective": {
+      "files": [
+        "reader/perspective.md"
+      ],
+      "fields": [
+        "name"
+      ]
+    },
+    "reader.narrative_system": {
+      "files": [
+        "reader/narrative_system.md"
+      ],
+      "fields": []
+    },
+    "reader.narrative": {
+      "files": [
+        "reader/narrative.md"
+      ],
+      "fields": [
+        "perspective_rule",
+        "title",
+        "summary",
+        "history",
+        "changes_json",
+        "narrative_state_guardrails",
+        "player_location_id",
+        "final_people_json",
+        "scene_boundary",
+        "place_names_json",
+        "character_names",
+        "location_names",
+        "event_brief",
+        "ending_instruction",
+        "repair_instruction"
+      ]
+    },
+    "legacy_rainy.interlude": {
+      "files": [
+        "legacy_rainy/interlude.md"
+      ],
+      "fields": [
+        "perspective_rule",
+        "latest",
+        "reading_history",
+        "event_brief",
+        "player_action",
+        "place",
+        "place_2",
+        "repair_instruction"
+      ]
+    },
+    "reader.opening_polish": {
+      "files": [
+        "reader/opening_polish.md"
+      ],
+      "fields": []
+    },
+    "reader.trim": {
+      "files": [
+        "reader/trim.md"
+      ],
+      "fields": []
+    },
+    "reader.opening_review": {
+      "files": [
+        "reader/opening_review.md"
+      ],
+      "fields": []
+    },
+    "legacy_rainy.ending_review": {
+      "files": [
+        "legacy_rainy/ending_review.md"
+      ],
+      "fields": []
+    },
+    "legacy_rainy.fact_review": {
+      "files": [
+        "legacy_rainy/fact_review.md"
+      ],
+      "fields": []
+    },
+    "reader.action_review": {
+      "files": [
+        "reader/action_review.md"
+      ],
+      "fields": []
+    },
+    "legacy_rainy.review_boundary": {
+      "files": [
+        "legacy_rainy/review_boundary.md"
+      ],
+      "fields": []
+    },
+    "reader.narrative_repair": {
+      "files": [
+        "reader/narrative_repair.md"
+      ],
+      "fields": []
+    },
+    "reader.opening": {
+      "files": [
+        "reader/opening.md"
+      ],
+      "fields": [
+        "perspective_rule",
+        "known_identity",
+        "source_opening"
+      ]
+    },
+    "reader.turn_system": {
+      "files": [
+        "reader/turn_system.md"
+      ],
+      "fields": [
+        "system_instruction",
+        "name",
+        "player_action",
+        "interlude_material"
+      ]
+    },
+    "reader.plan_repair": {
+      "files": [
+        "reader/plan_repair.md"
+      ],
+      "fields": [
+        "error"
+      ]
+    },
+    "reader.observation_repair": {
+      "files": [
+        "reader/observation_repair.md"
+      ],
+      "fields": [
+        "error"
+      ]
+    },
+    "reader.evidence_repair": {
+      "files": [
+        "reader/evidence_repair.md"
+      ],
+      "fields": [
+        "error",
+        "candidate_contract_json"
+      ]
+    },
+    "core.continuation": {
+      "files": [
+        "core/continuation.md"
+      ],
+      "fields": [
+        "title",
+        "summary",
+        "state_json",
+        "ledger_context",
+        "current_characters",
+        "max",
+        "max_2",
+        "minimum_narrative_characters",
+        "scope_text",
+        "location_name",
+        "state_character_location_context",
+        "state_guardrail_text",
+        "narrative",
+        "state_guardrail_text_2"
+      ]
+    },
+    "core.narrative": {
+      "files": [
+        "core/narrative.md"
+      ],
+      "fields": [
+        "title",
+        "summary",
+        "state_transition_json",
+        "state_json",
+        "arc_instruction",
+        "fact_text",
+        "source_scene_text",
+        "constraint_text",
+        "guideline_text",
+        "profile_text",
+        "character_text",
+        "registered_character_text",
+        "character_location_text",
+        "protected_character_text",
+        "location_text",
+        "current_location_name",
+        "available_item_text",
+        "unavailable_item_text",
+        "branch_ledger_text",
+        "module_scope_text",
+        "continuity_text",
+        "perspective_instruction",
+        "length_instruction",
+        "state_guardrail_text",
+        "terminal_instruction",
+        "repair_instruction"
+      ]
+    },
+    "core.module_narrative": {
+      "files": [
+        "core/module_narrative.md"
+      ],
+      "fields": [
+        "module_scope_text",
+        "title",
+        "summary",
+        "get",
+        "location_name",
+        "current_location_name",
+        "perspective_instruction",
+        "profile_text",
+        "character_text",
+        "state_json",
+        "character_location_text",
+        "fact_text",
+        "state_transition_json",
+        "branch_ledger_text",
+        "continuity_text",
+        "source_scene_text",
+        "location_text",
+        "available_item_text",
+        "state_guardrail_text",
+        "protected_character_text",
+        "length_instruction",
+        "terminal_instruction",
+        "repair_instruction"
+      ]
+    },
+    "core.quality_review": {
+      "files": [
+        "core/quality_review.md"
+      ],
+      "fields": [
+        "state_json",
+        "ledger_context",
+        "narrative_text"
+      ]
+    },
+    "legacy.direction_evaluation": {
+      "files": [
+        "legacy/direction_evaluation.md"
+      ],
+      "fields": [
+        "directions_json",
+        "player_direction"
+      ]
+    },
+    "core.scene_expansion": {
+      "files": [
+        "core/scene_expansion.md"
+      ],
+      "fields": [
+        "needed"
+      ]
+    },
+    "core.fact_review_scope": {
+      "files": [
+        "core/fact_review_scope.md"
+      ],
+      "fields": []
+    },
+    "core.fact_repair": {
+      "files": [
+        "core/fact_repair.md"
+      ],
+      "fields": []
+    },
+    "core.fact_review": {
+      "files": [
+        "core/fact_review.md"
+      ],
+      "fields": []
+    },
+    "core.fact_support_review": {
+      "files": [
+        "core/fact_support_review.md"
+      ],
+      "fields": []
+    },
+    "core.rewrite_system": {
+      "files": [
+        "core/rewrite_system.md"
+      ],
+      "fields": []
+    },
+    "core.narrative_system": {
+      "files": [
+        "core/narrative_system.md"
+      ],
+      "fields": []
+    },
+    "core.terminal": {
+      "files": [
+        "core/terminal.md"
+      ],
+      "fields": []
+    },
+    "core.narrative_retry": {
+      "files": [
+        "core/narrative_retry.md"
+      ],
+      "fields": [
+        "error"
+      ]
+    },
+    "core.fact_evidence_repair": {
+      "files": [
+        "core/fact_evidence_repair.md"
+      ],
+      "fields": []
+    },
+    "legacy_rainy.illustration": {
+      "files": [
+        "legacy_rainy/illustration.md"
+      ],
+      "fields": [
+        "setting",
+        "role_name",
+        "player_appearance",
+        "visible_count",
+        "visible_names",
+        "cast_descriptions",
+        "moment"
+      ]
+    },
+    "actions.authority": {
+      "files": [
+        "actions/authority.md"
+      ],
+      "fields": []
+    },
+    "actions.plan": {
+      "files": [
+        "actions/plan.md"
+      ],
+      "fields": []
+    },
+    "actions.observe": {
+      "files": [
+        "actions/observe.md"
+      ],
+      "fields": []
+    },
+    "actions.review": {
+      "files": [
+        "actions/review.md"
+      ],
+      "fields": []
+    },
+    "consequences.plan": {
+      "files": [
+        "consequences/plan.md"
+      ],
+      "fields": []
+    },
+    "consequences.review": {
+      "files": [
+        "consequences/review.md"
+      ],
+      "fields": []
+    }
+  }
+}

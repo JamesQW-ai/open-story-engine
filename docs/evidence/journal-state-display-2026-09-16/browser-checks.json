@@ -1,0 +1,73 @@
+{
+  "date": "2026-09-16",
+  "environment": "desktop production build with isolated in-memory fixture",
+  "realModel": false,
+  "checks": [
+    {
+      "case": "failed journal",
+      "error": true,
+      "noFalseEmpty": true,
+      "noInventedGoal": true
+    },
+    {
+      "case": "retry succeeds",
+      "historicalLabel": true,
+      "emptyConfirmed": true,
+      "errorGone": true
+    },
+    {
+      "case": "right character unknown",
+      "ok": true
+    },
+    {
+      "case": "slow branch journal",
+      "loading": true,
+      "oldGoalHidden": true
+    },
+    {
+      "case": "late response ignored",
+      "rootGoal": true,
+      "noForeignGoal": true
+    },
+    {
+      "case": "left changed goal",
+      "newGoal": true,
+      "oldGoal": true
+    },
+    {
+      "case": "historical clue label",
+      "known": true,
+      "clue": true,
+      "noUnresolvedLabel": true
+    },
+    {
+      "case": "left death evidence",
+      "dead": true,
+      "evidence": true
+    },
+    {
+      "case": "refresh restores left goal",
+      "ok": true
+    },
+    {
+      "case": "sibling isolation",
+      "originalGoal": true,
+      "noAbandonedGoal": true,
+      "noForeignClue": true,
+      "statusUnknown": true,
+      "noDeath": true
+    },
+    {
+      "case": "wrong branch response rejected",
+      "error": true,
+      "noForeignGoal": true
+    },
+    {
+      "case": "final build failure keeps reading available",
+      "error": true,
+      "noFalseProgress": true,
+      "prose": true,
+      "input": true
+    }
+  ]
+}

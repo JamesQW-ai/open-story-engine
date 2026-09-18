@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "story-package-arc-module/0.1",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.2"
+  },
+  "arc": {
+    "id": "arc_source_chapter_022",
+    "title": "推进：借火修行",
+    "summary": "“因为火会让它找到你。”",
+    "availableWhen": {
+      "sourceProgress": {
+        "oneOf": [
+          "chapter_116",
+          "chapter_117",
+          "chapter_118",
+          "chapter_119"
+        ]
+      }
+    },
+    "completionWhen": {
+      "sourceProgress": {
+        "equals": "chapter_120"
+      }
+    },
+    "phaseDirectionIds": [
+      "direction_chapter_116_to_117",
+      "direction_chapter_117_to_118",
+      "direction_chapter_118_to_119",
+      "direction_chapter_119_to_120"
+    ],
+    "nextArcIds": [
+      "arc_source_chapter_023"
+    ]
+  }
+}
