@@ -147,12 +147,37 @@ def audit_one(source: Path, package_path: Path, package_root: Path) -> Dict[str,
     rebuild: Dict[str, Any] = {"status": "blocked", "reason": "缺少 analysis.json 或构建器"}
     if analysis:
         try:
-            from open_story_engine.package_builder import build_story_package
-            rebuilt = build_story_package(source, analysis, package["id"], package["version"])
+            from open_story_engine.package_builder import (
+                build_source_reader,
+                build_story_package,
+                build_story_package_modules,
+            )
+            base = build_story_package(source, analysis, package["id"], package["version"])
+            analysis_only = _diff_keys(base, package)
+            review_path = package_path.with_name("opening-review.json")
+            rebuilt = base
+            path = "analysis_only"
+            if review_path.is_file():
+                from open_story_engine.official_openings import apply_opening_review
+                review = _load(review_path)
+                rebuilt = apply_opening_review(base, source, review)
+                reader = build_source_reader(source, analysis, rebuilt)
+                build_story_package_modules(source, analysis, rebuilt, reader)
+                path = "analysis+opening_review+modules"
             differences = _diff_keys(rebuilt, package)
-            rebuild = {"status": "passed" if not differences else "failed", "differences": differences[:40], "rebuilt_sha256": sha256_bytes(_canonical(rebuilt).encode("utf-8")), "package_sha256": sha256_bytes(_canonical(package).encode("utf-8"))}
+            rebuild = {
+                "status": "passed" if not differences else "failed",
+                "path": path,
+                "analysis_only_differences": analysis_only[:40],
+                "differences": differences[:40],
+                "rebuilt_sha256": sha256_bytes(_canonical(rebuilt).encode("utf-8")),
+                "package_sha256": sha256_bytes(_canonical(package).encode("utf-8")),
+            }
             if differences:
-                errors.append({"id": "rebuild_mismatch", "message": "固定母本与 analysis.json 重新构建结果不一致"})
+                errors.append({
+                    "id": "rebuild_mismatch",
+                    "message": f"固定母本按 {path} 重新构建结果不一致",
+                })
         except Exception as error:
             rebuild = {"status": "blocked", "reason": str(error)}
             errors.append({"id": "rebuild_error", "message": str(error)})
