@@ -408,6 +408,7 @@ class PlayerNarrativePlanner(LlmPlanner):
                     retained_body = body
                 observations.append({'generationStage': 'scene_draft_metrics', 'revision': attempt,
                     'actualCjk': cjk_character_count(body),
+                                     'bodySha256': hashlib.sha256(body.encode('utf-8')).hexdigest(),
                                      'paragraphs': len(body.split('\n\n')),
                                      'pacing': self.last_prompt_context.get('pacing', {})})
                 if count > MAX_CHAPTER_CHARACTERS:
@@ -430,6 +431,7 @@ class PlayerNarrativePlanner(LlmPlanner):
                         body_was_streamed = True
                 if repair_record is not None:
                     repair_record['afterBody'] = body
+                    repair_record['afterBodySha256'] = hashlib.sha256(body.encode('utf-8')).hexdigest()
                 try:
                     check_player_voice(body, name)
                     if api_routes.role_name(context['package'], context['parent']['branchState']):
@@ -674,6 +676,7 @@ class PlayerNarrativePlanner(LlmPlanner):
                         repair_record = None
                     observations.append({'generationStage': 'validation', 'revision': attempt,
                                          'outcome': 'failed', 'error': str(error),
+                                         'bodySha256': hashlib.sha256(body.encode('utf-8')).hexdigest(),
                                          **({'repairIssues': error.repair_problem()} if isinstance(error, SceneReviewError) else {})})
                     if attempt == 2:
                         raise LlmError(str(error), 'model_output_rejected') from error
@@ -706,7 +709,10 @@ class PlayerNarrativePlanner(LlmPlanner):
                             material += '\n结果契约与永久状态：' + json.dumps({'contract': result_contract, 'state': consequences.prompt_state(resolved_state)}, ensure_ascii=False)
                         repair_record = {'generationStage': 'local_repair_record', 'revision': attempt,
                                          'beforeBody': body, 'afterBody': None, 'issues': problem,
+                                         'beforeBodySha256': hashlib.sha256(body.encode('utf-8')).hexdigest(),
+                                         'afterBodySha256': None,
                                          'issueTypes': repair_issue_types(problem), 'repairResponse': None,
+                                         'repairResponseSha256': None,
                                          'outcome': 'requested', 'failureReason': None,
                                          'failureStage': None, 'failureCode': None,
                                          'failureIssues': None, 'failureIssueTypes': []}
@@ -725,16 +731,21 @@ class PlayerNarrativePlanner(LlmPlanner):
                         raw.append(fixed.raw_response)
                         observations.extend({**o, 'generationStage': 'local_repair', 'revision': attempt} for o in fixed.observations)
                         repair_record['repairResponse'] = fixed.content
+                        repair_record['repairResponseSha256'] = hashlib.sha256(fixed.content.encode('utf-8')).hexdigest()
                         try:
                             repaired_body = apply_scene_repairs(body, parse_json_content(fixed.content).get('replacements'), getattr(error, 'violations', ()))
-                            repair_record.update(afterBody=repaired_body, outcome='pending_full_review')
+                            repair_record.update(afterBody=repaired_body,
+                                                 afterBodySha256=hashlib.sha256(repaired_body.encode('utf-8')).hexdigest(),
+                                                 outcome='pending_full_review')
                             observations.append({'generationStage': 'local_repair_validation', 'revision': attempt,
-                                                 'outcome': 'pending_full_review'})
+                                                 'outcome': 'pending_full_review',
+                                                 'reviewTargetBodySha256': hashlib.sha256(repaired_body.encode('utf-8')).hexdigest()})
                         except (ValueError, LlmError) as repair_error:
                             record_repair_failure(repair_record, repair_error, 'repair_validation', 'rejected')
                             repair_record = None
                             observations.append({'generationStage': 'local_repair_validation', 'revision': attempt,
-                                                 'outcome': 'rejected', 'error': str(repair_error)})
+                                                 'outcome': 'rejected', 'error': str(repair_error),
+                                                 'reviewTargetBodySha256': hashlib.sha256(body.encode('utf-8')).hexdigest()})
                             repaired_body = None
                     continue
                 if repair_record is not None:
@@ -795,7 +806,8 @@ class PlayerNarrativePlanner(LlmPlanner):
             error.audit = {'operation': 'branch_planner', 'model': self.gateway.model, 'promptVersion': 'web-player-v3+' + catalog_version(),
                            'requestSummary': selected['title'], 'rawResponse': '\n'.join(raw), 'error': str(error),
                            'callObservations': observations, 'promptContext': self.last_prompt_context,
-                           'retainedDraft': {'text': retained_body, 'status': 'unconfirmed'}}
+                           'retainedDraft': {'text': retained_body, 'status': 'unconfirmed',
+                                             'sha256': hashlib.sha256(retained_body.encode('utf-8')).hexdigest() if retained_body else None}}
             raise
 
     def opening(self, package, root, name, stream=None, stream_reset=None):

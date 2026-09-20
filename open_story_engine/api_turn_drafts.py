@@ -28,6 +28,60 @@ def digest(value):
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
 
+def _text_digest(value):
+    if not isinstance(value, str):
+        return None
+    return hashlib.sha256(value.encode('utf-8')).hexdigest()
+
+
+def decorate_audits(audits, request_id, usage, duration_ms):
+    """Attach private, redacted stage telemetry to deferred-turn audits.
+
+    Audit prose and provider responses remain internal evidence. The added
+    fields let a replay correlate a stage and call without copying prose into
+    the player-facing draft response.
+    """
+    for audit_entry in audits or ():
+        if not isinstance(audit_entry, (list, tuple)) or not audit_entry:
+            continue
+        audit = audit_entry[0]
+        if not isinstance(audit, dict):
+            continue
+        audit['observationSchema'] = 'nq001-stage-observation/1'
+        audit['requestId'] = request_id
+        audit['turnDurationMs'] = duration_ms
+        audit['providerUsage'] = copy.deepcopy(usage or {})
+        sequence = 0
+        current_body = None
+        for observation in audit.get('callObservations', ()):
+            if not isinstance(observation, dict):
+                continue
+            sequence += 1
+            observation['callSequence'] = sequence
+            observation['requestId'] = request_id
+            observation['stage'] = observation.get('stage') or observation.get('generationStage')
+            observation['attempt'] = observation.get('attempt', observation.get('revision'))
+            hashes = {}
+            for label, key in (('input', 'beforeBody'), ('output', 'afterBody'),
+                               ('repairResponse', 'repairResponse'),
+                               ('retainedDraft', 'text')):
+                value = observation.get(key)
+                if key == 'text' and isinstance(value, dict):
+                    value = value.get('text')
+                value_hash = _text_digest(value)
+                if value_hash:
+                    hashes[label] = value_hash
+            if hashes:
+                observation['bodyHashes'] = hashes
+                current_body = hashes.get('output') or hashes.get('input') or current_body
+            if observation.get('bodySha256'):
+                current_body = observation['bodySha256']
+            if observation.get('stage') in ('validation', 'local_repair_validation') and current_body:
+                observation['reviewTargetBodySha256'] = observation.get('bodySha256') or current_body
+            if observation.get('failureReason'):
+                observation['failureReasonSha256'] = _text_digest(observation['failureReason'])
+
+
 def reported_usage(completion):
     """Use provider receipts, never estimate billed tokens from prose length."""
     usages = []
@@ -334,10 +388,16 @@ class TurnDrafts:
                 artifact = None
                 try:
                     check()
+                    # Keep the transport request identifier in the private
+                    # snapshot only; it is removed with the snapshot before
+                    # durable draft persistence.
+                    job['snapshot'].request_id = job['binding'].get('request_id')
                     artifact = self.generate(job['snapshot'], job['payload'], delta, reset, validating, check)
                     check()
                     with self.condition:
                         check()
+                        decorate_audits(artifact.get('audits', []), job['binding'].get('request_id'),
+                                        artifact.get('usage', {}), round((time.monotonic() - started) * 1000))
                         job['artifact'] = artifact
                         job['status'] = 'ready'
                         self._finish(job, started)
@@ -346,6 +406,8 @@ class TurnDrafts:
                         job['status'] = 'expired' if job['status'] == 'expired' or isinstance(error, ReadError) and error.code == 'draft_cancelled' else 'failed'
                         job['usage'] = getattr(error, 'draft_usage', (artifact or {}).get('usage', {}))
                         job['failure_audits'] = getattr(error, 'draft_audits', (artifact or {}).get('audits', []))
+                        decorate_audits(job['failure_audits'], job['binding'].get('request_id'),
+                                        job['usage'], round((time.monotonic() - started) * 1000))
                         retained = getattr(error, 'retained_body', '') or (
                             (artifact or {}).get('audits', [{}])[-1].get('retainedDraft', {}).get('text', '')
                             if (artifact or {}).get('audits') else ''

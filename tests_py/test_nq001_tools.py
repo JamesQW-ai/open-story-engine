@@ -7,9 +7,75 @@ from pathlib import Path
 
 from test_support.nq001_live_eval import SseEventParser, _choose_entry, _sse_payload, main as live_main
 from test_support.repro_audit import cjk_count, duplicate_candidates
+from open_story_engine.api_turn_drafts import decorate_audits
+from open_story_engine.reader_scene_review import (
+    SceneReviewError, validate_knowledge_access, validate_repair_resolution,
+)
 
 
 class Nq001ToolTests(unittest.TestCase):
+    def test_first_inform_replay_rejects_overreach_accepts_limited_knowledge_and_tracks_repair(self):
+        fixture = json.loads((Path(__file__).parent / "fixtures" / "nq001_first_inform_replay.json").read_text(encoding="utf-8"))
+        people = {"guard": "守门弟子", "lu": "陆沉舟"}
+        for attempt in fixture["attempts"]:
+            body = attempt["body"]
+            quote = next(item for item in attempt["rejectedClaims"] if item in body)
+            with self.assertRaises(SceneReviewError):
+                validate_knowledge_access({"knowledgeChecks": [{
+                    "id": "D1", "speakerId": "guard", "kind": "background",
+                    "verdict": "supported", "reason": "守门弟子知道这件事",
+                    "accessSources": [], "missingEvidence": [],
+                }]}, body, fixture["evidence"], people, "lu")
+            self.assertIn(quote, body)
+
+        limited = fixture["legalLimitedKnowledge"]
+        validate_knowledge_access({"knowledgeChecks": [{
+            "id": "D1", "speakerId": "guard", "kind": "unknown",
+            "verdict": "supported", "reason": "只表达当前无法判断",
+            "accessSources": [], "missingEvidence": [],
+        }]}, limited, fixture["evidence"], people, "lu")
+
+        repaired = fixture["repairedBody"]
+        validate_knowledge_access({"knowledgeChecks": [{
+            "id": "D1", "speakerId": "guard", "kind": "current",
+            "verdict": "supported", "reason": "只转述刚刚听到的话",
+            "accessSources": [], "missingEvidence": [],
+        }]}, repaired, fixture["evidence"], people, "lu")
+
+        target = {"R1": {"paragraphId": "P1", "type": "background",
+                         "quote": "封山线内不得靠近，山门将闭。",
+                         "beforeOccurrences": 1}}
+        with self.assertRaises(SceneReviewError):
+            validate_repair_resolution({"repairChecks": [{
+                "id": "R1", "verdict": "resolved", "reason": "已修复",
+                "paragraphIds": ["P1"],
+            }]}, fixture["failedRepairBody"], target)
+
+        validate_repair_resolution({"repairChecks": [{
+            "id": "R1", "verdict": "resolved", "reason": "删除无来源的背景断言",
+            "paragraphIds": ["P1"],
+        }]}, repaired, target)
+
+    def test_failed_replay_retains_unconfirmed_draft_without_artifact(self):
+        fixture = json.loads((Path(__file__).parent / "fixtures" / "nq001_first_inform_replay.json").read_text(encoding="utf-8"))
+        audit = {"callObservations": [{
+            "generationStage": "validation", "revision": 0,
+            "outcome": "failed", "bodySha256": "body-before-review",
+        }, {
+            "generationStage": "local_repair_validation", "revision": 0,
+            "outcome": "rejected", "error": "仍有无来源断言",
+            "bodySha256": "body-after-repair",
+        }], "retainedDraft": {"text": fixture["failedRepairBody"], "status": "unconfirmed"}}
+        audits = [[audit, "branch-root"]]
+        decorate_audits(audits, "nq001-request", {"calls": 4, "reported_tokens": 20}, 1234)
+        self.assertEqual(audit["requestId"], "nq001-request")
+        self.assertEqual(audit["turnDurationMs"], 1234)
+        self.assertEqual([item["callSequence"] for item in audit["callObservations"]], [1, 2])
+        self.assertEqual(audit["callObservations"][0]["reviewTargetBodySha256"], "body-before-review")
+        self.assertEqual(audit["callObservations"][1]["reviewTargetBodySha256"], "body-after-repair")
+        self.assertEqual(audit["retainedDraft"]["status"], "unconfirmed")
+        self.assertNotIn("artifact", audit)
+
     def test_mock_http_run_writes_request_response_and_failure_stage_evidence(self):
         class Handler(BaseHTTPRequestHandler):
             counter = 0
