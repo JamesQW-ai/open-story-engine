@@ -13,7 +13,11 @@ from tests_api.test_reader_consequences import GU, plan
 class ScenePlanTests(unittest.TestCase):
     def setUp(self):
         self.contract = plan({'A1': '请说明依据'})
-        self.evidence = {'opening-1': '纸包仍然合着。', 'history-a-P1': '他说自己不清楚来历。'}
+        self.evidence = {
+            'opening-1': '纸包仍然合着。',
+            'history-a-P1': '他说自己不清楚来历。',
+            'history-a-P2': '石台边缘有粗石板，雨幕遮住远处。',
+        }
 
     def validate(self, contract):
         return validate_scene_plan(contract, self.evidence, {GU})
@@ -61,6 +65,53 @@ class ScenePlanTests(unittest.TestCase):
         check.update(kind='unknown', sources=[])
         with self.assertRaisesRegex(ValueError, '改分类'):
             validate_plan_premises({'premiseChecks': [check]}, self.contract, self.evidence)
+
+    def test_current_observation_inference_uses_after_step_without_state_change(self):
+        self.contract['steps'][0]['action'] = '停在石台边缘观察石台、脚印和道路，不往里走'
+        self.contract['scenePlan']['observationLimits'] = ['雨幕限制远处视线，未发现不等于绝对无人']
+        self.contract['scenePlan']['knowledge'] = [
+            dict(speakerId=GU, status='inference',
+                 statement='当前观察范围内未发现明确人迹，路径只辨认出石径来路。',
+                 sources=[dict(id='history-a-P2', quote='石台边缘有粗石板，雨幕遮住远处。')]),
+            dict(speakerId=GU, status='unknown', statement='不知道石台之外是否有人。', sources=[]),
+        ]
+        checks = [
+            dict(id='K1', kind='after_step', verdict='supported', sources=[], stepIds=['S1'],
+                 missingEvidence=[], reason='观察步骤产生的暂时推断'),
+            dict(id='K2', kind='unknown', verdict='supported', sources=[], stepIds=[],
+                 missingEvidence=[], reason='只保留当前不知道的范围'),
+            dict(id='O1', kind='restriction', verdict='supported', sources=[], stepIds=[],
+                 missingEvidence=[], reason='只限制远处观察范围'),
+        ]
+        self.validate(self.contract)
+        validate_plan_premises({'premiseChecks': checks}, self.contract, self.evidence)
+        self.assertEqual(self.contract['stateChanges'], [])
+
+    def test_observation_exception_does_not_cover_movement_or_unauthorized_reaction(self):
+        self.contract['scenePlan']['observationLimits'] = ['雨幕限制远处视线']
+        self.contract['scenePlan']['knowledge'] = [dict(
+            speakerId=GU, status='inference', statement='当前观察范围内未发现明确人迹',
+            sources=[dict(id='history-a-P2', quote='石台边缘有粗石板，雨幕遮住远处。')],
+        )]
+        check = dict(id='K1', kind='after_step', verdict='supported', sources=[], stepIds=['S1'],
+                     missingEvidence=[], reason='观察步骤产生的暂时推断')
+        limit = dict(id='O1', kind='restriction', verdict='supported', sources=[], stepIds=[],
+                     missingEvidence=[], reason='只限制远处观察范围')
+        self.contract['stateChanges'] = [dict(id='C1', entityId=GU, attribute='locationId',
+                                              before='location_open_gate', value='location_open_trial', stepId='S1')]
+        with self.assertRaisesRegex(ValueError, '改分类'):
+            validate_plan_premises({'premiseChecks': [check, limit]}, self.contract, self.evidence)
+        self.contract['stateChanges'] = []
+        self.contract['outcomes'] = [dict(characterId=GU, status='injured', permanence='temporary')]
+        self.contract['steps'][0]['authority'] = 'player'
+        self.contract['steps'][0]['causeStepId'] = None
+        with self.assertRaisesRegex(ValueError, '改分类'):
+            validate_plan_premises({'premiseChecks': [check, limit]}, self.contract, self.evidence)
+        self.contract['outcomes'] = []
+        self.contract['steps'][0]['authority'] = 'reaction'
+        self.contract['steps'][0]['causeStepId'] = 'S0'
+        with self.assertRaisesRegex(ValueError, '改分类'):
+            validate_plan_premises({'premiseChecks': [check, limit]}, self.contract, self.evidence)
 
     def test_plan_cannot_omit_or_add_authorized_steps(self):
         for refs in ([], ['S2']):

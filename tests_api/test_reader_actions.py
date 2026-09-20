@@ -252,6 +252,38 @@ class GeneralActionTests(unittest.TestCase):
             ra.validate_authority(bad, self.plan, action, '')
         self.assertNotIsInstance(caught.exception, ra.ActionEvidenceError)
 
+    def test_action_authority_allows_observation_inference_without_state_patch(self):
+        from open_story_engine.api_narrative import PlayerNarrativePlanner
+        from open_story_engine.llm import Completion
+        action = '我停在石台边缘，不往里走，观察石台、脚印和道路；陆照临也明确表示不知道石台之外是否有人。'
+        contract = copy.deepcopy(self.plan)
+        contract['requirements'] = {'A1': {'mode': 'result', 'summary': action}}
+        contract['steps'][0].update(action=action, requirementIds=['A1'])
+        contract['scenePlan']['observationLimits'] = ['雨幕限制远处视线，未发现不等于绝对无人。']
+        contract['scenePlan']['knowledge'] = [
+            dict(speakerId=GU, status='inference',
+                 statement='当前观察范围内未发现明确人迹，路径只辨认出石径来路。',
+                 sources=[dict(id='history-branch_31f0efdf-fb83-4f24-b04b-b3aa52d1ab04-P2',
+                               quote='这里是玄霄宗半山的试炼场，石壁上留着旧剑痕。')]),
+            dict(speakerId=LU, status='unknown', statement='陆照临不知道石台之外是否有人。', sources=[]),
+        ]
+        review = authority(contract)
+        review['premiseChecks'] = [
+            dict(id='K1', kind='after_step', verdict='supported', sources=[], stepIds=['S1'],
+                 missingEvidence=[], reason='当前观察步骤产生的暂时推断'),
+            dict(id='K2', kind='unknown', verdict='supported', sources=[], stepIds=[],
+                 missingEvidence=[], reason='NPC明确保留不知道'),
+            dict(id='O1', kind='restriction', verdict='supported', sources=[], stepIds=[],
+                 missingEvidence=[], reason='只限制远处观察范围'),
+        ]
+        gateway = Mock(model='fixture')
+        gateway.complete_json.return_value = Completion(json.dumps(review, ensure_ascii=False), '{}', [])
+        result = PlayerNarrativePlanner(gateway)._check_action_authority(
+            self.context, action, contract, [], [])
+        self.assertEqual(result, review)
+        self.assertEqual(contract['stateChanges'], [])
+        self.assertNotIn('locationId', str(contract['stateChanges']))
+
     def test_missing_scene_plan_rejected_before_body_generation(self):
         from open_story_engine.api_narrative import PlayerNarrativePlanner
         from open_story_engine.llm import Completion, LlmError

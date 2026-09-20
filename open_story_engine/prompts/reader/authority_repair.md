@@ -1,2 +1,3 @@
 上次授权审查的证据引用无效：{{ error }}。保持本回合计划不变，只重新审核并返回完整授权审查JSON。quote必须逐字取自input或previous，causal_reaction引用引发反应的原请求，不能取自steps、stateChanges、规划器解释或审查reason。仍须核对每项授权，不能为了修格式将未授权行为改判allow；有实质越权就返回revise及具体问题。
 premiseChecks.sources只从sceneEvidence引用；不是上述行动授权quote的来源规则。after_step通过stepIds说明依赖，不把尚未发生的告知当成公开事实。仍需覆盖所有K/O编号；原计划前提缺证就判unsupported，不为了修引用补造可见条件。
+停留观察且没有stateChanges、outcomes、goalUpdates、threadUpdates或实体引入时，玩家步骤产生的status=inference才可用after_step核对；移动或其他持久后果不得用它绕过existing依据。unknown仍只能承认不知道，不得夹带新的物性、经历或规律。

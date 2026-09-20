@@ -24,6 +24,31 @@ def plan_premises(plan):
             **{f'O{i+1}': {'statement': text} for i, text in enumerate(plan.get('observationLimits', []))}}
 
 
+def _current_observation_premise(target, check, contract):
+    """Allow an authorized observation to produce a transient inference.
+
+    ``scenePlan.knowledge`` normally describes facts already available before
+    writing.  A player can also look at the current scene and form a bounded
+    inference during this turn.  That inference is not an existing fact and
+    must be tied to player steps without any persistent state change.  This
+    narrow exception keeps movement/state patches and pre-existing knowledge
+    behind the existing authority checks.
+    """
+    if target.get('status') != 'inference' or check.get('kind') != 'after_step':
+        return False
+    if any(contract.get(field) for field in ('stateChanges', 'outcomes', 'goalUpdates', 'threadUpdates')):
+        return False
+    if any((contract.get('introductions') or {}).get(kind) for kind in ('characters', 'items', 'locations')):
+        return False
+    if not (contract.get('scenePlan') or {}).get('observationLimits'):
+        return False
+    steps = {step.get('id'): step for step in contract.get('steps', []) if isinstance(step, dict)}
+    return bool(check.get('stepIds')) and all(
+        isinstance(steps.get(step_id), dict) and steps[step_id].get('authority') == 'player'
+        for step_id in check['stepIds']
+    )
+
+
 def validate_plan_premises(data, contract, evidence):
     targets = plan_premises(contract.get('scenePlan') or {})
     if not targets:
@@ -55,7 +80,10 @@ def validate_plan_premises(data, contract, evidence):
             raise ValueError('既有知识或可见条件必须有公开来源：' + key)
         if kind == 'after_step' and not check['stepIds']:
             raise ValueError('本轮才形成的知识或观察必须有前置步骤：' + key)
-        if target.get('status') in ('fact', 'reported', 'inference') and kind != 'existing':
+        if target.get('status') in ('fact', 'reported') and kind != 'existing':
+            raise ValueError('不能把知识断言改分类以豁免依据：' + key)
+        if (target.get('status') == 'inference' and kind != 'existing'
+                and not _current_observation_premise(target, check, contract)):
             raise ValueError('不能把知识断言改分类以豁免依据：' + key)
         if target.get('status') == 'pending' and (kind != 'after_step' or target['afterStepId'] not in check['stepIds']):
             raise ValueError('待获知信息须核对其实际前置步骤：' + key)
