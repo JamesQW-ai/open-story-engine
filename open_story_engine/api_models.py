@@ -302,8 +302,8 @@ class EndingProposalView(BaseModel):
     status: Literal['pending', 'approved', 'rejected', 'failed', 'stale', 'committed', 'cancelled']
     can_cancel: bool = False
     created_at: str
-    review: dict[str, Any] | None
-    audit: dict[str, Any] | None
+    review: 'EndingReview | None'
+    audit: 'EndingAudit | None'
 
 
 class SessionList(BaseModel):
@@ -493,7 +493,7 @@ class RouteClosurePreparation(BaseModel):
     branch_id: str
     root_branch_id: str
     status: str
-    structure: dict[str, str | None]
+    structure: 'RouteStructure'
     coverage: ClosureCoverage
     outstanding: list[ClosureItem]
     cleared: list[ClosureItem]
@@ -503,6 +503,218 @@ class RouteClosurePreparation(BaseModel):
     ending_written: bool
     note: str
     lifecycle: RouteLifecycle | None = None
+
+
+class RouteStructure(BaseModel):
+    """Source-declared route coordinates; absent coordinates remain explicit nulls."""
+
+    volume: str | None = None
+    arc: str | None = None
+    beat: str | None = None
+    source_progress: str | None = None
+
+
+class EndingReviewCheck(BaseModel):
+    passed: bool
+    reason: str
+    evidence: str | None = None
+
+
+class EndingReviewChecks(BaseModel):
+    ending_type_supported: EndingReviewCheck
+    threads_accounted_for: EndingReviewCheck
+    no_new_unresolved_conflict: EndingReviewCheck
+    ending_present: EndingReviewCheck
+
+
+class EndingReview(BaseModel):
+    decision: Literal['allow', 'reject', 'unknown']
+    checks: EndingReviewChecks
+
+
+class EndingFailure(BaseModel):
+    code: str
+    message: str
+
+
+class EndingMetrics(BaseModel):
+    calls: int
+    reported_tokens: int | None
+    unreported_calls: int
+    tokens: int | None
+    elapsed_ms: int
+    call_count_source: Literal['transport_observations', 'gateway_invocation']
+
+
+class EndingCancellation(BaseModel):
+    at: str
+    reason: Literal['user_cancelled']
+    provider_cancelled: bool
+
+
+class EndingLateResult(BaseModel):
+    status: Literal['pending', 'approved', 'rejected', 'failed', 'stale', 'committed', 'cancelled']
+    review: EndingReview | None
+    received_at: str
+
+
+class EndingCharacterOutcome(BaseModel):
+    id: str
+    name: str
+    outcome: 'JournalStatus'
+
+
+class EndingAuditInput(BaseModel):
+    ending_type: Literal['normal', 'deviation', 'failure']
+    outcome_summary: str
+    ending_quote: str
+    narrative: str
+    goals: list['OutlineObligation']
+    threads: list['OutlineObligation']
+    conflicts: list['OutlineConflict | OutlineItemConflict']
+    character_outcomes: list[EndingCharacterOutcome]
+
+
+class EndingAudit(BaseModel):
+    model: str
+    prompt_version: str
+    input: EndingAuditInput
+    raw_response: str | None
+    failure: EndingFailure | None
+    metrics: EndingMetrics | None
+    observations: list[JsonValue] = Field(default_factory=list)
+    cancellation: EndingCancellation | None = None
+    late_result: EndingLateResult | None = None
+
+
+class EndingCommitResponse(BaseModel):
+    status: Literal['completed']
+    receipt: NaturalEndingReceipt
+
+
+class EndRouteResponse(BaseModel):
+    status: Literal['abandoned']
+
+
+class RouteErrorDetail(BaseModel):
+    code: Literal[
+        'invalid_request', 'session_not_found', 'branch_not_found',
+        'route_history_unavailable', 'route_has_continuation', 'route_ended',
+        'invalid_ending_type', 'ending_not_ready', 'invalid_ending_evidence',
+        'ending_reviewer_unavailable', 'request_conflict',
+        'ending_proposal_not_found', 'ending_proposal_stale',
+        'ending_review_required', 'ending_review_finished',
+        'ending_proposal_missing', 'invalid_response', 'http_error',
+        'invalid_package', 'endpoint_unavailable', 'generation_failed'
+    ]
+    message: str
+
+
+class RouteErrorResponse(BaseModel):
+    error: RouteErrorDetail
+
+
+class JournalStatus(BaseModel):
+    code: Literal['unknown', 'alive', 'dead', 'departed', 'missing', 'injured']
+    label: str
+    permanence: Literal['temporary', 'permanent'] | None
+    evidence: 'CharacterEvidenceView | None'
+
+
+class CharacterEvidenceView(BaseModel):
+    branch_id: str
+    page: int
+    quote: str
+    source: Literal['narrative', 'consequence']
+
+
+class JournalPersonView(BaseModel):
+    id: str
+    name: str
+    is_player: bool
+    first_page: int
+    last_page: int
+    summary: str
+    identity: str
+    summarized: bool
+    name_evidence: CharacterEvidenceView | None
+    portrait: 'PortraitView'
+    status: JournalStatus
+
+
+class PortraitView(BaseModel):
+    url: str | None
+    source: Literal['published', 'preset']
+    fallback_key: str
+
+
+class JourneyGoal(BaseModel):
+    id: str
+    title: str
+    status: Literal['active', 'completed', 'transformed', 'abandoned']
+    reason: str | None = None
+    causeBranchId: str | None = None
+
+
+class JourneyThread(BaseModel):
+    id: str
+    title: str
+    status: Literal['open', 'resolved', 'abandoned', 'unknown']
+    reason: str
+    evidence: str
+    causeBranchId: str | None
+
+
+class JourneyLedgerCoverage(BaseModel):
+    goals: Literal['recorded', 'unknown']
+    threads: Literal['recorded', 'unknown']
+
+
+class JourneyMilestone(BaseModel):
+    label: str
+    complete: bool
+
+
+class JourneyRecap(BaseModel):
+    branch_id: str
+    action: str
+    effects: list[str]
+
+
+class JourneyRouteHealth(BaseModel):
+    signals: list[Literal['unchanged_tracked_state', 'repeated_action', 'repeated_body', 'source_progress_stalled', 'source_progress_regressed']]
+    review_recommended: bool
+    window: int | None
+    unchanged_state_turns: int | None
+    repeated_action_turns: int | None
+    source_progress_streak: int | None
+    closure_readiness: Literal['ended', 'blocked_unknown', 'blocked_dependency', 'needs_explanation', 'checklist_clear', 'unknown']
+    closure_outstanding_count: int | None
+    ending_written: bool
+    note: str
+
+
+class JourneyView(BaseModel):
+    branch_id: str
+    threads: list[JourneyThread]
+    goals: list[JourneyGoal]
+    ledger_coverage: JourneyLedgerCoverage
+    role_name: str
+    goal: str
+    progress: int | None
+    progress_label: str
+    choices_made: int
+    current_task: str
+    status: Literal['active', 'completed', 'abandoned']
+    location: str | None
+    feedback: list[str]
+    clues: list[str]
+    people: list[JournalPersonView]
+    relationships: list['JourneyRelationship']
+    lineage: list[str]
+    milestones: list[JourneyMilestone]
+    recap: list[JourneyRecap]
+    route_health: JourneyRouteHealth
 
 
 class ContextView(BaseModel):
@@ -587,3 +799,23 @@ class SourceChapterView(BaseModel):
 class CharacterProfileRequest(RequestModel):
     branch_id: str = Field(min_length=1, max_length=200)
     character_id: str = Field(min_length=1, max_length=200)
+
+
+class JourneyRelationship(BaseModel):
+    source: str
+    target: str
+    label: str
+    evidence: str
+    page: int
+    origin: Literal['opening'] | None = None
+
+
+# These models intentionally refer to route-outline classes declared earlier in
+# this module. Rebuilding once all declarations exist keeps the OpenAPI graph
+# named and prevents response validation from silently accepting dictionaries.
+for _model in (
+    EndingProposalView, RouteClosurePreparation, EndingCharacterOutcome,
+    EndingAuditInput, EndingAudit, JournalStatus, JournalPersonView,
+    JourneyView,
+):
+    _model.model_rebuild()

@@ -23,13 +23,22 @@ def main():
     opening = entry_node(package, contract)
     reader = json.loads(case['path'].with_name('reader.json').read_text())
     character = next(c for c in package['characters'] if c['id'] == cid)
+    entries = list(package['story']['entryModel']['entryPoints'])
+    characters = []
+    for item in entries:
+        source_ids = item.get('sourceCharacterIds') or []
+        source_id = source_ids[0] if source_ids else None
+        selected = next((candidate for candidate in package['characters'] if candidate['id'] == source_id), None)
+        if selected is not None:
+            characters.append({**selected, 'defaultEntryPointId': item['id']})
     location = next(p for p in package['locations'] if p['id'] == opening['branchState']['playerLocationId'])
     entry = next(e for e in package['story']['entryModel']['entryPoints'] if e['id'] == contract['entryPointId'])
     # Full source chapters exercise desktop reading length. They are display
     # loads, not model-written alternative history or narrative-quality evidence.
     payload = dict(package_id=case['package_id'], version=case['version'], title=case['title'],
                    source_sha256=case['sha256'], source_cjk=case['cjk'], chapter_count=len(reader['chapters']),
-                   character=character, location=location, entry=entry, opening=opening,
+                   character=character, characters=characters, entries=entries,
+                   location=location, entry=entry, opening=opening,
                    chapters=reader['chapters'])
     args.output.write_text(json.dumps(payload, ensure_ascii=False))
     print(str(args.output))

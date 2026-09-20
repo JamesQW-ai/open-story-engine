@@ -364,9 +364,9 @@ export interface SourceChapterView {
 
 export interface Journey {
   branch_id: string
-  threads?: { id: string; title: string; status: 'open' | 'resolved' | 'abandoned' | 'unknown'; reason: string; evidence: string; causeBranchId: string | null }[]
-  goals?: { id: string; title: string; status: 'active' | 'completed' | 'transformed' | 'abandoned'; reason?: string; causeBranchId?: string | null }[]
-  ledger_coverage?: { goals: 'recorded' | 'unknown'; threads: 'recorded' | 'unknown' }
+  threads: JourneyThread[]
+  goals: JourneyGoal[]
+  ledger_coverage: { goals: 'recorded' | 'unknown'; threads: 'recorded' | 'unknown' }
   role_name: string
   goal: string
   progress: number | null
@@ -382,7 +382,7 @@ export interface Journey {
   lineage: string[]
   milestones: { label: string; complete: boolean }[]
   recap: { branch_id: string; action: string; effects: string[] }[]
-  route_health?: {
+  route_health: {
     signals: RouteHealthSignal[]
     review_recommended: boolean
     window: number | null
@@ -394,6 +394,23 @@ export interface Journey {
     ending_written: boolean
     note: string
   }
+}
+
+export interface JourneyGoal {
+  id: string
+  title: string
+  status: 'active' | 'completed' | 'transformed' | 'abandoned'
+  reason: string | null
+  causeBranchId: string | null
+}
+
+export interface JourneyThread {
+  id: string
+  title: string
+  status: 'open' | 'resolved' | 'abandoned' | 'unknown'
+  reason: string
+  evidence: string
+  causeBranchId: string | null
 }
 
 export type RouteHealthSignal =
@@ -453,19 +470,93 @@ export interface OpeningNavigation {
   catalog: PackageCatalog
 }
 export type EndingType = 'normal' | 'deviation' | 'failure'
-export type ClosureItem = { id: string; title: string; reason: string }
-export type RouteClosure = {
+export type RouteStructure = { volume: string | null; arc: string | null; beat: string | null; source_progress: string | null }
+export type OutlineEvidence = { kind: 'opening' | 'narrative'; branch_id: string; ref: string; quote: string }
+export type ClosureItem = {
+  id: string
+  kind: 'goal' | 'thread' | 'dependency'
+  target_id: string
+  title: string
+  reason: string
+  required_disclosure: boolean
+  blockers: string[]
+  evidence: OutlineEvidence | null
+}
+export type ClosureCoverage = { goals: 'recorded' | 'unknown'; threads: 'recorded' | 'unknown'; state: 'recorded' | 'unknown' }
+export type EarlyEndingReceipt = {
+  ending_type: 'early'
   branch_id: string
+  closed_at: string
+  readiness: string
+  coverage: ClosureCoverage
+  outstanding: ClosureItem[]
+  cleared: ClosureItem[]
+  ending_written: false
+}
+export type NaturalEndingReceipt = {
+  branch_id: string
+  closed_at: string
+  readiness: string
+  coverage: ClosureCoverage
+  outstanding: ClosureItem[]
+  cleared: ClosureItem[]
+  ending_type: EndingType
+  ending_written: true
+  proposal_id: string
+  binding_digest: string
+}
+export type RouteClosure = {
+  version: string
+  branch_id: string
+  root_branch_id: string
   status: string
+  structure: RouteStructure
+  coverage: ClosureCoverage
   readiness: 'ended' | 'blocked_unknown' | 'blocked_dependency' | 'needs_explanation' | 'checklist_clear'
   outstanding: ClosureItem[]
   cleared: ClosureItem[]
+  outstanding_count: number
+  cleared_count: number
+  ending_written: boolean
+  note: string
   lifecycle: {
     phase: 'active' | 'preparing' | 'closing' | 'ended'
     intended_type: EndingType | null
+    intent_branch_id: string | null
     ending_type: EndingType | 'early' | null
-    receipt: { ending_type: EndingType | 'early'; outstanding: ClosureItem[] } | null
+    receipt: EarlyEndingReceipt | NaturalEndingReceipt | null
+    requires_ending_evidence: true
+    ending_written: boolean
   } | null
+}
+export type EndingReviewCheck = { passed: boolean; reason: string; evidence: string | null }
+export type EndingReview = {
+  decision: 'allow' | 'reject' | 'unknown'
+  checks: {
+    ending_type_supported: EndingReviewCheck
+    threads_accounted_for: EndingReviewCheck
+    no_new_unresolved_conflict: EndingReviewCheck
+    ending_present: EndingReviewCheck
+  }
+}
+export type EndingMetrics = {
+  calls: number
+  reported_tokens: number | null
+  unreported_calls: number
+  tokens: number | null
+  elapsed_ms: number
+  call_count_source: 'transport_observations' | 'gateway_invocation'
+}
+export type EndingAudit = {
+  model: string
+  prompt_version: string
+  input: { ending_type: EndingType; outcome_summary: string; ending_quote: string; narrative: string; goals: JsonValue[]; threads: JsonValue[]; conflicts: JsonValue[]; character_outcomes: JsonValue[] }
+  raw_response: string | null
+  failure: { code: string; message: string } | null
+  metrics: EndingMetrics | null
+  observations: JsonValue[]
+  cancellation?: { at: string; reason: 'user_cancelled'; provider_cancelled: boolean }
+  late_result?: { status: EndingProposal['status']; review: EndingReview | null; received_at: string }
 }
 export type EndingProposal = {
   id: string
@@ -476,6 +567,11 @@ export type EndingProposal = {
   ending_quote: string
   status: 'pending' | 'approved' | 'rejected' | 'failed' | 'stale' | 'committed' | 'cancelled'
   can_cancel: boolean
-  review: { decision: string; checks: Record<string, { passed: boolean; reason: string; evidence: string }> } | null
+  created_at: string
+  binding_digest: string
+  review: EndingReview | null
+  audit: EndingAudit | null
 }
 export type EndingAttempt = { request_id: string; outcome_summary: string; ending_quote: string }
+export type EndRouteResponse = { status: 'abandoned' }
+export type EndingCommitResponse = { status: 'completed'; receipt: NaturalEndingReceipt }

@@ -22,7 +22,7 @@ from .api_models import (
     PackageList, ParseRequest, PlayContinueRequest, PlayContinueResponse, PlayCreateRequest,
     PlayCreateResponse, SessionList, SessionView,
     SourceChapterView, StateView, RenameRequest, EndRouteRequest, RouteClosureIntentRequest, EndingProposalRequest, EndingProposalView, CharacterProfileRequest, RouteMonitorView, RouteOutlineView,
-    RouteClosurePreparation,
+    RouteClosurePreparation, JourneyView, EndRouteResponse, EndingCommitResponse, RouteErrorResponse,
 )
 from .api_read import ReadError, ReadService
 from .content import StoryPackageError
@@ -56,6 +56,7 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
         description="首批提供故事包与会话浏览、局部上下文预览。未开放生成及状态写入。",
         responses={status: {"model": ErrorResponse} for status in (404, 409, 422, 503)},
     )
+    route_errors = {status: {"model": RouteErrorResponse} for status in (404, 409, 422, 503)}
     if cors_origins is None:
         cors_origins = [origin.strip() for origin in os.environ.get(
             "STORY_API_CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173",
@@ -147,7 +148,7 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
     def state(session_id: str, branch_id: str | None = None):
         return service.state(session_id, branch_id)
 
-    @app.get('/api/v1/sessions/{session_id}/journey')
+    @app.get('/api/v1/sessions/{session_id}/journey', response_model=JourneyView, responses=route_errors)
     def player_journey(session_id: str, branch_id: str):
         return service.journey(session_id, branch_id)
 
@@ -159,15 +160,15 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
     def route_outline(session_id: str, branch_id: str):
         return service.route_outline(session_id, branch_id)
 
-    @app.get('/api/v1/sessions/{session_id}/route-closure', response_model=RouteClosurePreparation)
+    @app.get('/api/v1/sessions/{session_id}/route-closure', response_model=RouteClosurePreparation, responses=route_errors)
     def route_closure(session_id: str, branch_id: str):
         return service.route_closure(session_id, branch_id)
 
-    @app.get('/api/v1/sessions/{session_id}/ending-proposals', response_model=list[EndingProposalView])
+    @app.get('/api/v1/sessions/{session_id}/ending-proposals', response_model=list[EndingProposalView], responses=route_errors)
     def ending_proposals(session_id: str, branch_id: str):
         return service.ending_proposals(session_id, branch_id)
 
-    @app.get('/api/v1/sessions/{session_id}/ending-proposals/{proposal_id}', response_model=EndingProposalView)
+    @app.get('/api/v1/sessions/{session_id}/ending-proposals/{proposal_id}', response_model=EndingProposalView, responses=route_errors)
     def ending_proposal(session_id: str, proposal_id: str, branch_id: str):
         return service.ending_proposal(session_id, branch_id, proposal_id)
 
@@ -227,24 +228,24 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
         def rename_session(session_id: str, request: RenameRequest):
             return _play().rename_session(session_id, request.title)
 
-        @app.post('/api/v1/sessions/{session_id}/end')
+        @app.post('/api/v1/sessions/{session_id}/end', response_model=EndRouteResponse, responses=route_errors)
         def end_route(session_id: str, request: EndRouteRequest):
             return _play().end_route(session_id, request.branch_id)
 
-        @app.post('/api/v1/sessions/{session_id}/route-closure', response_model=RouteClosurePreparation)
+        @app.post('/api/v1/sessions/{session_id}/route-closure', response_model=RouteClosurePreparation, responses=route_errors)
         def plan_route_closure(session_id: str, request: RouteClosureIntentRequest):
             return _play().plan_route_closure(session_id, request.branch_id, request.intended_type)
 
-        @app.post('/api/v1/sessions/{session_id}/ending-proposals', response_model=EndingProposalView)
+        @app.post('/api/v1/sessions/{session_id}/ending-proposals', response_model=EndingProposalView, responses=route_errors)
         def propose_ending(session_id: str, request: EndingProposalRequest):
             return _play().propose_ending(session_id, request.branch_id, request.request_id,
                                           request.outcome_summary, request.ending_quote)
 
-        @app.post('/api/v1/sessions/{session_id}/ending-proposals/{proposal_id}/commit')
+        @app.post('/api/v1/sessions/{session_id}/ending-proposals/{proposal_id}/commit', response_model=EndingCommitResponse, responses=route_errors)
         def commit_ending(session_id: str, proposal_id: str, request: EndRouteRequest):
             return _play().commit_ending(session_id, request.branch_id, proposal_id)
 
-        @app.post('/api/v1/sessions/{session_id}/ending-proposals/{proposal_id}/cancel', response_model=EndingProposalView)
+        @app.post('/api/v1/sessions/{session_id}/ending-proposals/{proposal_id}/cancel', response_model=EndingProposalView, responses=route_errors)
         def cancel_ending(session_id: str, proposal_id: str, request: EndRouteRequest):
             return _play().cancel_ending(session_id, request.branch_id, proposal_id)
 

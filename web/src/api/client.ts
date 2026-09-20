@@ -2,6 +2,8 @@ import type {
   RouteClosure,
   EndingType,
   EndingProposal,
+  EndRouteResponse,
+  EndingCommitResponse,
   EndingAttempt,
   PreparedChoice,
   SceneIllustrations,
@@ -199,7 +201,7 @@ export const api = {
       body: JSON.stringify({ title }),
     }),
   endRoute: (sid: string, branch_id: string) =>
-    request<{ status: string }>(`/sessions/${encodeURIComponent(sid)}/end`, {
+    request<EndRouteResponse>(`/sessions/${encodeURIComponent(sid)}/end`, {
       method: 'POST',
       body: JSON.stringify({ branch_id }),
     }),
@@ -216,7 +218,7 @@ export const api = {
       method: 'POST', body: JSON.stringify({ branch_id, ...attempt }),
     }),
   commitEnding: (sid: string, branch_id: string, proposal: string) =>
-    request<{ status: string }>(`/sessions/${encodeURIComponent(sid)}/ending-proposals/${encodeURIComponent(proposal)}/commit`, {
+    request<EndingCommitResponse>(`/sessions/${encodeURIComponent(sid)}/ending-proposals/${encodeURIComponent(proposal)}/commit`, {
       method: 'POST', body: JSON.stringify({ branch_id }),
     }),
   cancelEnding: (sid: string, branch_id: string, proposal: string) =>

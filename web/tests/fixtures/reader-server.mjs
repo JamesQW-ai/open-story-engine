@@ -36,11 +36,19 @@ const completedBranches = new Set()
 const closureIntents = new Map()
 const endingProposals = []
 let closureMode = {}
-const closureView = bid => ({ branch_id: bid, status: completedBranches.has(bid) ? 'completed' : endedBranches.has(bid) ? 'abandoned' : 'active',
+const closureView = bid => ({ version: 'route-closure/fixture', branch_id: bid, root_branch_id: 'root',
+  status: completedBranches.has(bid) ? 'completed' : endedBranches.has(bid) ? 'abandoned' : 'active',
+  structure: { volume: null, arc: null, beat: novel.entry.beatId ?? null, source_progress: novel.opening.branchState?.sourceProgress ?? null },
+  coverage: { goals: 'recorded', threads: 'recorded', state: 'recorded' },
   readiness: endedBranches.has(bid) ? 'ended' : closureMode.ready ? 'checklist_clear' : 'needs_explanation',
-  outstanding: closureMode.ready ? [] : [{ id: 'goal', title: novel.entry.openingThreads[0], reason: '桌面夹具：此事尚未交代。' }], cleared: [],
+  outstanding: closureMode.ready ? [] : [{ id: 'goal', kind: 'goal', target_id: 'goal', title: novel.entry.openingThreads[0], reason: '桌面夹具：此事尚未交代。', required_disclosure: true, blockers: [], evidence: null }], cleared: [],
+  outstanding_count: closureMode.ready ? 0 : 1, cleared_count: 0, ending_written: completedBranches.has(bid),
+  note: '桌面夹具只验证页面交互，不代表正文质量验收。',
   lifecycle: { intended_type: closureIntents.get(bid) ?? null, ending_type: completedBranches.has(bid) ? closureIntents.get(bid) : endedBranches.has(bid) ? 'early' : null,
-    phase: endedBranches.has(bid) ? 'ended' : closureIntents.has(bid) ? 'closing' : 'active', receipt: null } })
+    intent_branch_id: closureIntents.has(bid) ? bid : null,
+    phase: endedBranches.has(bid) ? 'ended' : closureIntents.has(bid) ? 'closing' : 'active',
+    receipt: completedBranches.has(bid) ? { ending_type: closureIntents.get(bid) ?? 'normal', branch_id: bid, closed_at: new Date().toISOString(), readiness: 'checklist_clear', coverage: { goals: 'recorded', threads: 'recorded', state: 'recorded' }, outstanding: [], cleared: [], ending_written: true, proposal_id: 'proposal-0', binding_digest: 'fixture-binding' } : endedBranches.has(bid) ? { ending_type: 'early', branch_id: bid, closed_at: new Date().toISOString(), readiness: 'needs_explanation', coverage: { goals: 'recorded', threads: 'recorded', state: 'recorded' }, outstanding: [], cleared: [], ending_written: false } : null,
+    requires_ending_evidence: true, ending_written: completedBranches.has(bid) } })
 const json = (res, value, status = 200) => {
   res.writeHead(status, { 'Content-Type': 'application/json' }); res.end(JSON.stringify(value))
 }
@@ -72,11 +80,11 @@ const server = http.createServer(async (req, res) => {
     if (!closureMode.ready || !closureIntents.get(input.branch_id) || !node?.narrativeText.includes(input.ending_quote))
       return json(res, { error: { code: 'ending_not_ready', message: '收束条件尚未满足。' } }, 409)
     const status = closureMode.review ?? 'approved'
-    const proposal = { ...input, id: `proposal-${endingProposals.length}`, ending_type: closureIntents.get(input.branch_id), status,
+    const checks = Object.fromEntries(['ending_type_supported', 'threads_accounted_for', 'no_new_unresolved_conflict', 'ending_present'].map(key => [key, { passed: status === 'approved', evidence: input.ending_quote, reason: '桌面夹具：只验证交互，不代表正文已形成结局。' }]))
+    const proposal = { ...input, id: `proposal-${endingProposals.length}`, binding_digest: 'fixture-binding', created_at: new Date().toISOString(), ending_type: closureIntents.get(input.branch_id), status,
       can_cancel: status === 'pending',
-      review: ['approved', 'rejected'].includes(status) ? { decision: status === 'approved' ? 'allow' : 'reject', checks: {
-        ending_present: { passed: status === 'approved', evidence: input.ending_quote, reason: '桌面模拟审查，只验证交互，不代表正文已形成结局。' },
-      } } : null }
+      review: ['approved', 'rejected'].includes(status) ? { decision: status === 'approved' ? 'allow' : 'reject', checks } : null,
+      audit: { model: 'desktop-fixture', prompt_version: 'fixture', input: { ending_type: closureIntents.get(input.branch_id), outcome_summary: input.outcome_summary, ending_quote: input.ending_quote, narrative: node.narrativeText, goals: [], threads: [], conflicts: [], character_outcomes: [] }, raw_response: null, failure: null, metrics: null, observations: [] } }
     endingProposals.push(proposal)
     if (closureMode.lose_response) { closureMode.lose_response = false; res.destroy(); return }
     return json(res, proposal)
@@ -87,7 +95,7 @@ const server = http.createServer(async (req, res) => {
     if (closureMode.commit_fail) return json(res, { error: { message: '模拟提交失败，路线未结束。' } }, 503)
     proposal.status = 'committed'
     endedBranches.add(input.branch_id); completedBranches.add(input.branch_id)
-    return json(res, { status: 'completed' })
+    return json(res, { status: 'completed', receipt: closureView(input.branch_id).lifecycle.receipt })
   }
   if (path.includes('/ending-proposals/') && path.endsWith('/cancel')) {
     const proposal = endingProposals.find(p => p.id === path.split('/').at(-2) && p.branch_id === input.branch_id)
@@ -134,9 +142,9 @@ const server = http.createServer(async (req, res) => {
     storyPackageId: novel.package_id, storyPackageVersion: novel.version, title: `${novel.title} · 桌面功能验证` } })
   if (path.startsWith('/api/v1/packages/')) return json(res, {
     package: { title: `${novel.title} · 桌面功能验证`, summary: novel.entry.summary },
-    characters: [{ id: novel.character.id, name: novel.character.name, defaultEntryPointId: novel.entry.id, identitySummary: novel.character.identitySummary }],
+    characters: (novel.characters ?? [novel.character]).map(c => ({ id: c.id, name: c.name, defaultEntryPointId: c.defaultEntryPointId, identitySummary: c.identitySummary })),
     locations: [novel.location],
-    entries: [{ id: novel.entry.id, title: novel.entry.title, source_character_ids: [novel.character.id], beat_id: novel.entry.beatId, summary: novel.entry.summary }],
+    entries: (novel.entries ?? [novel.entry]).map(e => ({ id: e.id, title: e.title, source_character_ids: e.sourceCharacterIds, beat_id: e.beatId, summary: e.summary })),
   })
   if (path === '/api/v1/sessions/stream') {
     openingStarted = true
@@ -158,6 +166,9 @@ const server = http.createServer(async (req, res) => {
   if (path.endsWith('/branches/stream')) {
     res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' })
     const event = (type, data) => res.write(`event: ${type}\ndata: ${JSON.stringify(data)}\n\n`)
+    if (endedBranches.has(input.parent_branch_id)) {
+      event('error', { code: 'route_ended', message: '这条路线已收尾。', status: 409 }); return res.end()
+    }
     if (receipts.has(input.request_id)) {
       event('done', { ...receipts.get(input.request_id), deduplicated: true }); return res.end()
     }

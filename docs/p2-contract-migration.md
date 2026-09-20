@@ -1,20 +1,18 @@
-# P2 契约迁移记录
+# P2 契约接入记录
 
-当前 worktree 基于 `checkpoint-2026-09-11-player-preview`，P0 的终局与收束实现仍在 `/Users/James/open-story-engine` 的未提交工作区，尚未冻结为可依赖的提交。为避免把 P0/P1 改动带入 P2，本轮只保留契约门禁测试和迁移记录。
+本 worktree 已从 P0 checkpoint `9cb10a20e0f1c35187ab4b3ec39a7a91d569533a` 接入，并保留 P2 初始门禁提交 `5d72c96`（当前分支提交为其 cherry-pick 后的 `f87ff74`）。StoryPackage 与桌面夹具固定为 `taixu-relics-part1@0.1.3`。
 
-`tests_api/test_p2_contracts.py` 使用 `expectedFailure` 固定 P2 的失败契约：
+## 已接入
 
-- `journey`、`route-closure`、`ending-proposals` 必须在 OpenAPI 中引用具名 `response_model`；
-- 终局提交必须显式返回最终状态、`NaturalEndingReceipt` 和账本覆盖；
-- 错误响应必须使用固定错误码枚举，并包含 `ending_proposal_stale` 等收束错误；
-- P0 合并后，前端 `web/src/api/types.ts`、`web/src/api/client.ts` 和 `SessionPage.tsx` 应与该 OpenAPI 同步，再移除 `expectedFailure`。
+- `journey`、route closure、ending proposal、early end 和 ending commit 使用具名 FastAPI `response_model`。
+- Journey 的目标、问题、账本覆盖、终局状态、路线健康和人物证据字段已显式建模。
+- Ending proposal 的四项审查、审计输入、失败、调用计量、取消与迟到结果已显式建模；commit 返回 `NaturalEndingReceipt`，包括覆盖、待交代项、已清项、`ending_written`、`proposal_id` 和 `binding_digest`。
+- 终局路由错误使用固定错误码枚举，OpenAPI 会暴露 `RouteErrorResponse`。
+- `web/src/api/types.ts` 与 `web/src/api/client.ts` 已同步上述字段、可空性和终局状态。
+- `web/tests/desktopReaderIntegration.test.mjs` 启动真实构建 reader-server，导出官方十万字长篇，覆盖七身份/七入口、预设方向、自由文本、失败重试、永久后果、收束回执、结局后续写阻断、刷新回看和分支恢复。
 
-当前失败属于“P0 契约尚未冻结”，不是运行包、前端状态或真实模型失败。测试只检查结构，不宣称产品验收通过，也不使用停用的 `rainy-waiting-room` 长篇桌面夹具。
+## 验收边界
 
-## 合并后的迁移顺序
+契约与桌面集成测试只证明当前 HTTP/UI 边界和冻结运行包字段可重复验证，不宣称真实模型生成质量、长篇叙事质量或完整产品验收。桌面夹具中的审查和收束结果是结构化交互注入，用于区分前端状态处理与契约失败；真实模型未运行。
 
-1. P0 冻结终局类型、receipt、账本证据、审计结构和错误码；
-2. 将严格模型接入 FastAPI `response_model`，并补齐只读/写入 OpenAPI 错误响应；
-3. 按同一 schema 更新 TypeScript 类型和 API client 返回类型；
-4. 用 `test_support.longform` 导出的当前官方十万字以上长篇夹具补桌面流程：默认入口、连续回合、自由行动、永久后果、自动结局、刷新回看和分支恢复；
-5. 分别运行 API 契约门禁、前端类型/测试/构建，以及真实模型专项测试。契约测试通过不等于叙事质量或真实模型验收通过。
+当前仍需会话 1 处理的事项：50 组重复候选的人工复核，以及真实模型专项评估。若 P0 后续修改终局字段，必须先更新 OpenAPI、Python models、TypeScript types 和契约测试，禁止以兼容性宽字段掩盖漂移。
