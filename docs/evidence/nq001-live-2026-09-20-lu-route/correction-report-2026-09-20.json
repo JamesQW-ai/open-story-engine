@@ -1,0 +1,199 @@
+{
+  "schema": "nq001-offline-correction/0.1",
+  "source": {
+    "evidence_dir": "docs/evidence/nq001-live-2026-09-20-lu-route",
+    "draft_db": "/tmp/nq001-live-20260920-1789876532.turn-drafts.sqlite",
+    "main_db": "/tmp/nq001-live-20260920-1789876532.sqlite"
+  },
+  "stream_calls": [
+    {
+      "stage": "opening",
+      "request_id": "nq001-nq001-longform-route-a-inform-ask-wait-opening",
+      "events": {
+        "delta": 3,
+        "done": 1
+      },
+      "preview_cjk": 229,
+      "terminal_event": "done",
+      "formal_commit": true,
+      "failure_code": null,
+      "transport_full_body_ms": 19.698
+    },
+    {
+      "stage": "turn-1-inform",
+      "request_id": "nq001-nq001-longform-route-a-inform-ask-wait-1",
+      "events": {
+        "delta": 268,
+        "reset": 3,
+        "error": 1
+      },
+      "preview_cjk": 337,
+      "terminal_event": "error",
+      "formal_commit": false,
+      "failure_code": "generation_failed",
+      "transport_full_body_ms": 65210.049
+    },
+    {
+      "stage": "turn-1-inform-retry",
+      "request_id": "nq001-nq001-longform-route-a-inform-ask-wait-1",
+      "events": {
+        "delta": 240,
+        "reset": 3,
+        "error": 1
+      },
+      "preview_cjk": 319,
+      "terminal_event": "error",
+      "formal_commit": false,
+      "failure_code": "generation_failed",
+      "transport_full_body_ms": 57242.725
+    }
+  ],
+  "attempts": [
+    {
+      "metrics": {
+        "first_text_ms": 18325,
+        "ready_hit": false,
+        "selection_count": 1,
+        "ready_hits": 0,
+        "queue_ms": 1,
+        "complete_ms": 65060,
+        "reported_tokens": 109690,
+        "calls": 17,
+        "unreported_calls": 0,
+        "tokens": 109690
+      },
+      "provider_receipts": 17,
+      "provider_reported_tokens": 109690,
+      "raw_provider_records": 283,
+      "call_stage_counts": {
+        "result_contract": 2,
+        "action_authority": 3,
+        "chapter": 1,
+        "fact_extraction": 3,
+        "action_review": 3,
+        "scene_grounding": 3,
+        "local_repair": 2
+      },
+      "failure_records": [
+        {
+          "stage": "full_review",
+          "code": "validation_error",
+          "reason": "场景审查未通过：P4：“封山令未解”“山门将闭”“守门人不能跨线动人”等具体禁令与规矩内容，此前正文与公开资料均未由任何在场者说明或建立，属于无依据的背景断言；sceneEvidence中并无封山令或守门规矩的公开来源。；P5：“铁链响是门在收”“门合上后外面的人进不来”是对铁链响声来源与门机制的具体事实断言，observationLimits明确铁链响声来源未确认，且无任何公开资料支持该机制，属于无依据背景。；P4：封山令未解、山门将闭、守门人不能跨线动人等具体禁令与规矩无公开来源，observationLimits亦未建立，属无依据背景断言。；P5：铁链响是门在收、门合上后外面的人进不来，是对铁链来源与门机制的具体事实断言，observationLimits明确来源未确认，无公开依据。；P4：“封山令未解”“山门将闭”“守门人不能跨线动人”等具体禁令与规矩无公开来源，observationLimits亦未建立，属无依据背景断言。；P5：“铁链响是门在收”“门合上后外面的人进不来”是对铁链来源与门机制的具体事实断言，observationLimits明确来源未确认，无公开依据。"
+        },
+        {
+          "stage": "full_review",
+          "code": "validation_error",
+          "reason": "场景审查未通过：P4：“封山期间任何人不得越过此线”的具体禁令内容此前正文与公开资料均未由任何在场者说明或建立，observationLimits也明确“封山期间的具体禁令内容尚未由任何在场者说明”，属于无依据的背景断言。；P4：“封山期间任何人不得越过此线”的具体禁令内容此前正文与公开资料均未由任何在场者说明或建立，observationLimits也明确尚未由任何在场者说明，属于无依据背景断言。；P4：“宗门有令，封山期间任何人不得越过此线”的具体禁令内容此前正文与公开资料均未建立，observationLimits也明确尚未由任何在场者说明，属于无依据背景断言。；P4：“宗门有令，封山期间任何人不得越过此线”为具体禁令内容，公开资料未由任何在场者说明或建立。；P4：封山期间的具体禁令内容尚未由任何在场者说明。：P4-C3新增“宗门有令，封山期间任何人不得越过此线”的具体禁令内容，此前无在场者说明。；P4：守门弟子称“宗门有令，封山期间任何人不得越过此线”，但公开资料未说明其获知该具体禁令。；未提供该NPC获得信息的途径；封山期间具体禁令内容、宗门有令的获知途径；P4：P4-C3仍保留“宗门有令，封山期间任何人不得越过此线”的无来源禁令内容。；P4：P4-C3仍保留封山期间禁令内容，未消除无依据背景断言。；P4：P4-C3仍保留“宗门有令，封山期间任何人不得越过此线”的无来源禁令。"
+        }
+      ],
+      "audit_error": "场景审查未通过：P4：“封山期间任何人不得越过此线”的具体禁令内容此前正文与公开资料均未由任何在场者说明或建立，observationLimits也明确“封山期间的具体禁令内容尚未由任何在场者说明”，属于无依据的背景断言。；P4：“封山期间任何人不得越过此线”的具体禁令内容此前正文与公开资料均未由任何在场者说明或建立，observationLimits也明确尚未由任何在场者说明，属于无依据背景断言。；P4：“宗门有令，封山期间任何人不得越过此线”的具体禁令内容此前正文与公开资料均未建立，observationLimits也明确尚未由任何在场者说明，属于无依据背景断言。；P4：“宗门有令，封山期间任何人不得越过此线”为具体禁令内容，公开资料未由任何在场者说明或建立。；P4：封山期间的具体禁令内容尚未由任何在场者说明。：P4-C3新增“宗门有令，封山期间任何人不得越过此线”的具体禁令内容，此前无在场者说明。；P4：守门弟子称“宗门有令，封山期间任何人不得越过此线”，但公开资料未说明其获知该具体禁令。；未提供该NPC获得信息的途径；封山期间具体禁令内容、宗门有令的获知途径；P4：P4-C3仍保留“宗门有令，封山期间任何人不得越过此线”的无来源禁令内容。；P4：P4-C3仍保留封山期间禁令内容，未消除无依据背景断言。；P4：P4-C3仍保留“宗门有令，封山期间任何人不得越过此线”的无来源禁令。",
+      "preview_body_retained": true
+    },
+    {
+      "metrics": {
+        "first_text_ms": 15905,
+        "ready_hit": false,
+        "selection_count": 1,
+        "ready_hits": 0,
+        "queue_ms": 4,
+        "complete_ms": 57044,
+        "reported_tokens": 101738,
+        "calls": 15,
+        "unreported_calls": 0,
+        "tokens": 101738
+      },
+      "provider_receipts": 15,
+      "provider_reported_tokens": 101738,
+      "raw_provider_records": 253,
+      "call_stage_counts": {
+        "result_contract": 2,
+        "action_authority": 1,
+        "chapter": 1,
+        "fact_extraction": 3,
+        "action_review": 3,
+        "scene_grounding": 3,
+        "local_repair": 2
+      },
+      "failure_records": [
+        {
+          "stage": "full_review",
+          "code": "validation_error",
+          "reason": "场景审查未通过：P3：守门弟子当场听到玩家口述后回应职责与山门将闭，属当前回应。；当前草稿只能证明先告知后转述，不能证明观察前提或既往事实；人物获知来源不存在、尚未发生或引用了自己的发言"
+        },
+        {
+          "stage": "full_review",
+          "code": "validation_error",
+          "reason": "场景审查未通过：P3：守门弟子对伤者身份、空灯来历、铁链异响来源的“不知道”属新增背景断言，sceneEvidence与knowledge中无任何依据支持其确实不知情，属无来源的否定性事实断言。；P3：守门弟子对伤者身份、空灯来历、铁链异响来源的“不知道”属新增否定性背景断言，sceneEvidence与knowledge中无任何依据支持其确实不知情。；P3：守门弟子声称不知道伤者身份、空灯来历、铁链异响来源，属新增否定性背景断言，sceneEvidence与knowledge中无任何来源支持其确实不知情。；P3：守门弟子当场听到玩家口述后回应职责，属当前回应。；当前草稿只能证明先告知后转述，不能证明观察前提或既往事实"
+        }
+      ],
+      "audit_error": "场景审查未通过：P3：守门弟子对伤者身份、空灯来历、铁链异响来源的“不知道”属新增背景断言，sceneEvidence与knowledge中无任何依据支持其确实不知情，属无来源的否定性事实断言。；P3：守门弟子对伤者身份、空灯来历、铁链异响来源的“不知道”属新增否定性背景断言，sceneEvidence与knowledge中无任何依据支持其确实不知情。；P3：守门弟子声称不知道伤者身份、空灯来历、铁链异响来源，属新增否定性背景断言，sceneEvidence与knowledge中无任何来源支持其确实不知情。；P3：守门弟子当场听到玩家口述后回应职责，属当前回应。；当前草稿只能证明先告知后转述，不能证明观察前提或既往事实",
+      "preview_body_retained": true
+    }
+  ],
+  "attempt_count": 2,
+  "scenario_count": 1,
+  "calls_total": 32,
+  "provider_reported_tokens_total": 211428,
+  "call_stage_counts": {
+    "result_contract": 4,
+    "action_authority": 4,
+    "chapter": 2,
+    "fact_extraction": 6,
+    "action_review": 6,
+    "scene_grounding": 6,
+    "local_repair": 4
+  },
+  "metrics": {
+    "opening": "1/1 formal commit",
+    "first_draft_pass_rate": "Unknown",
+    "final_success_rate": "0/1",
+    "fact_overreach_rate": "Unknown",
+    "review_false_block_rate": "Unknown",
+    "repair_success_rate": "Unknown",
+    "first_token_ms": "Unknown (raw SSE has no event timestamps)",
+    "transport_full_body_ms": [
+      65210.049,
+      57242.725
+    ],
+    "internal_first_text_ms": [
+      18325,
+      15905
+    ],
+    "internal_complete_ms": [
+      65060,
+      57044
+    ],
+    "direction_available_ms": "Unknown",
+    "reported_tokens": 211428,
+    "calls": 32
+  },
+  "state_evidence": {
+    "branch_nodes": 1,
+    "game_sessions": 1,
+    "turn_requests": 0,
+    "game_events": 0,
+    "llm_audits": 0
+  },
+  "stage_conclusion": {
+    "last_successful_stage": "local_repair generation returned completed observations; its validation did not complete",
+    "first_failed_stage": "full_review / narrative validation (generationStage=validation, then local_repair_record=failed_full_review)",
+    "planning": "completed",
+    "body_generation": "completed with unconfirmed preview",
+    "fact_review": "completed through grounding, then validation rejected",
+    "repair": "attempted; local repair calls completed but review remained pending/failed",
+    "state_validation": "not reached",
+    "atomic_commit": "not reached",
+    "transport": "HTTP 200 SSE; terminal error event, no transport exception evidence"
+  },
+  "primary_issue": {
+    "statement": "场景全审查拒绝了守门弟子对封山禁令、伤者身份、空灯来历和铁链来源的无来源背景/否定性断言；局部修复后仍未通过，因此没有形成可提交 artifact。",
+    "evidence": "两次 attempt 的 audit.error、validation failureRecords，以及 raw SSE 的 delta/reset 后 error:generation_failed。",
+    "code_locations": [
+      "open_story_engine/cocreation.py:2531-2611 (guard/fact review and rejection)",
+      "open_story_engine/cocreation.py:2627-2668 (failure and semantic repair path)",
+      "open_story_engine/api_play.py:573-599 (draft failure propagated without artifact)"
+    ],
+    "replay": "python3 -m unittest tests_py.test_nq001_tools；直接将 calls/0007、0008 的 raw SSE 交给 _sse_payload，不启动服务。",
+    "observation_gap": "公开 SSE 不提供 planner/reviewer/repair 分阶段事件；若会话1需要逐次定位，需保留脱敏的 stage、attempt、provider request id 与每次 review/repair 结果。"
+  }
+}

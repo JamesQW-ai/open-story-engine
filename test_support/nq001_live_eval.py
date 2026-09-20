@@ -15,6 +15,7 @@ import subprocess
 import tempfile
 import time
 import uuid
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 from urllib.error import HTTPError, URLError
@@ -87,26 +88,144 @@ def _usage(value: Any) -> Dict[str, Any]:
     return usage if isinstance(usage, dict) else {}
 
 
-def _sse_payload(raw: str, first_token_ms: Optional[float] = None, full_body_ms: Optional[float] = None) -> Tuple[Any, Optional[float], Optional[float]]:
-    events: List[Any] = []
+@dataclass(frozen=True)
+class SseEvent:
+    event: str
+    data: str
+
+
+class SseEventParser:
+    """Incremental parser for the SSE wire format used by the API.
+
+    Event names and data fields are wire fields.  The parser deliberately does
+    not infer an event type from JSON payload content: that was the source of
+    the previous evaluator's false success classification.
+    """
+
+    def __init__(self) -> None:
+        self._buffer = ""
+        self._event = ""
+        self._data: List[str] = []
+        self.incomplete_event = False
+
+    def _dispatch(self) -> Optional[SseEvent]:
+        if not self._event and not self._data:
+            return None
+        event = self._event or "message"
+        value = "\n".join(self._data)
+        self._event = ""
+        self._data = []
+        return SseEvent(event, value)
+
+    def _line(self, line: str) -> Optional[SseEvent]:
+        if line == "":
+            return self._dispatch()
+        if line.startswith(":"):
+            return None
+        field, separator, value = line.partition(":")
+        if not separator:
+            return None
+        if value.startswith(" "):
+            value = value[1:]
+        if field == "event":
+            self._event = value
+        elif field == "data":
+            self._data.append(value)
+        # id/retry and unknown fields are intentionally ignored here.
+        return None
+
+    def feed(self, chunk: str | bytes) -> List[SseEvent]:
+        if isinstance(chunk, bytes):
+            chunk = chunk.decode("utf-8", "replace")
+        self._buffer += chunk.replace("\r\n", "\n").replace("\r", "\n")
+        events: List[SseEvent] = []
+        while "\n" in self._buffer:
+            line, self._buffer = self._buffer.split("\n", 1)
+            event = self._line(line)
+            if event is not None:
+                events.append(event)
+        return events
+
+    def finish(self) -> List[SseEvent]:
+        # A stream ending without the required blank line is an incomplete
+        # event.  It must not become a formal commit merely because data was
+        # received.
+        if self._buffer:
+            self._line(self._buffer)
+            self._buffer = ""
+        self.incomplete_event = bool(self._event or self._data)
+        return []
+
+
+@dataclass
+class SseParseResult:
+    events: List[SseEvent] = field(default_factory=list)
+    preview_text: str = ""
+    done_payload: Any = None
+    error_payload: Any = None
+    terminal_event: Optional[str] = None
+    formal_commit: bool = False
+    incomplete_event: bool = False
     first_delta_ms: Optional[float] = None
     done_ms: Optional[float] = None
+
+    @property
+    def failure_code(self) -> Optional[str]:
+        if isinstance(self.error_payload, dict):
+            return _error_code(self.error_payload) or "stream_error"
+        if self.error_payload is not None:
+            return "stream_error"
+        if self.terminal_event is None:
+            return "stream_ended_without_terminal"
+        if self.terminal_event == "done" and not self.formal_commit:
+            return "stream_ended_without_commit"
+        return None
+
+
+def _formal_commit(value: Any) -> bool:
+    """Return true only for the published opening/turn commit responses."""
+    if not isinstance(value, dict):
+        return False
+    branch = _branch(value)
+    if not isinstance(branch, dict) or not isinstance(_first(branch, ("id",), ("branchId",), ("branch_id",)), str):
+        return False
+    # Opening responses have a session.  Turn responses are explicitly
+    # status=written; status=committed was an obsolete mock-only shape.
+    if isinstance(_session(value), dict):
+        return True
+    return value.get("status") == "written"
+
+
+def _sse_payload(raw: str, first_token_ms: Optional[float] = None, full_body_ms: Optional[float] = None) -> SseParseResult:
+    parser = SseEventParser()
+    events = parser.feed(raw)
+    parser.finish()
+    result = SseParseResult(events=events, incomplete_event=parser.incomplete_event)
     started = time.monotonic()
-    for line in raw.splitlines():
-        if not line.startswith("data:"):
-            continue
-        payload = _json(line[5:].strip())
-        events.append(payload)
-        if isinstance(payload, dict):
-            event = payload.get("event") or payload.get("type")
-            if event == "delta" and first_delta_ms is None:
-                first_delta_ms = round((time.monotonic() - started) * 1000, 3)
-            if event == "done":
-                done_ms = round((time.monotonic() - started) * 1000, 3)
-    done = next((item.get("data") for item in events[::-1] if isinstance(item, dict) and item.get("event") == "done"), None)
-    if done is None:
-        done = next((item for item in events[::-1] if isinstance(item, dict) and (_branch(item) or _session(item))), None)
-    return done, first_token_ms if first_token_ms is not None else first_delta_ms, full_body_ms if full_body_ms is not None else done_ms
+    for event in events:
+        payload = _json(event.data)
+        if event.event == "delta":
+            if isinstance(payload, dict) and isinstance(payload.get("text"), str):
+                result.preview_text += payload["text"]
+            elif isinstance(payload, str):
+                result.preview_text += payload
+            if result.first_delta_ms is None:
+                result.first_delta_ms = round((time.monotonic() - started) * 1000, 3)
+        elif event.event == "reset":
+            result.preview_text = ""
+        elif event.event == "done":
+            result.done_payload = payload
+            result.terminal_event = "done"
+            result.done_ms = round((time.monotonic() - started) * 1000, 3)
+        elif event.event == "error":
+            result.error_payload = payload
+            result.terminal_event = "error"
+    result.formal_commit = _formal_commit(result.done_payload)
+    if first_token_ms is not None:
+        result.first_delta_ms = first_token_ms
+    if full_body_ms is not None:
+        result.done_ms = full_body_ms
+    return result
 
 
 class HttpEvidenceClient:
@@ -122,6 +241,8 @@ class HttpEvidenceClient:
         url = self.base_url + path
         payload = json.dumps(body, ensure_ascii=False).encode("utf-8") if body is not None else None
         request = Request(url, data=payload, method=method, headers={**self.headers, "X-NQ001-Request": request_id})
+        if stream:
+            request.add_header("Accept", "text/event-stream")
         if payload is not None:
             request.add_header("Content-Type", "application/json")
         started = time.monotonic()
@@ -132,16 +253,16 @@ class HttpEvidenceClient:
                     chunks: List[str] = []
                     first_delta = None
                     stream_started = time.monotonic()
+                    wire_parser = SseEventParser()
                     while True:
                         line = response.readline()
                         if not line:
                             break
                         text = line.decode("utf-8", "replace")
                         chunks.append(text)
-                        if first_delta is None and text.startswith("data:"):
-                            payload = _json(text[5:].strip())
-                            if isinstance(payload, dict) and (payload.get("event") or payload.get("type")) == "delta":
-                                first_delta = round((time.monotonic() - stream_started) * 1000, 3)
+                        if first_delta is None and any(event.event == "delta" for event in wire_parser.feed(text)):
+                            first_delta = round((time.monotonic() - stream_started) * 1000, 3)
+                    wire_parser.finish()
                     raw = "".join(chunks)
                 else:
                     raw = response.read().decode("utf-8", "replace")
@@ -160,16 +281,31 @@ class HttpEvidenceClient:
         first_token_ms = None
         full_body_ms = round((time.monotonic() - started) * 1000, 3)
         if stream:
-            parsed_sse, first_token_ms, done_ms = _sse_payload(raw, locals().get("first_delta"), full_body_ms)
-            parsed = parsed_sse if parsed_sse is not None else parsed
-            if done_ms is not None:
-                full_body_ms = done_ms
+            sse = _sse_payload(raw, locals().get("first_delta"), full_body_ms)
+            parsed = sse.done_payload if sse.done_payload is not None else (sse.error_payload if sse.error_payload is not None else parsed)
+            first_token_ms = sse.first_delta_ms
+            if sse.done_ms is not None:
+                full_body_ms = sse.done_ms
+            record["stream"] = {
+                "events": [{"event": item.event, "data": _json(item.data)} for item in sse.events],
+                "preview_body": sse.preview_text,
+                "terminal_event": sse.terminal_event,
+                "formal_commit": sse.formal_commit,
+                "incomplete_event": sse.incomplete_event,
+                "failure_code": sse.failure_code,
+            }
         record["response"] = {"status": status, "headers": response_headers, "raw": raw, "parsed": parsed}
         record["timing"] = {"first_token_ms": first_token_ms, "full_body_ms": full_body_ms}
-        record["model_response"] = {"body": _body_text(parsed), "branch": _branch(parsed), "session": _session(parsed), "usage": _usage(parsed)}
+        stream_info = record.get("stream") or {}
+        formal = stream_info.get("formal_commit", _formal_commit(parsed))
+        body = _body_text(parsed) if formal else stream_info.get("preview_body", "")
+        record["model_response"] = {"body": body, "preview_body": stream_info.get("preview_body", ""), "formal_commit": formal, "branch": _branch(parsed), "session": _session(parsed), "usage": _usage(parsed)}
         code = _error_code(parsed)
-        if status not in SUCCESS_STATUSES or code:
-            record["failure"] = {"stage": stage, "code": code or f"http_{status}", "message": _first(parsed, ("error", "message"), ("message",))}
+        stream_failure = stream_info.get("failure_code")
+        expects_commit = stage in {"opening", "turn", "direction"}
+        if status not in SUCCESS_STATUSES or code or stream_failure or (expects_commit and not formal):
+            failure_code = stream_failure or code or (f"http_{status}" if status not in SUCCESS_STATUSES else "response_without_commit")
+            record["failure"] = {"stage": stage, "code": failure_code, "message": _first(parsed, ("error", "message"), ("message",))}
         self._save(record)
         return record
 
@@ -190,15 +326,17 @@ def _load_scenarios(path: Path) -> Dict[str, Any]:
 
 def _choose_entry(package: Dict[str, Any]) -> Tuple[Optional[str], Optional[str], List[str]]:
     gaps: List[str] = []
-    entries = _first(package, ("entryPoints",), ("entry_points",), ("story", "entryModel", "entryPoints"), ("story", "entry_model", "entry_points"))
+    # /api/v1/packages/{id}/{version} is the catalog contract.  Its entries
+    # are top-level objects; package.story.entryModel is not a read API shape.
+    entries = package.get("entries") if isinstance(package, dict) else None
     entries = entries if isinstance(entries, list) else []
     entry = next((item for item in entries if isinstance(item, dict)), None)
     entry_id = _first(entry or {}, ("id",), ("entryPointId",), ("entry_point_id",))
-    character = _first(entry or {}, ("sourceCharacterId",), ("source_character_id",), ("characterId",), ("character_id",))
+    character = _first(entry or {}, ("source_character_id",), ("sourceCharacterId",))
     if not isinstance(entry_id, str):
         gaps.append("entry_point_id")
     if not isinstance(character, str):
-        character_ids = _first(package, ("story", "entryModel", "sourceCharacterIds"), ("story", "entry_model", "source_character_ids"))
+        character_ids = _first(entry or {}, ("source_character_ids",), ("sourceCharacterIds",))
         if isinstance(character_ids, list) and character_ids and isinstance(character_ids[0], str):
             character = character_ids[0]
         else:
@@ -297,7 +435,7 @@ def run(args: argparse.Namespace) -> int:
         for scenario in scenarios["scenarios"]:
             scenario_record: Dict[str, Any] = {"id": scenario["id"], "label": scenario.get("label"), "status": "running", "calls": [], "failure_stage": None, "restored": False, "ended": False}
             report["scenarios"].append(scenario_record)
-            session_body = {"package_id": args.package_id, "version": args.package_version, "entry_point_id": entry_id, "source_character_id": character_id, "identity_opening": True, "request_id": f"nq001-{args.route_id}-{scenario['id']}-opening"}
+            session_body = {"package": {"package_id": args.package_id, "version": args.package_version}, "entry_point_id": entry_id, "source_character_id": character_id, "identity_opening": True, "request_id": f"nq001-{args.route_id}-{scenario['id']}-opening"}
             opening_path = "/api/v1/sessions/stream" if args.stream else "/api/v1/sessions"
             opening = client.request("POST", opening_path, session_body, "opening", stream=args.stream)
             scenario_record["calls"].append(opening["request_id"])
