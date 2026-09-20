@@ -112,6 +112,18 @@ test('official longform desktop reader covers identity entry, turns, recovery, c
   assert.equal(recovered.at(-1).event, 'done')
   assert.equal(recovered.at(-1).data.deduplicated, false)
 
+  await json(base, '/__fixture/closure', { method: 'POST', body: JSON.stringify({ auto_complete: true }) })
+  const autoEnded = await sse(base, '/api/v1/sessions/reader-fixture/branches/stream', {
+    parent_branch_id: 'page-3', text: '自动结局', request_id: 'auto-ending',
+  })
+  assert.equal(autoEnded.at(-1).event, 'done')
+  const autoJourney = await json(base, '/api/v1/sessions/reader-fixture/journey?branch_id=page-4')
+  assert.equal(autoJourney.body.status, 'completed')
+  const autoContinuation = await sse(base, '/api/v1/sessions/reader-fixture/branches/stream', {
+    parent_branch_id: 'page-4', text: '自动结局后不应普通续写', request_id: 'after-auto-ending',
+  })
+  assert.equal(autoContinuation.at(-1).data.code, 'route_ended')
+
   await json(base, '/__fixture/journal', { method: 'POST', body: JSON.stringify({ seed_branches: true, character_status: 'dead' }) })
   const journal = await json(base, '/api/v1/sessions/reader-fixture/journey?branch_id=left')
   assert.equal(journal.body.people[0].status.code, 'dead')

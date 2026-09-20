@@ -184,6 +184,11 @@ const server = http.createServer(async (req, res) => {
       }
     }
     nodes.push(next)
+    if (closureMode.auto_complete === true && input.text === '自动结局') {
+      next.planning = { narrativeOrigin: 'mock_structural_fixture' }
+      next.branchState = { ...next.branchState, freeTextProgress: 4 }
+      endedBranches.add(next.id); completedBranches.add(next.id)
+    }
     const result = { status: 'written', request_id: input.request_id, branch: next, deduplicated: false }
     receipts.set(input.request_id, result)
     event('done', result); return res.end()
