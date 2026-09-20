@@ -693,11 +693,17 @@ class PlayerNarrativePlanner(LlmPlanner):
                         continue
                     if isinstance(error, SceneReviewError):
                         rejected_ids = {v['paragraphId'] for v in error.violations}
-                        rejected_size = sum(narrative_character_count(p) for pid, p in
-                            {f'P{i+1}': p for i, p in enumerate(body.split('\n\n'))}.items() if pid in rejected_ids)
-                        if len(rejected_ids) > 8 or rejected_size > max(200, count // 2):
+                        # The repair prompt already receives the complete
+                        # problem set. Scope is bounded by the number of
+                        # affected paragraphs, not by their original prose
+                        # size: a long paragraph can contain one small,
+                        # repairable claim, while skipping it would spend the
+                        # next draft attempt and lose the full-review context.
+                        if len(rejected_ids) > 8:
                             observations.append({'generationStage': 'local_repair', 'outcome': 'skipped',
-                                                 'reason': 'repair_scope_exceeded', 'problem': problem, 'beforeBody': body})
+                                                 'reason': 'repair_scope_exceeded', 'problem': problem,
+                                                 'rejectedParagraphCount': len(rejected_ids),
+                                                 'rejectedParagraphIds': sorted(rejected_ids), 'beforeBody': body})
                             continue
                     if 0 < count <= MAX_CHAPTER_CHARACTERS:
                         current = api_routes.scene(context['package'], context['parent']['branchState'])
@@ -717,16 +723,25 @@ class PlayerNarrativePlanner(LlmPlanner):
                                          'failureStage': None, 'failureCode': None,
                                          'failureIssues': None, 'failureIssueTypes': []}
                         observations.append(repair_record)
-                        fixed = complete_with_retry(self.gateway, 'complete_json', [
-                            {'role': 'system', 'content': perspective_rule(name) + render_prompt('reader.narrative_repair')},
-                            {'role': 'user', 'content': json.dumps({'problem': {
+                        repair_payload = {'problem': {
                                 **problem, 'issues': [{k: v for k, v in issue.items() if k != 'quote'} for issue in problem['issues']]
                             } if isinstance(problem, dict) else problem, 'scene': material, 'sceneEvidence': public_scene_evidence(context),
                                 'pacing': self.last_prompt_context.get('pacing', {}),
                                 'dialogueDependencies': repair_dialogue_dependencies(body),
                                 'originalParagraphCjk': {f'P{i+1}': len(re.findall(r'[\u3400-\u4dbf\u4e00-\u9fff]', p))
                                                          for i, p in enumerate(body.split('\n\n'))},
-                                'paragraphs': repair_paragraphs(body, error)}, ensure_ascii=False)},
+                                'paragraphs': repair_paragraphs(body, error)}
+                        repair_record['repairInput'] = {
+                            'issueCount': len(problem.get('issues', [])) if isinstance(problem, dict) else 1,
+                            'issueParagraphIds': sorted({item.get('paragraphId') for item in problem.get('issues', [])
+                                                         if isinstance(item, dict) and item.get('paragraphId')}) if isinstance(problem, dict) else [],
+                            'paragraphCount': len(body.split('\n\n')),
+                            'inputCharacters': narrative_character_count(body),
+                            'jsonCharacters': len(json.dumps(repair_payload, ensure_ascii=False)),
+                        }
+                        fixed = complete_with_retry(self.gateway, 'complete_json', [
+                            {'role': 'system', 'content': perspective_rule(name) + render_prompt('reader.narrative_repair')},
+                            {'role': 'user', 'content': json.dumps(repair_payload, ensure_ascii=False)},
                         ], stage='local_repair')
                         raw.append(fixed.raw_response)
                         observations.extend({**o, 'generationStage': 'local_repair', 'revision': attempt} for o in fixed.observations)

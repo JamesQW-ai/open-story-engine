@@ -76,6 +76,32 @@ class Nq001ToolTests(unittest.TestCase):
         self.assertEqual(audit["retainedDraft"]["status"], "unconfirmed")
         self.assertNotIn("artifact", audit)
 
+    def test_targeted_three_issue_replay_requires_all_repairs_before_artifact(self):
+        fixture = json.loads((Path(__file__).parent / "fixtures" / "nq001_first_inform_replay.json").read_text(encoding="utf-8"))
+        failed = fixture["threeIssueBody"]
+        repaired = fixture["threeIssueRepairedBody"]
+        targets = {
+            "R1": {"paragraphId": "P1", "type": "background",
+                   "quote": "是新的。先前没有，方才那阵青光之后才裂开。", "beforeOccurrences": 1},
+            "R2": {"paragraphId": "P1", "type": "background",
+                   "quote": "铁链再响两回。", "beforeOccurrences": 1},
+            "R3": {"paragraphId": "P1", "type": "continuity",
+                   "quote": "门快关了。", "beforeOccurrences": 1},
+        }
+        with self.assertRaises(SceneReviewError):
+            validate_repair_resolution({"repairChecks": [
+                {"id": key, "verdict": "resolved", "paragraphIds": ["P1"], "reason": "已修复"}
+                for key in ("R1", "R2", "R3")
+            ]}, failed, targets)
+        validate_repair_resolution({"repairChecks": [
+            {"id": key, "verdict": "resolved", "paragraphIds": ["P1"], "reason": "删除无来源断言并保留当场可观察内容"}
+            for key in ("R1", "R2", "R3")
+        ]}, repaired, targets)
+        self.assertIn("听见铁链在近处响了一声", repaired)
+        self.assertIn("我不知道", repaired)
+        failed_audit = {"retainedDraft": {"text": repaired, "status": "unconfirmed"}}
+        self.assertNotIn("artifact", failed_audit)
+
     def test_mock_http_run_writes_request_response_and_failure_stage_evidence(self):
         class Handler(BaseHTTPRequestHandler):
             counter = 0

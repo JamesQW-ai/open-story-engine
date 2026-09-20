@@ -409,6 +409,51 @@ class GeneralActionTests(unittest.TestCase):
             self.assertNotIn('beforeBody', recheck)
         self.assertIn('originalParagraphCjk', payload)
 
+    def test_long_problem_paragraph_is_repaired_with_complete_issue_set(self):
+        from open_story_engine.api_narrative import PlayerNarrativePlanner
+        from open_story_engine.llm import Completion
+        # The rejected paragraph is deliberately longer than half of the body.
+        # Its replacement is small and valid; the old pre-check skipped the
+        # repair before the model could receive the complete issue set.
+        long_paragraph = ('守门弟子仍按着剑柄站在原地，目光停在门缝和你手边的灯上，'
+                          '他没有迈步，也没有碰触任何物件，只是听你把话说完。') * 3
+        body = f'你留在原地等候，没有离开当前的位置。\n\n{long_paragraph}\n\n你仍在原地，等待他当场回应。'
+        corrected = body.replace(long_paragraph, '守门弟子听完，只说：“这些事我现在不知道。”')
+
+        def review(text):
+            return dict(sceneChecks=scene_checked(text), issues=[],
+                        actions=[dict(id='A1', status='performed', summary='原地等候', paragraphId='P1')],
+                        finalState=rc.final_state_projection(self.state), checkedConsequences=True,
+                        outcomeEvidence=[], goalEvidence=[], changeEvidence=[], introductionEvidence=[],
+                        eventChecks=checked(text))
+
+        bad = review(body)
+        bad['issues'] = [
+            dict(paragraphId='P2', type='background', reason='缺少来源的既往状态'),
+            dict(paragraphId='P2', type='continuity', reason='把未知信息说成确定事实'),
+            dict(paragraphId='P2', type='state', reason='把当前未确认状态写成已确认'),
+        ]
+        repair = {'replacements': [dict(paragraphId='P2', text='守门弟子听完，只说：“这些事我现在不知道。”')]}
+        gateway = Mock(model='fixture', complete_text=Mock(return_value=Completion(body, '{}', [])))
+        gateway.complete_json.side_effect = [Completion(json.dumps(x, ensure_ascii=False), '{}', []) for x in
+            (self.plan, authority(self.plan), observed(body), bad, grounded(body), repair,
+             observed(corrected), review(corrected), grounded(corrected, repair_count=3))]
+        context = {**self.context, 'characterDetails': []}
+        selected = dict(id='custom', title=context['playerDirection'], summary=context['playerDirection'],
+                        isFreeText=True, statePatch={'freeTextProgress': 1})
+        result, audit = PlayerNarrativePlanner(gateway).plan(context, selected, self.state)
+        repair_call = gateway.complete_json.call_args_list[5]
+        payload = json.loads(repair_call.args[0][1]['content'])
+        record = next(o for o in audit['callObservations'] if o['generationStage'] == 'local_repair_record')
+        self.assertEqual(record['repairInput']['issueCount'], 3)
+        self.assertEqual(record['repairInput']['issueParagraphIds'], ['P2'])
+        self.assertEqual(record['repairInput']['inputCharacters'], len(''.join(body.split())))
+        self.assertEqual({v['paragraphId'] for v in payload['problem']['issues']}, {'P2'})
+        self.assertEqual(result['narrativeText'], corrected)
+        self.assertEqual(record['outcome'], 'passed_full_review')
+        self.assertEqual(gateway.complete_text.call_count, 1)
+        self.assertEqual(gateway.complete_json.call_count, 9)
+
     def test_independent_scope_review_repairs_violation_missed_by_first_review(self):
         from open_story_engine.api_narrative import PlayerNarrativePlanner
         from open_story_engine.llm import Completion
