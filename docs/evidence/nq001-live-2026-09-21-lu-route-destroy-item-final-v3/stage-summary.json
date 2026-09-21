@@ -1,0 +1,86 @@
+{
+  "result": "failed",
+  "done": false,
+  "first_failure_stage": "branch_planner contract validation",
+  "first_failure_field_paths": [
+    "$.method",
+    "$.steps[0].action",
+    "$.stateChanges[0].reason",
+    "$.scenePlan.outcome",
+    "$.scenePlan.lengthReason",
+    "$.scenePlan.beats[0].purpose",
+    "$.scenePlan.observationLimits[0]",
+    "$.scenePlan.observationLimits[1]"
+  ],
+  "first_failure_code": "generation_failed",
+  "first_failure_http_status": 503,
+  "first_failure_error": "canonical/pending字段边界错误；具体动作须留在 pending narrativeOptions，且 NPC 目睹或确认不能进入 canonical plan",
+  "planner_audit": {
+    "responses": 2,
+    "state_change": {
+      "count": 1,
+      "entity_id": "item_open_letter",
+      "attribute": "destroyedPermanently",
+      "value": true,
+      "before": null,
+      "holding_basis": "item_open_letter 由 character_ae4cb42b9b49 持有"
+    },
+    "scene_plan_knowledge": [],
+    "target_cjk": {
+      "provider_value": [80, 250],
+      "normalized_value": [80, 250],
+      "scalar_120_normalization": "not exercised; provider did not return scalar 120"
+    },
+    "narrative_options": "具体动作候选为 pending + requiresConfirmation=true",
+    "leaks": [
+      "$.method: 抽出、对折、撕扯；NPC 可能拒绝",
+      "$.steps[0].action: 对折、撕扯",
+      "$.stateChanges[0].reason: 对折、撕扯",
+      "$.scenePlan.outcome: 撕碎、守门弟子目睹",
+      "$.scenePlan.lengthReason: 撕扯、守门弟子即时反应",
+      "$.scenePlan.beats[0].purpose: 撕扯、守门弟子目睹",
+      "$.scenePlan.observationLimits[0]: 撕毁全过程、是否目睹",
+      "$.scenePlan.observationLimits[1]: 碎裂、撕扯"
+    ],
+    "raw_json": "calls/0010-turn-drafts.json"
+  },
+  "k1": {
+    "final_acceptance": "not_reached",
+    "knowledge_entries": 0,
+    "holding_not_used_as_destroyed_evidence": true
+  },
+  "action_authority": {
+    "result": "not_reached",
+    "input_contains_narrativeOptions": "Unknown; planner rejected before authority call"
+  },
+  "downstream": {
+    "body_generation": "not_reached",
+    "full_review": "not_reached",
+    "repair": "not_reached",
+    "atomic_commit": "not_reached",
+    "sse_done": false
+  },
+  "usage": {
+    "calls": 2,
+    "reported_tokens": 21279,
+    "first_text_ms": null,
+    "complete_ms": 7584,
+    "queue_ms": 1,
+    "explicit_retries": 0,
+    "retained_draft": {
+      "text": "",
+      "status": "unconfirmed",
+      "sha256": null
+    }
+  },
+  "state_safety": {
+    "state_version_before": 1,
+    "state_version_after_failure": 1,
+    "state_version_after_restart": 1,
+    "item_owner_before_after_restart": "character_ae4cb42b9b49",
+    "destroyed_permanently_before_after_restart": false,
+    "new_real_branch": false,
+    "game_events": 0,
+    "event_narrations": 0
+  }
+}

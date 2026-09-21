@@ -1,0 +1,109 @@
+[
+  {
+    "key": "736cb1022e5bc255cd82c2218df9815cf6c0c65653fde35dbd9adfec6700d743",
+    "attempt_id": "729ae881e630419782145adac2015ff4",
+    "binding": {
+      "session_id": "615a8714-854e-5cfe-a448-4ed98fd5b142",
+      "parent_branch_id": "branch_21d02a70-09c3-4f85-b855-efa4e031a1af",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.3",
+      "rules_version": "prepared-player-turn/19+prompt-catalog/1:b3c82d3d6d1be98fd4d175841691033ca661c87ff8ba6cf906a2d95558fa3dd8",
+      "model": "deepseek-v4-flash",
+      "closing_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "parent_digest": "38297b70fde5579b6ffea58c3bcdd000f5e34022a41296f2a4bb39cc44bcb0ee",
+      "request_id": "nq001-20260921-destroy-item-final-v3-7103065-2a4e6f0c9d2b",
+      "input_digest": "ff49be08da05f5c219e58494a777b291a4a7a895cb58f488c6bba46c092d7674"
+    },
+    "payload": {
+      "text": "我永久损毁道具：引荐文书。"
+    },
+    "status": "failed",
+    "created": 1789967643.506721,
+    "metrics": {
+      "first_text_ms": null,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 7584,
+      "reported_tokens": 21279,
+      "calls": 2,
+      "unreported_calls": 0,
+      "tokens": 21279
+    },
+    "previous_attempts": [],
+    "usage": {
+      "reported_tokens": 21279,
+      "calls": 2,
+      "unreported_calls": 0
+    },
+    "failure_audits": [
+      [
+        {
+          "operation": "branch_planner",
+          "model": "deepseek-v4-flash",
+          "promptVersion": "web-player-v3+prompt-catalog/1:b3c82d3d6d1be98fd4d175841691033ca661c87ff8ba6cf906a2d95558fa3dd8",
+          "requestSummary": "自定行动：我永久损毁道具：引荐文书",
+          "rawResponse": "{\"id\":\"72e86e36-8918-4f00-a46b-fc863eaca177\",\"object\":\"chat.completion\",\"created\":1789967644,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"ready\\\",\\n  \\\"message\\\": \\\"\\\",\\n  \\\"requirements\\\": {\\n    \\\"A1\\\": {\\n      \\\"mode\\\": \\\"result\\\",\\n      \\\"summary\\\": \\\"陆照临永久损毁引荐文书\\\"\\n    }\\n  },\\n  \\\"method\\\": \\\"陆照临此刻正站在玄霄宗山门封山石外，引荐文书就在他手中（历史场景明确：他低头把文书从怀里抽出来捏在手里）。他可以用双手将受潮的纸页反复对折、撕扯，直至纸页碎裂、字迹无法辨认，从而永久损毁该文书。代价是：他失去唯一能证明自己求入门资格的凭证，守门弟子可能因此拒绝他入门，且文书不可恢复。\\\",\\n  \\\"outcomes\\\": [],\\n  \\\"goalUpdates\\\": [],\\n  \\\"threadUpdates\\\": [],\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"S1\\\",\\n      \\\"actorId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"action\\\": \\\"陆照临将手中的引荐文书对折、撕扯，直至纸页碎裂、字迹无法辨认，永久损毁该文书。\\\",\\n      \\\"requirementIds\\\": [\\\"A1\\\"],\\n      \\\"authority\\\": \\\"player\\\",\\n      \\\"causeStepId\\\": null,\\n      \\\"usedItemIds\\\": [\\\"item_open_letter\\\"]\\n    }\\n  ],\\n  \\\"introductions\\\": {\\n    \\\"characters\\\": [],\\n    \\\"items\\\": [],\\n    \\\"locations\\\": []\\n  },\\n  \\\"stateChanges\\\": [\\n    {\\n      \\\"id\\\": \\\"C1\\\",\\n      \\\"entityId\\\": \\\"item_open_letter\\\",\\n      \\\"attribute\\\": \\\"destroyedPermanently\\\",\\n      \\\"before\\\": null,\\n      \\\"value\\\": true,\\n      \\\"stepId\\\": \\\"S1\\\",\\n      \\\"reason\\\": \\\"陆照临亲手将引荐文书对折、撕扯至碎裂，纸页无法恢复，字迹无法辨认，文书永久损毁。\\\"\\n    }\\n  ],\\n  \\\"scenePlan\\\": {\\n    \\\"start\\\": \\\"承接上一回合终点：陆照临站在玄霄宗山门封山石外，手中捏着受潮的引荐文书，山门铁链仍在响。\\\",\\n    \\\"beats\\\": [\\n      {\\n        \\\"purpose\\\": \\\"兑现玩家永久损毁引荐文书的授权行动，描写撕扯过程与文书碎裂的不可逆结果，并呈现守门弟子目睹后的即时反应。\\\",\\n        \\\"stepIds\\\": [\\\"S1\\\"]\\n      }\\n    ],\\n    \\\"outcome\\\": \\\"引荐文书被陆照临亲手撕碎，永久损毁，无法再作为入门凭证；守门弟子目睹此事，可能作出反应。\\\",\\n    \\\"stop\\\": \\\"停在文书碎裂、守门弟子反应之后，保留陆照临下一步如何应对的决定权，不替玩家回答守门弟子可能提出的新问题。\\\",\\n    \\\"targetCjk\\\": [80, 250],\\n    \\\"lengthReason\\\": \\\"本回合为单一破坏动作及其直接后果，需要描写撕扯过程、文书碎裂的不可逆状态以及守门弟子的即时反应，篇幅适中即可。\\\",\\n    \\\"knowledge\\\": [],\\n    \\\"observationLimits\\\": [\\n      \\\"守门弟子是否看清陆照临撕毁文书的全过程，取决于其站位与注意力，正文可写其目睹或未目睹，但不得凭空断定其知道文书内容。\\\",\\n      \\\"文书碎裂后字迹是否仍可辨认，取决于撕扯程度，正文可写无法辨认，但不得补造文书原有内容或隐藏信息。\\\"\\n    ],\\n    \\\"narrativeOptions\\\": [\\n      {\\n        \\\"text\\\": \\\"陆照临撕毁文书的具体方式（对折撕扯、揉搓、咬碎等）未指定，可由正文自然呈现。\\\",\\n        \\\"status\\\": \\\"pending\\\",\\n        \\\"requiresConfirmation\\\": true\\n      }\\n    ]\\n  },\\n  \\\"readingIntent\\\": \\\"normal\\\"\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":8961,\"completion_tokens\":812,\"total_tokens\":9773,\"prompt_tokens_details\":{\"cached_tokens\":768},\"prompt_cache_hit_tokens\":768,\"prompt_cache_miss_tokens\":8193},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}\n{\"id\":\"9930de28-f967-4e70-8199-02de24cf3579\",\"object\":\"chat.completion\",\"created\":1789967648,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"ready\\\",\\n  \\\"message\\\": \\\"\\\",\\n  \\\"requirements\\\": {\\n    \\\"A1\\\": {\\n      \\\"mode\\\": \\\"result\\\",\\n      \\\"summary\\\": \\\"陆照临永久损毁引荐文书\\\"\\n    }\\n  },\\n  \\\"method\\\": \\\"陆照临此刻正站在玄霄宗山门封山石外，引荐文书就在他手中（历史场景明确：他低头把文书从怀里抽出来捏在手里）。他可以用双手将受潮的纸页反复对折、撕扯，直至纸页碎裂、字迹无法辨认，从而永久损毁该文书。代价是：他失去唯一能证明自己求入门资格的凭证，守门弟子可能因此拒绝他入门，且文书不可恢复。\\\",\\n  \\\"outcomes\\\": [],\\n  \\\"goalUpdates\\\": [],\\n  \\\"threadUpdates\\\": [],\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"S1\\\",\\n      \\\"actorId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"action\\\": \\\"陆照临将手中的引荐文书对折、撕扯，直至纸页碎裂、字迹无法辨认，永久损毁该文书。\\\",\\n      \\\"requirementIds\\\": [\\\"A1\\\"],\\n      \\\"authority\\\": \\\"player\\\",\\n      \\\"causeStepId\\\": null,\\n      \\\"usedItemIds\\\": [\\\"item_open_letter\\\"]\\n    }\\n  ],\\n  \\\"introductions\\\": {\\n    \\\"characters\\\": [],\\n    \\\"items\\\": [],\\n    \\\"locations\\\": []\\n  },\\n  \\\"stateChanges\\\": [\\n    {\\n      \\\"id\\\": \\\"C1\\\",\\n      \\\"entityId\\\": \\\"item_open_letter\\\",\\n      \\\"attribute\\\": \\\"destroyedPermanently\\\",\\n      \\\"before\\\": null,\\n      \\\"value\\\": true,\\n      \\\"stepId\\\": \\\"S1\\\",\\n      \\\"reason\\\": \\\"陆照临亲手将引荐文书对折、撕扯至碎裂，纸页无法恢复，字迹无法辨认，文书永久损毁。\\\"\\n    }\\n  ],\\n  \\\"scenePlan\\\": {\\n    \\\"start\\\": \\\"承接上一回合终点：陆照临站在玄霄宗山门封山石外，手中捏着受潮的引荐文书，山门铁链仍在响。\\\",\\n    \\\"beats\\\": [\\n      {\\n        \\\"purpose\\\": \\\"兑现玩家永久损毁引荐文书的授权行动，描写撕扯过程与文书碎裂的不可逆结果，并呈现守门弟子目睹后的即时反应。\\\",\\n        \\\"stepIds\\\": [\\\"S1\\\"]\\n      }\\n    ],\\n    \\\"outcome\\\": \\\"引荐文书被陆照临亲手撕碎，永久损毁，无法再作为入门凭证；守门弟子目睹此事，可能作出反应。\\\",\\n    \\\"stop\\\": \\\"停在文书碎裂、守门弟子反应之后，保留陆照临下一步如何应对的决定权，不替玩家回答守门弟子可能提出的新问题。\\\",\\n    \\\"targetCjk\\\": [80, 250],\\n    \\\"lengthReason\\\": \\\"本回合为单一破坏动作及其直接后果，需要描写撕扯过程、文书碎裂的不可逆状态以及守门弟子的即时反应，篇幅适中即可。\\\",\\n    \\\"knowledge\\\": [],\\n    \\\"observationLimits\\\": [\\n      \\\"守门弟子是否看清陆照临撕毁文书的全过程，取决于其站位与注意力，正文可写其目睹或未目睹，但不得凭空断定其知道文书内容。\\\",\\n      \\\"文书碎裂后字迹是否仍可辨认，取决于撕扯程度，正文可写无法辨认，但不得补造文书原有内容或隐藏信息。\\\"\\n    ],\\n    \\\"narrativeOptions\\\": [\\n      {\\n        \\\"text\\\": \\\"陆照临撕毁文书的具体方式（对折撕扯、揉搓、咬碎等）未指定，可由正文自然呈现。\\\",\\n        \\\"status\\\": \\\"pending\\\",\\n        \\\"requiresConfirmation\\\": true\\n      }\\n    ]\\n  },\\n  \\\"readingIntent\\\": \\\"normal\\\"\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":10694,\"completion_tokens\":812,\"total_tokens\":11506,\"prompt_tokens_details\":{\"cached_tokens\":9728},\"prompt_cache_hit_tokens\":9728,\"prompt_cache_miss_tokens\":966},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+          "error": "canonical/pending字段边界错误：[{\"path\": \"$.method\", \"field\": \"method\", \"value\": \"陆照临此刻正站在玄霄宗山门封山石外，引荐文书就在他手中（历史场景明确：他低头把文书从怀里抽出来捏在手里）。他可以用双手将受潮的纸页反复对折、撕扯，直至纸页碎裂、字迹无法辨认，从而永久损毁该文书。代价是：他失去唯一能证明自己求入门资格的凭证，守门弟子可能因此拒绝他入门，且文书不可恢复。\", \"rule\": \"具体动作须留在pending narrativeOptions，不能进入canonical plan；命中=抽出\"}, {\"path\": \"$.steps[0].action\", \"field\": \"steps.action\", \"value\": \"陆照临将手中的引荐文书对折、撕扯，直至纸页碎裂、字迹无法辨认，永久损毁该文书。\", \"rule\": \"具体动作须留在pending narrativeOptions，不能进入canonical plan；命中=撕扯\"}, {\"path\": \"$.stateChanges[0].reason\", \"field\": \"stateChanges.reason\", \"value\": \"陆照临亲手将引荐文书对折、撕扯至碎裂，纸页无法恢复，字迹无法辨认，文书永久损毁。\", \"rule\": \"具体动作须留在pending narrativeOptions，不能进入canonical plan；命中=撕扯\"}, {\"path\": \"$.scenePlan.outcome\", \"field\": \"scenePlan.outcome\", \"value\": \"引荐文书被陆照临亲手撕碎，永久损毁，无法再作为入门凭证；守门弟子目睹此事，可能作出反应。\", \"rule\": \"具体动作须留在pending narrativeOptions，不能进入canonical plan；命中=撕碎\"}, {\"path\": \"$.scenePlan.lengthReason\", \"field\": \"scenePlan.lengthReason\", \"value\": \"本回合为单一破坏动作及其直接后果，需要描写撕扯过程、文书碎裂的不可逆状态以及守门弟子的即时反应，篇幅适中即可。\", \"rule\": \"具体动作须留在pending narrativeOptions，不能进入canonical plan；命中=撕扯\"}, {\"path\": \"$.scenePlan.beats[0].purpose\", \"field\": \"scenePlan.beats.purpose\", \"value\": \"兑现玩家永久损毁引荐文书的授权行动，描写撕扯过程与文书碎裂的不可逆结果，并呈现守门弟子目睹后的即时反应。\", \"rule\": \"具体动作须留在pending narrativeOptions，不能进入canonical plan；命中=撕扯\"}, {\"path\": \"$.scenePlan.observationLimits[0]\", \"field\": \"scenePlan.observationLimits\", \"value\": \"守门弟子是否看清陆照临撕毁文书的全过程，取决于其站位与注意力，正文可写其目睹或未目睹，但不得凭空断定其知道文书内容。\", \"rule\": \"具体动作须留在pending narrativeOptions，不能进入canonical plan；命中=撕毁\"}, {\"path\": \"$.scenePlan.observationLimits[1]\", \"field\": \"scenePlan.observationLimits\", \"value\": \"文书碎裂后字迹是否仍可辨认，取决于撕扯程度，正文可写无法辨认，但不得补造文书原有内容或隐藏信息。\", \"rule\": \"具体动作须留在pending narrativeOptions，不能进入canonical plan；命中=撕扯\"}, {\"path\": \"$.scenePlan.outcome\", \"field\": \"scenePlan.outcome\", \"value\": \"引荐文书被陆照临亲手撕碎，永久损毁，无法再作为入门凭证；守门弟子目睹此事，可能作出反应。\", \"rule\": \"NPC目睹或确认损毁缺少当前证据或依据；不得进入canonical plan\"}, {\"path\": \"$.scenePlan.beats[0].purpose\", \"field\": \"scenePlan.beats.purpose\", \"value\": \"兑现玩家永久损毁引荐文书的授权行动，描写撕扯过程与文书碎裂的不可逆结果，并呈现守门弟子目睹后的即时反应。\", \"rule\": \"NPC目睹或确认损毁缺少当前证据或依据；不得进入canonical plan\"}]",
+          "callObservations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 4119,
+                "responseHeadersMs": 417,
+                "completeBodyMs": 4119
+              },
+              "generationStage": "result_contract",
+              "revision": 0,
+              "callSequence": 1,
+              "requestId": "nq001-20260921-destroy-item-final-v3-7103065-2a4e6f0c9d2b",
+              "stage": "result_contract"
+            },
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 3400,
+                "responseHeadersMs": 344,
+                "completeBodyMs": 3400
+              },
+              "generationStage": "result_contract",
+              "revision": 1,
+              "callSequence": 2,
+              "requestId": "nq001-20260921-destroy-item-final-v3-7103065-2a4e6f0c9d2b",
+              "stage": "result_contract"
+            }
+          ],
+          "promptContext": {
+            "mode": "package"
+          },
+          "retainedDraft": {
+            "text": "",
+            "status": "unconfirmed",
+            "sha256": null
+          },
+          "observationSchema": "nq001-stage-observation/1",
+          "requestId": "nq001-20260921-destroy-item-final-v3-7103065-2a4e6f0c9d2b",
+          "turnDurationMs": 7584,
+          "providerUsage": {
+            "reported_tokens": 21279,
+            "calls": 2,
+            "unreported_calls": 0
+          }
+        },
+        null
+      ]
+    ],
+    "error": {
+      "code": "generation_failed",
+      "message": "这次续写未能完成，请重试或调整行动。",
+      "status": 503
+    }
+  }
+]
