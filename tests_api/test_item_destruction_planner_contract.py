@@ -1,5 +1,6 @@
 """Offline contract replay for permanent-destruction planner boundaries."""
 import copy
+import json
 import unittest
 from pathlib import Path
 
@@ -11,6 +12,8 @@ from open_story_engine.content import load_runtime_story_package
 from open_story_engine.cocreation import create_contract, entry_node
 from open_story_engine.reader_scene_plan import validate_scene_plan
 from open_story_engine.reader_scene_review import public_scene_evidence
+from open_story_engine.api_narrative import PlayerNarrativePlanner
+from open_story_engine.llm import Completion
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -85,11 +88,29 @@ class ItemDestructionPlannerContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '具体.*动作'):
             self.validate(plan)
 
+    def test_pending_candidate_must_not_leak_into_canonical_fields(self):
+        plan = self.abstract_plan()
+        plan['narrativeOptions'] = [{'text': '撕毁或揉散，待正文确认',
+                                     'status': 'pending', 'requiresConfirmation': True}]
+        plan['method'] = '先取出文书，再撕毁并揉散。'
+        with self.assertRaisesRegex(ValueError, '具体.*动作'):
+            self.validate(plan)
+
     def test_unsupported_witness_is_rejected(self):
         plan = self.abstract_plan()
         plan['scenePlan']['outcome'] = '守门弟子目睹陆照临永久损毁引荐文书。'
         with self.assertRaisesRegex(ValueError, '目睹.*依据'):
             self.validate(plan)
+
+        plan = self.abstract_plan()
+        plan['requirements']['A1']['summary'] = '永久损毁引荐文书，并由守门弟子确认。'
+        with self.assertRaisesRegex(ValueError, '目睹或确认.*依据'):
+            self.validate(plan)
+
+    def test_explicitly_unknown_witness_limit_is_allowed(self):
+        plan = self.abstract_plan()
+        plan['scenePlan']['observationLimits'][0] = '没有依据表明守门弟子或伤者看清、听见或确认损毁动作。'
+        self.validate(plan)
 
     def test_holding_quote_cannot_prove_destruction(self):
         plan = self.abstract_plan()
@@ -102,6 +123,34 @@ class ItemDestructionPlannerContractTests(unittest.TestCase):
         plan['stateChanges'] = []
         with self.assertRaisesRegex(ValueError, '没有登记不可逆'):
             self.validate(plan)
+
+    def test_valid_canonical_plan_still_stops_at_authority_before_any_write(self):
+        plan = self.abstract_plan()
+        evidence = self.evidence
+        review = {
+            'decision': 'allow', 'issues': [],
+            'checks': [{'stepId': 'S1', 'authorized': True, 'basis': 'player_input',
+                        'quote': self.action, 'reason': '只授权抽象的永久损毁结果'}],
+            'stateChecks': [{'changeId': 'C1', 'authorized': True, 'reason': '不可逆结果与玩家请求一致'}],
+            'premiseChecks': [{
+                'id': 'K1', 'kind': 'existing', 'verdict': 'supported',
+                'sources': [{'id': self.source_id, 'quote': evidence[self.source_id]}],
+                'stepIds': [], 'missingEvidence': [],
+                'reason': '性质：道具当前由玩家持有，未证明已损毁。依据：公开引文确认持有。缺证内容：具体损毁方式与NPC反应。',
+            }, {
+                'id': 'O1', 'kind': 'restriction', 'verdict': 'supported', 'sources': [], 'stepIds': [],
+                'missingEvidence': [], 'reason': '具体损毁方式与现场反应保持未知。',
+            }],
+        }
+        before = copy.deepcopy(self.state)
+        gateway = type('Gateway', (), {})()
+        gateway.model = 'fixture'
+        gateway.complete_json = lambda *args, **kwargs: Completion(json.dumps(review, ensure_ascii=False), '{}', [])
+        ra_result = PlayerNarrativePlanner(gateway)._check_action_authority(
+            self.context, self.action, plan, [], [])
+        self.assertEqual(ra_result['decision'], 'allow')
+        self.assertEqual(self.state, before)
+        self.assertFalse(items.destroyed(self.state, ITEM))
 
 
 if __name__ == '__main__':

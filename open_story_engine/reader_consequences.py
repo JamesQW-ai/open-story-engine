@@ -116,7 +116,7 @@ _MOVEMENT_NEGATION = re.compile(r'(?:不|不要|不必|暂不|暂时不|不再|�
 # used the verb, it remains a pending narrative option and cannot become a
 # player-authorized step or state-change reason.
 _CONCRETE_DESTRUCTION = re.compile(
-    r'(?:撕碎|撕裂|撕扯|扯碎|揉烂|揉碎|揉搓|搓成|烧毁|焚烧|焚毁|点燃|折断|折碎|砸碎|摔碎|剪碎|磨碎|掰断|踩碎|碾碎)'
+    r'(?:取出|抽出|拿出|撕毁|撕碎|撕裂|撕扯|扯碎|揉散|揉烂|揉碎|揉搓|搓成|烧毁|焚烧|焚毁|点燃|折断|折碎|砸碎|摔碎|剪碎|磨碎|掰断|踩碎|碾碎)'
 )
 _PERMANENT_DESTRUCTION = re.compile(r'(?:永久|彻底|完全|不可再).{0,5}(?:损毁|销毁|毁掉|毁坏|破坏)')
 _DESTRUCTION_ASSERTION = re.compile(r'(?<!未)(?<!尚未)(?<!没有)(?<!不)(?:已|已经|完成|发生|被).{0,8}(?:损毁|销毁|毁掉|毁坏|破坏)|(?:永久|彻底|完全)(?:地)?(?:损毁|销毁|毁掉|毁坏)')
@@ -178,12 +178,15 @@ def _validate_player_intent_boundaries(data, requirements, context):
         raise ValueError('玩家明确要求永久损毁，但计划没有登记不可逆的道具结果')
     # ``requirements`` is the normalized playerIntent.  It must not become a
     # second, more specific command than the original input.
+    canonical_summaries = []
     for item in entries.values():
         summary = item.get('summary', '') if isinstance(item, dict) else ''
+        canonical_summaries.append(summary)
         extra = _CONCRETE_DESTRUCTION.search(summary)
         if extra and not _CONCRETE_DESTRUCTION.search(original):
             raise ValueError('玩家意图不得擅自补入具体损毁动作：' + extra.group())
-    for text in _flatten_plan_text(data):
+    canonical_texts = canonical_summaries + _flatten_plan_text(data)
+    for text in canonical_texts:
         extra = _CONCRETE_DESTRUCTION.search(text)
         if extra and not _CONCRETE_DESTRUCTION.search(original):
             raise ValueError('永久损毁的具体动作须待确认，不能写入行动计划或权威状态：' + extra.group())
@@ -194,8 +197,8 @@ def _validate_player_intent_boundaries(data, requirements, context):
     names = {character.get('name') for character in context.get('package', {}).get('characters', [])
              if isinstance(character, dict) and character.get('name')}
     roles = names | {'守门弟子', '门卫', '执事', '旁人', '弟子', '证人'}
-    for text in _flatten_plan_text(data):
-        uncertain = re.search(r'(?:是否|未知|不知|不知道|未确认|尚未确认|无法判断)', text)
+    for text in canonical_texts:
+        uncertain = re.search(r'(?:是否|未知|不知|不知道|未确认|尚未确认|无法判断|没有依据|无依据|不写|不假定|不得)', text)
         if _WITNESS_CLAIM.search(text) and not uncertain and any(role in text for role in roles if role):
             if not (_WITNESS_CLAIM.search(original) and any(role in original for role in roles if role)):
                 raise ValueError('NPC目睹或确认损毁缺少当前获知依据：' + text[:80])
