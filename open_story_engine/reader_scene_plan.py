@@ -61,11 +61,22 @@ def validate_plan_premises(data, contract, evidence):
     steps = {s['id'] for s in contract['steps']}
     for check in checks:
         key = check['id']
-        if (check.get('kind') not in ('existing', 'after_step', 'restriction', 'unknown')
-                or not isinstance(check.get('reason'), str) or not check['reason'].strip()
-                or not isinstance(check.get('sources'), list) or not isinstance(check.get('stepIds'), list)
-                or not isinstance(check.get('missingEvidence'), list)):
-            raise ActionEvidenceError('写前前提核对须说明性质、依据和缺证内容：' + key)
+        missing = []
+        if check.get('kind') not in ('existing', 'after_step', 'restriction', 'unknown'):
+            missing.append('kind')
+        if check.get('verdict') not in ('supported', 'unsupported'):
+            missing.append('verdict')
+        if not isinstance(check.get('sources'), list):
+            missing.append('sources')
+        if not isinstance(check.get('stepIds'), list):
+            missing.append('stepIds')
+        if not isinstance(check.get('missingEvidence'), list):
+            missing.append('missingEvidence')
+        if not isinstance(check.get('reason'), str) or not check['reason'].strip():
+            missing.append('reason')
+        if missing:
+            raise ActionEvidenceError('写前前提核对缺少K/O必填字段：' + key + '；缺少或无效=' + '、'.join(missing)
+                                      + '；必须说明性质、依据和缺证内容')
         if check.get('verdict') != 'supported' or check['missingEvidence']:
             raise ValueError('场景规划前提缺证：' + key + ' ' + check['reason'] + ' ' + str(check['missingEvidence']))
         for ref in check['sources']:

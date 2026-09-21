@@ -50,6 +50,16 @@ class ScenePlanTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '前提缺证'):
             validate_plan_premises({'premiseChecks': [check]}, self.contract, self.evidence)
 
+    def test_prewrite_review_reports_the_missing_k1_contract_field(self):
+        self.contract['scenePlan']['knowledge'] = [dict(
+            speakerId=GU, statement='引荐文书已由玩家持有，尚未永久损毁',
+            status='reported', sources=[dict(id='opening-1', quote='纸包仍然合着')],
+        )]
+        check = dict(id='K1', kind='existing', verdict='supported', sources=[
+            dict(id='opening-1', quote='纸包仍然合着')], stepIds=[], reason='性质和来源均已核对')
+        with self.assertRaisesRegex(ValueError, r'K1.*missingEvidence'):
+            validate_plan_premises({'premiseChecks': [check]}, self.contract, self.evidence)
+
     def test_prewrite_future_knowledge_requires_actual_dependency(self):
         self.contract['scenePlan']['knowledge'] = [dict(status='pending', afterStepId='S1', statement='听完才知道')]
         check = dict(id='K1', kind='after_step', verdict='supported', sources=[], stepIds=['S1'], missingEvidence=[], reason='告知后才听到')

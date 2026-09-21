@@ -42,6 +42,20 @@ def destruction_evidence(nodes, item_id):
     return None
 
 
+def can_destroy(item):
+    """Return whether a registered item may take the irreversible terminal bit.
+
+    StoryPackages predating the explicit flag only expose ``portable``.  A
+    portable item is the safe legacy default; an explicit ``destructible`` or
+    ``destroyable`` value remains authoritative for packages and test fixtures
+    that declare the capability directly.
+    """
+    for key in ('destructible', 'destroyable'):
+        if key in item:
+            return item[key] is True
+    return item.get('portable', True) is True
+
+
 def validate_changes(state, plan, known):
     changes = plan.get('stateChanges', [])
     unavailable = {iid for iid, entity in known.items() if entity['kind'] == 'item' and destroyed(state, iid)}
@@ -51,8 +65,16 @@ def validate_changes(state, plan, known):
         if attribute == ATTRIBUTE:
             if known[iid]['kind'] != 'item' or value is not True:
                 raise ValueError('永久损毁标记只允许对道具登记 true，不能撤销')
+            if iid in unavailable:
+                raise ValueError('已永久损毁的道具不能再次损毁：' + iid)
+            if not can_destroy(known[iid]):
+                raise ValueError('该道具没有可核实的可损毁性：' + iid)
+            player_id = state.get('playerCharacterId')
+            owner_id = state.get('itemOwnerCharacterIds', {}).get(iid)
+            if owner_id != player_id:
+                raise ValueError('永久损毁道具必须由玩家当前持有：' + iid)
             destroying.add(iid)
-        if iid in unavailable and not (attribute == ATTRIBUTE and value is True):
+        if iid in unavailable:
             raise ValueError('已永久损毁的道具不能恢复、转交或继续改变可用状态：' + iid)
     for change in changes:
         if change['entityId'] in destroying and change['attribute'] in ('ownerCharacterId', 'locationId') and change['value'] is not None:

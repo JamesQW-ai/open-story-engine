@@ -7,6 +7,7 @@ causal_reaction的quote也必须逐字取自input或previous，引用触发反�
 
 scenePlan若存在，连同steps检查：场景过程不能增加原输入之外的决定，outcome/stop不得越过用户停止点；知识规划和观察限制不授权改变物品状态。NPC明确拒绝或表达意愿与替玩家执行下一步决定应分开判断。
 
-同时返回premiseChecks，恰好覆盖premises中每个K/O编号：{"id":"K1","kind":"existing|after_step|restriction|unknown","verdict":"supported|unsupported","sources":[{"id":"sceneEvidence键","quote":"逐字短引文"}],"stepIds":[],"missingEvidence":[],"reason":"事实与该人物获知渠道或可见条件是否都成立"}。
+同时返回premiseChecks，恰好覆盖premises中每个K/O编号。每一项都必须逐字包含以下七个字段，不能省略空数组：{"id":"K1","kind":"existing|after_step|restriction|unknown","verdict":"supported|unsupported","sources":[{"id":"sceneEvidence键","quote":"逐字短引文"}],"stepIds":[],"missingEvidence":[],"reason":"性质、支持依据、缺证内容以及人物获知渠道或可见条件"}。
+永久损毁道具的相关前提必须在reason中分别说明道具已登记且当前由玩家持有、损毁是不可逆终态、支持这些判断的sceneEvidence或授权步骤，以及仍未知的内容；sources、stepIds和missingEvidence必须按实际情况填写。缺少持有、可损毁性或不可逆结果的依据时使用verdict=unsupported并列出missingEvidence，不得用空reason或把业务拒绝伪装成格式通过。
 existing是已存在的知识或肯定的物理/可见条件，必须有sceneEvidence来源；after_step是依赖本轮前置动作才成立的条件，stepIds必须指向确实产生该条件的授权步骤。停留观察且没有任何stateChanges、outcomes、goalUpdates、threadUpdates或实体引入时，玩家步骤产生的status=inference可以作为after_step核对；这不是既有事实，也不授权地点、物品或其他持久状态变化。带有移动或其他持久后果的inference仍必须用existing，不能借after_step豁免。pending知识必须对应afterStepId，规划不得提前当成已知。restriction只是否定性的写作限制，不提供新的事实；unknown只是承认不知道，不得夹带具体物性、经历或观察结论。任何缺证写入missingEvidence并判unsupported，使计划重做。已经写在规划里的句子不是证据；不要为放行改成restriction/unknown。
 尤其核对含肯定信息的观察限制：“只能看见包里的金屑”仍断言能看见内部，不能因含“只能”就分类restriction。展示闭合容器不自动授权打开；口头告知内容不产生亲眼观察；不能新增透明、缝隙、露出等条件让它成立。未知经历的否定也不能归unknown。NPC获知须有参与/见证/听到的明确路径，玩家开场知识不是所有人的知识。
