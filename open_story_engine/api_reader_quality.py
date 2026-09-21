@@ -1,14 +1,14 @@
 """Evidence-bound reading notes; these never grant inventory or world state."""
 import re
 
-from .reader_scene_plan import MIN_SCENE_CJK, MAX_SCENE_CJK, cjk_character_count
+from .reader_scene_plan import MIN_SCENE_CJK, MAX_SCENE_CJK, cjk_character_count, normalize_target_cjk
 
 
 def scene_pacing(contract, before, after):
     """A writing budget based on authorized work, never a completion score."""
     plan = (contract or {}).get('scenePlan')
     if plan:
-        return {'level': 'dynamic', 'targetCjk': list(plan['targetCjk']),
+        return {'level': 'dynamic', 'targetCjk': normalize_target_cjk(plan['targetCjk']),
                 'reason': plan['lengthReason'], 'hardMinimum': False,
                 'minCjk': MIN_SCENE_CJK, 'maxCjk': MAX_SCENE_CJK,
                 'lengthPolicy': 'final_visible_prose_dynamic_80_1500'}

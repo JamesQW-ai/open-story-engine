@@ -192,6 +192,8 @@ class ItemDestructionPlannerContractTests(unittest.TestCase):
 
     def test_valid_canonical_plan_still_stops_at_authority_before_any_write(self):
         plan = self.abstract_plan()
+        plan['scenePlan']['targetCjk'] = 120
+        plan = self.validate(plan)
         evidence = self.evidence
         review = {
             'decision': 'allow', 'issues': [],
@@ -225,6 +227,7 @@ class ItemDestructionPlannerContractTests(unittest.TestCase):
         self.assertEqual(ra_result['decision'], 'allow')
         authority_input = json.loads(gateway.calls[0][1]['content'])
         self.assertNotIn('narrativeOptions', authority_input['scenePlan'])
+        self.assertEqual(authority_input['scenePlan']['targetCjk'], [120, 120])
         self.assertEqual(self.state, before)
         self.assertFalse(items.destroyed(self.state, ITEM))
 

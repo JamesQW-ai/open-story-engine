@@ -33,6 +33,23 @@ def cjk_character_count(text):
     return len(re.findall(r'[\u3400-\u4dbf\u4e00-\u9fff]', text or ''))
 
 
+def normalize_target_cjk(value):
+    """Return the canonical dynamic interval for a scene target.
+
+    An integer is a shorthand for a fixed target and therefore normalizes to
+    a degenerate interval before pacing, authority review, and prose checks.
+    """
+    if type(value) is int:
+        if MIN_SCENE_CJK <= value <= MAX_SCENE_CJK:
+            return [value, value]
+        raise ValueError(f'scenePlan.targetCjk标量须位于{MIN_SCENE_CJK}至{MAX_SCENE_CJK}之间')
+    if (isinstance(value, list) and len(value) == 2
+            and all(type(n) is int for n in value)
+            and MIN_SCENE_CJK <= value[0] <= value[1] <= MAX_SCENE_CJK):
+        return list(value)
+    raise ValueError(f'scenePlan.targetCjk须是{MIN_SCENE_CJK}至{MAX_SCENE_CJK}内的标量或动态区间')
+
+
 def plan_premises(plan):
     """Number prerequisites for the existing independent authority review."""
     return {**{f'K{i+1}': item for i, item in enumerate(plan.get('knowledge', []))},
@@ -122,11 +139,7 @@ def validate_scene_plan(contract, evidence, people):
     for field in ('start', 'outcome', 'stop', 'lengthReason'):
         if not isinstance(plan.get(field), str) or not 1 <= len(plan[field].strip()) <= 500:
             raise ValueError('scenePlan缺少有效的' + field)
-    target = plan.get('targetCjk')
-    if (not isinstance(target, list) or len(target) != 2
-            or any(type(n) is not int for n in target)
-            or not MIN_SCENE_CJK <= target[0] <= target[1] <= MAX_SCENE_CJK):
-        raise ValueError(f'scenePlan.targetCjk须是{MIN_SCENE_CJK}至{MAX_SCENE_CJK}内的动态区间')
+    plan['targetCjk'] = normalize_target_cjk(plan.get('targetCjk'))
     beats = plan.get('beats')
     steps = {s['id'] for s in contract['steps']}
     covered = set()

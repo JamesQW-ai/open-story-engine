@@ -2,6 +2,7 @@ import copy
 import unittest
 
 from open_story_engine.reader_scene_plan import plan_premises, validate_plan_premises, validate_scene_plan
+from open_story_engine.api_reader_quality import scene_pacing
 from open_story_engine.reader_scene_review import (
     SceneReviewError, grounding_claims, reject_review_issues, repair_paragraphs,
     scene_knowledge, validate_grounding,
@@ -145,15 +146,33 @@ class ScenePlanTests(unittest.TestCase):
             self.validate(self.contract)
 
     def test_missing_or_malformed_plan_rejected_before_writing(self):
+        scalar = copy.deepcopy(self.contract)
+        scalar['scenePlan']['targetCjk'] = 120
+        self.validate(scalar)
+        self.assertEqual(scalar['scenePlan']['targetCjk'], [120, 120])
+
+        interval = copy.deepcopy(self.contract)
+        interval['scenePlan']['targetCjk'] = [80, 1500]
+        self.validate(interval)
+        self.assertEqual(interval['scenePlan']['targetCjk'], [80, 1500])
+
         bad = copy.deepcopy(self.contract)
         del bad['scenePlan']
         with self.assertRaises(ValueError):
             self.validate(bad)
-        for target in ([True, 600], [700, 300], [0, 200], [200, 2500], None):
+        for target in ([True, 600], [700, 300], [0, 200], [200, 2500], 79, 1501, '120', None):
             bad = copy.deepcopy(self.contract)
             bad['scenePlan']['targetCjk'] = target
             with self.subTest(target=target), self.assertRaises(ValueError):
                 self.validate(bad)
+        missing = copy.deepcopy(self.contract)
+        del missing['scenePlan']['targetCjk']
+        with self.assertRaises(ValueError):
+            self.validate(missing)
+
+    def test_scene_pacing_uses_the_same_normalized_interval(self):
+        profile = scene_pacing({'scenePlan': {'targetCjk': 120, 'lengthReason': '单一结果'}}, {}, {})
+        self.assertEqual(profile['targetCjk'], [120, 120])
 
     def test_public_knowledge_does_not_reveal_internal_state(self):
         context = {'contract': {'openingContext': {'knownFacts': ['纸包仍然合着。']}},
