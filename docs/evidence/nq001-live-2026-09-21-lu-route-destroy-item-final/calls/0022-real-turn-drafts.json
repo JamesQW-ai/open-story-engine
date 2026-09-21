@@ -1,0 +1,109 @@
+[
+  {
+    "key": "0774c852a901fea70bce3a17fecb4b8d43bf5648e9542739a8dcde3a77f4a1be",
+    "attempt_id": "4d59e4f501804f7b9e186d30019896b4",
+    "binding": {
+      "session_id": "615a8714-854e-5cfe-a448-4ed98fd5b142",
+      "parent_branch_id": "branch_21d02a70-09c3-4f85-b855-efa4e031a1af",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.3",
+      "rules_version": "prepared-player-turn/19+prompt-catalog/1:30b6498a5c3bf4b1af577eecf1ba08d890eae8495e53df4ec7cffd39490c5833",
+      "model": "deepseek-v4-flash",
+      "closing_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "parent_digest": "38297b70fde5579b6ffea58c3bcdd000f5e34022a41296f2a4bb39cc44bcb0ee",
+      "request_id": "nq001-20260921-destroy-item-final-real-c4f4d44-7a4e6f0c9d2b",
+      "input_digest": "ff49be08da05f5c219e58494a777b291a4a7a895cb58f488c6bba46c092d7674"
+    },
+    "payload": {
+      "text": "我永久损毁道具：引荐文书。"
+    },
+    "status": "failed",
+    "created": 1789962409.254077,
+    "metrics": {
+      "first_text_ms": null,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 9632,
+      "reported_tokens": 20758,
+      "calls": 2,
+      "unreported_calls": 0,
+      "tokens": 20758
+    },
+    "previous_attempts": [],
+    "usage": {
+      "reported_tokens": 20758,
+      "calls": 2,
+      "unreported_calls": 0
+    },
+    "failure_audits": [
+      [
+        {
+          "operation": "branch_planner",
+          "model": "deepseek-v4-flash",
+          "promptVersion": "web-player-v3+prompt-catalog/1:30b6498a5c3bf4b1af577eecf1ba08d890eae8495e53df4ec7cffd39490c5833",
+          "requestSummary": "自定行动：我永久损毁道具：引荐文书",
+          "rawResponse": "{\"id\":\"6bde25b6-2ba1-43f8-90eb-23eea4cf784b\",\"object\":\"chat.completion\",\"created\":1789962410,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"ready\\\",\\n  \\\"message\\\": \\\"\\\",\\n  \\\"requirements\\\": {\\n    \\\"A1\\\": {\\n      \\\"mode\\\": \\\"result\\\",\\n      \\\"summary\\\": \\\"我永久损毁道具：引荐文书\\\"\\n    }\\n  },\\n  \\\"method\\\": \\\"陆照临此刻正站在玄霄宗山门外的雨中，手中捏着那封已经受潮的引荐文书（item_open_letter，当前由陆照临持有）。他可以在原地、在守门弟子视线可及的范围内，用双手将这封纸质文书撕扯、揉搓至无法复原的程度，使文书作为一封完整可递交的引荐凭证永久失效。代价是：他失去唯一能证明自己求入门身份的凭证，守门弟子会目睹这一行为，山门将闭而他没有文书可递。具体撕扯方式由正文呈现，不在此处预设。\\\",\\n  \\\"outcomes\\\": [],\\n  \\\"goalUpdates\\\": [],\\n  \\\"threadUpdates\\\": [],\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"S1\\\",\\n      \\\"actorId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"action\\\": \\\"陆照临在山门外将手中受潮的引荐文书永久损毁，使其不再是一封可递交的完整凭证；损毁后停在原地，不递文书、不跨封山线、不回应守门弟子尚未提出的新要求。\\\",\\n      \\\"requirementIds\\\": [\\\"A1\\\"],\\n      \\\"authority\\\": \\\"player\\\",\\n      \\\"causeStepId\\\": null,\\n      \\\"usedItemIds\\\": [\\\"item_open_letter\\\"]\\n    }\\n  ],\\n  \\\"introductions\\\": {\\n    \\\"characters\\\": [],\\n    \\\"items\\\": [],\\n    \\\"locations\\\": []\\n  },\\n  \\\"stateChanges\\\": [\\n    {\\n      \\\"id\\\": \\\"C1\\\",\\n      \\\"entityId\\\": \\\"item_open_letter\\\",\\n      \\\"attribute\\\": \\\"destroyedPermanently\\\",\\n      \\\"before\\\": null,\\n      \\\"value\\\": true,\\n      \\\"stepId\\\": \\\"S1\\\",\\n      \\\"reason\\\": \\\"陆照临在山门外亲手将受潮的引荐文书损毁至无法复原，文书作为完整凭证永久失效。\\\"\\n    }\\n  ],\\n  \\\"scenePlan\\\": {\\n    \\\"start\\\": \\\"承接上一回合终点：陆照临站在玄霄宗山门外的雨中，刚从怀里抽出受潮的引荐文书，捏在手里，纸角已软，字迹洇开。守门弟子仍按剑守在封山石旁，山门铁链作响。\\\",\\n    \\\"beats\\\": [\\n      {\\n        \\\"purpose\\\": \\\"兑现玩家永久损毁引荐文书的行动：呈现陆照临亲手将文书损毁至无法复原的过程与代价，不预设具体撕扯方式，只写结果——文书不再是一封可递交的完整凭证。\\\",\\n        \\\"stepIds\\\": [\\\"S1\\\"]\\n      },\\n      {\\n        \\\"purpose\\\": \\\"呈现损毁后的当场直接后果：守门弟子目睹这一行为后的反应，以及陆照临失去唯一入门凭证、停在原地不再递文书的处境。\\\",\\n        \\\"stepIds\\\": [\\\"S1\\\"]\\n      }\\n    ],\\n    \\\"outcome\\\": \\\"引荐文书被陆照临亲手永久损毁，他失去求入门的凭证，停在原地，未跨封山线，未递文书，未回应守门弟子尚未提出的新要求。\\\",\\n    \\\"stop\\\": \\\"保留给玩家的下一步决定：是否开口、是否离开、是否转向空灯或伤者等，均不由本回合替玩家决定。\\\",\\n    \\\"targetCjk\\\": [80, 250],\\n    \\\"lengthReason\\\": \\\"本回合为单一动作及其直接当场反应，无需复杂交锋或信息展开，篇幅以呈现损毁过程、代价与守门弟子反应为限。\\\",\\n    \\\"knowledge\\\": [],\\n    \\\"observationLimits\\\": [\\n      \\\"守门弟子是否看清损毁的具体方式、是否理解陆照临的意图，取决于其视线与距离，正文不替其断言。\\\",\\n      \\\"文书损毁后是否留下可辨认的残片、残片是否被任何人拾取，均为未知，不在此处补造。\\\",\\n      \\\"伤者与空灯仍在封山线外，其状态本回合无新变化，不重复确认。\\\"\\n    ],\\n    \\\"narrativeOptions\\\": [\\n      {\\n        \\\"text\\\": \\\"陆照临损毁文书的具体动作表现（如撕、揉、扯等）\\\",\\n        \\\"status\\\": \\\"pending\\\",\\n        \\\"requiresConfirmation\\\": true\\n      }\\n    ]\\n  },\\n  \\\"readingIntent\\\": \\\"brief\\\"\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":8928,\"completion_tokens\":960,\"total_tokens\":9888,\"prompt_tokens_details\":{\"cached_tokens\":8704},\"prompt_cache_hit_tokens\":8704,\"prompt_cache_miss_tokens\":224},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}\n{\"id\":\"a164f3a0-e5b4-4c8f-9aef-7b21c4c804d7\",\"object\":\"chat.completion\",\"created\":1789962415,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"ready\\\",\\n  \\\"message\\\": \\\"\\\",\\n  \\\"requirements\\\": {\\n    \\\"A1\\\": {\\n      \\\"mode\\\": \\\"result\\\",\\n      \\\"summary\\\": \\\"我永久损毁道具：引荐文书\\\"\\n    }\\n  },\\n  \\\"method\\\": \\\"陆照临此刻正站在玄霄宗山门外的雨中，手中捏着那封已经受潮的引荐文书（item_open_letter，当前由陆照临持有）。他可以在原地、在守门弟子视线可及的范围内，将这封纸质文书损毁至无法复原的程度，使文书作为一封完整可递交的引荐凭证永久失效。代价是：他失去唯一能证明自己求入门身份的凭证，守门弟子会目睹这一行为，山门将闭而他没有文书可递。具体损毁方式由正文呈现，不在此处预设。\\\",\\n  \\\"outcomes\\\": [],\\n  \\\"goalUpdates\\\": [],\\n  \\\"threadUpdates\\\": [],\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"S1\\\",\\n      \\\"actorId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"action\\\": \\\"陆照临在山门外将手中受潮的引荐文书永久损毁，使其不再是一封可递交的完整凭证；损毁后停在原地，不递文书、不跨封山线、不回应守门弟子尚未提出的新要求。\\\",\\n      \\\"requirementIds\\\": [\\\"A1\\\"],\\n      \\\"authority\\\": \\\"player\\\",\\n      \\\"causeStepId\\\": null,\\n      \\\"usedItemIds\\\": [\\\"item_open_letter\\\"]\\n    }\\n  ],\\n  \\\"introductions\\\": {\\n    \\\"characters\\\": [],\\n    \\\"items\\\": [],\\n    \\\"locations\\\": []\\n  },\\n  \\\"stateChanges\\\": [\\n    {\\n      \\\"id\\\": \\\"C1\\\",\\n      \\\"entityId\\\": \\\"item_open_letter\\\",\\n      \\\"attribute\\\": \\\"destroyedPermanently\\\",\\n      \\\"before\\\": null,\\n      \\\"value\\\": true,\\n      \\\"stepId\\\": \\\"S1\\\",\\n      \\\"reason\\\": \\\"陆照临在山门外亲手将受潮的引荐文书损毁至无法复原，文书作为完整凭证永久失效。\\\"\\n    }\\n  ],\\n  \\\"scenePlan\\\": {\\n    \\\"start\\\": \\\"承接上一回合终点：陆照临站在玄霄宗山门外的雨中，刚从怀里抽出受潮的引荐文书，捏在手里，纸角已软，字迹洇开。守门弟子仍按剑守在封山石旁，山门铁链作响。\\\",\\n    \\\"beats\\\": [\\n      {\\n        \\\"purpose\\\": \\\"兑现玩家永久损毁引荐文书的行动：呈现陆照临亲手将文书损毁至无法复原的过程与代价，不预设具体损毁方式，只写结果——文书不再是一封可递交的完整凭证。\\\",\\n        \\\"stepIds\\\": [\\\"S1\\\"]\\n      },\\n      {\\n        \\\"purpose\\\": \\\"呈现损毁后的当场直接后果：守门弟子目睹这一行为后的反应，以及陆照临失去唯一入门凭证、停在原地不再递文书的处境。\\\",\\n        \\\"stepIds\\\": [\\\"S1\\\"]\\n      }\\n    ],\\n    \\\"outcome\\\": \\\"引荐文书被陆照临亲手永久损毁，他失去求入门的凭证，停在原地，未跨封山线，未递文书，未回应守门弟子尚未提出的新要求。\\\",\\n    \\\"stop\\\": \\\"保留给玩家的下一步决定：是否开口、是否离开、是否转向空灯或伤者等，均不由本回合替玩家决定。\\\",\\n    \\\"targetCjk\\\": [80, 250],\\n    \\\"lengthReason\\\": \\\"本回合为单一动作及其直接当场反应，无需复杂交锋或信息展开，篇幅以呈现损毁过程、代价与守门弟子反应为限。\\\",\\n    \\\"knowledge\\\": [],\\n    \\\"observationLimits\\\": [\\n      \\\"守门弟子是否看清损毁的具体方式、是否理解陆照临的意图，取决于其视线与距离，正文不替其断言。\\\",\\n      \\\"文书损毁后是否留下可辨认的残片、残片是否被任何人拾取，均为未知，不在此处补造。\\\",\\n      \\\"伤者与空灯仍在封山线外，其状态本回合无新变化，不重复确认。\\\"\\n    ],\\n    \\\"narrativeOptions\\\": [\\n      {\\n        \\\"text\\\": \\\"陆照临损毁文书的具体动作表现\\\",\\n        \\\"status\\\": \\\"pending\\\",\\n        \\\"requiresConfirmation\\\": true\\n      }\\n    ]\\n  },\\n  \\\"readingIntent\\\": \\\"brief\\\"\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":9924,\"completion_tokens\":946,\"total_tokens\":10870,\"prompt_tokens_details\":{\"cached_tokens\":9728},\"prompt_cache_hit_tokens\":9728,\"prompt_cache_miss_tokens\":196},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+          "error": "永久损毁的具体动作须待确认，不能写入行动计划或权威状态：抽出",
+          "callObservations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 5545,
+                "responseHeadersMs": 468,
+                "completeBodyMs": 5545
+              },
+              "generationStage": "result_contract",
+              "revision": 0,
+              "callSequence": 1,
+              "requestId": "nq001-20260921-destroy-item-final-real-c4f4d44-7a4e6f0c9d2b",
+              "stage": "result_contract"
+            },
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 4005,
+                "responseHeadersMs": 375,
+                "completeBodyMs": 4005
+              },
+              "generationStage": "result_contract",
+              "revision": 1,
+              "callSequence": 2,
+              "requestId": "nq001-20260921-destroy-item-final-real-c4f4d44-7a4e6f0c9d2b",
+              "stage": "result_contract"
+            }
+          ],
+          "promptContext": {
+            "mode": "package"
+          },
+          "retainedDraft": {
+            "text": "",
+            "status": "unconfirmed",
+            "sha256": null
+          },
+          "observationSchema": "nq001-stage-observation/1",
+          "requestId": "nq001-20260921-destroy-item-final-real-c4f4d44-7a4e6f0c9d2b",
+          "turnDurationMs": 9632,
+          "providerUsage": {
+            "reported_tokens": 20758,
+            "calls": 2,
+            "unreported_calls": 0
+          }
+        },
+        null
+      ]
+    ],
+    "error": {
+      "code": "generation_failed",
+      "message": "这次续写未能完成，请重试或调整行动。",
+      "status": 503
+    }
+  }
+]

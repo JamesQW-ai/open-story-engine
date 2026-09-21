@@ -1,0 +1,69 @@
+{
+  "real_attempt": {
+    "result": "failed",
+    "done": false,
+    "sse_status": "error",
+    "error_code": "generation_failed",
+    "http_status": 503,
+    "error_message": "这次续写未能完成，请重试或调整行动。",
+    "first_failure_stage": "branch_planner contract validation",
+    "first_failure_detail": "永久损毁的具体动作须待确认，不能写入行动计划或权威状态：抽出"
+  },
+  "planner": {
+    "calls": 2,
+    "decision": "ready",
+    "canonical_state_change": {
+      "entity_id": "item_open_letter",
+      "attribute": "destroyedPermanently",
+      "value": true,
+      "before": null,
+      "evidence": "itemOwnerCharacterIds.item_open_letter = character_ae4cb42b9b49"
+    },
+    "requirements": "A1 仅为永久损毁引荐文书，没有额外玩家动作要求",
+    "scene_plan_knowledge": [],
+    "narrative_options": {
+      "status": "pending",
+      "requiresConfirmation": true,
+      "content": "损毁文书的具体动作表现"
+    },
+    "contract_result": "rejected"
+  },
+  "planner_boundary_audit": {
+    "first_response": "method 明确写入撕扯、揉搓，并断言守门弟子会目睹；不符合固定请求边界",
+    "second_response": "移除撕扯/揉搓的明确动作，仍在 method 写入亲手损毁并断言守门弟子会目睹；具体动作仅放入 pending 选项",
+    "k1": "未形成最终通过结果；knowledge 为空，持有证据未被当作已损毁证据",
+    "raw_evidence": "calls/0022-real-turn-drafts.json"
+  },
+  "downstream": {
+    "action_authority": "not_reached_as_accepted",
+    "body_generation": "not_reached",
+    "full_review": "not_reached",
+    "repair": "not_reached",
+    "atomic_commit": "not_reached",
+    "sse_done": false
+  },
+  "usage": {
+    "calls": 2,
+    "reported_tokens": 20758,
+    "first_text_ms": null,
+    "complete_ms": 9632,
+    "queue_ms": 1,
+    "explicit_retries": 0,
+    "retained_draft": {
+      "text": "",
+      "status": "unconfirmed",
+      "sha256": null
+    }
+  },
+  "state_safety": {
+    "parent_state_version_before": 1,
+    "parent_state_version_after_failure": 1,
+    "parent_state_version_after_restart": 1,
+    "item_owner_before_after_restart": "character_ae4cb42b9b49",
+    "destroyed_permanently_before_after_restart": false,
+    "real_attempt_new_branch": false,
+    "real_attempt_game_events": 0,
+    "real_attempt_event_narrations": 0,
+    "note": "同一数据库中此前的 mock 误用已单独保存为 b47d4af8-4555-4363-ae5d-6030052ddf1e；不计入真实模型结果。"
+  }
+}
