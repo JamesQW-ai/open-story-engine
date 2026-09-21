@@ -5,7 +5,7 @@ import re
 from .prompts import render_prompt
 from . import reader_actions, reader_threads, item_lifecycle
 
-VERSION = 'reader-consequences/7'
+VERSION = 'reader-consequences/8'
 
 
 class ConsequenceEvidenceError(ValueError):
@@ -111,6 +111,104 @@ _MOVEMENT_INTENT = re.compile(
 )
 _MOVEMENT_NEGATION = re.compile(r'(?:不|不要|不必|暂不|暂时不|不再|未曾|没有|拒绝)$')
 
+# A permanent-destruction result is an abstract player intent.  These verbs
+# describe a physical manifestation chosen by the planner; unless the player
+# used the verb, it remains a pending narrative option and cannot become a
+# player-authorized step or state-change reason.
+_CONCRETE_DESTRUCTION = re.compile(
+    r'(?:撕碎|撕裂|撕扯|扯碎|揉烂|揉碎|揉搓|搓成|烧毁|焚烧|焚毁|点燃|折断|折碎|砸碎|摔碎|剪碎|磨碎|掰断|踩碎|碾碎)'
+)
+_PERMANENT_DESTRUCTION = re.compile(r'(?:永久|彻底|完全|不可再).{0,5}(?:损毁|销毁|毁掉|毁坏|破坏)')
+_DESTRUCTION_ASSERTION = re.compile(r'(?<!未)(?<!尚未)(?<!没有)(?<!不)(?:已|已经|完成|发生|被).{0,8}(?:损毁|销毁|毁掉|毁坏|破坏)|(?:永久|彻底|完全)(?:地)?(?:损毁|销毁|毁掉|毁坏)')
+_WITNESS_CLAIM = re.compile(r'(?:目睹|亲眼|看见|看到|看清|见证|知晓|确认)')
+_ROLE_WITNESS = re.compile(r'(?:守门弟子|门卫|执事|旁人|弟子|证人)')
+
+
+def _positive_destruction_assertion(text):
+    """Match an affirmative destruction claim, excluding ``尚未/未`` claims."""
+    if not isinstance(text, str):
+        return None
+    for match in _DESTRUCTION_ASSERTION.finditer(text):
+        prefix = text[max(0, match.start() - 8):match.start()]
+        if re.search(r'(?:尚未|未|没有|不曾|不能|无法)\s*$', prefix):
+            continue
+        return match
+    return None
+
+
+def _flatten_plan_text(data):
+    """Return user-visible planner fields, excluding explicit pending options."""
+    values = []
+    for key in ('method',):
+        if isinstance(data.get(key), str):
+            values.append(data[key])
+    for step in data.get('steps', []) if isinstance(data.get('steps'), list) else []:
+        if isinstance(step, dict) and isinstance(step.get('action'), str):
+            values.append(step['action'])
+    for change in data.get('stateChanges', []) if isinstance(data.get('stateChanges'), list) else []:
+        if isinstance(change, dict) and isinstance(change.get('reason'), str):
+            values.append(change['reason'])
+    scene = data.get('scenePlan')
+    if isinstance(scene, dict):
+        for key in ('start', 'outcome', 'stop', 'lengthReason'):
+            if isinstance(scene.get(key), str):
+                values.append(scene[key])
+        for key in ('beats', 'knowledge', 'observationLimits'):
+            entries = scene.get(key)
+            if not isinstance(entries, list):
+                continue
+            for entry in entries:
+                if isinstance(entry, str):
+                    values.append(entry)
+                elif isinstance(entry, dict):
+                    for field in ('purpose', 'statement'):
+                        if isinstance(entry.get(field), str):
+                            values.append(entry[field])
+    return values
+
+
+def _validate_player_intent_boundaries(data, requirements, context):
+    """Keep irreversible item plans within the words and evidence of the turn."""
+    original = '；'.join(str(value) for value in requirements.values())
+    entries = data.get('requirements') or {}
+    if not _PERMANENT_DESTRUCTION.search(original):
+        return
+    if not any(isinstance(change, dict) and change.get('attribute') == item_lifecycle.ATTRIBUTE
+               and change.get('value') is True for change in data.get('stateChanges', [])):
+        raise ValueError('玩家明确要求永久损毁，但计划没有登记不可逆的道具结果')
+    # ``requirements`` is the normalized playerIntent.  It must not become a
+    # second, more specific command than the original input.
+    for item in entries.values():
+        summary = item.get('summary', '') if isinstance(item, dict) else ''
+        extra = _CONCRETE_DESTRUCTION.search(summary)
+        if extra and not _CONCRETE_DESTRUCTION.search(original):
+            raise ValueError('玩家意图不得擅自补入具体损毁动作：' + extra.group())
+    for text in _flatten_plan_text(data):
+        extra = _CONCRETE_DESTRUCTION.search(text)
+        if extra and not _CONCRETE_DESTRUCTION.search(original):
+            raise ValueError('永久损毁的具体动作须待确认，不能写入行动计划或权威状态：' + extra.group())
+
+    # A witness/knowledge claim needs a current access path.  The planner has
+    # no authority to turn the role in the scene into an eyewitness merely by
+    # mentioning it in outcome/method text.
+    names = {character.get('name') for character in context.get('package', {}).get('characters', [])
+             if isinstance(character, dict) and character.get('name')}
+    roles = names | {'守门弟子', '门卫', '执事', '旁人', '弟子', '证人'}
+    for text in _flatten_plan_text(data):
+        uncertain = re.search(r'(?:是否|未知|不知|不知道|未确认|尚未确认|无法判断)', text)
+        if _WITNESS_CLAIM.search(text) and not uncertain and any(role in text for role in roles if role):
+            if not (_WITNESS_CLAIM.search(original) and any(role in original for role in roles if role)):
+                raise ValueError('NPC目睹或确认损毁缺少当前获知依据：' + text[:80])
+
+    scene = data.get('scenePlan') or {}
+    for item in scene.get('knowledge', []) if isinstance(scene.get('knowledge'), list) else []:
+        if not isinstance(item, dict) or not _positive_destruction_assertion(item.get('statement', '')):
+            continue
+        sources = item.get('sources') if isinstance(item.get('sources'), list) else []
+        quoted = '；'.join(str(source.get('quote', '')) for source in sources if isinstance(source, dict))
+        if not _positive_destruction_assertion(quoted):
+            raise ValueError('当前持有证据只能证明持有，不能证明道具已经损毁：' + item.get('statement', '')[:80])
+
 
 def _has_player_movement_intent(requirements, context):
     """Detect an explicit player departure without treating refusal to move as one."""
@@ -173,6 +271,7 @@ def validate_plan(data, requirements, context):
     if isinstance(data.get('stateChanges'), list):
         data['stateChanges'] = [c for c in data['stateChanges'] if not (isinstance(c, dict) and 'before' in c and 'value' in c and c['before'] == c['value'])]
     reader_actions.validate_plan(data, context)
+    _validate_player_intent_boundaries(data, requirements, context)
     player_id = context['contract']['persona'].get('sourceCharacterId')
     player_location_change = next((change for change in data['stateChanges']
                                    if change.get('entityId') == player_id

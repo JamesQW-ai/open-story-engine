@@ -12,6 +12,21 @@ from .reader_actions import ActionEvidenceError
 MIN_SCENE_CJK = 80
 MAX_SCENE_CJK = 1500
 
+_POSITIVE_DESTRUCTION = re.compile(
+    r'(?<!未)(?<!尚未)(?<!没有)(?<!不)(?:已|已经|完成|发生|被).{0,8}(?:损毁|销毁|毁掉|毁坏|破坏)|(?:永久|彻底|完全)(?:地)?(?:损毁|销毁|毁掉|毁坏)'
+)
+
+
+def _affirmative_destruction(text):
+    if not isinstance(text, str):
+        return None
+    for match in _POSITIVE_DESTRUCTION.finditer(text):
+        prefix = text[max(0, match.start() - 8):match.start()]
+        if re.search(r'(?:尚未|未|没有|不曾|不能|无法)\s*$', prefix):
+            continue
+        return match
+    return None
+
 
 def cjk_character_count(text):
     """Count Han characters used by the player-facing prose contract."""
@@ -143,9 +158,20 @@ def validate_scene_plan(contract, evidence, people):
                 raise ValueError('场景知识来源必须逐字引用公开资料：' + str(ref) + '；只引用knowledge.publicEvidence已有键和原文。待发生告知应为pending、sources=[]。')
         if item['status'] in ('fact', 'reported', 'inference') and not refs:
             raise ValueError('事实、转述或推断前提须有公开依据；缺依据时标unknown。本回合尚未发生的告知用pending并指定afterStepId，不能提前标reported')
+        if _affirmative_destruction(item['statement']):
+            quoted = '；'.join(ref.get('quote', '') for ref in refs if isinstance(ref, dict))
+            if not _affirmative_destruction(quoted):
+                raise ValueError('持有或捏着道具的来源只能证明当前持有，不能证明已经永久损毁：' + item['statement'][:80])
         if item['status'] == 'pending' and (not isinstance(item.get('afterStepId'), str) or item['afterStepId'] not in steps):
             raise ValueError('待获知内容须用afterStepId绑定本回合授权步骤；只有正文实际告知后才可转述')
     limits = plan.get('observationLimits')
     if not isinstance(limits, list) or len(limits) > 12 or any(not isinstance(s, str) or not s.strip() for s in limits):
         raise ValueError('scenePlan.observationLimits须列明本回合可观察条件；没有则空数组')
+    options = plan.get('narrativeOptions', [])
+    if (not isinstance(options, list) or len(options) > 8
+            or any(not isinstance(option, dict)
+                   or not isinstance(option.get('text'), str) or not option['text'].strip()
+                   or option.get('status') != 'pending'
+                   or option.get('requiresConfirmation') is not True for option in options)):
+        raise ValueError('scenePlan.narrativeOptions只能登记待确认的具体表现')
     return plan
