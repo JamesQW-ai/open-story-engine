@@ -223,6 +223,13 @@ class PlayerNarrativePlanner(LlmPlanner):
         return scope
 
     def _check_action_authority(self, context, action, contract, raw, observations):
+        # Pending narrative candidates are not authority input.  They remain
+        # available to the later, explicitly confirmed writing path, while
+        # this reviewer sees only executable steps, state changes and factual
+        # scene premises.
+        scene_plan = contract.get('scenePlan')
+        authority_scene_plan = ({key: value for key, value in scene_plan.items() if key != 'narrativeOptions'}
+                                if isinstance(scene_plan, dict) else scene_plan)
         messages = [
             {'role': 'system', 'content': reader_actions.AUTHORITY_RULES},
             {'role': 'user', 'content': json.dumps({
@@ -230,8 +237,8 @@ class PlayerNarrativePlanner(LlmPlanner):
                 'playerId': context['contract']['persona'].get('sourceCharacterId'),
                 'priorState': consequences.prompt_state(context['parent']['branchState']),
                 'steps': contract['steps'], 'stateChanges': contract['stateChanges'],
-                'scenePlan': contract.get('scenePlan'),
-                'premises': plan_premises(contract.get('scenePlan') or {}),
+                'scenePlan': authority_scene_plan,
+                'premises': plan_premises(authority_scene_plan or {}),
                 'sceneEvidence': public_scene_evidence(context),
             }, ensure_ascii=False)},
         ]

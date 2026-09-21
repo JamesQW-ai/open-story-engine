@@ -1,6 +1,7 @@
 """Validated reader outcomes and goals, separate from frozen source-state patches."""
 import copy
 import hashlib
+import json
 import re
 from .prompts import render_prompt
 from . import reader_actions, reader_threads, item_lifecycle
@@ -136,41 +137,60 @@ def _positive_destruction_assertion(text):
     return None
 
 
-def _flatten_plan_text(data):
-    """Return user-visible planner fields, excluding explicit pending options."""
-    values = []
-    for key in ('method',):
-        if isinstance(data.get(key), str):
-            values.append(data[key])
-    for step in data.get('steps', []) if isinstance(data.get('steps'), list) else []:
-        if isinstance(step, dict) and isinstance(step.get('action'), str):
-            values.append(step['action'])
-    for change in data.get('stateChanges', []) if isinstance(data.get('stateChanges'), list) else []:
-        if isinstance(change, dict) and isinstance(change.get('reason'), str):
-            values.append(change['reason'])
+def _canonical_plan_texts(data):
+    """Return ``(JSON path, field, value)`` for executable plan text.
+
+    ``narrativeOptions`` is deliberately absent: it is a pending candidate
+    channel and must never be interpreted as an executable plan field.
+    """
+    entries = []
+    requirements = data.get('requirements') if isinstance(data.get('requirements'), dict) else {}
+    for key, item in requirements.items():
+        if isinstance(item, dict):
+            for field in ('summary', 'playerIntent', 'method'):
+                if isinstance(item.get(field), str):
+                    entries.append((f'$.requirements[{json.dumps(key, ensure_ascii=False)}].{field}', f'requirements.{field}', item[field]))
+    player_intent = data.get('playerIntent')
+    if isinstance(player_intent, str):
+        entries.append(('$.playerIntent', 'playerIntent', player_intent))
+    elif isinstance(player_intent, dict):
+        for field in ('summary', 'action', 'method'):
+            if isinstance(player_intent.get(field), str):
+                entries.append((f'$.playerIntent.{field}', f'playerIntent.{field}', player_intent[field]))
+    if isinstance(data.get('method'), str):
+        entries.append(('$.method', 'method', data['method']))
+    for index, step in enumerate(data.get('steps', []) if isinstance(data.get('steps'), list) else []):
+        if isinstance(step, dict):
+            for field in ('action', 'method', 'playerIntent'):
+                if isinstance(step.get(field), str):
+                    entries.append((f'$.steps[{index}].{field}', f'steps.{field}', step[field]))
+    for index, change in enumerate(data.get('stateChanges', []) if isinstance(data.get('stateChanges'), list) else []):
+        if isinstance(change, dict):
+            for field in ('reason', 'action', 'method', 'playerIntent'):
+                if isinstance(change.get(field), str):
+                    entries.append((f'$.stateChanges[{index}].{field}', f'stateChanges.{field}', change[field]))
     scene = data.get('scenePlan')
     if isinstance(scene, dict):
         for key in ('start', 'outcome', 'stop', 'lengthReason'):
             if isinstance(scene.get(key), str):
-                values.append(scene[key])
+                entries.append((f'$.scenePlan.{key}', f'scenePlan.{key}', scene[key]))
         for key in ('beats', 'knowledge', 'observationLimits'):
-            entries = scene.get(key)
-            if not isinstance(entries, list):
+            values = scene.get(key)
+            if not isinstance(values, list):
                 continue
-            for entry in entries:
+            for index, entry in enumerate(values):
                 if isinstance(entry, str):
-                    values.append(entry)
+                    entries.append((f'$.scenePlan.{key}[{index}]', f'scenePlan.{key}', entry))
                 elif isinstance(entry, dict):
                     for field in ('purpose', 'statement'):
                         if isinstance(entry.get(field), str):
-                            values.append(entry[field])
-    return values
+                            entries.append((f'$.scenePlan.{key}[{index}].{field}', f'scenePlan.{key}.{field}', entry[field]))
+    return entries
 
 
 def _validate_player_intent_boundaries(data, requirements, context):
     """Keep irreversible item plans within the words and evidence of the turn."""
     original = '；'.join(str(value) for value in requirements.values())
-    entries = data.get('requirements') or {}
     if not _PERMANENT_DESTRUCTION.search(original):
         return
     if not any(isinstance(change, dict) and change.get('attribute') == item_lifecycle.ATTRIBUTE
@@ -178,18 +198,13 @@ def _validate_player_intent_boundaries(data, requirements, context):
         raise ValueError('玩家明确要求永久损毁，但计划没有登记不可逆的道具结果')
     # ``requirements`` is the normalized playerIntent.  It must not become a
     # second, more specific command than the original input.
-    canonical_summaries = []
-    for item in entries.values():
-        summary = item.get('summary', '') if isinstance(item, dict) else ''
-        canonical_summaries.append(summary)
-        extra = _CONCRETE_DESTRUCTION.search(summary)
-        if extra and not _CONCRETE_DESTRUCTION.search(original):
-            raise ValueError('玩家意图不得擅自补入具体损毁动作：' + extra.group())
-    canonical_texts = canonical_summaries + _flatten_plan_text(data)
-    for text in canonical_texts:
+    violations = []
+    canonical_texts = _canonical_plan_texts(data)
+    for path, field, text in canonical_texts:
         extra = _CONCRETE_DESTRUCTION.search(text)
         if extra and not _CONCRETE_DESTRUCTION.search(original):
-            raise ValueError('永久损毁的具体动作须待确认，不能写入行动计划或权威状态：' + extra.group())
+            violations.append({'path': path, 'field': field, 'value': text,
+                               'rule': '具体动作须留在pending narrativeOptions，不能进入canonical plan；命中=' + extra.group()})
 
     # A witness/knowledge claim needs a current access path.  The planner has
     # no authority to turn the role in the scene into an eyewitness merely by
@@ -197,11 +212,15 @@ def _validate_player_intent_boundaries(data, requirements, context):
     names = {character.get('name') for character in context.get('package', {}).get('characters', [])
              if isinstance(character, dict) and character.get('name')}
     roles = names | {'守门弟子', '门卫', '执事', '旁人', '弟子', '证人'}
-    for text in canonical_texts:
+    for path, field, text in canonical_texts:
         uncertain = re.search(r'(?:是否|未知|不知|不知道|未确认|尚未确认|无法判断|没有依据|无依据|不写|不假定|不得)', text)
         if _WITNESS_CLAIM.search(text) and not uncertain and any(role in text for role in roles if role):
             if not (_WITNESS_CLAIM.search(original) and any(role in original for role in roles if role)):
-                raise ValueError('NPC目睹或确认损毁缺少当前获知依据：' + text[:80])
+                violations.append({'path': path, 'field': field, 'value': text,
+                                   'rule': 'NPC目睹或确认损毁缺少当前证据或依据；不得进入canonical plan'})
+
+    if violations:
+        raise ValueError('canonical/pending字段边界错误：' + json.dumps(violations, ensure_ascii=False))
 
     scene = data.get('scenePlan') or {}
     for item in scene.get('knowledge', []) if isinstance(scene.get('knowledge'), list) else []:

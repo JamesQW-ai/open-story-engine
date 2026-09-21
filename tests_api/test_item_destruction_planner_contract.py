@@ -36,6 +36,21 @@ class ItemDestructionPlannerContractTests(unittest.TestCase):
         self.source_id = next(key for key in evidence if key.startswith('history-') and key.endswith('-P1'))
         self.evidence = evidence
 
+    def real_failure_plans(self):
+        path = ROOT / 'docs/evidence/nq001-live-2026-09-21-lu-route-destroy-item-final/calls/0022-real-turn-drafts.json'
+        record = json.loads(path.read_text(encoding='utf-8'))[0]
+        plans = []
+        for group in record.get('failure_audits', []):
+            for audit in group:
+                if not isinstance(audit, dict) or audit.get('operation') != 'branch_planner':
+                    continue
+                for line in (audit.get('rawResponse') or '').splitlines():
+                    payload = json.loads(line)
+                    content = payload['choices'][0]['message']['content']
+                    plans.append(json.loads(content))
+        self.assertEqual(len(plans), 2)
+        return plans
+
     def abstract_plan(self):
         return {
             'decision': 'ready', 'readingIntent': 'brief',
@@ -96,6 +111,57 @@ class ItemDestructionPlannerContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '具体.*动作'):
             self.validate(plan)
 
+    def test_extra_canonical_aliases_are_scanned_with_exact_paths(self):
+        for path_kind in ('playerIntent', 'step_method', 'state_action'):
+            plan = self.abstract_plan()
+            if path_kind == 'playerIntent':
+                plan['playerIntent'] = '永久损毁时撕毁文书'
+                expected = '$.playerIntent'
+            elif path_kind == 'step_method':
+                plan['steps'][0]['method'] = '抽出并损毁文书'
+                expected = '$.steps[0].method'
+            else:
+                plan['stateChanges'][0]['action'] = '揉散文书'
+                expected = '$.stateChanges[0].action'
+            with self.subTest(path_kind=path_kind), self.assertRaises(ValueError) as caught:
+                self.validate(plan)
+            self.assertIn(expected, str(caught.exception))
+
+    def test_real_failure_jsons_are_rejected_with_exact_canonical_paths(self):
+        first, second = self.real_failure_plans()
+        for plan in (first, second):
+            with self.subTest(method=plan['method']), self.assertRaises(ValueError) as caught:
+                self.validate(plan)
+            message = str(caught.exception)
+            details = json.loads(message[message.index('['):])
+            self.assertTrue(details)
+            for item in details:
+                self.assertIn('path', item)
+                self.assertIn('field', item)
+                self.assertIn('value', item)
+                self.assertIn('rule', item)
+                self.assertNotIn('narrativeOptions', item['path'])
+            paths = {item['path'] for item in details}
+            self.assertIn('$.method', paths)
+            self.assertIn('$.scenePlan.start', paths)
+            self.assertIn('$.scenePlan.beats[1].purpose', paths)
+
+    def test_real_second_json_passes_after_canonical_fields_are_abstracted(self):
+        plan = copy.deepcopy(self.real_failure_plans()[1])
+        plan['method'] = '依据当前持有和可损毁性，登记引荐文书的永久损毁结果。'
+        plan['steps'][0]['action'] = '永久损毁当前持有的引荐文书，具体表现待确认。'
+        plan['stateChanges'][0]['reason'] = '玩家明确要求永久损毁当前持有的引荐文书。'
+        plan['scenePlan'].update({
+            'start': '承接山门外当前手中文书的场景。',
+            'outcome': '引荐文书产生永久损毁结果。',
+            'stop': '下一步由玩家决定。',
+            'lengthReason': '单一不可逆结果，短段落足够。',
+        })
+        plan['scenePlan']['beats'] = [{'purpose': '保留抽象的永久损毁结果，具体表现待正文确认。', 'stepIds': ['S1']}]
+        self.assertEqual(plan['scenePlan']['narrativeOptions'][0]['status'], 'pending')
+        self.assertTrue(plan['scenePlan']['narrativeOptions'][0]['requiresConfirmation'])
+        self.validate(plan)
+
     def test_unsupported_witness_is_rejected(self):
         plan = self.abstract_plan()
         plan['scenePlan']['outcome'] = '守门弟子目睹陆照临永久损毁引荐文书。'
@@ -143,12 +209,22 @@ class ItemDestructionPlannerContractTests(unittest.TestCase):
             }],
         }
         before = copy.deepcopy(self.state)
-        gateway = type('Gateway', (), {})()
-        gateway.model = 'fixture'
-        gateway.complete_json = lambda *args, **kwargs: Completion(json.dumps(review, ensure_ascii=False), '{}', [])
+        class Gateway:
+            model = 'fixture'
+
+            def __init__(self):
+                self.calls = []
+
+            def complete_json(self, messages, *args, **kwargs):
+                self.calls.append(messages)
+                return Completion(json.dumps(review, ensure_ascii=False), '{}', [])
+
+        gateway = Gateway()
         ra_result = PlayerNarrativePlanner(gateway)._check_action_authority(
             self.context, self.action, plan, [], [])
         self.assertEqual(ra_result['decision'], 'allow')
+        authority_input = json.loads(gateway.calls[0][1]['content'])
+        self.assertNotIn('narrativeOptions', authority_input['scenePlan'])
         self.assertEqual(self.state, before)
         self.assertFalse(items.destroyed(self.state, ITEM))
 
