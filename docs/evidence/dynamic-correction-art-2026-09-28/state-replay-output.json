@@ -1,0 +1,79 @@
+{
+  "summary": "陆照临折回执事房，将凭据与册上“已接收，存库待查”记录当面核对，确认铜灯仍由书办保管在木匣中，未拆未带；随后请书办代为约见周执事，询问昨夜伤者是否醒来及父亲陆沉舟失踪线索。书办答应午后未时前后引见，并说明执事房不管寻人，若当年无册上记录，问周执事也未必有结果。",
+  "actionStatus": "performed",
+  "updates": {
+    "introductions": {
+      "characters": [],
+      "items": [],
+      "locations": []
+    },
+    "stateChanges": [
+      {
+        "entityId": "item_open_empty_lamp",
+        "attribute": "ownerCharacterId",
+        "value": null,
+        "reason": "铜灯已由书办接收，存于执事房木匣中，未交予陆照临，也未认领。",
+        "paragraphIds": [
+          "P2",
+          "P3",
+          "P9"
+        ]
+      },
+      {
+        "entityId": "item_open_empty_lamp",
+        "attribute": "locationId",
+        "value": "location_open_registry",
+        "reason": "书办将铜灯收入木匣，置于执事房案角靠里位置，当面确认仍由他保管。",
+        "paragraphIds": [
+          "P1",
+          "P2",
+          "P9"
+        ]
+      }
+    ],
+    "outcomes": [],
+    "goalUpdates": [],
+    "threadUpdates": [],
+    "confirmedStates": [
+      {
+        "entityId": "item_open_empty_lamp",
+        "attribute": "locationId",
+        "value": "location_open_registry",
+        "reason": "陆照临当面核对凭据与册上记录，确认铜灯在执事房木匣中，由书办保管。",
+        "paragraphIds": [
+          "P1",
+          "P2",
+          "P9"
+        ]
+      },
+      {
+        "entityId": "item_open_empty_lamp",
+        "attribute": "ownerCharacterId",
+        "value": null,
+        "reason": "铜灯存库待查，未认领，持有人仍为执事房书办保管，未转交陆照临。",
+        "paragraphIds": [
+          "P2",
+          "P3",
+          "P9"
+        ]
+      }
+    ],
+    "followups": [
+      {
+        "summary": "书办答应替陆照临约见周执事，定在午后未时前后到前院偏厅，但周执事见不见取决于他手上的事；伤者是否醒来、父亲陆沉舟失踪线索均待当面询问。",
+        "paragraphIds": [
+          "P6",
+          "P8",
+          "P9"
+        ]
+      },
+      {
+        "summary": "书办称执事房只管院里进出与器物交接，不管寻人；若陆沉舟当年未在册上留过记录，问周执事也未必问得出线索。此说法尚未经周执事或册档核实。",
+        "paragraphIds": [
+          "P6"
+        ]
+      }
+    ],
+    "resolvedFollowups": []
+  }
+}

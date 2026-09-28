@@ -29,11 +29,13 @@ const BASE = '/api/v1'
 export class ApiError extends Error {
   status: number
   code: string
+  details: Record<string, unknown>
 
-  constructor(status: number, code: string, message: string) {
+  constructor(status: number, code: string, message: string, details: Record<string, unknown> = {}) {
     super(message)
     this.status = status
     this.code = code
+    this.details = details
   }
 }
 
@@ -70,18 +72,44 @@ async function streamRequest<T>(
   path: string,
   payload: PlayContinueRequest | PlayCreateRequest,
   onDelta: (text: string) => void,
-  onReset: () => void,
+  _onReset: () => void,
   signal?: AbortSignal,
 ): Promise<T> {
-  const response = await fetch(`${BASE}${path}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'text/event-stream',
-    },
-    body: JSON.stringify(payload),
-    signal,
-  })
+  // A lost receipt can be recovered only with the original idempotency key.
+  // Keep this bounded; a semantic rejection is not a connection failure.
+  for (let attempt = 0; ; attempt++) {
+    if (signal?.aborted) throw new DOMException('Aborted', 'AbortError')
+    try {
+      return await streamRequestOnce<T>(path, payload, onDelta, signal)
+    } catch (error) {
+      if (signal?.aborted) throw new DOMException('Aborted', 'AbortError')
+      if (attempt !== 0 || !payload.request_id?.trim() || !(error instanceof ApiError)
+          || !['network_error', 'stream_interrupted'].includes(error.code)) throw error
+    }
+  }
+}
+
+async function streamRequestOnce<T>(
+  path: string,
+  payload: PlayContinueRequest | PlayCreateRequest,
+  onDelta: (text: string) => void,
+  signal?: AbortSignal,
+): Promise<T> {
+  let response: Response
+  try {
+    response = await fetch(`${BASE}${path}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'text/event-stream',
+      },
+      body: JSON.stringify(payload),
+      signal,
+    })
+  } catch (error) {
+    if (signal?.aborted || (error instanceof Error && error.name === 'AbortError')) throw error
+    throw new ApiError(0, 'network_error', '暂时连接不上，请稍后重试。')
+  }
   if (!response.ok || !response.body)
     throw new ApiError(
       response.status,
@@ -93,7 +121,14 @@ async function streamRequest<T>(
   let buffer = ''
   try {
     for (;;) {
-      const { done, value } = await reader.read()
+      let chunk: ReadableStreamReadResult<Uint8Array>
+      try {
+        chunk = await reader.read()
+      } catch (error) {
+        if (signal?.aborted || (error instanceof Error && error.name === 'AbortError')) throw error
+        throw new ApiError(0, 'stream_interrupted', '连接中断，尚未收到正文确认。')
+      }
+      const { done, value } = chunk
       buffer += decoder.decode(value, { stream: !done })
       buffer = buffer.replace(/\r\n/g, '\n')
       let boundary: number
@@ -111,16 +146,25 @@ async function streamRequest<T>(
           .join('\n')
         if (!raw) continue
         const data = JSON.parse(raw)
-        if (event === 'delta' && typeof data.text === 'string')
-          onDelta(data.text)
-        if (event === 'reset') onReset()
+        // Transport fragments are not a display receipt. A disconnect after
+        // a delta must never expose text that the reader will then withdraw.
         if (event === 'error')
           throw new ApiError(
             data.status ?? 503,
             data.code ?? 'generation_failed',
             data.message ?? '续写未完成。',
+            data as Record<string, unknown>,
           )
-        if (event === 'done') return data as T
+        if (event === 'done') {
+          if (data.status === 'written' || data.session) {
+            if (!data.branch?.id || typeof data.branch.narrativeText !== 'string'
+                || !data.branch.narrativeText.trim())
+              throw new ApiError(0, 'invalid_confirmation', '正文确认数据不完整。')
+            if (signal?.aborted) throw new DOMException('Aborted', 'AbortError')
+            onDelta(data.branch.narrativeText)
+          }
+          return data as T
+        }
       }
       if (done)
         throw new ApiError(

@@ -301,10 +301,19 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
                     emit("done", validated.model_dump(mode="json", exclude_unset=True))
                 except ReadError as error:
                     emit("error", {"code": error.code, "status": error.status,
-                                   "message": "这次续写未能完成，请重试或调整行动。"})
+                                   "message": "这次续写未能完成，请重试或调整行动。",
+                                   "retryable": True,
+                                   "candidateShown": False,
+                                   "previousBranchUnchanged": True,
+                                   **{key: error.details[key] for key in (
+                                       'reviewAttempts', 'repairAttempted', 'failureStage', 'fallbackMode'
+                                   ) if key in error.details}})
                 except Exception:
                     emit("error", {"code": "generation_failed", "status": 503,
-                                   "message": "这次续写未能完成，请稍后重试。"})
+                                   "message": "这次续写未能完成，请稍后重试。",
+                                   "retryable": True,
+                                   "candidateShown": False,
+                                   "previousBranchUnchanged": True})
 
             async def event_stream():
                 Thread(target=generate, daemon=True).start()

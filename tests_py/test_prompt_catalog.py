@@ -16,9 +16,10 @@ class PromptCatalogTests(unittest.TestCase):
         # Captured from the pre-extraction Python expressions, not the renderer.
         cases = json.loads((Path(__file__).parent / 'fixtures/prompt_migration_v1.json').read_text())
         for key, case in cases.items():
-            if key in ('reader.narrative', 'reader.narrative_system', 'reader.opening', 'actions.plan', 'reader.observation_repair', 'reader.narrative_repair', 'actions.authority', 'reader.action_review'):
+            if key in ('reader.narrative', 'reader.narrative_system', 'reader.opening', 'actions.plan', 'reader.observation_repair', 'reader.narrative_repair', 'actions.authority', 'reader.action_review', 'reader.plan_repair'):
                 # D2 intentionally changes pacing, agency and extraction repair; retain the migration
-                # fixture unchanged as history, rather than rewriting its hash.
+                # fixture unchanged as history, rather than rewriting its hash. Plan repair also
+                # gained explicit exact-ID instructions for model outputs.
                 continue
             if key in ('actions.observe', 'actions.review', 'consequences.review'):
                 # P3 adds item usage, destruction and dependency evidence.

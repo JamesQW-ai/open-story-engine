@@ -1,0 +1,2619 @@
+{
+  "schemaVersion": "assertion-review-replay/0.1",
+  "sources": [
+    {
+      "name": "context-assertion-quote-eval-2026-09-27.json",
+      "path": "docs/evidence/context-management-2026-09-22/context-assertion-quote-eval-2026-09-27.json",
+      "sha256": "e85edce268dd11a07e7c8b94855d22fae26ccebf7a4a7d15777e881c985d3ddf",
+      "auditPath": "docs/evidence/context-management-2026-09-22/context-assertion-quote-eval-audit-2026-09-27.json",
+      "auditSha256": "6221268b8cd94a17bf9fe97770df66dc324200c032ac9bd28ab05246458a5444"
+    },
+    {
+      "name": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "path": "docs/evidence/context-management-2026-09-22/context-assertion-quote-v2-eval-2026-09-27.json",
+      "sha256": "8005a872b4a912abc75cf9d07f4cf61ff4bc5d2db017b47872262085a830bffb",
+      "auditPath": "docs/evidence/context-management-2026-09-22/context-assertion-quote-v2-eval-audit-2026-09-27.json",
+      "auditSha256": "f7026dc71877270a6fdf2365b6c535843037476f083793b4bb8ad268664eeddc"
+    },
+    {
+      "name": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "path": "docs/evidence/context-management-2026-09-22/context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "sha256": "456344eb777076e5284582082e87aa8bd0ea20af634891a63a0a5e360cb907c1",
+      "auditPath": "docs/evidence/context-management-2026-09-22/context-assertion-quote-reasoning-eval-audit-2026-09-27.json",
+      "auditSha256": "11f4eaecfd3c757ebe04cc14b9a86912b98a80676f638100dd46c6618ec588ef"
+    },
+    {
+      "name": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "path": "docs/evidence/context-management-2026-09-22/context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "sha256": "608ed513c2983720da93b67b6afd13ada02cef8ce470056e6585e0ca25b06e5c",
+      "auditPath": "docs/evidence/context-management-2026-09-22/context-assertion-quote-reasoning-capacity-eval-audit-2026-09-27.json",
+      "auditSha256": "bf0bc186d8f5cebb602e1f00f0a3714a3479eb1b9f51070c28cc4799c64fcadd"
+    },
+    {
+      "name": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "path": "docs/evidence/context-management-2026-09-22/context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "sha256": "4e9d228a5e2a20eecc8aecfac817afd198fac167b12c05aa418a5347960f980e",
+      "auditPath": "docs/evidence/context-management-2026-09-22/context-assertion-quote-reasoning-remainder-eval-audit-2026-09-27.json",
+      "auditSha256": "08fba03e493f7623b47e2f9bdc0b0048e4d60c915c122571e391b0b4dd845293"
+    }
+  ],
+  "inputHashes": {
+    "test_support/context_assertion_review_replay.py": "668405b5749105249854eeca7683d4585d8e04a6580badc5d5c50c430a088db3",
+    "test_support/context_assertion_review.py": "d957d15180e09ebb0849de4174aea8ffebb0b00f504eb4bb1c21a94449071d6c",
+    "test_support/context_assertion_binding_audit.py": "c9f85ad2ed75c6a1376ec31cb03fb4f098e1067cd422af5e1d3f9df54c35ae7c",
+    "test_support/context_assertion_iteration_report.py": "95ef6230c9e52490f0719ce95c6554e09c10bc31ffaf4905e66538d9c5738c85"
+  },
+  "cases": [
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "prefix:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "semantic_review_required",
+        "differingDimensions": [
+          "decisions",
+          "contents",
+          "origins",
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "prefix:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "in_core:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "semantic_review_required",
+        "differingDimensions": [
+          "decisions",
+          "contents",
+          "origins",
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "in_core:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "unquoted:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "unquoted:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "denial:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "denial:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "neighbour:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "neighbour:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "invalid_response",
+        "category": "invalid_response",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "two_people:first_operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "terminal_punctuation_only",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "two_people:second_operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "terminal_punctuation_only",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "gate:original_condition",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "gate:plain_emphasis",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "gate:possibility",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "gate:both",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "invalid_response",
+        "category": "invalid_response",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "gate:condition_paraphrase",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "gate:possibility_paraphrase",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "gate:both_paraphrase",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "gate:unrelated_possibility",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "gate:unrelated_condition",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "hall:source_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "terminal_punctuation_only",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "hall:negative_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "hall:inferred_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "invalid_response",
+        "category": "invalid_response",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "hall:explicit_uncertainty",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "invalid_response",
+        "category": "invalid_response",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "hall:word_mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "semantic_review_required",
+        "differingDimensions": [
+          "decisions",
+          "contents",
+          "origins",
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "hall:condition_and_inference",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "invalid_response",
+        "category": "invalid_response",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "hall:two_people",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "range_review_required",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "hall:unrelated_uncertainty",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "hall:denied_certainty",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "semantic_review_required",
+        "differingDimensions": [
+          "contents",
+          "origins",
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "control:location_mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "control:object_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "control:quoted_words",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "invalid_response",
+        "category": "invalid_response",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "control:mixed_people",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "scope:pronoun",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "out_of_scope",
+        "category": "out_of_scope",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "scope:cross_sentence",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "out_of_scope",
+        "category": "out_of_scope",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "control:adjunct_mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "semantic_review_required",
+        "differingDimensions": [
+          "decisions",
+          "contents",
+          "origins",
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "control:negative_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "frame:name_words",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "frame:portrait",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "frame:mixed_ownership",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "semantic_review_required",
+        "differingDimensions": [
+          "decisions",
+          "contents",
+          "origins",
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "frame:position_and_quote",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "invalid_response",
+        "category": "invalid_response",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "frame:self_report",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "frame:other_report",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "binding_conflict",
+        "differingDimensions": [
+          "decisions",
+          "contents",
+          "origins",
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [
+          {
+            "code": "registered_subject_mismatch",
+            "subject": "Efdd5a0e3878a-1",
+            "itemIndex": 0,
+            "subjectAnchor": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 3,
+              "quote": "沈砚秋"
+            },
+            "subjectMention": {
+              "unitId": "P1-U1",
+              "start": 4,
+              "end": 8,
+              "quote": "守门长老"
+            },
+            "expectedEntity": "scene:shen",
+            "mentionedEntity": "scene:gate_elder"
+          }
+        ],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "design:dual_origin",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "design:repeated_quote",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "design:nested_pending",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "semantic_review_required",
+        "differingDimensions": [
+          "decisions",
+          "contents",
+          "origins",
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-eval-2026-09-27.json",
+      "caseId": "design:unknown_speaker_pending",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "invalid_response",
+        "category": "invalid_response",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "prefix:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "prefix:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "in_core:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "range_review_required",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "in_core:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "unquoted:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "unquoted:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "denial:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "denial:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "semantic_review_required",
+        "differingDimensions": [
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "neighbour:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "neighbour:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "two_people:first_operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "range_review_required",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "two_people:second_operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "invalid_response",
+        "category": "invalid_response",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "gate:original_condition",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "gate:plain_emphasis",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "gate:possibility",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "gate:both",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "gate:condition_paraphrase",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "gate:possibility_paraphrase",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "gate:both_paraphrase",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "gate:unrelated_possibility",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "gate:unrelated_condition",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "hall:source_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "hall:negative_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "hall:inferred_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "hall:explicit_uncertainty",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "hall:word_mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "hall:condition_and_inference",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "hall:two_people",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "range_review_required",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "hall:unrelated_uncertainty",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "hall:denied_certainty",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "semantic_review_required",
+        "differingDimensions": [
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "control:location_mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "control:object_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "semantic_review_required",
+        "differingDimensions": [
+          "decisions",
+          "contents",
+          "origins",
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "control:quoted_words",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "invalid_response",
+        "category": "invalid_response",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "control:mixed_people",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "invalid_response",
+        "category": "invalid_response",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "scope:pronoun",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "out_of_scope",
+        "category": "out_of_scope",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "scope:cross_sentence",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "out_of_scope",
+        "category": "out_of_scope",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "control:adjunct_mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "control:negative_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "frame:name_words",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "frame:portrait",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "frame:mixed_ownership",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "range_review_required",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "frame:position_and_quote",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "semantic_review_required",
+        "differingDimensions": [
+          "contents",
+          "origins",
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "frame:self_report",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "range_review_required",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "frame:other_report",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "binding_conflict",
+        "differingDimensions": [
+          "decisions",
+          "contents",
+          "origins",
+          "qualifiers",
+          "ranges"
+        ],
+        "bindingIssues": [
+          {
+            "code": "registered_subject_mismatch",
+            "subject": "Efdd5a0e3878a-1",
+            "itemIndex": 0,
+            "subjectAnchor": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 3,
+              "quote": "沈砚秋"
+            },
+            "subjectMention": {
+              "unitId": "P1-U1",
+              "start": 4,
+              "end": 8,
+              "quote": "守门长老"
+            },
+            "expectedEntity": "scene:shen",
+            "mentionedEntity": "scene:gate_elder"
+          }
+        ],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "design:dual_origin",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "design:repeated_quote",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "design:nested_pending",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-v2-eval-2026-09-27.json",
+      "caseId": "design:unknown_speaker_pending",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "two_people:second_operator",
+      "review": {
+        "originalStatus": "model_error",
+        "category": "model_error",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "denial:operator",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "control:object_position",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "control:quoted_words",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "control:mixed_people",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "frame:position_and_quote",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "frame:other_report",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "hall:source_position",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "frame:self_report",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "design:dual_origin",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "design:nested_pending",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-eval-2026-09-27.json",
+      "caseId": "design:unknown_speaker_pending",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "two_people:second_operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "range_review_required",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "denial:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "range_review_required",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "control:object_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "control:quoted_words",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "control:mixed_people",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "frame:position_and_quote",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "frame:other_report",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "hall:source_position",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "frame:self_report",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "range_review_required",
+        "differingDimensions": [
+          "ranges"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "design:dual_origin",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "design:nested_pending",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_mismatch",
+        "category": "abstention_policy_review_required",
+        "differingDimensions": [
+          "decisions"
+        ],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json",
+      "caseId": "design:unknown_speaker_pending",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "prefix:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "prefix:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "in_core:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "in_core:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "unquoted:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "unquoted:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "denial:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "neighbour:mention",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "neighbour:operator",
+      "review": {
+        "schemaVersion": "assertion-review/0.1",
+        "originalStatus": "reference_match",
+        "category": "reference_match",
+        "differingDimensions": [],
+        "bindingIssues": [],
+        "semanticStatus": "unverified",
+        "comparisonScope": "frozen_reference_not_semantic_truth",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "two_people:first_operator",
+      "review": {
+        "originalStatus": "model_error",
+        "category": "model_error",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "gate:original_condition",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "gate:plain_emphasis",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "gate:possibility",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "gate:both",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "gate:condition_paraphrase",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "gate:possibility_paraphrase",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "gate:both_paraphrase",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "gate:unrelated_possibility",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "gate:unrelated_condition",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "hall:negative_position",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "hall:inferred_position",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "hall:explicit_uncertainty",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "hall:word_mention",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "hall:condition_and_inference",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "hall:two_people",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "hall:unrelated_uncertainty",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "hall:denied_certainty",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "control:location_mention",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "scope:pronoun",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "scope:cross_sentence",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "control:adjunct_mention",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "control:negative_position",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "frame:name_words",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "frame:portrait",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "frame:mixed_ownership",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    },
+    {
+      "source": "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json",
+      "caseId": "design:repeated_quote",
+      "review": {
+        "originalStatus": "not_run",
+        "category": "not_run",
+        "semanticStatus": "unverified",
+        "reviewRequired": true,
+        "acceptance": false,
+        "productionEnablement": false
+      }
+    }
+  ],
+  "summary": {
+    "context-assertion-quote-eval-2026-09-27.json": {
+      "all": {
+        "semantic_review_required": 7,
+        "reference_match": 26,
+        "invalid_response": 8,
+        "terminal_punctuation_only": 3,
+        "range_review_required": 1,
+        "out_of_scope": 2,
+        "binding_conflict": 1
+      },
+      "original": {
+        "semantic_review_required": 6,
+        "reference_match": 24,
+        "invalid_response": 7,
+        "terminal_punctuation_only": 3,
+        "range_review_required": 1,
+        "out_of_scope": 2,
+        "binding_conflict": 1
+      },
+      "design": {
+        "reference_match": 2,
+        "semantic_review_required": 1,
+        "invalid_response": 1
+      }
+    },
+    "context-assertion-quote-v2-eval-2026-09-27.json": {
+      "all": {
+        "reference_match": 33,
+        "range_review_required": 5,
+        "semantic_review_required": 4,
+        "invalid_response": 3,
+        "out_of_scope": 2,
+        "binding_conflict": 1
+      },
+      "original": {
+        "reference_match": 29,
+        "range_review_required": 5,
+        "semantic_review_required": 4,
+        "invalid_response": 3,
+        "out_of_scope": 2,
+        "binding_conflict": 1
+      },
+      "design": {
+        "reference_match": 4
+      }
+    },
+    "context-assertion-quote-reasoning-eval-2026-09-27.json": {
+      "all": {
+        "model_error": 1,
+        "not_run": 11
+      },
+      "original": {
+        "model_error": 1,
+        "not_run": 8
+      },
+      "design": {
+        "not_run": 3
+      }
+    },
+    "context-assertion-quote-reasoning-capacity-eval-2026-09-27.json": {
+      "all": {
+        "range_review_required": 3,
+        "reference_match": 8,
+        "abstention_policy_review_required": 1
+      },
+      "original": {
+        "range_review_required": 3,
+        "reference_match": 6
+      },
+      "design": {
+        "reference_match": 2,
+        "abstention_policy_review_required": 1
+      }
+    },
+    "context-assertion-quote-reasoning-remainder-eval-2026-09-27.json": {
+      "all": {
+        "reference_match": 9,
+        "model_error": 1,
+        "not_run": 26
+      },
+      "original": {
+        "reference_match": 9,
+        "model_error": 1,
+        "not_run": 25
+      },
+      "design": {
+        "not_run": 1
+      }
+    }
+  },
+  "newModelCalls": 0,
+  "acceptance": false,
+  "productionEnablement": false,
+  "historicalScoresChanged": false
+}

@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "context-baseline/0.1",
+  "status": "frozen",
+  "recordedAt": "2026-09-22",
+  "purpose": "阶段0三类真实模型基线；失败样本保留，不计为质量通过",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "identity": {
+    "entry_point_id": "entry_gu_trial",
+    "source_character_id": "character_e663361ab1c7"
+  },
+  "model": {
+    "planner": "openai",
+    "model": "deepseek-v4-flash",
+    "baseUrl": "https://api.deepseek.com",
+    "stream": true,
+    "qualityReview": false,
+    "transportFallback": false,
+    "apiKeyRecorded": false
+  },
+  "databaseBoundary": {
+    "formalDatabase": "/Users/James/open-story-engine/data/open-story-engine.sqlite",
+    "formalDatabaseSha256After": "8aa7dd302f5d0f16eb3cf08831ce46ff82227d13fd44b72e679f71d3b606c911",
+    "formalDatabaseSha256Before": "8aa7dd302f5d0f16eb3cf08831ce46ff82227d13fd44b72e679f71d3b606c911",
+    "formalDatabaseModified": false,
+    "isolatedRunsDirectory": "/tmp/open-story-engine-context-baseline-20260922/real-baseline-runs",
+    "formalTurnDraftsSha256Before": "6c976bfdb873a77033a536206a2b2548032da846a3abf59adbb9f1e6b168c916",
+    "formalTurnDraftsModified": false
+  },
+  "scenes": [
+    {
+      "id": "inform",
+      "input": "我告诉陆照临，我打算先带着这粒金屑和木牌参加后坡试炼，按规矩取青露草；此刻只说明这个打算，听听他的回应，不再追问，也不出发。",
+      "status": "written",
+      "failureClass": null,
+      "evidenceFile": "/tmp/open-story-engine-context-baseline-20260922/real-baseline-runs/inform.json",
+      "manualReview": [
+        "背景感官细节和NPC规则台词需核对来源",
+        "未出发停止点需核对"
+      ]
+    },
+    {
+      "id": "ask_basis",
+      "input": "我向陆照临指出木牌刻痕里的金屑，只询问他对此怎么看、有什么依据。听完回应再决定，暂不交出纸包，也不离开原地。",
+      "status": "failed",
+      "failureClass": "state_knowledge_boundary",
+      "evidenceFile": "/tmp/open-story-engine-context-baseline-20260922/real-baseline-runs/ask_basis.json",
+      "manualReview": [
+        "模型反复登记NPC已知木牌刻痕夹金屑，代码拒绝未登记持续状态变化"
+      ]
+    },
+    {
+      "id": "brief_wait",
+      "input": "我留在原地，把纸包和木牌收好，暂不行动，等试炼钟响或陆照临回应。请简短写完，不替我作决定，不转场。",
+      "status": "failed",
+      "failureClass": "action_scope_and_premature_event",
+      "evidenceFile": "/tmp/open-story-engine-context-baseline-20260922/real-baseline-runs/brief_wait.json",
+      "manualReview": [
+        "模型提前生成NPC台词/动作和钟响，代码拒绝越权并保留失败"
+      ]
+    }
+  ],
+  "failureTaxonomy": [
+    "knowledge_boundary",
+    "action_overreach",
+    "state_conflict",
+    "evidence_gap",
+    "repair_repeat",
+    "budget_or_latency"
+  ],
+  "classificationBoundary": {
+    "known": "代码或审查错误明确定位到上下文边界、行动授权或状态一致性",
+    "unknown": "无法仅凭现有审计区分上下文输入问题与模型输出/审查问题",
+    "qualityPass": "离线测试和一次成功写入不等于真实模型质量通过"
+  },
+  "checks": {
+    "formalDatabaseModified": false,
+    "isolatedCopiesUsed": true,
+    "apiKeyRecorded": false,
+    "coreTests": "30 passed",
+    "apiTests": "454 passed at baseline capture"
+  },
+  "knownGaps": [
+    "尚未统一ContextBundle/contextSha256",
+    "尚未提供阶段投影审计字段",
+    "真实基线中两个场景失败，需作为后续比较基线"
+  ]
+}

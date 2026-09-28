@@ -1,8 +1,18 @@
 {
   "version": "prompt-catalog/1",
   "prompts": {
-    "consequences.threads_plan": {"files": ["consequences/threads_plan.md"], "fields": []},
-    "consequences.threads_review": {"files": ["consequences/threads_review.md"], "fields": []},
+    "consequences.threads_plan": {
+      "files": [
+        "consequences/threads_plan.md"
+      ],
+      "fields": []
+    },
+    "consequences.threads_review": {
+      "files": [
+        "consequences/threads_review.md"
+      ],
+      "fields": []
+    },
     "reader.perspective": {
       "files": [
         "reader/perspective.md"
@@ -166,8 +176,7 @@
         "location_name",
         "state_character_location_context",
         "state_guardrail_text",
-        "narrative",
-        "state_guardrail_text_2"
+        "narrative"
       ]
     },
     "core.narrative": {
@@ -367,7 +376,9 @@
       "fields": []
     },
     "reader.ending_review": {
-      "files": ["reader/ending_review.md"],
+      "files": [
+        "reader/ending_review.md"
+      ],
       "fields": []
     },
     "reader.choices": {
@@ -409,14 +420,59 @@
       ]
     },
     "reader.grounding_repair": {
-      "files": ["reader/grounding_repair.md"],
-      "fields": ["error"]
+      "files": [
+        "reader/grounding_repair.md"
+      ],
+      "fields": [
+        "error"
+      ]
     },
     "reader.scope_review": {
       "files": [
         "reader/scope_review.md"
       ],
       "fields": []
+    },
+    "reader.state_extract": {
+      "files": [
+        "reader/state_extract.md"
+      ],
+      "fields": []
+    },
+    "reader.context_plan": {
+      "files": [
+        "reader/context_plan.md"
+      ],
+      "fields": []
+    },
+    "reader.context_system": {
+      "files": [
+        "reader/context_system.md"
+      ],
+      "fields": []
+    },
+    "reader.context_narrative": {
+      "files": [
+        "reader/context_narrative.md"
+      ],
+      "fields": [
+        "perspective_rule",
+        "title",
+        "summary",
+        "history",
+        "changes_json",
+        "narrative_state_guardrails",
+        "player_location_id",
+        "final_people_json",
+        "scene_boundary",
+        "place_names_json",
+        "character_names",
+        "location_names",
+        "event_brief",
+        "ending_instruction",
+        "repair_instruction",
+        "pacing_json"
+      ]
     }
   }
 }

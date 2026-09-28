@@ -408,6 +408,8 @@ def build_story_package_modules(
         "initialState": copy.deepcopy(package["initialState"]),
         "stateModel": copy.deepcopy(package["stateModel"]),
     }
+    if "stateVisibility" in package:
+        files["state-schema.json"]["stateVisibility"] = copy.deepcopy(package["stateVisibility"])
     files["main-story-graph.json"] = {
         "schemaVersion": "story-package-graph-module/0.2",
         "package": {"id": package["id"], "version": package["version"]},

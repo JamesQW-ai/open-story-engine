@@ -1,0 +1,649 @@
+{
+  "schemaVersion": "context-proposition-labels/0.1",
+  "fixtureArtifact": "test_support/fixtures/context-semantic-cases-2026-09-25.json",
+  "fixtureSha256": "f12aceabf4802fba8b4fc9a7a0b1d0a5eb2359e6458d8f7e8af4e6bb82d6f2dc",
+  "sourceSha256": "f999bcdf130a048b03516843726d88e4b8937f9eaffc8370c2e859ff7c7f20b0",
+  "labelAuthor": "Codex",
+  "scope": "专项人工式标注及来源核对诊断；命题为经复核的固定输入，不代表自动提取成功；needs_review 不计分。",
+  "cases": [
+    {
+      "caseId": "recorded_v11",
+      "draftSha256": "be082fef3489604f9b9a906a1bcc355aa50fec14bb5aa085980843c0486507aa",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 7,
+          "quote": "“他还活着。”",
+          "statement": "伤者仍活着。",
+          "expectedVerdict": "supported",
+          "expectedBasis": "",
+          "evidence": [
+            {
+              "id": "module:opening:knownFacts:2",
+              "quote": "伤者仍活着"
+            }
+          ],
+          "rationale": "公开来源确认存活。",
+          "allowedBases": [
+            ""
+          ]
+        },
+        {
+          "id": "C2",
+          "paragraphId": "P1",
+          "start": 7,
+          "end": 18,
+          "quote": "你朝守门弟子迈出半步，",
+          "statement": "你在催促守门弟子时朝他迈出半步。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "ordinary_reaction",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C3",
+          "paragraphId": "P1",
+          "start": 18,
+          "end": 25,
+          "quote": "声音压过雨声，",
+          "statement": "你说话的声音压过雨声。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "ordinary_reaction",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C4",
+          "paragraphId": "P1",
+          "start": 25,
+          "end": 32,
+          "quote": "“胸口还在动，",
+          "statement": "伤者的胸口仍在动。",
+          "expectedVerdict": "unsupported",
+          "expectedBasis": "",
+          "evidence": [],
+          "rationale": "存活概括不确认具体体征。",
+          "allowedBases": [
+            ""
+          ]
+        },
+        {
+          "id": "C5",
+          "paragraphId": "P1",
+          "start": 32,
+          "end": 39,
+          "quote": "手也攥着灯——",
+          "statement": "伤者的手攥着灯。",
+          "expectedVerdict": "supported",
+          "expectedBasis": "",
+          "evidence": [
+            {
+              "id": "module:opening:knownFacts:2",
+              "quote": "手边抓着空灯"
+            }
+          ],
+          "rationale": "来源明确抓着空灯。",
+          "allowedBases": [
+            ""
+          ]
+        },
+        {
+          "id": "C6",
+          "paragraphId": "P1",
+          "start": 39,
+          "end": 48,
+          "quote": "落锁前把他挪进去，",
+          "statement": "你请求守门弟子在落锁前把伤者挪进去。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "authorized_action",
+          "evidence": [],
+          "rationale": "原文只是救助请求，未断言请求被执行。",
+          "allowedBases": [
+            "authorized_action",
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C7",
+          "paragraphId": "P1",
+          "start": 39,
+          "end": 55,
+          "quote": "落锁前把他挪进去，兴许还有救。”",
+          "statement": "你猜测在落锁前挪入伤者，伤者兴许还有救。",
+          "expectedVerdict": "needs_review",
+          "expectedBasis": "",
+          "evidence": [],
+          "rationale": "救助愿望与具体条件性结果预测的界限尚未冻结；不强行计为正确或错误。",
+          "allowedBases": [
+            ""
+          ]
+        },
+        {
+          "id": "C8",
+          "paragraphId": "P2",
+          "start": 57,
+          "end": 65,
+          "quote": "守门弟子侧过身，",
+          "statement": "守门弟子侧过身。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "ordinary_reaction",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C9",
+          "paragraphId": "P2",
+          "start": 65,
+          "end": 86,
+          "quote": "目光从你脸上移到封山线内那道伏着的人影上，",
+          "statement": "守门弟子把目光从你脸上移到伤者身上。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "ordinary_reaction",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C10",
+          "paragraphId": "P2",
+          "start": 65,
+          "end": 86,
+          "quote": "目光从你脸上移到封山线内那道伏着的人影上，",
+          "statement": "伏着的伤者在封山线内。",
+          "expectedVerdict": "contradicted",
+          "expectedBasis": "",
+          "evidence": [
+            {
+              "id": "module:currentBeat:beat_chapter_001",
+              "quote": "陌生伤者与空灯被挡在封山线外"
+            }
+          ],
+          "rationale": "来源明确在封山线外，原文内外位置相反。",
+          "allowedBases": [
+            ""
+          ]
+        },
+        {
+          "id": "C11",
+          "paragraphId": "P2",
+          "start": 86,
+          "end": 91,
+          "quote": "眉头拧紧，",
+          "statement": "守门弟子眉头拧紧。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "ordinary_reaction",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C12",
+          "paragraphId": "P2",
+          "start": 91,
+          "end": 99,
+          "quote": "却没有立刻让开。",
+          "statement": "守门弟子没有立刻让开。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "ordinary_reaction",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C13",
+          "paragraphId": "P2",
+          "start": 99,
+          "end": 107,
+          "quote": "铁链又响了一声，",
+          "statement": "铁链又响了一声。",
+          "expectedVerdict": "supported",
+          "expectedBasis": "",
+          "evidence": [
+            {
+              "id": "module:opening:evidence:4",
+              "quote": "铁链又响了一声。"
+            }
+          ],
+          "rationale": "来源逐字支持。",
+          "allowedBases": [
+            ""
+          ]
+        },
+        {
+          "id": "C14",
+          "paragraphId": "P2",
+          "start": 107,
+          "end": 116,
+          "quote": "他抬手按在门框边，",
+          "statement": "守门弟子抬手按在门框边。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "ordinary_reaction",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C15",
+          "paragraphId": "P2",
+          "start": 116,
+          "end": 124,
+          "quote": "像是在等你说完，",
+          "statement": "守门弟子的姿态像在等你说完。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "ordinary_reaction",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C16",
+          "paragraphId": "P2",
+          "start": 124,
+          "end": 134,
+          "quote": "又像是在等别的什么。",
+          "statement": "守门弟子的姿态也像在等别的什么。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "ordinary_reaction",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "ordinary_reaction"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "supported_life",
+      "draftSha256": "a157d8d7fc936e93a580118720b8947d2412595039e92f9af9ed38dbfd7b555d",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 13,
+          "quote": "伤者仍活着，手边抓着空灯。",
+          "statement": "伤者仍活着。",
+          "expectedVerdict": "supported",
+          "expectedBasis": "",
+          "evidence": [
+            {
+              "id": "module:opening:knownFacts:2",
+              "quote": "伤者仍活着"
+            }
+          ],
+          "rationale": "来源支持。",
+          "allowedBases": [
+            ""
+          ]
+        },
+        {
+          "id": "C2",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 13,
+          "quote": "伤者仍活着，手边抓着空灯。",
+          "statement": "伤者手边抓着空灯。",
+          "expectedVerdict": "supported",
+          "expectedBasis": "",
+          "evidence": [
+            {
+              "id": "module:opening:knownFacts:2",
+              "quote": "手边抓着空灯"
+            }
+          ],
+          "rationale": "来源支持。",
+          "allowedBases": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "ordinary_action",
+      "draftSha256": "33e898a941c8de407b42bc6e6aad36d33892d47771e5748f525861456eacc0ca",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 20,
+          "quote": "你向守门弟子点了点头，随后等待他的回应。",
+          "statement": "你向守门弟子点头。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "authorized_action",
+          "evidence": [],
+          "rationale": "玩家明确要求点头。",
+          "allowedBases": [
+            "authorized_action",
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C2",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 20,
+          "quote": "你向守门弟子点了点头，随后等待他的回应。",
+          "statement": "你点头后等待守门弟子回应。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "authorized_action",
+          "evidence": [],
+          "rationale": "玩家明确要求等待。",
+          "allowedBases": [
+            "authorized_action",
+            "ordinary_reaction"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "legal_wait",
+      "draftSha256": "4a34432cfcb70ed155dfea37caee53c7d685afbb0cc079655491a986b70003cc",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 8,
+          "quote": "“请帮忙救他。”",
+          "statement": "你请求守门弟子帮忙救助伤者。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "authorized_action",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "authorized_action",
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C2",
+          "paragraphId": "P1",
+          "start": 8,
+          "end": 16,
+          "quote": "你对守门弟子说。",
+          "statement": "你向守门弟子说话。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "authorized_action",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "authorized_action",
+            "ordinary_reaction"
+          ]
+        },
+        {
+          "id": "C3",
+          "paragraphId": "P2",
+          "start": 18,
+          "end": 32,
+          "quote": "你等着对方回应，没有再开口。",
+          "statement": "你等待守门弟子回应，并未继续说话。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "authorized_action",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "authorized_action",
+            "ordinary_reaction"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "honest_unknown",
+      "draftSha256": "796cd969c912327884eeb4739db2dede3eeac3551dc46570528946a7dd59d399",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 15,
+          "quote": "“我还不能判断他的具体伤势。”",
+          "statement": "你承认自己还不能判断伤者具体伤势。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "expressed_uncertainty",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "expressed_uncertainty"
+          ]
+        },
+        {
+          "id": "C2",
+          "paragraphId": "P1",
+          "start": 15,
+          "end": 18,
+          "quote": "你说。",
+          "statement": "你说了话。",
+          "expectedVerdict": "nonfactual",
+          "expectedBasis": "authorized_action",
+          "evidence": [],
+          "rationale": "仅为当场普通叙事动作或表现，不新增持续状态、知识、权限或结果。",
+          "allowedBases": [
+            "authorized_action",
+            "ordinary_reaction"
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "supported_negation",
+      "draftSha256": "c67992662e9052c7a687d15c2fb146dfa22b1f3b7190caaf7504f9176ae461fa",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 12,
+          "quote": "你尚未登记成为外门弟子。",
+          "statement": "你尚未登记成为外门弟子。",
+          "expectedVerdict": "supported",
+          "expectedBasis": "",
+          "evidence": [
+            {
+              "id": "module:opening:identity",
+              "quote": "尚未登记成为外门弟子"
+            }
+          ],
+          "rationale": "明确否定与来源一致。",
+          "allowedBases": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "reported_history",
+      "draftSha256": "01ca5762a83ef5d1ed95ad5a44bdf562e39031bf6371c76b40539f646c71188c",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 26,
+          "quote": "三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。",
+          "statement": "三年前陆沉舟离开北河城。",
+          "expectedVerdict": "supported",
+          "expectedBasis": "",
+          "evidence": [
+            {
+              "id": "module:opening:evidence:1",
+              "quote": "三年前，陆沉舟离开北河城"
+            }
+          ],
+          "rationale": "时间限定保留在离开事件中。",
+          "allowedBases": [
+            ""
+          ]
+        },
+        {
+          "id": "C2",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 26,
+          "quote": "三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。",
+          "statement": "三年前陆沉舟离开北河城时，说要替宗门押送一批引路灯。",
+          "expectedVerdict": "supported",
+          "expectedBasis": "",
+          "evidence": [
+            {
+              "id": "module:opening:evidence:1",
+              "quote": "三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。"
+            }
+          ],
+          "rationale": "只声称意图，不声明完成。",
+          "allowedBases": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "derived_symptom",
+      "draftSha256": "78234600f3ebd3f44935042c5f9a3c721abb66eb1d518a6605dac4cec20b1be5",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 10,
+          "quote": "伤者的胸口仍在起伏。",
+          "statement": "伤者的胸口仍在起伏。",
+          "expectedVerdict": "unsupported",
+          "expectedBasis": "",
+          "evidence": [],
+          "rationale": "存活不支持具体胸口运动。",
+          "allowedBases": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "negated_life",
+      "draftSha256": "abfdfb54f79ff9347c111815bf108034bd0978668c3bb0da1d323d45798f24f3",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 9,
+          "quote": "伤者已经不再活着。",
+          "statement": "伤者已经死亡。",
+          "expectedVerdict": "contradicted",
+          "expectedBasis": "",
+          "evidence": [
+            {
+              "id": "module:opening:knownFacts:2",
+              "quote": "伤者仍活着"
+            }
+          ],
+          "rationale": "肯否直接相反。",
+          "allowedBases": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "swapped_subject",
+      "draftSha256": "26d33b99c1852de137c1ef72b2a1d6efb0fcacf31d7ab2ba1d99ff740871e80c",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 27,
+          "quote": "三年前，守门弟子离开北河城，说要替宗门押送一批引路灯。",
+          "statement": "三年前守门弟子离开北河城。",
+          "expectedVerdict": "unsupported",
+          "expectedBasis": "",
+          "evidence": [],
+          "rationale": "来源只记载陆沉舟，不证明守门弟子经历；未明确否定守门弟子，因此不是 contradicted。",
+          "allowedBases": [
+            ""
+          ]
+        },
+        {
+          "id": "C2",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 27,
+          "quote": "三年前，守门弟子离开北河城，说要替宗门押送一批引路灯。",
+          "statement": "三年前守门弟子离开北河城时，说要替宗门押送一批引路灯。",
+          "expectedVerdict": "unsupported",
+          "expectedBasis": "",
+          "evidence": [],
+          "rationale": "来源的说话者是陆沉舟，无守门弟子声称记录。",
+          "allowedBases": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "expanded_permission",
+      "draftSha256": "69ec4127777aabeee364ef98cd720c685631a17cd77171110af421721cd80a8b",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 22,
+          "quote": "只要赶在落锁前，守门弟子就有权让任何人入门。",
+          "statement": "只要赶在落锁前，守门弟子就有权让任何人入门。",
+          "expectedVerdict": "unsupported",
+          "expectedBasis": "",
+          "evidence": [],
+          "rationale": "条件与结果是同一规则；来源没有该授权规则。",
+          "allowedBases": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "reported_to_completed",
+      "draftSha256": "05142ea1c8a4ea15e1666c93c4b96273c91e7f88106219d3540a802dde693245",
+      "propositions": [
+        {
+          "id": "C1",
+          "paragraphId": "P1",
+          "start": 0,
+          "end": 24,
+          "quote": "三年前，陆沉舟已经替宗门完成了那批引路灯的押送。",
+          "statement": "三年前陆沉舟已经替宗门完成了那批引路灯的押送。",
+          "expectedVerdict": "unsupported",
+          "expectedBasis": "",
+          "evidence": [],
+          "rationale": "来源只证明押送意图与失踪，不证实完成，也未明确证明未完成。",
+          "allowedBases": [
+            ""
+          ]
+        }
+      ]
+    }
+  ]
+}

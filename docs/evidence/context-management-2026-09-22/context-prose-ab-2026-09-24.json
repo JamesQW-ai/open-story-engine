@@ -1,0 +1,1699 @@
+{
+  "schemaVersion": "context-prose-ab/0.2",
+  "recordedAt": "2026-09-24",
+  "status": "completed",
+  "purpose": "同一官方长篇、动作、状态、模型和写作提示下，只替换 full ContextBundle 与 chapter 投影 payload；正文缓冲后执行相同本地校验",
+  "model": {
+    "route": "direct",
+    "model": "deepseek-v4-flash",
+    "stream": false,
+    "transportFallback": false
+  },
+  "sampleDesign": {
+    "requested": 20,
+    "actual": 20,
+    "pairs": 20,
+    "modelCalls": 40,
+    "officialLongformOnly": true,
+    "formalSessionWrites": 0,
+    "jevCalls": 0
+  },
+  "qualityComparison": {
+    "chapterPassedLocalValidation": 19,
+    "fullPassedLocalValidation": 19,
+    "chapterFailedLocalValidation": 1,
+    "fullFailedLocalValidation": 1,
+    "chapterErrors": 0,
+    "fullErrors": 0
+  },
+  "fullArmPolicy": {
+    "mode": "negative_control_only",
+    "productionEnablement": "forbidden",
+    "reason": "完整 bundle 含 chapter 明确排除的权威状态与来源追踪字段，用于暴露隐藏事实泄漏风险",
+    "pairsWithForbiddenKeys": 20
+  },
+  "latencyMs": {
+    "chapter": [
+      2006,
+      2420,
+      2474,
+      2546,
+      2751,
+      2755,
+      2870,
+      2961,
+      2994,
+      3060,
+      3290,
+      3364,
+      3414,
+      3481,
+      3499,
+      3711,
+      3748,
+      3983,
+      3986,
+      4411
+    ],
+    "full": [
+      2016,
+      2401,
+      2497,
+      2560,
+      2654,
+      2693,
+      2756,
+      2868,
+      2869,
+      2967,
+      3332,
+      3462,
+      3478,
+      3504,
+      3743,
+      3891,
+      3996,
+      4094,
+      4282,
+      4518
+    ]
+  },
+  "pairs": [
+    {
+      "sampleId": "entry_lu_gate-ab-1",
+      "entryPointId": "entry_lu_gate",
+      "contextSha256": "2a38d731c4827595441f174e2665c1119c167b9f248ee87b108947ebed390822",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "a5adf799683b5f8a44b269cdffb7f5db12b5518004f896368554e3a140c6d8ed",
+        "promptChars": 7245,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "22da7985d4d89aa64f4b79b2937fbc21926451a41c9824a6514c3f8099d0ed23",
+        "bodyChars": 477,
+        "bodyCjk": 381,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2821,
+              "responseHeadersMs": 229,
+              "completeBodyMs": 2821
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2965,
+        "reportedOutputTokens": 312,
+        "reportedTotalTokens": 3277,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1173,
+        "elapsedMs": 2870,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_gate-ab-1-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "5c78173fe367df41429ef6bef3617c8709410fa57c7cb21963c3d1c61fdeae29",
+        "promptChars": 9091,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "986c9e03ba96c74665c90979b31849527a02c6d6772a86e8afd6d67cf2ee48a7",
+        "bodyChars": 736,
+        "bodyCjk": 585,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3993,
+              "responseHeadersMs": 470,
+              "completeBodyMs": 3993
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3512,
+        "reportedOutputTokens": 509,
+        "reportedTotalTokens": 4021,
+        "promptCacheHitTokens": 1920,
+        "promptCacheMissTokens": 1592,
+        "elapsedMs": 3996,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_gate-ab-1-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_lu_gate-ab-2",
+      "entryPointId": "entry_lu_gate",
+      "contextSha256": "7e5b81fa47253814e9f8c5a48a43d1b1e4f19a678df2071c92e38cf1d78ec648",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "04dcdc8ce54e4065a0e5da824a173b8da335e7cde9ef11251db59d9a3d39cfa7",
+        "promptChars": 7247,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "1e8e56685472d6a8f6861fcbd322f2212b960749b0ea4c5e55737030ee495cc0",
+        "bodyChars": 475,
+        "bodyCjk": 418,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3058,
+              "responseHeadersMs": 276,
+              "completeBodyMs": 3058
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2990,
+        "reportedOutputTokens": 345,
+        "reportedTotalTokens": 3335,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2478,
+        "elapsedMs": 3060,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_gate-ab-2-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "d39920eee9e5166c26ea1e6893bacc684c99d25057dfeca3b0bd461591f43bab",
+        "promptChars": 9093,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "c81d39ebda1b4f2972079c6d3c2910852a5017c6a858475c461e9352f404c6e3",
+        "bodyChars": 431,
+        "bodyCjk": 368,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2558,
+              "responseHeadersMs": 240,
+              "completeBodyMs": 2558
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3537,
+        "reportedOutputTokens": 309,
+        "reportedTotalTokens": 3846,
+        "promptCacheHitTokens": 1920,
+        "promptCacheMissTokens": 1617,
+        "elapsedMs": 2560,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_gate-ab-2-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_lu_gate-ab-3",
+      "entryPointId": "entry_lu_gate",
+      "contextSha256": "d6db3d8d2d298b333074d38baad8c86dd03f1a6eee4d3654f2fba0708db0888d",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "d35b28758521002de0c40f7dd74f35f163c711fbad8fa943a4c6551a82c04ae0",
+        "promptChars": 7275,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "ca1de8c2b81f9c7725d5db40f109317e96810ae0b448ae25c5f8e03f9128b428",
+        "bodyChars": 494,
+        "bodyCjk": 426,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2753,
+              "responseHeadersMs": 493,
+              "completeBodyMs": 2753
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2998,
+        "reportedOutputTokens": 346,
+        "reportedTotalTokens": 3344,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2486,
+        "elapsedMs": 2755,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_gate-ab-3-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "df0be5abfa87355e3635af1a47b20e46657bdce5f547a191845d028015c05a95",
+        "promptChars": 9121,
+        "promptEstimatedTokens": null,
+        "status": "failed_local_validation",
+        "bodySha256": "8534dcca73fc6526cd48805c0232dd539bb4054f2b6e3862d6d9582ab546495e",
+        "bodyChars": 668,
+        "bodyCjk": 563,
+        "issues": [
+          "narrative_guard: 陆沉舟 的去向或结果尚未由状态登记，正文不能擅自确认。冲突片段：陆沉舟离开"
+        ],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3501,
+              "responseHeadersMs": 293,
+              "completeBodyMs": 3500
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3545,
+        "reportedOutputTokens": 455,
+        "reportedTotalTokens": 4000,
+        "promptCacheHitTokens": 1920,
+        "promptCacheMissTokens": 1625,
+        "elapsedMs": 3504,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_gate-ab-3-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_gu_trial-ab-1",
+      "entryPointId": "entry_gu_trial",
+      "contextSha256": "727d24330d95fb1576e405464cc0a5d0f0d6a36a01332cadace89603b8d69079",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "7ac3a9314d4d1888772ac53439b7f164bf7ffe261007720d917a993356ab7985",
+        "promptChars": 6808,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "05a3f6ac500d183aecfb661299e8bb1d65886ed6c3a42bce19dbced1c2a234ef",
+        "bodyChars": 450,
+        "bodyCjk": 351,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2417,
+              "responseHeadersMs": 238,
+              "completeBodyMs": 2417
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2886,
+        "reportedOutputTokens": 307,
+        "reportedTotalTokens": 3193,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2374,
+        "elapsedMs": 2420,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_gu_trial-ab-1-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "e800ea3f45f055b0b68811ff733f7c60844609135bf5cdfa0f59865fa2e84b10",
+        "promptChars": 8723,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "1043c011870de98f1bbd53a59e3139240cea10a296ff2289743a8b17bb2119e6",
+        "bodyChars": 475,
+        "bodyCjk": 385,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2701,
+              "responseHeadersMs": 231,
+              "completeBodyMs": 2701
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3455,
+        "reportedOutputTokens": 345,
+        "reportedTotalTokens": 3800,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1663,
+        "elapsedMs": 2756,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_gu_trial-ab-1-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_gu_trial-ab-2",
+      "entryPointId": "entry_gu_trial",
+      "contextSha256": "2a4dedbe505aa77867db1def02ebec85a4a126045b569f7d8f88f59a3120b6f1",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "f158c1f0cf0e74b356634a50bff6e2df074a7b77ed3405ab5114e568c0d9462a",
+        "promptChars": 6782,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "caa56b1d72de14b3093e6edc1f5d00399189a532f06f3b9e8f3f14623cb3fc29",
+        "bodyChars": 377,
+        "bodyCjk": 306,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2001,
+              "responseHeadersMs": 217,
+              "completeBodyMs": 2001
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2845,
+        "reportedOutputTokens": 259,
+        "reportedTotalTokens": 3104,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2333,
+        "elapsedMs": 2006,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_gu_trial-ab-2-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "3667ca400d5c151b320a5ca799b99e637fbdd14ceb4438ea291f8eaa683ee75d",
+        "promptChars": 8697,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "e6ad9da7027521853dc6d54dd039b00888ed717e6d6feee59f69247a8556c2b1",
+        "bodyChars": 390,
+        "bodyCjk": 307,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2397,
+              "responseHeadersMs": 239,
+              "completeBodyMs": 2397
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3414,
+        "reportedOutputTokens": 261,
+        "reportedTotalTokens": 3675,
+        "promptCacheHitTokens": 1664,
+        "promptCacheMissTokens": 1750,
+        "elapsedMs": 2401,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_gu_trial-ab-2-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_gu_trial-ab-3",
+      "entryPointId": "entry_gu_trial",
+      "contextSha256": "413e04a990b5adece375935b8b8f84783b3b74c3727df7128e3afe62ac10a41b",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "7d768532e54fe5a37479d985e022b61bf2b4ee83d547fda1f9db61145c0d09d0",
+        "promptChars": 6818,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "137efcf460f61e42c734bc27bf58b12b446512f17816f859bf865112d5f57a04",
+        "bodyChars": 576,
+        "bodyCjk": 484,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2956,
+              "responseHeadersMs": 219,
+              "completeBodyMs": 2956
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2880,
+        "reportedOutputTokens": 387,
+        "reportedTotalTokens": 3267,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2368,
+        "elapsedMs": 2961,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_gu_trial-ab-3-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "62c0ec146c7ea1a8d7e520ebbec7ee961833f63b157a9446b13a2d5df99ddc9a",
+        "promptChars": 8733,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "68239ead3b7f40f19a0e849fc0b321f916e345aa83cfaf76fc19ecabae1625ca",
+        "bodyChars": 827,
+        "bodyCjk": 719,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 4513,
+              "responseHeadersMs": 284,
+              "completeBodyMs": 4513
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3449,
+        "reportedOutputTokens": 588,
+        "reportedTotalTokens": 4037,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1657,
+        "elapsedMs": 4518,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_gu_trial-ab-3-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_ye_gallery-ab-1",
+      "entryPointId": "entry_ye_gallery",
+      "contextSha256": "b4b726ebc4df8f524cee0b502a318727ad538a9bd2f8f0028422fbdc13d1b5e2",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "4a6d84caf159b688bb3615456fa546294e5f8d78b3af90c00cca7890460358c0",
+        "promptChars": 6917,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "a25f8c235f50d865edce8ef09251d3611c71e75888dd25f2649263265e88b5a0",
+        "bodyChars": 649,
+        "bodyCjk": 531,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3656,
+              "responseHeadersMs": 227,
+              "completeBodyMs": 3656
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2941,
+        "reportedOutputTokens": 450,
+        "reportedTotalTokens": 3391,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2429,
+        "elapsedMs": 3711,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_ye_gallery-ab-1-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "791ca04b5b75f1f320c0a44f3772602ac4d5f0f97be4c0a2d206deeedfb51cb4",
+        "promptChars": 8930,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "5b5d0a22f4ac8653d337372b50e27676f5e9ebf321cb470abb9c3dd6658c44e8",
+        "bodyChars": 643,
+        "bodyCjk": 531,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3326,
+              "responseHeadersMs": 246,
+              "completeBodyMs": 3326
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3536,
+        "reportedOutputTokens": 454,
+        "reportedTotalTokens": 3990,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1744,
+        "elapsedMs": 3332,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_ye_gallery-ab-1-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_ye_gallery-ab-2",
+      "entryPointId": "entry_ye_gallery",
+      "contextSha256": "2fa4f4d1d019bf89cce1e3e0e48c46518c7424b0597068d09f37788c2d6daeb2",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "4528cc92751b525ff3a6ce7217d2a6b1166dbe15f05b6c9d0d5ca96228ae0d3a",
+        "promptChars": 6897,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "c0c8f6740810896ec08ea413a8b2ee2a7ccc4e3d7c97b9e88062538a6a0c177e",
+        "bodyChars": 490,
+        "bodyCjk": 388,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2746,
+              "responseHeadersMs": 227,
+              "completeBodyMs": 2746
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2913,
+        "reportedOutputTokens": 356,
+        "reportedTotalTokens": 3269,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2401,
+        "elapsedMs": 2751,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_ye_gallery-ab-2-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "a8d1fa4f03c5a9b06f4b7e3bef0920a7ef5f9482e663982d76652656e53fb1ea",
+        "promptChars": 8910,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "ccc0c8e45163fb9761ec49c138cda8f19031958ff7a0af1ff961d120baf74625",
+        "bodyChars": 738,
+        "bodyCjk": 585,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3885,
+              "responseHeadersMs": 235,
+              "completeBodyMs": 3885
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3508,
+        "reportedOutputTokens": 497,
+        "reportedTotalTokens": 4005,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1716,
+        "elapsedMs": 3891,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_ye_gallery-ab-2-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_ye_gallery-ab-3",
+      "entryPointId": "entry_ye_gallery",
+      "contextSha256": "151b8f2d9af2584bfaa17097d6637c2dba0064ba014a6ef2b85e4592e41668cc",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "673c7158c9c506f9765171f48fd6db717cc252e7eecf8a4adbc049151343bbad",
+        "promptChars": 6925,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "d8a4e4cc6a00bd345bd97822ea48bb517af2f5c67f1751816bf5a2400bfc57d0",
+        "bodyChars": 799,
+        "bodyCjk": 668,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3981,
+              "responseHeadersMs": 282,
+              "completeBodyMs": 3980
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2940,
+        "reportedOutputTokens": 551,
+        "reportedTotalTokens": 3491,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2428,
+        "elapsedMs": 3986,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_ye_gallery-ab-3-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "49b9dab87a5dc0f9a8020a89778b7754855302d175d1c8385870bd554569a22b",
+        "promptChars": 8938,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "396c5f99802dfbf21e56baed98cfeac6ac32a677f76e3c39719ff4ab87af007b",
+        "bodyChars": 604,
+        "bodyCjk": 520,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3473,
+              "responseHeadersMs": 259,
+              "completeBodyMs": 3473
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3535,
+        "reportedOutputTokens": 429,
+        "reportedTotalTokens": 3964,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1743,
+        "elapsedMs": 3478,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_ye_gallery-ab-3-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_shen_register-ab-1",
+      "entryPointId": "entry_shen_register",
+      "contextSha256": "41dd9d6848071e9eac4d9b021c7570278b9c3730a3190f74d4f3fbf7796d7097",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "196279716addf9748081abf39104dfc10790f8f6d17e7bd0b5c1e45117e79189",
+        "promptChars": 6838,
+        "promptEstimatedTokens": null,
+        "status": "failed_local_validation",
+        "bodySha256": "32f3e38e5efd19c83e643bed502e34aa5bb61eff5ea48274450a4a3b847ac2e4",
+        "bodyChars": 743,
+        "bodyCjk": 607,
+        "issues": [
+          "source_character_names: 剧情正文引入了未登记的新人物姓名: 常年"
+        ],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3978,
+              "responseHeadersMs": 228,
+              "completeBodyMs": 3977
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2847,
+        "reportedOutputTokens": 558,
+        "reportedTotalTokens": 3405,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2335,
+        "elapsedMs": 3983,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_shen_register-ab-1-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "c1cd03352f665e39220ea7124eeaa1af237d7b8217e3c423a2b760aa961b0b62",
+        "promptChars": 8699,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "9bda7414f4c73fae1c640a1f1203595dc4644e9c7b15f260c8fe98d8433eca4c",
+        "bodyChars": 467,
+        "bodyCjk": 392,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2865,
+              "responseHeadersMs": 266,
+              "completeBodyMs": 2865
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3395,
+        "reportedOutputTokens": 352,
+        "reportedTotalTokens": 3747,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1603,
+        "elapsedMs": 2869,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_shen_register-ab-1-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_shen_register-ab-2",
+      "entryPointId": "entry_shen_register",
+      "contextSha256": "8a60606b79c7b884769c138fae857c4899daecfc437cba59c05325899a8a3ece",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "debfdcb70989b12c9e1d36719988763ccc9754673738749a6859b79c5737ca94",
+        "promptChars": 6840,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "606f6fb78bcb75e912abf242229d0c95506160c1fe0ccfe11f8433ee66d75465",
+        "bodyChars": 703,
+        "bodyCjk": 544,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3407,
+              "responseHeadersMs": 251,
+              "completeBodyMs": 3407
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2858,
+        "reportedOutputTokens": 475,
+        "reportedTotalTokens": 3333,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2346,
+        "elapsedMs": 3414,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_shen_register-ab-2-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "6cda5e8bf8e839b11f1d2bdbedf2bc0380f83086905219ce1545d77f4bd9acc6",
+        "promptChars": 8701,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "9a1d882fb74b1925313a8afbb3890b59ecec35a7d716c2ca33847d668d70f5f8",
+        "bodyChars": 726,
+        "bodyCjk": 569,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3736,
+              "responseHeadersMs": 327,
+              "completeBodyMs": 3736
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3406,
+        "reportedOutputTokens": 506,
+        "reportedTotalTokens": 3912,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1614,
+        "elapsedMs": 3743,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_shen_register-ab-2-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_shen_register-ab-3",
+      "entryPointId": "entry_shen_register",
+      "contextSha256": "82a2f432a3ac40d6eb5258f2dcf2d41fa5cb49e0757ed35a704cdc33e1c65030",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "10bad459c7c5b025f08995d60d76d9f918b463f5d81a82dc99f2cb89d04c3f1b",
+        "promptChars": 6836,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "f30caddc2e79d31e688370a37d5aa1ec4ca1c6f8fa409f7375b43dce67927f80",
+        "bodyChars": 430,
+        "bodyCjk": 362,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2542,
+              "responseHeadersMs": 258,
+              "completeBodyMs": 2542
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2840,
+        "reportedOutputTokens": 303,
+        "reportedTotalTokens": 3143,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2328,
+        "elapsedMs": 2546,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_shen_register-ab-3-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "6bdd8427db21fdca4c58d4ec472bb709d44bb1bec2e28210cdfa31b9541964dd",
+        "promptChars": 8697,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "ac38d3847fb9dcebd8ad732ca6e2490a76bf48e6d82130cfc295e0f3526a8afb",
+        "bodyChars": 628,
+        "bodyCjk": 536,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3457,
+              "responseHeadersMs": 294,
+              "completeBodyMs": 3457
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3388,
+        "reportedOutputTokens": 442,
+        "reportedTotalTokens": 3830,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1596,
+        "elapsedMs": 3462,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_shen_register-ab-3-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_lu_ledger-ab-1",
+      "entryPointId": "entry_lu_ledger",
+      "contextSha256": "65189532f2650fb8f790c7b1fb8cef1fac0f6bc2f156516c61038bbdb9d1255a",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "a225a616ce1414e509c0361f700e94957659d57588f49167f103af3e77a73976",
+        "promptChars": 6861,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "10d8ee55751744fe6ca5814ef5c830f78a424df68949015e4a7fca9640adca70",
+        "bodyChars": 488,
+        "bodyCjk": 407,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3284,
+              "responseHeadersMs": 273,
+              "completeBodyMs": 3284
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2860,
+        "reportedOutputTokens": 362,
+        "reportedTotalTokens": 3222,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2348,
+        "elapsedMs": 3290,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_ledger-ab-1-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "8f88bcb1cb530a9f95734298d995eb29f9107b94d5b57482650bdf3609cb2497",
+        "promptChars": 8727,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "0171ba72e37046f202a6348d86721e0beacefc6141f96a14cecedd07548aca0b",
+        "bodyChars": 420,
+        "bodyCjk": 359,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2690,
+              "responseHeadersMs": 288,
+              "completeBodyMs": 2690
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3407,
+        "reportedOutputTokens": 311,
+        "reportedTotalTokens": 3718,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1615,
+        "elapsedMs": 2693,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_ledger-ab-1-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_lu_ledger-ab-2",
+      "entryPointId": "entry_lu_ledger",
+      "contextSha256": "28553448874a86a0c33474ffd902bb2f459ad62dddf6f75254de420d7d2d13ee",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "4a4001e97c042aa5a4caa201a23ca1c1825007255077db63c2b395e282664c90",
+        "promptChars": 6863,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "1055baf1f3f6d7d1ecf812cb5f331283b05eb8b72e39ae5d6376b0e97a125cee",
+        "bodyChars": 724,
+        "bodyCjk": 577,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3742,
+              "responseHeadersMs": 257,
+              "completeBodyMs": 3741
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2845,
+        "reportedOutputTokens": 491,
+        "reportedTotalTokens": 3336,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2333,
+        "elapsedMs": 3748,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_ledger-ab-2-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "7cf7343a17c99897b0da53ea4039e3d4ef9e42ec47adfe656df500f6014ecb62",
+        "promptChars": 8729,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "71604843ebaa4e3e6c45554d0fcb71bc5ae83d60a126c01d39d5252348c26ca4",
+        "bodyChars": 551,
+        "bodyCjk": 442,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2962,
+              "responseHeadersMs": 344,
+              "completeBodyMs": 2961
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3392,
+        "reportedOutputTokens": 373,
+        "reportedTotalTokens": 3765,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1600,
+        "elapsedMs": 2967,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_ledger-ab-2-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_lu_ledger-ab-3",
+      "entryPointId": "entry_lu_ledger",
+      "contextSha256": "162a126e9d922c9f510c8e90b66e6d486418ab42c93e318162763a0f9628f37c",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "e79ee05faee5d027dc2613df16aceda3ad43ee17e5b4fff09fbdfc4c3284f627",
+        "promptChars": 6871,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "3b388dbf5e90c9ab8bf8ce2d20bec0b4a043e6222296190d9f693d42d9f5bed8",
+        "bodyChars": 504,
+        "bodyCjk": 431,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2991,
+              "responseHeadersMs": 240,
+              "completeBodyMs": 2991
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2862,
+        "reportedOutputTokens": 325,
+        "reportedTotalTokens": 3187,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2350,
+        "elapsedMs": 2994,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_ledger-ab-3-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "9773c60810a98991857ddc25b3d57764e5fac6935b84da2c955f0dd1f487ecb0",
+        "promptChars": 8737,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "096e8279ecf22f328da6635049a738fe17493038015f5c7a2427d2eecc09de54",
+        "bodyChars": 396,
+        "bodyCjk": 297,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2013,
+              "responseHeadersMs": 257,
+              "completeBodyMs": 2012
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3409,
+        "reportedOutputTokens": 266,
+        "reportedTotalTokens": 3675,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1617,
+        "elapsedMs": 2016,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_lu_ledger-ab-3-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_xiao_edict-ab-1",
+      "entryPointId": "entry_xiao_edict",
+      "contextSha256": "1360b16aba2270c9fd94abdb3a5f23cd425b1ec0dcfd8bf1476c091b9f224b22",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "15b47f50d6743d4a217820cad3b7f7aa1407ea0326969570cbd9d87c5e1405ea",
+        "promptChars": 6840,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "e8c470cff2e6d8c3495bf49fa234283a43bf086a5d0351e50a9aa32b1371e75d",
+        "bodyChars": 413,
+        "bodyCjk": 342,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2390,
+              "responseHeadersMs": 251,
+              "completeBodyMs": 2390
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2873,
+        "reportedOutputTokens": 277,
+        "reportedTotalTokens": 3150,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2361,
+        "elapsedMs": 2474,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_xiao_edict-ab-1-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "8beec491be2e7ca8ebae015077c00388b8f39048ac0abb2c145141532daae56f",
+        "promptChars": 8802,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "287b261e2095c750826467230a6b239f70863a5eb477f87fcc09093093f01171",
+        "bodyChars": 422,
+        "bodyCjk": 338,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2495,
+              "responseHeadersMs": 241,
+              "completeBodyMs": 2495
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3462,
+        "reportedOutputTokens": 294,
+        "reportedTotalTokens": 3756,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1670,
+        "elapsedMs": 2497,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_xiao_edict-ab-1-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_xiao_edict-ab-2",
+      "entryPointId": "entry_xiao_edict",
+      "contextSha256": "48a27099f91d964e2424cc8a05a409df8786f9383533d4c5955a7143717c9e45",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "dfe4b6af031ea703d884dda962096bdedc4a27ef23aac715fa094dd515652231",
+        "promptChars": 6832,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "7e73fb462c7ce1b1170844140584bcf2f40f14f8540e8f6809e92aed6486f7df",
+        "bodyChars": 616,
+        "bodyCjk": 512,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3497,
+              "responseHeadersMs": 430,
+              "completeBodyMs": 3496
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2848,
+        "reportedOutputTokens": 434,
+        "reportedTotalTokens": 3282,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2336,
+        "elapsedMs": 3499,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_xiao_edict-ab-2-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "48bdecc9a7a89cb24024476271ae94fb1d596b8d49312d5fde3f1d2b8f604b8a",
+        "promptChars": 8794,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "5deaf3449398f6436abb6a77dbe7dd65446f880717e0c698e4094afcfb201d8f",
+        "bodyChars": 735,
+        "bodyCjk": 595,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 4091,
+              "responseHeadersMs": 264,
+              "completeBodyMs": 4091
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3437,
+        "reportedOutputTokens": 505,
+        "reportedTotalTokens": 3942,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1645,
+        "elapsedMs": 4094,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_xiao_edict-ab-2-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_xiao_edict-ab-3",
+      "entryPointId": "entry_xiao_edict",
+      "contextSha256": "956e62b6410916a5f4e7d9bce1df5b8c21ba8ba90827b21a6f6a59ec69a25418",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "20d43ab5dc6e9f6dc2ec0652c87ff9393830d9b7922d4843867ef761ca8de35a",
+        "promptChars": 6834,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "9a813738cbdb7e14467b8c3a0b7e6bc6f1dab27c941a8684d15e70b8b575b78a",
+        "bodyChars": 661,
+        "bodyCjk": 555,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3472,
+              "responseHeadersMs": 277,
+              "completeBodyMs": 3472
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2864,
+        "reportedOutputTokens": 439,
+        "reportedTotalTokens": 3303,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2352,
+        "elapsedMs": 3481,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_xiao_edict-ab-3-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "10c8c68a0e4bdf708d2691b7f4a4861073d12a7f1812c1f66b6d32642ce74b89",
+        "promptChars": 8796,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "2c2f274884cd6dcf91bda348c614e4fb209d33884516f6bb5f8e8f946c440346",
+        "bodyChars": 457,
+        "bodyCjk": 380,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2650,
+              "responseHeadersMs": 248,
+              "completeBodyMs": 2650
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3453,
+        "reportedOutputTokens": 308,
+        "reportedTotalTokens": 3761,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1661,
+        "elapsedMs": 2654,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_xiao_edict-ab-3-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_ye_qingming_hall-ab-1",
+      "entryPointId": "entry_ye_qingming_hall",
+      "contextSha256": "2db0422f1521fd2176b89eca6ad5e0660038877a00a62fecbc4df463ff4d35b4",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "8e93302652a2af0be06232b28a35c2d46a340059b6fba4143261801d26087963",
+        "promptChars": 6955,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "a49ab7da43b46c2f8b027911f1b2ea331775b32805965f6b94131f20e361bae2",
+        "bodyChars": 814,
+        "bodyCjk": 654,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 4405,
+              "responseHeadersMs": 333,
+              "completeBodyMs": 4405
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2918,
+        "reportedOutputTokens": 562,
+        "reportedTotalTokens": 3480,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2406,
+        "elapsedMs": 4411,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_ye_qingming_hall-ab-1-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "ed5273e1d2ebaf8a5a79e1710d71e31141bc4dfd97b509f528937a0fbb46517a",
+        "promptChars": 8999,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "2e6419cbc2e376d6f97ee360e2c47b3d0c409de033500ce5fcdc618acdcccca1",
+        "bodyChars": 769,
+        "bodyCjk": 616,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 4276,
+              "responseHeadersMs": 482,
+              "completeBodyMs": 4276
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3540,
+        "reportedOutputTokens": 503,
+        "reportedTotalTokens": 4043,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1748,
+        "elapsedMs": 4282,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_ye_qingming_hall-ab-1-full.json"
+      }
+    },
+    {
+      "sampleId": "entry_ye_qingming_hall-ab-2",
+      "entryPointId": "entry_ye_qingming_hall",
+      "contextSha256": "11317a1c10882279e614f3fbcf15651e69ca16fbb1af2ec16d7e5ae51d306429",
+      "fullAndChapterSameSourceContext": true,
+      "fullArmPolicy": "negative_control_only",
+      "fullArmForbiddenKeys": [
+        "/authoritativeState/characterOutcomeStates",
+        "/authoritativeState/itemLocationIds",
+        "/authoritativeState/itemOwnerCharacterIds",
+        "/authoritativeState/threadLedger",
+        "/provenance"
+      ],
+      "chapter": {
+        "variant": "chapter",
+        "promptSha256": "0c45d3c6de7daa0fc46eda6aa82e0a7825cc72a3cad078fb808d4c465809e4bb",
+        "promptChars": 6923,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "f4e214c95c0ec88d114e8b08332c2be69da629741fe8b58546e9d7cc92e5876f",
+        "bodyChars": 715,
+        "bodyCjk": 570,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3361,
+              "responseHeadersMs": 269,
+              "completeBodyMs": 3360
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 2895,
+        "reportedOutputTokens": 465,
+        "reportedTotalTokens": 3360,
+        "promptCacheHitTokens": 512,
+        "promptCacheMissTokens": 2383,
+        "elapsedMs": 3364,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_ye_qingming_hall-ab-2-chapter.json"
+      },
+      "full": {
+        "variant": "full",
+        "promptSha256": "334c2f336813585679f4e2bf59c62df7f53503817ddf61923cd2b94e717fa972",
+        "promptChars": 8967,
+        "promptEstimatedTokens": null,
+        "status": "passed_local_validation",
+        "bodySha256": "868bde660701bc168b5fad7a1155ec59cacef54a5f6af7422380377f6671c1cd",
+        "bodyChars": 559,
+        "bodyCjk": 460,
+        "issues": [],
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 2864,
+              "responseHeadersMs": 386,
+              "completeBodyMs": 2864
+            }
+          }
+        ],
+        "transportFallback": false,
+        "bodyWasStreamed": false,
+        "reportedInputTokens": 3517,
+        "reportedOutputTokens": 374,
+        "reportedTotalTokens": 3891,
+        "promptCacheHitTokens": 1792,
+        "promptCacheMissTokens": 1725,
+        "elapsedMs": 2868,
+        "artifact": "docs/evidence/context-management-2026-09-22/context-prose-ab-2026-09-24/entry_ye_qingming_hall-ab-2-full.json"
+      }
+    }
+  ],
+  "acceptance": {
+    "qualityGatePassed": false,
+    "reason": "配对正文实验只完成本地首稿校验；未执行完整 planner 提交链路，因此不能提升默认路径或启动 Jev",
+    "defaultEnablement": "blocked_until_full_planner_commit_replay_and_human_review",
+    "jevExperiment": "deferred"
+  },
+  "manualReviewRequired": true,
+  "humanReviewScope": [
+    "完整 bundle 与 chapter 的同一动作、同一停止点和叙事视角是否一致",
+    "正文是否把未在 allowedEvidence 或 authoritativeState 中确认的细节写成事实",
+    "短正文是否遗漏行动结果、停止点或必要因果，而本地结构校验未能发现"
+  ]
+}

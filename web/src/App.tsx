@@ -11,6 +11,7 @@ import { PackagesPage } from './pages/PackagesPage'
 import { PackageDetailPage } from './pages/PackageDetailPage'
 import { SessionsPage } from './pages/SessionsPage'
 import { SessionPage } from './pages/SessionPage'
+import { DemoPage } from './pages/DemoPage'
 
 function Shell() {
   const location = useLocation()
@@ -58,6 +59,7 @@ function Shell() {
         </div>
       </header>
       <Routes>
+        <Route path="/demo" element={<DemoPage />} />
         <Route path="/" element={<Navigate to="/packages" replace />} />
         <Route path="/packages" element={<PackagesPage />} />
         <Route

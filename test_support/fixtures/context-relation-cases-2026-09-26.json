@@ -1,0 +1,194 @@
+{
+  "schemaVersion": "context-relation-cases/0.1",
+  "labelAuthor": "Codex",
+  "scope": "当前可见性声明应用于冻结历史快照的离线能力诊断；非生产、非自动语义提取。",
+  "bindings": {
+    "test_support/fixtures/context-semantic-cases-2026-09-25.json": "f12aceabf4802fba8b4fc9a7a0b1d0a5eb2359e6458d8f7e8af4e6bb82d6f2dc",
+    "test_support/fixtures/context-proposition-labels-2026-09-26.json": "9ab11de1ec76b4099bea4bac13189428c853d239660c9e60002a5ab863458697",
+    "docs/evidence/context-management-2026-09-22/context-grounding-frozen-v11-2026-09-25.json": "f999bcdf130a048b03516843726d88e4b8937f9eaffc8370c2e859ff7c7f20b0",
+    "content/packages/taixu-relics-part1/0.1.3/package.json": "94f8591c009e3733c9ac505b5ef63554912003de3ebdd2143045099cbe019dcd",
+    "content/packages/taixu-relics-part1/0.1.3/modules/package-index.json": "95a3fc1cd6e200778a9b260e65210144f027c4311dd9edc14f9367e210a741d1",
+    "content/packages/taixu-relics-part1/0.1.3/modules/state-schema.json": "fa6e023bc0228b4797cb81251f82ba738c15d8996f21590b780c04f575f088b9",
+    "docs/evidence/context-management-2026-09-22/context-proposition-eval-2026-09-26.json": "fd287a2494b1e8a91df98c8f939db446c7020c132db6e0db5d0242eceeff0fe3"
+  },
+  "packageArtifact": "content/packages/taixu-relics-part1/0.1.3/package.json",
+  "previousReportArtifact": "docs/evidence/context-management-2026-09-22/context-proposition-eval-2026-09-26.json",
+  "cases": [
+    {
+      "id": "position_out",
+      "axis": "position",
+      "statement": "伤者在封山线外。",
+      "expectedVerdict": "supported",
+      "reference": {
+        "id": "module:currentBeat:beat_chapter_001",
+        "quote": "陌生伤者与空灯被挡在封山线外"
+      },
+      "rationale": "来源明确确认同一当前位置。"
+    },
+    {
+      "id": "position_in",
+      "axis": "position",
+      "statement": "伤者在封山线内。",
+      "expectedVerdict": "contradicted",
+      "reference": {
+        "id": "module:currentBeat:beat_chapter_001",
+        "quote": "陌生伤者与空灯被挡在封山线外"
+      },
+      "rationale": "同一时点同一封山线的内外关系相反。"
+    },
+    {
+      "id": "position_not_out",
+      "axis": "position",
+      "statement": "伤者不在封山线外。",
+      "expectedVerdict": "contradicted",
+      "reference": {
+        "id": "module:currentBeat:beat_chapter_001",
+        "quote": "陌生伤者与空灯被挡在封山线外"
+      },
+      "rationale": "对已确认位置作直接否定。"
+    },
+    {
+      "id": "position_not_in",
+      "axis": "position",
+      "statement": "伤者不在封山线内。",
+      "expectedVerdict": "supported",
+      "reference": {
+        "id": "module:currentBeat:beat_chapter_001",
+        "quote": "陌生伤者与空灯被挡在封山线外"
+      },
+      "rationale": "来源明确在线外，支持不在线内；不是缺记录推断。"
+    },
+    {
+      "id": "alive",
+      "axis": "negation",
+      "statement": "伤者仍活着。",
+      "expectedVerdict": "supported",
+      "reference": {
+        "id": "module:opening:knownFacts:2",
+        "quote": "伤者仍活着"
+      },
+      "rationale": "对当前已确认存活状态的肯定或直接相反判断。"
+    },
+    {
+      "id": "not_alive",
+      "axis": "negation",
+      "statement": "伤者已经死了。",
+      "expectedVerdict": "contradicted",
+      "reference": {
+        "id": "module:opening:knownFacts:2",
+        "quote": "伤者仍活着"
+      },
+      "rationale": "对当前已确认存活状态的肯定或直接相反判断。"
+    },
+    {
+      "id": "not_registered",
+      "axis": "negation",
+      "statement": "陆照临尚未登记成为外门弟子。",
+      "expectedVerdict": "supported",
+      "reference": {
+        "id": "module:opening:identity",
+        "quote": "尚未登记成为外门弟子"
+      },
+      "rationale": "核对已明确提供的否定，不能把无记录等同否定。"
+    },
+    {
+      "id": "registered",
+      "axis": "negation",
+      "statement": "陆照临已经登记成为外门弟子。",
+      "expectedVerdict": "contradicted",
+      "reference": {
+        "id": "module:opening:identity",
+        "quote": "尚未登记成为外门弟子"
+      },
+      "rationale": "核对已明确提供的否定，不能把无记录等同否定。"
+    },
+    {
+      "id": "actor_lu",
+      "axis": "subject",
+      "statement": "三年前，陆沉舟离开北河城。",
+      "expectedVerdict": "supported",
+      "reference": {
+        "id": "module:opening:evidence:1",
+        "quote": "三年前，陆沉舟离开北河城"
+      },
+      "rationale": "换主体后缺证，不推出守门弟子从未离开。"
+    },
+    {
+      "id": "actor_guard",
+      "axis": "subject",
+      "statement": "三年前，守门弟子离开北河城。",
+      "expectedVerdict": "unsupported",
+      "reference": {
+        "id": "module:opening:evidence:1",
+        "quote": "三年前，陆沉舟离开北河城"
+      },
+      "rationale": "换主体后缺证，不推出守门弟子从未离开。"
+    },
+    {
+      "id": "time_three",
+      "axis": "time",
+      "statement": "陆沉舟三年前离开北河城。",
+      "expectedVerdict": "supported",
+      "reference": {
+        "id": "module:opening:evidence:1",
+        "quote": "三年前，陆沉舟离开北河城"
+      },
+      "rationale": "未证明离开只发生一次；不同时间缺证，不直接判矛盾。"
+    },
+    {
+      "id": "time_two",
+      "axis": "time",
+      "statement": "陆沉舟两年前离开北河城。",
+      "expectedVerdict": "unsupported",
+      "reference": {
+        "id": "module:opening:evidence:1",
+        "quote": "三年前，陆沉舟离开北河城"
+      },
+      "rationale": "未证明离开只发生一次；不同时间缺证，不直接判矛盾。"
+    },
+    {
+      "id": "intended",
+      "axis": "completion",
+      "statement": "陆沉舟三年前说要替宗门押送一批引路灯。",
+      "expectedVerdict": "supported",
+      "reference": {
+        "id": "module:opening:evidence:1",
+        "quote": "说要替宗门押送一批引路灯"
+      },
+      "rationale": "陈述意图不能证明完成或未完成。"
+    },
+    {
+      "id": "completed",
+      "axis": "completion",
+      "statement": "陆沉舟三年前已完成替宗门押送引路灯。",
+      "expectedVerdict": "unsupported",
+      "reference": {
+        "id": "module:opening:evidence:1",
+        "quote": "说要替宗门押送一批引路灯"
+      },
+      "rationale": "陈述意图不能证明完成或未完成。"
+    },
+    {
+      "id": "order_after",
+      "axis": "order",
+      "statement": "陆沉舟押送引路灯后失踪。",
+      "expectedVerdict": "supported",
+      "reference": {
+        "id": "module:opening:knownFacts:0",
+        "quote": "父亲陆沉舟三年前押送引路灯后失踪"
+      },
+      "rationale": "无事件唯一编号，不排除其他事件；改变顺序的命题缺证，不擅自判互斥。"
+    },
+    {
+      "id": "order_before",
+      "axis": "order",
+      "statement": "陆沉舟失踪后才押送引路灯。",
+      "expectedVerdict": "unsupported",
+      "reference": {
+        "id": "module:opening:knownFacts:0",
+        "quote": "父亲陆沉舟三年前押送引路灯后失踪"
+      },
+      "rationale": "无事件唯一编号，不排除其他事件；改变顺序的命题缺证，不擅自判互斥。"
+    }
+  ]
+}

@@ -1,0 +1,797 @@
+{
+  "schemaVersion": "context-qualifier-mention-contrast-cases/0.1",
+  "scope": "已见议事殿场景的6组成对诊断，12篇控制稿、14个位置命题；包含旧反例，不是未见场景或泛化验收。",
+  "baseFixtureSha256": "263b80a669d6f73bb8eca6d56e2662b439ae6100d4d6e83c6c3360a195921505",
+  "frozenImplementationHashes": {
+    "test_support/fixtures/context-qualifier-selection-strict-2026-09-26.json": "8802272f19f5980640e1dc085b5d98497ce88c071413878e15fa803df5a232db",
+    "test_support/fixtures/context-qualifier-scope-v2-2026-09-26.json": "263b80a669d6f73bb8eca6d56e2662b439ae6100d4d6e83c6c3360a195921505",
+    "test_support/fixtures/context-qualifier-cases-2026-09-26.json": "10fe78d8560b67e2782ffb53f88b366729d2ae08db6a914f9d60174f5b4ef2e9",
+    "test_support/fixtures/context-qualifier-heldout-2026-09-26.json": "4881e74544e168560f4c2cd37e3199d145e2740b21fb599f0349e7a11dd6b183",
+    "test_support/prompts/context_qualifier_unit_premises.md": "23ed32f2c24640e8e0e7158325f07dd1d68b61f00a8b9734d002f1fc2bc10472",
+    "test_support/context_qualifier_unit_premises_eval.py": "8f7e424d665444a2910494349f39fb62f2ea7f3928b821dbe60d2c0d73f4d847",
+    "test_support/context_fullscan.py": "f42e891b1aa70039d5f06e248a4bced8c04842b7659cdb2fce1e2149eadd0494",
+    "test_support/context_fullscan_audit.py": "487db1d6b3bfe80a575af63e43b737fbd385e5874bfb7bbb5a492b704c59558f",
+    "test_support/context_candidate_mapping.py": "8bc3ebcd8869c6024101a2f69b3454d15afd5b63892377ba097a740818404bc1",
+    "test_support/context_indexed_pipeline.py": "582e07dc3c411af4294bfcfc2ba9a977db6a80967a81cae0373c7831b7913fbd",
+    "test_support/context_scene_relations.py": "c312b3efde6f36a38adfc9dc4555547cead9e19aec326721eb1c0576ec2f7ead",
+    "test_support/context_claim_pipeline.py": "d897bf75e71e08de574ccd62b5e725a318782f13642ce04dcb820a08c977d4f3",
+    "test_support/context_planner_smoke.py": "c1f458da4716833f149e92e12ea7c25cf778ccbe86d30a3819b0dbe5f73823e9",
+    "open_story_engine/llm.py": "6b013d24f41fe25775f5a9dc7b45ef6dd171949105b22f62bea1f1de0d8021ff",
+    "test_support/context_qualifier_eval.py": "efb0ed7e40f163b15ce881059b2136273d4b70d3bfce2042ecbb9ad9f23bb584",
+    "test_support/context_qualifier_evidence.py": "fcbb91232c501ea465ef183f10ed64b171271d52d922f15103999f4cbcfbcf0c",
+    "test_support/context_qualifier_scope_v2.py": "ff26566b3282d6ef265b0df521d3bb6a9e4aff3b22ed0221b830134b1c033719",
+    "test_support/context_qualifier_heldout.py": "056f4130892691323aa86839faa035fb9c5f87f41bd245bc82a0a160dbd8f0ba",
+    "test_support/context_qualifier_evidence_eval.py": "dfb46ff574d3831436a626b9a02e15887646850d23a63eca5e284aa7c0fc169e",
+    "test_support/longform.py": "0be0a045e1a9f78bfa6efe7a982e794f732509b76ef20b46e6433b1645081989",
+    "test_support/context_qualifier_scope_eval.py": "469e5762deb30c7fa02ca87b5abced543feccd8ee3ed12dd8e31888bf7d85c01",
+    "test_support/context_qualifier_scope_candidate_eval.py": "c09d3a3cb3855393d66f5cd050fa9de91e84d05bec41ecc056f3dbb947e08ef6",
+    "test_support/context_qualifier_scope_typed_eval.py": "162ed67ecef72c4c6e28e2cf99ff74e206ef36d44580b7cd0f7afde0d6717cbb",
+    "test_support/context_qualifier_selection.py": "7c030f2fdeffb66632e303bd98885bae505a0c95fd1de9eb157bfc1cc863d348",
+    "test_support/context_qualifier_selection_eval.py": "04424da44a0e8896656eb2cbe3175b570ec90873a38c513055c53ac7b447f8fd",
+    "test_support/context_qualifier_selection_linear_eval.py": "b910addc977ad814df2d5887e4441c703b2993bbefa502c2a5d379111ec701b8",
+    "test_support/context_qualifier_selection_policy.py": "e12fef2b6eaeb1a3a9e0dea3afd766fe51b8dc8548b51af63cf53ee75d41c459",
+    "test_support/context_qualifier_selection_policy_eval.py": "9244e13d56a1bac136f7536054a8e9fbadc2c19761e322d173a0adfec30bea55",
+    "test_support/context_qualifier_selection_policy_bound_eval.py": "f7762131f3d9dd72dedf981a3944b3bce523552aca8bc075e731ec18debaf675",
+    "test_support/context_qualifier_selection_scoped.py": "f05922eb914695d37f9f09f1a9b2644ddd21ea9d1a37a164789cc1b0a3e83fa6",
+    "test_support/context_qualifier_selection_scoped_eval.py": "82d6928a8c8b222ed9da532748eb629efc5e2121f1b9048bff4856674f8fb655",
+    "test_support/context_qualifier_selection_strict.py": "e4b00f0c8b464e7f9431c9b3e99e81bd0b8296a1b976d8882eb07d3082e6114d",
+    "test_support/context_qualifier_selection_strict_eval.py": "be92403f871289af4f9f0016122b4472db255d519055fa3476054e747b3e74a3",
+    "test_support/context_qualifier_entity_refs.py": "bef957cf6606e12a2fe5526ef6686c57fae4f48107a27edfa86b33b95b4175b5",
+    "test_support/context_qualifier_entity_refs_eval.py": "e03e3406a9900661087c75ef84b9b85d9c0210b7f9c82b10aff0c79f785e4fa9",
+    "test_support/context_qualifier_entity_refs_v2.py": "07b1e11a86373d5b4e22873a9e60787eba5274ae811ea2ce12a5d0e0a07aac20",
+    "test_support/context_qualifier_entity_refs_v2_eval.py": "b4e9d6ea035ad1c620d22a9e75ae49afb78f0ff9b31ea7d6adc42d96193ff2f4",
+    "test_support/context_qualifier_explicit_segments_eval.py": "e363a3814ef6b4482eedd80d9c234f627e1b71eeb0aaf7c46884545a8ccd453d",
+    "test_support/context_qualifier_unit_premises.py": "01c226d6e529c6166f4a6b56c9b0911b5cbcdf20f7e17e15c394019edbb659fe"
+  },
+  "cases": [
+    {
+      "id": "prefix:mention",
+      "pairId": "prefix",
+      "variant": "mention",
+      "sceneKey": "hall",
+      "draft": "说出“可能”二字的守门长老站在议事殿内。",
+      "draftSha256": "37e2435ec7b1977a03f09be6a323e3634ed6c75a7e8459fa3c35d60eaa76fe30",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S2"
+              ],
+              "qualified": [
+                "P1-U1-S2"
+              ]
+            },
+            {
+              "core": [
+                "P1-U1-S1",
+                "P1-U1-S2"
+              ],
+              "qualified": [
+                "P1-U1-S1",
+                "P1-U1-S2"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        }
+      ]
+    },
+    {
+      "id": "prefix:operator",
+      "pairId": "prefix",
+      "variant": "operator",
+      "sceneKey": "hall",
+      "draft": "守门长老可能站在议事殿内。",
+      "draftSha256": "4a05b39e4537544e848894b431dd614771506c76efc48804c1af47b91c31997d",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S1"
+              ],
+              "qualified": [
+                "P1-U1-S1"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": {
+            "segmentId": "P1-U1-S1",
+            "quote": "可能",
+            "occurrence": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "in_core:mention",
+      "pairId": "in_core",
+      "variant": "mention",
+      "sceneKey": "hall",
+      "draft": "守门长老在议事殿内说出“可能”二字。",
+      "draftSha256": "78ad78d3ded8cb7bffd4f4524c72487d068832eab9bd96fec310dd3e64a11aa8",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S1"
+              ],
+              "qualified": [
+                "P1-U1-S1"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        }
+      ]
+    },
+    {
+      "id": "in_core:operator",
+      "pairId": "in_core",
+      "variant": "operator",
+      "sceneKey": "hall",
+      "draft": "守门长老可能在议事殿内。",
+      "draftSha256": "30c4069ba3daf8aa428a136ffdeb5352cd8a9dca885be04ee650a88434450823",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S1"
+              ],
+              "qualified": [
+                "P1-U1-S1"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": {
+            "segmentId": "P1-U1-S1",
+            "quote": "可能",
+            "occurrence": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "unquoted:mention",
+      "pairId": "unquoted",
+      "variant": "mention",
+      "sceneKey": "hall",
+      "draft": "把或许二字写在纸上的守门长老站在议事殿内。",
+      "draftSha256": "923528967969ec37079e881eb0fe281092d52a0925a9fd1b81ff39f82d7f850f",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S2"
+              ],
+              "qualified": [
+                "P1-U1-S2"
+              ]
+            },
+            {
+              "core": [
+                "P1-U1-S1",
+                "P1-U1-S2"
+              ],
+              "qualified": [
+                "P1-U1-S1",
+                "P1-U1-S2"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        }
+      ]
+    },
+    {
+      "id": "unquoted:operator",
+      "pairId": "unquoted",
+      "variant": "operator",
+      "sceneKey": "hall",
+      "draft": "守门长老或许站在议事殿内。",
+      "draftSha256": "2643588d026ee9cb4ca3154a76d79689f6cd5c7418b36d2cbc1d219b50e482a1",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S1"
+              ],
+              "qualified": [
+                "P1-U1-S1"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": {
+            "segmentId": "P1-U1-S1",
+            "quote": "或许",
+            "occurrence": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "denial:mention",
+      "pairId": "denial",
+      "variant": "mention",
+      "sceneKey": "hall",
+      "draft": "说出“断定”二字的沈砚秋站在议事殿内。",
+      "draftSha256": "c9efa5f370bce385b20ae959d9b20b2b08222bcf169aa2d24265bb99c12674fe",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S2"
+              ],
+              "qualified": [
+                "P1-U1-S2"
+              ]
+            },
+            {
+              "core": [
+                "P1-U1-S1",
+                "P1-U1-S2"
+              ],
+              "qualified": [
+                "P1-U1-S1",
+                "P1-U1-S2"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        }
+      ]
+    },
+    {
+      "id": "denial:operator",
+      "pairId": "denial",
+      "variant": "operator",
+      "sceneKey": "hall",
+      "draft": "没有人敢断定沈砚秋在议事殿内。",
+      "draftSha256": "62f919353550d84505f792814ad8165113b5012ed6fafedeb18fde06327fd1c3",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S2"
+              ],
+              "qualified": [
+                "P1-U1-S1",
+                "P1-U1-S2"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": {
+            "segmentId": "P1-U1-S1",
+            "quote": "没有人敢断定",
+            "occurrence": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "neighbour:mention",
+      "pairId": "neighbour",
+      "variant": "mention",
+      "sceneKey": "hall",
+      "draft": "守门长老说出“可能”二字。沈砚秋在议事殿外。",
+      "draftSha256": "51bd8e83e78f2a0650b48c8773e46f2a75c03cf4be839d4d7da5f6fcb4d747af",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U2"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U2-S1"
+              ],
+              "qualified": [
+                "P1-U2-S1"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        }
+      ]
+    },
+    {
+      "id": "neighbour:operator",
+      "pairId": "neighbour",
+      "variant": "operator",
+      "sceneKey": "hall",
+      "draft": "守门长老说出“可能”二字。沈砚秋可能在议事殿外。",
+      "draftSha256": "21a719ad540f3874ef53a76c431c1caed9dad86b527e0cbc3823b3338d848024",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U2"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U2-S1"
+              ],
+              "qualified": [
+                "P1-U2-S1"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": {
+            "segmentId": "P1-U2-S1",
+            "quote": "可能",
+            "occurrence": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "two_people:first_operator",
+      "pairId": "two_people",
+      "variant": "first_operator",
+      "sceneKey": "hall",
+      "draft": "守门长老或许在议事殿内，而说出“可能”二字的沈砚秋在议事殿外。",
+      "draftSha256": "e98b6701bbaee0e88041922ebbcb748d413e9f697ec2f1409fc9cc2d760453c1",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        },
+        {
+          "unitIds": [
+            "P1-U2"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S1"
+              ],
+              "qualified": [
+                "P1-U1-S1"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": {
+            "segmentId": "P1-U1-S1",
+            "quote": "或许",
+            "occurrence": 0
+          }
+        },
+        {
+          "position": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U2-S2"
+              ],
+              "qualified": [
+                "P1-U2-S2"
+              ]
+            },
+            {
+              "core": [
+                "P1-U2-S1",
+                "P1-U2-S2"
+              ],
+              "qualified": [
+                "P1-U2-S1",
+                "P1-U2-S2"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        }
+      ]
+    },
+    {
+      "id": "two_people:second_operator",
+      "pairId": "two_people",
+      "variant": "second_operator",
+      "sceneKey": "hall",
+      "draft": "说出“或许”二字的守门长老在议事殿内，而沈砚秋可能在议事殿外。",
+      "draftSha256": "31e1496ad6407edeab33ca710f94b54fa7491d11111a45bf1a0f1ba277107a32",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        },
+        {
+          "unitIds": [
+            "P1-U2"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S2"
+              ],
+              "qualified": [
+                "P1-U1-S2"
+              ]
+            },
+            {
+              "core": [
+                "P1-U1-S1",
+                "P1-U1-S2"
+              ],
+              "qualified": [
+                "P1-U1-S1",
+                "P1-U1-S2"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        },
+        {
+          "position": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U2-S2"
+              ],
+              "qualified": [
+                "P1-U2-S2"
+              ]
+            },
+            {
+              "core": [
+                "P1-U2-S1",
+                "P1-U2-S2"
+              ],
+              "qualified": [
+                "P1-U2-S1",
+                "P1-U2-S2"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": {
+            "segmentId": "P1-U2-S2",
+            "quote": "可能",
+            "occurrence": 0
+          }
+        }
+      ]
+    }
+  ]
+}

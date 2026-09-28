@@ -1,0 +1,239 @@
+{
+  "schemaVersion": "context-qualifier-cases/0.1",
+  "labelAuthor": "Codex",
+  "scope": "官方长篇同一场景的条件与认识可能性最小对照；开发集，不是留出集或来源真假验收。",
+  "bindings": {
+    "test_support/fixtures/context-candidate-mapping-cases-2026-09-26.json": "aaffa3d1f433fb49fc70da4c1d74246e2b92c21fe3b30160b4ae2aa80a5ef617"
+  },
+  "entities": {
+    "scene:wounded_stranger": {
+      "kind": "scene_person",
+      "mentions": [
+        "伤者",
+        "陌生伤者"
+      ]
+    },
+    "scene:sealing_line": {
+      "kind": "scene_boundary",
+      "mentions": [
+        "封山线"
+      ]
+    },
+    "scene:gatekeeper": {
+      "kind": "scene_person",
+      "mentions": [
+        "守门弟子"
+      ]
+    }
+  },
+  "additionalEntitySources": {
+    "scene:gatekeeper": {
+      "id": "module:opening:relationships:1",
+      "quote": "守门弟子",
+      "contentSha256": "6fcd5c607c4aaca83def80916c63cf1166597eb98dd08ff5efde016147579197"
+    }
+  },
+  "cases": [
+    {
+      "id": "original_condition",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "如果守门弟子放行，伤者就在封山线内。铁链又响了一声。",
+      "draftSha256": "b2f6e11f32ffd5afc54972a5e30f880277438d64c28c7996f431173ccaece335",
+      "labelRationale": "原失败对照；条件结果中的就在没有独立认识可能性依据。",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1",
+            "P1-U2"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "condition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plain_emphasis",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "伤者就在封山线内。",
+      "draftSha256": "9dee620b1b5182beefdc77db7d7bef8a2fe48d4c85a7f0dd628318c519c01842",
+      "labelRationale": "就在仅强调位置。",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:wounded_stranger",
+            "relation": "boundary_side",
+            "object": "scene:sealing_line",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ]
+    },
+    {
+      "id": "possibility",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "伤者可能在封山线内。",
+      "draftSha256": "51a355ca140fea96e9d84832e299ae0fc486955e45a28f1b847a57cc1633d863",
+      "labelRationale": "可能限定位置判断。",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "both",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "如果守门弟子放行，伤者也可能在封山线内。",
+      "draftSha256": "e22e5e324e5528df5611ec3a1a3a813740fb54c2edac47316e13307fdb4cda03",
+      "labelRationale": "如果限定前提，可能独立限定位置判断。",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1",
+            "P1-U2"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "condition",
+            "modality"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "condition_paraphrase",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "只要守门弟子点头，伤者便在封山线外。",
+      "draftSha256": "650130aa8299fd6407bee079cea528649d0be6e1a688f037cd8801c25bff0e40",
+      "labelRationale": "只要引出前提，便连接结果。",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1",
+            "P1-U2"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "condition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "possibility_paraphrase",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "伤者或许在封山线外。",
+      "draftSha256": "d9777f3fb3d8e732eef3123da7ca8fee7829756809f98223fb93133163e5b176",
+      "labelRationale": "或许表达认识可能性。",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "both_paraphrase",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "只要守门弟子点头，伤者或许在封山线外。",
+      "draftSha256": "38fa9f9013a04d7735a7921cef1d44555b181c4a9248b94d4daf4b956efdefad",
+      "labelRationale": "条件与认识可能性同时保留。",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1",
+            "P1-U2"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "condition",
+            "modality"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unrelated_possibility",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "守门弟子可能会点头。伤者就在封山线内。",
+      "draftSha256": "55a29e423fcf56b399f1f95348ef01c630dc4339bff2c52145a07ae771e56d9a",
+      "labelRationale": "可能作用于点头，不作用于独立位置句。",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U2"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:wounded_stranger",
+            "relation": "boundary_side",
+            "object": "scene:sealing_line",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ]
+    },
+    {
+      "id": "unrelated_condition",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "如果铁链响了，守门弟子就按住门框。伤者在封山线外。",
+      "draftSha256": "9803a2b3e1c20a69627d651297617024c06ac925134bbaeca6cc3eb4066dccee",
+      "labelRationale": "条件作用于按住门框，不作用于独立位置句。",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U3"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:wounded_stranger",
+            "relation": "boundary_side",
+            "object": "scene:sealing_line",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ]
+    }
+  ],
+  "parentFixtureSha256": "774e85b91a67adb305229c5a9ed366df8c19a1060a13f092d784755b5e778a0b",
+  "labelDefinitions": {
+    "condition": "位置命题依赖显式前提成立。",
+    "modality": "位置命题本身被表述为不确定或可能；不含单纯的条件逻辑。",
+    "scope": "限定只归属于其作用的位置命题；显式过去/未来仍另记 time，不从条件自动推断。"
+  }
+}

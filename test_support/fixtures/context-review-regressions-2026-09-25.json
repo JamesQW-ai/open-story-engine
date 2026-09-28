@@ -1,0 +1,251 @@
+{
+  "schemaVersion": "context-review-regressions/0.1",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-planner-smoke-2026-09-25-controls.json",
+  "sourceSha256": "af72b82e77f9e941cef58238fa0af4cc566ebf7488b33d06608de5bf227be814",
+  "packageId": "taixu-relics-part1",
+  "sampleId": "entry_lu_gate-ab-1",
+  "input": "指出伤者尚有呼吸，争取在落锁前让他得到救助。",
+  "requirements": {
+    "A1": "指出伤者尚有呼吸",
+    "A2": "争取在落锁前让他得到救助"
+  },
+  "sceneEvidence": {
+    "opening-1": "父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。",
+    "opening-2": "老人让你到玄霄宗问山门的灯。",
+    "opening-3": "伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。",
+    "opening-identity": "陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。",
+    "history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P1": "雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。",
+    "history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P2": "眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。",
+    "history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3": "你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。"
+  },
+  "baselineSceneReviewPrompt": "在同一个审核JSON中增加sceneChecks，逐段检查玩家选择权与背景信息，每段一条：{\"paragraphId\":\"P1\",\"playerDecision\":\"none|authorized|overreach\",\"background\":\"none|supported|unsupported\",\"sources\":[{\"id\":\"sceneEvidence中的键\",\"quote\":\"该条资料的逐字原文片段\"}],\"quote\":\"实际错误的逐字短句；无问题为空\", \"issue\":\"具体问题，无问题为空\"}。\n顶层issues只列实际语义错误，每条使用{\"paragraphId\":\"存在的正文段落编号\",\"type\":\"action|background|continuity|state\",\"quote\":\"该段中实际有错的逐字短句，不包含无关句子\",\"reason\":\"具体违反什么要求及依赖此错误的相邻段落\"}。逐项列全，不只报告第一处；同段不同错误也分别说明。若问题定位在事件，可附eventId，但不要把段落编号或事件编号只写在reason句子中。整回合缺少某项行动而无法定位时paragraphId用null，不编造编号。引文编号抄写错误不算正文语义错误；按输入修正引文即可。sceneChecks和eventChecks中的拒绝判定必须保留，不能为了让issues为空而改成通过。\n不能只核对状态是否改变。玩家开口追问新问题、接受提议、作出承诺、认定某人可信、决定后续行程，即使没有移动或转交物品，也是决策。原始输入已授权的问题可以自然分句、复问不清楚的同一问题；对方回答带出的新问题、NPC主动建议的新任务，必须留给玩家选择，擅自执行为overreach。抬眼、呼吸等没有新意图的短暂动作是none。resultContract不能自行扩张原始输入的授权边界。\n背景检查覆盖叙述和NPC台词。人物过去见过什么、早到几日、曾经如何调查，以及世界规则、草药生长规律、地点布局、线索来源等断言都需要sceneEvidence中的已公开依据；“这是NPC自己说的”“NPC应当知道”“这是合理反应”不是事实来源。不因使用“我见过”或引号就略过。相邻真实细节不能支持新添的往事；一段内任一背景断言无依据就标unsupported并定位具体句子。仅说当前观察、明确未证实的猜测、表达意愿或承认不知道可以是none；猜测中夹带“旧牌通常如此”等事实前提仍须依据。新的可观察变化由动作契约核对，不把本回合真实的新行动误当背景。\n背景supported时sources必须覆盖该段全部背景断言，逐字引用sceneEvidence，不能引用新正文、规划器的解释或自己的审查理由。没有背景断言时sources为空数组。公开前情里的NPC说法只能证明他曾这样说，不能自动升级为客观真相或可信经历。发现问题明确报告，不为了凑字数或让生成通过而放行。\n\n尤其核对NPC反问之后的下一段：玩家原输入只要求陈述或听回应时，作者不能替玩家回答反问；这即使主题相关、未新增重大状态也属于overreach。回答与原话的自然拆分不同，须结合问答先后判断。observedEvents标为background或recollection的事实必须出现在背景审查中，不得将整段标none跳过。\n\n背景来源核对须覆盖该段每一个背景断言，包括否定、数量、人物、时间与条件。不能仅引用同主题前文；“不得越界”不能支持“必须越界”，“没提及经历”不能证明“没有经历”。先查冲突和缺证，再判supported。不要输出backgroundClaims或重抄当前段落，程序会把整段原文交给独立依据核对。任何断言缺证或矛盾，该段background标unsupported并在issue中说明全部问题。\n规矩、资格、允许或禁止的结论，以及具体的光线、声音、材质、厚薄等感官或物理细节，必须由同一条公开来源同时支持规则与对象或具体细节；泛泛的场景气氛、无关人物经历或同主题但未提及对象的引文不能充当依据。\npriorRepairIssues若存在，逐项检查当前正文是否实质修复，不能以换词方式保留相同的缺证事实或越权动作；旧判定仅供核查，不要求无条件沿用。对白改写后还要核对相邻段的引用、问答和因果：不得叙述“说完某句话”而当前前文已无该话。只审核当前完整正文，不能把上一版已删台词当作仍然发生。\n\n精确定位问题：issues.quote只引用实际错误句，保留同段正确内容。删除对白会影响相邻引用、回答或反应时，把受影响句子一并列入issues，不直接判整段无效。只因正文短于scenePlan预算不能报告问题；确实遗漏原始要求才按行动完整性拒绝。\nknowledge.sourceKinds标识来源权威级别。history_scene中的已发生动作可以承接，人物说法不能自动证明客观背景；明确保留来源的转述可以通过。人物当场表情、语气、感受和对眼前交流的理解不因缺少前史而拒绝。推断须有真实前提且保留不确定性，不能以“可能”掩盖虚构观察。核对scenePlan.observationLimits与authoritativeState，包裹内部不可见等条件不能被正文无声改写。NPC明确拒绝应作为请求受阻处理，正常对视不等于检查被排除物品。\n",
+  "recordedReview": {
+    "issues": [
+      {
+        "paragraphId": "P2",
+        "type": "background",
+        "quote": "人若留在外面，撑不到天亮。",
+        "reason": "“撑不到天亮”是对伤者存活时限的推断，公开来源仅支持伤者仍活着、山门将闭，未支持此具体时限，属于无依据的背景断言。"
+      },
+      {
+        "paragraphId": "P4",
+        "type": "action",
+        "quote": "“封山线内不得擅入，这是门规。”他说，“我放人进去，谁担这个责？”",
+        "reason": "守门弟子反问“谁担这个责”后，正文未让玩家回答即转入P5，但原始输入未授权玩家回答反问；此处虽未替玩家作答，但P5直接跳过玩家回应，使玩家在反问后的选择权被悬置，应留给玩家决定如何回应。"
+      }
+    ],
+    "actions": [
+      {
+        "id": "A1",
+        "status": "performed",
+        "summary": "陆照临隔着封山线指出伤者喉间有血沫、胸口仍在起伏，确认其尚有呼吸。",
+        "paragraphId": "P2"
+      },
+      {
+        "id": "A2",
+        "status": "blocked",
+        "summary": "陆照临请求守门弟子在落锁前救助伤者，但守门弟子以门规为由反问谁担责，未答应放行或唤人，救助尚未落实。",
+        "paragraphId": "P4"
+      }
+    ],
+    "outcomeEvidence": [],
+    "goalEvidence": [],
+    "finalState": {
+      "playerLocationId": "location_open_gate",
+      "itemOwnerCharacterIds": {
+        "item_open_letter": "character_ae4cb42b9b49"
+      },
+      "itemLocationIds": {}
+    },
+    "checkedConsequences": true,
+    "threadEvidence": [],
+    "eventChecks": [
+      {
+        "id": "E1",
+        "verdict": "supported",
+        "reason": "正文P1直接描写陆照临看见伤者喉间血沫与胸口起伏，属于当前观察。",
+        "stepIds": [
+          "S1"
+        ],
+        "changeIds": [],
+        "introductionIds": []
+      },
+      {
+        "id": "E2",
+        "verdict": "supported",
+        "reason": "正文P2陆照临说出“他还活着”及血沫、胸口起伏，并请求救助，符合S1授权。",
+        "stepIds": [
+          "S1"
+        ],
+        "changeIds": [],
+        "introductionIds": []
+      },
+      {
+        "id": "E3",
+        "verdict": "supported",
+        "reason": "正文P3描写守门弟子按剑、目光来回、往前半步又停住，属于当场反应。",
+        "stepIds": [
+          "S2"
+        ],
+        "changeIds": [],
+        "introductionIds": []
+      },
+      {
+        "id": "E4",
+        "verdict": "supported",
+        "reason": "正文P4守门弟子重申门规并反问谁担责，属于S2允许的当场回应。",
+        "stepIds": [
+          "S2"
+        ],
+        "changeIds": [],
+        "introductionIds": []
+      },
+      {
+        "id": "E5",
+        "verdict": "supported",
+        "reason": "守门弟子陈述门规是其当前台词，属于当场反应，不要求客观背景升级。",
+        "stepIds": [
+          "S2"
+        ],
+        "changeIds": [],
+        "introductionIds": []
+      },
+      {
+        "id": "E6",
+        "verdict": "supported",
+        "reason": "正文P5描写雨更密、铁链拖动声，陆照临判断落锁时辰近了，属于当前观察与合理推断。",
+        "stepIds": [
+          "S1",
+          "S2"
+        ],
+        "changeIds": [],
+        "introductionIds": []
+      }
+    ],
+    "changeEvidence": [],
+    "introductionEvidence": [],
+    "additionalChanges": [],
+    "sceneChecks": [
+      {
+        "paragraphId": "P1",
+        "playerDecision": "none",
+        "background": "none",
+        "sources": [],
+        "quote": "",
+        "issue": ""
+      },
+      {
+        "paragraphId": "P2",
+        "playerDecision": "authorized",
+        "background": "unsupported",
+        "sources": [
+          {
+            "id": "opening-3",
+            "quote": "伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。"
+          }
+        ],
+        "quote": "人若留在外面，撑不到天亮。",
+        "issue": "“撑不到天亮”为伤者存活时限推断，公开来源仅支持伤者仍活着、山门将闭，未支持此具体时限。"
+      },
+      {
+        "paragraphId": "P3",
+        "playerDecision": "none",
+        "background": "none",
+        "sources": [],
+        "quote": "",
+        "issue": ""
+      },
+      {
+        "paragraphId": "P4",
+        "playerDecision": "none",
+        "background": "supported",
+        "sources": [
+          {
+            "id": "opening-3",
+            "quote": "伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。"
+          }
+        ],
+        "quote": "",
+        "issue": ""
+      },
+      {
+        "paragraphId": "P5",
+        "playerDecision": "none",
+        "background": "none",
+        "sources": [],
+        "quote": "",
+        "issue": ""
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "request_then_wait",
+      "draft": "“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\n\n“你愿意担责吗？”守门弟子问。\n\n你没有回答，仍站在原地。",
+      "expectedIssues": [],
+      "construction": "人工构造的合法停止点：请求后不替玩家回答NPC反问。"
+    },
+    {
+      "id": "unsolicited_commitment",
+      "draft": "“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\n\n“你愿意担责吗？”守门弟子问。\n\n“我担这个责。”你回答。",
+      "expectedIssues": [
+        [
+          "P3",
+          "action"
+        ]
+      ],
+      "construction": "从合法等待样本仅替换最后一段，新增未经授权的承诺。"
+    },
+    {
+      "id": "unsupported_deadline",
+      "draft": "“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\n\n“人若留在外面，撑不到天亮。”你又说。",
+      "expectedIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "construction": "加入旧稿真实被拒的存活时限断言。"
+    },
+    {
+      "id": "hedged_deadline",
+      "draft": "“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\n\n“他可能撑不到天亮。”你又说。",
+      "expectedIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "construction": "反例：仅增加可能，仍无存活时限依据。"
+    },
+    {
+      "id": "invented_lamp_interior",
+      "draft": "“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\n\n空灯里积着水，灯芯早湿透了。",
+      "expectedIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "construction": "移入chapter失败稿的空灯内部状态，来源没有这些细节。"
+    },
+    {
+      "id": "sourced_injury_then_wait",
+      "draft": "伤者喉间涌出血沫。\n\n“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\n\n“你愿意担责吗？”守门弟子问。\n\n你没有回答，仍站在原地。",
+      "expectedIssues": [],
+      "construction": "正例：保留官方开场中逐字存在的血沫事实，不能误删已公开观察。"
+    },
+    {
+      "id": "recorded_mixed_failure",
+      "draft": "雨顺着斗笠边沿滴下来，砸在你手背上。你隔着封山线，看见那人的喉间又涌出一口血沫，胸口跟着起伏了一下——很浅，但确实在动。\n\n“他还活着。”你朝守门弟子开口，声音压过雨声，“喉间有血沫，胸口还在起伏。人若留在外面，撑不到天亮。”\n\n守门弟子按剑的手没松，目光在你和倒地的人之间来回。他往前半步，像是要看清那道起伏，又停住，脚始终没越过封山线。\n\n“封山线内不得擅入，这是门规。”他说，“我放人进去，谁担这个责？”\n\n雨更密了。你听见山门深处传来铁链拖动的声响，像是有人在收闸。落锁的时辰近了。",
+      "expectedIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "construction": "原生产第二稿逐字保留；P4无玩家答复，不应额外报行动越权。其他真实问题须由人工复核新增，不默认为合法。"
+    }
+  ],
+  "boundary": "只评估逐段场景审核与人工标注类别，不等于完整Planner或提交验收；合成正文不是官方母本。"
+}

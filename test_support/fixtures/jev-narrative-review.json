@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "jev-narrative-review-fixture/0.1",
+  "description": "最小 ContextBundle、BranchState、玩家行动和候选正文，用于 Jev 剧情质量审核的可重复试验。",
+  "cases": [
+    {
+      "id": "pass_consistent",
+      "expectedDecision": "allow",
+      "context": "铜牌当前由玩家持有；沈执事已说明登记堂在前方；玩家本回合只要求询问入口位置。",
+      "branchState": "player_has_token=true; steward_alive=true; location=archive_hall; no_unresolved_anomaly=true",
+      "playerAction": "我向沈执事询问登记堂入口的位置。",
+      "resultContract": "保留铜牌在玩家手中；完成一次询问；不移动地点；不新增未登记事实。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你没有移动铜牌，只抬眼问沈执事登记堂的入口。沈执事指向东侧的窄门，说那里仍有人值守。"
+    },
+    {
+      "id": "environment_small_hallucination",
+      "expectedDecision": "allow_with_patch",
+      "context": "当前场景是封闭的登记堂；已确认外门关闭，但门缝附近有持续冷风；没有确认冷风来源。",
+      "branchState": "outer_door_closed=true; cold_draft_observed=true; source_of_draft=unknown",
+      "playerAction": "我观察门缝和地面。",
+      "resultContract": "只描述可观察的门缝、地面和冷风；不得断言门外已经有人。",
+      "allowedMechanisms": ["hidden_vent", "unseen_gap"],
+      "candidateNarrative": "门外的雨声从门缝里压进来，地面却没有新的脚印。冷风贴着你的鞋面掠过，来源仍未查明，你决定随后检查墙面和门缝。",
+      "patchHint": "冷风来源仍需通过后续调查确认，不得直接写成已发现暗道。"
+    },
+    {
+      "id": "false_death_ambiguous",
+      "expectedDecision": "allow_with_patch",
+      "context": "沈执事在上一段被记录为疑似死亡；现场没有遗体确认；世界观允许假死或身外化身，但当前没有选择具体机制。",
+      "branchState": "steward_status=suspected_dead; body_confirmed=false; anomaly_mechanisms_allowed=true",
+      "playerAction": "我查看门后的身影。",
+      "resultContract": "可以呈现相似身影或异常，但不得确认沈执事本人已经正常存活。",
+      "allowedMechanisms": ["false_death", "avatar", "resurrection_ritual"],
+      "candidateNarrative": "门后的身影与沈执事极其相似，却隔着雨幕没有露出正脸。你只能确认那个人抬起了手，不能确认他究竟是不是已经死去的沈执事。",
+      "patchHint": "后续必须留下身份核验线索，并在有限回合内解释缺席原因。"
+    },
+    {
+      "id": "replica_item_ambiguous",
+      "expectedDecision": "allow_with_patch",
+      "context": "唯一的原铜牌已被记录为不可修复地损毁；世界观允许仿制品和诱饵；正文不能把新物品称为原物。",
+      "branchState": "original_token_destroyed=true; original_token_repairable=false; replica_allowed=true",
+      "playerAction": "我检查桌上的铜牌。",
+      "resultContract": "可以发现外观相同的物品，但不得恢复原铜牌或改变损毁状态。",
+      "allowedMechanisms": ["replica", "decoy", "borrowed_token"],
+      "candidateNarrative": "桌上又放着一枚铜牌，边缘的刻痕和原先那枚相似得过分。你没有把它当作已经损毁的原物，只把它记作一件需要追查来源的仿制品。",
+      "patchHint": "后续需要给出仿制品的来源、代价或可观察线索。"
+    },
+    {
+      "id": "explicit_death_conflict",
+      "expectedDecision": "rewrite",
+      "context": "沈执事已确认死亡，遗体和死亡记录均已核实；当前世界观没有复生机制；玩家尚未获得任何相关线索。",
+      "branchState": "steward_status=confirmed_dead; body_confirmed=true; resurrection_allowed=false",
+      "playerAction": "我观察门后的动静。",
+      "resultContract": "不得让沈执事本人再次正常出现；只能描述可疑声响或其他角色。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "沈执事从门后走出来，拍了拍肩上的雨水，笑着问你为什么还站在这里。"
+    },
+    {
+      "id": "unique_weapon_restored",
+      "expectedDecision": "rewrite",
+      "context": "唯一的玄铁剑已在前回合被不可逆地熔毁；状态账本禁止恢复；没有复制或替身规则。",
+      "branchState": "iron_sword_destroyed=true; destruction_permanent=true; duplicate_allowed=false",
+      "playerAction": "我查看熔炉旁的残留物。",
+      "resultContract": "只能描述残渣、温度和线索；不得让原剑恢复或被挥舞。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你从灰烬中取出完整的玄铁剑，剑锋依旧锋利，随后握住它冲向门口的敌人。"
+    },
+    {
+      "id": "unauthorized_agency",
+      "expectedDecision": "rewrite",
+      "context": "玩家本回合只选择观察走廊；角色尚未决定移动、交战或开启铁门；铁门仍处于关闭状态。",
+      "branchState": "location=archive_hall; iron_gate=closed; player_action_scope=observe_only",
+      "playerAction": "我先观察走廊。",
+      "resultContract": "停留在观察和感知；不得替玩家移动、开门或发动战斗。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你推开铁门，冲进走廊，拔刀击退了守卫，并在尽头找到了出口。"
+    },
+    {
+      "id": "knowledge_leak",
+      "expectedDecision": "rewrite",
+      "context": "只有玩家看见过密信中的‘北井’暗号；沈执事、守卫和旁观者没有获知路径；当前没有转述事件。",
+      "branchState": "secret_known_by=[player]; steward_knows_secret=false; guards_knows_secret=false; relay_event=false",
+      "playerAction": "我把密信收好，不向任何人解释。",
+      "resultContract": "NPC 只能依据公开观察或已登记信息行动；不得直接说出北井暗号。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "沈执事看着你收起密信，立即说出了北井暗号，并提醒你不要把它告诉守卫。"
+    },
+    {
+      "id": "future_beat_leak",
+      "expectedDecision": "rewrite",
+      "context": "后续 beat 才会揭示‘白塔祭坛’和祭司姓名；当前入口上下文没有公开这些内容；玩家只知道登记堂。",
+      "branchState": "known_locations=[archive_hall, registration_hall]; future_locations=[white_tower_altar]; future_priest_name=unrevealed",
+      "playerAction": "我询问登记堂的路线。",
+      "resultContract": "正文只能使用当前已公开地点和人物，不得提前泄露未来剧情节点。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "沈执事告诉你，白塔祭坛的祭司顾长庚正在等你，那里才是解决登记问题的关键。"
+    },
+    {
+      "id": "unsupported_explanation",
+      "expectedDecision": "rewrite",
+      "context": "世界观允许假死，但要求出现机制、代价、线索和解释期限；当前没有任何机制证据；沈执事的死亡只被疑似记录。",
+      "branchState": "suspected_dead=true; mechanism_evidence=[]; repair_debt_required=true",
+      "playerAction": "我确认门后的身影。",
+      "resultContract": "如果呈现异常，只能保持疑问，并留下可验证线索；不得用一句话封闭解释。",
+      "allowedMechanisms": ["false_death", "avatar"],
+      "candidateNarrative": "沈执事其实早已用秘术复生，所有细节都已经解释清楚，你无需再调查。"
+    },
+    {
+      "id": "mixed_repair_and_fatal",
+      "expectedDecision": "rewrite",
+      "context": "原铜牌已不可修复地损毁，但允许出现仿制品；玩家只选择检查桌面，没有选择移动或攻击；守卫仍在门外。",
+      "branchState": "original_token_destroyed=true; replica_allowed=true; player_action_scope=inspect_only; guard_present=true",
+      "playerAction": "我检查桌面。",
+      "resultContract": "可以发现仿制品线索，但不得替玩家冲出门外攻击守卫。",
+      "allowedMechanisms": ["replica", "decoy"],
+      "candidateNarrative": "桌上的铜牌显然是仿制品。你随即冲出门外杀死守卫，把整条走廊都搜了一遍。"
+    },
+    {
+      "id": "uncertain_identity",
+      "expectedDecision": "allow_with_patch",
+      "context": "上一段只确认沈执事疑似死亡，没有遗体；当前雨幕遮挡视线；世界观允许替身，但没有确认替身已经出现。",
+      "branchState": "steward_status=suspected_dead; body_confirmed=false; visibility=poor; identity_unresolved=true",
+      "playerAction": "我远远观察雨幕中的人影。",
+      "resultContract": "只能表达相似、疑问和观察结果；不得确认身份或完成状态变化。",
+      "allowedMechanisms": ["false_death", "avatar", "mistaken_identity"],
+      "candidateNarrative": "雨幕里站着一个与沈执事相似的人。你看不清他的脸，只注意到他抬手的动作和记忆中的动作完全一样。",
+      "patchHint": "保留身份不确定性，并给出后续核验方向。"
+    }
+  ]
+}

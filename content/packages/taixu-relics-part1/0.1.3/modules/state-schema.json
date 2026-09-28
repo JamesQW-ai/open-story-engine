@@ -4,6 +4,16 @@
     "id": "taixu-relics-part1",
     "version": "0.1.3"
   },
+  "stateVisibility": {
+    "schemaVersion": "state-visibility/0.2",
+    "paths": {
+      "/playerCharacterId": "player_known",
+      "/playerLocationId": "player_known"
+    },
+    "pathTemplates": {
+      "/characterLocationIds/{playerCharacterId}": "player_known"
+    }
+  },
   "initialState": {
     "player": {
       "characterId": "character_ae4cb42b9b49",

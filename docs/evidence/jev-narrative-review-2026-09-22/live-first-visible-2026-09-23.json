@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "live-first-visible/0.1",
+  "status": "completed",
+  "package": "taixu-relics-part1@0.1.3",
+  "provider": "direct-deepseek-v4-flash",
+  "database": "temporary",
+  "userVisibleRule": "正文仅在审核完成并成功提交后回放",
+  "records": [
+    {
+      "scenario": "first_review_pass",
+      "source": "natural_live_action",
+      "status": "written",
+      "wallMs": 40162,
+      "firstVisibleTextMs": 39974,
+      "firstGeneratedTextMs": 25476,
+      "completeMs": 39762,
+      "commitMs": 212,
+      "calls": 11,
+      "visibleChars": 369
+    },
+    {
+      "scenario": "natural_failure_a",
+      "source": "natural_live_action",
+      "status": "generation_failed",
+      "wallMs": 35745,
+      "firstVisibleTextMs": null,
+      "firstGeneratedTextMs": 9657,
+      "completeMs": 35568,
+      "calls": 14,
+      "visibleChars": 0,
+      "branchWritten": false
+    },
+    {
+      "scenario": "natural_failure_b",
+      "source": "natural_live_action",
+      "status": "generation_failed",
+      "wallMs": 16050,
+      "firstVisibleTextMs": null,
+      "firstGeneratedTextMs": null,
+      "completeMs": 15864,
+      "calls": 3,
+      "visibleChars": 0,
+      "branchWritten": false
+    },
+    {
+      "scenario": "first_review_fail_then_repair_pass",
+      "source": "controlled_review_probe",
+      "status": "generation_failed",
+      "wallMs": 38455,
+      "firstVisibleTextMs": null,
+      "firstGeneratedTextMs": 12685,
+      "completeMs": 38268,
+      "calls": 12,
+      "visibleChars": 0,
+      "note": "真实修复模型未形成可提交结果；不作为修复通过样本"
+    },
+    {
+      "scenario": "second_review_fail_safe_error",
+      "source": "controlled_review_probe",
+      "status": "generation_failed",
+      "wallMs": 35532,
+      "firstVisibleTextMs": null,
+      "firstGeneratedTextMs": 10886,
+      "completeMs": 35345,
+      "calls": 11,
+      "visibleChars": 0,
+      "branchWritten": false,
+      "note": "受控审核拒绝未产生可提交候选；安全失败路径生效"
+    }
+  ],
+  "limitations": [
+    "本批次没有自然出现首轮失败后修复通过，因此该场景没有可报告的真实成功首字时间。",
+    "firstGeneratedTextMs 是服务端内部指标，不是用户可见时间。"
+  ]
+}

@@ -2886,6 +2886,10 @@ button.rail-person:hover { background: var(--gold-soft); }
 /* Opening art is chosen before prose starts; its slot never changes height. */
 .opening-illustration { margin-top: 0; }
 .illustration-placeholder { aspect-ratio: 3 / 2; display: grid; place-content: center; text-align: center; border: 1px dashed var(--line); background: var(--panel); }
+.inline-scene-slot { aspect-ratio: 3 / 2; display: grid; align-content: center; margin: 28px 0; }
+.inline-scene-slot .reading-illustration { margin: 0; }
+.reader-feedback, .generation-banner { position: sticky; top: 0; z-index: 2; background: var(--panel); }
+.generation-banner .loading { padding: 24px 12px; }
 .closure-panel {
   margin: 28px 0 16px;
   padding-top: 20px;

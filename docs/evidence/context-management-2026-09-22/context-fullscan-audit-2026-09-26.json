@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "context-fullscan-audit/0.1",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-fullscan-2026-09-26.json",
+  "sourceSha256": "4714df2e4157824392d18dbf491f38176ea6d126c695682080b834699d1005c7",
+  "auditHarnessSha256": "487db1d6b3bfe80a575af63e43b737fbd385e5874bfb7bbb5a492b704c59558f",
+  "allStatusesReproduced": true,
+  "actualInputsVerified": true,
+  "originalCalls": 9,
+  "newModelCalls": 0,
+  "rawModels": [
+    "deepseek-flash"
+  ],
+  "finishReasons": [
+    "stop"
+  ],
+  "requestMedianMs": 887,
+  "usage": {
+    "input": 6560,
+    "output": 894
+  },
+  "cases": [
+    {
+      "caseId": "original_v11",
+      "strictStatus": "matched",
+      "locatedTargets": 1,
+      "missingLocations": [],
+      "extraLocations": [],
+      "semanticDifferences": [],
+      "duplicateItems": []
+    },
+    {
+      "caseId": "no_position",
+      "strictStatus": "matched",
+      "locatedTargets": 0,
+      "missingLocations": [],
+      "extraLocations": [],
+      "semanticDifferences": [],
+      "duplicateItems": []
+    },
+    {
+      "caseId": "two_subjects",
+      "strictStatus": "matched",
+      "locatedTargets": 2,
+      "missingLocations": [],
+      "extraLocations": [],
+      "semanticDifferences": [],
+      "duplicateItems": []
+    },
+    {
+      "caseId": "negative_motion",
+      "strictStatus": "matched",
+      "locatedTargets": 1,
+      "missingLocations": [],
+      "extraLocations": [],
+      "semanticDifferences": [],
+      "duplicateItems": []
+    },
+    {
+      "caseId": "conditional",
+      "strictStatus": "mismatched",
+      "locatedTargets": 1,
+      "missingLocations": [],
+      "extraLocations": [],
+      "semanticDifferences": [
+        {
+          "itemIndex": 0,
+          "targetIndex": 0,
+          "fields": [
+            "limitations"
+          ],
+          "extraLimitations": [
+            "modality"
+          ],
+          "missingLimitations": []
+        }
+      ],
+      "duplicateItems": []
+    },
+    {
+      "caseId": "ambiguous_person",
+      "strictStatus": "matched",
+      "locatedTargets": 1,
+      "missingLocations": [],
+      "extraLocations": [],
+      "semanticDifferences": [],
+      "duplicateItems": []
+    },
+    {
+      "caseId": "repeated_mentions",
+      "strictStatus": "matched",
+      "locatedTargets": 2,
+      "missingLocations": [],
+      "extraLocations": [],
+      "semanticDifferences": [],
+      "duplicateItems": []
+    },
+    {
+      "caseId": "past_current",
+      "strictStatus": "matched",
+      "locatedTargets": 2,
+      "missingLocations": [],
+      "extraLocations": [],
+      "semanticDifferences": [],
+      "duplicateItems": []
+    },
+    {
+      "caseId": "unknown_boundary",
+      "strictStatus": "matched",
+      "locatedTargets": 1,
+      "missingLocations": [],
+      "extraLocations": [],
+      "semanticDifferences": [],
+      "duplicateItems": []
+    }
+  ],
+  "summary": {
+    "strictMatched": 8,
+    "strictMismatched": 1,
+    "totalTargets": 11,
+    "locatedTargets": 11,
+    "missingLocations": 0,
+    "extraLocations": 0,
+    "duplicateItems": 0,
+    "semanticDifferences": 1
+  },
+  "findings": [
+    {
+      "severity": "P2",
+      "caseId": "conditional",
+      "detail": {
+        "itemIndex": 0,
+        "targetIndex": 0,
+        "fields": [
+          "limitations"
+        ],
+        "extraLimitations": [
+          "modality"
+        ],
+        "missingLimitations": []
+      }
+    }
+  ],
+  "acceptance": false,
+  "productionEnablement": false,
+  "limitations": [
+    "定位匹配不是事实正确；严格评分未因多报限定而放宽。",
+    "同一场景的固定开发集，不是新场景留出集或全类型事实扫描。"
+  ]
+}

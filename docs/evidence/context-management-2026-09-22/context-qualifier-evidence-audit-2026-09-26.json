@@ -1,0 +1,1271 @@
+{
+  "schemaVersion": "context-qualifier-evidence-audit/0.1",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-qualifier-evidence-2026-09-26.json",
+  "sourceSha256": "4d5fc466c3a0d9821ef04bb77db7749c427005f02b4dd8c5316cc62b124aa9fa",
+  "originalCalls": 9,
+  "newModelCalls": 0,
+  "actualInputsVerified": true,
+  "allScoresReproduced": true,
+  "cases": [
+    {
+      "caseId": "original_condition",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1",
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U2",
+                "quote": "伤者",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U2",
+                "quote": "封山线",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "伤者就在封山线内。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [
+              {
+                "kind": "condition",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "如果",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U2",
+                    "quote": "伤者就在封山线内。",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "如果守门弟子放行，",
+                    "occurrence": 0
+                  }
+                ]
+              }
+            ],
+            "reason": "位置命题以守门弟子放行为条件，需审核。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1",
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "位置命题以守门弟子放行为条件，需审核。",
+            "limitations": [
+              {
+                "kind": "condition",
+                "quote": "如果"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U2",
+              "start": 9,
+              "end": 11,
+              "quote": "伤者"
+            },
+            "boundary": {
+              "unitId": "P1-U2",
+              "start": 13,
+              "end": 16,
+              "quote": "封山线"
+            },
+            "position": [
+              {
+                "unitId": "P1-U2",
+                "start": 9,
+                "end": 18,
+                "quote": "伤者就在封山线内。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "condition",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 2,
+                "quote": "如果"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U2",
+                  "start": 9,
+                  "end": 18,
+                  "quote": "伤者就在封山线内。"
+                }
+              ],
+              "premise": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 9,
+                  "quote": "如果守门弟子放行，"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "plain_emphasis",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "伤者",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "封山线",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "伤者就在封山线内。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [],
+            "reason": "明确表述伤者位于封山线内，无认识或条件限定。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确表述伤者位于封山线内，无认识或条件限定。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 2,
+              "quote": "伤者"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 4,
+              "end": 7,
+              "quote": "封山线"
+            },
+            "position": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 9,
+                "quote": "伤者就在封山线内。"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "possibility",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "伤者",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "封山线",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "伤者可能在封山线内。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "伤者可能在封山线内。",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": []
+              }
+            ],
+            "reason": "位置判断带认识不确定性“可能”，需复核，不升级为当前事实。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "位置判断带认识不确定性“可能”，需复核，不升级为当前事实。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "可能"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 2,
+              "quote": "伤者"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 5,
+              "end": 8,
+              "quote": "封山线"
+            },
+            "position": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 10,
+                "quote": "伤者可能在封山线内。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 2,
+                "end": 4,
+                "quote": "可能"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 10,
+                  "quote": "伤者可能在封山线内。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "both",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1",
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U2",
+                "quote": "伤者",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U2",
+                "quote": "封山线",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "伤者也可能在封山线内",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [
+              {
+                "kind": "condition",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "如果",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U2",
+                    "quote": "伤者也可能在封山线内",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "如果守门弟子放行，",
+                    "occurrence": 0
+                  }
+                ]
+              },
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U2",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U2",
+                    "quote": "伤者也可能在封山线内",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": []
+              }
+            ],
+            "reason": "位置命题依赖守门弟子放行的条件前提，且以“可能”表达认识不确定性。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1",
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "位置命题依赖守门弟子放行的条件前提，且以“可能”表达认识不确定性。",
+            "limitations": [
+              {
+                "kind": "condition",
+                "quote": "如果"
+              },
+              {
+                "kind": "modality",
+                "quote": "可能"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U2",
+              "start": 9,
+              "end": 11,
+              "quote": "伤者"
+            },
+            "boundary": {
+              "unitId": "P1-U2",
+              "start": 15,
+              "end": 18,
+              "quote": "封山线"
+            },
+            "position": [
+              {
+                "unitId": "P1-U2",
+                "start": 9,
+                "end": 19,
+                "quote": "伤者也可能在封山线内"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "condition",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 2,
+                "quote": "如果"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U2",
+                  "start": 9,
+                  "end": 19,
+                  "quote": "伤者也可能在封山线内"
+                }
+              ],
+              "premise": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 9,
+                  "quote": "如果守门弟子放行，"
+                }
+              ]
+            },
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U2",
+                "start": 12,
+                "end": 14,
+                "quote": "可能"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U2",
+                  "start": 9,
+                  "end": 19,
+                  "quote": "伤者也可能在封山线内"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "condition_paraphrase",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1",
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U2",
+                "quote": "伤者",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U2",
+                "quote": "封山线",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "伤者便在封山线外。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [
+              {
+                "kind": "condition",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "只要",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U2",
+                    "quote": "伤者便在封山线外。",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "只要守门弟子点头，",
+                    "occurrence": 0
+                  }
+                ]
+              }
+            ],
+            "reason": "位置命题依赖“守门弟子点头”这一条件前提，非无条件当前事实。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1",
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "位置命题依赖“守门弟子点头”这一条件前提，非无条件当前事实。",
+            "limitations": [
+              {
+                "kind": "condition",
+                "quote": "只要"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U2",
+              "start": 9,
+              "end": 11,
+              "quote": "伤者"
+            },
+            "boundary": {
+              "unitId": "P1-U2",
+              "start": 13,
+              "end": 16,
+              "quote": "封山线"
+            },
+            "position": [
+              {
+                "unitId": "P1-U2",
+                "start": 9,
+                "end": 18,
+                "quote": "伤者便在封山线外。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "condition",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 2,
+                "quote": "只要"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U2",
+                  "start": 9,
+                  "end": 18,
+                  "quote": "伤者便在封山线外。"
+                }
+              ],
+              "premise": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 9,
+                  "quote": "只要守门弟子点头，"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "possibility_paraphrase",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "伤者",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "封山线",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "伤者或许在封山线外。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "伤者或许在封山线外。",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": []
+              }
+            ],
+            "reason": "位置命题含认识不确定性词“或许”，无法作为当前事实。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "位置命题含认识不确定性词“或许”，无法作为当前事实。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "或许"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 2,
+              "quote": "伤者"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 5,
+              "end": 8,
+              "quote": "封山线"
+            },
+            "position": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 10,
+                "quote": "伤者或许在封山线外。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 2,
+                "end": 4,
+                "quote": "或许"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 10,
+                  "quote": "伤者或许在封山线外。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "both_paraphrase",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1",
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U2",
+                "quote": "伤者",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U2",
+                "quote": "封山线",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "伤者或许在封山线外。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [
+              {
+                "kind": "condition",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "只要守门弟子点头",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U2",
+                    "quote": "伤者或许在封山线外。",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "只要守门弟子点头，",
+                    "occurrence": 0
+                  }
+                ]
+              },
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U2",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U2",
+                    "quote": "伤者或许在封山线外。",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": []
+              }
+            ],
+            "reason": "位置命题依赖守门弟子点头的条件，且使用“或许”表达认识不确定性，无法作为当前确定事实。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1",
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "位置命题依赖守门弟子点头的条件，且使用“或许”表达认识不确定性，无法作为当前确定事实。",
+            "limitations": [
+              {
+                "kind": "condition",
+                "quote": "只要守门弟子点头"
+              },
+              {
+                "kind": "modality",
+                "quote": "或许"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U2",
+              "start": 9,
+              "end": 11,
+              "quote": "伤者"
+            },
+            "boundary": {
+              "unitId": "P1-U2",
+              "start": 14,
+              "end": 17,
+              "quote": "封山线"
+            },
+            "position": [
+              {
+                "unitId": "P1-U2",
+                "start": 9,
+                "end": 19,
+                "quote": "伤者或许在封山线外。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "condition",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 8,
+                "quote": "只要守门弟子点头"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U2",
+                  "start": 9,
+                  "end": 19,
+                  "quote": "伤者或许在封山线外。"
+                }
+              ],
+              "premise": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 9,
+                  "quote": "只要守门弟子点头，"
+                }
+              ]
+            },
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U2",
+                "start": 11,
+                "end": 13,
+                "quote": "或许"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U2",
+                  "start": 9,
+                  "end": 19,
+                  "quote": "伤者或许在封山线外。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "unrelated_possibility",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U2",
+                "quote": "伤者",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U2",
+                "quote": "封山线",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "伤者就在封山线内。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [],
+            "reason": "明确表述伤者位于封山线内，主体与边界可解析，无认识或条件限定。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确表述伤者位于封山线内，主体与边界可解析，无认识或条件限定。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U2",
+              "start": 10,
+              "end": 12,
+              "quote": "伤者"
+            },
+            "boundary": {
+              "unitId": "P1-U2",
+              "start": 14,
+              "end": 17,
+              "quote": "封山线"
+            },
+            "position": [
+              {
+                "unitId": "P1-U2",
+                "start": 10,
+                "end": 19,
+                "quote": "伤者就在封山线内。"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "unrelated_condition",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U3"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U3",
+                "quote": "伤者",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U3",
+                "quote": "封山线",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U3",
+                  "quote": "伤者在封山线外。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [],
+            "reason": "直接陈述伤者位于封山线外，无否定或不确定限定。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U3"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "直接陈述伤者位于封山线外，无否定或不确定限定。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U3",
+              "start": 17,
+              "end": 19,
+              "quote": "伤者"
+            },
+            "boundary": {
+              "unitId": "P1-U3",
+              "start": 20,
+              "end": 23,
+              "quote": "封山线"
+            },
+            "position": [
+              {
+                "unitId": "P1-U3",
+                "start": 17,
+                "end": 25,
+                "quote": "伤者在封山线外。"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    }
+  ],
+  "summary": {
+    "matched": 9,
+    "mismatched": 0,
+    "invalid_response": 0,
+    "model_error": 0,
+    "harness_error": 0,
+    "not_run": 0
+  },
+  "requiresSemanticReview": true,
+  "acceptance": false,
+  "productionEnablement": false
+}

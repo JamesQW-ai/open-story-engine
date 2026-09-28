@@ -13,7 +13,19 @@ from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple
 
 from .prompts import render_prompt, catalog_version
 from .branch_ledger import BRANCH_LEDGER_KEY, append_branch_ledger, empty_branch_ledger, ensure_branch_ledger, ledger_context
-from .content import by_id, story_node_by_id
+from .content import StoryPackageError, by_id, expand_state_visibility, story_node_by_id
+from .context_budget import ContextBudgetError, apply_context_budget
+from .context_bundle import (
+    CONTEXT_FACTS_MAX_CHARS,
+    CONTEXT_FACTS_MAX_ITEMS,
+    CONTEXT_SCOPE_ITEM_MAX_CHARS,
+    CONTEXT_SCOPE_MAX_CHARS,
+    CONTEXT_SCOPE_MAX_ITEMS,
+    ContextBundleBuilder,
+    ContextBundleError,
+    STATE_VISIBILITY_MODES,
+    select_bounded_context_facts,
+)
 from .llm import Completion, LlmError, OpenAICompatibleGateway, parse_json_content
 from .storage import SessionStore
 
@@ -1493,16 +1505,42 @@ def source_fact_protection_context(package: Dict[str, Any], state: Dict[str, Any
     if not protected_names:
         return "- 无"
     status_markers = ("无法接通", "没有回应", "失联", "失踪", "下落不明", "被困", "失去联系")
-    facts = [
-        fact["text"]
-        for fact in package.get("world", {}).get("immutableFacts", [])
-        if isinstance(fact, dict)
-        and isinstance(fact.get("text"), str)
-        and any(name in fact["text"] for name in protected_names)
-        and any(marker in fact["text"] for marker in status_markers)
-    ]
+    progress = state.get("sourceProgress")
+    current_index = (
+        int(progress.rsplit("_", 1)[-1])
+        if isinstance(progress, str) and progress.rsplit("_", 1)[-1].isdigit()
+        else None
+    )
+    facts = []
+    for fact in package.get("world", {}).get("immutableFacts", []):
+        if not isinstance(fact, dict) or not isinstance(fact.get("text"), str):
+            continue
+        fact_progress = fact.get("sourceProgress")
+        fact_index = (
+            int(fact_progress.rsplit("_", 1)[-1])
+            if isinstance(fact_progress, str) and fact_progress.rsplit("_", 1)[-1].isdigit()
+            else None
+        )
+        if current_index is not None and fact_index is not None and fact_index > current_index:
+            continue
+        if any(name in fact["text"] for name in protected_names) and any(
+            marker in fact["text"] for marker in status_markers
+        ):
+            facts.append(fact["text"])
+    selected_facts = []
+    selected_chars = 0
+    for fact_text in facts:
+        if len(selected_facts) >= CONTEXT_FACTS_MAX_ITEMS:
+            break
+        if selected_chars + len(fact_text) > CONTEXT_FACTS_MAX_CHARS:
+            continue
+        selected_facts.append(fact_text)
+        selected_chars += len(fact_text)
     names = "、".join(sorted(protected_names))
-    fact_text = "；".join(facts) if facts else "母本已将其状态保留为未确定"
+    fact_text = "；".join(selected_facts) if selected_facts else "母本已将其状态保留为未确定"
+    omitted = len(facts) - len(selected_facts)
+    if omitted:
+        fact_text += f"；另有 {omitted} 条同类来源事实已省略，具体限制仍由本地校验执行"
     return (
         f"- {names}：{fact_text}。不得补写其过去、当前或之后的到达、离开、路线、位置、对话、回应或行动；"
         "也不得通过“他/她/其”等代词间接断言。已登记的历史通信原句可以准确引用，这不代表重新取得联系。只能写已确认人物的寻找、联络未果或基于现状的反应。"
@@ -2003,6 +2041,14 @@ class Planner:
         raise NotImplementedError
 
 
+class StateVisibilityProjectionError(ContextBundleError):
+    """A package projection failed under the formal visibility contract."""
+
+    def __init__(self, message: str, reason: str) -> None:
+        super().__init__(message)
+        self.reason = reason
+
+
 def _mock_player_facing_action(value: str) -> str:
     """Keep the structural fixture readable in the player's second-person POV."""
     action = re.sub(r"^自定行动[：:]\s*", "", str(value or "").strip())
@@ -2322,14 +2368,612 @@ def derived_direction(identifier: str, title: str, summary: str, patch: Dict[str
 
 
 class LlmPlanner(Planner):
-    def __init__(self, gateway: OpenAICompatibleGateway, minimum_narrative_characters: int = 0, context_resolver: Optional[Any] = None, verify_source_facts: bool = False, concise: bool = False) -> None:
+    def __init__(self, gateway: OpenAICompatibleGateway, minimum_narrative_characters: int = 0, context_resolver: Optional[Any] = None, verify_source_facts: bool = False, concise: bool = False, context_window_tokens: Optional[int] = None, reserved_output_tokens: int = 0, context_projection: Optional[Dict[str, Any]] = None, require_context_bundle: bool = False) -> None:
         self.gateway = gateway
         self.minimum_narrative_characters = minimum_narrative_characters
         self.context_resolver = context_resolver
+        if context_window_tokens is not None and context_window_tokens <= 0:
+            raise ValueError("context_window_tokens 必须大于零或为 None")
+        if reserved_output_tokens < 0:
+            raise ValueError("reserved_output_tokens 不能为负数")
+        if context_projection is not None and not isinstance(context_projection, dict):
+            raise ValueError("context_projection 必须是对象或 None")
+        self.context_window_tokens = context_window_tokens
+        self.reserved_output_tokens = reserved_output_tokens
+        self.context_projection = copy.deepcopy(context_projection or {})
+        self.require_context_bundle = require_context_bundle
         self.last_prompt_context: Dict[str, Any] = {"mode": "package"}
+        self.last_context_bundle = None
+        self._context_projection_rejection: Optional[Dict[str, Any]] = None
         self.writing_scope: Optional[Dict[str, Any]] = None
         self.verify_source_facts = verify_source_facts
         self.concise = concise
+
+    def _context_projection_mode(self, context: Dict[str, Any]) -> str:
+        config = context["contextProjection"] if "contextProjection" in context else self.context_projection
+        if config is None:
+            config = {}
+        if not isinstance(config, dict):
+            raise ContextBundleError("contextProjection 必须是对象。")
+        mode = config.get("stateVisibilityMode", "audit_fallback")
+        if not isinstance(mode, str) or mode not in STATE_VISIBILITY_MODES:
+            raise ContextBundleError("contextProjection.stateVisibilityMode 无效。")
+        return mode
+
+    @staticmethod
+    def _bounded_prompt_fact_text(
+        facts: Iterable[Dict[str, Any]],
+        query: str,
+        explicit_ids: Iterable[str] = (),
+    ) -> Tuple[str, Dict[str, Any]]:
+        selected, _, audit = select_bounded_context_facts(
+            facts, query=query, explicit_ids=explicit_ids,
+        )
+        lines = []
+        for fact in selected:
+            communication = fact.get("communication")
+            prefix = ""
+            if isinstance(communication, dict):
+                speaker = communication.get("speakerName")
+                kind = communication.get("kind")
+                if isinstance(speaker, str) and isinstance(kind, str):
+                    prefix = speaker + "的已登记" + kind + "原句："
+            lines.append("- " + prefix + fact["text"].strip())
+        return "\n".join(lines), audit
+
+    def _bounded_scope_facts(
+        self,
+        scope: Dict[str, Any],
+        context: Dict[str, Any],
+        selected: Dict[str, Any],
+        state: Dict[str, Any],
+        extra_query: str = "",
+    ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+        """Project one bounded, intent-linked fact set for every writer stage."""
+        current_beat = scope.get("currentBeat", {}) if isinstance(scope, dict) else {}
+        current_chapter = scope.get("currentChapter", {}) if isinstance(scope, dict) else {}
+        context_refs = current_beat.get("contextRefs", {}) if isinstance(current_beat, dict) else {}
+        explicit_ids: List[str] = []
+        if isinstance(context_refs, dict):
+            for key in ("factIds", "immutableFactIds", "sourceFactIds"):
+                values = context_refs.get(key, [])
+                if isinstance(values, list):
+                    explicit_ids.extend(value for value in values if isinstance(value, str))
+        query = " ".join(str(value) for value in (
+            context.get("playerDirection", ""),
+            selected.get("title", ""),
+            selected.get("summary", ""),
+            current_beat.get("summary", "") if isinstance(current_beat, dict) else "",
+            current_chapter.get("title", "") if isinstance(current_chapter, dict) else "",
+            extra_query,
+        ))
+        world = scope.get("world", {}) if isinstance(scope, dict) else {}
+        facts = world.get("immutableFacts", []) if isinstance(world, dict) else []
+        bounded, _, audit = select_bounded_context_facts(
+            facts, query=query, explicit_ids=explicit_ids,
+        )
+        audit["querySource"] = "writer_stage"
+        audit["explicitFactIds"] = list(dict.fromkeys(explicit_ids))
+        audit["stateSourceProgress"] = state.get("sourceProgress")
+        return bounded, audit
+
+    @staticmethod
+    def _compact_scope_value(value: Any, char_limit: int, depth: int = 0) -> Any:
+        """Keep source-scope records useful while making their size deterministic."""
+        if isinstance(value, str):
+            return value[:char_limit]
+        if value is None or isinstance(value, (bool, int, float)):
+            return value
+        if depth >= 2:
+            return str(value)[:char_limit]
+        if isinstance(value, list):
+            result = []
+            item_limit = max(120, min(char_limit, 360))
+            for item in value[:CONTEXT_SCOPE_MAX_ITEMS]:
+                compact = LlmPlanner._compact_scope_value(item, item_limit, depth + 1)
+                trial = result + [compact]
+                if len(json.dumps(trial, ensure_ascii=False)) > char_limit:
+                    break
+                result.append(compact)
+            return result
+        if isinstance(value, dict):
+            result = {}
+            for key, item in value.items():
+                compact = LlmPlanner._compact_scope_value(item, char_limit, depth + 1)
+                trial = dict(result)
+                trial[str(key)] = compact
+                if len(json.dumps(trial, ensure_ascii=False)) > char_limit:
+                    break
+                result[str(key)] = compact
+            return result
+        return str(value)[:char_limit]
+
+    @classmethod
+    def _bounded_scope_projection(
+        cls, scope: Dict[str, Any],
+    ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        """Share one bounded projection between continuation and fact review."""
+        scope = scope if isinstance(scope, dict) else {}
+
+        def records(key: str) -> List[Any]:
+            value = scope.get(key, [])
+            if not isinstance(value, list):
+                return []
+            return [
+                cls._compact_scope_value(item, CONTEXT_SCOPE_ITEM_MAX_CHARS)
+                for item in value[:CONTEXT_SCOPE_MAX_ITEMS]
+            ]
+
+        def names(key: str) -> List[str]:
+            value = scope.get(key, [])
+            if not isinstance(value, list):
+                return []
+            result = []
+            for item in value[:CONTEXT_SCOPE_MAX_ITEMS]:
+                name = item.get("name") if isinstance(item, dict) else item
+                if isinstance(name, str) and name.strip():
+                    result.append(name.strip()[:160])
+            return result
+
+        def registered_items() -> List[Dict[str, str]]:
+            value = scope.get("items", [])
+            if not isinstance(value, list):
+                return []
+            result = []
+            for item in value[:CONTEXT_SCOPE_MAX_ITEMS]:
+                if not isinstance(item, dict):
+                    continue
+                name = item.get("name")
+                if isinstance(name, str) and name.strip():
+                    entry = {"name": name.strip()[:160]}
+                    if isinstance(item.get("id"), str):
+                        entry["id"] = item["id"][:160]
+                    result.append(entry)
+            return result
+
+        candidates = [
+            ("sourceSceneCues", records("narrativeBrief")),
+            ("priorSourceSceneCues", records("priorNarrativeBrief")),
+            ("actionContract", cls._compact_scope_value(
+                scope.get("actionContract", {}), CONTEXT_SCOPE_ITEM_MAX_CHARS,
+            )),
+            ("characters", names("characters")),
+            ("locations", names("locations")),
+            ("items", names("items")),
+            ("registeredItems", registered_items()),
+            ("characterDetails", records("characterDetails")),
+            ("characterIdentityEvidence", records("characterIdentityEvidence")),
+            ("sourceDialogueContext", records("sourceDialogueContext")),
+            ("continuityText", str(scope.get("continuityText", ""))[:1200]),
+        ]
+        projection: Dict[str, Any] = {}
+        omitted_fields: List[str] = []
+        source_keys = {
+            "sourceSceneCues": "narrativeBrief",
+            "priorSourceSceneCues": "priorNarrativeBrief",
+            "characters": "characters",
+            "locations": "locations",
+            "items": "items",
+            "registeredItems": "items",
+            "characterDetails": "characterDetails",
+            "characterIdentityEvidence": "characterIdentityEvidence",
+            "sourceDialogueContext": "sourceDialogueContext",
+        }
+        omitted_items = sum(
+            max(0, len(scope.get(source_key, [])) - CONTEXT_SCOPE_MAX_ITEMS)
+            for source_key in set(source_keys.values())
+            if isinstance(scope.get(source_key), list)
+        )
+        for key, candidate in candidates:
+            if isinstance(candidate, list):
+                accepted = []
+                original_count = len(candidate)
+                for item in candidate:
+                    trial = dict(projection)
+                    trial[key] = accepted + [item]
+                    if len(json.dumps(trial, ensure_ascii=False)) > CONTEXT_SCOPE_MAX_CHARS:
+                        omitted_items += original_count - len(accepted)
+                        break
+                    accepted.append(item)
+                if accepted:
+                    projection[key] = accepted
+                elif candidate:
+                    omitted_fields.append(key)
+            else:
+                trial = dict(projection)
+                trial[key] = candidate
+                if len(json.dumps(trial, ensure_ascii=False)) <= CONTEXT_SCOPE_MAX_CHARS:
+                    projection[key] = candidate
+                elif candidate:
+                    omitted_fields.append(key)
+        selected_chars = len(json.dumps(projection, ensure_ascii=False))
+        audit = {
+            "selectedChars": selected_chars,
+            "maxChars": CONTEXT_SCOPE_MAX_CHARS,
+            "maxItems": CONTEXT_SCOPE_MAX_ITEMS,
+            "itemMaxChars": CONTEXT_SCOPE_ITEM_MAX_CHARS,
+            "selectedFieldCounts": {
+                key: len(value) if isinstance(value, list) else 1
+                for key, value in projection.items()
+            },
+            "omittedFields": omitted_fields,
+            "omittedItems": omitted_items,
+        }
+        return projection, audit
+
+    def _preflight_context_projection(
+        self, context: Dict[str, Any], selected: Dict[str, Any], state: Dict[str, Any],
+    ) -> None:
+        """Build the turn bundle before any player-planner call.
+
+        The consequence planner is the first model stage. Building its
+        bounded projection here lets the later chapter stage create a new
+        state-bound snapshot after a valid consequence transition, instead of
+        independently concatenating the same source fields.
+        """
+        self.last_context_bundle = None
+        self._context_projection_rejection = None
+        self.writing_scope = None
+        self.last_prompt_context = {"mode": "context_preflight"}
+        try:
+            mode = self._context_projection_mode(context)
+        except ContextBundleError as error:
+            raise LlmError(str(error), "context_projection_invalid") from error
+        if self.context_resolver is None:
+            audit = self._record_context_bundle_audit(context, selected, state, None)
+            self.last_prompt_context["contextBundle"] = audit
+            self._check_context_bundle(context)
+            return
+        try:
+            module_context = self.context_resolver.resolve(context, selected, state)
+            if not isinstance(module_context, dict):
+                raise ContextBundleError("模块上下文不可用。")
+        except (ValueError, KeyError, TypeError, OSError) as error:
+            rejection_audit = self._projection_rejection_audit(context, "unresolved_path", mode)
+            result = {
+                "status": "rejected",
+                "error": "模块上下文解析失败：" + str(error),
+                "stateVisibilityMode": mode,
+                "projectionRejectionAudit": rejection_audit,
+            }
+            self.last_prompt_context["contextBundle"] = result
+            self._check_context_bundle(context)
+            return
+        self.writing_scope = module_context
+        audit = self._record_context_bundle_audit(context, selected, state, module_context)
+        self.last_prompt_context["contextBundle"] = audit
+        self._check_context_bundle(context)
+
+    def _check_context_bundle(self, context: Dict[str, Any]) -> None:
+        """A failed required snapshot must not become a legacy prompt."""
+        mode = self._context_projection_mode(context)
+        audit = self.last_prompt_context.get("contextBundle", {})
+        budget_rejected = audit.get("contextBudget", {}).get("status") == "rejected"
+        required = self.require_context_bundle or mode == "formal_required" or budget_rejected
+        if required and (self.last_context_bundle is None or audit.get("status") != "recorded"):
+            result = {**audit, "status": "rejected",
+                      "error": audit.get("error", "当前回合缺少必需的上下文包。"),
+                      "bundleRejectionAudit": {
+                          **self._projection_rejection_audit(context, audit.get("reason", "bundle_build_failed"), mode),
+                          "auditType": "context_bundle_rejected",
+                          "required": True,
+                      }}
+            self.last_prompt_context["contextBundle"] = result
+            self._context_projection_rejection = result
+        if self._context_projection_rejection is not None:
+            rejection = self._context_projection_rejection
+            raise LlmError(
+                rejection.get("error", "当前回合上下文包被拒绝。"),
+                "context_projection_rejected",
+            )
+
+    @staticmethod
+    def _projection_rejection_audit(
+        context: Dict[str, Any], reason: str, mode: str,
+    ) -> Dict[str, Any]:
+        package = context.get("package") if isinstance(context.get("package"), dict) else {}
+        parent = context.get("parent") if isinstance(context.get("parent"), dict) else {}
+        audit = {
+            "auditType": "state_visibility_projection_rejected",
+            "package": {"id": package.get("id"), "version": package.get("version")},
+            "mode": mode,
+            "sessionId": parent.get("sessionId") or context.get("sessionId"),
+            "parentBranchId": parent.get("id"),
+            "reason": reason,
+        }
+        request_id = context.get("requestId")
+        if request_id is not None:
+            audit["requestId"] = request_id
+        return audit
+
+    def _record_context_bundle(
+        self,
+        context: Dict[str, Any],
+        selected: Dict[str, Any],
+        state: Dict[str, Any],
+        module_context: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        """Record a deterministic bundle without feeding it into the prompt yet."""
+        projected_selected, excluded_fields = ContextBundleBuilder.project_selected_state_patch(selected)
+        validated_state_patch = context.get("validatedStatePatch")
+        if context.get("validatedStatePatchSource") != "apply_branch_patch":
+            raise ContextBundleError("上下文审计缺少状态层验证标记。")
+        if not isinstance(validated_state_patch, dict):
+            raise ContextBundleError("上下文审计缺少状态层验证后的补丁投影。")
+        parent = context.get("parent") if isinstance(context.get("parent"), dict) else {}
+        parent_branch_id = parent.get("id")
+        if not isinstance(parent_branch_id, str) or not parent_branch_id.strip():
+            raise ContextBundleError("上下文审计缺少父分支节点 ID。")
+        package = context.get("package")
+        if not isinstance(package, dict):
+            raise ContextBundleError("上下文审计缺少故事包。")
+        branch = {
+            "sessionId": parent.get("sessionId") or context.get("sessionId"),
+            "parentBranchId": parent_branch_id,
+            "lineageHead": parent_branch_id,
+        }
+        branch = {key: value for key, value in branch.items() if value is not None}
+        builder = ContextBundleBuilder(self.context_resolver)
+        state_visibility_mode = self._context_projection_mode(context)
+        package_declaration = package.get("stateVisibility")
+        normalized_state = copy.deepcopy(state)
+        normalized_state.pop(BRANCH_LEDGER_KEY, None)
+        normalized_state.pop("freeTextProgress", None)
+        state_visibility = context.get("stateVisibility")
+        state_visibility_source = "explicit"
+        if package_declaration is not None:
+            try:
+                declared_visibility = expand_state_visibility(package_declaration, normalized_state, package)
+            except StoryPackageError as error:
+                if state_visibility_mode == "formal_required":
+                    message = str(error)
+                    reason = "path_collision" if "冲突可见性" in message else "unresolved_path"
+                    if (not isinstance(package_declaration, dict)
+                            or package_declaration.get("schemaVersion") not in {
+                                "state-visibility/0.1", "state-visibility/0.2",
+                            }):
+                        reason = "version_mismatch"
+                    raise StateVisibilityProjectionError(
+                        "业务包 stateVisibility 展开失败：" + message, reason,
+                    ) from error
+                raise ContextBundleError("业务包 stateVisibility 展开失败：" + str(error)) from error
+            if state_visibility is not None and state_visibility != declared_visibility:
+                if state_visibility_mode == "formal_required":
+                    raise StateVisibilityProjectionError(
+                        "上下文 stateVisibility 与业务包声明不一致。", "path_collision",
+                    )
+                raise ContextBundleError("上下文 stateVisibility 与业务包声明不一致。")
+            state_visibility = declared_visibility
+        elif state_visibility_mode == "formal_required":
+            raise StateVisibilityProjectionError(
+                "正式可见性模式要求业务包声明 stateVisibility。", "missing_declaration",
+            )
+        elif state_visibility is None:
+            state_visibility = ContextBundleBuilder.default_state_visibility(state)
+            state_visibility_source = "runtime_default_migration"
+        parent_context_id = parent.get("contextId")
+        if not isinstance(parent_context_id, str) or not parent_context_id.strip():
+            parent_context_id = None
+        from .dynamic_memory import select as select_dynamic_memory
+        memories, memory_evidence, memory_audit = select_dynamic_memory(context, state, module_context)
+        bundle = builder.build(
+            context=context,
+            selected=projected_selected,
+            state=state,
+            branch=branch,
+            state_visibility=state_visibility,
+            parent_context_id=parent_context_id,
+            module_context=module_context,
+            validated_state_patch=validated_state_patch,
+            state_visibility_source=state_visibility_source,
+            state_visibility_mode=state_visibility_mode,
+            dynamic_memory=memories,
+            memory_evidence=memory_evidence,
+        )
+        budget_audit = {"status": "disabled"}
+        if self.context_window_tokens is not None:
+            budget_result = apply_context_budget(
+                bundle,
+                context_window_tokens=self.context_window_tokens,
+                reserved_output_tokens=self.reserved_output_tokens,
+            )
+            bundle = budget_result.bundle
+            budget_audit = {
+                "status": "recorded",
+                "availableTokens": budget_result.available_tokens,
+                "protectedTokens": budget_result.protected_tokens,
+                "selectedTokens": budget_result.selected_tokens,
+                "omittedSources": list(budget_result.omitted_sources),
+                "estimated": budget_result.estimated,
+            }
+        bundle_data = bundle.as_dict()
+        self.last_context_bundle = bundle
+        return {
+            "status": "recorded",
+            "contextId": bundle.context_id,
+            "contextSha256": bundle.context_sha256,
+            "excludedStatePatchFields": excluded_fields,
+            "stateVisibilityEntries": len(bundle.state_visibility),
+            "stateVisibilityMode": state_visibility_mode,
+            "stateVisibilitySource": bundle.provenance.get("stateVisibilitySource"),
+            "contextBudget": budget_audit,
+            "memorySelection": memory_audit,
+            "bundle": bundle_data,
+        }
+
+    def _record_context_bundle_audit(
+        self,
+        context: Dict[str, Any],
+        selected: Dict[str, Any],
+        state: Dict[str, Any],
+        module_context: Optional[Dict[str, Any]],
+    ) -> Dict[str, Any]:
+        self.last_context_bundle = None
+        self._context_projection_rejection = None
+        if module_context is None:
+            mode = self._context_projection_mode(context)
+            if mode == "formal_required":
+                package = context.get("package") if isinstance(context.get("package"), dict) else {}
+                declaration = package.get("stateVisibility")
+                try:
+                    if declaration is None:
+                        raise StateVisibilityProjectionError(
+                            "正式可见性模式要求业务包声明 stateVisibility。", "missing_declaration",
+                        )
+                    normalized_state = copy.deepcopy(state)
+                    normalized_state.pop(BRANCH_LEDGER_KEY, None)
+                    normalized_state.pop("freeTextProgress", None)
+                    expand_state_visibility(declaration, normalized_state, package)
+                except StateVisibilityProjectionError as error:
+                    rejection_audit = self._projection_rejection_audit(context, error.reason, mode)
+                    result = {
+                        "status": "rejected", "error": str(error),
+                        "stateVisibilityMode": mode, "projectionRejectionAudit": rejection_audit,
+                    }
+                    self._context_projection_rejection = result
+                    return result
+                except StoryPackageError as error:
+                    message = str(error)
+                    reason = "path_collision" if "冲突可见性" in message else "unresolved_path"
+                    if (not isinstance(declaration, dict)
+                            or declaration.get("schemaVersion") not in {
+                                "state-visibility/0.1", "state-visibility/0.2",
+                            }):
+                        reason = "version_mismatch"
+                    rejection_audit = self._projection_rejection_audit(context, reason, mode)
+                    result = {
+                        "status": "rejected", "error": "业务包 stateVisibility 展开失败：" + message,
+                        "stateVisibilityMode": mode, "projectionRejectionAudit": rejection_audit,
+                    }
+                    self._context_projection_rejection = result
+                    return result
+            return {"status": "skipped", "reason": "module_context_unavailable"}
+        try:
+            return self._record_context_bundle(context, selected, state, module_context)
+        except ContextBudgetError as error:
+            return {
+                "status": "rejected",
+                "error": str(error),
+                "contextBudget": {
+                    "status": "rejected",
+                    "code": error.code,
+                    "protectedTokens": error.protected_tokens,
+                    "availableTokens": error.available_tokens,
+                },
+            }
+        except StateVisibilityProjectionError as error:
+            mode = self._context_projection_mode(context)
+            rejection_audit = self._projection_rejection_audit(context, error.reason, mode)
+            result = {
+                "status": "rejected",
+                "error": str(error),
+                "stateVisibilityMode": mode,
+                "projectionRejectionAudit": rejection_audit,
+            }
+            self._context_projection_rejection = result
+            return result
+        except ContextBundleError as error:
+            try:
+                mode = self._context_projection_mode(context)
+            except ContextBundleError:
+                mode = "audit_fallback"
+            return {"status": "rejected", "error": str(error), "stateVisibilityMode": mode}
+
+    @staticmethod
+    def _chapter_projection_compatibility(
+        projection: Optional[Dict[str, Any]],
+        legacy_fields: Iterable[str],
+        field_paths: Dict[str, Iterable[str]],
+    ) -> Dict[str, Any]:
+        """Compare legacy prompt field inventory with chapter projection paths."""
+        fields = sorted(set(legacy_fields))
+        if projection is None:
+            return {"status": "unavailable", "legacyPromptFields": fields}
+
+        def has_path(path: str) -> bool:
+            value: Any = projection
+            for segment in path.split("."):
+                if not isinstance(value, dict) or segment not in value:
+                    return False
+                value = value[segment]
+            return True
+
+        mappings = []
+        mapped_top_level = set()
+        for field in fields:
+            paths = list(field_paths.get(field, ()))
+            present = [path for path in paths if has_path(path)]
+            missing = [path for path in paths if path not in present]
+            mapped_top_level.update(path.split(".", 1)[0] for path in present)
+            status = (
+                "no_projection_path" if not present
+                else "all_declared_paths_present" if not missing
+                else "some_declared_paths_missing"
+            )
+            mappings.append({
+                "legacyField": field,
+                "availableProjectionPaths": present,
+                "missingProjectionPaths": missing,
+                "status": status,
+            })
+        return {
+            "status": "recorded",
+            "projectionStage": "chapter",
+            "comparisonLevel": "schema_path_presence_only",
+            "projectionContextSha256": projection.get("contextSha256"),
+            "legacyPromptFields": fields,
+            "fieldMappings": mappings,
+            "legacyOnlyFields": [item["legacyField"] for item in mappings if item["status"] == "no_projection_path"],
+            "partialFields": [item["legacyField"] for item in mappings if item["status"] == "some_declared_paths_missing"],
+            "projectionOnlyFields": sorted(
+                set(projection) - mapped_top_level
+                - {"schemaVersion", "contextId", "contextSha256", "stage", "package", "branch"}
+            ),
+        }
+
+    @staticmethod
+    def _legacy_prompt_projection_paths(module_context: bool) -> Dict[str, Tuple[str, ...]]:
+        """Return schema-only compatibility candidates for each prompt mode."""
+        paths: Dict[str, Tuple[str, ...]] = {
+            "module_scope_text": (
+                "hardConstraints.currentChapter", "hardConstraints.currentBeat", "continuityWindow",
+            ),
+            "title": ("turnIntent.selectedDirection.title",),
+            "summary": ("turnIntent.selectedDirection.summary",),
+            "get": ("hardConstraints.actionContract",),
+            "location_name": ("authoritativeState.playerLocationId",),
+            "current_location_name": ("authoritativeState.playerLocationId",),
+            "character_text": ("hardConstraints.entityContext.characters",),
+            "character_location_text": ("authoritativeState.characterLocationIds",),
+            "fact_text": ("allowedEvidence",),
+            "state_transition_json": ("outputContract.selectedStatePatch",),
+            "continuity_text": ("continuityWindow",),
+            "source_scene_text": ("allowedEvidence",),
+            "location_text": ("hardConstraints.entityContext.locations",),
+            "available_item_text": (
+                "hardConstraints.entityContext.items", "authoritativeState.inventory",
+                "authoritativeState.itemOwnerCharacterIds",
+            ),
+            "constraint_text": ("hardConstraints.globalConstraints",),
+            "registered_character_text": ("hardConstraints.entityContext.characters",),
+        }
+        # The old template receives selected title/summary through the bounded
+        # turn intent projection; never substitute player raw input.
+        paths["state_json"] = ("allowedEvidence",) if module_context else ("authoritativeState",)
+        return paths
+
+    def _record_chapter_projection_compatibility(
+        self,
+        chapter_projection: Optional[Dict[str, Any]],
+        legacy_prompt_fields: Iterable[str],
+        module_context: bool,
+        field_paths: Optional[Dict[str, Iterable[str]]] = None,
+    ) -> None:
+        self.last_prompt_context["projectionCompatibility"] = self._chapter_projection_compatibility(
+            chapter_projection,
+            legacy_prompt_fields,
+            field_paths or self._legacy_prompt_projection_paths(module_context),
+        )
 
     @staticmethod
     def _repairable_semantic_error(error: ValueError) -> bool:
@@ -2411,6 +3055,20 @@ class LlmPlanner(Planner):
                 )},
             ])
         try:
+            if self._context_projection_rejection is not None:
+                rejection = self._context_projection_rejection
+                error = LlmError(
+                    rejection.get("error", "正式 stateVisibility 投影被拒绝。"),
+                    "context_projection_rejected",
+                )
+                error.audit = {
+                    "operation": "branch_planner",
+                    "model": self.gateway.model,
+                    "promptVersion": "python-v0.27+" + catalog_version(),
+                    "requestSummary": selected["title"],
+                    "promptContext": copy.deepcopy(self.last_prompt_context),
+                }
+                raise error
             fact_review_enabled = self.verify_source_facts and self.writing_scope is not None
             targeted_repair = (fact_review_enabled and repair_narrative
                                and self._repairable_semantic_error(ValueError(str(repair)))
@@ -2574,7 +3232,7 @@ class LlmPlanner(Planner):
                             reviewed_content = self._normalize_fact_review(review_completion.content)
                             if original_review is not None:
                                 reviewed_content = self._merge_fact_review_records(original_review, reviewed_content, repair_ids)
-                            evidence = self._fact_evidence(context, selected, resolved_state)
+                            evidence = self._fact_evidence(context, selected, resolved_state, query=narrative)
                             self._check_fact_review(reviewed_content, narrative, {item["id"] for item in evidence}, evidence)
                         except LlmError as error:
                             if review_attempt or error.code != "model_output_rejected":
@@ -2674,29 +3332,44 @@ class LlmPlanner(Planner):
         error.audit = {"operation": "branch_planner", "model": self.gateway.model, "promptVersion": "python-v0.27+" + catalog_version(), "requestSummary": selected["title"], "rawResponse": "\n\n".join(raw_responses), "error": observations[-1]["error"], "callObservations": observations, "rejectedNarrativeCharacters": rejected_narrative_characters, "promptContext": copy.deepcopy(self.last_prompt_context)}
         raise error
 
-    def _fact_evidence(self, context: Dict[str, Any], selected: Dict[str, Any], state: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _fact_evidence(
+        self,
+        context: Dict[str, Any],
+        selected: Dict[str, Any],
+        state: Dict[str, Any],
+        query: str = "",
+    ) -> List[Dict[str, Any]]:
         scope = self.writing_scope or {}
+        bounded_facts, fact_audit = self._bounded_scope_facts(
+            scope, context, selected, state, extra_query=query,
+        )
+        scope_projection, scope_audit = self._bounded_scope_projection(scope)
+        self.last_prompt_context["factEvidence"] = {
+            **fact_audit,
+            "scopeProjection": scope_audit,
+        }
         evidence = {
-            "currentAction": selected["summary"], "actionContract": scope.get("actionContract"),
-            "sourceSceneCues": scope.get("narrativeBrief", []),
-            "priorSourceSceneCues": scope.get("priorNarrativeBrief", []),
-            "knownFacts": scope.get("world", {}).get("immutableFacts", []),
-            "characterDetails": scope.get("characterDetails", []),
+            "currentAction": selected["summary"],
+            "actionContract": scope_projection.get("actionContract"),
+            "sourceSceneCues": scope_projection.get("sourceSceneCues", []),
+            "priorSourceSceneCues": scope_projection.get("priorSourceSceneCues", []),
+            "knownFacts": bounded_facts,
+            "characterDetails": scope_projection.get("characterDetails", []),
             "characterLocations": state_character_locations(context["package"], state),
-            "registeredItems": [{"id": item["id"], "name": item["name"]} for item in scope.get("items", [])],
+            "registeredItems": scope_projection.get("registeredItems", []),
             "stateTransition": {key: {"from": context["parent"]["branchState"].get(key), "to": state.get(key)}
                                 for key in selected["statePatch"]},
             "afterState": {key: value for key, value in state.items() if key != BRANCH_LEDGER_KEY},
             "confirmedBranchLedger": ledger_context(state),
-            "confirmedBranchContext": scope.get("continuityText"),
-            "characterIdentityEvidence": scope.get("characterIdentityEvidence", []),
-            "sourceDialogueContext": scope.get("sourceDialogueContext", []),
+            "confirmedBranchContext": scope_projection.get("continuityText"),
+            "characterIdentityEvidence": scope_projection.get("characterIdentityEvidence", []),
+            "sourceDialogueContext": scope_projection.get("sourceDialogueContext", []),
         }
         records = []
         for kind, value in evidence.items():
             for item in value if isinstance(value, list) else [value]:
                 if kind in ("sourceSceneCues", "priorSourceSceneCues"):
-                    item = item["text"]
+                    item = item.get("text", item) if isinstance(item, dict) else item
                 elif kind == "knownFacts":
                     item = {key: item[key] for key in ("text", "communication") if key in item}
                 elif kind == "actionContract" and isinstance(item, dict):
@@ -2762,7 +3435,11 @@ class LlmPlanner(Planner):
 
     def _fact_repair_messages(self, context: Dict[str, Any], selected: Dict[str, Any], state: Dict[str, Any], narrative: str, issues: str, conflicts: Optional[List[Dict[str, Any]]] = None) -> List[Dict[str, str]]:
         paragraphs = self._draft_paragraphs(narrative)
-        data = {"evidence": self._fact_evidence(context, selected, state), "problems": issues, "paragraphs": paragraphs}
+        data = {
+            "evidence": self._fact_evidence(context, selected, state, query=narrative + "\n" + issues),
+            "problems": issues,
+            "paragraphs": paragraphs,
+        }
         if conflicts:
             by_id = {item["paragraphId"]: item["claims"] for item in conflicts}
             # Keep rejected quotations in the audit, not in the editing input:
@@ -2789,7 +3466,10 @@ class LlmPlanner(Planner):
                 render_prompt('core.fact_review')
             )},
             {"role": "user", "content": json.dumps({"evidence": [{"id": e["id"], "kind": e["kind"], "spans": self._referenced_fact_spans(e["value"], e["id"])}
-                                                                  for e in self._fact_evidence(context, selected, state)], "localIssue": local_issue,
+                                                                  for e in self._fact_evidence(
+                                                                      context, selected, state,
+                                                                      query=narrative + "\n" + (local_issue or ""),
+                                                                  )], "localIssue": local_issue,
                                                     "requiredRuleClaims": [{"paragraphId": p["id"], "claims": self._rule_claims(p["text"])}
                                                                            for p in self._draft_paragraphs(narrative) if self._rule_claims(p["text"])],
                                                     "requiredHistoryClaims": [{"paragraphId": p["id"], "claims": self._past_claims(p["text"])}
@@ -2879,7 +3559,10 @@ class LlmPlanner(Planner):
                 "task": "verify_fact_support",
                 "expansionAddedText": expansion_added_text,
                 "evidence": [{"id": e["id"], "kind": e["kind"], "spans": self._referenced_fact_spans(e["value"], e["id"])}
-                             for e in self._fact_evidence(context, selected, state)],
+                             for e in self._fact_evidence(
+                                 context, selected, state,
+                                 query=narrative + "\n" + initial_review,
+                             )],
                 "paragraphs": [{"id": p["id"], "spans": self._referenced_fact_spans(p["text"], f"p{p['id']}"),
                                 "candidateSupports": checks[p["id"]].get("supports", [])}
                                for p in self._draft_paragraphs(narrative)],
@@ -3344,13 +4027,17 @@ class LlmPlanner(Planner):
         current_characters = narrative_character_count(narrative)
         target_characters = max(self.minimum_narrative_characters + 200, 2200)
         scope = self.context_resolver.resolve(context, selected, state) if self.context_resolver else context["package"]
+        bounded_facts, fact_audit = self._bounded_scope_facts(
+            scope, context, selected, state, extra_query=narrative,
+        )
+        scope_projection, scope_audit = self._bounded_scope_projection(scope)
+        self.last_prompt_context["continuationFacts"] = {
+            **fact_audit,
+            "scopeProjection": scope_audit,
+        }
         scope_text = json.dumps({
-            "immutableFacts": scope["world"].get("immutableFacts", []),
-            "sourceSceneCues": scope.get("narrativeBrief", []),
-            "actionContract": scope.get("actionContract", {}),
-            "characters": [item["name"] for item in scope.get("characters", [])],
-            "locations": [item["name"] for item in scope.get("locations", [])],
-            "items": [item["name"] for item in scope.get("items", [])],
+            "immutableFacts": bounded_facts,
+            **scope_projection,
         }, ensure_ascii=False)
         state_guardrail_text = "\n".join([
             narrative_state_guardrails(context["package"], state),
@@ -3371,7 +4058,6 @@ class LlmPlanner(Planner):
             state_character_location_context=f"{state_character_location_context(context['package'], state)}",
             state_guardrail_text=f'{state_guardrail_text}',
             narrative=f'{narrative}',
-            state_guardrail_text_2=f'{state_guardrail_text}',
         )
 
     def _prompt(
@@ -3394,13 +4080,32 @@ class LlmPlanner(Planner):
             if module_context else {"mode": "package"}
         )
         self.last_prompt_context["branchLedgerEntries"] = len(state.get(BRANCH_LEDGER_KEY, {}).get("entries", []))
-        prompt_world = module_context["world"] if module_context else context["package"]["world"]
-        fact_text = "\n".join(
-            "- " + (
-                fact["communication"]["speakerName"] + "的已登记" + fact["communication"]["kind"] + "原句："
-                if isinstance(fact.get("communication"), dict) else ""
-            ) + fact["text"] for fact in prompt_world["immutableFacts"]
+        self.last_prompt_context["contextBundle"] = self._record_context_bundle_audit(
+            context, selected, state, module_context,
         )
+        self._check_context_bundle(context)
+        prompt_world = module_context["world"] if module_context else context["package"]["world"]
+        current_beat = module_context.get("currentBeat", {}) if module_context else {}
+        current_chapter = module_context.get("currentChapter", {}) if module_context else {}
+        fact_query = " ".join(str(value) for value in (
+            context.get("playerDirection", ""),
+            selected.get("title", ""),
+            selected.get("summary", ""),
+            current_beat.get("summary", "") if isinstance(current_beat, dict) else "",
+            current_chapter.get("title", "") if isinstance(current_chapter, dict) else "",
+        ))
+        explicit_fact_ids = []
+        if isinstance(current_beat, dict):
+            context_refs = current_beat.get("contextRefs", {})
+            if isinstance(context_refs, dict):
+                for key in ("factIds", "immutableFactIds", "sourceFactIds"):
+                    values = context_refs.get(key, [])
+                    if isinstance(values, list):
+                        explicit_fact_ids.extend(value for value in values if isinstance(value, str))
+        fact_text, fact_audit = self._bounded_prompt_fact_text(
+            prompt_world.get("immutableFacts", []), fact_query, explicit_fact_ids,
+        )
+        self.last_prompt_context["promptHardFacts"] = fact_audit
         constraint_text = "\n".join("- " + item for item in prompt_world.get("globalConstraints", [])) or "- 未声明额外全局约束"
         guideline_text = "\n".join(
             "- " + item for item in prompt_world.get("narrativeGuidelines", {}).get("prohibitions", [])
@@ -3507,6 +4212,31 @@ class LlmPlanner(Planner):
             render_prompt('core.terminal')
             if terminal_source_branch
             else "本回合尚未到达声明的源分支终点；在当前行动完成处收笔，下一回合方向由运行时提供，正文不列菜单。"
+        )
+        chapter_projection = self.last_context_bundle.project("chapter") if self.last_context_bundle else None
+        legacy_prompt_fields = (
+            [
+                "module_scope_text", "title", "summary", "get", "location_name",
+                "current_location_name", "perspective_instruction", "profile_text",
+                "character_text", "state_json", "character_location_text", "fact_text",
+                "state_transition_json", "branch_ledger_text", "continuity_text",
+                "source_scene_text", "location_text", "available_item_text",
+                "state_guardrail_text", "protected_character_text", "length_instruction",
+                "terminal_instruction", "repair_instruction",
+            ]
+            if module_context else [
+                "title", "summary", "state_transition_json", "state_json", "arc_instruction",
+                "fact_text", "source_scene_text", "constraint_text", "guideline_text",
+                "profile_text", "character_text", "registered_character_text",
+                "character_location_text", "protected_character_text", "location_text",
+                "current_location_name", "available_item_text", "unavailable_item_text",
+                "branch_ledger_text", "module_scope_text", "continuity_text",
+                "perspective_instruction", "length_instruction", "state_guardrail_text",
+                "terminal_instruction", "repair_instruction",
+            ]
+        )
+        self._record_chapter_projection_compatibility(
+            chapter_projection, legacy_prompt_fields, bool(module_context),
         )
         if module_context:
             return render_prompt('core.module_narrative',
@@ -3877,6 +4607,7 @@ class CoCreationService:
         resolved = apply_branch_patch(
             self.package, parent["branchState"], selected["statePatch"], source_node_ref, direction_source,
         )
+        bundle_selected, _ = ContextBundleBuilder.project_selected_state_patch(selected)
         rejoin = resolve_rejoin(self.package, parent.get("sourceNodeRef") or contract["entryNodeId"], parent["openThreads"], parent["branchState"], source_node_ref, resolved, selected) if resolved["storyScope"] == "source" else None
         if rejoin and not any(item["canonicalRelation"] == "diverged" for item in lineage):
             raise ValueError("只有已偏离原著的分支可以汇合: " + rejoin["id"])
@@ -3899,7 +4630,14 @@ class CoCreationService:
                 if expected_state != actual_state:
                     raise ValueError("规范方向状态快照与补丁不一致: " + selected["id"])
                 canonical = {"narrativeText": beat.get("sourceExcerpt", {}).get("text", beat["narrativeAnchor"]), "summary": beat["summary"], "factDeltas": [{"id": "fact_" + beat["id"], "source": "source", "summary": beat["summary"]}], "openThreads": beat["openThreads"], "nextDirections": [branch_direction(item) for item in beat["nextDirections"]], "storyArc": parent.get("storyArc"), "planning": {"citations": [{"kind": "canonical_node", "ref": beat["nodeId"], "rationale": "规范分支复用原著。"}], "confidence": "high", "stateChangeProposals": []}}
-        context = {"package": self.package, "contract": contract, "parent": parent, "lineage": lineage, "playerDirection": player_direction, "characterDetails": confirmed_character_details(self.package, lineage)}
+        context = {
+            "package": self.package, "contract": contract, "parent": parent, "lineage": lineage,
+            "playerDirection": player_direction,
+            "requestId": request_id,
+            "characterDetails": confirmed_character_details(self.package, lineage),
+            "validatedStatePatch": bundle_selected.get("statePatch", {}),
+            "validatedStatePatchSource": "apply_branch_patch",
+        }
         closing_intent = getattr(self.store, 'closing_intent', None)
         if callable(closing_intent):
             context['closingIntent'] = closing_intent(session_id, parent_id)
@@ -3946,7 +4684,8 @@ class CoCreationService:
         resolved = commit_consequences(context, resolved, result, branch_id)
         if callable(getattr(self.store, "on_validating", None)):
             self.store.on_validating()
-        if canonical is None or draft_editor is not None:
+        if ((canonical is None or draft_editor is not None)
+                and 'stateReceipt' not in result and 'deliveryReceipt' not in result):
             guard_narrative(
                 result["narrativeText"], resolved, context["characterDetails"],
                 self.package["world"].get("narrativeGuidelines"), self.package,
@@ -3986,11 +4725,21 @@ class CoCreationService:
         result["nextDirections"] = filter_directions(result["nextDirections"], self.package, resolved)
         assert_published_directions(self.package, source_node_ref, resolved, result["nextDirections"])
         node = {
-            **result, "id": branch_id, "sourceNodeRef": source_node_ref, "branchState": resolved,
+            **result, "id": branch_id, "parentId": parent_id, "sourceNodeRef": source_node_ref, "branchState": resolved,
             "canonicalRelation": relation, "selectedDirectionId": direction_id,
             "selectedDirection": branch_direction(selected), "playerDirection": player_direction,
             "requestId": request_id, "createdAt": timestamp(),
         }
+        prompt_context = audit.get("promptContext", {}) if isinstance(audit, dict) else {}
+        context_bundle_audit = prompt_context.get("contextBundle", {}) if isinstance(prompt_context, dict) else {}
+        context_id = context_bundle_audit.get("contextId") if isinstance(context_bundle_audit, dict) else None
+        if isinstance(context_id, str) and context_id.strip():
+            node["contextId"] = context_id
+        from .dynamic_memory import receipt_for
+        node.pop("contextMemory", None)
+        memory_receipt = receipt_for(self.package, node)
+        if memory_receipt is not None:
+            node["contextMemory"] = memory_receipt
         stored = self.store.append_branch(session_id, parent_id, node)
         if resolved["storyScope"] == "derived":
             derived = self.store.derived(session_id)

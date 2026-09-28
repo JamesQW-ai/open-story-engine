@@ -1,0 +1,273 @@
+[
+  {
+    "key": "3dcebd0703fc7f32f94b60edfa5277f21d6f3d28f48d6291954088f4205ed99f",
+    "attempt_id": "0c8e02b35a6d481d958af78802073a8e",
+    "binding": {
+      "session_id": "170f67cd-e62a-4bf8-b355-fdb7e8e27804",
+      "parent_branch_id": "branch_f3e6ecdf-7995-42a8-ad8f-dd57097ac434",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.3",
+      "rules_version": "prepared-player-turn/19+prompt-catalog/1:9fbcdce6be61cac179abc246d61da26a3528171ac0e7d198b44858f3f05ee22f",
+      "model": "~typesafe/jev-latest",
+      "closing_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "parent_digest": "dbc9e091776eae87534f0bc3abcf405581976b31845f9cb30f638ad18c4395eb",
+      "request_id": "live-wait",
+      "input_digest": "0160066b036fd07d6258134def43b5dac17b45a04459421f3a6eec2f56291609"
+    },
+    "payload": {
+      "text": "留在原地，独自等待片刻，不说话，不移动，也不开始其他行动。"
+    },
+    "status": "failed",
+    "created": 1790071020.108942,
+    "selected": false,
+    "selected_waiters": 0,
+    "text": "",
+    "revision": 0,
+    "metrics": {
+      "first_text_ms": null,
+      "ready_hit": false,
+      "selection_count": 1,
+      "ready_hits": 0,
+      "queue_ms": 1,
+      "complete_ms": 2695,
+      "reported_tokens": 0,
+      "calls": 2,
+      "unreported_calls": 2,
+      "tokens": null
+    },
+    "previous_attempts": [],
+    "usage": {
+      "reported_tokens": 0,
+      "calls": 2,
+      "unreported_calls": 2
+    },
+    "failure_audits": [
+      [
+        {
+          "operation": "branch_planner",
+          "model": "~typesafe/jev-latest",
+          "promptVersion": "web-player-v3+prompt-catalog/1:9fbcdce6be61cac179abc246d61da26a3528171ac0e7d198b44858f3f05ee22f",
+          "requestSummary": "自定行动：留在原地，独自等待片刻，",
+          "rawResponse": "",
+          "error": "HTTP Error 400: Bad Request",
+          "callObservations": [
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": null,
+                "durationMs": 1515
+              },
+              "error": "HTTP Error 400: Bad Request",
+              "generationStage": "result_contract",
+              "retryReason": "transient_provider_failure"
+            },
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": null,
+                "durationMs": 1078
+              },
+              "error": "HTTP Error 400: Bad Request",
+              "generationStage": "result_contract"
+            }
+          ],
+          "promptContext": {
+            "mode": "package"
+          },
+          "retainedDraft": {
+            "text": "",
+            "status": "unconfirmed"
+          }
+        },
+        null
+      ]
+    ],
+    "error": {
+      "code": "generation_failed",
+      "message": "这次续写未能完成，请重试或调整行动。",
+      "status": 503
+    }
+  },
+  {
+    "key": "23fd1751912cef98ad756fd5bf1d744d7660df965d31696fe08f9dc9075a9e08",
+    "attempt_id": "37913e06dbee4cd6aef5d8be89ddd4da",
+    "binding": {
+      "session_id": "170f67cd-e62a-4bf8-b355-fdb7e8e27804",
+      "parent_branch_id": "branch_f3e6ecdf-7995-42a8-ad8f-dd57097ac434",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.3",
+      "rules_version": "prepared-player-turn/19+prompt-catalog/1:9fbcdce6be61cac179abc246d61da26a3528171ac0e7d198b44858f3f05ee22f",
+      "model": "~typesafe/jev-latest",
+      "closing_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "parent_digest": "dbc9e091776eae87534f0bc3abcf405581976b31845f9cb30f638ad18c4395eb",
+      "choice_id": "opening-0"
+    },
+    "payload": {
+      "text": "请守门弟子救人。指出伤者尚有呼吸，争取在落锁前让他得到救助。"
+    },
+    "status": "failed",
+    "created": 1790071023.0276868,
+    "selected": false,
+    "selected_waiters": 0,
+    "text": "",
+    "revision": 0,
+    "metrics": {
+      "first_text_ms": null,
+      "queue_ms": 1,
+      "complete_ms": 2346,
+      "reported_tokens": 0,
+      "calls": 2,
+      "unreported_calls": 2,
+      "tokens": null
+    },
+    "previous_attempts": [],
+    "usage": {
+      "reported_tokens": 0,
+      "calls": 2,
+      "unreported_calls": 2
+    },
+    "failure_audits": [
+      [
+        {
+          "operation": "branch_planner",
+          "model": "~typesafe/jev-latest",
+          "promptVersion": "web-player-v3+prompt-catalog/1:9fbcdce6be61cac179abc246d61da26a3528171ac0e7d198b44858f3f05ee22f",
+          "requestSummary": "自定行动：请守门弟子救人。指出伤者",
+          "rawResponse": "",
+          "error": "HTTP Error 400: Bad Request",
+          "callObservations": [
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": null,
+                "durationMs": 1062
+              },
+              "error": "HTTP Error 400: Bad Request",
+              "generationStage": "result_contract",
+              "retryReason": "transient_provider_failure"
+            },
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": null,
+                "durationMs": 1187
+              },
+              "error": "HTTP Error 400: Bad Request",
+              "generationStage": "result_contract"
+            }
+          ],
+          "promptContext": {
+            "mode": "package"
+          },
+          "retainedDraft": {
+            "text": "",
+            "status": "unconfirmed"
+          }
+        },
+        null
+      ]
+    ],
+    "error": {
+      "code": "generation_failed",
+      "message": "这次续写未能完成，请重试或调整行动。",
+      "status": 503
+    }
+  },
+  {
+    "key": "f05b6a3cb25d02d5b9b65a914c25be9f66170c3fd3553141e33d0d49d75cdaf0",
+    "attempt_id": "078fe8f741fe41d8a333f22cdb93cd93",
+    "binding": {
+      "session_id": "170f67cd-e62a-4bf8-b355-fdb7e8e27804",
+      "parent_branch_id": "branch_f3e6ecdf-7995-42a8-ad8f-dd57097ac434",
+      "package_id": "taixu-relics-part1",
+      "package_version": "0.1.3",
+      "rules_version": "prepared-player-turn/19+prompt-catalog/1:9fbcdce6be61cac179abc246d61da26a3528171ac0e7d198b44858f3f05ee22f",
+      "model": "~typesafe/jev-latest",
+      "closing_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "parent_digest": "dbc9e091776eae87534f0bc3abcf405581976b31845f9cb30f638ad18c4395eb",
+      "choice_id": "opening-1"
+    },
+    "payload": {
+      "text": "查看封山石的裂纹。留在封山线外，观察青白光退去后的水痕与空灯。"
+    },
+    "status": "failed",
+    "created": 1790071023.130593,
+    "selected": false,
+    "selected_waiters": 0,
+    "text": "",
+    "revision": 0,
+    "metrics": {
+      "first_text_ms": null,
+      "queue_ms": 1,
+      "complete_ms": 2329,
+      "reported_tokens": 0,
+      "calls": 2,
+      "unreported_calls": 2,
+      "tokens": null
+    },
+    "previous_attempts": [],
+    "usage": {
+      "reported_tokens": 0,
+      "calls": 2,
+      "unreported_calls": 2
+    },
+    "failure_audits": [
+      [
+        {
+          "operation": "branch_planner",
+          "model": "~typesafe/jev-latest",
+          "promptVersion": "web-player-v3+prompt-catalog/1:9fbcdce6be61cac179abc246d61da26a3528171ac0e7d198b44858f3f05ee22f",
+          "requestSummary": "自定行动：查看封山石的裂纹。留在封",
+          "rawResponse": "",
+          "error": "HTTP Error 400: Bad Request",
+          "callObservations": [
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": null,
+                "durationMs": 1134
+              },
+              "error": "HTTP Error 400: Bad Request",
+              "generationStage": "result_contract",
+              "retryReason": "transient_provider_failure"
+            },
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": null,
+                "durationMs": 1081
+              },
+              "error": "HTTP Error 400: Bad Request",
+              "generationStage": "result_contract"
+            }
+          ],
+          "promptContext": {
+            "mode": "package"
+          },
+          "retainedDraft": {
+            "text": "",
+            "status": "unconfirmed"
+          }
+        },
+        null
+      ]
+    ],
+    "error": {
+      "code": "generation_failed",
+      "message": "这次续写未能完成，请重试或调整行动。",
+      "status": 503
+    }
+  }
+]

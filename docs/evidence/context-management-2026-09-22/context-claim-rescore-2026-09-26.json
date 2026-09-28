@@ -1,0 +1,215 @@
+{
+  "schemaVersion": "context-claim-rescore/0.2",
+  "recordedAt": "2026-09-26T08:23:57.298348+00:00",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-claim-pipeline-2026-09-25-v2.json",
+  "sourceSha256": "c6d5268d386c7921f7d53d801ca8b96c9847e10c966d0640a40da7d41af913bc",
+  "originalHarnessSha256": "b39466eb2e7528af47473fbbfc67d9d0e6ba4c03e0c0d846ae1b7169ac2fad2d",
+  "scorerSha256": "d897bf75e71e08de574ccd62b5e725a318782f13642ce04dcb820a08c977d4f3",
+  "fixtureSha256": "f12aceabf4802fba8b4fc9a7a0b1d0a5eb2359e6458d8f7e8af4e6bb82d6f2dc",
+  "newModelCalls": 0,
+  "originalModelCalls": 18,
+  "preservedEvidenceHashes": {
+    "docs/evidence/context-management-2026-09-22/context-claim-request-diagnostic-2026-09-25.json": "c4ef3636dff6480b7f5c4abf260f60ea5a2817b3aa548cfe4540298c3069e632",
+    "docs/evidence/context-management-2026-09-22/context-claim-pipeline-2026-09-25.json": "5e08b2eb6106860471486a2fe3e9a3601a7385f084dcf833b5e779b061b55200",
+    "docs/evidence/context-management-2026-09-22/context-claim-pipeline-audit-2026-09-25.json": "258341deee3d01a8d009100a0528cfc72ecd37f8bd1fd7ab23cd2b85782b7c2a",
+    "docs/evidence/context-management-2026-09-22/context-claim-pipeline-2026-09-25-v2.json": "c6d5268d386c7921f7d53d801ca8b96c9847e10c966d0640a40da7d41af913bc"
+  },
+  "statusChanges": [],
+  "summary": {
+    "matched": 4,
+    "false_positive": 0,
+    "false_negative": 0,
+    "unexpected_rejection": 0,
+    "invalid_extraction": 6,
+    "extraction_error": 2,
+    "invalid_review": 0
+  },
+  "scoringCounts": {
+    "scoredCases": 6,
+    "unscoredCases": 6,
+    "detectedTargets": 4,
+    "missedTargets": 0,
+    "additionalRejections": 0,
+    "casesRequiringReview": 2
+  },
+  "cases": [
+    {
+      "caseId": "recorded_v11",
+      "previousStatus": "invalid_extraction",
+      "status": "invalid_extraction",
+      "error": "提取未逐字完整覆盖单元：P1-C2"
+    },
+    {
+      "caseId": "supported_life",
+      "previousStatus": "invalid_extraction",
+      "status": "invalid_extraction",
+      "error": "提取未逐字完整覆盖单元：P1-C1"
+    },
+    {
+      "caseId": "ordinary_action",
+      "previousStatus": "invalid_extraction",
+      "status": "invalid_extraction",
+      "error": "提取未逐字完整覆盖单元：P1-C1"
+    },
+    {
+      "caseId": "legal_wait",
+      "previousStatus": "invalid_extraction",
+      "status": "invalid_extraction",
+      "error": "提取未逐字完整覆盖单元：P2-C1"
+    },
+    {
+      "caseId": "honest_unknown",
+      "previousStatus": "extraction_error",
+      "status": "extraction_error",
+      "detectedTargets": [],
+      "missedTargets": [],
+      "additionalRejections": [],
+      "extractionIssues": [
+        {
+          "id": "P1-C2-F1",
+          "paragraphId": "P1",
+          "claim": "你说。",
+          "statement": "你说了话。",
+          "reason": "原文“你说”只表明当前说话动作，未保留说话内容；该动作属于当前授权动作，不依赖公开历史来源。"
+        }
+      ],
+      "requiresReview": true,
+      "violations": []
+    },
+    {
+      "caseId": "supported_negation",
+      "previousStatus": "matched",
+      "status": "matched",
+      "detectedTargets": [],
+      "missedTargets": [],
+      "additionalRejections": [],
+      "extractionIssues": [],
+      "requiresReview": false,
+      "violations": []
+    },
+    {
+      "caseId": "reported_history",
+      "previousStatus": "invalid_extraction",
+      "status": "invalid_extraction",
+      "error": "提取未逐字完整覆盖单元：P1-C1"
+    },
+    {
+      "caseId": "derived_symptom",
+      "previousStatus": "matched",
+      "status": "matched",
+      "detectedTargets": [
+        {
+          "paragraphId": "P1",
+          "quote": "胸口仍在起伏"
+        }
+      ],
+      "missedTargets": [],
+      "additionalRejections": [],
+      "extractionIssues": [],
+      "requiresReview": false,
+      "violations": [
+        {
+          "id": "P1-C1-F1",
+          "paragraphId": "P1",
+          "claim": "伤者的胸口仍在起伏。",
+          "statement": "伤者的胸口仍在起伏。",
+          "reason": "原文断言“伤者的胸口仍在起伏”，即伤者仍有呼吸/生命体征。公开证据仅说明“伤者仍活着”，未提供胸口起伏这一具体可见表现；从“仍活着”不能派生该具体观察，故不支持。"
+        }
+      ]
+    },
+    {
+      "caseId": "negated_life",
+      "previousStatus": "matched",
+      "status": "matched",
+      "detectedTargets": [
+        {
+          "paragraphId": "P1",
+          "quote": "不再活着"
+        }
+      ],
+      "missedTargets": [],
+      "additionalRejections": [],
+      "extractionIssues": [],
+      "requiresReview": false,
+      "violations": [
+        {
+          "id": "P1-C1-F1",
+          "paragraphId": "P1",
+          "claim": "伤者已经不再活着。",
+          "statement": "伤者已经不再活着。",
+          "reason": "原文断言伤者已经不再活着，即伤者已死亡；公开证据明确记载伤者仍活着，二者直接相反。"
+        }
+      ]
+    },
+    {
+      "caseId": "swapped_subject",
+      "previousStatus": "invalid_extraction",
+      "status": "invalid_extraction",
+      "error": "提取未逐字完整覆盖单元：P1-C1"
+    },
+    {
+      "caseId": "expanded_permission",
+      "previousStatus": "matched",
+      "status": "matched",
+      "detectedTargets": [
+        {
+          "paragraphId": "P1",
+          "quote": "就有权让任何人入门"
+        }
+      ],
+      "missedTargets": [],
+      "additionalRejections": [],
+      "extractionIssues": [],
+      "requiresReview": false,
+      "violations": [
+        {
+          "id": "P1-C1-F1",
+          "paragraphId": "P1",
+          "claim": "只要赶在落锁前，守门弟子就有权让任何人入门。",
+          "statement": "只要赶在落锁前，守门弟子就有权让任何人入门。",
+          "reason": "原文断言守门弟子在落锁前有权让任何人入门，属于具体规则性授权；公开证据仅说明守门人阻止靠近、山门将闭及守门职责，未提供任何关于落锁前入门权限的规则，故不支持。"
+        }
+      ]
+    },
+    {
+      "caseId": "reported_to_completed",
+      "previousStatus": "extraction_error",
+      "status": "extraction_error",
+      "detectedTargets": [
+        {
+          "paragraphId": "P1",
+          "quote": "完成了那批引路灯的押送"
+        }
+      ],
+      "missedTargets": [],
+      "additionalRejections": [],
+      "extractionIssues": [
+        {
+          "id": "P1-C1-F1",
+          "paragraphId": "P1",
+          "claim": "三年前，陆沉舟已经替宗门完成了那批引路灯的押送。",
+          "statement": "三年前，陆沉舟已经替宗门完成了那批引路灯的押送。",
+          "reason": "公开证据只表明陆沉舟三年前离开北河城并声称要替宗门押送引路灯，属于意图或声称，不能推出“已经完成押送”；原句将声称/打算改写成完成事实，且丢失“离开北河城”和“说要”等关键限定。"
+        }
+      ],
+      "requiresReview": true,
+      "violations": [
+        {
+          "id": "P1-C1-F1",
+          "paragraphId": "P1",
+          "claim": "三年前，陆沉舟已经替宗门完成了那批引路灯的押送。",
+          "statement": "三年前，陆沉舟已经替宗门完成了那批引路灯的押送。",
+          "reason": "公开证据只表明陆沉舟三年前离开北河城并声称要替宗门押送引路灯，属于意图或声称，不能推出“已经完成押送”；原句将声称/打算改写成完成事实，且丢失“离开北河城”和“说要”等关键限定。"
+        }
+      ]
+    }
+  ],
+  "acceptance": false,
+  "productionEnablement": false,
+  "limitations": [
+    "additionalRejections 仅表示未匹配预标目标的拒绝，须复核是否误报；目标清单不是整稿完整语义标签。",
+    "引文包含目标只是定位命中，不能证明同一引文内每个命题都判对；混合长句仍须语义复审。",
+    "提取格式失败的六例未评分；extraction_error 内的命中只保留诊断，不计整例通过。",
+    "本轮只修评分与持久化，不修提取或核对提示，不证明真实正文质量改善。"
+  ]
+}

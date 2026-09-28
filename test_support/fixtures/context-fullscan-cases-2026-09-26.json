@@ -1,0 +1,263 @@
+{
+  "schemaVersion": "context-fullscan-cases/0.1",
+  "labelAuthor": "Codex",
+  "scope": "官方长篇同一场景的完整短稿位置关系扫描；不是整部小说或所有事实类型扫描。",
+  "bindings": {
+    "test_support/fixtures/context-candidate-mapping-cases-2026-09-26.json": "aaffa3d1f433fb49fc70da4c1d74246e2b92c21fe3b30160b4ae2aa80a5ef617"
+  },
+  "entities": {
+    "scene:wounded_stranger": {
+      "kind": "scene_person",
+      "mentions": [
+        "伤者",
+        "陌生伤者"
+      ]
+    },
+    "scene:sealing_line": {
+      "kind": "scene_boundary",
+      "mentions": [
+        "封山线"
+      ]
+    },
+    "scene:gatekeeper": {
+      "kind": "scene_person",
+      "mentions": [
+        "守门弟子"
+      ]
+    }
+  },
+  "additionalEntitySources": {
+    "scene:gatekeeper": {
+      "id": "module:opening:relationships:1",
+      "quote": "守门弟子",
+      "contentSha256": "6fcd5c607c4aaca83def80916c63cf1166597eb98dd08ff5efde016147579197"
+    }
+  },
+  "cases": [
+    {
+      "id": "original_v11",
+      "origin": "recorded_v11",
+      "draft": "“他还活着。”你朝守门弟子迈出半步，声音压过雨声，“胸口还在动，手也攥着灯——落锁前把他挪进去，兴许还有救。”\n\n守门弟子侧过身，目光从你脸上移到封山线内那道伏着的人影上，眉头拧紧，却没有立刻让开。铁链又响了一声，他抬手按在门框边，像是在等你说完，又像是在等别的什么。",
+      "draftSha256": "be082fef3489604f9b9a906a1bcc355aa50fec14bb5aa085980843c0486507aa",
+      "targets": [
+        {
+          "unitIds": [
+            "P2-U2"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:wounded_stranger",
+            "relation": "boundary_side",
+            "object": "scene:sealing_line",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ]
+    },
+    {
+      "id": "no_position",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "伤者仍活着，手边抓着空灯。守门弟子侧过身，眉头拧紧。铁链又响了一声。",
+      "draftSha256": "9483b5f40c78e501b24770224413bae643ba56236b500ce3016131d22eac76fd",
+      "targets": []
+    },
+    {
+      "id": "two_subjects",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "伤者在封山线外而守门弟子在封山线内。",
+      "draftSha256": "85fee7fe7fcabb63b952cb52e2518a09cb68ed73c6fcdaf468028715be8f6116",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:wounded_stranger",
+            "relation": "boundary_side",
+            "object": "scene:sealing_line",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        },
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:gatekeeper",
+            "relation": "boundary_side",
+            "object": "scene:sealing_line",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ]
+    },
+    {
+      "id": "negative_motion",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "伤者不在封山线内。守门弟子侧过身，眉头拧紧。",
+      "draftSha256": "ef15b6edb280f221d19b8b29bacb9120ff631ea417d83668dbceac724b920d35",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:wounded_stranger",
+            "relation": "boundary_side",
+            "object": "scene:sealing_line",
+            "value": "inside",
+            "polarity": "negative",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ]
+    },
+    {
+      "id": "conditional",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "如果守门弟子放行，伤者就在封山线内。铁链又响了一声。",
+      "draftSha256": "b2f6e11f32ffd5afc54972a5e30f880277438d64c28c7996f431173ccaece335",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1",
+            "P1-U2"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "condition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ambiguous_person",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "伤者望向守门弟子。他站在封山线外。",
+      "draftSha256": "4ece869d38d9ebcb4db395ab16a3402883aa202021c0d97b1d6c39c323fa4e8e",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1",
+            "P1-U2"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "ambiguity"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "repeated_mentions",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "伤者在封山线外。铁链响了一声。伤者仍在封山线外。",
+      "draftSha256": "90a2cdf70006d2e7c3d63074ab9aebfba6512215e6fea161e7858783a4523d48",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:wounded_stranger",
+            "relation": "boundary_side",
+            "object": "scene:sealing_line",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        },
+        {
+          "unitIds": [
+            "P1-U3"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:wounded_stranger",
+            "relation": "boundary_side",
+            "object": "scene:sealing_line",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ]
+    },
+    {
+      "id": "past_current",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "昨天伤者在封山线内；现在伤者在封山线外。",
+      "draftSha256": "7cbe29b077995e2c42410d9353f1e4074f1c92e20628d9d24775245efb718e91",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "time"
+          ]
+        },
+        {
+          "unitIds": [
+            "P1-U2"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:wounded_stranger",
+            "relation": "boundary_side",
+            "object": "scene:sealing_line",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ]
+    },
+    {
+      "id": "unknown_boundary",
+      "origin": "synthetic_longform_scene_contrast",
+      "draft": "伤者在宗门结界内。守门弟子按住门框。",
+      "draftSha256": "4c1b12e820fb3df0e9314bc40aa7cf525d5241da2be719a44030027f7f51cf05",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "unresolved_object"
+          ]
+        }
+      ]
+    }
+  ]
+}

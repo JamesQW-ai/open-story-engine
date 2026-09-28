@@ -17,14 +17,16 @@ import hashlib
 import copy
 import logging
 import time
+from concurrent.futures import ThreadPoolExecutor
 from collections import OrderedDict
+from dataclasses import replace
 from pathlib import Path
 from typing import Any, Callable, Optional
 
 from .api_read import ReadError, ReadService
 from .api_openings import identity_opening_package
-from .api_journey import preferences, save_preferences, journey, player_directions, player_beat
-from .api_narrative import MIN_SCENE_CJK, PlayerNarrativePlanner, player_package
+from .api_journey import preferences, save_preferences, journey, player_directions, player_beat, route_status
+from .api_narrative import MIN_SCENE_CJK, PlayerNarrativePlanner, ContextNarrativePlanner, player_package
 from .api_profiles import profile_evidence, summarize_profile
 from .cocreation import (
     CoCreationService,
@@ -39,10 +41,12 @@ from .cocreation import (
     normalize_entry_selection,
 )
 from .environment import load_env_file
-from .llm import LlmError, OpenAICompatibleGateway
+from .llm import LlmError, OpenAICompatibleGateway, writer_config_from_env
 from .module_context import ModuleContextResolver
 from .storage import SessionStore, now
+from .route_lifecycle import closing_intent as read_closing_intent
 from .api_turn_drafts import TurnDrafts, TurnSnapshot, visible_choices, digest, reported_usage, RULES_VERSION
+from .jev_gateway import JevGatewayConfig, JevRuntimeGateway, runtime_review_mode
 
 
 def _env_bool(name: str, fallback: bool) -> bool:
@@ -99,6 +103,10 @@ class PlayService:
         self._turn_context_cache = OrderedDict()
         self._turn_context_lock = threading.Lock()
         self._profile_lock = threading.Lock()
+        # Shadow reviews are observational and can finish after replay. Keep
+        # the worker count bounded so they cannot open unbounded provider
+        # connections during concurrent reader turns.
+        self._jev_shadow_executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix='jev-shadow')
         self.drafts = TurnDrafts(self.database_path.with_suffix(".turn-drafts.sqlite"), self._generate_turn)
         self._planner_error: Optional[str] = None
         self._planner: Any = None
@@ -145,36 +153,41 @@ class PlayService:
             return
         if self.mode != "openai":
             raise ValueError("STORY_PLANNER 仅支持 mock 或 openai")
-        required = {key: os.environ.get(key, "").strip() for key in ("STORY_LLM_BASE_URL", "STORY_LLM_API_KEY", "STORY_LLM_MODEL")}
-        missing = [key for key, value in required.items() if not value]
+        required = writer_config_from_env()
+        missing = [key for key in ("base_url", "api_key", "model") if not required[key]]
         if missing:
-            raise ValueError("真实模型写作缺少配置：" + "、".join(missing))
+            prefix = "STORY_LLM_DIRECT_" if required["route"] == "direct" else "STORY_LLM_"
+            names = {"base_url": f"{prefix}BASE_URL", "api_key": f"{prefix}API_KEY", "model": f"{prefix}MODEL"}
+            raise ValueError("真实模型写作缺少配置：" + "、".join(names[key] for key in missing))
         stream = _env_bool("STORY_LLM_STREAM", True)
         timeout = _env_integer("STORY_LLM_TIMEOUT_SECONDS", 30, 5, 120)
         first_delta_timeout = _env_integer("STORY_LLM_FIRST_DELTA_TIMEOUT_SECONDS", 30, 5, 120)
         max_tokens = _env_integer("STORY_LLM_MAX_TOKENS", 8192, 1024, 8192)
+        text_max_tokens = _env_integer("STORY_LLM_TEXT_MAX_TOKENS", 4096, 1024, max_tokens)
+        context_window = _env_integer("STORY_LLM_CONTEXT_WINDOW_TOKENS", 0, 0, 1_000_000)
+        reserved_output = _env_integer("STORY_LLM_CONTEXT_RESERVED_OUTPUT_TOKENS", 0, 0, 200_000)
+        projection_mode = os.environ.get(
+            "STORY_CONTEXT_PROJECTION_STATE_VISIBILITY_MODE", "audit_fallback",
+        ).strip()
         allow_fallback = _env_bool("STORY_LLM_TRANSPORT_FALLBACK", True)
         reasoning_effort = _env_reasoning_effort()
-        self._planner = PlayerNarrativePlanner(
+        self._planner = ContextNarrativePlanner(
             OpenAICompatibleGateway(
-                required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"],
-                stream, timeout, max_tokens, allow_transport_fallback=allow_fallback,
+                required["base_url"], required["api_key"], required["model"],
+                stream, timeout, max_tokens, text_max_tokens=text_max_tokens,
+                allow_transport_fallback=allow_fallback,
                 reasoning_effort=reasoning_effort,
                 first_delta_timeout_seconds=first_delta_timeout,
             ),
             minimum_narrative_characters=MIN_SCENE_CJK,
-            verify_source_facts=True,
+            verify_source_facts=False,
             concise=True,
+            context_window_tokens=context_window or None,
+            reserved_output_tokens=reserved_output,
+            context_projection={"stateVisibilityMode": projection_mode},
+            require_context_bundle=True,
         )
         self._evaluator = DirectionEvaluator()
-        if _env_bool("STORY_LLM_QUALITY_REVIEW", False):
-            self._reviewer = LlmNarrativeReviewer(
-                OpenAICompatibleGateway(
-                    required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"],
-                    False, timeout, reasoning_effort=reasoning_effort,
-                    first_delta_timeout_seconds=first_delta_timeout,
-                )
-            )
 
     def delete_session(self, session_id: str) -> None:
         """Serialize deletion with generation so a completed turn cannot revive a save."""
@@ -444,18 +457,20 @@ class PlayService:
             try:
                 session = store.get_session(sid)
                 contract = store.contract(sid)
-                lineage = store.lineage(sid, bid)
+                lineage, fingerprint = store.lineage_with_fingerprint(sid, bid)
             except ValueError as error:
                 raise ReadError(404, 'branch_not_found', '会话或分支不存在') from error
             path, package = self.read.load_package(session['storyPackageId'], session['storyPackageVersion'])
             store.assert_session_package(sid, package)
             if package['story'].get('entryModel', {}).get('policy') != 'official_unknown_reader/1':
                 raise ReadError(409, 'package_retired', '这本故事已停用，请选择当前官方长篇。')
-            if journey(store, sid, bid, package)['status'] != 'active':
+            # Reuse this transaction's validated history; avoid loading it again
+            # for journal presentation or closing intent. Each request still reads.
+            if route_status(store, sid, lineage, package) != 'active':
                 raise ReadError(409, 'route_ended', '这条路线已收尾，可以回到更早的选择重新尝试。')
             derived = store.derived(sid)
             try:
-                closing_intent = store.closing_intent(sid, bid)
+                closing_intent = read_closing_intent(store, sid, lineage)
             except (ValueError, TypeError, KeyError, AttributeError) as error:
                 raise ReadError(409, 'route_history_unavailable', '收束意图记录无效，无法继续') from error
         parent = lineage[-1]
@@ -463,6 +478,7 @@ class PlayService:
                        package_version=package['version'], rules_version=RULES_VERSION,
                        model=getattr(getattr(self._planner, 'gateway', None), 'model', self.mode),
                        closing_digest=digest(closing_intent),
+                       lineage_digest=fingerprint,
                        parent_digest=digest([parent, contract, derived, session.get('storyPackageModuleIndexSha256')]))
         # Reuse immutable source material/history for both choices and an
         # eventual custom action. Recheck package binding and state above first.
@@ -493,9 +509,10 @@ class PlayService:
             # lock as selection and route ending before scheduling any work.
             with self._lock:
                 with self.read.store() as store:
-                    if journey(store, sid, bid, snapshot.package)['status'] != 'active':
+                    nodes, fingerprint = store.lineage_with_fingerprint(sid, bid)
+                    if route_status(store, sid, nodes, snapshot.package) != 'active':
                         raise ReadError(409, 'route_ended', '这条路线已收尾，可以回到更早的选择重新尝试。')
-                    self._check_closing_binding(store, binding)
+                    self._check_closing_binding(store, binding, nodes, fingerprint)
                     saved = self._prepared_branch(store, sid, digest(choice_binding))
                 if saved:
                     view = dict(draft_id=digest(choice_binding), status='ready', metrics={'source': 'saved_branch'})
@@ -517,19 +534,163 @@ class PlayService:
         # must not restart a discarded job afterwards.
         with self._lock:
             with self.read.store() as store:
-                if journey(store, binding['session_id'], binding['parent_branch_id'], snapshot.package)['status'] != 'active':
+                nodes, fingerprint = store.lineage_with_fingerprint(binding['session_id'], binding['parent_branch_id'])
+                if route_status(store, binding['session_id'], nodes, snapshot.package) != 'active':
                     raise ReadError(409, 'route_ended', '这条路线已收尾，可以回到更早的选择重新尝试。')
-                self._check_closing_binding(store, binding)
+                self._check_closing_binding(store, binding, nodes, fingerprint)
             return self.drafts.ensure(binding, payload, snapshot, **kwargs)
 
     @staticmethod
-    def _check_closing_binding(store, binding):
+    def _check_closing_binding(store, binding, nodes, fingerprint):
         try:
-            current = store.closing_intent(binding['session_id'], binding['parent_branch_id'])
+            current = read_closing_intent(store, binding['session_id'], nodes)
         except (ValueError, TypeError, KeyError, AttributeError) as error:
             raise ReadError(409, 'route_history_unavailable', '收束意图记录无效，无法继续') from error
         if binding.get('closing_digest') != digest(current):
             raise ReadError(409, 'draft_expired', '收束意图已变化，请重新选择方向。')
+        if binding.get('lineage_digest') != fingerprint:
+            raise ReadError(409, 'draft_expired', '故事历史已变化，请重新选择方向。')
+
+    @staticmethod
+    def _jev_text(value: Any, limit: int = 12000) -> str:
+        """Serialize a bounded reviewer field without sending the live state object."""
+
+        # Compact JSON preserves the exact reviewer facts while reducing the
+        # request body sent to Jev. This affects transport size only; it does
+        # not remove or summarize any context field.
+        text = value if isinstance(value, str) else json.dumps(
+            value, ensure_ascii=False, sort_keys=True, separators=(',', ':')
+        )
+        if len(text) <= limit:
+            return text
+        return text[:limit] + "\n...[bounded by runtime reviewer]"
+
+    def _jev_review_state(self, planner, snapshot, payload, node):
+        """Build Jev input from the validated chapter projection only."""
+
+        bundle = getattr(planner, 'last_context_bundle', None)
+        if bundle is None:
+            return None, {
+                'status': 'preflight_rejected',
+                'reason': 'context_projection_unavailable',
+                'stateFields': [],
+            }
+        try:
+            projection = bundle.project('grounding_review')
+        except Exception as error:
+            return None, {
+                'status': 'preflight_rejected',
+                'reason': 'context_projection_unavailable',
+                'detail': str(error),
+                'stateFields': [],
+            }
+        action = payload.get('text') or payload.get('direction_id') or payload.get('choice_id') or ''
+        evidence = projection.get('allowedEvidence', [])
+        output_contract = projection.get('outputContract', {})
+        state = {
+            'context': self._jev_text({
+                'package': projection.get('package'),
+                'branch': projection.get('branch'),
+                'hardConstraints': projection.get('hardConstraints', {}),
+                'turnIntent': projection.get('turnIntent', {}),
+                'continuityWindow': projection.get('continuityWindow', []),
+                'dynamicMemory': projection.get('dynamicMemory', []),
+            }),
+            'branchState': self._jev_text(projection.get('authoritativeState', {})),
+            'playerAction': self._jev_text(action),
+            'resultContract': self._jev_text(output_contract),
+            'allowedEvidence': self._jev_text(evidence),
+            'allowedMechanisms': self._jev_text(projection.get('hardConstraints', {}).get('globalConstraints', [])),
+            'candidateNarrative': self._jev_text(node.get('narrativeText', '')),
+            'reviewMeta': {
+                'contractPresent': bool(output_contract),
+                'evidenceSufficient': bool(evidence),
+                'contextSha256': projection.get('contextSha256'),
+            },
+        }
+        return state, None
+
+    def _run_jev_runtime_review(self, planner, snapshot, payload, node, request_id, check, mode):
+        """Run the opt-in Jev experiment after local review and before commit."""
+
+        state, preflight = self._jev_review_state(planner, snapshot, payload, node)
+        if preflight is not None:
+            result = dict(preflight, shadow=False, runtimeExperiment=True,
+                          requestId=request_id, decision='reject')
+        else:
+            check()
+            config = replace(JevGatewayConfig.from_env(runtime=True), enabled=True)
+            result = JevRuntimeGateway(config).review(state, request_id=request_id)
+        audit = self._jev_audit(result, state, node, request_id, mode)
+        snapshot.audits.append([audit, snapshot.history[-1]['id']])
+        if mode != 'block':
+            return result
+        if result.get('status') != 'ok' or result.get('decision') != 'allow':
+            reason = result.get('reason') or result.get('error') or result.get('status') or 'jev_review_rejected'
+            error = LlmError('Jev 审核未通过：' + str(reason),
+                             'jev_review_rejected' if result.get('status') == 'ok' else 'jev_review_unavailable')
+            error.audit = audit
+            error.failure_stage = 'jev_runtime_review'
+            error.fallback_mode = 'preserve_previous_branch'
+            raise error
+        return result
+
+    @staticmethod
+    def _jev_audit(result, state, node, request_id, mode):
+        """Build one durable Jev audit record for sync or deferred shadow runs."""
+        return {
+            'operation': 'jev_runtime_review',
+            'model': result.get('resolvedModel') or result.get('model') or JevGatewayConfig().model,
+            'promptVersion': (result.get('review') or {}).get('ruleSetVersion', 'jev-review-rules/0.3'),
+            'requestSummary': 'precommit narrative review',
+            'rawResponse': json.dumps(result, ensure_ascii=False),
+            'error': result.get('error'),
+            'callObservations': [{
+                'generationStage': 'jev_runtime_review',
+                'status': result.get('status'),
+                'decision': result.get('decision'),
+                'durationMs': result.get('durationMs'),
+            }],
+            'promptContext': {'mode': mode, 'stateFields': sorted(state) if state else []},
+            'mode': mode,
+            'requestId': request_id,
+            'stateFields': sorted(state) if state else [],
+            'candidateCharacterCount': len(node.get('narrativeText', '')),
+            'result': result,
+        }
+
+    def _schedule_deferred_jev_review(self, session_id, parent_id, request_id, deferred):
+        """Persist a non-blocking shadow result after the approved replay starts."""
+        if not isinstance(deferred, dict):
+            return
+        self._jev_shadow_executor.submit(
+            self._persist_deferred_jev_review,
+            session_id, parent_id, request_id, deferred,
+        )
+
+    def _persist_deferred_jev_review(self, session_id, parent_id, request_id, deferred):
+        state = deferred.get('state')
+        preflight = deferred.get('preflight')
+        try:
+            if preflight is not None:
+                result = dict(preflight, shadow=False, runtimeExperiment=True,
+                              requestId=request_id, decision='reject')
+            else:
+                config = replace(JevGatewayConfig.from_env(runtime=True), enabled=True)
+                result = JevRuntimeGateway(config).review(state, request_id=request_id)
+            node = {'narrativeText': deferred.get('candidateNarrative', '')}
+            audit = self._jev_audit(result, state, node, request_id, 'shadow')
+            audit['deferredUntilAfterReplay'] = True
+            audit['parentBranchId'] = parent_id
+            audit['callObservations'][0]['deferredUntilAfterReplay'] = True
+            with self._lock:
+                store = SessionStore(str(self.database_path))
+                try:
+                    store.save_audit(session_id, audit, parent_id)
+                finally:
+                    store.close()
+        except Exception as error:  # pragma: no cover - provider and shutdown dependent
+            logging.getLogger(__name__).warning('Deferred Jev shadow failed: %s', error)
 
     def _generate_turn(self, source, payload, stream, reset, validating, check):
         # Each worker gets independent planner, gateway, evaluator, lazy modules
@@ -569,13 +730,36 @@ class PlayService:
                         setattr(gateway, name, guarded)
         service = CoCreationService(package, snapshot, planner, evaluator, reviewer)
         sid, bid = snapshot.session['id'], snapshot.history[-1]['id']
+        request_id = payload.get('_request_id')
         try:
             if 'text' in payload:
-                outcome = service.continue_free_text(sid, bid, payload['text'], stream=stream, stream_reset=reset)
+                outcome = service.continue_free_text(
+                    sid, bid, payload['text'], stream=stream, stream_reset=reset,
+                    request_id=request_id,
+                )
             else:
-                outcome = dict(kind='accepted', node=service.continue_direction(sid, bid, payload['direction_id'], stream=stream, stream_reset=reset))
+                outcome = dict(kind='accepted', node=service.continue_direction(
+                    sid, bid, payload['direction_id'], stream=stream, stream_reset=reset,
+                    request_id=request_id,
+                ))
             validating()
-            if outcome['kind'] == 'accepted' and isinstance(planner, PlayerNarrativePlanner):
+            mode = 'off' if isinstance(planner, ContextNarrativePlanner) else runtime_review_mode()
+            if outcome['kind'] == 'accepted' and mode == 'block':
+                self._run_jev_runtime_review(
+                    planner, snapshot, payload, outcome['node'], request_id, check, mode,
+                )
+            elif outcome['kind'] == 'accepted' and mode == 'shadow':
+                state, preflight = self._jev_review_state(planner, snapshot, payload, outcome['node'])
+                snapshot.deferred_jev_review = {
+                    'state': state,
+                    'preflight': preflight,
+                    'requestId': request_id,
+                    'candidateNarrative': outcome['node'].get('narrativeText', ''),
+                }
+            if (
+                outcome['kind'] == 'accepted'
+                and isinstance(planner, PlayerNarrativePlanner)
+            ):
                 from .reader_consequences import enabled
                 from .reader_choices import generate_choices
                 state = snapshot.node['branchState'] if snapshot.node else {}
@@ -670,11 +854,12 @@ class PlayService:
                     session = store.get_session(sid)
                     path, package = self.read.load_package(session['storyPackageId'], session['storyPackageVersion'])
                     store.assert_session_package(sid, package)
-                    actual = digest([store.branch(sid, bid), store.contract(sid), store.derived(sid), session.get('storyPackageModuleIndexSha256')])
+                    nodes, fingerprint = store.lineage_with_fingerprint(sid, bid)
+                    actual = digest([nodes[-1], store.contract(sid), store.derived(sid), session.get('storyPackageModuleIndexSha256')])
                     if actual != binding['parent_digest'] or binding['rules_version'] != RULES_VERSION:
                         raise ReadError(409, 'draft_expired', '这段故事已变化，请重新选择方向。')
-                    self._check_closing_binding(store, binding)
-                    if journey(store, sid, bid, package)['status'] != 'active':
+                    self._check_closing_binding(store, binding, nodes, fingerprint)
+                    if route_status(store, sid, nodes, package) != 'active':
                         raise ReadError(409, 'route_ended', '这条路线已收尾。')
                     # Different click IDs for the same prepared result also
                     # converge to one saved branch (double clicks/multiple tabs).
@@ -683,6 +868,11 @@ class PlayService:
                         return receipt(dict(status='written', request_id=request_id, deduplicated=True, branch=saved))
                     if artifact is None:
                         return None
+                    # Failed-review candidates are diagnostic evidence, never
+                    # committable prose, even from a legacy prepared artifact.
+                    if any(isinstance(part, dict) and part.get('fallbackMode')
+                           for part in (artifact.get('node'), artifact.get('outcome'))):
+                        raise ReadError(409, 'draft_unreviewed', '这段正文尚未通过审核，请重新尝试。')
                     for audit, parent_id in artifact['audits']:
                         store.save_audit(sid, audit, parent_id)
                     evaluation = artifact['evaluation']
@@ -696,7 +886,9 @@ class PlayService:
                                 preparedTurnKey=job['key'], preparedAttemptId=job['attempt_id'])
                     from .route_outline import build_outline
                     node['parentId'] = bid
-                    node['routeOutline'] = build_outline(package, store.contract(sid), [*store.lineage(sid, bid), node])
+                    from .dynamic_memory import validate_receipt
+                    validate_receipt(package, node)
+                    node['routeOutline'] = build_outline(package, store.contract(sid), [*nodes, node])
                     stored = store.append_branch(sid, bid, node)
                     if artifact['derived']:
                         store.update_derived(artifact['derived'])
@@ -734,7 +926,7 @@ class PlayService:
             choice = next((c for c in visible_choices(snapshot.history[-1], snapshot.package, snapshot.story_contract, snapshot.history) if c['id'] == choice_id), None)
             if choice is None:
                 raise ReadError(409, 'choice_unavailable', '这个方向已不在当前可选列表中')
-            generation_payload = choice['payload']
+            generation_payload = {**choice['payload'], '_request_id': request_id}
             binding['choice_id'] = choice_id
         else:
             if direction_id is not None:
@@ -744,6 +936,10 @@ class PlayService:
                     raise ReadError(409, 'play_rejected', '当前分支不存在可选方向: ' + direction_id)
                 if not any(d['id'] == direction_id for d in filter_directions(parent['nextDirections'], snapshot.package, parent['branchState'])):
                     raise ReadError(409, 'choice_unavailable', '这个方向已不符合当前分支状态')
+            # Free text and published directions already carry the request ID
+            # in their mutable binding. Keep the generator payload limited to
+            # the player action; prepared choices need the private marker above
+            # because their persisted binding must remain unchanged.
             generation_payload = action_payload
             binding.update(request_id=request_id, input_digest=digest(payload))
         if draft_id is not None and (choice_id is None or digest(binding) != draft_id):
@@ -754,19 +950,32 @@ class PlayService:
             if saved:
                 result = self._commit_turn(dict(binding=binding, key=digest(binding)), None, payload, request_id)
                 if result is not None:
+                    cached_job = self.drafts.jobs.get(draft_id)
+                    if cached_job is not None:
+                        with self.drafts.condition:
+                            cached_job['metrics']['first_visible_text_ms'] = cached_job['metrics'].get('complete_ms')
+                            self.drafts._save(cached_job)
                     _stream_text(result.get('branch', {}).get('narrativeText', ''), stream)
                     if subscriber_id:
                         self.drafts.release(session_id, parent_branch_id, subscriber_id)
                     return result
-        job = self._ensure_turn(binding, generation_payload, snapshot, foreground=True, retry=True)
+        job = self._ensure_turn(
+            binding, generation_payload, snapshot, foreground=True, retry=True,
+            request_id=request_id if choice_id is not None else None,
+        )
         try:
             if subscriber_id:
                 self.drafts.release(session_id, parent_branch_id, subscriber_id)
-            artifact = self.drafts.wait(job, stream, stream_reset)
+            # The worker has already completed all narrative checks, but the
+            # player-facing replay waits until the authoritative branch commit
+            # succeeds.  This prevents an approved draft from appearing before
+            # persistence or being reset after a failed review.
+            artifact = self.drafts.wait(job)
             started = time.monotonic()
             result = self._commit_turn(job, artifact, payload, request_id)
             with self.drafts.condition:
-                job['metrics']['commit_ms'] = round((time.monotonic() - started) * 1000)
+                commit_ms = round((time.monotonic() - started) * 1000)
+                job['metrics']['commit_ms'] = commit_ms
                 written = result['status'] == 'written'
                 owns_result = written and (
                     result['branch'].get('preparedAttemptId') == job.get('attempt_id') and bool(job.get('attempt_id'))
@@ -776,6 +985,16 @@ class PlayService:
                 if owns_result:
                     job['metrics']['committed_branch_id'] = result['branch']['id']
                 job['metrics']['selection_to_complete_ms'] = round((time.monotonic() - selected_at) * 1000)
+            if result.get('status') == 'written':
+                self.drafts.replay_approved(
+                    job, stream,
+                    first_visible_ms=job['metrics'].get('complete_ms', 0) + commit_ms,
+                )
+            if result.get('status') == 'written' and owns_result:
+                self._schedule_deferred_jev_review(
+                    session_id, parent_branch_id, request_id,
+                    artifact.get('deferredJevReview') if isinstance(artifact, dict) else None,
+                )
             return result
         finally:
             self.drafts.release_selection(job)

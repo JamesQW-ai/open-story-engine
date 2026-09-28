@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "jev-acceptance-report/0.1",
+  "status": "ready_for_shadow_only",
+  "recommendedIntegration": "shadow_only",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3",
+    "cjk": 102610
+  },
+  "directJevAccuracyInformational": 0.8,
+  "gates": {
+    "real_beat_derived_accuracy": {
+      "passed": true,
+      "value": 1.0,
+      "threshold": 0.9
+    },
+    "per_decision_class_accuracy": {
+      "passed": true,
+      "classes": {
+        "allow": {
+          "passed": true,
+          "accuracy": 1.0,
+          "count": 40
+        },
+        "rewrite": {
+          "passed": true,
+          "accuracy": 1.0,
+          "count": 80
+        },
+        "reject": {
+          "passed": true,
+          "accuracy": 1.0,
+          "count": 80
+        }
+      },
+      "threshold": 0.9
+    },
+    "repeat_stability": {
+      "passed": true,
+      "stableCaseCount": 200,
+      "caseCount": 200,
+      "rate": 1.0,
+      "threshold": 0.98
+    },
+    "shadow_review_p95": {
+      "passed": true,
+      "valueMs": 1197,
+      "thresholdMs": 2000
+    },
+    "integrated_runtime": {
+      "passed": false,
+      "value": false,
+      "threshold": true
+    }
+  },
+  "blockers": [
+    "integrated_runtime"
+  ],
+  "decision": {
+    "allowDefaultPlannerImport": false,
+    "allowStateWriteFromJev": false,
+    "reason": "完整回合仍未在同一运行时中串联生成、Jev 审核和提交；当前只能确认 shadow 阶段。"
+  },
+  "sources": {
+    "realBeat": "live-real-beat-report-v2.json",
+    "repeat": "live-real-beat-repeat2-report.json",
+    "shadow": "shadow-replay-report.json",
+    "phase": "full-turn-phase-report.json"
+  }
+}

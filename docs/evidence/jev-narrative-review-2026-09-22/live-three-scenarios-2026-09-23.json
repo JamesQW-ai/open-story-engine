@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "live-three-scenarios/0.1",
+  "status": "completed",
+  "package": "taixu-relics-part1@0.1.3",
+  "writerRoute": "direct",
+  "writerModel": "deepseek-v4-flash",
+  "database": "temporary",
+  "config": {
+    "planner": "openai",
+    "timeoutSeconds": 45,
+    "textMaxTokens": 2048,
+    "jsonMaxTokens": 8192,
+    "transportFallback": true,
+    "parallelReviews": true
+  },
+  "userVisibleRule": "正文仅在审核完成并成功提交后回放",
+  "records": [
+    {
+      "scenario": "first_review_pass",
+      "execution": "real_writer_and_real_reviews",
+      "status": "written",
+      "wallMs": 23023,
+      "firstVisibleTextMs": 23021,
+      "visibleChars": 505,
+      "branchWritten": true
+    },
+    {
+      "scenario": "first_review_fail_then_repair_pass",
+      "execution": "real_writer_with_controlled_review_boundary",
+      "status": "written",
+      "wallMs": 7763,
+      "firstVisibleTextMs": 7761,
+      "visibleChars": 518,
+      "branchWritten": true,
+      "reviewCalls": 2,
+      "note": "真实模型负责生成候选；审核边界受控触发首轮失败、修复后通过。该数字用于验证时序，不代表自然失败率。"
+    },
+    {
+      "scenario": "second_review_fail_safe_error",
+      "execution": "real_writer_with_controlled_review_boundary",
+      "status": "error",
+      "wallMs": 7703,
+      "firstVisibleTextMs": null,
+      "visibleChars": 0,
+      "branchWritten": false,
+      "reviewCalls": 2,
+      "error": {
+        "code": "generation_failed",
+        "reviewAttempts": 2,
+        "repairAttempted": true,
+        "failureStage": "second_review",
+        "fallbackMode": "preserve_previous_branch",
+        "retryable": true,
+        "candidateShown": false,
+        "previousBranchUnchanged": true
+      },
+      "note": "受控触发二次审核失败；未回放未确认正文。"
+    }
+  ],
+  "limitations": [
+    "首轮通过为真实生产链路；修复通过和二次失败为受控审核边界，因为自然样本不会稳定触发指定状态。",
+    "受控案例仍使用真实 writer 请求，但为保证状态可重复，关闭了结果契约分支并替换了审核边界。",
+    "三条记录均使用临时数据库，不修改正式存档。"
+  ]
+}

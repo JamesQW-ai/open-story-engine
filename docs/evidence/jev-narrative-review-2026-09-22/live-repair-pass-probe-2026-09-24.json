@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "jev-real-repair-pass-probe/0.1",
+  "status": "not_qualified",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3",
+    "cjk": 102610
+  },
+  "source": "real_writer_and_real_repair_model_with_controlled_first_review_boundary",
+  "writerRoute": "direct",
+  "writerModel": "deepseek-v4-flash",
+  "jevMode": "shadow",
+  "scenario": "first_review_fail_then_repair_pass",
+  "controlledTrigger": true,
+  "statusCode": 200,
+  "requestElapsedMs": 27576,
+  "firstVisibleTextMs": 27391,
+  "visibleCharacterCount": 54,
+  "branchWritten": true,
+  "fallbackMode": "conservative_approved",
+  "repairRecords": [
+    {
+      "outcome": "failed_full_review",
+      "failureStage": "full_review"
+    },
+    {
+      "outcome": "rejected",
+      "failureStage": "second_review"
+    }
+  ],
+  "jev": {
+    "status": "ok",
+    "decision": "allow",
+    "durationMs": 1447,
+    "model": "typesafe/jev-1.13-20260917"
+  },
+  "writer": {
+    "completeMs": 27205,
+    "commitMs": 186,
+    "calls": 8,
+    "reportedTokens": 51744,
+    "unreportedCalls": 0
+  },
+  "qualification": {
+    "repair_pass_verified": false,
+    "reason": "受控首轮失败后，真实修复模型的第二次完整复核仍未通过；最终由保守 fallback 安全提交。"
+  },
+  "limitations": [
+    "真实 writer 和修复模型均被调用，但首轮失败由受控边界触发。",
+    "该记录不能作为自然首轮失败、修复后通过的合格样本。"
+  ]
+}

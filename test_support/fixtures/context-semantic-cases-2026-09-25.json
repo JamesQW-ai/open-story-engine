@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "context-semantic-cases/0.1",
+  "packageId": "taixu-relics-part1",
+  "packageVersion": "0.1.3",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-grounding-frozen-v11-2026-09-25.json",
+  "sourceSha256": "f999bcdf130a048b03516843726d88e4b8937f9eaffc8370c2e859ff7c7f20b0",
+  "sourceCallIndex": 0,
+  "boundary": "仅评测固定正文的公开事实语义支持；构造用例不是新增官方正文或全链验收。期待值仅用于评分，不发送模型。",
+  "cases": [
+    {
+      "id": "recorded_v11",
+      "origin": "recorded",
+      "input": "指出伤者尚有呼吸，争取在落锁前让他得到救助。",
+      "draft": "“他还活着。”你朝守门弟子迈出半步，声音压过雨声，“胸口还在动，手也攥着灯——落锁前把他挪进去，兴许还有救。”\n\n守门弟子侧过身，目光从你脸上移到封山线内那道伏着的人影上，眉头拧紧，却没有立刻让开。铁链又响了一声，他抬手按在门框边，像是在等你说完，又像是在等别的什么。",
+      "expected": "reject",
+      "targets": [
+        {
+          "paragraphId": "P1",
+          "quote": "胸口还在动"
+        }
+      ],
+      "reason": "公开来源不包含这一具体体征。"
+    },
+    {
+      "id": "supported_life",
+      "origin": "constructed",
+      "input": "只陈述已知伤者情况。",
+      "draft": "伤者仍活着，手边抓着空灯。",
+      "expected": "allow",
+      "targets": [],
+      "reason": "逐字复述已确认公开事实。"
+    },
+    {
+      "id": "ordinary_action",
+      "origin": "constructed",
+      "input": "向守门弟子点头，随后等待。",
+      "draft": "你向守门弟子点了点头，随后等待他的回应。",
+      "expected": "allow",
+      "targets": [],
+      "reason": "当前授权动作，不要求有历史来源。"
+    },
+    {
+      "id": "legal_wait",
+      "origin": "constructed",
+      "input": "请求救助后等待，不替我回答问题。",
+      "draft": "“请帮忙救他。”你对守门弟子说。\n\n你等着对方回应，没有再开口。",
+      "expected": "allow",
+      "targets": [],
+      "reason": "纯请求和等待，不新增救助结果。"
+    },
+    {
+      "id": "honest_unknown",
+      "origin": "constructed",
+      "input": "说明无法确认具体伤势。",
+      "draft": "“我还不能判断他的具体伤势。”你说。",
+      "expected": "allow",
+      "targets": [],
+      "reason": "承认未知，不断言既往经历或伤势。"
+    },
+    {
+      "id": "supported_negation",
+      "origin": "constructed",
+      "input": "只陈述登记状态。",
+      "draft": "你尚未登记成为外门弟子。",
+      "expected": "allow",
+      "targets": [],
+      "reason": "公开身份明确支持未登记。"
+    },
+    {
+      "id": "reported_history",
+      "origin": "constructed",
+      "input": "复述父亲出发时的说法，不断言完成押送。",
+      "draft": "三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。",
+      "expected": "allow",
+      "targets": [],
+      "reason": "保留说话主体、时间和声称边界。"
+    },
+    {
+      "id": "derived_symptom",
+      "origin": "constructed",
+      "input": "只陈述已知伤者情况。",
+      "draft": "伤者的胸口仍在起伏。",
+      "expected": "reject",
+      "targets": [
+        {
+          "paragraphId": "P1",
+          "quote": "胸口仍在起伏"
+        }
+      ],
+      "reason": "活着不授权虚构具体可见体征。"
+    },
+    {
+      "id": "negated_life",
+      "origin": "constructed",
+      "input": "只陈述已知伤者情况。",
+      "draft": "伤者已经不再活着。",
+      "expected": "reject",
+      "targets": [
+        {
+          "paragraphId": "P1",
+          "quote": "不再活着"
+        }
+      ],
+      "reason": "与仍活着的来源相反。"
+    },
+    {
+      "id": "swapped_subject",
+      "origin": "constructed",
+      "input": "只复述三年前押送引路灯的往事。",
+      "draft": "三年前，守门弟子离开北河城，说要替宗门押送一批引路灯。",
+      "expected": "reject",
+      "targets": [
+        {
+          "paragraphId": "P1",
+          "quote": "守门弟子离开北河城"
+        }
+      ],
+      "reason": "原始主体为陆沉舟，不是守门弟子。"
+    },
+    {
+      "id": "expanded_permission",
+      "origin": "constructed",
+      "input": "只说明当前山门情况，不创设规则。",
+      "draft": "只要赶在落锁前，守门弟子就有权让任何人入门。",
+      "expected": "reject",
+      "targets": [
+        {
+          "paragraphId": "P1",
+          "quote": "就有权让任何人入门"
+        }
+      ],
+      "reason": "山门将闭不证明放行权限及无条件适用范围。"
+    },
+    {
+      "id": "reported_to_completed",
+      "origin": "constructed",
+      "input": "只复述父亲的已知往事。",
+      "draft": "三年前，陆沉舟已经替宗门完成了那批引路灯的押送。",
+      "expected": "reject",
+      "targets": [
+        {
+          "paragraphId": "P1",
+          "quote": "完成了那批引路灯的押送"
+        }
+      ],
+      "reason": "说要押送及后来失踪不证明已完成。"
+    }
+  ]
+}

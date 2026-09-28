@@ -1,0 +1,650 @@
+{
+  "schemaVersion": "context-planner-production/0.1",
+  "status": "completed",
+  "recordedAt": "2026-09-25T11:51:13.489278+00:00",
+  "purpose": "单样本 production repair 诊断；不执行提交验收",
+  "formalSessionWrites": 0,
+  "jevCalls": 0,
+  "sampleId": "entry_lu_gate-ab-1",
+  "model": {
+    "route": "direct",
+    "model": "deepseek-v4-flash"
+  },
+  "variant": {
+    "variant": "production",
+    "status": "failed",
+    "callLimit": 30,
+    "maxTokens": 8192,
+    "textMaxTokens": 2048,
+    "error": "行动计划越权：S2 中“山门铁链再响一声”属于环境事件，但玩家输入仅为“指出伤者尚有呼吸，争取在落锁前让他得到救助”，并未包含等待铁链再响或触发新环境声响的动作；上一段已有“山门上的铁链又响了”，本回合不应新增一次铁链响声。应改为维持已有环境状态（雨势未歇、水痕仍在、落锁尚未完成），不新增铁链再响。；scenePlan 中“守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持”超出授权：玩家只请求救助并等待回应，未授权守门弟子在本回合给出态度松动或坚持的具体反应。应改为守门弟子尚未回答，或仅保留其听见请求但未立即处置的收束状态。；scenePlan 的 outcome 中“守门弟子听见了，但未立即放行，也未离开岗位”属于NPC反应，但玩家输入未授权NPC在本回合做出可观察的回应；若保留，只能作为未回答的默认状态，不能写成已发生的反应。；K1 状态为 pending 且 afterStepId 为 S1，但 S1 是玩家说出观察与请求，并非“伤者仍活着”这一事实的发现步骤；该事实在上一段已存在（伤者喉间涌出血沫），不应作为本轮新产生的知识。应改为 existing 或调整来源。",
+    "errorType": "LlmError",
+    "failureStage": "generation",
+    "audit": {
+      "operation": "branch_planner",
+      "model": "deepseek-v4-flash",
+      "promptVersion": "web-player-v3+prompt-catalog/1:838717a07b35b58e9e2195c4322cb4f0063f4f45e946d45e834f4af4f0a6b68d",
+      "requestSummary": "请守门弟子救人",
+      "rawResponse": "{\"id\":\"a63ac77f-e40c-46ac-a183-a1e77cb50b4b\",\"object\":\"chat.completion\",\"created\":1790337057,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"ready\\\",\\n  \\\"message\\\": \\\"\\\",\\n  \\\"requirements\\\": {\\n    \\\"A1\\\": {\\n      \\\"mode\\\": \\\"result\\\",\\n      \\\"summary\\\": \\\"陆照临当众指出倒地伤者尚有呼吸，并给出可见依据（胸口起伏、喉间血沫）。\\\"\\n    },\\n    \\\"A2\\\": {\\n      \\\"mode\\\": \\\"attempt\\\",\\n      \\\"summary\\\": \\\"陆照临以伤者未死为由请求守门弟子在落锁前放行或叫人来救，结果取决于守门弟子的当场回应，不保证获准。\\\"\\n    }\\n  },\\n  \\\"method\\\": \\\"陆照临站在封山线外，与伤者距离数步，能观察到其胸口起伏与喉间血沫，据此出声指出伤者尚活；随后以引荐文书求入者的身份向守门弟子陈情，请求在铁链落锁前施救。守门弟子握剑守线，是否放行、是否上报由他自行决定；陆照临没有越过封山线、没有触碰伤者或空灯的能力与授权，因此只能争取而不能保证救助成立。\\\",\\n  \\\"outcomes\\\": [],\\n  \\\"goalUpdates\\\": [],\\n  \\\"threadUpdates\\\": [],\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"S1\\\",\\n      \\\"actorId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"action\\\": \\\"隔着封山线指向倒地伤者，指出其胸口仍有起伏、喉间涌出血沫，说明人还活着；随即向守门弟子请求在铁链落锁前放行或唤人来救，话止于等待对方回应，不越线、不触碰伤者与空灯。\\\",\\n      \\\"requirementIds\\\": [\\n        \\\"A1\\\",\\n        \\\"A2\\\"\\n      ],\\n      \\\"authority\\\": \\\"player\\\",\\n      \\\"causeStepId\\\": null,\\n      \\\"usedItemIds\\\": []\\n    },\\n    {\\n      \\\"id\\\": \\\"S2\\\",\\n      \\\"actorId\\\": \\\"environment\\\",\\n      \\\"action\\\": \\\"山门铁链再响一声，雨势未歇，封山石上的水痕仍在；落锁尚未完成，时间仍在流逝。\\\",\\n      \\\"requirementIds\\\": [\\n        \\\"A2\\\"\\n      ],\\n      \\\"authority\\\": \\\"reaction\\\",\\n      \\\"causeStepId\\\": \\\"S1\\\",\\n      \\\"usedItemIds\\\": []\\n    }\\n  ],\\n  \\\"introductions\\\": {\\n    \\\"characters\\\": [],\\n    \\\"items\\\": [],\\n    \\\"locations\\\": []\\n  },\\n  \\\"stateChanges\\\": [\\n    {\\n      \\\"id\\\": \\\"C1\\\",\\n      \\\"entityId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"attribute\\\": \\\"已向守门弟子指出伤者尚活并请求施救\\\",\\n      \\\"before\\\": null,\\n      \\\"value\\\": true,\\n      \\\"stepId\\\": \\\"S1\\\",\\n      \\\"reason\\\": \\\"陆照临当众说明伤者仍有呼吸并出言求援。\\\"\\n    }\\n  ],\\n  \\\"scenePlan\\\": {\\n    \\\"start\\\": \\\"雨仍在下，你站在封山石外，铁链的响声还没停，倒地的人就在几步之外，手边是那盏没有点燃的灯。\\\",\\n    \\\"beats\\\": [\\n      {\\n        \\\"purpose\\\": \\\"兑现A1：陆照临把观察到的活人迹象说出口，让守门弟子无法当作死人处理。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S1\\\"\\n        ]\\n      },\\n      {\\n        \\\"purpose\\\": \\\"兑现A2：以未死为由争取落锁前施救，守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S1\\\",\\n          \\\"S2\\\"\\n        ]\\n      },\\n      {\\n        \\\"purpose\\\": \\\"收束在等待：铁链未落尽，守门弟子尚未给出最终处置，把下一步留给玩家。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S2\\\"\\n        ]\\n      }\\n    ],\\n    \\\"outcome\\\": \\\"陆照临当众指出伤者尚有呼吸并请求施救；守门弟子听见了，但未立即放行，也未离开岗位，山门仍在将闭未闭之间。\\\",\\n    \\\"stop\\\": \\\"守门弟子尚未回答是否唤人或放行，铁链仍在响；陆照临停在封山线外，下一步由玩家决定。\\\",\\n    \\\"targetCjk\\\": 620,\\n    \\\"lengthReason\\\": \\\"需要呈现指出活人迹象的具体观察、陈情措辞、守门弟子的当场反应与铁链将落的紧迫感，并停在等待回应的节点，不宜过短也不需展开新线索。\\\",\\n    \\\"knowledge\\\": [\\n      {\\n        \\\"speakerId\\\": \\\"character_ae4cb42b9b49\\\",\\n        \\\"statement\\\": \\\"伤者胸口仍有起伏、喉间涌出血沫，人还活着；请求在落锁前放行或唤人来救。\\\",\\n        \\\"status\\\": \\\"pending\\\",\\n        \\\"sources\\\": [],\\n        \\\"afterStepId\\\": \\\"S1\\\"\\n      }\\n    ],\\n    \\\"observationLimits\\\": [\\n      \\\"陆照临与伤者相隔数步，只能看到胸口起伏与喉间血沫，无法判断伤势轻重或能否救活。\\\",\\n      \\\"守门弟子的姓名、身份与职权范围未知；他是否会上报、是否会被说动，本回合不作保证。\\\",\\n      \\\"空灯为何不燃、伤者为何倒在此处，均无依据，不得推断。\\\"\\n    ]\\n  }\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":7941,\"completion_tokens\":1172,\"total_tokens\":9113,\"prompt_tokens_details\":{\"cached_tokens\":3328},\"prompt_cache_hit_tokens\":3328,\"prompt_cache_miss_tokens\":4613},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}\n{\"id\":\"d854476c-c62e-477d-b8eb-5a1e64cde10e\",\"object\":\"chat.completion\",\"created\":1790337063,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"ready\\\",\\n  \\\"message\\\": \\\"\\\",\\n  \\\"requirements\\\": {\\n    \\\"A1\\\": {\\n      \\\"mode\\\": \\\"result\\\",\\n      \\\"summary\\\": \\\"陆照临当众指出倒地伤者尚有呼吸，并给出可见依据（胸口起伏、喉间血沫）。\\\"\\n    },\\n    \\\"A2\\\": {\\n      \\\"mode\\\": \\\"attempt\\\",\\n      \\\"summary\\\": \\\"陆照临以伤者未死为由请求守门弟子在落锁前放行或叫人来救，结果取决于守门弟子的当场回应，不保证获准。\\\"\\n    }\\n  },\\n  \\\"method\\\": \\\"陆照临站在封山线外，与伤者距离数步，能观察到其胸口起伏与喉间血沫，据此出声指出伤者尚活；随后以引荐文书求入者的身份向守门弟子陈情，请求在铁链落锁前施救。守门弟子握剑守线，是否放行、是否上报由他自行决定；陆照临没有越过封山线、没有触碰伤者或空灯的能力与授权，因此只能争取而不能保证救助成立。\\\",\\n  \\\"outcomes\\\": [],\\n  \\\"goalUpdates\\\": [],\\n  \\\"threadUpdates\\\": [],\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"S1\\\",\\n      \\\"actorId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"action\\\": \\\"隔着封山线指向倒地伤者，指出其胸口仍有起伏、喉间涌出血沫，说明人还活着；随即向守门弟子请求在铁链落锁前放行或唤人来救，话止于等待对方回应，不越线、不触碰伤者与空灯。\\\",\\n      \\\"requirementIds\\\": [\\n        \\\"A1\\\",\\n        \\\"A2\\\"\\n      ],\\n      \\\"authority\\\": \\\"player\\\",\\n      \\\"causeStepId\\\": null,\\n      \\\"usedItemIds\\\": []\\n    },\\n    {\\n      \\\"id\\\": \\\"S2\\\",\\n      \\\"actorId\\\": \\\"environment\\\",\\n      \\\"action\\\": \\\"山门铁链再响一声，雨势未歇，封山石上的水痕仍在；落锁尚未完成，时间仍在流逝。\\\",\\n      \\\"requirementIds\\\": [\\n        \\\"A2\\\"\\n      ],\\n      \\\"authority\\\": \\\"reaction\\\",\\n      \\\"causeStepId\\\": \\\"S1\\\",\\n      \\\"usedItemIds\\\": []\\n    }\\n  ],\\n  \\\"introductions\\\": {\\n    \\\"characters\\\": [],\\n    \\\"items\\\": [],\\n    \\\"locations\\\": []\\n  },\\n  \\\"stateChanges\\\": [\\n    {\\n      \\\"id\\\": \\\"C1\\\",\\n      \\\"entityId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"attribute\\\": \\\"已向守门弟子指出伤者尚活并请求施救\\\",\\n      \\\"before\\\": null,\\n      \\\"value\\\": true,\\n      \\\"stepId\\\": \\\"S1\\\",\\n      \\\"reason\\\": \\\"陆照临当众说明伤者仍有呼吸并出言求援。\\\"\\n    }\\n  ],\\n  \\\"scenePlan\\\": {\\n    \\\"start\\\": \\\"雨仍在下，你站在封山石外，铁链的响声还没停，倒地的人就在几步之外，手边是那盏没有点燃的灯。\\\",\\n    \\\"beats\\\": [\\n      {\\n        \\\"purpose\\\": \\\"兑现A1：陆照临把观察到的活人迹象说出口，让守门弟子无法当作死人处理。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S1\\\"\\n        ]\\n      },\\n      {\\n        \\\"purpose\\\": \\\"兑现A2：以未死为由争取落锁前施救，守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S1\\\",\\n          \\\"S2\\\"\\n        ]\\n      },\\n      {\\n        \\\"purpose\\\": \\\"收束在等待：铁链未落尽，守门弟子尚未给出最终处置，把下一步留给玩家。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S2\\\"\\n        ]\\n      }\\n    ],\\n    \\\"outcome\\\": \\\"陆照临当众指出伤者尚有呼吸并请求施救；守门弟子听见了，但未立即放行，也未离开岗位，山门仍在将闭未闭之间。\\\",\\n    \\\"stop\\\": \\\"守门弟子尚未回答是否唤人或放行，铁链仍在响；陆照临停在封山线外，下一步由玩家决定。\\\",\\n    \\\"targetCjk\\\": [\\n      80,\\n      1500\\n    ],\\n    \\\"lengthReason\\\": \\\"需要呈现指出活人迹象的具体观察、陈情措辞、守门弟子的当场反应与铁链将落的紧迫感，并停在等待回应的节点，不宜过短也不需展开新线索。\\\",\\n    \\\"knowledge\\\": [\\n      {\\n        \\\"speakerId\\\": \\\"character_ae4cb42b9b49\\\",\\n        \\\"statement\\\": \\\"伤者胸口仍有起伏、喉间涌出血沫，人还活着；请求在落锁前放行或唤人来救。\\\",\\n        \\\"status\\\": \\\"pending\\\",\\n        \\\"sources\\\": [],\\n        \\\"afterStepId\\\": \\\"S1\\\"\\n      }\\n    ],\\n    \\\"observationLimits\\\": [\\n      \\\"陆照临与伤者相隔数步，只能看到胸口起伏与喉间血沫，无法判断伤势轻重或能否救活。\\\",\\n      \\\"守门弟子的姓名、身份与职权范围未知；他是否会上报、是否会被说动，本回合不作保证。\\\",\\n      \\\"空灯为何不燃、伤者为何倒在此处，均无依据，不得推断。\\\"\\n    ]\\n  }\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":9310,\"completion_tokens\":1179,\"total_tokens\":10489,\"prompt_tokens_details\":{\"cached_tokens\":9088},\"prompt_cache_hit_tokens\":9088,\"prompt_cache_miss_tokens\":222},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}\n{\"id\":\"6117fef3-57fd-4f05-a303-6b84ffffbd01\",\"object\":\"chat.completion\",\"created\":1790337067,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"revise\\\",\\n  \\\"issues\\\": [\\n    \\\"S2 中“山门铁链再响一声”属于环境事件，但玩家输入仅为“指出伤者尚有呼吸，争取在落锁前让他得到救助”，并未包含等待铁链再响或触发新环境声响的动作；上一段已有“山门上的铁链又响了”，本回合不应新增一次铁链响声。应改为维持已有环境状态（雨势未歇、水痕仍在、落锁尚未完成），不新增铁链再响。\\\",\\n    \\\"scenePlan 中“守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持”超出授权：玩家只请求救助并等待回应，未授权守门弟子在本回合给出态度松动或坚持的具体反应。应改为守门弟子尚未回答，或仅保留其听见请求但未立即处置的收束状态。\\\",\\n    \\\"scenePlan 的 outcome 中“守门弟子听见了，但未立即放行，也未离开岗位”属于NPC反应，但玩家输入未授权NPC在本回合做出可观察的回应；若保留，只能作为未回答的默认状态，不能写成已发生的反应。\\\",\\n    \\\"K1 状态为 pending 且 afterStepId 为 S1，但 S1 是玩家说出观察与请求，并非“伤者仍活着”这一事实的发现步骤；该事实在上一段已存在（伤者喉间涌出血沫），不应作为本轮新产生的知识。应改为 existing 或调整来源。\\\",\\n    \\\"O1 中“只能看到胸口起伏与喉间血沫”是观察限制，但上一段已明确“伤者喉间涌出血沫”，因此该观察已发生，不是限制；且“无法判断伤势轻重或能否救活”属于合理限制，可保留。\\\",\\n    \\\"O2 中“守门弟子的姓名、身份与职权范围未知”与上一段“守门弟子”一致，可保留；但“他是否会上报、是否会被说动，本回合不作保证”是限制，不提供新事实，可保留。\\\",\\n    \\\"O3 中“空灯为何不燃、伤者为何倒在此处，均无依据，不得推断”是限制，可保留。\\\"\\n  ],\\n  \\\"checks\\\": [\\n    {\\n      \\\"stepId\\\": \\\"S1\\\",\\n      \\\"authorized\\\": true,\\n      \\\"basis\\\": \\\"player_input\\\",\\n      \\\"quote\\\": \\\"指出伤者尚有呼吸，争取在落锁前让他得到救助。\\\",\\n      \\\"reason\\\": \\\"玩家明确要求指出伤者尚有呼吸并争取救助，S1 的指向伤者、说明活人迹象、请求放行或唤人、不越线不触碰，均直接来自该输入。\\\"\\n    },\\n    {\\n      \\\"stepId\\\": \\\"S2\\\",\\n      \\\"authorized\\\": false,\\n      \\\"basis\\\": \\\"causal_reaction\\\",\\n      \\\"quote\\\": \\\"山门上的铁链又响了\\\",\\n      \\\"reason\\\": \\\"上一段已有铁链响声，但玩家本回合输入未包含等待铁链再响或触发新环境声响的动作；S2 新增“山门铁链再响一声”属于额外环境事件，不能由玩家请求直接因果推出。应改为维持已有环境状态，不新增铁链响声。\\\"\\n    }\\n  ],\\n  \\\"stateChecks\\\": [\\n    {\\n      \\\"changeId\\\": \\\"C1\\\",\\n      \\\"authorized\\\": true,\\n      \\\"reason\\\": \\\"玩家输入明确要求指出伤者尚有呼吸并争取救助，C1 登记“已向守门弟子指出伤者尚活并请求施救”是玩家本回合实际执行的行为，授权成立。\\\"\\n    }\\n  ],\\n  \\\"premiseChecks\\\": [\\n    {\\n      \\\"id\\\": \\\"K1\\\",\\n      \\\"kind\\\": \\\"after_step\\\",\\n      \\\"verdict\\\": \\\"unsupported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P3\\\",\\n          \\\"quote\\\": \\\"伤者喉间涌出血沫，半句话断在雨声里。\\\"\\n        }\\n      ],\\n      \\\"stepIds\\\": [\\n        \\\"S1\\\"\\n      ],\\n      \\\"missingEvidence\\\": [\\n        \\\"伤者胸口仍有起伏、喉间涌出血沫，人还活着——该事实在上一段已存在，并非 S1 新产生；S1 只是说出该观察并请求救助。\\\"\\n      ],\\n      \\\"reason\\\": \\\"K1 将“伤者仍活着”列为 pending 且依赖 S1，但上一段已明确伤者喉间涌出血沫，该事实在本轮之前已存在，不应作为本轮新产生的知识。应改为 existing 或调整来源。\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"O1\\\",\\n      \\\"kind\\\": \\\"restriction\\\",\\n      \\\"verdict\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P3\\\",\\n          \\\"quote\\\": \\\"伤者喉间涌出血沫，半句话断在雨声里。\\\"\\n        }\\n      ],\\n      \\\"stepIds\\\": [],\\n      \\\"missingEvidence\\\": [],\\n      \\\"reason\\\": \\\"O1 中“无法判断伤势轻重或能否救活”是合理的观察限制，不提供新事实；但“只能看到胸口起伏与喉间血沫”中“胸口起伏”在上一段未明确出现，若作为限制需确认其可见性。整体作为限制可保留。\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"O2\\\",\\n      \\\"kind\\\": \\\"restriction\\\",\\n      \\\"verdict\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P2\\\",\\n          \\\"quote\\\": \\\"守门弟子按住剑柄，不许你靠近。\\\"\\n        }\\n      ],\\n      \\\"stepIds\\\": [],\\n      \\\"missingEvidence\\\": [],\\n      \\\"reason\\\": \\\"O2 中“守门弟子的姓名、身份与职权范围未知”与上一段一致；“他是否会上报、是否会被说动，本回合不作保证”是限制，不提供新事实，可保留。\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"O3\\\",\\n      \\\"kind\\\": \\\"restriction\\\",\\n      \\\"verdict\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P2\\\",\\n          \\\"quote\\\": \\\"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。\\\"\\n        }\\n      ],\\n      \\\"stepIds\\\": [],\\n      \\\"missingEvidence\\\": [],\\n      \\\"reason\\\": \\\"O3 中“空灯为何不燃、伤者为何倒在此处，均无依据，不得推断”是限制，不提供新事实，可保留。\\\"\\n    }\\n  ]\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":2711,\"completion_tokens\":1516,\"total_tokens\":4227,\"prompt_tokens_details\":{\"cached_tokens\":1280},\"prompt_cache_hit_tokens\":1280,\"prompt_cache_miss_tokens\":1431},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+      "error": "行动计划越权：S2 中“山门铁链再响一声”属于环境事件，但玩家输入仅为“指出伤者尚有呼吸，争取在落锁前让他得到救助”，并未包含等待铁链再响或触发新环境声响的动作；上一段已有“山门上的铁链又响了”，本回合不应新增一次铁链响声。应改为维持已有环境状态（雨势未歇、水痕仍在、落锁尚未完成），不新增铁链再响。；scenePlan 中“守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持”超出授权：玩家只请求救助并等待回应，未授权守门弟子在本回合给出态度松动或坚持的具体反应。应改为守门弟子尚未回答，或仅保留其听见请求但未立即处置的收束状态。；scenePlan 的 outcome 中“守门弟子听见了，但未立即放行，也未离开岗位”属于NPC反应，但玩家输入未授权NPC在本回合做出可观察的回应；若保留，只能作为未回答的默认状态，不能写成已发生的反应。；K1 状态为 pending 且 afterStepId 为 S1，但 S1 是玩家说出观察与请求，并非“伤者仍活着”这一事实的发现步骤；该事实在上一段已存在（伤者喉间涌出血沫），不应作为本轮新产生的知识。应改为 existing 或调整来源。",
+      "callObservations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 5829,
+            "responseHeadersMs": 301,
+            "completeBodyMs": 5829
+          },
+          "generationStage": "result_contract",
+          "revision": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 3993,
+            "responseHeadersMs": 261,
+            "completeBodyMs": 3993
+          },
+          "generationStage": "result_contract",
+          "revision": 1
+        },
+        {
+          "generationStage": "scene_plan",
+          "plan": {
+            "start": "雨仍在下，你站在封山石外，铁链的响声还没停，倒地的人就在几步之外，手边是那盏没有点燃的灯。",
+            "beats": [
+              {
+                "purpose": "兑现A1：陆照临把观察到的活人迹象说出口，让守门弟子无法当作死人处理。",
+                "stepIds": [
+                  "S1"
+                ]
+              },
+              {
+                "purpose": "兑现A2：以未死为由争取落锁前施救，守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持。",
+                "stepIds": [
+                  "S1",
+                  "S2"
+                ]
+              },
+              {
+                "purpose": "收束在等待：铁链未落尽，守门弟子尚未给出最终处置，把下一步留给玩家。",
+                "stepIds": [
+                  "S2"
+                ]
+              }
+            ],
+            "outcome": "陆照临当众指出伤者尚有呼吸并请求施救；守门弟子听见了，但未立即放行，也未离开岗位，山门仍在将闭未闭之间。",
+            "stop": "守门弟子尚未回答是否唤人或放行，铁链仍在响；陆照临停在封山线外，下一步由玩家决定。",
+            "targetCjk": [
+              80,
+              1500
+            ],
+            "lengthReason": "需要呈现指出活人迹象的具体观察、陈情措辞、守门弟子的当场反应与铁链将落的紧迫感，并停在等待回应的节点，不宜过短也不需展开新线索。",
+            "knowledge": [
+              {
+                "speakerId": "character_ae4cb42b9b49",
+                "statement": "伤者胸口仍有起伏、喉间涌出血沫，人还活着；请求在落锁前放行或唤人来救。",
+                "status": "pending",
+                "sources": [],
+                "afterStepId": "S1"
+              }
+            ],
+            "observationLimits": [
+              "陆照临与伤者相隔数步，只能看到胸口起伏与喉间血沫，无法判断伤势轻重或能否救活。",
+              "守门弟子的姓名、身份与职权范围未知；他是否会上报、是否会被说动，本回合不作保证。",
+              "空灯为何不燃、伤者为何倒在此处，均无依据，不得推断。"
+            ]
+          }
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 6301,
+            "responseHeadersMs": 277,
+            "completeBodyMs": 6301
+          },
+          "generationStage": "action_authority",
+          "evidenceAttempt": 0
+        }
+      ],
+      "promptContext": {
+        "mode": "package",
+        "contextBundle": {
+          "status": "recorded",
+          "contextId": "ctx-aefcd77781a76440",
+          "contextSha256": "9cb96ff175f13c797853989351856011ebe1d90a059d9509bba6542685a82867",
+          "excludedStatePatchFields": [],
+          "stateVisibilityEntries": 3,
+          "stateVisibilityMode": "formal_required",
+          "stateVisibilitySource": "explicit",
+          "contextBudget": {
+            "status": "disabled"
+          },
+          "bundle": {
+            "schemaVersion": "narrative-context/0.3",
+            "contextId": "ctx-aefcd77781a76440",
+            "package": {
+              "id": "taixu-relics-part1",
+              "version": "0.1.3"
+            },
+            "branch": {
+              "parentBranchId": "branch_e07fab57-8d5c-4ee5-8526-e69e0488551a",
+              "lineageHead": "branch_e07fab57-8d5c-4ee5-8526-e69e0488551a"
+            },
+            "hardConstraints": {
+              "globalConstraints": [
+                "运行时模型只能承接 StoryPackage 的压缩上下文，不读取母本全文。"
+              ],
+              "immutableFacts": [],
+              "currentChapter": {
+                "id": "chapter-001",
+                "title": "山门雨夜"
+              },
+              "currentBeat": {
+                "id": "beat_chapter_001",
+                "summary": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。"
+              },
+              "actionContract": {},
+              "branchRules": {
+                "currentBranchOnly": true,
+                "futureBeatsExcluded": true
+              },
+              "stopPoint": null,
+              "entityContext": {
+                "characters": [
+                  {
+                    "id": "character_ae4cb42b9b49",
+                    "name": "陆照临",
+                    "detail": "陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。"
+                  }
+                ],
+                "locations": [
+                  {
+                    "id": "location_open_gate",
+                    "name": "玄霄宗山门"
+                  }
+                ],
+                "items": [
+                  {
+                    "id": "item_open_letter",
+                    "name": "引荐文书"
+                  }
+                ]
+              },
+              "openingKnowledgeBoundaries": [
+                "伤者身份、父亲下落、空灯与青光成因均未知。",
+                "尚未认识其他主角团成员；不得写成已有残印、功法、修为突破或领过药瓶。"
+              ],
+              "continuityContract": {
+                "locked": "世界铁律及截至入场点已发生的历史；仅当角色有依据时才成为其知识。",
+                "mutable": "入场后的未来、选择及其后果；原著后续只是候选路线。",
+                "outcomeStateField": "characterOutcomeStates",
+                "outcomeRecordSchema": {
+                  "status": [
+                    "alive",
+                    "dead",
+                    "departed"
+                  ],
+                  "permanence": [
+                    "temporary",
+                    "permanent"
+                  ],
+                  "causeBranchId": "string",
+                  "evidence": "string"
+                },
+                "outcomeUpdatesEnabled": false,
+                "implementationBoundary": "P0 仅持久化预留空账本，P3 实现并校验永久变化。"
+              }
+            },
+            "turnIntent": {
+              "rawInput": "指出伤者尚有呼吸，争取在落锁前让他得到救助。",
+              "selectedDirection": {
+                "id": "entry_lu_gate-ab-1",
+                "title": "请守门弟子救人",
+                "summary": "指出伤者尚有呼吸，争取在落锁前让他得到救助。"
+              },
+              "atomicRequirements": [
+                {
+                  "id": "input-1",
+                  "text": "指出伤者尚有呼吸，争取在落锁前让他得到救助。",
+                  "status": "unknown",
+                  "source": "player_input"
+                }
+              ],
+              "stopPoint": null
+            },
+            "authoritativeState": {
+              "playerLocationId": "location_open_gate",
+              "sourceProgress": "chapter_001",
+              "storyScope": "source",
+              "derivativeStage": "inactive",
+              "derivedTurn": 0,
+              "derivedLocations": [],
+              "derivedCharacters": [],
+              "derivedItems": [],
+              "derivedCharacterReveals": [],
+              "derivedRelationships": [],
+              "derivedClues": [],
+              "derivedEvents": [],
+              "playerCharacterId": "character_ae4cb42b9b49",
+              "characterLocationIds": {
+                "character_ae4cb42b9b49": "location_open_gate"
+              },
+              "itemOwnerCharacterIds": {
+                "item_open_letter": "character_ae4cb42b9b49"
+              },
+              "itemLocationIds": {},
+              "characterOutcomeStates": {},
+              "threadLedger": [
+                {
+                  "id": "opening-thread-1",
+                  "title": "陌生伤者是否能得到救助",
+                  "status": "open",
+                  "source": "opening",
+                  "openedBranchId": null,
+                  "causeBranchId": null,
+                  "reason": "",
+                  "evidence": "",
+                  "priority": "unknown",
+                  "recoveryWindow": "unknown"
+                },
+                {
+                  "id": "opening-thread-2",
+                  "title": "空灯与父亲失踪是否有关",
+                  "status": "open",
+                  "source": "opening",
+                  "openedBranchId": null,
+                  "causeBranchId": null,
+                  "reason": "",
+                  "evidence": "",
+                  "priority": "unknown",
+                  "recoveryWindow": "unknown"
+                }
+              ]
+            },
+            "stateVisibility": {
+              "/playerCharacterId": "player_known",
+              "/playerLocationId": "player_known",
+              "/characterLocationIds/character_ae4cb42b9b49": "player_known"
+            },
+            "allowedEvidence": [
+              {
+                "sourceId": "module:currentBeat:beat_chapter_001",
+                "kind": "current_beat",
+                "visibility": "public_world_fact",
+                "branchId": "package",
+                "location": "module.currentBeat",
+                "content": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:identity",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.identity",
+                "content": "陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:appearance",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.appearance",
+                "content": "斗笠被雨打湿，手上有长途跋涉留下的冻裂。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:knownFacts:0",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.knownFacts",
+                "content": "父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:knownFacts:1",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.knownFacts",
+                "content": "老人让你到玄霄宗问山门的灯。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:knownFacts:2",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.knownFacts",
+                "content": "伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:relationships:0",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.relationships",
+                "content": "{\"name\": \"陆沉舟\", \"relation\": \"父亲，失踪，生死未确认。\"}",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:relationships:1",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.relationships",
+                "content": "{\"name\": \"守门弟子\", \"relation\": \"初遇，只知道其守门职责，不知姓名。\"}",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:relationships:2",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.relationships",
+                "content": "{\"name\": \"陌生伤者\", \"relation\": \"初遇，不知身份。\"}",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:visibleItems:0",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.visibleItems",
+                "content": "引荐文书在你手中，尚未交出。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:visibleItems:1",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.visibleItems",
+                "content": "空灯仍在伤者手边，不能写进你的持有物；未登记人物持物只记为场景事实。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:evidence:0",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.evidence",
+                "content": "陆照临摸了摸怀里的引荐文书。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:evidence:1",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.evidence",
+                "content": "三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:evidence:2",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.evidence",
+                "content": "陆照临取出文书，却没有递过去。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:evidence:3",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.evidence",
+                "content": "倒地的人猛地睁开眼。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "module:opening:evidence:4",
+                "kind": "public_fact",
+                "visibility": "player_known",
+                "branchId": "package",
+                "location": "module.openingContext.evidence",
+                "content": "铁链又响了一声。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              },
+              {
+                "sourceId": "branch:lineage:branch_e07fab57-8d5c-4ee5-8526-e69e0488551a",
+                "kind": "continuity_summary",
+                "visibility": "player_known",
+                "branchId": "branch_e07fab57-8d5c-4ee5-8526-e69e0488551a",
+                "location": "branch.lineage",
+                "content": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+                "authority": "confirmed_evidence",
+                "validity": "confirmed"
+              }
+            ],
+            "continuityWindow": [
+              {
+                "sourceId": "branch:lineage:branch_e07fab57-8d5c-4ee5-8526-e69e0488551a",
+                "branchId": "branch_e07fab57-8d5c-4ee5-8526-e69e0488551a",
+                "status": "confirmed",
+                "kind": "confirmed_event",
+                "content": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。"
+              }
+            ],
+            "dynamicMemory": [],
+            "styleGuide": {},
+            "outputContract": {
+              "actionContract": {},
+              "selectedStatePatch": {
+                "playerLocationId": "location_open_gate"
+              },
+              "mustStop": true
+            },
+            "provenance": {
+              "modulePaths": [
+                "entries/entry_lu_gate.json",
+                "item-index.json",
+                "items/item_open_letter.json",
+                "location-index.json",
+                "locations/location_open_gate.json",
+                "world.json"
+              ],
+              "sourceIds": [
+                "module:currentBeat:beat_chapter_001",
+                "module:opening:identity",
+                "module:opening:appearance",
+                "module:opening:knownFacts:0",
+                "module:opening:knownFacts:1",
+                "module:opening:knownFacts:2",
+                "module:opening:relationships:0",
+                "module:opening:relationships:1",
+                "module:opening:relationships:2",
+                "module:opening:visibleItems:0",
+                "module:opening:visibleItems:1",
+                "module:opening:evidence:0",
+                "module:opening:evidence:1",
+                "module:opening:evidence:2",
+                "module:opening:evidence:3",
+                "module:opening:evidence:4",
+                "branch:lineage:branch_e07fab57-8d5c-4ee5-8526-e69e0488551a"
+              ],
+              "excludedSources": [
+                "future-beats",
+                "sibling-branches",
+                "reader-original",
+                "unmarked-author-truth"
+              ],
+              "stateVisibilitySource": "explicit",
+              "stateVisibilityMode": "formal_required"
+            },
+            "budget": {},
+            "contextSha256": "9cb96ff175f13c797853989351856011ebe1d90a059d9509bba6542685a82867"
+          }
+        },
+        "resultContractProjection": {
+          "status": "recorded",
+          "source": "context_bundle",
+          "stage": "result_contract",
+          "contextId": "ctx-aefcd77781a76440",
+          "contextSha256": "9cb96ff175f13c797853989351856011ebe1d90a059d9509bba6542685a82867",
+          "allowedEvidenceCount": 17,
+          "planningStateFields": [
+            "closing",
+            "closure",
+            "criticalHistory",
+            "goals",
+            "threads"
+          ],
+          "serializedChars": 7940,
+          "estimatedTokens": 2655,
+          "excludedFields": [
+            "styleGuide",
+            "continuityWindow",
+            "provenance",
+            "dynamicMemory"
+          ],
+          "excludedReasons": {
+            "styleGuide": "result_contract_does_not_write_prose",
+            "continuityWindow": "result_contract_uses_current_intent_only",
+            "provenance": "internal_source_trace_not_needed_for_planning",
+            "dynamicMemory": "only_confirmed_state_contract is exposed"
+          }
+        }
+      },
+      "retainedDraft": {
+        "text": "",
+        "status": "unconfirmed"
+      }
+    },
+    "elapsedMs": 16137,
+    "remainingCalls": 27,
+    "calls": [
+      {
+        "kind": "complete_json",
+        "messages": [
+          {
+            "role": "system",
+            "content": "你是互动小说本回合结果规划器。玩家未读原著，原著未来不是必须发生的事实。\n硬规则：`scenePlan.knowledge` 中每条既有知识的 `status` 是只读事实分类，`premiseChecks` 只能核对，不能为了通过校验把 `fact`、`reported` 或 `inference` 改成 `after_step`、`unknown`、`restriction` 或其他类别。若既有断言缺少公开依据，保持原分类并返回 `clarification_needed` 或 `conflict`，不得用改分类规避依据要求。\n逐项保留用户请求的行动、禁止事项和指定结果。明确要求杀死某人/永久离队必须在本回合实现，不能偷换成尝试、重伤、昏迷、暂时离场、打算以后执行或原著还需要此人。仅“尝试/设法”等不保证结果的措辞可标为attempt。否定、假设、引述、条件尚未满足不是杀人授权。“永久下线”若死亡和离队不能确定，返回clarification_needed，提出一个简短问题。\n依据当前能力、距离、已知道具和在场人物安排有因果的实现方法及代价，不凭空增加能力、物品、物品的有利属性或幕后历史。现有物品若要折断、磨尖等，必须有本回合可行的实际过程，不能假装原本就有断口或刃口。死亡须在正文明确确认呼吸脉搏停止等不可逆结果，不能只写倒地不动。门规、法律、阵营利益是可违背但会付出代价的社会规则，不是物理铁律。不得以守卫阻挡、道德说教、主线需要、人物受保护为借口吞掉指定结果。确实与世界铁律或已发生事实冲突且无合理方法时返回conflict并具体说明，不冒充成功。死亡不可复活，永久离队不可重新参与现场行动；回忆、遗物、既有证人可以承接线索，不能凭空造替身。\n目标是引导而非强迫回主线。只有用户明确改变目标，或本回合证据证明目标完成/受阻，才更新目标。目标被改变或放弃时保留旧记录；transformed可用successor新增后续目标；不要强制恢复原目标，不泄漏角色未知秘密。只有单次询问不得自动视为长线目标完成。dependencies只列目标必须依靠其活着亲自参与的人物；提及死者、追究其死因或承担杀害他的后果，不代表依赖死者继续行动，应省略死者ID。\n仅返回JSON：{\"decision\":\"ready|clarification_needed|conflict\",\"message\":\"非ready说明\",\"requirements\":{\"A1\":{\"mode\":\"result|attempt|constraint\",\"summary\":\"本回合必须发生的具体结果\"}},\"method\":\"能力、道具、实施步骤和代价的因果说明\",\"outcomes\":[{\"characterId\":\"输入中的ID\",\"status\":\"dead|departed|alive|missing|injured\",\"permanence\":\"permanent|temporary\",\"requirementId\":\"A1\",\"cause\":\"具体原因\"}],\"goalUpdates\":[{\"id\":\"已有目标ID；全新目标用new\",\"status\":\"active|completed|transformed|abandoned\",\"title\":\"目标文字\",\"dependencies\":[\"人物ID\"],\"reason\":\"改变原因\",\"successor\":\"转化后的目标；不转化用空字符串\"}]}。\nrequirements的ID须与输入完全一致。outcomes只登记本回合确定发生的人物生死/离队变化，普通对话不必登记。用户要求的结果不得被漏记。不要登记未执行分支，不改过去。留在原地等限制须贯穿本段，不能在回应后擅自押走玩家或执行下一行动；接受处置只授权眼前回应，不授权立即新增押送流程。已发生结果只继承，不重复登记outcomes；目标title/status/dependencies不变时不登记goalUpdates。\nready时必须在同一JSON增加scenePlan，在正文生成前组织场景，不新增模型调用：\n{\"start\":\"承接前一回合的终点，不重演前情\",\"beats\":[{\"purpose\":\"这一段过程的独立叙事作用与要兑现的回应\",\"stepIds\":[\"S1\"]}],\"outcome\":\"本回合实际产生的结果，未知回答也可成为完整结果\",\"stop\":\"保留给玩家的下一步决定，不替玩家回答NPC新问题\",\"targetCjk\":[80,250],\"lengthReason\":\"根据实际交锋、信息、冲突与情绪变化说明篇幅需要\",\"knowledge\":[{\"speakerId\":\"已登记人物ID\",\"statement\":\"本次准备表达的知识或未知边界\",\"status\":\"fact|reported|inference|unknown|pending\",\"sources\":[{\"id\":\"knowledge.publicEvidence中的键\",\"quote\":\"逐字短引文\"}]}],\"observationLimits\":[\"影响判断的可观察条件及未知项\"]}\ntargetCjk必须位于80至1500之间。简单确认、等待或一次告知可以规划较短正文，但只能表达当前授权行动的过程、人物反应和直接后果；复杂交锋可延长，超过1200字必须有新的因果、反应或线索，超过1500字禁止。不要根据step数量、是否转场或用户输入长短机械填充；不要为了预算发明冲突。beats覆盖已授权steps，每个过程有不同作用，没有必要的过程不添加。完成当前事情就停，不留待正文不足后扩写。等待未来钟声或人物回应的输入，未来条件尚未满足时不得在同一回合物化为NPC回应或环境事件；scenePlan应在玩家停留、等待的收束处停止，并把下一步决定留给玩家。\nknowledge.publicEvidence与sourceKinds区分开局事实和历史场景。fact必须有支持具体断言的公开依据；已发生动作可承接，历史中的人物说法用reported，不将旧台词自动当客观规律。内部权威状态仅用于避免矛盾，不能泄漏尚未向人物公开的信息。inference引用真实前提，结论明确不确定，不能新增前提；unknown可以sources=[]。普通当场语气和姿态不是历史知识，不必塞入knowledge。需要NPC回答的问题须在knowledge准备可说的内容或明确的unknown，不能一边不知道一边补造依据。对白可拒绝、表达意愿，不因此获准新增世界事实。\nobservationLimits沿用当前状态和公开条件：拥有物品不代表看清内部，物品打开、翻转、递交等变化须有授权步骤；状态未确认时说明unknown，不为形成推断补造纹理、内部颜色或来历。NPC可以明确不配合请求，不能把越出请求范围写成依言照做。场景计划是待校验的写作安排，不是新增事实来源。\nknowledge只列既有知识或未知边界，不把本回合即将说的话伪装成已经知道的事实。对NPC逐项查获取路径：开场的玩家独自经历不是NPC知识；没有明确听见、见到或此前自述的来源就标unknown。若玩家这次将要告知，在beats安排先告知再转述，不编造历史引文证明尚未发生的获知。不知道时的完整结果可以很简短，不用物性/因果推测凑出“有依据”的回答。\n\n本回合即将告知的信息用status=pending、sources=[]、afterStepId=\"S1\"列入knowledge，明确依赖哪个授权步骤，正文在这个告知真正发生之前NPC仍不知道；完成后也只能按听说的转述。pending不是已发生事实，不能用于补造往事或检验结论。reported只用于已有公开来源证明已经发生过的转述，不能用于尚未写出的未来对话。\n\n人物状态补充：missing 只用于本回合明确确认失踪且有正文证据，不能由暂未露面、缺席或未知地点推断；登记后地点变为未知。injured 只用于明确发生或确认的伤势，不能仅由疲劳推断。二者使用 temporary，不推断死亡或永久离队。伤愈或失踪者重现须有新的正文依据并登记 alive（仍受伤则 injured）；重现地点另经 stateChanges 核对，不能恢复旧位置。永久死亡／永久离队不能经这些状态绕过。\n\n如果输入 closing 非空，按 intended_type 理解正常、偏离或失败收束意图，并逐项参考 closure.outstanding 安排本回合可交代的事项。收束意图不代替本回合玩家行动授权，不得擅自执行额外行动、放弃目标、制造死亡或推进时间。preparing 阶段先处理已授权且可核实的待办；closing 阶段只能处理已有目标和剧情问题账本条目，不能使用 id=new、transformed 后继或新长期线程把收束变成另一条路线。每个已交代或未能交代的事项都须有本回合正文证据；证据不足时保持 unknown 或返回 clarification_needed，不得为了满足清单补造人物知识、历史原因、完成事实或结局条件。closing 仅表示账本清单已交代，不表示结局成立。ending_check.unmet_conditions 中仍有条件时不得假称已满足；ledger_ready=true 也不是结局审核通过。主动放弃不等于被迫失败，旧目标转化不等于新目标完成，未知事实不能靠收束需要补造。不得自行写入任何结束状态、终局回执或结束权限；本回合只提交既有契约允许且有正文证据的结果变化，实际结束由独立的程序流程决定。\n\n目标可增加itemDependencies数组，列出完成目标实际需要使用的已登记道具ID，与人物dependencies分开。仅提及物品、调查其损毁原因不等于依赖原物可用。新目标没有道具依赖时用[]；更新旧目标时省略表示继承，只有明确给出[]才解除依赖。已永久损毁的原物不能成为新增或更新后active目标、transformed后继目标的依赖。可以保留既有受阻目标等待玩家决定，不强迫在损毁当回合放弃；改换途径、解除依赖仍须本回合已授权的行动和正文依据，不能静默清空。依赖调整可保持active，但原目标标题和历史不可改写。损毁本身不代表目标完成，消耗道具完成目标也必须有真实完成证据。\n\n在同一JSON中返回threadUpdates数组，无变化时为[]，不增加额外规划调用。threads是当前路线已公开的剧情问题账本，不是目标清单或历史线索；旧存档中unknown表示处理状态未确认，不能据目标完成、人物缺席、菜单变化或未再提到就推断问题已解决或放下。\n每项格式：{\"id\":\"已有问题ID；新问题用new-1至new-8中不同ID\",\"title\":\"已有问题原文或新问题的简短中文\",\"status\":\"open|resolved|abandoned\",\"priority\":\"critical|high|normal|low|unknown\",\"recoveryWindow\":\"immediate|near|mid|late|unknown\",\"reason\":\"本回合为何建立、确认或结束此问题\",\"stepIds\":[\"S1\"]}。priority和recoveryWindow只记录本回合有依据的紧迫度与预计回收时机；没有明确依据时填unknown，不能从status、人物缺席或菜单消失推断。更新旧问题时省略字段表示继承，不能静默改变。最多8项，仅登记已授权步骤本回合真正导致的变化。新问题必须open，且有当前事件的具体疑问，不为每次动作、下一方向或已知事实创建问题。resolved需要真正回答该问题；询问过、回答不知道、目标完成、人物死亡均不自动等于解决。abandoned需要玩家明确放下并在正文交代原因；无法追问仍可能是未解，不擅自替玩家放弃。unknown仅在当前正文明确确认后可变为open/resolved/abandoned。未变项不重复输出；已resolved/abandoned的问题不能重置，同名问题不能以new重新加入。问题改变时先交代旧问题的处理再登记不同的新问题，不改写旧标题。不要引用角色尚未知晓的秘密，不因记录账本而延长或偏离当前行动。\n\n剧情问题可增加itemDependencies数组，列出追查路径实际需要使用的已登记道具ID。只讨论已损毁物品或调查损毁原因不要求原物可用，不列作依赖。更新旧问题时省略字段表示继承；以本回合正文证据改换追查路径时可显式修改数组（[]解除依赖），允许status仍为open。新建或修改后的open问题不能依赖已永久损毁原物；可以保留既有受阻问题等待玩家决定，不能因依赖失效自动resolved或abandoned。\n\n所有自由输入共用行动解释流程，不以预定义场景、名字、关键词判断能否响应。完整理解原始输入中的指代、否定、引述、条件和先后关系；requirements里的逗号分句不是独立授权，必须结合整句。条件未满足的行为不能执行。要求描述结果与仅提出尝试不同；询问、拒绝、等待、解释、交易、制作、破坏、关系改变等同样必须落实对应回应。输入含糊才澄清，有确定的世界事实冲突才说明冲突，不因不在选项列表而拒绝。\n在原JSON中增加以下三个必填字段，空数组也须返回：\nsteps:[{id:\"S1\",actorId:\"已登记人物ID或environment\",action:\"这一回合实际执行的动作及停止边界\",requirementIds:[\"A1\"],authority:\"player或reaction\",causeStepId:null,usedItemIds:[]}]\nintroductions:{characters:[],items:[],locations:[]}，每个新增实体含id（character_/item_/location_开头的英文ID）、name、summary（实际来源与形成过程），sourceStepId。不得仅为推动剧情凭空授予关键工具；现有实体、角色身上既有物品或背景服饰不重新引入。\nstateChanges:[{id:\"C1\",entityId:\"已登记或本段引入的实体ID\",attribute:\"属性名\",before:null,value:\"新的值\",stepId:\"S1\",reason:\"变化因果\"}]\nplayer步骤只能来自用户授权的实际行为，NPC命令/建议不是授权；reaction步骤必须由本回合较早的步骤引起，causeStepId指向该步骤。不可替玩家接受NPC新建议、执行下一决定；只问处置不意味着已经服从处置。所有步骤requirementIds须追溯到原输入。内心的重大决定也属于玩家步骤。\n父分支中永久死亡或永久离队的人物不能成为本回合steps的actorId，也不能继续发言、带路或履行旧职责；可由玩家或仍可行动的人物处理其遗留影响。人物后果只由outcomes更新，不能用通用属性outcome或goal绕过人物后果与目标账本。\nstateChanges记所有持续影响后续行动的变化，不是有限事件类型清单。属性可动态命名，如姿态、双手活动、完整性、对某人的态度、已知某事、承诺等；使用已有属性名称和值，避免同义词另起字段。locationId表示人物或物品所在地点，ownerCharacterId表示物品持有人（值为ID，放下为null）。人物的死亡/离队沿用outcomes，目标沿用goalUpdates，不能另建同义字段覆盖其权威结果。before必须等于当前已登记值，未知用null。不变的属性不要登记，null新值表示解除该属性。\n引入实体必须有实际来源，状态改变必须有支持它的步骤；NPC反应引起束缚、伤势等也须提前登记，不能只写在正文。若没有发生该结果，不能借登记假造成功。原著未来可变化，已发生前史不可改写。结束正文时保留未授权决定给下一回合。\n可增加readingIntent，值为brief或normal，仅表达用户的简短偏好，不按动作数量设置长度。实际长度由scenePlan在写作前根据剧情需要给出。\n\n状态变化的entityId对应实际获知者或受影响者，不总是步骤说话者。说出自己的打算不代表说话者重新获得该知识；听者明确得知才可登记听者知识。普通交流不强制创造新的知识属性；确实影响后续行动的披露仍须记入接收者状态，不能丢失信息差。\n\n每个步骤的usedItemIds列出实际作为工具使用、交付、携带或破坏的已登记道具ID（没有则[]）；仅回忆原物或查看遗留影响不算继续使用原物。道具确定永久毁灭且不能修复时，必须登记stateChanges属性destroyedPermanently、value:true；普通破损不自动等同永久毁灭，未知不能推断。此标记只属于道具，登记后不可撤销；后续不能恢复原ID、再次持有、移动或使用。执行损毁的当步可以使用该物，后续步骤不可再用。同回合损毁不要同时赋予非空ownerCharacterId或locationId，程序会清除原物归属和位置。需要保留残片或制作替代物时，依据正文来源登记为不同的新实体，不能用它恢复原物身份。\n"
+          },
+          {
+            "role": "user",
+            "content": "{\"contextProjection\": {\"schemaVersion\": \"narrative-context/0.3\", \"contextId\": \"ctx-aefcd77781a76440\", \"contextSha256\": \"9cb96ff175f13c797853989351856011ebe1d90a059d9509bba6542685a82867\", \"stage\": \"result_contract\", \"package\": {\"id\": \"taixu-relics-part1\", \"version\": \"0.1.3\"}, \"branch\": {\"parentBranchId\": \"branch_e07fab57-8d5c-4ee5-8526-e69e0488551a\", \"lineageHead\": \"branch_e07fab57-8d5c-4ee5-8526-e69e0488551a\"}, \"hardConstraints\": {\"globalConstraints\": [\"运行时模型只能承接 StoryPackage 的压缩上下文，不读取母本全文。\"], \"immutableFacts\": [], \"currentChapter\": {\"id\": \"chapter-001\", \"title\": \"山门雨夜\"}, \"currentBeat\": {\"id\": \"beat_chapter_001\", \"summary\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\"}, \"actionContract\": {}, \"branchRules\": {\"currentBranchOnly\": true, \"futureBeatsExcluded\": true}, \"stopPoint\": null, \"entityContext\": {\"characters\": [{\"id\": \"character_ae4cb42b9b49\", \"name\": \"陆照临\", \"detail\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\"}], \"locations\": [{\"id\": \"location_open_gate\", \"name\": \"玄霄宗山门\"}], \"items\": [{\"id\": \"item_open_letter\", \"name\": \"引荐文书\"}]}, \"openingKnowledgeBoundaries\": [\"伤者身份、父亲下落、空灯与青光成因均未知。\", \"尚未认识其他主角团成员；不得写成已有残印、功法、修为突破或领过药瓶。\"], \"continuityContract\": {\"locked\": \"世界铁律及截至入场点已发生的历史；仅当角色有依据时才成为其知识。\", \"mutable\": \"入场后的未来、选择及其后果；原著后续只是候选路线。\", \"outcomeStateField\": \"characterOutcomeStates\", \"outcomeRecordSchema\": {\"status\": [\"alive\", \"dead\", \"departed\"], \"permanence\": [\"temporary\", \"permanent\"], \"causeBranchId\": \"string\", \"evidence\": \"string\"}, \"outcomeUpdatesEnabled\": false, \"implementationBoundary\": \"P0 仅持久化预留空账本，P3 实现并校验永久变化。\"}}, \"turnIntent\": {\"rawInput\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"selectedDirection\": {\"id\": \"entry_lu_gate-ab-1\", \"title\": \"请守门弟子救人\", \"summary\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\"}, \"atomicRequirements\": [{\"id\": \"input-1\", \"text\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"status\": \"unknown\", \"source\": \"player_input\"}], \"stopPoint\": null}, \"authoritativeState\": {\"playerLocationId\": \"location_open_gate\", \"playerCharacterId\": \"character_ae4cb42b9b49\", \"characterLocationIds\": {\"character_ae4cb42b9b49\": \"location_open_gate\"}}, \"outputContract\": {\"actionContract\": {}, \"selectedStatePatch\": {\"playerLocationId\": \"location_open_gate\"}, \"mustStop\": true}, \"allowedEvidence\": [{\"sourceId\": \"module:currentBeat:beat_chapter_001\", \"kind\": \"current_beat\", \"visibility\": \"public_world_fact\", \"branchId\": \"package\", \"location\": \"module.currentBeat\", \"content\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:identity\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.identity\", \"content\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:appearance\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.appearance\", \"content\": \"斗笠被雨打湿，手上有长途跋涉留下的冻裂。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:knownFacts:0\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.knownFacts\", \"content\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:knownFacts:1\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.knownFacts\", \"content\": \"老人让你到玄霄宗问山门的灯。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:knownFacts:2\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.knownFacts\", \"content\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:relationships:0\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.relationships\", \"content\": \"{\\\"name\\\": \\\"陆沉舟\\\", \\\"relation\\\": \\\"父亲，失踪，生死未确认。\\\"}\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:relationships:1\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.relationships\", \"content\": \"{\\\"name\\\": \\\"守门弟子\\\", \\\"relation\\\": \\\"初遇，只知道其守门职责，不知姓名。\\\"}\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:relationships:2\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.relationships\", \"content\": \"{\\\"name\\\": \\\"陌生伤者\\\", \\\"relation\\\": \\\"初遇，不知身份。\\\"}\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:visibleItems:0\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.visibleItems\", \"content\": \"引荐文书在你手中，尚未交出。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:visibleItems:1\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.visibleItems\", \"content\": \"空灯仍在伤者手边，不能写进你的持有物；未登记人物持物只记为场景事实。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:evidence:0\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.evidence\", \"content\": \"陆照临摸了摸怀里的引荐文书。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:evidence:1\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.evidence\", \"content\": \"三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:evidence:2\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.evidence\", \"content\": \"陆照临取出文书，却没有递过去。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:evidence:3\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.evidence\", \"content\": \"倒地的人猛地睁开眼。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:evidence:4\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.evidence\", \"content\": \"铁链又响了一声。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"branch:lineage:branch_e07fab57-8d5c-4ee5-8526-e69e0488551a\", \"kind\": \"continuity_summary\", \"visibility\": \"player_known\", \"branchId\": \"branch_e07fab57-8d5c-4ee5-8526-e69e0488551a\", \"location\": \"branch.lineage\", \"content\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}], \"planningState\": {\"goals\": [{\"id\": \"opening-goal-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}, {\"id\": \"opening-goal-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}], \"threads\": [{\"id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\", \"priority\": \"unknown\", \"recoveryWindow\": \"unknown\"}, {\"id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\", \"priority\": \"unknown\", \"recoveryWindow\": \"unknown\"}], \"closure\": {\"readiness\": \"needs_explanation\", \"outstanding\": [{\"kind\": \"goal\", \"target_id\": \"opening-goal-1\", \"title\": \"陌生伤者是否能得到救助\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"goal\", \"target_id\": \"opening-goal-2\", \"title\": \"空灯与父亲失踪是否有关\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"thread\", \"target_id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"thread\", \"target_id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}], \"note\": \"清单通过仅表示当前路线没有未交代的目标、开放问题或受阻依赖；不表示自然结局已写成，也不构成叙事质量验收。\"}, \"closing\": null, \"criticalHistory\": []}}, \"input\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"requirements\": {\"A1\": \"指出伤者尚有呼吸\", \"A2\": \"争取在落锁前让他得到救助\"}, \"knowledge\": {\"publicEvidence\": {\"opening-1\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"opening-2\": \"老人让你到玄霄宗问山门的灯。\", \"opening-3\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"opening-identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P1\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P2\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P3\": \"你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\"}, \"sourceKinds\": {\"opening-1\": \"opening_fact\", \"opening-2\": \"opening_fact\", \"opening-3\": \"opening_fact\", \"opening-identity\": \"opening_fact\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P1\": \"history_scene\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P2\": \"history_scene\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P3\": \"history_scene\"}, \"unresolvedQuestions\": [], \"evidenceBoundary\": \"资料未说明的经历、依据、规则条件均为 unknown；不从缺席推断没有或不可能。历史中的已发生动作可承接；人物说法只证明曾如此声称，不自动升级为客观规律或可靠知识。内部权威状态用于约束矛盾，不代表玩家或NPC已知。\", \"allowedNewContent\": \"本回合授权行动与当场反应；新说出的台词不能使其中的旧事自动成为事实。\", \"speakerBoundary\": \"开场已知信息属于玩家知识，不能默认NPC也知道。NPC获知必须有其听到、见到或曾明确说过的资料；本回合玩家先告知后，NPC可注明你说的而转述，不能升级为亲眼见证。没有获取路径就不知道。\", \"answerBoundary\": \"询问依据但资料没有依据时，NPC明确说不知道或尚不能判断；可以说明当前看见什么与无法据此断定什么，不补造亲历、传闻、检测或规律。\"}, \"goals\": [{\"id\": \"opening-goal-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}, {\"id\": \"opening-goal-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}], \"threads\": [{\"id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\", \"priority\": \"unknown\", \"recoveryWindow\": \"unknown\"}, {\"id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\", \"priority\": \"unknown\", \"recoveryWindow\": \"unknown\"}], \"closure\": {\"readiness\": \"needs_explanation\", \"outstanding\": [{\"kind\": \"goal\", \"target_id\": \"opening-goal-1\", \"title\": \"陌生伤者是否能得到救助\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"goal\", \"target_id\": \"opening-goal-2\", \"title\": \"空灯与父亲失踪是否有关\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"thread\", \"target_id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"thread\", \"target_id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}], \"note\": \"清单通过仅表示当前路线没有未交代的目标、开放问题或受阻依赖；不表示自然结局已写成，也不构成叙事质量验收。\"}, \"closing\": null, \"criticalHistory\": []}"
+          },
+          {
+            "role": "assistant",
+            "content": "{\n  \"decision\": \"ready\",\n  \"message\": \"\",\n  \"requirements\": {\n    \"A1\": {\n      \"mode\": \"result\",\n      \"summary\": \"陆照临当众指出倒地伤者尚有呼吸，并给出可见依据（胸口起伏、喉间血沫）。\"\n    },\n    \"A2\": {\n      \"mode\": \"attempt\",\n      \"summary\": \"陆照临以伤者未死为由请求守门弟子在落锁前放行或叫人来救，结果取决于守门弟子的当场回应，不保证获准。\"\n    }\n  },\n  \"method\": \"陆照临站在封山线外，与伤者距离数步，能观察到其胸口起伏与喉间血沫，据此出声指出伤者尚活；随后以引荐文书求入者的身份向守门弟子陈情，请求在铁链落锁前施救。守门弟子握剑守线，是否放行、是否上报由他自行决定；陆照临没有越过封山线、没有触碰伤者或空灯的能力与授权，因此只能争取而不能保证救助成立。\",\n  \"outcomes\": [],\n  \"goalUpdates\": [],\n  \"threadUpdates\": [],\n  \"steps\": [\n    {\n      \"id\": \"S1\",\n      \"actorId\": \"character_ae4cb42b9b49\",\n      \"action\": \"隔着封山线指向倒地伤者，指出其胸口仍有起伏、喉间涌出血沫，说明人还活着；随即向守门弟子请求在铁链落锁前放行或唤人来救，话止于等待对方回应，不越线、不触碰伤者与空灯。\",\n      \"requirementIds\": [\n        \"A1\",\n        \"A2\"\n      ],\n      \"authority\": \"player\",\n      \"causeStepId\": null,\n      \"usedItemIds\": []\n    },\n    {\n      \"id\": \"S2\",\n      \"actorId\": \"environment\",\n      \"action\": \"山门铁链再响一声，雨势未歇，封山石上的水痕仍在；落锁尚未完成，时间仍在流逝。\",\n      \"requirementIds\": [\n        \"A2\"\n      ],\n      \"authority\": \"reaction\",\n      \"causeStepId\": \"S1\",\n      \"usedItemIds\": []\n    }\n  ],\n  \"introductions\": {\n    \"characters\": [],\n    \"items\": [],\n    \"locations\": []\n  },\n  \"stateChanges\": [\n    {\n      \"id\": \"C1\",\n      \"entityId\": \"character_ae4cb42b9b49\",\n      \"attribute\": \"已向守门弟子指出伤者尚活并请求施救\",\n      \"before\": null,\n      \"value\": true,\n      \"stepId\": \"S1\",\n      \"reason\": \"陆照临当众说明伤者仍有呼吸并出言求援。\"\n    }\n  ],\n  \"scenePlan\": {\n    \"start\": \"雨仍在下，你站在封山石外，铁链的响声还没停，倒地的人就在几步之外，手边是那盏没有点燃的灯。\",\n    \"beats\": [\n      {\n        \"purpose\": \"兑现A1：陆照临把观察到的活人迹象说出口，让守门弟子无法当作死人处理。\",\n        \"stepIds\": [\n          \"S1\"\n        ]\n      },\n      {\n        \"purpose\": \"兑现A2：以未死为由争取落锁前施救，守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持。\",\n        \"stepIds\": [\n          \"S1\",\n          \"S2\"\n        ]\n      },\n      {\n        \"purpose\": \"收束在等待：铁链未落尽，守门弟子尚未给出最终处置，把下一步留给玩家。\",\n        \"stepIds\": [\n          \"S2\"\n        ]\n      }\n    ],\n    \"outcome\": \"陆照临当众指出伤者尚有呼吸并请求施救；守门弟子听见了，但未立即放行，也未离开岗位，山门仍在将闭未闭之间。\",\n    \"stop\": \"守门弟子尚未回答是否唤人或放行，铁链仍在响；陆照临停在封山线外，下一步由玩家决定。\",\n    \"targetCjk\": 620,\n    \"lengthReason\": \"需要呈现指出活人迹象的具体观察、陈情措辞、守门弟子的当场反应与铁链将落的紧迫感，并停在等待回应的节点，不宜过短也不需展开新线索。\",\n    \"knowledge\": [\n      {\n        \"speakerId\": \"character_ae4cb42b9b49\",\n        \"statement\": \"伤者胸口仍有起伏、喉间涌出血沫，人还活着；请求在落锁前放行或唤人来救。\",\n        \"status\": \"pending\",\n        \"sources\": [],\n        \"afterStepId\": \"S1\"\n      }\n    ],\n    \"observationLimits\": [\n      \"陆照临与伤者相隔数步，只能看到胸口起伏与喉间血沫，无法判断伤势轻重或能否救活。\",\n      \"守门弟子的姓名、身份与职权范围未知；他是否会上报、是否会被说动，本回合不作保证。\",\n      \"空灯为何不燃、伤者为何倒在此处，均无依据，不得推断。\"\n    ]\n  }\n}"
+          },
+          {
+            "role": "user",
+            "content": "修正契约字段错误并返回完整JSON，不改变用户要求：scenePlan.targetCjk须是80至1500内的动态区间\n原始要求ID必须严格保留为：A1、A2；删除所有多余ID，不得新增A8或其他要求。\nrequirements 对象的键必须与输入中的原始要求 ID 完全一致：只补齐缺少的原始 ID，删除所有多余 ID，绝不能把 NPC 回应、未来条件、模型推断或审查信息新增为 A8 等要求，也不能改写原始要求的含义。\n若错误涉及 premiseChecks：scenePlan.knowledge 中 status 为 fact、reported 或 inference 的既有断言，premiseChecks 必须使用 kind=existing 并引用公开依据；只有 status=pending 且绑定本轮授权步骤时才可使用 kind=after_step。不能把已有事实改标为 after_step、unknown 或 restriction 来规避依据校验。\n"
+          }
+        ],
+        "rawResponse": "{\"id\":\"a63ac77f-e40c-46ac-a183-a1e77cb50b4b\",\"object\":\"chat.completion\",\"created\":1790337057,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"ready\\\",\\n  \\\"message\\\": \\\"\\\",\\n  \\\"requirements\\\": {\\n    \\\"A1\\\": {\\n      \\\"mode\\\": \\\"result\\\",\\n      \\\"summary\\\": \\\"陆照临当众指出倒地伤者尚有呼吸，并给出可见依据（胸口起伏、喉间血沫）。\\\"\\n    },\\n    \\\"A2\\\": {\\n      \\\"mode\\\": \\\"attempt\\\",\\n      \\\"summary\\\": \\\"陆照临以伤者未死为由请求守门弟子在落锁前放行或叫人来救，结果取决于守门弟子的当场回应，不保证获准。\\\"\\n    }\\n  },\\n  \\\"method\\\": \\\"陆照临站在封山线外，与伤者距离数步，能观察到其胸口起伏与喉间血沫，据此出声指出伤者尚活；随后以引荐文书求入者的身份向守门弟子陈情，请求在铁链落锁前施救。守门弟子握剑守线，是否放行、是否上报由他自行决定；陆照临没有越过封山线、没有触碰伤者或空灯的能力与授权，因此只能争取而不能保证救助成立。\\\",\\n  \\\"outcomes\\\": [],\\n  \\\"goalUpdates\\\": [],\\n  \\\"threadUpdates\\\": [],\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"S1\\\",\\n      \\\"actorId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"action\\\": \\\"隔着封山线指向倒地伤者，指出其胸口仍有起伏、喉间涌出血沫，说明人还活着；随即向守门弟子请求在铁链落锁前放行或唤人来救，话止于等待对方回应，不越线、不触碰伤者与空灯。\\\",\\n      \\\"requirementIds\\\": [\\n        \\\"A1\\\",\\n        \\\"A2\\\"\\n      ],\\n      \\\"authority\\\": \\\"player\\\",\\n      \\\"causeStepId\\\": null,\\n      \\\"usedItemIds\\\": []\\n    },\\n    {\\n      \\\"id\\\": \\\"S2\\\",\\n      \\\"actorId\\\": \\\"environment\\\",\\n      \\\"action\\\": \\\"山门铁链再响一声，雨势未歇，封山石上的水痕仍在；落锁尚未完成，时间仍在流逝。\\\",\\n      \\\"requirementIds\\\": [\\n        \\\"A2\\\"\\n      ],\\n      \\\"authority\\\": \\\"reaction\\\",\\n      \\\"causeStepId\\\": \\\"S1\\\",\\n      \\\"usedItemIds\\\": []\\n    }\\n  ],\\n  \\\"introductions\\\": {\\n    \\\"characters\\\": [],\\n    \\\"items\\\": [],\\n    \\\"locations\\\": []\\n  },\\n  \\\"stateChanges\\\": [\\n    {\\n      \\\"id\\\": \\\"C1\\\",\\n      \\\"entityId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"attribute\\\": \\\"已向守门弟子指出伤者尚活并请求施救\\\",\\n      \\\"before\\\": null,\\n      \\\"value\\\": true,\\n      \\\"stepId\\\": \\\"S1\\\",\\n      \\\"reason\\\": \\\"陆照临当众说明伤者仍有呼吸并出言求援。\\\"\\n    }\\n  ],\\n  \\\"scenePlan\\\": {\\n    \\\"start\\\": \\\"雨仍在下，你站在封山石外，铁链的响声还没停，倒地的人就在几步之外，手边是那盏没有点燃的灯。\\\",\\n    \\\"beats\\\": [\\n      {\\n        \\\"purpose\\\": \\\"兑现A1：陆照临把观察到的活人迹象说出口，让守门弟子无法当作死人处理。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S1\\\"\\n        ]\\n      },\\n      {\\n        \\\"purpose\\\": \\\"兑现A2：以未死为由争取落锁前施救，守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S1\\\",\\n          \\\"S2\\\"\\n        ]\\n      },\\n      {\\n        \\\"purpose\\\": \\\"收束在等待：铁链未落尽，守门弟子尚未给出最终处置，把下一步留给玩家。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S2\\\"\\n        ]\\n      }\\n    ],\\n    \\\"outcome\\\": \\\"陆照临当众指出伤者尚有呼吸并请求施救；守门弟子听见了，但未立即放行，也未离开岗位，山门仍在将闭未闭之间。\\\",\\n    \\\"stop\\\": \\\"守门弟子尚未回答是否唤人或放行，铁链仍在响；陆照临停在封山线外，下一步由玩家决定。\\\",\\n    \\\"targetCjk\\\": 620,\\n    \\\"lengthReason\\\": \\\"需要呈现指出活人迹象的具体观察、陈情措辞、守门弟子的当场反应与铁链将落的紧迫感，并停在等待回应的节点，不宜过短也不需展开新线索。\\\",\\n    \\\"knowledge\\\": [\\n      {\\n        \\\"speakerId\\\": \\\"character_ae4cb42b9b49\\\",\\n        \\\"statement\\\": \\\"伤者胸口仍有起伏、喉间涌出血沫，人还活着；请求在落锁前放行或唤人来救。\\\",\\n        \\\"status\\\": \\\"pending\\\",\\n        \\\"sources\\\": [],\\n        \\\"afterStepId\\\": \\\"S1\\\"\\n      }\\n    ],\\n    \\\"observationLimits\\\": [\\n      \\\"陆照临与伤者相隔数步，只能看到胸口起伏与喉间血沫，无法判断伤势轻重或能否救活。\\\",\\n      \\\"守门弟子的姓名、身份与职权范围未知；他是否会上报、是否会被说动，本回合不作保证。\\\",\\n      \\\"空灯为何不燃、伤者为何倒在此处，均无依据，不得推断。\\\"\\n    ]\\n  }\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":7941,\"completion_tokens\":1172,\"total_tokens\":9113,\"prompt_tokens_details\":{\"cached_tokens\":3328},\"prompt_cache_hit_tokens\":3328,\"prompt_cache_miss_tokens\":4613},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+        "content": "{\n  \"decision\": \"ready\",\n  \"message\": \"\",\n  \"requirements\": {\n    \"A1\": {\n      \"mode\": \"result\",\n      \"summary\": \"陆照临当众指出倒地伤者尚有呼吸，并给出可见依据（胸口起伏、喉间血沫）。\"\n    },\n    \"A2\": {\n      \"mode\": \"attempt\",\n      \"summary\": \"陆照临以伤者未死为由请求守门弟子在落锁前放行或叫人来救，结果取决于守门弟子的当场回应，不保证获准。\"\n    }\n  },\n  \"method\": \"陆照临站在封山线外，与伤者距离数步，能观察到其胸口起伏与喉间血沫，据此出声指出伤者尚活；随后以引荐文书求入者的身份向守门弟子陈情，请求在铁链落锁前施救。守门弟子握剑守线，是否放行、是否上报由他自行决定；陆照临没有越过封山线、没有触碰伤者或空灯的能力与授权，因此只能争取而不能保证救助成立。\",\n  \"outcomes\": [],\n  \"goalUpdates\": [],\n  \"threadUpdates\": [],\n  \"steps\": [\n    {\n      \"id\": \"S1\",\n      \"actorId\": \"character_ae4cb42b9b49\",\n      \"action\": \"隔着封山线指向倒地伤者，指出其胸口仍有起伏、喉间涌出血沫，说明人还活着；随即向守门弟子请求在铁链落锁前放行或唤人来救，话止于等待对方回应，不越线、不触碰伤者与空灯。\",\n      \"requirementIds\": [\n        \"A1\",\n        \"A2\"\n      ],\n      \"authority\": \"player\",\n      \"causeStepId\": null,\n      \"usedItemIds\": []\n    },\n    {\n      \"id\": \"S2\",\n      \"actorId\": \"environment\",\n      \"action\": \"山门铁链再响一声，雨势未歇，封山石上的水痕仍在；落锁尚未完成，时间仍在流逝。\",\n      \"requirementIds\": [\n        \"A2\"\n      ],\n      \"authority\": \"reaction\",\n      \"causeStepId\": \"S1\",\n      \"usedItemIds\": []\n    }\n  ],\n  \"introductions\": {\n    \"characters\": [],\n    \"items\": [],\n    \"locations\": []\n  },\n  \"stateChanges\": [\n    {\n      \"id\": \"C1\",\n      \"entityId\": \"character_ae4cb42b9b49\",\n      \"attribute\": \"已向守门弟子指出伤者尚活并请求施救\",\n      \"before\": null,\n      \"value\": true,\n      \"stepId\": \"S1\",\n      \"reason\": \"陆照临当众说明伤者仍有呼吸并出言求援。\"\n    }\n  ],\n  \"scenePlan\": {\n    \"start\": \"雨仍在下，你站在封山石外，铁链的响声还没停，倒地的人就在几步之外，手边是那盏没有点燃的灯。\",\n    \"beats\": [\n      {\n        \"purpose\": \"兑现A1：陆照临把观察到的活人迹象说出口，让守门弟子无法当作死人处理。\",\n        \"stepIds\": [\n          \"S1\"\n        ]\n      },\n      {\n        \"purpose\": \"兑现A2：以未死为由争取落锁前施救，守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持。\",\n        \"stepIds\": [\n          \"S1\",\n          \"S2\"\n        ]\n      },\n      {\n        \"purpose\": \"收束在等待：铁链未落尽，守门弟子尚未给出最终处置，把下一步留给玩家。\",\n        \"stepIds\": [\n          \"S2\"\n        ]\n      }\n    ],\n    \"outcome\": \"陆照临当众指出伤者尚有呼吸并请求施救；守门弟子听见了，但未立即放行，也未离开岗位，山门仍在将闭未闭之间。\",\n    \"stop\": \"守门弟子尚未回答是否唤人或放行，铁链仍在响；陆照临停在封山线外，下一步由玩家决定。\",\n    \"targetCjk\": 620,\n    \"lengthReason\": \"需要呈现指出活人迹象的具体观察、陈情措辞、守门弟子的当场反应与铁链将落的紧迫感，并停在等待回应的节点，不宜过短也不需展开新线索。\",\n    \"knowledge\": [\n      {\n        \"speakerId\": \"character_ae4cb42b9b49\",\n        \"statement\": \"伤者胸口仍有起伏、喉间涌出血沫，人还活着；请求在落锁前放行或唤人来救。\",\n        \"status\": \"pending\",\n        \"sources\": [],\n        \"afterStepId\": \"S1\"\n      }\n    ],\n    \"observationLimits\": [\n      \"陆照临与伤者相隔数步，只能看到胸口起伏与喉间血沫，无法判断伤势轻重或能否救活。\",\n      \"守门弟子的姓名、身份与职权范围未知；他是否会上报、是否会被说动，本回合不作保证。\",\n      \"空灯为何不燃、伤者为何倒在此处，均无依据，不得推断。\"\n    ]\n  }\n}",
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 5829,
+              "responseHeadersMs": 301,
+              "completeBodyMs": 5829
+            }
+          }
+        ]
+      },
+      {
+        "kind": "complete_json",
+        "messages": [
+          {
+            "role": "system",
+            "content": "你是互动小说本回合结果规划器。玩家未读原著，原著未来不是必须发生的事实。\n硬规则：`scenePlan.knowledge` 中每条既有知识的 `status` 是只读事实分类，`premiseChecks` 只能核对，不能为了通过校验把 `fact`、`reported` 或 `inference` 改成 `after_step`、`unknown`、`restriction` 或其他类别。若既有断言缺少公开依据，保持原分类并返回 `clarification_needed` 或 `conflict`，不得用改分类规避依据要求。\n逐项保留用户请求的行动、禁止事项和指定结果。明确要求杀死某人/永久离队必须在本回合实现，不能偷换成尝试、重伤、昏迷、暂时离场、打算以后执行或原著还需要此人。仅“尝试/设法”等不保证结果的措辞可标为attempt。否定、假设、引述、条件尚未满足不是杀人授权。“永久下线”若死亡和离队不能确定，返回clarification_needed，提出一个简短问题。\n依据当前能力、距离、已知道具和在场人物安排有因果的实现方法及代价，不凭空增加能力、物品、物品的有利属性或幕后历史。现有物品若要折断、磨尖等，必须有本回合可行的实际过程，不能假装原本就有断口或刃口。死亡须在正文明确确认呼吸脉搏停止等不可逆结果，不能只写倒地不动。门规、法律、阵营利益是可违背但会付出代价的社会规则，不是物理铁律。不得以守卫阻挡、道德说教、主线需要、人物受保护为借口吞掉指定结果。确实与世界铁律或已发生事实冲突且无合理方法时返回conflict并具体说明，不冒充成功。死亡不可复活，永久离队不可重新参与现场行动；回忆、遗物、既有证人可以承接线索，不能凭空造替身。\n目标是引导而非强迫回主线。只有用户明确改变目标，或本回合证据证明目标完成/受阻，才更新目标。目标被改变或放弃时保留旧记录；transformed可用successor新增后续目标；不要强制恢复原目标，不泄漏角色未知秘密。只有单次询问不得自动视为长线目标完成。dependencies只列目标必须依靠其活着亲自参与的人物；提及死者、追究其死因或承担杀害他的后果，不代表依赖死者继续行动，应省略死者ID。\n仅返回JSON：{\"decision\":\"ready|clarification_needed|conflict\",\"message\":\"非ready说明\",\"requirements\":{\"A1\":{\"mode\":\"result|attempt|constraint\",\"summary\":\"本回合必须发生的具体结果\"}},\"method\":\"能力、道具、实施步骤和代价的因果说明\",\"outcomes\":[{\"characterId\":\"输入中的ID\",\"status\":\"dead|departed|alive|missing|injured\",\"permanence\":\"permanent|temporary\",\"requirementId\":\"A1\",\"cause\":\"具体原因\"}],\"goalUpdates\":[{\"id\":\"已有目标ID；全新目标用new\",\"status\":\"active|completed|transformed|abandoned\",\"title\":\"目标文字\",\"dependencies\":[\"人物ID\"],\"reason\":\"改变原因\",\"successor\":\"转化后的目标；不转化用空字符串\"}]}。\nrequirements的ID须与输入完全一致。outcomes只登记本回合确定发生的人物生死/离队变化，普通对话不必登记。用户要求的结果不得被漏记。不要登记未执行分支，不改过去。留在原地等限制须贯穿本段，不能在回应后擅自押走玩家或执行下一行动；接受处置只授权眼前回应，不授权立即新增押送流程。已发生结果只继承，不重复登记outcomes；目标title/status/dependencies不变时不登记goalUpdates。\nready时必须在同一JSON增加scenePlan，在正文生成前组织场景，不新增模型调用：\n{\"start\":\"承接前一回合的终点，不重演前情\",\"beats\":[{\"purpose\":\"这一段过程的独立叙事作用与要兑现的回应\",\"stepIds\":[\"S1\"]}],\"outcome\":\"本回合实际产生的结果，未知回答也可成为完整结果\",\"stop\":\"保留给玩家的下一步决定，不替玩家回答NPC新问题\",\"targetCjk\":[80,250],\"lengthReason\":\"根据实际交锋、信息、冲突与情绪变化说明篇幅需要\",\"knowledge\":[{\"speakerId\":\"已登记人物ID\",\"statement\":\"本次准备表达的知识或未知边界\",\"status\":\"fact|reported|inference|unknown|pending\",\"sources\":[{\"id\":\"knowledge.publicEvidence中的键\",\"quote\":\"逐字短引文\"}]}],\"observationLimits\":[\"影响判断的可观察条件及未知项\"]}\ntargetCjk必须位于80至1500之间。简单确认、等待或一次告知可以规划较短正文，但只能表达当前授权行动的过程、人物反应和直接后果；复杂交锋可延长，超过1200字必须有新的因果、反应或线索，超过1500字禁止。不要根据step数量、是否转场或用户输入长短机械填充；不要为了预算发明冲突。beats覆盖已授权steps，每个过程有不同作用，没有必要的过程不添加。完成当前事情就停，不留待正文不足后扩写。等待未来钟声或人物回应的输入，未来条件尚未满足时不得在同一回合物化为NPC回应或环境事件；scenePlan应在玩家停留、等待的收束处停止，并把下一步决定留给玩家。\nknowledge.publicEvidence与sourceKinds区分开局事实和历史场景。fact必须有支持具体断言的公开依据；已发生动作可承接，历史中的人物说法用reported，不将旧台词自动当客观规律。内部权威状态仅用于避免矛盾，不能泄漏尚未向人物公开的信息。inference引用真实前提，结论明确不确定，不能新增前提；unknown可以sources=[]。普通当场语气和姿态不是历史知识，不必塞入knowledge。需要NPC回答的问题须在knowledge准备可说的内容或明确的unknown，不能一边不知道一边补造依据。对白可拒绝、表达意愿，不因此获准新增世界事实。\nobservationLimits沿用当前状态和公开条件：拥有物品不代表看清内部，物品打开、翻转、递交等变化须有授权步骤；状态未确认时说明unknown，不为形成推断补造纹理、内部颜色或来历。NPC可以明确不配合请求，不能把越出请求范围写成依言照做。场景计划是待校验的写作安排，不是新增事实来源。\nknowledge只列既有知识或未知边界，不把本回合即将说的话伪装成已经知道的事实。对NPC逐项查获取路径：开场的玩家独自经历不是NPC知识；没有明确听见、见到或此前自述的来源就标unknown。若玩家这次将要告知，在beats安排先告知再转述，不编造历史引文证明尚未发生的获知。不知道时的完整结果可以很简短，不用物性/因果推测凑出“有依据”的回答。\n\n本回合即将告知的信息用status=pending、sources=[]、afterStepId=\"S1\"列入knowledge，明确依赖哪个授权步骤，正文在这个告知真正发生之前NPC仍不知道；完成后也只能按听说的转述。pending不是已发生事实，不能用于补造往事或检验结论。reported只用于已有公开来源证明已经发生过的转述，不能用于尚未写出的未来对话。\n\n人物状态补充：missing 只用于本回合明确确认失踪且有正文证据，不能由暂未露面、缺席或未知地点推断；登记后地点变为未知。injured 只用于明确发生或确认的伤势，不能仅由疲劳推断。二者使用 temporary，不推断死亡或永久离队。伤愈或失踪者重现须有新的正文依据并登记 alive（仍受伤则 injured）；重现地点另经 stateChanges 核对，不能恢复旧位置。永久死亡／永久离队不能经这些状态绕过。\n\n如果输入 closing 非空，按 intended_type 理解正常、偏离或失败收束意图，并逐项参考 closure.outstanding 安排本回合可交代的事项。收束意图不代替本回合玩家行动授权，不得擅自执行额外行动、放弃目标、制造死亡或推进时间。preparing 阶段先处理已授权且可核实的待办；closing 阶段只能处理已有目标和剧情问题账本条目，不能使用 id=new、transformed 后继或新长期线程把收束变成另一条路线。每个已交代或未能交代的事项都须有本回合正文证据；证据不足时保持 unknown 或返回 clarification_needed，不得为了满足清单补造人物知识、历史原因、完成事实或结局条件。closing 仅表示账本清单已交代，不表示结局成立。ending_check.unmet_conditions 中仍有条件时不得假称已满足；ledger_ready=true 也不是结局审核通过。主动放弃不等于被迫失败，旧目标转化不等于新目标完成，未知事实不能靠收束需要补造。不得自行写入任何结束状态、终局回执或结束权限；本回合只提交既有契约允许且有正文证据的结果变化，实际结束由独立的程序流程决定。\n\n目标可增加itemDependencies数组，列出完成目标实际需要使用的已登记道具ID，与人物dependencies分开。仅提及物品、调查其损毁原因不等于依赖原物可用。新目标没有道具依赖时用[]；更新旧目标时省略表示继承，只有明确给出[]才解除依赖。已永久损毁的原物不能成为新增或更新后active目标、transformed后继目标的依赖。可以保留既有受阻目标等待玩家决定，不强迫在损毁当回合放弃；改换途径、解除依赖仍须本回合已授权的行动和正文依据，不能静默清空。依赖调整可保持active，但原目标标题和历史不可改写。损毁本身不代表目标完成，消耗道具完成目标也必须有真实完成证据。\n\n在同一JSON中返回threadUpdates数组，无变化时为[]，不增加额外规划调用。threads是当前路线已公开的剧情问题账本，不是目标清单或历史线索；旧存档中unknown表示处理状态未确认，不能据目标完成、人物缺席、菜单变化或未再提到就推断问题已解决或放下。\n每项格式：{\"id\":\"已有问题ID；新问题用new-1至new-8中不同ID\",\"title\":\"已有问题原文或新问题的简短中文\",\"status\":\"open|resolved|abandoned\",\"priority\":\"critical|high|normal|low|unknown\",\"recoveryWindow\":\"immediate|near|mid|late|unknown\",\"reason\":\"本回合为何建立、确认或结束此问题\",\"stepIds\":[\"S1\"]}。priority和recoveryWindow只记录本回合有依据的紧迫度与预计回收时机；没有明确依据时填unknown，不能从status、人物缺席或菜单消失推断。更新旧问题时省略字段表示继承，不能静默改变。最多8项，仅登记已授权步骤本回合真正导致的变化。新问题必须open，且有当前事件的具体疑问，不为每次动作、下一方向或已知事实创建问题。resolved需要真正回答该问题；询问过、回答不知道、目标完成、人物死亡均不自动等于解决。abandoned需要玩家明确放下并在正文交代原因；无法追问仍可能是未解，不擅自替玩家放弃。unknown仅在当前正文明确确认后可变为open/resolved/abandoned。未变项不重复输出；已resolved/abandoned的问题不能重置，同名问题不能以new重新加入。问题改变时先交代旧问题的处理再登记不同的新问题，不改写旧标题。不要引用角色尚未知晓的秘密，不因记录账本而延长或偏离当前行动。\n\n剧情问题可增加itemDependencies数组，列出追查路径实际需要使用的已登记道具ID。只讨论已损毁物品或调查损毁原因不要求原物可用，不列作依赖。更新旧问题时省略字段表示继承；以本回合正文证据改换追查路径时可显式修改数组（[]解除依赖），允许status仍为open。新建或修改后的open问题不能依赖已永久损毁原物；可以保留既有受阻问题等待玩家决定，不能因依赖失效自动resolved或abandoned。\n\n所有自由输入共用行动解释流程，不以预定义场景、名字、关键词判断能否响应。完整理解原始输入中的指代、否定、引述、条件和先后关系；requirements里的逗号分句不是独立授权，必须结合整句。条件未满足的行为不能执行。要求描述结果与仅提出尝试不同；询问、拒绝、等待、解释、交易、制作、破坏、关系改变等同样必须落实对应回应。输入含糊才澄清，有确定的世界事实冲突才说明冲突，不因不在选项列表而拒绝。\n在原JSON中增加以下三个必填字段，空数组也须返回：\nsteps:[{id:\"S1\",actorId:\"已登记人物ID或environment\",action:\"这一回合实际执行的动作及停止边界\",requirementIds:[\"A1\"],authority:\"player或reaction\",causeStepId:null,usedItemIds:[]}]\nintroductions:{characters:[],items:[],locations:[]}，每个新增实体含id（character_/item_/location_开头的英文ID）、name、summary（实际来源与形成过程），sourceStepId。不得仅为推动剧情凭空授予关键工具；现有实体、角色身上既有物品或背景服饰不重新引入。\nstateChanges:[{id:\"C1\",entityId:\"已登记或本段引入的实体ID\",attribute:\"属性名\",before:null,value:\"新的值\",stepId:\"S1\",reason:\"变化因果\"}]\nplayer步骤只能来自用户授权的实际行为，NPC命令/建议不是授权；reaction步骤必须由本回合较早的步骤引起，causeStepId指向该步骤。不可替玩家接受NPC新建议、执行下一决定；只问处置不意味着已经服从处置。所有步骤requirementIds须追溯到原输入。内心的重大决定也属于玩家步骤。\n父分支中永久死亡或永久离队的人物不能成为本回合steps的actorId，也不能继续发言、带路或履行旧职责；可由玩家或仍可行动的人物处理其遗留影响。人物后果只由outcomes更新，不能用通用属性outcome或goal绕过人物后果与目标账本。\nstateChanges记所有持续影响后续行动的变化，不是有限事件类型清单。属性可动态命名，如姿态、双手活动、完整性、对某人的态度、已知某事、承诺等；使用已有属性名称和值，避免同义词另起字段。locationId表示人物或物品所在地点，ownerCharacterId表示物品持有人（值为ID，放下为null）。人物的死亡/离队沿用outcomes，目标沿用goalUpdates，不能另建同义字段覆盖其权威结果。before必须等于当前已登记值，未知用null。不变的属性不要登记，null新值表示解除该属性。\n引入实体必须有实际来源，状态改变必须有支持它的步骤；NPC反应引起束缚、伤势等也须提前登记，不能只写在正文。若没有发生该结果，不能借登记假造成功。原著未来可变化，已发生前史不可改写。结束正文时保留未授权决定给下一回合。\n可增加readingIntent，值为brief或normal，仅表达用户的简短偏好，不按动作数量设置长度。实际长度由scenePlan在写作前根据剧情需要给出。\n\n状态变化的entityId对应实际获知者或受影响者，不总是步骤说话者。说出自己的打算不代表说话者重新获得该知识；听者明确得知才可登记听者知识。普通交流不强制创造新的知识属性；确实影响后续行动的披露仍须记入接收者状态，不能丢失信息差。\n\n每个步骤的usedItemIds列出实际作为工具使用、交付、携带或破坏的已登记道具ID（没有则[]）；仅回忆原物或查看遗留影响不算继续使用原物。道具确定永久毁灭且不能修复时，必须登记stateChanges属性destroyedPermanently、value:true；普通破损不自动等同永久毁灭，未知不能推断。此标记只属于道具，登记后不可撤销；后续不能恢复原ID、再次持有、移动或使用。执行损毁的当步可以使用该物，后续步骤不可再用。同回合损毁不要同时赋予非空ownerCharacterId或locationId，程序会清除原物归属和位置。需要保留残片或制作替代物时，依据正文来源登记为不同的新实体，不能用它恢复原物身份。\n"
+          },
+          {
+            "role": "user",
+            "content": "{\"contextProjection\": {\"schemaVersion\": \"narrative-context/0.3\", \"contextId\": \"ctx-aefcd77781a76440\", \"contextSha256\": \"9cb96ff175f13c797853989351856011ebe1d90a059d9509bba6542685a82867\", \"stage\": \"result_contract\", \"package\": {\"id\": \"taixu-relics-part1\", \"version\": \"0.1.3\"}, \"branch\": {\"parentBranchId\": \"branch_e07fab57-8d5c-4ee5-8526-e69e0488551a\", \"lineageHead\": \"branch_e07fab57-8d5c-4ee5-8526-e69e0488551a\"}, \"hardConstraints\": {\"globalConstraints\": [\"运行时模型只能承接 StoryPackage 的压缩上下文，不读取母本全文。\"], \"immutableFacts\": [], \"currentChapter\": {\"id\": \"chapter-001\", \"title\": \"山门雨夜\"}, \"currentBeat\": {\"id\": \"beat_chapter_001\", \"summary\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\"}, \"actionContract\": {}, \"branchRules\": {\"currentBranchOnly\": true, \"futureBeatsExcluded\": true}, \"stopPoint\": null, \"entityContext\": {\"characters\": [{\"id\": \"character_ae4cb42b9b49\", \"name\": \"陆照临\", \"detail\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\"}], \"locations\": [{\"id\": \"location_open_gate\", \"name\": \"玄霄宗山门\"}], \"items\": [{\"id\": \"item_open_letter\", \"name\": \"引荐文书\"}]}, \"openingKnowledgeBoundaries\": [\"伤者身份、父亲下落、空灯与青光成因均未知。\", \"尚未认识其他主角团成员；不得写成已有残印、功法、修为突破或领过药瓶。\"], \"continuityContract\": {\"locked\": \"世界铁律及截至入场点已发生的历史；仅当角色有依据时才成为其知识。\", \"mutable\": \"入场后的未来、选择及其后果；原著后续只是候选路线。\", \"outcomeStateField\": \"characterOutcomeStates\", \"outcomeRecordSchema\": {\"status\": [\"alive\", \"dead\", \"departed\"], \"permanence\": [\"temporary\", \"permanent\"], \"causeBranchId\": \"string\", \"evidence\": \"string\"}, \"outcomeUpdatesEnabled\": false, \"implementationBoundary\": \"P0 仅持久化预留空账本，P3 实现并校验永久变化。\"}}, \"turnIntent\": {\"rawInput\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"selectedDirection\": {\"id\": \"entry_lu_gate-ab-1\", \"title\": \"请守门弟子救人\", \"summary\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\"}, \"atomicRequirements\": [{\"id\": \"input-1\", \"text\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"status\": \"unknown\", \"source\": \"player_input\"}], \"stopPoint\": null}, \"authoritativeState\": {\"playerLocationId\": \"location_open_gate\", \"playerCharacterId\": \"character_ae4cb42b9b49\", \"characterLocationIds\": {\"character_ae4cb42b9b49\": \"location_open_gate\"}}, \"outputContract\": {\"actionContract\": {}, \"selectedStatePatch\": {\"playerLocationId\": \"location_open_gate\"}, \"mustStop\": true}, \"allowedEvidence\": [{\"sourceId\": \"module:currentBeat:beat_chapter_001\", \"kind\": \"current_beat\", \"visibility\": \"public_world_fact\", \"branchId\": \"package\", \"location\": \"module.currentBeat\", \"content\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:identity\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.identity\", \"content\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:appearance\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.appearance\", \"content\": \"斗笠被雨打湿，手上有长途跋涉留下的冻裂。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:knownFacts:0\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.knownFacts\", \"content\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:knownFacts:1\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.knownFacts\", \"content\": \"老人让你到玄霄宗问山门的灯。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:knownFacts:2\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.knownFacts\", \"content\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:relationships:0\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.relationships\", \"content\": \"{\\\"name\\\": \\\"陆沉舟\\\", \\\"relation\\\": \\\"父亲，失踪，生死未确认。\\\"}\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:relationships:1\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.relationships\", \"content\": \"{\\\"name\\\": \\\"守门弟子\\\", \\\"relation\\\": \\\"初遇，只知道其守门职责，不知姓名。\\\"}\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:relationships:2\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.relationships\", \"content\": \"{\\\"name\\\": \\\"陌生伤者\\\", \\\"relation\\\": \\\"初遇，不知身份。\\\"}\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:visibleItems:0\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.visibleItems\", \"content\": \"引荐文书在你手中，尚未交出。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:visibleItems:1\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.visibleItems\", \"content\": \"空灯仍在伤者手边，不能写进你的持有物；未登记人物持物只记为场景事实。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:evidence:0\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.evidence\", \"content\": \"陆照临摸了摸怀里的引荐文书。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:evidence:1\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.evidence\", \"content\": \"三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:evidence:2\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.evidence\", \"content\": \"陆照临取出文书，却没有递过去。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:evidence:3\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.evidence\", \"content\": \"倒地的人猛地睁开眼。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"module:opening:evidence:4\", \"kind\": \"public_fact\", \"visibility\": \"player_known\", \"branchId\": \"package\", \"location\": \"module.openingContext.evidence\", \"content\": \"铁链又响了一声。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}, {\"sourceId\": \"branch:lineage:branch_e07fab57-8d5c-4ee5-8526-e69e0488551a\", \"kind\": \"continuity_summary\", \"visibility\": \"player_known\", \"branchId\": \"branch_e07fab57-8d5c-4ee5-8526-e69e0488551a\", \"location\": \"branch.lineage\", \"content\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"authority\": \"confirmed_evidence\", \"validity\": \"confirmed\"}], \"planningState\": {\"goals\": [{\"id\": \"opening-goal-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}, {\"id\": \"opening-goal-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}], \"threads\": [{\"id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\", \"priority\": \"unknown\", \"recoveryWindow\": \"unknown\"}, {\"id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\", \"priority\": \"unknown\", \"recoveryWindow\": \"unknown\"}], \"closure\": {\"readiness\": \"needs_explanation\", \"outstanding\": [{\"kind\": \"goal\", \"target_id\": \"opening-goal-1\", \"title\": \"陌生伤者是否能得到救助\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"goal\", \"target_id\": \"opening-goal-2\", \"title\": \"空灯与父亲失踪是否有关\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"thread\", \"target_id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"thread\", \"target_id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}], \"note\": \"清单通过仅表示当前路线没有未交代的目标、开放问题或受阻依赖；不表示自然结局已写成，也不构成叙事质量验收。\"}, \"closing\": null, \"criticalHistory\": []}}, \"input\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"requirements\": {\"A1\": \"指出伤者尚有呼吸\", \"A2\": \"争取在落锁前让他得到救助\"}, \"knowledge\": {\"publicEvidence\": {\"opening-1\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"opening-2\": \"老人让你到玄霄宗问山门的灯。\", \"opening-3\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"opening-identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P1\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P2\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P3\": \"你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\"}, \"sourceKinds\": {\"opening-1\": \"opening_fact\", \"opening-2\": \"opening_fact\", \"opening-3\": \"opening_fact\", \"opening-identity\": \"opening_fact\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P1\": \"history_scene\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P2\": \"history_scene\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P3\": \"history_scene\"}, \"unresolvedQuestions\": [], \"evidenceBoundary\": \"资料未说明的经历、依据、规则条件均为 unknown；不从缺席推断没有或不可能。历史中的已发生动作可承接；人物说法只证明曾如此声称，不自动升级为客观规律或可靠知识。内部权威状态用于约束矛盾，不代表玩家或NPC已知。\", \"allowedNewContent\": \"本回合授权行动与当场反应；新说出的台词不能使其中的旧事自动成为事实。\", \"speakerBoundary\": \"开场已知信息属于玩家知识，不能默认NPC也知道。NPC获知必须有其听到、见到或曾明确说过的资料；本回合玩家先告知后，NPC可注明你说的而转述，不能升级为亲眼见证。没有获取路径就不知道。\", \"answerBoundary\": \"询问依据但资料没有依据时，NPC明确说不知道或尚不能判断；可以说明当前看见什么与无法据此断定什么，不补造亲历、传闻、检测或规律。\"}, \"goals\": [{\"id\": \"opening-goal-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}, {\"id\": \"opening-goal-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"active\", \"characterId\": \"character_ae4cb42b9b49\", \"dependencies\": [], \"source\": \"opening\", \"evidence\": \"你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。\", \"causeBranchId\": null}], \"threads\": [{\"id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\", \"priority\": \"unknown\", \"recoveryWindow\": \"unknown\"}, {\"id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\", \"priority\": \"unknown\", \"recoveryWindow\": \"unknown\"}], \"closure\": {\"readiness\": \"needs_explanation\", \"outstanding\": [{\"kind\": \"goal\", \"target_id\": \"opening-goal-1\", \"title\": \"陌生伤者是否能得到救助\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"goal\", \"target_id\": \"opening-goal-2\", \"title\": \"空灯与父亲失踪是否有关\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"thread\", \"target_id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}, {\"kind\": \"thread\", \"target_id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"reason\": \"尚未完成，收束前须完成或有依据地放弃\", \"required_disclosure\": true, \"blockers\": []}], \"note\": \"清单通过仅表示当前路线没有未交代的目标、开放问题或受阻依赖；不表示自然结局已写成，也不构成叙事质量验收。\"}, \"closing\": null, \"criticalHistory\": []}"
+          },
+          {
+            "role": "assistant",
+            "content": "{\n  \"decision\": \"ready\",\n  \"message\": \"\",\n  \"requirements\": {\n    \"A1\": {\n      \"mode\": \"result\",\n      \"summary\": \"陆照临当众指出倒地伤者尚有呼吸，并给出可见依据（胸口起伏、喉间血沫）。\"\n    },\n    \"A2\": {\n      \"mode\": \"attempt\",\n      \"summary\": \"陆照临以伤者未死为由请求守门弟子在落锁前放行或叫人来救，结果取决于守门弟子的当场回应，不保证获准。\"\n    }\n  },\n  \"method\": \"陆照临站在封山线外，与伤者距离数步，能观察到其胸口起伏与喉间血沫，据此出声指出伤者尚活；随后以引荐文书求入者的身份向守门弟子陈情，请求在铁链落锁前施救。守门弟子握剑守线，是否放行、是否上报由他自行决定；陆照临没有越过封山线、没有触碰伤者或空灯的能力与授权，因此只能争取而不能保证救助成立。\",\n  \"outcomes\": [],\n  \"goalUpdates\": [],\n  \"threadUpdates\": [],\n  \"steps\": [\n    {\n      \"id\": \"S1\",\n      \"actorId\": \"character_ae4cb42b9b49\",\n      \"action\": \"隔着封山线指向倒地伤者，指出其胸口仍有起伏、喉间涌出血沫，说明人还活着；随即向守门弟子请求在铁链落锁前放行或唤人来救，话止于等待对方回应，不越线、不触碰伤者与空灯。\",\n      \"requirementIds\": [\n        \"A1\",\n        \"A2\"\n      ],\n      \"authority\": \"player\",\n      \"causeStepId\": null,\n      \"usedItemIds\": []\n    },\n    {\n      \"id\": \"S2\",\n      \"actorId\": \"environment\",\n      \"action\": \"山门铁链再响一声，雨势未歇，封山石上的水痕仍在；落锁尚未完成，时间仍在流逝。\",\n      \"requirementIds\": [\n        \"A2\"\n      ],\n      \"authority\": \"reaction\",\n      \"causeStepId\": \"S1\",\n      \"usedItemIds\": []\n    }\n  ],\n  \"introductions\": {\n    \"characters\": [],\n    \"items\": [],\n    \"locations\": []\n  },\n  \"stateChanges\": [\n    {\n      \"id\": \"C1\",\n      \"entityId\": \"character_ae4cb42b9b49\",\n      \"attribute\": \"已向守门弟子指出伤者尚活并请求施救\",\n      \"before\": null,\n      \"value\": true,\n      \"stepId\": \"S1\",\n      \"reason\": \"陆照临当众说明伤者仍有呼吸并出言求援。\"\n    }\n  ],\n  \"scenePlan\": {\n    \"start\": \"雨仍在下，你站在封山石外，铁链的响声还没停，倒地的人就在几步之外，手边是那盏没有点燃的灯。\",\n    \"beats\": [\n      {\n        \"purpose\": \"兑现A1：陆照临把观察到的活人迹象说出口，让守门弟子无法当作死人处理。\",\n        \"stepIds\": [\n          \"S1\"\n        ]\n      },\n      {\n        \"purpose\": \"兑现A2：以未死为由争取落锁前施救，守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持。\",\n        \"stepIds\": [\n          \"S1\",\n          \"S2\"\n        ]\n      },\n      {\n        \"purpose\": \"收束在等待：铁链未落尽，守门弟子尚未给出最终处置，把下一步留给玩家。\",\n        \"stepIds\": [\n          \"S2\"\n        ]\n      }\n    ],\n    \"outcome\": \"陆照临当众指出伤者尚有呼吸并请求施救；守门弟子听见了，但未立即放行，也未离开岗位，山门仍在将闭未闭之间。\",\n    \"stop\": \"守门弟子尚未回答是否唤人或放行，铁链仍在响；陆照临停在封山线外，下一步由玩家决定。\",\n    \"targetCjk\": 620,\n    \"lengthReason\": \"需要呈现指出活人迹象的具体观察、陈情措辞、守门弟子的当场反应与铁链将落的紧迫感，并停在等待回应的节点，不宜过短也不需展开新线索。\",\n    \"knowledge\": [\n      {\n        \"speakerId\": \"character_ae4cb42b9b49\",\n        \"statement\": \"伤者胸口仍有起伏、喉间涌出血沫，人还活着；请求在落锁前放行或唤人来救。\",\n        \"status\": \"pending\",\n        \"sources\": [],\n        \"afterStepId\": \"S1\"\n      }\n    ],\n    \"observationLimits\": [\n      \"陆照临与伤者相隔数步，只能看到胸口起伏与喉间血沫，无法判断伤势轻重或能否救活。\",\n      \"守门弟子的姓名、身份与职权范围未知；他是否会上报、是否会被说动，本回合不作保证。\",\n      \"空灯为何不燃、伤者为何倒在此处，均无依据，不得推断。\"\n    ]\n  }\n}"
+          },
+          {
+            "role": "user",
+            "content": "修正契约字段错误并返回完整JSON，不改变用户要求：scenePlan.targetCjk须是80至1500内的动态区间\n原始要求ID必须严格保留为：A1、A2；删除所有多余ID，不得新增A8或其他要求。\nrequirements 对象的键必须与输入中的原始要求 ID 完全一致：只补齐缺少的原始 ID，删除所有多余 ID，绝不能把 NPC 回应、未来条件、模型推断或审查信息新增为 A8 等要求，也不能改写原始要求的含义。\n若错误涉及 premiseChecks：scenePlan.knowledge 中 status 为 fact、reported 或 inference 的既有断言，premiseChecks 必须使用 kind=existing 并引用公开依据；只有 status=pending 且绑定本轮授权步骤时才可使用 kind=after_step。不能把已有事实改标为 after_step、unknown 或 restriction 来规避依据校验。\n"
+          }
+        ],
+        "rawResponse": "{\"id\":\"d854476c-c62e-477d-b8eb-5a1e64cde10e\",\"object\":\"chat.completion\",\"created\":1790337063,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"ready\\\",\\n  \\\"message\\\": \\\"\\\",\\n  \\\"requirements\\\": {\\n    \\\"A1\\\": {\\n      \\\"mode\\\": \\\"result\\\",\\n      \\\"summary\\\": \\\"陆照临当众指出倒地伤者尚有呼吸，并给出可见依据（胸口起伏、喉间血沫）。\\\"\\n    },\\n    \\\"A2\\\": {\\n      \\\"mode\\\": \\\"attempt\\\",\\n      \\\"summary\\\": \\\"陆照临以伤者未死为由请求守门弟子在落锁前放行或叫人来救，结果取决于守门弟子的当场回应，不保证获准。\\\"\\n    }\\n  },\\n  \\\"method\\\": \\\"陆照临站在封山线外，与伤者距离数步，能观察到其胸口起伏与喉间血沫，据此出声指出伤者尚活；随后以引荐文书求入者的身份向守门弟子陈情，请求在铁链落锁前施救。守门弟子握剑守线，是否放行、是否上报由他自行决定；陆照临没有越过封山线、没有触碰伤者或空灯的能力与授权，因此只能争取而不能保证救助成立。\\\",\\n  \\\"outcomes\\\": [],\\n  \\\"goalUpdates\\\": [],\\n  \\\"threadUpdates\\\": [],\\n  \\\"steps\\\": [\\n    {\\n      \\\"id\\\": \\\"S1\\\",\\n      \\\"actorId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"action\\\": \\\"隔着封山线指向倒地伤者，指出其胸口仍有起伏、喉间涌出血沫，说明人还活着；随即向守门弟子请求在铁链落锁前放行或唤人来救，话止于等待对方回应，不越线、不触碰伤者与空灯。\\\",\\n      \\\"requirementIds\\\": [\\n        \\\"A1\\\",\\n        \\\"A2\\\"\\n      ],\\n      \\\"authority\\\": \\\"player\\\",\\n      \\\"causeStepId\\\": null,\\n      \\\"usedItemIds\\\": []\\n    },\\n    {\\n      \\\"id\\\": \\\"S2\\\",\\n      \\\"actorId\\\": \\\"environment\\\",\\n      \\\"action\\\": \\\"山门铁链再响一声，雨势未歇，封山石上的水痕仍在；落锁尚未完成，时间仍在流逝。\\\",\\n      \\\"requirementIds\\\": [\\n        \\\"A2\\\"\\n      ],\\n      \\\"authority\\\": \\\"reaction\\\",\\n      \\\"causeStepId\\\": \\\"S1\\\",\\n      \\\"usedItemIds\\\": []\\n    }\\n  ],\\n  \\\"introductions\\\": {\\n    \\\"characters\\\": [],\\n    \\\"items\\\": [],\\n    \\\"locations\\\": []\\n  },\\n  \\\"stateChanges\\\": [\\n    {\\n      \\\"id\\\": \\\"C1\\\",\\n      \\\"entityId\\\": \\\"character_ae4cb42b9b49\\\",\\n      \\\"attribute\\\": \\\"已向守门弟子指出伤者尚活并请求施救\\\",\\n      \\\"before\\\": null,\\n      \\\"value\\\": true,\\n      \\\"stepId\\\": \\\"S1\\\",\\n      \\\"reason\\\": \\\"陆照临当众说明伤者仍有呼吸并出言求援。\\\"\\n    }\\n  ],\\n  \\\"scenePlan\\\": {\\n    \\\"start\\\": \\\"雨仍在下，你站在封山石外，铁链的响声还没停，倒地的人就在几步之外，手边是那盏没有点燃的灯。\\\",\\n    \\\"beats\\\": [\\n      {\\n        \\\"purpose\\\": \\\"兑现A1：陆照临把观察到的活人迹象说出口，让守门弟子无法当作死人处理。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S1\\\"\\n        ]\\n      },\\n      {\\n        \\\"purpose\\\": \\\"兑现A2：以未死为由争取落锁前施救，守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S1\\\",\\n          \\\"S2\\\"\\n        ]\\n      },\\n      {\\n        \\\"purpose\\\": \\\"收束在等待：铁链未落尽，守门弟子尚未给出最终处置，把下一步留给玩家。\\\",\\n        \\\"stepIds\\\": [\\n          \\\"S2\\\"\\n        ]\\n      }\\n    ],\\n    \\\"outcome\\\": \\\"陆照临当众指出伤者尚有呼吸并请求施救；守门弟子听见了，但未立即放行，也未离开岗位，山门仍在将闭未闭之间。\\\",\\n    \\\"stop\\\": \\\"守门弟子尚未回答是否唤人或放行，铁链仍在响；陆照临停在封山线外，下一步由玩家决定。\\\",\\n    \\\"targetCjk\\\": [\\n      80,\\n      1500\\n    ],\\n    \\\"lengthReason\\\": \\\"需要呈现指出活人迹象的具体观察、陈情措辞、守门弟子的当场反应与铁链将落的紧迫感，并停在等待回应的节点，不宜过短也不需展开新线索。\\\",\\n    \\\"knowledge\\\": [\\n      {\\n        \\\"speakerId\\\": \\\"character_ae4cb42b9b49\\\",\\n        \\\"statement\\\": \\\"伤者胸口仍有起伏、喉间涌出血沫，人还活着；请求在落锁前放行或唤人来救。\\\",\\n        \\\"status\\\": \\\"pending\\\",\\n        \\\"sources\\\": [],\\n        \\\"afterStepId\\\": \\\"S1\\\"\\n      }\\n    ],\\n    \\\"observationLimits\\\": [\\n      \\\"陆照临与伤者相隔数步，只能看到胸口起伏与喉间血沫，无法判断伤势轻重或能否救活。\\\",\\n      \\\"守门弟子的姓名、身份与职权范围未知；他是否会上报、是否会被说动，本回合不作保证。\\\",\\n      \\\"空灯为何不燃、伤者为何倒在此处，均无依据，不得推断。\\\"\\n    ]\\n  }\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":9310,\"completion_tokens\":1179,\"total_tokens\":10489,\"prompt_tokens_details\":{\"cached_tokens\":9088},\"prompt_cache_hit_tokens\":9088,\"prompt_cache_miss_tokens\":222},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+        "content": "{\n  \"decision\": \"ready\",\n  \"message\": \"\",\n  \"requirements\": {\n    \"A1\": {\n      \"mode\": \"result\",\n      \"summary\": \"陆照临当众指出倒地伤者尚有呼吸，并给出可见依据（胸口起伏、喉间血沫）。\"\n    },\n    \"A2\": {\n      \"mode\": \"attempt\",\n      \"summary\": \"陆照临以伤者未死为由请求守门弟子在落锁前放行或叫人来救，结果取决于守门弟子的当场回应，不保证获准。\"\n    }\n  },\n  \"method\": \"陆照临站在封山线外，与伤者距离数步，能观察到其胸口起伏与喉间血沫，据此出声指出伤者尚活；随后以引荐文书求入者的身份向守门弟子陈情，请求在铁链落锁前施救。守门弟子握剑守线，是否放行、是否上报由他自行决定；陆照临没有越过封山线、没有触碰伤者或空灯的能力与授权，因此只能争取而不能保证救助成立。\",\n  \"outcomes\": [],\n  \"goalUpdates\": [],\n  \"threadUpdates\": [],\n  \"steps\": [\n    {\n      \"id\": \"S1\",\n      \"actorId\": \"character_ae4cb42b9b49\",\n      \"action\": \"隔着封山线指向倒地伤者，指出其胸口仍有起伏、喉间涌出血沫，说明人还活着；随即向守门弟子请求在铁链落锁前放行或唤人来救，话止于等待对方回应，不越线、不触碰伤者与空灯。\",\n      \"requirementIds\": [\n        \"A1\",\n        \"A2\"\n      ],\n      \"authority\": \"player\",\n      \"causeStepId\": null,\n      \"usedItemIds\": []\n    },\n    {\n      \"id\": \"S2\",\n      \"actorId\": \"environment\",\n      \"action\": \"山门铁链再响一声，雨势未歇，封山石上的水痕仍在；落锁尚未完成，时间仍在流逝。\",\n      \"requirementIds\": [\n        \"A2\"\n      ],\n      \"authority\": \"reaction\",\n      \"causeStepId\": \"S1\",\n      \"usedItemIds\": []\n    }\n  ],\n  \"introductions\": {\n    \"characters\": [],\n    \"items\": [],\n    \"locations\": []\n  },\n  \"stateChanges\": [\n    {\n      \"id\": \"C1\",\n      \"entityId\": \"character_ae4cb42b9b49\",\n      \"attribute\": \"已向守门弟子指出伤者尚活并请求施救\",\n      \"before\": null,\n      \"value\": true,\n      \"stepId\": \"S1\",\n      \"reason\": \"陆照临当众说明伤者仍有呼吸并出言求援。\"\n    }\n  ],\n  \"scenePlan\": {\n    \"start\": \"雨仍在下，你站在封山石外，铁链的响声还没停，倒地的人就在几步之外，手边是那盏没有点燃的灯。\",\n    \"beats\": [\n      {\n        \"purpose\": \"兑现A1：陆照临把观察到的活人迹象说出口，让守门弟子无法当作死人处理。\",\n        \"stepIds\": [\n          \"S1\"\n        ]\n      },\n      {\n        \"purpose\": \"兑现A2：以未死为由争取落锁前施救，守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持。\",\n        \"stepIds\": [\n          \"S1\",\n          \"S2\"\n        ]\n      },\n      {\n        \"purpose\": \"收束在等待：铁链未落尽，守门弟子尚未给出最终处置，把下一步留给玩家。\",\n        \"stepIds\": [\n          \"S2\"\n        ]\n      }\n    ],\n    \"outcome\": \"陆照临当众指出伤者尚有呼吸并请求施救；守门弟子听见了，但未立即放行，也未离开岗位，山门仍在将闭未闭之间。\",\n    \"stop\": \"守门弟子尚未回答是否唤人或放行，铁链仍在响；陆照临停在封山线外，下一步由玩家决定。\",\n    \"targetCjk\": [\n      80,\n      1500\n    ],\n    \"lengthReason\": \"需要呈现指出活人迹象的具体观察、陈情措辞、守门弟子的当场反应与铁链将落的紧迫感，并停在等待回应的节点，不宜过短也不需展开新线索。\",\n    \"knowledge\": [\n      {\n        \"speakerId\": \"character_ae4cb42b9b49\",\n        \"statement\": \"伤者胸口仍有起伏、喉间涌出血沫，人还活着；请求在落锁前放行或唤人来救。\",\n        \"status\": \"pending\",\n        \"sources\": [],\n        \"afterStepId\": \"S1\"\n      }\n    ],\n    \"observationLimits\": [\n      \"陆照临与伤者相隔数步，只能看到胸口起伏与喉间血沫，无法判断伤势轻重或能否救活。\",\n      \"守门弟子的姓名、身份与职权范围未知；他是否会上报、是否会被说动，本回合不作保证。\",\n      \"空灯为何不燃、伤者为何倒在此处，均无依据，不得推断。\"\n    ]\n  }\n}",
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 3993,
+              "responseHeadersMs": 261,
+              "completeBodyMs": 3993
+            }
+          }
+        ]
+      },
+      {
+        "kind": "complete_json",
+        "messages": [
+          {
+            "role": "system",
+            "content": "你只审核玩家行动授权，不写小说，不补剧情。独立读取原始输入及上一段已经发生的正文，规划器的解释不构成证据。\n返回JSON {\"decision\":\"allow|revise\",\"issues\":[],\"checks\":[{\"stepId\":\"S1\",\"authorized\":true,\"basis\":\"player_input|prior_fact|causal_reaction\",\"quote\":\"输入或上段正文中的逐字短引文\",\"reason\":\"具体授权依据\"}],\"stateChecks\":[{\"changeId\":\"C1\",\"authorized\":true,\"reason\":\"此持续状态如何得到授权或实际前因\"}]}。\n必须覆盖每一个步骤及stateChanges，不合并不遗漏。任一未授权项目即revise，issues解释如何修正。\n完整理解否定、引述、条件和行动先后。当前输入让玩家等到答复后再行动时，不得提前执行此前NPC的要求。NPC发出命令、邀请或建议，不代表玩家已接受或执行；prior_fact必须是上一段实际执行的行为，不能引用一句命令就声称已经照做。用户允许等待或接受后果不等于授权任意新动作、姿态改变或未来决定。维持已有事实可允许；把未执行指令登记成新状态不允许。如果原始输入只是等待钟声、回应或其他尚未满足的未来条件，本回合只能规划玩家的等待与收束，不能提前生成NPC台词、NPC动作或环境事件；只有已有的玩家动作先发生后，才可登记由它直接引起的反应。\n核对状态变化本身而非只检查步骤标题：即使步骤标题只是询问，关联状态也不能偷偷执行额外动作。NPC和环境有因果的反应可以发生，但不能把玩家自愿服从伪装成外力后果。对玩家明确指定的结果，按世界条件落实，不因人物重要、道德评价或原著未来而拒绝。只判断授权与已发生前史，不要求用户预先写出动作的全部肌肉细节。\ncausal_reaction的quote也必须逐字取自input或previous，引用触发反应的玩家请求或既成事实，例如“听完他的回应再决定”；不能抄steps中的规划句来证明steps自身。reason解释因果关系，quote不承担重述反应的任务。\n\nscenePlan若存在，连同steps检查：场景过程不能增加原输入之外的决定，outcome/stop不得越过用户停止点；知识规划和观察限制不授权改变物品状态。NPC明确拒绝或表达意愿与替玩家执行下一步决定应分开判断。\n\n同时返回premiseChecks，恰好覆盖premises中每个K/O编号：{\"id\":\"K1\",\"kind\":\"existing|after_step|restriction|unknown\",\"verdict\":\"supported|unsupported\",\"sources\":[{\"id\":\"sceneEvidence键\",\"quote\":\"逐字短引文\"}],\"stepIds\":[],\"missingEvidence\":[],\"reason\":\"事实与该人物获知渠道或可见条件是否都成立\"}。\nexisting是已存在的知识或肯定的物理/可见条件，必须有sceneEvidence来源；after_step是依赖本轮前置动作才成立的条件，stepIds必须指向确实产生该条件的授权步骤。pending知识必须对应afterStepId，规划不得提前当成已知。restriction只是否定性的写作限制，不提供新的事实；unknown只是承认不知道，不得夹带具体物性、经历或观察结论。任何缺证写入missingEvidence并判unsupported，使计划重做。已经写在规划里的句子不是证据；不要为放行改成restriction/unknown。\n尤其核对含肯定信息的观察限制：“只能看见包里的金屑”仍断言能看见内部，不能因含“只能”就分类restriction。展示闭合容器不自动授权打开；口头告知内容不产生亲眼观察；不能新增透明、缝隙、露出等条件让它成立。未知经历的否定也不能归unknown。NPC获知须有参与/见证/听到的明确路径，玩家开场知识不是所有人的知识。\n"
+          },
+          {
+            "role": "user",
+            "content": "{\"input\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"previous\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\\n\\n眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\\n\\n你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\", \"playerId\": \"character_ae4cb42b9b49\", \"priorState\": {\"playerLocationId\": \"location_open_gate\", \"sourceProgress\": \"chapter_001\", \"freeTextProgress\": 0, \"storyScope\": \"source\", \"derivativeStage\": \"inactive\", \"derivedTurn\": 0, \"derivedLocations\": [], \"derivedCharacters\": [], \"derivedItems\": [], \"derivedCharacterReveals\": [], \"derivedRelationships\": [], \"derivedClues\": [], \"derivedEvents\": [], \"playerCharacterId\": \"character_ae4cb42b9b49\", \"characterLocationIds\": {\"character_ae4cb42b9b49\": \"location_open_gate\"}, \"itemOwnerCharacterIds\": {\"item_open_letter\": \"character_ae4cb42b9b49\"}, \"itemLocationIds\": {}, \"characterOutcomeStates\": {}, \"threadLedger\": [{\"id\": \"opening-thread-1\", \"title\": \"陌生伤者是否能得到救助\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\", \"priority\": \"unknown\", \"recoveryWindow\": \"unknown\"}, {\"id\": \"opening-thread-2\", \"title\": \"空灯与父亲失踪是否有关\", \"status\": \"open\", \"source\": \"opening\", \"openedBranchId\": null, \"causeBranchId\": null, \"reason\": \"\", \"evidence\": \"\", \"priority\": \"unknown\", \"recoveryWindow\": \"unknown\"}]}, \"steps\": [{\"id\": \"S1\", \"actorId\": \"character_ae4cb42b9b49\", \"action\": \"隔着封山线指向倒地伤者，指出其胸口仍有起伏、喉间涌出血沫，说明人还活着；随即向守门弟子请求在铁链落锁前放行或唤人来救，话止于等待对方回应，不越线、不触碰伤者与空灯。\", \"requirementIds\": [\"A1\", \"A2\"], \"authority\": \"player\", \"causeStepId\": null, \"usedItemIds\": []}, {\"id\": \"S2\", \"actorId\": \"environment\", \"action\": \"山门铁链再响一声，雨势未歇，封山石上的水痕仍在；落锁尚未完成，时间仍在流逝。\", \"requirementIds\": [\"A2\"], \"authority\": \"reaction\", \"causeStepId\": \"S1\", \"usedItemIds\": []}], \"stateChanges\": [{\"id\": \"C1\", \"entityId\": \"character_ae4cb42b9b49\", \"attribute\": \"已向守门弟子指出伤者尚活并请求施救\", \"before\": null, \"value\": true, \"stepId\": \"S1\", \"reason\": \"陆照临当众说明伤者仍有呼吸并出言求援。\"}], \"scenePlan\": {\"start\": \"雨仍在下，你站在封山石外，铁链的响声还没停，倒地的人就在几步之外，手边是那盏没有点燃的灯。\", \"beats\": [{\"purpose\": \"兑现A1：陆照临把观察到的活人迹象说出口，让守门弟子无法当作死人处理。\", \"stepIds\": [\"S1\"]}, {\"purpose\": \"兑现A2：以未死为由争取落锁前施救，守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持。\", \"stepIds\": [\"S1\", \"S2\"]}, {\"purpose\": \"收束在等待：铁链未落尽，守门弟子尚未给出最终处置，把下一步留给玩家。\", \"stepIds\": [\"S2\"]}], \"outcome\": \"陆照临当众指出伤者尚有呼吸并请求施救；守门弟子听见了，但未立即放行，也未离开岗位，山门仍在将闭未闭之间。\", \"stop\": \"守门弟子尚未回答是否唤人或放行，铁链仍在响；陆照临停在封山线外，下一步由玩家决定。\", \"targetCjk\": [80, 1500], \"lengthReason\": \"需要呈现指出活人迹象的具体观察、陈情措辞、守门弟子的当场反应与铁链将落的紧迫感，并停在等待回应的节点，不宜过短也不需展开新线索。\", \"knowledge\": [{\"speakerId\": \"character_ae4cb42b9b49\", \"statement\": \"伤者胸口仍有起伏、喉间涌出血沫，人还活着；请求在落锁前放行或唤人来救。\", \"status\": \"pending\", \"sources\": [], \"afterStepId\": \"S1\"}], \"observationLimits\": [\"陆照临与伤者相隔数步，只能看到胸口起伏与喉间血沫，无法判断伤势轻重或能否救活。\", \"守门弟子的姓名、身份与职权范围未知；他是否会上报、是否会被说动，本回合不作保证。\", \"空灯为何不燃、伤者为何倒在此处，均无依据，不得推断。\"]}, \"premises\": {\"K1\": {\"speakerId\": \"character_ae4cb42b9b49\", \"statement\": \"伤者胸口仍有起伏、喉间涌出血沫，人还活着；请求在落锁前放行或唤人来救。\", \"status\": \"pending\", \"sources\": [], \"afterStepId\": \"S1\"}, \"O1\": {\"statement\": \"陆照临与伤者相隔数步，只能看到胸口起伏与喉间血沫，无法判断伤势轻重或能否救活。\"}, \"O2\": {\"statement\": \"守门弟子的姓名、身份与职权范围未知；他是否会上报、是否会被说动，本回合不作保证。\"}, \"O3\": {\"statement\": \"空灯为何不燃、伤者为何倒在此处，均无依据，不得推断。\"}}, \"sceneEvidence\": {\"opening-1\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"opening-2\": \"老人让你到玄霄宗问山门的灯。\", \"opening-3\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"opening-identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P1\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P2\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\", \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P3\": \"你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\"}}"
+          }
+        ],
+        "rawResponse": "{\"id\":\"6117fef3-57fd-4f05-a303-6b84ffffbd01\",\"object\":\"chat.completion\",\"created\":1790337067,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"decision\\\": \\\"revise\\\",\\n  \\\"issues\\\": [\\n    \\\"S2 中“山门铁链再响一声”属于环境事件，但玩家输入仅为“指出伤者尚有呼吸，争取在落锁前让他得到救助”，并未包含等待铁链再响或触发新环境声响的动作；上一段已有“山门上的铁链又响了”，本回合不应新增一次铁链响声。应改为维持已有环境状态（雨势未歇、水痕仍在、落锁尚未完成），不新增铁链再响。\\\",\\n    \\\"scenePlan 中“守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持”超出授权：玩家只请求救助并等待回应，未授权守门弟子在本回合给出态度松动或坚持的具体反应。应改为守门弟子尚未回答，或仅保留其听见请求但未立即处置的收束状态。\\\",\\n    \\\"scenePlan 的 outcome 中“守门弟子听见了，但未立即放行，也未离开岗位”属于NPC反应，但玩家输入未授权NPC在本回合做出可观察的回应；若保留，只能作为未回答的默认状态，不能写成已发生的反应。\\\",\\n    \\\"K1 状态为 pending 且 afterStepId 为 S1，但 S1 是玩家说出观察与请求，并非“伤者仍活着”这一事实的发现步骤；该事实在上一段已存在（伤者喉间涌出血沫），不应作为本轮新产生的知识。应改为 existing 或调整来源。\\\",\\n    \\\"O1 中“只能看到胸口起伏与喉间血沫”是观察限制，但上一段已明确“伤者喉间涌出血沫”，因此该观察已发生，不是限制；且“无法判断伤势轻重或能否救活”属于合理限制，可保留。\\\",\\n    \\\"O2 中“守门弟子的姓名、身份与职权范围未知”与上一段“守门弟子”一致，可保留；但“他是否会上报、是否会被说动，本回合不作保证”是限制，不提供新事实，可保留。\\\",\\n    \\\"O3 中“空灯为何不燃、伤者为何倒在此处，均无依据，不得推断”是限制，可保留。\\\"\\n  ],\\n  \\\"checks\\\": [\\n    {\\n      \\\"stepId\\\": \\\"S1\\\",\\n      \\\"authorized\\\": true,\\n      \\\"basis\\\": \\\"player_input\\\",\\n      \\\"quote\\\": \\\"指出伤者尚有呼吸，争取在落锁前让他得到救助。\\\",\\n      \\\"reason\\\": \\\"玩家明确要求指出伤者尚有呼吸并争取救助，S1 的指向伤者、说明活人迹象、请求放行或唤人、不越线不触碰，均直接来自该输入。\\\"\\n    },\\n    {\\n      \\\"stepId\\\": \\\"S2\\\",\\n      \\\"authorized\\\": false,\\n      \\\"basis\\\": \\\"causal_reaction\\\",\\n      \\\"quote\\\": \\\"山门上的铁链又响了\\\",\\n      \\\"reason\\\": \\\"上一段已有铁链响声，但玩家本回合输入未包含等待铁链再响或触发新环境声响的动作；S2 新增“山门铁链再响一声”属于额外环境事件，不能由玩家请求直接因果推出。应改为维持已有环境状态，不新增铁链响声。\\\"\\n    }\\n  ],\\n  \\\"stateChecks\\\": [\\n    {\\n      \\\"changeId\\\": \\\"C1\\\",\\n      \\\"authorized\\\": true,\\n      \\\"reason\\\": \\\"玩家输入明确要求指出伤者尚有呼吸并争取救助，C1 登记“已向守门弟子指出伤者尚活并请求施救”是玩家本回合实际执行的行为，授权成立。\\\"\\n    }\\n  ],\\n  \\\"premiseChecks\\\": [\\n    {\\n      \\\"id\\\": \\\"K1\\\",\\n      \\\"kind\\\": \\\"after_step\\\",\\n      \\\"verdict\\\": \\\"unsupported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P3\\\",\\n          \\\"quote\\\": \\\"伤者喉间涌出血沫，半句话断在雨声里。\\\"\\n        }\\n      ],\\n      \\\"stepIds\\\": [\\n        \\\"S1\\\"\\n      ],\\n      \\\"missingEvidence\\\": [\\n        \\\"伤者胸口仍有起伏、喉间涌出血沫，人还活着——该事实在上一段已存在，并非 S1 新产生；S1 只是说出该观察并请求救助。\\\"\\n      ],\\n      \\\"reason\\\": \\\"K1 将“伤者仍活着”列为 pending 且依赖 S1，但上一段已明确伤者喉间涌出血沫，该事实在本轮之前已存在，不应作为本轮新产生的知识。应改为 existing 或调整来源。\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"O1\\\",\\n      \\\"kind\\\": \\\"restriction\\\",\\n      \\\"verdict\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P3\\\",\\n          \\\"quote\\\": \\\"伤者喉间涌出血沫，半句话断在雨声里。\\\"\\n        }\\n      ],\\n      \\\"stepIds\\\": [],\\n      \\\"missingEvidence\\\": [],\\n      \\\"reason\\\": \\\"O1 中“无法判断伤势轻重或能否救活”是合理的观察限制，不提供新事实；但“只能看到胸口起伏与喉间血沫”中“胸口起伏”在上一段未明确出现，若作为限制需确认其可见性。整体作为限制可保留。\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"O2\\\",\\n      \\\"kind\\\": \\\"restriction\\\",\\n      \\\"verdict\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P2\\\",\\n          \\\"quote\\\": \\\"守门弟子按住剑柄，不许你靠近。\\\"\\n        }\\n      ],\\n      \\\"stepIds\\\": [],\\n      \\\"missingEvidence\\\": [],\\n      \\\"reason\\\": \\\"O2 中“守门弟子的姓名、身份与职权范围未知”与上一段一致；“他是否会上报、是否会被说动，本回合不作保证”是限制，不提供新事实，可保留。\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"O3\\\",\\n      \\\"kind\\\": \\\"restriction\\\",\\n      \\\"verdict\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P2\\\",\\n          \\\"quote\\\": \\\"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。\\\"\\n        }\\n      ],\\n      \\\"stepIds\\\": [],\\n      \\\"missingEvidence\\\": [],\\n      \\\"reason\\\": \\\"O3 中“空灯为何不燃、伤者为何倒在此处，均无依据，不得推断”是限制，不提供新事实，可保留。\\\"\\n    }\\n  ]\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":2711,\"completion_tokens\":1516,\"total_tokens\":4227,\"prompt_tokens_details\":{\"cached_tokens\":1280},\"prompt_cache_hit_tokens\":1280,\"prompt_cache_miss_tokens\":1431},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+        "content": "{\n  \"decision\": \"revise\",\n  \"issues\": [\n    \"S2 中“山门铁链再响一声”属于环境事件，但玩家输入仅为“指出伤者尚有呼吸，争取在落锁前让他得到救助”，并未包含等待铁链再响或触发新环境声响的动作；上一段已有“山门上的铁链又响了”，本回合不应新增一次铁链响声。应改为维持已有环境状态（雨势未歇、水痕仍在、落锁尚未完成），不新增铁链再响。\",\n    \"scenePlan 中“守门弟子给出当场回应——不越权放行，但态度与处置出现可观察的松动或坚持”超出授权：玩家只请求救助并等待回应，未授权守门弟子在本回合给出态度松动或坚持的具体反应。应改为守门弟子尚未回答，或仅保留其听见请求但未立即处置的收束状态。\",\n    \"scenePlan 的 outcome 中“守门弟子听见了，但未立即放行，也未离开岗位”属于NPC反应，但玩家输入未授权NPC在本回合做出可观察的回应；若保留，只能作为未回答的默认状态，不能写成已发生的反应。\",\n    \"K1 状态为 pending 且 afterStepId 为 S1，但 S1 是玩家说出观察与请求，并非“伤者仍活着”这一事实的发现步骤；该事实在上一段已存在（伤者喉间涌出血沫），不应作为本轮新产生的知识。应改为 existing 或调整来源。\",\n    \"O1 中“只能看到胸口起伏与喉间血沫”是观察限制，但上一段已明确“伤者喉间涌出血沫”，因此该观察已发生，不是限制；且“无法判断伤势轻重或能否救活”属于合理限制，可保留。\",\n    \"O2 中“守门弟子的姓名、身份与职权范围未知”与上一段“守门弟子”一致，可保留；但“他是否会上报、是否会被说动，本回合不作保证”是限制，不提供新事实，可保留。\",\n    \"O3 中“空灯为何不燃、伤者为何倒在此处，均无依据，不得推断”是限制，可保留。\"\n  ],\n  \"checks\": [\n    {\n      \"stepId\": \"S1\",\n      \"authorized\": true,\n      \"basis\": \"player_input\",\n      \"quote\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\",\n      \"reason\": \"玩家明确要求指出伤者尚有呼吸并争取救助，S1 的指向伤者、说明活人迹象、请求放行或唤人、不越线不触碰，均直接来自该输入。\"\n    },\n    {\n      \"stepId\": \"S2\",\n      \"authorized\": false,\n      \"basis\": \"causal_reaction\",\n      \"quote\": \"山门上的铁链又响了\",\n      \"reason\": \"上一段已有铁链响声，但玩家本回合输入未包含等待铁链再响或触发新环境声响的动作；S2 新增“山门铁链再响一声”属于额外环境事件，不能由玩家请求直接因果推出。应改为维持已有环境状态，不新增铁链响声。\"\n    }\n  ],\n  \"stateChecks\": [\n    {\n      \"changeId\": \"C1\",\n      \"authorized\": true,\n      \"reason\": \"玩家输入明确要求指出伤者尚有呼吸并争取救助，C1 登记“已向守门弟子指出伤者尚活并请求施救”是玩家本回合实际执行的行为，授权成立。\"\n    }\n  ],\n  \"premiseChecks\": [\n    {\n      \"id\": \"K1\",\n      \"kind\": \"after_step\",\n      \"verdict\": \"unsupported\",\n      \"sources\": [\n        {\n          \"id\": \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P3\",\n          \"quote\": \"伤者喉间涌出血沫，半句话断在雨声里。\"\n        }\n      ],\n      \"stepIds\": [\n        \"S1\"\n      ],\n      \"missingEvidence\": [\n        \"伤者胸口仍有起伏、喉间涌出血沫，人还活着——该事实在上一段已存在，并非 S1 新产生；S1 只是说出该观察并请求救助。\"\n      ],\n      \"reason\": \"K1 将“伤者仍活着”列为 pending 且依赖 S1，但上一段已明确伤者喉间涌出血沫，该事实在本轮之前已存在，不应作为本轮新产生的知识。应改为 existing 或调整来源。\"\n    },\n    {\n      \"id\": \"O1\",\n      \"kind\": \"restriction\",\n      \"verdict\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P3\",\n          \"quote\": \"伤者喉间涌出血沫，半句话断在雨声里。\"\n        }\n      ],\n      \"stepIds\": [],\n      \"missingEvidence\": [],\n      \"reason\": \"O1 中“无法判断伤势轻重或能否救活”是合理的观察限制，不提供新事实；但“只能看到胸口起伏与喉间血沫”中“胸口起伏”在上一段未明确出现，若作为限制需确认其可见性。整体作为限制可保留。\"\n    },\n    {\n      \"id\": \"O2\",\n      \"kind\": \"restriction\",\n      \"verdict\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P2\",\n          \"quote\": \"守门弟子按住剑柄，不许你靠近。\"\n        }\n      ],\n      \"stepIds\": [],\n      \"missingEvidence\": [],\n      \"reason\": \"O2 中“守门弟子的姓名、身份与职权范围未知”与上一段一致；“他是否会上报、是否会被说动，本回合不作保证”是限制，不提供新事实，可保留。\"\n    },\n    {\n      \"id\": \"O3\",\n      \"kind\": \"restriction\",\n      \"verdict\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"history-branch_e07fab57-8d5c-4ee5-8526-e69e0488551a-P2\",\n          \"quote\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。\"\n        }\n      ],\n      \"stepIds\": [],\n      \"missingEvidence\": [],\n      \"reason\": \"O3 中“空灯为何不燃、伤者为何倒在此处，均无依据，不得推断”是限制，不提供新事实，可保留。\"\n    }\n  ]\n}",
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 6301,
+              "responseHeadersMs": 277,
+              "completeBodyMs": 6301
+            }
+          }
+        ]
+      }
+    ],
+    "proseCalls": 0
+  }
+}

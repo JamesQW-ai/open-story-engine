@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "action-history-labels/1",
+  "packageId": "taixu-relics-part1",
+  "packageVersion": "0.1.3",
+  "novelSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+  "characterId": "character_ae4cb42b9b49",
+  "labelOrigin": "assistant_authored_controls_not_independent_human_review",
+  "scope": "合成回合排列，引用当前官方开场原文；不代表原著实际发生这些回合，也不是正文质量验收。",
+  "historyCases": [
+    {"id":"lamp-odd-prefix","action":"看空灯","source":"visibleItems.1","expectedPrior":true,"reason":"空灯当前位置与归属直接支持观察对象；不能因单字前缀漏掉。"},
+    {"id":"lamp-even-prefix","action":"看看空灯","source":"visibleItems.1","expectedPrior":true,"reason":"与单字前缀表达相同观察对象。"},
+    {"id":"document-odd-prefix","action":"读文书","source":"visibleItems.0","expectedPrior":true,"reason":"文书在玩家手中且未交出，是当前查看动作的直接承接。"},
+    {"id":"document-even-prefix","action":"阅读文书","source":"visibleItems.0","expectedPrior":true,"reason":"与单字前缀表达相同查看对象。"},
+    {"id":"compound-action","action":"先看空灯，再读文书","source":"visibleItems.1","expectedPrior":true,"reason":"复合行动的第一项仍须获得空灯位置依据。"},
+    {"id":"explicit-plan","action":"沉默","source":"knownFacts.0","explicit":true,"expectedPrior":true,"reason":"已校验计划明确引用父亲失踪依据，不能因行动中没有实体名而漏掉。"},
+    {"id":"parent-reference","action":"照他说的做","source":"knownFacts.1","parent":"你记起老人交代的话。","expectedPrior":true,"reason":"上一页明确关联老人的交代，需保留指代承接依据。"},
+    {"id":"no-topic","action":"继续等候","source":"knownFacts.0","expectedPrior":false,"reason":"单纯等候不需要主动召回父亲失踪摘要；父页仍单独保留。"},
+    {"id":"shared-hand-location","action":"看看手边的引荐文书","source":"visibleItems.1","expectedPrior":false,"reason":"伤者手边的灯不是玩家手边的文书；共享手边一词不足以标记为所需历史。"},
+    {"id":"shared-pronoun","action":"看看他们的姓名","source":"paragraph.2","quote":"你已经请他们叫执事来，得到的却是质问。","expectedPrior":false,"reason":"曾请他们叫人不提供姓名依据；代词相同不证明历史相关。"},
+    {"id":"distinct-topic","action":"阅读引荐文书","source":"knownFacts.0","expectedPrior":false,"reason":"父亲失踪材料不直接支持此处文书查看。"},
+    {"id":"parent-only-pronoun","action":"按刚才说的继续","source":"visibleItems.0","expectedPrior":false,"reason":"父页没有把指代绑定到文书；保留父页，但不能凭不明确指代补选文书来源。"}
+  ],
+  "memoryCases": [
+    {"id":"active-goal","profile":"goal","turns":1,"actionMode":"target","expectedCurrent":true,"reason":"当前明确点名的未完成目标需保留。"},
+    {"id":"open-thread","profile":"thread","turns":1,"actionMode":"target","expectedCurrent":true,"reason":"当前明确点名的未结问题需保留。"},
+    {"id":"completed-goal","profile":"goal","turns":4,"actionMode":"target","expectedCurrent":true,"reason":"已完成状态取代旧进行中状态，不能复活旧事实。"},
+    {"id":"resolved-thread","profile":"thread","turns":4,"actionMode":"target","expectedCurrent":true,"reason":"已解决状态取代旧待处理状态。"},
+    {"id":"irrelevant-goal","profile":"goal","turns":1,"actionMode":"unrelated","expectedCurrent":false,"reason":"无关目标不得仅因存在账本就进入动态记忆。"},
+    {"id":"irrelevant-thread","profile":"thread","turns":1,"actionMode":"unrelated","expectedCurrent":false,"reason":"无关问题不得堆入动态记忆。"},
+    {"id":"invalid-goal-source","profile":"goal","turns":1,"actionMode":"target","tamper":true,"expectedCurrent":false,"reason":"来源正文变化使回执失效，不得仍当确认记忆。"},
+    {"id":"invalid-thread-source","profile":"thread","turns":1,"actionMode":"target","tamper":true,"expectedCurrent":false,"reason":"来源正文变化使回执失效，不得仍当确认记忆。"}
+  ]
+}

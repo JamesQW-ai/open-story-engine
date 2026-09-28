@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "jev-real-conservative-fallback/0.2",
+  "status": "completed",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3",
+    "cjk": 102610
+  },
+  "source": "natural_live_action",
+  "writerRoute": "direct",
+  "writerModel": "deepseek-v4-flash",
+  "jevMode": "shadow",
+  "scenario": "second_review_fail_conservative_fallback_current_template",
+  "action": "我观察门上的封山刻痕和伤者呼吸，只向守门弟子询问能否通传救助，既不移动也不触碰铁链。",
+  "statusCode": 200,
+  "requestElapsedMs": 41427,
+  "firstVisibleTextMs": 41239,
+  "visibleCharacterCount": 143,
+  "branchWritten": true,
+  "fallbackMode": "conservative_approved",
+  "fallbackReason": "second_review_failed",
+  "branchStateUnchanged": true,
+  "candidateShown": false,
+  "writer": {
+    "fallbackAuditCount": 1
+  },
+  "jev": {
+    "status": "ok",
+    "decision": "allow_with_patch",
+    "durationMs": 6555,
+    "model": "typesafe/jev-1.13-20260917",
+    "scoreIsObservational": true
+  },
+  "ordering": [
+    "writer_two_reviews_failed",
+    "conservative_fallback_validated",
+    "jev_review",
+    "commit",
+    "branch_written",
+    "approved_replay"
+  ],
+  "limitations": [
+    "这是单条自然真实 fallback 样本，不能估计该路径的质量或 P50/P95。",
+    "Jev 处于 shadow，不阻断本次提交；正式 block 仍关闭。"
+  ]
+}

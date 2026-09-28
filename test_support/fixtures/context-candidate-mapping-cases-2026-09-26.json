@@ -1,0 +1,232 @@
+{
+  "schemaVersion": "context-candidate-mapping-cases/0.1",
+  "labelAuthor": "Codex",
+  "scope": "定位已给定的单个原文片段到场景位置关系；不测试全稿自动定位或所有命题覆盖。",
+  "bindings": {
+    "test_support/fixtures/context-scene-relations-2026-09-26.json": "6fc47d80c86449e6ebf7449eb7222837a795310de6e89ce8fc2ef134a5995bc8",
+    "test_support/fixtures/context-scene-relations-review-2026-09-26.json": "4bae2096311bcb6c6f1c550ce0cdc0919d1f62214e93bcbff7aa0ad509f29abb",
+    "test_support/fixtures/context-relation-cases-2026-09-26.json": "360112ea882f975cae8a1a56777163c3b40a6009b50af3bf4b2a2d6afbad4fc1"
+  },
+  "entities": {
+    "scene:wounded_stranger": {
+      "kind": "scene_person",
+      "mentions": [
+        "伤者",
+        "陌生伤者"
+      ]
+    },
+    "scene:sealing_line": {
+      "kind": "scene_boundary",
+      "mentions": [
+        "封山线"
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "position_out",
+      "origin": "position_out",
+      "draft": "伤者在封山线外。",
+      "target": {
+        "start": 0,
+        "end": 8,
+        "quote": "伤者在封山线外。"
+      },
+      "draftSha256": "e1bb77fd10e54e4eef107fddefe0bf15bfac056ba2c4000226cb8313501e4117",
+      "expectedStatus": "candidate",
+      "expectedNormal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "outside",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "expectedLimitations": [],
+      "rationale": "保留已复核正文中的位置及肯否，不根据来源真实位置改写。"
+    },
+    {
+      "id": "position_in",
+      "origin": "position_in",
+      "draft": "伤者在封山线内。",
+      "target": {
+        "start": 0,
+        "end": 8,
+        "quote": "伤者在封山线内。"
+      },
+      "draftSha256": "8decb3772ba5155b9d362123361fe6402d8445d167627b90ead3a1e5cc4b9a48",
+      "expectedStatus": "candidate",
+      "expectedNormal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "inside",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "expectedLimitations": [],
+      "rationale": "保留已复核正文中的位置及肯否，不根据来源真实位置改写。"
+    },
+    {
+      "id": "position_not_out",
+      "origin": "position_not_out",
+      "draft": "伤者不在封山线外。",
+      "target": {
+        "start": 0,
+        "end": 9,
+        "quote": "伤者不在封山线外。"
+      },
+      "draftSha256": "22d171aa5a528f335cc9c249d466f5f028d6fc06066c1b405edd9e3c385bb010",
+      "expectedStatus": "candidate",
+      "expectedNormal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "outside",
+        "polarity": "negative",
+        "time": "snapshot",
+        "condition": null
+      },
+      "expectedLimitations": [],
+      "rationale": "保留已复核正文中的位置及肯否，不根据来源真实位置改写。"
+    },
+    {
+      "id": "position_not_in",
+      "origin": "position_not_in",
+      "draft": "伤者不在封山线内。",
+      "target": {
+        "start": 0,
+        "end": 9,
+        "quote": "伤者不在封山线内。"
+      },
+      "draftSha256": "69514dd56cf12282eeab8fc29a39923453b972b9d0fbdb815243b56d5bb9f763",
+      "expectedStatus": "candidate",
+      "expectedNormal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "inside",
+        "polarity": "negative",
+        "time": "snapshot",
+        "condition": null
+      },
+      "expectedLimitations": [],
+      "rationale": "保留已复核正文中的位置及肯否，不根据来源真实位置改写。"
+    },
+    {
+      "id": "original_C10",
+      "origin": "recorded_v11:C10",
+      "draft": "“他还活着。”你朝守门弟子迈出半步，声音压过雨声，“胸口还在动，手也攥着灯——落锁前把他挪进去，兴许还有救。”\n\n守门弟子侧过身，目光从你脸上移到封山线内那道伏着的人影上，眉头拧紧，却没有立刻让开。铁链又响了一声，他抬手按在门框边，像是在等你说完，又像是在等别的什么。",
+      "target": {
+        "start": 65,
+        "end": 86,
+        "quote": "目光从你脸上移到封山线内那道伏着的人影上，"
+      },
+      "draftSha256": "be082fef3489604f9b9a906a1bcc355aa50fec14bb5aa085980843c0486507aa",
+      "expectedStatus": "candidate",
+      "expectedNormal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "inside",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "expectedLimitations": [],
+      "rationale": "保留已复核正文中的位置及肯否，不根据来源真实位置改写。"
+    },
+    {
+      "id": "past",
+      "origin": "synthetic_boundary_contrast",
+      "draft": "伤者昨天在封山线内。",
+      "target": {
+        "start": 0,
+        "end": 10,
+        "quote": "伤者昨天在封山线内。"
+      },
+      "draftSha256": "65de85c65724fc2a2462f78cd1b9312e4bda03745719af4fc93284df6da2398a",
+      "expectedStatus": "needs_review",
+      "expectedNormal": null,
+      "expectedLimitations": [
+        "time"
+      ],
+      "limitationQuote": "昨天",
+      "rationale": "冻结的官方场景边界反例，不是新确认的故事事实；本版关系域不能忠实承载该限定或解析该实体。"
+    },
+    {
+      "id": "condition",
+      "origin": "synthetic_boundary_contrast",
+      "draft": "如果守门弟子放行，伤者就在封山线内。",
+      "target": {
+        "start": 0,
+        "end": 18,
+        "quote": "如果守门弟子放行，伤者就在封山线内。"
+      },
+      "draftSha256": "ceff3a16649064c73b6368df0543b8691b152e0aa5f43c2eb0fbf847d4024ebe",
+      "expectedStatus": "needs_review",
+      "expectedNormal": null,
+      "expectedLimitations": [
+        "condition"
+      ],
+      "limitationQuote": "如果守门弟子放行",
+      "rationale": "冻结的官方场景边界反例，不是新确认的故事事实；本版关系域不能忠实承载该限定或解析该实体。"
+    },
+    {
+      "id": "possible",
+      "origin": "synthetic_boundary_contrast",
+      "draft": "伤者可能在封山线内。",
+      "target": {
+        "start": 0,
+        "end": 10,
+        "quote": "伤者可能在封山线内。"
+      },
+      "draftSha256": "51a355ca140fea96e9d84832e299ae0fc486955e45a28f1b847a57cc1633d863",
+      "expectedStatus": "needs_review",
+      "expectedNormal": null,
+      "expectedLimitations": [
+        "modality"
+      ],
+      "limitationQuote": "可能",
+      "rationale": "冻结的官方场景边界反例，不是新确认的故事事实；本版关系域不能忠实承载该限定或解析该实体。"
+    },
+    {
+      "id": "unknown_subject",
+      "origin": "synthetic_boundary_contrast",
+      "draft": "守门弟子在封山线内。",
+      "target": {
+        "start": 0,
+        "end": 10,
+        "quote": "守门弟子在封山线内。"
+      },
+      "draftSha256": "263e88511fb2dde22dea4ba438cc702289ad1a073c2407857848b8c90464f238",
+      "expectedStatus": "needs_review",
+      "expectedNormal": null,
+      "expectedLimitations": [
+        "unresolved_subject"
+      ],
+      "limitationQuote": "守门弟子",
+      "rationale": "冻结的官方场景边界反例，不是新确认的故事事实；本版关系域不能忠实承载该限定或解析该实体。"
+    },
+    {
+      "id": "unknown_boundary",
+      "origin": "synthetic_boundary_contrast",
+      "draft": "伤者在宗门结界内。",
+      "target": {
+        "start": 0,
+        "end": 9,
+        "quote": "伤者在宗门结界内。"
+      },
+      "draftSha256": "7f3779a7d94207b17b9c56e5b44c289dc877d37f0e97c3c168fcbe71ebbab4a6",
+      "expectedStatus": "needs_review",
+      "expectedNormal": null,
+      "expectedLimitations": [
+        "unresolved_object"
+      ],
+      "limitationQuote": "宗门结界",
+      "rationale": "冻结的官方场景边界反例，不是新确认的故事事实；本版关系域不能忠实承载该限定或解析该实体。"
+    }
+  ]
+}

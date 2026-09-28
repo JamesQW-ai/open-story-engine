@@ -1,0 +1,340 @@
+{
+  "schemaVersion": "context-review-regressions/0.1",
+  "status": "completed",
+  "recordedAt": "2026-09-25T07:56:34.581470+00:00",
+  "fixture": "test_support/fixtures/context-review-regressions-2026-09-25.json",
+  "fixtureSha256": "2867c363d66720061d0eef0e62ddc58de81f493f83e96f29e5c452462b001aaf",
+  "boundary": "只评估逐段场景审核与人工标注类别，不等于完整Planner或提交验收；合成正文不是官方母本。",
+  "formalSessionWrites": 0,
+  "jevCalls": 0,
+  "model": {
+    "route": "direct",
+    "model": "deepseek-v4-flash"
+  },
+  "cases": [
+    {
+      "caseId": "request_then_wait",
+      "arm": "current",
+      "expectedIssues": [],
+      "status": "matched",
+      "actualIssues": [],
+      "missedIssues": [],
+      "extraIssues": [],
+      "unlocated": [],
+      "call": {
+        "kind": "complete_json",
+        "messages": [
+          {
+            "role": "system",
+            "content": "在同一个审核JSON中增加sceneChecks，逐段检查玩家选择权与背景信息，每段一条：{\"paragraphId\":\"P1\",\"playerDecision\":\"none|authorized|overreach\",\"background\":\"none|supported|unsupported\",\"sources\":[{\"id\":\"sceneEvidence中的键\",\"quote\":\"该条资料的逐字原文片段\"}],\"quote\":\"实际错误的逐字短句；无问题为空\", \"issue\":\"具体问题，无问题为空\"}。\n顶层issues只列实际语义错误，每条使用{\"paragraphId\":\"存在的正文段落编号\",\"type\":\"action|background|continuity|state\",\"quote\":\"该段中实际有错的逐字短句，不包含无关句子\",\"reason\":\"具体违反什么要求及依赖此错误的相邻段落\"}。逐项列全，不只报告第一处；同段不同错误也分别说明。若问题定位在事件，可附eventId，但不要把段落编号或事件编号只写在reason句子中。整回合缺少某项行动而无法定位时paragraphId用null，不编造编号。引文编号抄写错误不算正文语义错误；按输入修正引文即可。sceneChecks和eventChecks中的拒绝判定必须保留，不能为了让issues为空而改成通过。\n不能只核对状态是否改变。玩家开口追问新问题、接受提议、作出承诺、认定某人可信、决定后续行程，即使没有移动或转交物品，也是决策。原始输入已授权的问题可以自然分句、复问不清楚的同一问题；对方回答带出的新问题、NPC主动建议的新任务，必须留给玩家选择，擅自执行为overreach。抬眼、呼吸等没有新意图的短暂动作是none。resultContract不能自行扩张原始输入的授权边界。\n事实检查覆盖叙述和全部台词，不因是劝说、建议、提醒或猜测而豁免。人物经历、规则、位置、物品内部状态、伤势程度、存活时限与因果判断均需sceneEvidence支持；已知仍活着不证明存活期限，外部物品描述不证明内部状态。加“可能”、假设条件或借NPC之口都不产生证据。此处background表示需要核实的事实，不仅指过去：现在的物理状态或未来结果预测也须核对。只有不引入这类事实的当场动作、态度、请求和明确承认未知可标none；任一缺证断言须标unsupported并引用最小错误片段，有来源的观察保留为supported。\n背景supported时sources必须覆盖该段全部背景断言，逐字引用sceneEvidence，不能引用新正文、规划器的解释或自己的审查理由。没有背景断言时sources为空数组。公开前情里的NPC说法只能证明他曾这样说，不能自动升级为客观真相或可信经历。发现问题明确报告，不为了凑字数或让生成通过而放行。\n\n核对NPC反问后的实际行为：原输入只授权陈述或请求时，新增玩家答复、承诺或决定才是overreach；没有替玩家回答、停在等待或当场姿态处，是保留选择权，不能以“跳过回应”“选择被悬置”判越权。当前请求直接引起的NPC回应本身不要求玩家另行授权，但不得借此执行玩家下一步决定；纯等待未来条件的输入仍不能提前兑现该条件。行动问题须引用实际越权的玩家行为，不能仅引用NPC问题。回答与原话的自然拆分须结合先后判断。observedEvents标为background或recollection的事实仍须核对依据。\n\n背景来源核对须覆盖该段每一个背景断言，包括否定、数量、人物、时间与条件。不能仅引用同主题前文；“不得越界”不能支持“必须越界”，“没提及经历”不能证明“没有经历”。先查冲突和缺证，再判supported。不要输出backgroundClaims或重抄当前段落，程序会把整段原文交给独立依据核对。任何断言缺证或矛盾，该段background标unsupported并在issue中说明全部问题。\n规矩、资格、允许或禁止的结论，以及具体的光线、声音、材质、厚薄等感官或物理细节，必须由同一条公开来源同时支持规则与对象或具体细节；泛泛的场景气氛、无关人物经历或同主题但未提及对象的引文不能充当依据。\npriorRepairIssues若存在，逐项检查当前正文是否实质修复，不能以换词方式保留相同的缺证事实或越权动作；旧判定仅供核查，不要求无条件沿用。对白改写后还要核对相邻段的引用、问答和因果：不得叙述“说完某句话”而当前前文已无该话。只审核当前完整正文，不能把上一版已删台词当作仍然发生。\n\n精确定位问题：issues.quote只引用实际错误句，保留同段正确内容。删除对白会影响相邻引用、回答或反应时，把受影响句子一并列入issues，不直接判整段无效。只因正文短于scenePlan预算不能报告问题；确实遗漏原始要求才按行动完整性拒绝。\nknowledge.sourceKinds标识来源权威级别。history_scene中的已发生动作可以承接，人物说法不能自动证明客观背景；明确保留来源的转述可以通过。人物当场表情、语气、感受和对眼前交流的理解不因缺少前史而拒绝。推断须有真实前提且保留不确定性，不能以“可能”掩盖虚构观察。核对scenePlan.observationLimits与authoritativeState，包裹内部不可见等条件不能被正文无声改写。NPC明确拒绝应作为请求受阻处理，正常对视不等于检查被排除物品。\n"
+          },
+          {
+            "role": "user",
+            "content": "{\"input\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"requirements\": {\"A1\": \"指出伤者尚有呼吸\", \"A2\": \"争取在落锁前让他得到救助\"}, \"sceneEvidence\": {\"opening-1\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"opening-2\": \"老人让你到玄霄宗问山门的灯。\", \"opening-3\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"opening-identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P1\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P2\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\": \"你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\"}, \"draft\": {\"P1\": \"“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\", \"P2\": \"“你愿意担责吗？”守门弟子问。\", \"P3\": \"你没有回答，仍站在原地。\"}}"
+          }
+        ],
+        "rawResponse": "{\"id\":\"102b0f54-ba4d-4e98-8862-7cde8ab2d53d\",\"object\":\"chat.completion\",\"created\":1790322995,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"type\\\": \\\"json_object\\\",\\n  \\\"issues\\\": [],\\n  \\\"sceneChecks\\\": [\\n    {\\n      \\\"paragraphId\\\": \\\"P1\\\",\\n      \\\"playerDecision\\\": \\\"authorized\\\",\\n      \\\"background\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"opening-3\\\",\\n          \\\"quote\\\": \\\"伤者仍活着\\\"\\n        }\\n      ],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P2\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"none\\\",\\n      \\\"sources\\\": [],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P3\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"none\\\",\\n      \\\"sources\\\": [],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    }\\n  ],\\n  \\\"eventChecks\\\": []\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1653,\"completion_tokens\":190,\"total_tokens\":1843,\"prompt_tokens_details\":{\"cached_tokens\":128},\"prompt_cache_hit_tokens\":128,\"prompt_cache_miss_tokens\":1525},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+        "content": "{\n  \"type\": \"json_object\",\n  \"issues\": [],\n  \"sceneChecks\": [\n    {\n      \"paragraphId\": \"P1\",\n      \"playerDecision\": \"authorized\",\n      \"background\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"opening-3\",\n          \"quote\": \"伤者仍活着\"\n        }\n      ],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P2\",\n      \"playerDecision\": \"none\",\n      \"background\": \"none\",\n      \"sources\": [],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P3\",\n      \"playerDecision\": \"none\",\n      \"background\": \"none\",\n      \"sources\": [],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    }\n  ],\n  \"eventChecks\": []\n}",
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 909,
+              "responseHeadersMs": 215,
+              "completeBodyMs": 909
+            }
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "unsolicited_commitment",
+      "arm": "current",
+      "expectedIssues": [
+        [
+          "P3",
+          "action"
+        ]
+      ],
+      "status": "matched",
+      "actualIssues": [
+        [
+          "P3",
+          "action"
+        ]
+      ],
+      "missedIssues": [],
+      "extraIssues": [],
+      "unlocated": [],
+      "call": {
+        "kind": "complete_json",
+        "messages": [
+          {
+            "role": "system",
+            "content": "在同一个审核JSON中增加sceneChecks，逐段检查玩家选择权与背景信息，每段一条：{\"paragraphId\":\"P1\",\"playerDecision\":\"none|authorized|overreach\",\"background\":\"none|supported|unsupported\",\"sources\":[{\"id\":\"sceneEvidence中的键\",\"quote\":\"该条资料的逐字原文片段\"}],\"quote\":\"实际错误的逐字短句；无问题为空\", \"issue\":\"具体问题，无问题为空\"}。\n顶层issues只列实际语义错误，每条使用{\"paragraphId\":\"存在的正文段落编号\",\"type\":\"action|background|continuity|state\",\"quote\":\"该段中实际有错的逐字短句，不包含无关句子\",\"reason\":\"具体违反什么要求及依赖此错误的相邻段落\"}。逐项列全，不只报告第一处；同段不同错误也分别说明。若问题定位在事件，可附eventId，但不要把段落编号或事件编号只写在reason句子中。整回合缺少某项行动而无法定位时paragraphId用null，不编造编号。引文编号抄写错误不算正文语义错误；按输入修正引文即可。sceneChecks和eventChecks中的拒绝判定必须保留，不能为了让issues为空而改成通过。\n不能只核对状态是否改变。玩家开口追问新问题、接受提议、作出承诺、认定某人可信、决定后续行程，即使没有移动或转交物品，也是决策。原始输入已授权的问题可以自然分句、复问不清楚的同一问题；对方回答带出的新问题、NPC主动建议的新任务，必须留给玩家选择，擅自执行为overreach。抬眼、呼吸等没有新意图的短暂动作是none。resultContract不能自行扩张原始输入的授权边界。\n事实检查覆盖叙述和全部台词，不因是劝说、建议、提醒或猜测而豁免。人物经历、规则、位置、物品内部状态、伤势程度、存活时限与因果判断均需sceneEvidence支持；已知仍活着不证明存活期限，外部物品描述不证明内部状态。加“可能”、假设条件或借NPC之口都不产生证据。此处background表示需要核实的事实，不仅指过去：现在的物理状态或未来结果预测也须核对。只有不引入这类事实的当场动作、态度、请求和明确承认未知可标none；任一缺证断言须标unsupported并引用最小错误片段，有来源的观察保留为supported。\n背景supported时sources必须覆盖该段全部背景断言，逐字引用sceneEvidence，不能引用新正文、规划器的解释或自己的审查理由。没有背景断言时sources为空数组。公开前情里的NPC说法只能证明他曾这样说，不能自动升级为客观真相或可信经历。发现问题明确报告，不为了凑字数或让生成通过而放行。\n\n核对NPC反问后的实际行为：原输入只授权陈述或请求时，新增玩家答复、承诺或决定才是overreach；没有替玩家回答、停在等待或当场姿态处，是保留选择权，不能以“跳过回应”“选择被悬置”判越权。当前请求直接引起的NPC回应本身不要求玩家另行授权，但不得借此执行玩家下一步决定；纯等待未来条件的输入仍不能提前兑现该条件。行动问题须引用实际越权的玩家行为，不能仅引用NPC问题。回答与原话的自然拆分须结合先后判断。observedEvents标为background或recollection的事实仍须核对依据。\n\n背景来源核对须覆盖该段每一个背景断言，包括否定、数量、人物、时间与条件。不能仅引用同主题前文；“不得越界”不能支持“必须越界”，“没提及经历”不能证明“没有经历”。先查冲突和缺证，再判supported。不要输出backgroundClaims或重抄当前段落，程序会把整段原文交给独立依据核对。任何断言缺证或矛盾，该段background标unsupported并在issue中说明全部问题。\n规矩、资格、允许或禁止的结论，以及具体的光线、声音、材质、厚薄等感官或物理细节，必须由同一条公开来源同时支持规则与对象或具体细节；泛泛的场景气氛、无关人物经历或同主题但未提及对象的引文不能充当依据。\npriorRepairIssues若存在，逐项检查当前正文是否实质修复，不能以换词方式保留相同的缺证事实或越权动作；旧判定仅供核查，不要求无条件沿用。对白改写后还要核对相邻段的引用、问答和因果：不得叙述“说完某句话”而当前前文已无该话。只审核当前完整正文，不能把上一版已删台词当作仍然发生。\n\n精确定位问题：issues.quote只引用实际错误句，保留同段正确内容。删除对白会影响相邻引用、回答或反应时，把受影响句子一并列入issues，不直接判整段无效。只因正文短于scenePlan预算不能报告问题；确实遗漏原始要求才按行动完整性拒绝。\nknowledge.sourceKinds标识来源权威级别。history_scene中的已发生动作可以承接，人物说法不能自动证明客观背景；明确保留来源的转述可以通过。人物当场表情、语气、感受和对眼前交流的理解不因缺少前史而拒绝。推断须有真实前提且保留不确定性，不能以“可能”掩盖虚构观察。核对scenePlan.observationLimits与authoritativeState，包裹内部不可见等条件不能被正文无声改写。NPC明确拒绝应作为请求受阻处理，正常对视不等于检查被排除物品。\n"
+          },
+          {
+            "role": "user",
+            "content": "{\"input\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"requirements\": {\"A1\": \"指出伤者尚有呼吸\", \"A2\": \"争取在落锁前让他得到救助\"}, \"sceneEvidence\": {\"opening-1\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"opening-2\": \"老人让你到玄霄宗问山门的灯。\", \"opening-3\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"opening-identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P1\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P2\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\": \"你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\"}, \"draft\": {\"P1\": \"“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\", \"P2\": \"“你愿意担责吗？”守门弟子问。\", \"P3\": \"“我担这个责。”你回答。\"}}"
+          }
+        ],
+        "rawResponse": "{\"id\":\"695a5de7-9e6c-4803-9f3c-081eed200d8f\",\"object\":\"chat.completion\",\"created\":1790322995,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"type\\\": \\\"json_object\\\",\\n  \\\"issues\\\": [\\n    {\\n      \\\"paragraphId\\\": \\\"P3\\\",\\n      \\\"type\\\": \\\"action\\\",\\n      \\\"quote\\\": \\\"“我担这个责。”你回答。\\\",\\n      \\\"reason\\\": \\\"原始输入仅授权指出伤者尚有呼吸并争取在落锁前让他得到救助，未授权玩家接受守门弟子提出的担责要求或作出承诺。该新增承诺属于玩家决策，必须留给玩家选择，擅自执行构成越权。\\\"\\n    }\\n  ],\\n  \\\"sceneChecks\\\": [\\n    {\\n      \\\"paragraphId\\\": \\\"P1\\\",\\n      \\\"playerDecision\\\": \\\"authorized\\\",\\n      \\\"background\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"opening-3\\\",\\n          \\\"quote\\\": \\\"伤者仍活着\\\"\\n        }\\n      ],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P2\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"none\\\",\\n      \\\"sources\\\": [],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P3\\\",\\n      \\\"playerDecision\\\": \\\"overreach\\\",\\n      \\\"background\\\": \\\"none\\\",\\n      \\\"sources\\\": [],\\n      \\\"quote\\\": \\\"“我担这个责。”你回答。\\\",\\n      \\\"issue\\\": \\\"原始输入未授权玩家接受担责要求或作出承诺，该新增玩家决策属于越权。\\\"\\n    }\\n  ],\\n  \\\"eventChecks\\\": []\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1656,\"completion_tokens\":318,\"total_tokens\":1974,\"prompt_tokens_details\":{\"cached_tokens\":1408},\"prompt_cache_hit_tokens\":1408,\"prompt_cache_miss_tokens\":248},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+        "content": "{\n  \"type\": \"json_object\",\n  \"issues\": [\n    {\n      \"paragraphId\": \"P3\",\n      \"type\": \"action\",\n      \"quote\": \"“我担这个责。”你回答。\",\n      \"reason\": \"原始输入仅授权指出伤者尚有呼吸并争取在落锁前让他得到救助，未授权玩家接受守门弟子提出的担责要求或作出承诺。该新增承诺属于玩家决策，必须留给玩家选择，擅自执行构成越权。\"\n    }\n  ],\n  \"sceneChecks\": [\n    {\n      \"paragraphId\": \"P1\",\n      \"playerDecision\": \"authorized\",\n      \"background\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"opening-3\",\n          \"quote\": \"伤者仍活着\"\n        }\n      ],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P2\",\n      \"playerDecision\": \"none\",\n      \"background\": \"none\",\n      \"sources\": [],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P3\",\n      \"playerDecision\": \"overreach\",\n      \"background\": \"none\",\n      \"sources\": [],\n      \"quote\": \"“我担这个责。”你回答。\",\n      \"issue\": \"原始输入未授权玩家接受担责要求或作出承诺，该新增玩家决策属于越权。\"\n    }\n  ],\n  \"eventChecks\": []\n}",
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 1555,
+              "responseHeadersMs": 197,
+              "completeBodyMs": 1555
+            }
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "unsupported_deadline",
+      "arm": "current",
+      "expectedIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "status": "matched",
+      "actualIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "missedIssues": [],
+      "extraIssues": [],
+      "unlocated": [],
+      "call": {
+        "kind": "complete_json",
+        "messages": [
+          {
+            "role": "system",
+            "content": "在同一个审核JSON中增加sceneChecks，逐段检查玩家选择权与背景信息，每段一条：{\"paragraphId\":\"P1\",\"playerDecision\":\"none|authorized|overreach\",\"background\":\"none|supported|unsupported\",\"sources\":[{\"id\":\"sceneEvidence中的键\",\"quote\":\"该条资料的逐字原文片段\"}],\"quote\":\"实际错误的逐字短句；无问题为空\", \"issue\":\"具体问题，无问题为空\"}。\n顶层issues只列实际语义错误，每条使用{\"paragraphId\":\"存在的正文段落编号\",\"type\":\"action|background|continuity|state\",\"quote\":\"该段中实际有错的逐字短句，不包含无关句子\",\"reason\":\"具体违反什么要求及依赖此错误的相邻段落\"}。逐项列全，不只报告第一处；同段不同错误也分别说明。若问题定位在事件，可附eventId，但不要把段落编号或事件编号只写在reason句子中。整回合缺少某项行动而无法定位时paragraphId用null，不编造编号。引文编号抄写错误不算正文语义错误；按输入修正引文即可。sceneChecks和eventChecks中的拒绝判定必须保留，不能为了让issues为空而改成通过。\n不能只核对状态是否改变。玩家开口追问新问题、接受提议、作出承诺、认定某人可信、决定后续行程，即使没有移动或转交物品，也是决策。原始输入已授权的问题可以自然分句、复问不清楚的同一问题；对方回答带出的新问题、NPC主动建议的新任务，必须留给玩家选择，擅自执行为overreach。抬眼、呼吸等没有新意图的短暂动作是none。resultContract不能自行扩张原始输入的授权边界。\n事实检查覆盖叙述和全部台词，不因是劝说、建议、提醒或猜测而豁免。人物经历、规则、位置、物品内部状态、伤势程度、存活时限与因果判断均需sceneEvidence支持；已知仍活着不证明存活期限，外部物品描述不证明内部状态。加“可能”、假设条件或借NPC之口都不产生证据。此处background表示需要核实的事实，不仅指过去：现在的物理状态或未来结果预测也须核对。只有不引入这类事实的当场动作、态度、请求和明确承认未知可标none；任一缺证断言须标unsupported并引用最小错误片段，有来源的观察保留为supported。\n背景supported时sources必须覆盖该段全部背景断言，逐字引用sceneEvidence，不能引用新正文、规划器的解释或自己的审查理由。没有背景断言时sources为空数组。公开前情里的NPC说法只能证明他曾这样说，不能自动升级为客观真相或可信经历。发现问题明确报告，不为了凑字数或让生成通过而放行。\n\n核对NPC反问后的实际行为：原输入只授权陈述或请求时，新增玩家答复、承诺或决定才是overreach；没有替玩家回答、停在等待或当场姿态处，是保留选择权，不能以“跳过回应”“选择被悬置”判越权。当前请求直接引起的NPC回应本身不要求玩家另行授权，但不得借此执行玩家下一步决定；纯等待未来条件的输入仍不能提前兑现该条件。行动问题须引用实际越权的玩家行为，不能仅引用NPC问题。回答与原话的自然拆分须结合先后判断。observedEvents标为background或recollection的事实仍须核对依据。\n\n背景来源核对须覆盖该段每一个背景断言，包括否定、数量、人物、时间与条件。不能仅引用同主题前文；“不得越界”不能支持“必须越界”，“没提及经历”不能证明“没有经历”。先查冲突和缺证，再判supported。不要输出backgroundClaims或重抄当前段落，程序会把整段原文交给独立依据核对。任何断言缺证或矛盾，该段background标unsupported并在issue中说明全部问题。\n规矩、资格、允许或禁止的结论，以及具体的光线、声音、材质、厚薄等感官或物理细节，必须由同一条公开来源同时支持规则与对象或具体细节；泛泛的场景气氛、无关人物经历或同主题但未提及对象的引文不能充当依据。\npriorRepairIssues若存在，逐项检查当前正文是否实质修复，不能以换词方式保留相同的缺证事实或越权动作；旧判定仅供核查，不要求无条件沿用。对白改写后还要核对相邻段的引用、问答和因果：不得叙述“说完某句话”而当前前文已无该话。只审核当前完整正文，不能把上一版已删台词当作仍然发生。\n\n精确定位问题：issues.quote只引用实际错误句，保留同段正确内容。删除对白会影响相邻引用、回答或反应时，把受影响句子一并列入issues，不直接判整段无效。只因正文短于scenePlan预算不能报告问题；确实遗漏原始要求才按行动完整性拒绝。\nknowledge.sourceKinds标识来源权威级别。history_scene中的已发生动作可以承接，人物说法不能自动证明客观背景；明确保留来源的转述可以通过。人物当场表情、语气、感受和对眼前交流的理解不因缺少前史而拒绝。推断须有真实前提且保留不确定性，不能以“可能”掩盖虚构观察。核对scenePlan.observationLimits与authoritativeState，包裹内部不可见等条件不能被正文无声改写。NPC明确拒绝应作为请求受阻处理，正常对视不等于检查被排除物品。\n"
+          },
+          {
+            "role": "user",
+            "content": "{\"input\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"requirements\": {\"A1\": \"指出伤者尚有呼吸\", \"A2\": \"争取在落锁前让他得到救助\"}, \"sceneEvidence\": {\"opening-1\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"opening-2\": \"老人让你到玄霄宗问山门的灯。\", \"opening-3\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"opening-identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P1\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P2\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\": \"你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\"}, \"draft\": {\"P1\": \"“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\", \"P2\": \"“人若留在外面，撑不到天亮。”你又说。\"}}"
+          }
+        ],
+        "rawResponse": "{\"id\":\"ad2d3848-fa4a-4c7d-8ac7-d9be6c78e885\",\"object\":\"chat.completion\",\"created\":1790322997,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"type\\\": \\\"json_object\\\",\\n  \\\"sceneChecks\\\": [\\n    {\\n      \\\"paragraphId\\\": \\\"P1\\\",\\n      \\\"playerDecision\\\": \\\"authorized\\\",\\n      \\\"background\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"opening-3\\\",\\n          \\\"quote\\\": \\\"伤者仍活着\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\\\",\\n          \\\"quote\\\": \\\"山门上的铁链又响了\\\"\\n        }\\n      ],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P2\\\",\\n      \\\"playerDecision\\\": \\\"authorized\\\",\\n      \\\"background\\\": \\\"unsupported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"opening-3\\\",\\n          \\\"quote\\\": \\\"伤者仍活着\\\"\\n        }\\n      ],\\n      \\\"quote\\\": \\\"撑不到天亮\\\",\\n      \\\"issue\\\": \\\"“撑不到天亮”是对伤者存活期限的预测，sceneEvidence未提供伤者伤势程度或存活时限依据，属于无证据断言。\\\"\\n    }\\n  ],\\n  \\\"eventChecks\\\": [],\\n  \\\"issues\\\": [\\n    {\\n      \\\"paragraphId\\\": \\\"P2\\\",\\n      \\\"type\\\": \\\"background\\\",\\n      \\\"quote\\\": \\\"撑不到天亮\\\",\\n      \\\"reason\\\": \\\"sceneEvidence仅说明伤者仍活着，未提供伤势程度或存活时限，无法支持“撑不到天亮”这一未来结果预测。\\\"\\n    }\\n  ]\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1642,\"completion_tokens\":328,\"total_tokens\":1970,\"prompt_tokens_details\":{\"cached_tokens\":1408},\"prompt_cache_hit_tokens\":1408,\"prompt_cache_miss_tokens\":234},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+        "content": "{\n  \"type\": \"json_object\",\n  \"sceneChecks\": [\n    {\n      \"paragraphId\": \"P1\",\n      \"playerDecision\": \"authorized\",\n      \"background\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"opening-3\",\n          \"quote\": \"伤者仍活着\"\n        },\n        {\n          \"id\": \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\",\n          \"quote\": \"山门上的铁链又响了\"\n        }\n      ],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P2\",\n      \"playerDecision\": \"authorized\",\n      \"background\": \"unsupported\",\n      \"sources\": [\n        {\n          \"id\": \"opening-3\",\n          \"quote\": \"伤者仍活着\"\n        }\n      ],\n      \"quote\": \"撑不到天亮\",\n      \"issue\": \"“撑不到天亮”是对伤者存活期限的预测，sceneEvidence未提供伤者伤势程度或存活时限依据，属于无证据断言。\"\n    }\n  ],\n  \"eventChecks\": [],\n  \"issues\": [\n    {\n      \"paragraphId\": \"P2\",\n      \"type\": \"background\",\n      \"quote\": \"撑不到天亮\",\n      \"reason\": \"sceneEvidence仅说明伤者仍活着，未提供伤势程度或存活时限，无法支持“撑不到天亮”这一未来结果预测。\"\n    }\n  ]\n}",
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 1579,
+              "responseHeadersMs": 241,
+              "completeBodyMs": 1579
+            }
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "hedged_deadline",
+      "arm": "current",
+      "expectedIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "status": "matched",
+      "actualIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "missedIssues": [],
+      "extraIssues": [],
+      "unlocated": [],
+      "call": {
+        "kind": "complete_json",
+        "messages": [
+          {
+            "role": "system",
+            "content": "在同一个审核JSON中增加sceneChecks，逐段检查玩家选择权与背景信息，每段一条：{\"paragraphId\":\"P1\",\"playerDecision\":\"none|authorized|overreach\",\"background\":\"none|supported|unsupported\",\"sources\":[{\"id\":\"sceneEvidence中的键\",\"quote\":\"该条资料的逐字原文片段\"}],\"quote\":\"实际错误的逐字短句；无问题为空\", \"issue\":\"具体问题，无问题为空\"}。\n顶层issues只列实际语义错误，每条使用{\"paragraphId\":\"存在的正文段落编号\",\"type\":\"action|background|continuity|state\",\"quote\":\"该段中实际有错的逐字短句，不包含无关句子\",\"reason\":\"具体违反什么要求及依赖此错误的相邻段落\"}。逐项列全，不只报告第一处；同段不同错误也分别说明。若问题定位在事件，可附eventId，但不要把段落编号或事件编号只写在reason句子中。整回合缺少某项行动而无法定位时paragraphId用null，不编造编号。引文编号抄写错误不算正文语义错误；按输入修正引文即可。sceneChecks和eventChecks中的拒绝判定必须保留，不能为了让issues为空而改成通过。\n不能只核对状态是否改变。玩家开口追问新问题、接受提议、作出承诺、认定某人可信、决定后续行程，即使没有移动或转交物品，也是决策。原始输入已授权的问题可以自然分句、复问不清楚的同一问题；对方回答带出的新问题、NPC主动建议的新任务，必须留给玩家选择，擅自执行为overreach。抬眼、呼吸等没有新意图的短暂动作是none。resultContract不能自行扩张原始输入的授权边界。\n事实检查覆盖叙述和全部台词，不因是劝说、建议、提醒或猜测而豁免。人物经历、规则、位置、物品内部状态、伤势程度、存活时限与因果判断均需sceneEvidence支持；已知仍活着不证明存活期限，外部物品描述不证明内部状态。加“可能”、假设条件或借NPC之口都不产生证据。此处background表示需要核实的事实，不仅指过去：现在的物理状态或未来结果预测也须核对。只有不引入这类事实的当场动作、态度、请求和明确承认未知可标none；任一缺证断言须标unsupported并引用最小错误片段，有来源的观察保留为supported。\n背景supported时sources必须覆盖该段全部背景断言，逐字引用sceneEvidence，不能引用新正文、规划器的解释或自己的审查理由。没有背景断言时sources为空数组。公开前情里的NPC说法只能证明他曾这样说，不能自动升级为客观真相或可信经历。发现问题明确报告，不为了凑字数或让生成通过而放行。\n\n核对NPC反问后的实际行为：原输入只授权陈述或请求时，新增玩家答复、承诺或决定才是overreach；没有替玩家回答、停在等待或当场姿态处，是保留选择权，不能以“跳过回应”“选择被悬置”判越权。当前请求直接引起的NPC回应本身不要求玩家另行授权，但不得借此执行玩家下一步决定；纯等待未来条件的输入仍不能提前兑现该条件。行动问题须引用实际越权的玩家行为，不能仅引用NPC问题。回答与原话的自然拆分须结合先后判断。observedEvents标为background或recollection的事实仍须核对依据。\n\n背景来源核对须覆盖该段每一个背景断言，包括否定、数量、人物、时间与条件。不能仅引用同主题前文；“不得越界”不能支持“必须越界”，“没提及经历”不能证明“没有经历”。先查冲突和缺证，再判supported。不要输出backgroundClaims或重抄当前段落，程序会把整段原文交给独立依据核对。任何断言缺证或矛盾，该段background标unsupported并在issue中说明全部问题。\n规矩、资格、允许或禁止的结论，以及具体的光线、声音、材质、厚薄等感官或物理细节，必须由同一条公开来源同时支持规则与对象或具体细节；泛泛的场景气氛、无关人物经历或同主题但未提及对象的引文不能充当依据。\npriorRepairIssues若存在，逐项检查当前正文是否实质修复，不能以换词方式保留相同的缺证事实或越权动作；旧判定仅供核查，不要求无条件沿用。对白改写后还要核对相邻段的引用、问答和因果：不得叙述“说完某句话”而当前前文已无该话。只审核当前完整正文，不能把上一版已删台词当作仍然发生。\n\n精确定位问题：issues.quote只引用实际错误句，保留同段正确内容。删除对白会影响相邻引用、回答或反应时，把受影响句子一并列入issues，不直接判整段无效。只因正文短于scenePlan预算不能报告问题；确实遗漏原始要求才按行动完整性拒绝。\nknowledge.sourceKinds标识来源权威级别。history_scene中的已发生动作可以承接，人物说法不能自动证明客观背景；明确保留来源的转述可以通过。人物当场表情、语气、感受和对眼前交流的理解不因缺少前史而拒绝。推断须有真实前提且保留不确定性，不能以“可能”掩盖虚构观察。核对scenePlan.observationLimits与authoritativeState，包裹内部不可见等条件不能被正文无声改写。NPC明确拒绝应作为请求受阻处理，正常对视不等于检查被排除物品。\n"
+          },
+          {
+            "role": "user",
+            "content": "{\"input\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"requirements\": {\"A1\": \"指出伤者尚有呼吸\", \"A2\": \"争取在落锁前让他得到救助\"}, \"sceneEvidence\": {\"opening-1\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"opening-2\": \"老人让你到玄霄宗问山门的灯。\", \"opening-3\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"opening-identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P1\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P2\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\": \"你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\"}, \"draft\": {\"P1\": \"“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\", \"P2\": \"“他可能撑不到天亮。”你又说。\"}}"
+          }
+        ],
+        "rawResponse": "{\"id\":\"22c40f47-9dd0-4dcf-82a1-0793e0abaf91\",\"object\":\"chat.completion\",\"created\":1790322999,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"type\\\": \\\"json_object\\\",\\n  \\\"issues\\\": [],\\n  \\\"sceneChecks\\\": [\\n    {\\n      \\\"paragraphId\\\": \\\"P1\\\",\\n      \\\"playerDecision\\\": \\\"authorized\\\",\\n      \\\"background\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"opening-3\\\",\\n          \\\"quote\\\": \\\"伤者仍活着\\\"\\n        }\\n      ],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P2\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"unsupported\\\",\\n      \\\"sources\\\": [],\\n      \\\"quote\\\": \\\"他可能撑不到天亮。\\\",\\n      \\\"issue\\\": \\\"“撑不到天亮”是对伤者存活时限的预测，sceneEvidence中无任何依据支持，属于无证据断言。\\\"\\n    }\\n  ],\\n  \\\"eventChecks\\\": []\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1639,\"completion_tokens\":181,\"total_tokens\":1820,\"prompt_tokens_details\":{\"cached_tokens\":1408},\"prompt_cache_hit_tokens\":1408,\"prompt_cache_miss_tokens\":231},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+        "content": "{\n  \"type\": \"json_object\",\n  \"issues\": [],\n  \"sceneChecks\": [\n    {\n      \"paragraphId\": \"P1\",\n      \"playerDecision\": \"authorized\",\n      \"background\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"opening-3\",\n          \"quote\": \"伤者仍活着\"\n        }\n      ],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P2\",\n      \"playerDecision\": \"none\",\n      \"background\": \"unsupported\",\n      \"sources\": [],\n      \"quote\": \"他可能撑不到天亮。\",\n      \"issue\": \"“撑不到天亮”是对伤者存活时限的预测，sceneEvidence中无任何依据支持，属于无证据断言。\"\n    }\n  ],\n  \"eventChecks\": []\n}",
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 1129,
+              "responseHeadersMs": 224,
+              "completeBodyMs": 1129
+            }
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "invented_lamp_interior",
+      "arm": "current",
+      "expectedIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "status": "matched",
+      "actualIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "missedIssues": [],
+      "extraIssues": [],
+      "unlocated": [],
+      "call": {
+        "kind": "complete_json",
+        "messages": [
+          {
+            "role": "system",
+            "content": "在同一个审核JSON中增加sceneChecks，逐段检查玩家选择权与背景信息，每段一条：{\"paragraphId\":\"P1\",\"playerDecision\":\"none|authorized|overreach\",\"background\":\"none|supported|unsupported\",\"sources\":[{\"id\":\"sceneEvidence中的键\",\"quote\":\"该条资料的逐字原文片段\"}],\"quote\":\"实际错误的逐字短句；无问题为空\", \"issue\":\"具体问题，无问题为空\"}。\n顶层issues只列实际语义错误，每条使用{\"paragraphId\":\"存在的正文段落编号\",\"type\":\"action|background|continuity|state\",\"quote\":\"该段中实际有错的逐字短句，不包含无关句子\",\"reason\":\"具体违反什么要求及依赖此错误的相邻段落\"}。逐项列全，不只报告第一处；同段不同错误也分别说明。若问题定位在事件，可附eventId，但不要把段落编号或事件编号只写在reason句子中。整回合缺少某项行动而无法定位时paragraphId用null，不编造编号。引文编号抄写错误不算正文语义错误；按输入修正引文即可。sceneChecks和eventChecks中的拒绝判定必须保留，不能为了让issues为空而改成通过。\n不能只核对状态是否改变。玩家开口追问新问题、接受提议、作出承诺、认定某人可信、决定后续行程，即使没有移动或转交物品，也是决策。原始输入已授权的问题可以自然分句、复问不清楚的同一问题；对方回答带出的新问题、NPC主动建议的新任务，必须留给玩家选择，擅自执行为overreach。抬眼、呼吸等没有新意图的短暂动作是none。resultContract不能自行扩张原始输入的授权边界。\n事实检查覆盖叙述和全部台词，不因是劝说、建议、提醒或猜测而豁免。人物经历、规则、位置、物品内部状态、伤势程度、存活时限与因果判断均需sceneEvidence支持；已知仍活着不证明存活期限，外部物品描述不证明内部状态。加“可能”、假设条件或借NPC之口都不产生证据。此处background表示需要核实的事实，不仅指过去：现在的物理状态或未来结果预测也须核对。只有不引入这类事实的当场动作、态度、请求和明确承认未知可标none；任一缺证断言须标unsupported并引用最小错误片段，有来源的观察保留为supported。\n背景supported时sources必须覆盖该段全部背景断言，逐字引用sceneEvidence，不能引用新正文、规划器的解释或自己的审查理由。没有背景断言时sources为空数组。公开前情里的NPC说法只能证明他曾这样说，不能自动升级为客观真相或可信经历。发现问题明确报告，不为了凑字数或让生成通过而放行。\n\n核对NPC反问后的实际行为：原输入只授权陈述或请求时，新增玩家答复、承诺或决定才是overreach；没有替玩家回答、停在等待或当场姿态处，是保留选择权，不能以“跳过回应”“选择被悬置”判越权。当前请求直接引起的NPC回应本身不要求玩家另行授权，但不得借此执行玩家下一步决定；纯等待未来条件的输入仍不能提前兑现该条件。行动问题须引用实际越权的玩家行为，不能仅引用NPC问题。回答与原话的自然拆分须结合先后判断。observedEvents标为background或recollection的事实仍须核对依据。\n\n背景来源核对须覆盖该段每一个背景断言，包括否定、数量、人物、时间与条件。不能仅引用同主题前文；“不得越界”不能支持“必须越界”，“没提及经历”不能证明“没有经历”。先查冲突和缺证，再判supported。不要输出backgroundClaims或重抄当前段落，程序会把整段原文交给独立依据核对。任何断言缺证或矛盾，该段background标unsupported并在issue中说明全部问题。\n规矩、资格、允许或禁止的结论，以及具体的光线、声音、材质、厚薄等感官或物理细节，必须由同一条公开来源同时支持规则与对象或具体细节；泛泛的场景气氛、无关人物经历或同主题但未提及对象的引文不能充当依据。\npriorRepairIssues若存在，逐项检查当前正文是否实质修复，不能以换词方式保留相同的缺证事实或越权动作；旧判定仅供核查，不要求无条件沿用。对白改写后还要核对相邻段的引用、问答和因果：不得叙述“说完某句话”而当前前文已无该话。只审核当前完整正文，不能把上一版已删台词当作仍然发生。\n\n精确定位问题：issues.quote只引用实际错误句，保留同段正确内容。删除对白会影响相邻引用、回答或反应时，把受影响句子一并列入issues，不直接判整段无效。只因正文短于scenePlan预算不能报告问题；确实遗漏原始要求才按行动完整性拒绝。\nknowledge.sourceKinds标识来源权威级别。history_scene中的已发生动作可以承接，人物说法不能自动证明客观背景；明确保留来源的转述可以通过。人物当场表情、语气、感受和对眼前交流的理解不因缺少前史而拒绝。推断须有真实前提且保留不确定性，不能以“可能”掩盖虚构观察。核对scenePlan.observationLimits与authoritativeState，包裹内部不可见等条件不能被正文无声改写。NPC明确拒绝应作为请求受阻处理，正常对视不等于检查被排除物品。\n"
+          },
+          {
+            "role": "user",
+            "content": "{\"input\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"requirements\": {\"A1\": \"指出伤者尚有呼吸\", \"A2\": \"争取在落锁前让他得到救助\"}, \"sceneEvidence\": {\"opening-1\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"opening-2\": \"老人让你到玄霄宗问山门的灯。\", \"opening-3\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"opening-identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P1\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P2\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\": \"你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\"}, \"draft\": {\"P1\": \"“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\", \"P2\": \"空灯里积着水，灯芯早湿透了。\"}}"
+          }
+        ],
+        "rawResponse": "{\"id\":\"f16f0dbb-5942-49b2-97ae-a0e9ed3eb543\",\"object\":\"chat.completion\",\"created\":1790323000,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"type\\\": \\\"json_object\\\",\\n  \\\"issues\\\": [\\n    {\\n      \\\"paragraphId\\\": \\\"P2\\\",\\n      \\\"type\\\": \\\"background\\\",\\n      \\\"quote\\\": \\\"空灯里积着水，灯芯早湿透了。\\\",\\n      \\\"reason\\\": \\\"sceneEvidence未提供空灯内部积水或灯芯湿透的信息，该断言缺乏依据。\\\"\\n    }\\n  ],\\n  \\\"sceneChecks\\\": [\\n    {\\n      \\\"paragraphId\\\": \\\"P1\\\",\\n      \\\"playerDecision\\\": \\\"authorized\\\",\\n      \\\"background\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"opening-3\\\",\\n          \\\"quote\\\": \\\"伤者仍活着\\\"\\n        }\\n      ],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P2\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"unsupported\\\",\\n      \\\"sources\\\": [],\\n      \\\"quote\\\": \\\"空灯里积着水，灯芯早湿透了。\\\",\\n      \\\"issue\\\": \\\"空灯内部状态无证据支持。\\\"\\n    }\\n  ],\\n  \\\"eventChecks\\\": []\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1642,\"completion_tokens\":237,\"total_tokens\":1879,\"prompt_tokens_details\":{\"cached_tokens\":1408},\"prompt_cache_hit_tokens\":1408,\"prompt_cache_miss_tokens\":234},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+        "content": "{\n  \"type\": \"json_object\",\n  \"issues\": [\n    {\n      \"paragraphId\": \"P2\",\n      \"type\": \"background\",\n      \"quote\": \"空灯里积着水，灯芯早湿透了。\",\n      \"reason\": \"sceneEvidence未提供空灯内部积水或灯芯湿透的信息，该断言缺乏依据。\"\n    }\n  ],\n  \"sceneChecks\": [\n    {\n      \"paragraphId\": \"P1\",\n      \"playerDecision\": \"authorized\",\n      \"background\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"opening-3\",\n          \"quote\": \"伤者仍活着\"\n        }\n      ],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P2\",\n      \"playerDecision\": \"none\",\n      \"background\": \"unsupported\",\n      \"sources\": [],\n      \"quote\": \"空灯里积着水，灯芯早湿透了。\",\n      \"issue\": \"空灯内部状态无证据支持。\"\n    }\n  ],\n  \"eventChecks\": []\n}",
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 1430,
+              "responseHeadersMs": 193,
+              "completeBodyMs": 1430
+            }
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "sourced_injury_then_wait",
+      "arm": "current",
+      "expectedIssues": [],
+      "status": "matched",
+      "actualIssues": [],
+      "missedIssues": [],
+      "extraIssues": [],
+      "unlocated": [],
+      "call": {
+        "kind": "complete_json",
+        "messages": [
+          {
+            "role": "system",
+            "content": "在同一个审核JSON中增加sceneChecks，逐段检查玩家选择权与背景信息，每段一条：{\"paragraphId\":\"P1\",\"playerDecision\":\"none|authorized|overreach\",\"background\":\"none|supported|unsupported\",\"sources\":[{\"id\":\"sceneEvidence中的键\",\"quote\":\"该条资料的逐字原文片段\"}],\"quote\":\"实际错误的逐字短句；无问题为空\", \"issue\":\"具体问题，无问题为空\"}。\n顶层issues只列实际语义错误，每条使用{\"paragraphId\":\"存在的正文段落编号\",\"type\":\"action|background|continuity|state\",\"quote\":\"该段中实际有错的逐字短句，不包含无关句子\",\"reason\":\"具体违反什么要求及依赖此错误的相邻段落\"}。逐项列全，不只报告第一处；同段不同错误也分别说明。若问题定位在事件，可附eventId，但不要把段落编号或事件编号只写在reason句子中。整回合缺少某项行动而无法定位时paragraphId用null，不编造编号。引文编号抄写错误不算正文语义错误；按输入修正引文即可。sceneChecks和eventChecks中的拒绝判定必须保留，不能为了让issues为空而改成通过。\n不能只核对状态是否改变。玩家开口追问新问题、接受提议、作出承诺、认定某人可信、决定后续行程，即使没有移动或转交物品，也是决策。原始输入已授权的问题可以自然分句、复问不清楚的同一问题；对方回答带出的新问题、NPC主动建议的新任务，必须留给玩家选择，擅自执行为overreach。抬眼、呼吸等没有新意图的短暂动作是none。resultContract不能自行扩张原始输入的授权边界。\n事实检查覆盖叙述和全部台词，不因是劝说、建议、提醒或猜测而豁免。人物经历、规则、位置、物品内部状态、伤势程度、存活时限与因果判断均需sceneEvidence支持；已知仍活着不证明存活期限，外部物品描述不证明内部状态。加“可能”、假设条件或借NPC之口都不产生证据。此处background表示需要核实的事实，不仅指过去：现在的物理状态或未来结果预测也须核对。只有不引入这类事实的当场动作、态度、请求和明确承认未知可标none；任一缺证断言须标unsupported并引用最小错误片段，有来源的观察保留为supported。\n背景supported时sources必须覆盖该段全部背景断言，逐字引用sceneEvidence，不能引用新正文、规划器的解释或自己的审查理由。没有背景断言时sources为空数组。公开前情里的NPC说法只能证明他曾这样说，不能自动升级为客观真相或可信经历。发现问题明确报告，不为了凑字数或让生成通过而放行。\n\n核对NPC反问后的实际行为：原输入只授权陈述或请求时，新增玩家答复、承诺或决定才是overreach；没有替玩家回答、停在等待或当场姿态处，是保留选择权，不能以“跳过回应”“选择被悬置”判越权。当前请求直接引起的NPC回应本身不要求玩家另行授权，但不得借此执行玩家下一步决定；纯等待未来条件的输入仍不能提前兑现该条件。行动问题须引用实际越权的玩家行为，不能仅引用NPC问题。回答与原话的自然拆分须结合先后判断。observedEvents标为background或recollection的事实仍须核对依据。\n\n背景来源核对须覆盖该段每一个背景断言，包括否定、数量、人物、时间与条件。不能仅引用同主题前文；“不得越界”不能支持“必须越界”，“没提及经历”不能证明“没有经历”。先查冲突和缺证，再判supported。不要输出backgroundClaims或重抄当前段落，程序会把整段原文交给独立依据核对。任何断言缺证或矛盾，该段background标unsupported并在issue中说明全部问题。\n规矩、资格、允许或禁止的结论，以及具体的光线、声音、材质、厚薄等感官或物理细节，必须由同一条公开来源同时支持规则与对象或具体细节；泛泛的场景气氛、无关人物经历或同主题但未提及对象的引文不能充当依据。\npriorRepairIssues若存在，逐项检查当前正文是否实质修复，不能以换词方式保留相同的缺证事实或越权动作；旧判定仅供核查，不要求无条件沿用。对白改写后还要核对相邻段的引用、问答和因果：不得叙述“说完某句话”而当前前文已无该话。只审核当前完整正文，不能把上一版已删台词当作仍然发生。\n\n精确定位问题：issues.quote只引用实际错误句，保留同段正确内容。删除对白会影响相邻引用、回答或反应时，把受影响句子一并列入issues，不直接判整段无效。只因正文短于scenePlan预算不能报告问题；确实遗漏原始要求才按行动完整性拒绝。\nknowledge.sourceKinds标识来源权威级别。history_scene中的已发生动作可以承接，人物说法不能自动证明客观背景；明确保留来源的转述可以通过。人物当场表情、语气、感受和对眼前交流的理解不因缺少前史而拒绝。推断须有真实前提且保留不确定性，不能以“可能”掩盖虚构观察。核对scenePlan.observationLimits与authoritativeState，包裹内部不可见等条件不能被正文无声改写。NPC明确拒绝应作为请求受阻处理，正常对视不等于检查被排除物品。\n"
+          },
+          {
+            "role": "user",
+            "content": "{\"input\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"requirements\": {\"A1\": \"指出伤者尚有呼吸\", \"A2\": \"争取在落锁前让他得到救助\"}, \"sceneEvidence\": {\"opening-1\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"opening-2\": \"老人让你到玄霄宗问山门的灯。\", \"opening-3\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"opening-identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P1\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P2\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\": \"你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\"}, \"draft\": {\"P1\": \"伤者喉间涌出血沫。\", \"P2\": \"“他还活着。”你对守门弟子说，“请在落锁前让他得到救助。”\", \"P3\": \"“你愿意担责吗？”守门弟子问。\", \"P4\": \"你没有回答，仍站在原地。\"}}"
+          }
+        ],
+        "rawResponse": "{\"id\":\"5fb5a15f-733a-4abd-b62b-851da53f8b6d\",\"object\":\"chat.completion\",\"created\":1790323001,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"type\\\": \\\"json_object\\\",\\n  \\\"issues\\\": [],\\n  \\\"sceneChecks\\\": [\\n    {\\n      \\\"paragraphId\\\": \\\"P1\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\\\",\\n          \\\"quote\\\": \\\"伤者喉间涌出血沫\\\"\\n        }\\n      ],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P2\\\",\\n      \\\"playerDecision\\\": \\\"authorized\\\",\\n      \\\"background\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"opening-3\\\",\\n          \\\"quote\\\": \\\"伤者仍活着\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\\\",\\n          \\\"quote\\\": \\\"山门上的铁链又响了\\\"\\n        }\\n      ],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P3\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"none\\\",\\n      \\\"sources\\\": [],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P4\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"none\\\",\\n      \\\"sources\\\": [],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    }\\n  ],\\n  \\\"eventChecks\\\": []\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1667,\"completion_tokens\":340,\"total_tokens\":2007,\"prompt_tokens_details\":{\"cached_tokens\":1408},\"prompt_cache_hit_tokens\":1408,\"prompt_cache_miss_tokens\":259},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+        "content": "{\n  \"type\": \"json_object\",\n  \"issues\": [],\n  \"sceneChecks\": [\n    {\n      \"paragraphId\": \"P1\",\n      \"playerDecision\": \"none\",\n      \"background\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\",\n          \"quote\": \"伤者喉间涌出血沫\"\n        }\n      ],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P2\",\n      \"playerDecision\": \"authorized\",\n      \"background\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"opening-3\",\n          \"quote\": \"伤者仍活着\"\n        },\n        {\n          \"id\": \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\",\n          \"quote\": \"山门上的铁链又响了\"\n        }\n      ],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P3\",\n      \"playerDecision\": \"none\",\n      \"background\": \"none\",\n      \"sources\": [],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P4\",\n      \"playerDecision\": \"none\",\n      \"background\": \"none\",\n      \"sources\": [],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    }\n  ],\n  \"eventChecks\": []\n}",
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 1344,
+              "responseHeadersMs": 215,
+              "completeBodyMs": 1344
+            }
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "recorded_mixed_failure",
+      "arm": "current",
+      "expectedIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "status": "mismatch",
+      "actualIssues": [],
+      "missedIssues": [
+        [
+          "P2",
+          "background"
+        ]
+      ],
+      "extraIssues": [],
+      "unlocated": [],
+      "call": {
+        "kind": "complete_json",
+        "messages": [
+          {
+            "role": "system",
+            "content": "在同一个审核JSON中增加sceneChecks，逐段检查玩家选择权与背景信息，每段一条：{\"paragraphId\":\"P1\",\"playerDecision\":\"none|authorized|overreach\",\"background\":\"none|supported|unsupported\",\"sources\":[{\"id\":\"sceneEvidence中的键\",\"quote\":\"该条资料的逐字原文片段\"}],\"quote\":\"实际错误的逐字短句；无问题为空\", \"issue\":\"具体问题，无问题为空\"}。\n顶层issues只列实际语义错误，每条使用{\"paragraphId\":\"存在的正文段落编号\",\"type\":\"action|background|continuity|state\",\"quote\":\"该段中实际有错的逐字短句，不包含无关句子\",\"reason\":\"具体违反什么要求及依赖此错误的相邻段落\"}。逐项列全，不只报告第一处；同段不同错误也分别说明。若问题定位在事件，可附eventId，但不要把段落编号或事件编号只写在reason句子中。整回合缺少某项行动而无法定位时paragraphId用null，不编造编号。引文编号抄写错误不算正文语义错误；按输入修正引文即可。sceneChecks和eventChecks中的拒绝判定必须保留，不能为了让issues为空而改成通过。\n不能只核对状态是否改变。玩家开口追问新问题、接受提议、作出承诺、认定某人可信、决定后续行程，即使没有移动或转交物品，也是决策。原始输入已授权的问题可以自然分句、复问不清楚的同一问题；对方回答带出的新问题、NPC主动建议的新任务，必须留给玩家选择，擅自执行为overreach。抬眼、呼吸等没有新意图的短暂动作是none。resultContract不能自行扩张原始输入的授权边界。\n事实检查覆盖叙述和全部台词，不因是劝说、建议、提醒或猜测而豁免。人物经历、规则、位置、物品内部状态、伤势程度、存活时限与因果判断均需sceneEvidence支持；已知仍活着不证明存活期限，外部物品描述不证明内部状态。加“可能”、假设条件或借NPC之口都不产生证据。此处background表示需要核实的事实，不仅指过去：现在的物理状态或未来结果预测也须核对。只有不引入这类事实的当场动作、态度、请求和明确承认未知可标none；任一缺证断言须标unsupported并引用最小错误片段，有来源的观察保留为supported。\n背景supported时sources必须覆盖该段全部背景断言，逐字引用sceneEvidence，不能引用新正文、规划器的解释或自己的审查理由。没有背景断言时sources为空数组。公开前情里的NPC说法只能证明他曾这样说，不能自动升级为客观真相或可信经历。发现问题明确报告，不为了凑字数或让生成通过而放行。\n\n核对NPC反问后的实际行为：原输入只授权陈述或请求时，新增玩家答复、承诺或决定才是overreach；没有替玩家回答、停在等待或当场姿态处，是保留选择权，不能以“跳过回应”“选择被悬置”判越权。当前请求直接引起的NPC回应本身不要求玩家另行授权，但不得借此执行玩家下一步决定；纯等待未来条件的输入仍不能提前兑现该条件。行动问题须引用实际越权的玩家行为，不能仅引用NPC问题。回答与原话的自然拆分须结合先后判断。observedEvents标为background或recollection的事实仍须核对依据。\n\n背景来源核对须覆盖该段每一个背景断言，包括否定、数量、人物、时间与条件。不能仅引用同主题前文；“不得越界”不能支持“必须越界”，“没提及经历”不能证明“没有经历”。先查冲突和缺证，再判supported。不要输出backgroundClaims或重抄当前段落，程序会把整段原文交给独立依据核对。任何断言缺证或矛盾，该段background标unsupported并在issue中说明全部问题。\n规矩、资格、允许或禁止的结论，以及具体的光线、声音、材质、厚薄等感官或物理细节，必须由同一条公开来源同时支持规则与对象或具体细节；泛泛的场景气氛、无关人物经历或同主题但未提及对象的引文不能充当依据。\npriorRepairIssues若存在，逐项检查当前正文是否实质修复，不能以换词方式保留相同的缺证事实或越权动作；旧判定仅供核查，不要求无条件沿用。对白改写后还要核对相邻段的引用、问答和因果：不得叙述“说完某句话”而当前前文已无该话。只审核当前完整正文，不能把上一版已删台词当作仍然发生。\n\n精确定位问题：issues.quote只引用实际错误句，保留同段正确内容。删除对白会影响相邻引用、回答或反应时，把受影响句子一并列入issues，不直接判整段无效。只因正文短于scenePlan预算不能报告问题；确实遗漏原始要求才按行动完整性拒绝。\nknowledge.sourceKinds标识来源权威级别。history_scene中的已发生动作可以承接，人物说法不能自动证明客观背景；明确保留来源的转述可以通过。人物当场表情、语气、感受和对眼前交流的理解不因缺少前史而拒绝。推断须有真实前提且保留不确定性，不能以“可能”掩盖虚构观察。核对scenePlan.observationLimits与authoritativeState，包裹内部不可见等条件不能被正文无声改写。NPC明确拒绝应作为请求受阻处理，正常对视不等于检查被排除物品。\n"
+          },
+          {
+            "role": "user",
+            "content": "{\"input\": \"指出伤者尚有呼吸，争取在落锁前让他得到救助。\", \"requirements\": {\"A1\": \"指出伤者尚有呼吸\", \"A2\": \"争取在落锁前让他得到救助\"}, \"sceneEvidence\": {\"opening-1\": \"父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。\", \"opening-2\": \"老人让你到玄霄宗问山门的灯。\", \"opening-3\": \"伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。\", \"opening-identity\": \"陆照临，初到玄霄宗求入门；尚未登记成为外门弟子。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P1\": \"雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P2\": \"眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\", \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\": \"你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。\"}, \"draft\": {\"P1\": \"雨顺着斗笠边沿滴下来，砸在你手背上。你隔着封山线，看见那人的喉间又涌出一口血沫，胸口跟着起伏了一下——很浅，但确实在动。\", \"P2\": \"“他还活着。”你朝守门弟子开口，声音压过雨声，“喉间有血沫，胸口还在起伏。人若留在外面，撑不到天亮。”\", \"P3\": \"守门弟子按剑的手没松，目光在你和倒地的人之间来回。他往前半步，像是要看清那道起伏，又停住，脚始终没越过封山线。\", \"P4\": \"“封山线内不得擅入，这是门规。”他说，“我放人进去，谁担这个责？”\", \"P5\": \"雨更密了。你听见山门深处传来铁链拖动的声响，像是有人在收闸。落锁的时辰近了。\"}}"
+          }
+        ],
+        "rawResponse": "{\"id\":\"7fcb2523-8c4f-47c0-ab37-1f2eec4f76d7\",\"object\":\"chat.completion\",\"created\":1790323002,\"model\":\"deepseek-flash\",\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"type\\\": \\\"json_object\\\",\\n  \\\"issues\\\": [],\\n  \\\"sceneChecks\\\": [\\n    {\\n      \\\"paragraphId\\\": \\\"P1\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"opening-3\\\",\\n          \\\"quote\\\": \\\"伤者仍活着\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\\\",\\n          \\\"quote\\\": \\\"伤者喉间涌出血沫\\\"\\n        }\\n      ],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P2\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"opening-3\\\",\\n          \\\"quote\\\": \\\"伤者仍活着\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\\\",\\n          \\\"quote\\\": \\\"伤者喉间涌出血沫\\\"\\n        }\\n      ],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P3\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"none\\\",\\n      \\\"sources\\\": [],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P4\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"none\\\",\\n      \\\"sources\\\": [],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"paragraphId\\\": \\\"P5\\\",\\n      \\\"playerDecision\\\": \\\"none\\\",\\n      \\\"background\\\": \\\"supported\\\",\\n      \\\"sources\\\": [\\n        {\\n          \\\"id\\\": \\\"opening-3\\\",\\n          \\\"quote\\\": \\\"山门将闭\\\"\\n        }\\n      ],\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    }\\n  ],\\n  \\\"eventChecks\\\": [\\n    {\\n      \\\"eventId\\\": \\\"opening-3\\\",\\n      \\\"decision\\\": \\\"accept\\\",\\n      \\\"quote\\\": \\\"\\\",\\n      \\\"issue\\\": \\\"\\\"\\n    }\\n  ]\\n}\"},\"logprobs\":null,\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":1802,\"completion_tokens\":467,\"total_tokens\":2269,\"prompt_tokens_details\":{\"cached_tokens\":1536},\"prompt_cache_hit_tokens\":1536,\"prompt_cache_miss_tokens\":266},\"system_fingerprint\":\"aeb56401ca74e127821c4f9126dcb669\"}",
+        "content": "{\n  \"type\": \"json_object\",\n  \"issues\": [],\n  \"sceneChecks\": [\n    {\n      \"paragraphId\": \"P1\",\n      \"playerDecision\": \"none\",\n      \"background\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"opening-3\",\n          \"quote\": \"伤者仍活着\"\n        },\n        {\n          \"id\": \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\",\n          \"quote\": \"伤者喉间涌出血沫\"\n        }\n      ],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P2\",\n      \"playerDecision\": \"none\",\n      \"background\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"opening-3\",\n          \"quote\": \"伤者仍活着\"\n        },\n        {\n          \"id\": \"history-branch_f414260f-c15a-4156-83b0-afd11c6aee9b-P3\",\n          \"quote\": \"伤者喉间涌出血沫\"\n        }\n      ],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P3\",\n      \"playerDecision\": \"none\",\n      \"background\": \"none\",\n      \"sources\": [],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P4\",\n      \"playerDecision\": \"none\",\n      \"background\": \"none\",\n      \"sources\": [],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    },\n    {\n      \"paragraphId\": \"P5\",\n      \"playerDecision\": \"none\",\n      \"background\": \"supported\",\n      \"sources\": [\n        {\n          \"id\": \"opening-3\",\n          \"quote\": \"山门将闭\"\n        }\n      ],\n      \"quote\": \"\",\n      \"issue\": \"\"\n    }\n  ],\n  \"eventChecks\": [\n    {\n      \"eventId\": \"opening-3\",\n      \"decision\": \"accept\",\n      \"quote\": \"\",\n      \"issue\": \"\"\n    }\n  ]\n}",
+        "observations": [
+          {
+            "attempt": 1,
+            "outcome": "completed",
+            "transport": {
+              "responseMode": "json",
+              "httpStatus": 200,
+              "durationMs": 1624,
+              "responseHeadersMs": 212,
+              "completeBodyMs": 1624
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "current": {
+      "matched": 6,
+      "mismatch": 1,
+      "invalid_review": 0,
+      "model_error": 0
+    }
+  }
+}

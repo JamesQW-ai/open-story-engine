@@ -1,0 +1,1076 @@
+{
+  "schemaVersion": "history-fingerprint-benchmark/1",
+  "modelCalls": 0,
+  "semanticAcceptance": false,
+  "scope": "actual _turn_snapshot; excludes enqueue, model, review and commit",
+  "comparison": "both paths read full history once; fingerprint format intentionally differs; lineageMs includes hashing",
+  "cachePolicy": "snapshot cache cleared each sample; alternating order; OS cache uncontrolled",
+  "python": "3.12.14",
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "sourceHashes": {
+    "test_support/history_fingerprint_benchmark.py": "f70d5163b5516cb513b8e38e496b50e94c352687327bf541fe2d97fc7cdc7f1b",
+    "test_support/turn_snapshot_benchmark.py": "1bb51ca7fcffb50b0bfc24ae63f56029649bd1da548d987f9a205634c591819c",
+    "test_support/dynamic_memory_read_benchmark.py": "107f8dffce02f762f539a217ceb0f59bbb8690b13a377c62f46260924c52bf27",
+    "test_support/dynamic_memory_benchmark.py": "b1bd9a515409482dcf0204f8b93bd35710f91d404dbccae1bb29294f9e635091",
+    "test_support/longform.py": "0be0a045e1a9f78bfa6efe7a982e794f732509b76ef20b46e6433b1645081989",
+    "open_story_engine/storage.py": "77ce1c606c130152a8e5b6450a16f4d28368170ea98a6f78e8232906d3e149e7",
+    "open_story_engine/api_read.py": "c9dcf55153a8fa7761ab47293cb08441c3ab978ef791f5d880d9393a0e2a7889",
+    "open_story_engine/api_play.py": "02f405f5ae4dd7313ce9a28d3538f98d2fa766a8afe7ba4bde6e42b667c18fe4",
+    "open_story_engine/api_turn_drafts.py": "ff3319a40a1260d686e65531ce047393713973f2543ed106d43a3ed68c4a2979",
+    "open_story_engine/dynamic_memory.py": "53da0a236335243468848df256b8e64e93d7417466c176de163eb31358843632",
+    "open_story_engine/context_bundle.py": "d4db048b4fd07c01e98f8d5c4ab81fb5b07be3e48ddad4b86ab60163502d8521",
+    "open_story_engine/module_context.py": "92d08f045fcd7e17f2c33ec29cb87b1c5c5c3234ecd47535be486e4a5b78411b"
+  },
+  "rows": [
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "goal",
+      "turns": 32,
+      "repeats": 5,
+      "fixtureInputSha256": "2e9cc674497d8fe37a74859c5d83afcb79ad7a312a26760943f28c1866c85fce",
+      "timings": {
+        "canonical": [
+          {
+            "lineageMs": 3.18025,
+            "packageMs": 6.376042,
+            "routeMs": 0.231625,
+            "closingMs": 0.025041,
+            "snapshotMs": 0.004333,
+            "otherMs": 0.4615009999999984,
+            "totalMs": 10.278792
+          },
+          {
+            "lineageMs": 3.213791,
+            "packageMs": 5.85575,
+            "routeMs": 0.203667,
+            "closingMs": 0.022917,
+            "snapshotMs": 0.001375,
+            "otherMs": 0.4694160000000007,
+            "totalMs": 9.766916
+          },
+          {
+            "lineageMs": 3.162375,
+            "packageMs": 5.997584,
+            "routeMs": 0.214458,
+            "closingMs": 0.0225,
+            "snapshotMs": 0.001459,
+            "otherMs": 0.45037400000000183,
+            "totalMs": 9.84875
+          },
+          {
+            "lineageMs": 3.16525,
+            "packageMs": 5.672125,
+            "routeMs": 0.200083,
+            "closingMs": 0.021375,
+            "snapshotMs": 0.001458,
+            "otherMs": 0.4336260000000003,
+            "totalMs": 9.493917
+          },
+          {
+            "lineageMs": 3.156542,
+            "packageMs": 5.726583,
+            "routeMs": 0.202167,
+            "closingMs": 0.020667,
+            "snapshotMs": 0.001333,
+            "otherMs": 0.44033300000000075,
+            "totalMs": 9.547625
+          }
+        ],
+        "stored_bytes": [
+          {
+            "lineageMs": 1.867709,
+            "packageMs": 5.760833,
+            "routeMs": 0.209666,
+            "closingMs": 0.022042,
+            "snapshotMs": 0.002125,
+            "otherMs": 0.4666669999999993,
+            "totalMs": 8.329042
+          },
+          {
+            "lineageMs": 1.901375,
+            "packageMs": 5.705917,
+            "routeMs": 0.221667,
+            "closingMs": 0.023792,
+            "snapshotMs": 0.001375,
+            "otherMs": 0.44449899999999865,
+            "totalMs": 8.298625
+          },
+          {
+            "lineageMs": 1.826375,
+            "packageMs": 5.75675,
+            "routeMs": 0.20125,
+            "closingMs": 0.021334,
+            "snapshotMs": 0.001333,
+            "otherMs": 0.4405829999999993,
+            "totalMs": 8.247625
+          },
+          {
+            "lineageMs": 1.822084,
+            "packageMs": 5.929125,
+            "routeMs": 0.207959,
+            "closingMs": 0.021334,
+            "snapshotMs": 0.001292,
+            "otherMs": 0.4299980000000003,
+            "totalMs": 8.411792
+          },
+          {
+            "lineageMs": 1.831542,
+            "packageMs": 5.914167,
+            "routeMs": 0.204833,
+            "closingMs": 0.020708,
+            "snapshotMs": 0.001334,
+            "otherMs": 0.43804099999999924,
+            "totalMs": 8.410625
+          }
+        ]
+      },
+      "metrics": {
+        "canonical": {
+          "lineageMs": {
+            "medianMs": 3.16525,
+            "p95Ms": 3.213791
+          },
+          "packageMs": {
+            "medianMs": 5.85575,
+            "p95Ms": 6.376042
+          },
+          "routeMs": {
+            "medianMs": 0.203667,
+            "p95Ms": 0.231625
+          },
+          "closingMs": {
+            "medianMs": 0.0225,
+            "p95Ms": 0.025041
+          },
+          "snapshotMs": {
+            "medianMs": 0.001458,
+            "p95Ms": 0.004333
+          },
+          "otherMs": {
+            "medianMs": 0.45037400000000183,
+            "p95Ms": 0.4694160000000007
+          },
+          "totalMs": {
+            "medianMs": 9.766916,
+            "p95Ms": 10.278792
+          }
+        },
+        "stored_bytes": {
+          "lineageMs": {
+            "medianMs": 1.831542,
+            "p95Ms": 1.901375
+          },
+          "packageMs": {
+            "medianMs": 5.760833,
+            "p95Ms": 5.929125
+          },
+          "routeMs": {
+            "medianMs": 0.207959,
+            "p95Ms": 0.221667
+          },
+          "closingMs": {
+            "medianMs": 0.021334,
+            "p95Ms": 0.023792
+          },
+          "snapshotMs": {
+            "medianMs": 0.001334,
+            "p95Ms": 0.002125
+          },
+          "otherMs": {
+            "medianMs": 0.4405829999999993,
+            "p95Ms": 0.4666669999999993
+          },
+          "totalMs": {
+            "medianMs": 8.329042,
+            "p95Ms": 8.411792
+          }
+        }
+      },
+      "databaseUnchanged": true,
+      "semanticProjectionEqual": true,
+      "selectedSources": [
+        "memory:goal:memory-bench-31:goal-97dfd1f3809d2156"
+      ],
+      "bundleSha256": "6653c142a0070ad4a8cd83c09f3644e0dae8a1139ae3db3202c3e47aa5ee44ac",
+      "chapterChars": 4754
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "goal",
+      "turns": 128,
+      "repeats": 5,
+      "fixtureInputSha256": "049aaac57db8b65880e755a5ccecadbc50216388c391c837bcedc7cc1468de25",
+      "timings": {
+        "canonical": [
+          {
+            "lineageMs": 29.626959,
+            "packageMs": 6.11375,
+            "routeMs": 0.257208,
+            "closingMs": 0.034583,
+            "snapshotMs": 0.002083,
+            "otherMs": 0.7139580000000052,
+            "totalMs": 36.748541
+          },
+          {
+            "lineageMs": 29.07525,
+            "packageMs": 5.988875,
+            "routeMs": 0.23575,
+            "closingMs": 0.036375,
+            "snapshotMs": 0.001958,
+            "otherMs": 0.7649589999999975,
+            "totalMs": 36.103167
+          },
+          {
+            "lineageMs": 29.175625,
+            "packageMs": 6.009458,
+            "routeMs": 0.222666,
+            "closingMs": 0.0335,
+            "snapshotMs": 0.001667,
+            "otherMs": 0.740916999999996,
+            "totalMs": 36.183833
+          },
+          {
+            "lineageMs": 29.900916,
+            "packageMs": 5.966041,
+            "routeMs": 0.25,
+            "closingMs": 0.0355,
+            "snapshotMs": 0.001875,
+            "otherMs": 0.8320430000000059,
+            "totalMs": 36.986375
+          },
+          {
+            "lineageMs": 30.235833,
+            "packageMs": 5.940625,
+            "routeMs": 0.253458,
+            "closingMs": 0.035125,
+            "snapshotMs": 0.001875,
+            "otherMs": 0.8321670000000054,
+            "totalMs": 37.299083
+          }
+        ],
+        "stored_bytes": [
+          {
+            "lineageMs": 16.78525,
+            "packageMs": 6.041917,
+            "routeMs": 0.245208,
+            "closingMs": 0.033792,
+            "snapshotMs": 0.001833,
+            "otherMs": 0.7075420000000001,
+            "totalMs": 23.815542
+          },
+          {
+            "lineageMs": 16.544916,
+            "packageMs": 6.013125,
+            "routeMs": 0.232541,
+            "closingMs": 0.033375,
+            "snapshotMs": 0.002333,
+            "otherMs": 0.7493349999999985,
+            "totalMs": 23.575625
+          },
+          {
+            "lineageMs": 25.281125,
+            "packageMs": 6.442417,
+            "routeMs": 0.249209,
+            "closingMs": 0.034667,
+            "snapshotMs": 0.002083,
+            "otherMs": 0.7769159999999999,
+            "totalMs": 32.786417
+          },
+          {
+            "lineageMs": 17.415333,
+            "packageMs": 6.225833,
+            "routeMs": 0.324584,
+            "closingMs": 0.040334,
+            "snapshotMs": 0.0025,
+            "otherMs": 0.8462080000000007,
+            "totalMs": 24.854792
+          },
+          {
+            "lineageMs": 16.8325,
+            "packageMs": 5.9955,
+            "routeMs": 0.248042,
+            "closingMs": 0.033958,
+            "snapshotMs": 0.002375,
+            "otherMs": 0.8003329999999984,
+            "totalMs": 23.912708
+          }
+        ]
+      },
+      "metrics": {
+        "canonical": {
+          "lineageMs": {
+            "medianMs": 29.626959,
+            "p95Ms": 30.235833
+          },
+          "packageMs": {
+            "medianMs": 5.988875,
+            "p95Ms": 6.11375
+          },
+          "routeMs": {
+            "medianMs": 0.25,
+            "p95Ms": 0.257208
+          },
+          "closingMs": {
+            "medianMs": 0.035125,
+            "p95Ms": 0.036375
+          },
+          "snapshotMs": {
+            "medianMs": 0.001875,
+            "p95Ms": 0.002083
+          },
+          "otherMs": {
+            "medianMs": 0.7649589999999975,
+            "p95Ms": 0.8321670000000054
+          },
+          "totalMs": {
+            "medianMs": 36.748541,
+            "p95Ms": 37.299083
+          }
+        },
+        "stored_bytes": {
+          "lineageMs": {
+            "medianMs": 16.8325,
+            "p95Ms": 25.281125
+          },
+          "packageMs": {
+            "medianMs": 6.041917,
+            "p95Ms": 6.442417
+          },
+          "routeMs": {
+            "medianMs": 0.248042,
+            "p95Ms": 0.324584
+          },
+          "closingMs": {
+            "medianMs": 0.033958,
+            "p95Ms": 0.040334
+          },
+          "snapshotMs": {
+            "medianMs": 0.002333,
+            "p95Ms": 0.0025
+          },
+          "otherMs": {
+            "medianMs": 0.7769159999999999,
+            "p95Ms": 0.8462080000000007
+          },
+          "totalMs": {
+            "medianMs": 23.912708,
+            "p95Ms": 32.786417
+          }
+        }
+      },
+      "databaseUnchanged": true,
+      "semanticProjectionEqual": true,
+      "selectedSources": [
+        "memory:goal:memory-bench-127:goal-bc7f3b59610b70bf"
+      ],
+      "bundleSha256": "d3d7c951a4e37678ee9ff21570f9e0d08183213156c2ae6e5666600d05201180",
+      "chapterChars": 4691
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "goal",
+      "turns": 512,
+      "repeats": 5,
+      "fixtureInputSha256": "0bce690313c700afe5de44f2648e282ba33c264413e7b4ebbae4703ccbcd75b3",
+      "timings": {
+        "canonical": [
+          {
+            "lineageMs": 475.423125,
+            "packageMs": 6.046083,
+            "routeMs": 0.340708,
+            "closingMs": 0.077833,
+            "snapshotMs": 0.00175,
+            "otherMs": 1.3775430000000028,
+            "totalMs": 483.267042
+          },
+          {
+            "lineageMs": 502.248375,
+            "packageMs": 6.251459,
+            "routeMs": 0.330542,
+            "closingMs": 0.077,
+            "snapshotMs": 0.003417,
+            "otherMs": 1.7101240000000075,
+            "totalMs": 510.620917
+          },
+          {
+            "lineageMs": 630.052625,
+            "packageMs": 6.760792,
+            "routeMs": 0.336458,
+            "closingMs": 0.07925,
+            "snapshotMs": 0.0025,
+            "otherMs": 1.501041999999984,
+            "totalMs": 638.732667
+          },
+          {
+            "lineageMs": 500.65875,
+            "packageMs": 5.993916,
+            "routeMs": 0.332875,
+            "closingMs": 0.088625,
+            "snapshotMs": 0.002167,
+            "otherMs": 1.45979200000005,
+            "totalMs": 508.536125
+          },
+          {
+            "lineageMs": 635.951833,
+            "packageMs": 6.172125,
+            "routeMs": 0.337125,
+            "closingMs": 0.077833,
+            "snapshotMs": 0.002083,
+            "otherMs": 1.4906260000000202,
+            "totalMs": 644.031625
+          }
+        ],
+        "stored_bytes": [
+          {
+            "lineageMs": 461.624167,
+            "packageMs": 6.034167,
+            "routeMs": 0.349375,
+            "closingMs": 0.07575,
+            "snapshotMs": 0.002208,
+            "otherMs": 1.5082499999999754,
+            "totalMs": 469.593917
+          },
+          {
+            "lineageMs": 338.249834,
+            "packageMs": 6.243708,
+            "routeMs": 0.392792,
+            "closingMs": 0.0755,
+            "snapshotMs": 0.001958,
+            "otherMs": 1.4207499999999982,
+            "totalMs": 346.384542
+          },
+          {
+            "lineageMs": 335.728625,
+            "packageMs": 6.117375,
+            "routeMs": 0.358792,
+            "closingMs": 0.077917,
+            "snapshotMs": 0.002125,
+            "otherMs": 1.6104159999999297,
+            "totalMs": 343.89525
+          },
+          {
+            "lineageMs": 454.530458,
+            "packageMs": 6.2455,
+            "routeMs": 0.387584,
+            "closingMs": 0.081625,
+            "snapshotMs": 0.002,
+            "otherMs": 1.5375420000000304,
+            "totalMs": 462.784709
+          },
+          {
+            "lineageMs": 341.086125,
+            "packageMs": 6.145292,
+            "routeMs": 0.373667,
+            "closingMs": 0.078125,
+            "snapshotMs": 0.001834,
+            "otherMs": 1.4324149999999918,
+            "totalMs": 349.117458
+          }
+        ]
+      },
+      "metrics": {
+        "canonical": {
+          "lineageMs": {
+            "medianMs": 502.248375,
+            "p95Ms": 635.951833
+          },
+          "packageMs": {
+            "medianMs": 6.172125,
+            "p95Ms": 6.760792
+          },
+          "routeMs": {
+            "medianMs": 0.336458,
+            "p95Ms": 0.340708
+          },
+          "closingMs": {
+            "medianMs": 0.077833,
+            "p95Ms": 0.088625
+          },
+          "snapshotMs": {
+            "medianMs": 0.002167,
+            "p95Ms": 0.003417
+          },
+          "otherMs": {
+            "medianMs": 1.4906260000000202,
+            "p95Ms": 1.7101240000000075
+          },
+          "totalMs": {
+            "medianMs": 510.620917,
+            "p95Ms": 644.031625
+          }
+        },
+        "stored_bytes": {
+          "lineageMs": {
+            "medianMs": 341.086125,
+            "p95Ms": 461.624167
+          },
+          "packageMs": {
+            "medianMs": 6.145292,
+            "p95Ms": 6.2455
+          },
+          "routeMs": {
+            "medianMs": 0.373667,
+            "p95Ms": 0.392792
+          },
+          "closingMs": {
+            "medianMs": 0.077917,
+            "p95Ms": 0.081625
+          },
+          "snapshotMs": {
+            "medianMs": 0.002,
+            "p95Ms": 0.002208
+          },
+          "otherMs": {
+            "medianMs": 1.5082499999999754,
+            "p95Ms": 1.6104159999999297
+          },
+          "totalMs": {
+            "medianMs": 349.117458,
+            "p95Ms": 469.593917
+          }
+        }
+      },
+      "databaseUnchanged": true,
+      "semanticProjectionEqual": true,
+      "selectedSources": [
+        "memory:goal:memory-bench-511:goal-0c14539111e1f006"
+      ],
+      "bundleSha256": "5fcf57014e06f3526970112296bf4a8548f6f18b6ac54cbf0545483ec77ce588",
+      "chapterChars": 4653
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "thread",
+      "turns": 32,
+      "repeats": 5,
+      "fixtureInputSha256": "79e456e0e770eeb96fb2b5e7f8b5eb91b49c5b693ed40780e435e0cdb8d94288",
+      "timings": {
+        "canonical": [
+          {
+            "lineageMs": 3.635583,
+            "packageMs": 6.059167,
+            "routeMs": 0.215542,
+            "closingMs": 0.023083,
+            "snapshotMs": 0.001834,
+            "otherMs": 0.4597490000000004,
+            "totalMs": 10.394958
+          },
+          {
+            "lineageMs": 3.361,
+            "packageMs": 5.710042,
+            "routeMs": 0.20825,
+            "closingMs": 0.020833,
+            "snapshotMs": 0.001292,
+            "otherMs": 0.446333000000001,
+            "totalMs": 9.74775
+          },
+          {
+            "lineageMs": 3.324291,
+            "packageMs": 6.002875,
+            "routeMs": 0.2515,
+            "closingMs": 0.025208,
+            "snapshotMs": 0.002125,
+            "otherMs": 0.48675099999999993,
+            "totalMs": 10.09275
+          },
+          {
+            "lineageMs": 3.292791,
+            "packageMs": 5.629791,
+            "routeMs": 0.201834,
+            "closingMs": 0.020709,
+            "snapshotMs": 0.001375,
+            "otherMs": 0.463083000000001,
+            "totalMs": 9.609583
+          },
+          {
+            "lineageMs": 3.312,
+            "packageMs": 5.99425,
+            "routeMs": 0.241333,
+            "closingMs": 0.0225,
+            "snapshotMs": 0.001875,
+            "otherMs": 0.47604199999999963,
+            "totalMs": 10.048
+          }
+        ],
+        "stored_bytes": [
+          {
+            "lineageMs": 1.902666,
+            "packageMs": 5.740208,
+            "routeMs": 0.212791,
+            "closingMs": 0.021042,
+            "snapshotMs": 0.001292,
+            "otherMs": 0.46054300000000037,
+            "totalMs": 8.338542
+          },
+          {
+            "lineageMs": 1.85975,
+            "packageMs": 5.682333,
+            "routeMs": 0.200125,
+            "closingMs": 0.020625,
+            "snapshotMs": 0.001333,
+            "otherMs": 0.45300100000000043,
+            "totalMs": 8.217167
+          },
+          {
+            "lineageMs": 1.932167,
+            "packageMs": 5.732292,
+            "routeMs": 0.200333,
+            "closingMs": 0.021667,
+            "snapshotMs": 0.001333,
+            "otherMs": 0.49733300000000025,
+            "totalMs": 8.385125
+          },
+          {
+            "lineageMs": 1.973083,
+            "packageMs": 5.742625,
+            "routeMs": 0.212583,
+            "closingMs": 0.021125,
+            "snapshotMs": 0.001375,
+            "otherMs": 0.45408399999999993,
+            "totalMs": 8.404875
+          },
+          {
+            "lineageMs": 2.013333,
+            "packageMs": 5.678959,
+            "routeMs": 0.201834,
+            "closingMs": 0.020416,
+            "snapshotMs": 0.001333,
+            "otherMs": 0.4777920000000009,
+            "totalMs": 8.393667
+          }
+        ]
+      },
+      "metrics": {
+        "canonical": {
+          "lineageMs": {
+            "medianMs": 3.324291,
+            "p95Ms": 3.635583
+          },
+          "packageMs": {
+            "medianMs": 5.99425,
+            "p95Ms": 6.059167
+          },
+          "routeMs": {
+            "medianMs": 0.215542,
+            "p95Ms": 0.2515
+          },
+          "closingMs": {
+            "medianMs": 0.0225,
+            "p95Ms": 0.025208
+          },
+          "snapshotMs": {
+            "medianMs": 0.001834,
+            "p95Ms": 0.002125
+          },
+          "otherMs": {
+            "medianMs": 0.463083000000001,
+            "p95Ms": 0.48675099999999993
+          },
+          "totalMs": {
+            "medianMs": 10.048,
+            "p95Ms": 10.394958
+          }
+        },
+        "stored_bytes": {
+          "lineageMs": {
+            "medianMs": 1.932167,
+            "p95Ms": 2.013333
+          },
+          "packageMs": {
+            "medianMs": 5.732292,
+            "p95Ms": 5.742625
+          },
+          "routeMs": {
+            "medianMs": 0.201834,
+            "p95Ms": 0.212791
+          },
+          "closingMs": {
+            "medianMs": 0.021042,
+            "p95Ms": 0.021667
+          },
+          "snapshotMs": {
+            "medianMs": 0.001333,
+            "p95Ms": 0.001375
+          },
+          "otherMs": {
+            "medianMs": 0.46054300000000037,
+            "p95Ms": 0.49733300000000025
+          },
+          "totalMs": {
+            "medianMs": 8.385125,
+            "p95Ms": 8.404875
+          }
+        }
+      },
+      "databaseUnchanged": true,
+      "semanticProjectionEqual": true,
+      "selectedSources": [
+        "memory:thread:memory-bench-31:thread-97dfd1f3809d2156"
+      ],
+      "bundleSha256": "a202785239050961d30186adf02d388a42f5e721fadf0bce7fd2dd962f27002f",
+      "chapterChars": 4760
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "thread",
+      "turns": 128,
+      "repeats": 5,
+      "fixtureInputSha256": "538c33c2e58abb79e48c41334d69c0dd4beb4382ef2143c9d31b2326932b8706",
+      "timings": {
+        "canonical": [
+          {
+            "lineageMs": 30.519834,
+            "packageMs": 5.881083,
+            "routeMs": 0.24275,
+            "closingMs": 0.0355,
+            "snapshotMs": 0.002,
+            "otherMs": 0.6916659999999979,
+            "totalMs": 37.372833
+          },
+          {
+            "lineageMs": 30.078916,
+            "packageMs": 5.919458,
+            "routeMs": 0.251292,
+            "closingMs": 0.033667,
+            "snapshotMs": 0.001875,
+            "otherMs": 0.8312500000000043,
+            "totalMs": 37.116458
+          },
+          {
+            "lineageMs": 30.529375,
+            "packageMs": 6.018209,
+            "routeMs": 0.234916,
+            "closingMs": 0.033667,
+            "snapshotMs": 0.002083,
+            "otherMs": 0.8152499999999989,
+            "totalMs": 37.6335
+          },
+          {
+            "lineageMs": 30.231833,
+            "packageMs": 5.952792,
+            "routeMs": 0.227917,
+            "closingMs": 0.036292,
+            "snapshotMs": 0.001875,
+            "otherMs": 0.8199579999999997,
+            "totalMs": 37.270667
+          },
+          {
+            "lineageMs": 30.778666,
+            "packageMs": 6.048833,
+            "routeMs": 0.2435,
+            "closingMs": 0.033292,
+            "snapshotMs": 0.001959,
+            "otherMs": 0.8087499999999963,
+            "totalMs": 37.915
+          }
+        ],
+        "stored_bytes": [
+          {
+            "lineageMs": 16.464667,
+            "packageMs": 5.937583,
+            "routeMs": 0.239,
+            "closingMs": 0.033875,
+            "snapshotMs": 0.002,
+            "otherMs": 0.7641249999999999,
+            "totalMs": 23.44125
+          },
+          {
+            "lineageMs": 16.983666,
+            "packageMs": 6.003459,
+            "routeMs": 0.242292,
+            "closingMs": 0.033625,
+            "snapshotMs": 0.001834,
+            "otherMs": 0.7966659999999983,
+            "totalMs": 24.061542
+          },
+          {
+            "lineageMs": 16.7165,
+            "packageMs": 5.933875,
+            "routeMs": 0.234625,
+            "closingMs": 0.033125,
+            "snapshotMs": 0.001958,
+            "otherMs": 0.8127510000000022,
+            "totalMs": 23.732834
+          },
+          {
+            "lineageMs": 16.933208,
+            "packageMs": 5.971709,
+            "routeMs": 0.2355,
+            "closingMs": 0.033625,
+            "snapshotMs": 0.001875,
+            "otherMs": 0.8030829999999973,
+            "totalMs": 23.979
+          },
+          {
+            "lineageMs": 16.499584,
+            "packageMs": 6.0835,
+            "routeMs": 0.24125,
+            "closingMs": 0.035,
+            "snapshotMs": 0.001708,
+            "otherMs": 0.8302080000000025,
+            "totalMs": 23.69125
+          }
+        ]
+      },
+      "metrics": {
+        "canonical": {
+          "lineageMs": {
+            "medianMs": 30.519834,
+            "p95Ms": 30.778666
+          },
+          "packageMs": {
+            "medianMs": 5.952792,
+            "p95Ms": 6.048833
+          },
+          "routeMs": {
+            "medianMs": 0.24275,
+            "p95Ms": 0.251292
+          },
+          "closingMs": {
+            "medianMs": 0.033667,
+            "p95Ms": 0.036292
+          },
+          "snapshotMs": {
+            "medianMs": 0.001959,
+            "p95Ms": 0.002083
+          },
+          "otherMs": {
+            "medianMs": 0.8152499999999989,
+            "p95Ms": 0.8312500000000043
+          },
+          "totalMs": {
+            "medianMs": 37.372833,
+            "p95Ms": 37.915
+          }
+        },
+        "stored_bytes": {
+          "lineageMs": {
+            "medianMs": 16.7165,
+            "p95Ms": 16.983666
+          },
+          "packageMs": {
+            "medianMs": 5.971709,
+            "p95Ms": 6.0835
+          },
+          "routeMs": {
+            "medianMs": 0.239,
+            "p95Ms": 0.242292
+          },
+          "closingMs": {
+            "medianMs": 0.033625,
+            "p95Ms": 0.035
+          },
+          "snapshotMs": {
+            "medianMs": 0.001875,
+            "p95Ms": 0.002
+          },
+          "otherMs": {
+            "medianMs": 0.8030829999999973,
+            "p95Ms": 0.8302080000000025
+          },
+          "totalMs": {
+            "medianMs": 23.732834,
+            "p95Ms": 24.061542
+          }
+        }
+      },
+      "databaseUnchanged": true,
+      "semanticProjectionEqual": true,
+      "selectedSources": [
+        "memory:thread:memory-bench-127:thread-bc7f3b59610b70bf"
+      ],
+      "bundleSha256": "54b8e95b093e9135d73111aa1cb51e26917016b03441efb46fcefa19f11d72b7",
+      "chapterChars": 4697
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "thread",
+      "turns": 512,
+      "repeats": 5,
+      "fixtureInputSha256": "2f11ac7b84ed1c6ba71a229c6d4581e0758fe8f63c1d3c44a18df377d8d42e13",
+      "timings": {
+        "canonical": [
+          {
+            "lineageMs": 399.006625,
+            "packageMs": 6.127833,
+            "routeMs": 0.321625,
+            "closingMs": 0.078041,
+            "snapshotMs": 0.002,
+            "otherMs": 1.4880840000000148,
+            "totalMs": 407.024208
+          },
+          {
+            "lineageMs": 392.906125,
+            "packageMs": 6.120833,
+            "routeMs": 0.344583,
+            "closingMs": 0.077208,
+            "snapshotMs": 0.002,
+            "otherMs": 1.4948340000000258,
+            "totalMs": 400.945583
+          },
+          {
+            "lineageMs": 386.720333,
+            "packageMs": 6.465125,
+            "routeMs": 0.319458,
+            "closingMs": 0.078209,
+            "snapshotMs": 0.001958,
+            "otherMs": 1.512207999999987,
+            "totalMs": 395.097291
+          },
+          {
+            "lineageMs": 596.9745,
+            "packageMs": 5.995583,
+            "routeMs": 0.321416,
+            "closingMs": 0.076583,
+            "snapshotMs": 0.002042,
+            "otherMs": 1.5114589999999453,
+            "totalMs": 604.881583
+          },
+          {
+            "lineageMs": 401.556167,
+            "packageMs": 5.966917,
+            "routeMs": 0.337541,
+            "closingMs": 0.076458,
+            "snapshotMs": 0.002041,
+            "otherMs": 1.4810840000000098,
+            "totalMs": 409.420208
+          }
+        ],
+        "stored_bytes": [
+          {
+            "lineageMs": 221.750291,
+            "packageMs": 6.278209,
+            "routeMs": 0.414167,
+            "closingMs": 0.078,
+            "snapshotMs": 0.002292,
+            "otherMs": 1.5166659999999865,
+            "totalMs": 230.039625
+          },
+          {
+            "lineageMs": 212.262709,
+            "packageMs": 6.315709,
+            "routeMs": 0.370792,
+            "closingMs": 0.079584,
+            "snapshotMs": 0.002417,
+            "otherMs": 1.546580999999975,
+            "totalMs": 220.577792
+          },
+          {
+            "lineageMs": 218.433708,
+            "packageMs": 6.031542,
+            "routeMs": 0.376959,
+            "closingMs": 0.077625,
+            "snapshotMs": 0.001916,
+            "otherMs": 1.5011250000000018,
+            "totalMs": 226.422875
+          },
+          {
+            "lineageMs": 204.450459,
+            "packageMs": 5.983625,
+            "routeMs": 0.347166,
+            "closingMs": 0.076292,
+            "snapshotMs": 0.001875,
+            "otherMs": 1.518665999999996,
+            "totalMs": 212.378083
+          },
+          {
+            "lineageMs": 221.405917,
+            "packageMs": 5.934125,
+            "routeMs": 0.329042,
+            "closingMs": 0.0755,
+            "snapshotMs": 0.002125,
+            "otherMs": 1.5076660000000288,
+            "totalMs": 229.254375
+          }
+        ]
+      },
+      "metrics": {
+        "canonical": {
+          "lineageMs": {
+            "medianMs": 399.006625,
+            "p95Ms": 596.9745
+          },
+          "packageMs": {
+            "medianMs": 6.120833,
+            "p95Ms": 6.465125
+          },
+          "routeMs": {
+            "medianMs": 0.321625,
+            "p95Ms": 0.344583
+          },
+          "closingMs": {
+            "medianMs": 0.077208,
+            "p95Ms": 0.078209
+          },
+          "snapshotMs": {
+            "medianMs": 0.002,
+            "p95Ms": 0.002042
+          },
+          "otherMs": {
+            "medianMs": 1.4948340000000258,
+            "p95Ms": 1.512207999999987
+          },
+          "totalMs": {
+            "medianMs": 407.024208,
+            "p95Ms": 604.881583
+          }
+        },
+        "stored_bytes": {
+          "lineageMs": {
+            "medianMs": 218.433708,
+            "p95Ms": 221.750291
+          },
+          "packageMs": {
+            "medianMs": 6.031542,
+            "p95Ms": 6.315709
+          },
+          "routeMs": {
+            "medianMs": 0.370792,
+            "p95Ms": 0.414167
+          },
+          "closingMs": {
+            "medianMs": 0.077625,
+            "p95Ms": 0.079584
+          },
+          "snapshotMs": {
+            "medianMs": 0.002125,
+            "p95Ms": 0.002417
+          },
+          "otherMs": {
+            "medianMs": 1.5166659999999865,
+            "p95Ms": 1.546580999999975
+          },
+          "totalMs": {
+            "medianMs": 226.422875,
+            "p95Ms": 230.039625
+          }
+        }
+      },
+      "databaseUnchanged": true,
+      "semanticProjectionEqual": true,
+      "selectedSources": [
+        "memory:thread:memory-bench-511:thread-0c14539111e1f006"
+      ],
+      "bundleSha256": "0ef93587251e99bc088735eedea8c6bb937af6373307e3dc80ca146e91b90d09",
+      "chapterChars": 4659
+    }
+  ]
+}

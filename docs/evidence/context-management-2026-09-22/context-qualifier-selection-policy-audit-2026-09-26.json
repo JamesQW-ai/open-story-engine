@@ -1,0 +1,937 @@
+{
+  "schemaVersion": "context-qualifier-selection-audit/0.2",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-qualifier-selection-policy-2026-09-26.json",
+  "sourceSha256": "a96d95901b0a62599f397e27214bf4a1d98eb1d21a12d2ec79b6ce5cfc6daa18",
+  "originalCalls": 18,
+  "newModelCalls": 0,
+  "actualInputsVerified": true,
+  "allScoresReproduced": true,
+  "cases": [
+    {
+      "caseId": "gate:original_condition",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "条件句主句明确伤者位于封山线内，条件前提不改变位置命题本身",
+            "subject": {
+              "segmentId": "P1-U2-S1",
+              "quote": "伤者",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S1",
+              "quote": "封山线",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U1-S2",
+              "P1-U2-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "condition",
+                "cue": {
+                  "segmentId": "P1-U1-S2",
+                  "quote": "守门弟子放行",
+                  "occurrence": 0
+                },
+                "premise": [
+                  "P1-U1-S1",
+                  "P1-U1-S2"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "gate:plain_emphasis",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确主体伤者位于封山线内，无认识限定或条件。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "伤者",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "封山线",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "gate:possibility",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "主体和边界明确，位置为封山线内，含可能性限定。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "伤者",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "封山线",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "gate:both",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "伤者可能在封山线内，主体与边界明确，位置命题为在内。",
+            "subject": {
+              "segmentId": "P1-U2-S1",
+              "quote": "伤者",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S1",
+              "quote": "封山线",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U1-S2",
+              "P1-U2-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "condition",
+                "cue": {
+                  "segmentId": "P1-U1-S2",
+                  "quote": "守门弟子放行",
+                  "occurrence": 0
+                },
+                "premise": [
+                  "P1-U1-S1",
+                  "P1-U1-S2"
+                ]
+              },
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U2-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "gate:condition_paraphrase",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "伤者位于封山线外，主体与边界明确，无否定或限定。",
+            "subject": {
+              "segmentId": "P1-U2-S1",
+              "quote": "伤者",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S1",
+              "quote": "封山线",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U1-S2",
+              "P1-U2-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "condition",
+                "cue": {
+                  "segmentId": "P1-U1-S2",
+                  "quote": "守门弟子点头",
+                  "occurrence": 0
+                },
+                "premise": [
+                  "P1-U1-S1",
+                  "P1-U1-S2"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "gate:possibility_paraphrase",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "needs_review",
+            "normal": null,
+            "reason": "命题含认识情态“或许”，位置不确定，不能升级为确定候选",
+            "subject": {
+              "segmentId": "⟦P1-U1-S1⟧",
+              "quote": "伤者",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "⟦P1-U1-S1⟧",
+              "quote": "封山线",
+              "occurrence": 0
+            },
+            "core": [
+              "⟦P1-U1-S1⟧"
+            ],
+            "qualified": [
+              "⟦P1-U1-S1⟧"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "⟦P1-U1-S1⟧",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "gate:both_paraphrase",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "伤者或许在封山线外，主体与边界明确，位置为线外。",
+            "subject": {
+              "segmentId": "P1-U2-S1",
+              "quote": "伤者",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S1",
+              "quote": "封山线",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U1-S2",
+              "P1-U2-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "condition",
+                "cue": {
+                  "segmentId": "P1-U1-S2",
+                  "quote": "守门弟子点头",
+                  "occurrence": 0
+                },
+                "premise": [
+                  "P1-U1-S1",
+                  "P1-U1-S2"
+                ]
+              },
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U2-S1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "gate:unrelated_possibility",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确主体伤者位于封山线内，无认识限定或条件。",
+            "subject": {
+              "segmentId": "P1-U2-S1",
+              "quote": "伤者",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S1",
+              "quote": "封山线",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U2-S1"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "gate:unrelated_condition",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:wounded_stranger",
+              "relation": "boundary_side",
+              "object": "scene:sealing_line",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确断言伤者在封山线外，无认识限定或条件。",
+            "subject": {
+              "segmentId": "P1-U3-S1",
+              "quote": "伤者",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U3-S1",
+              "quote": "封山线",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U3-S1"
+            ],
+            "qualified": [
+              "P1-U3-S1"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "hall:source_position",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确陈述沈砚秋位于殿外，主体与边界唯一可定位。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "hall:negative_position",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "negative",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确主体沈砚秋与议事殿边界，否定位于殿内。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "hall:inferred_position",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "needs_review",
+            "normal": null,
+            "reason": "存在认识情态限定“想必”，位置命题不能确定为事实候选",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "开门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "想必",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "hall:explicit_uncertainty",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "needs_review",
+            "normal": null,
+            "reason": "命题含认识情态“大概”，位置不确定，不能升级为确定候选。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "大概",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "hall:word_mention",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老站在议事殿内，明确主体与边界位置。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S2"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "hall:condition_and_inference",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "needs_review",
+            "normal": null,
+            "reason": "位置命题含条件前提与认识可能性限定，且边界称呼为'议事殿内'，需确认边界实体与位置值分离。",
+            "subject": {
+              "segmentId": "P1-U2-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U2-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "condition",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "若议事尚未散场",
+                  "occurrence": 0
+                },
+                "premise": [
+                  "P1-U1-S1"
+                ]
+              },
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U2-S1",
+                  "quote": "也许",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "hall:two_people",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确表述守门长老位于议事殿内，无额外限定。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": []
+          },
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确表述沈砚秋留在议事殿外，无额外限定。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S2"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "hall:unrelated_uncertainty",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "negative",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确主体沈砚秋与边界议事殿，否定位于内部，即不在内。",
+            "subject": {
+              "segmentId": "P1-U2-S1",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U2-S1"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "hall:denied_certainty",
+      "status": "invalid_response",
+      "error": "须返回 qualifier-selection/0.2 与 items",
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "proposedResponse": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "status": "needs_review",
+            "normal": null,
+            "reason": "存在认识情态限定“没有人敢断定”，不能作为确定的位置命题。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U1-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "没有人敢断定",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "matched": 0,
+    "mismatched": 0,
+    "invalid_response": 18,
+    "model_error": 0,
+    "harness_error": 0,
+    "not_run": 0
+  },
+  "requiresSemanticReview": true,
+  "acceptance": false,
+  "productionEnablement": false
+}

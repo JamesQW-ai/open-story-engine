@@ -67,8 +67,14 @@ def choice_context(package, contract, history, node):
             if item.get('evidence') and item['evidence'] in entry.get('narrativeText', ''):
                 public_items.add(item['id'])
     items = list(package.get('items', [])) + state.get('derivedItems', [])
-    locations = {p['id'] for p in list(package.get('locations', [])) + state.get('derivedLocations', [])}
-    return {'player': player, 'playerLocationId': state.get('playerLocationId', 'unknown'), 'paragraphs': paragraphs,
+    places = {p['id']: p for p in list(package.get('locations', [])) + state.get('derivedLocations', [])}
+    locations = set(places)
+    current_place = places.get(state.get('playerLocationId'))
+    from .narrative_delivery import continuity_context
+    return {'player': player, 'playerLocationId': state.get('playerLocationId', 'unknown'),
+            'currentLocation': {key: current_place[key] for key in ('id', 'name')} if current_place else None,
+            'paragraphs': paragraphs,
+            **continuity_context(node, node.get('playerDirection') or '', limit=4),
             'people': [{'id': c['id'], 'name': c['name'],
                         'status': state.get('characterOutcomeStates', {}).get(c['id'], {}).get('status', 'unknown'),
                         'permanence': state.get('characterOutcomeStates', {}).get(c['id'], {}).get('permanence', 'unknown'),
@@ -102,9 +108,13 @@ def validate_choices(data, context, package):
         refs, interactions = option.get('paragraphIds'), option.get('interactWith')
         mentions = option.get('mentionOnly', [])
         uses = option.get('useItems', [])
+        followup_id = option.get('followupId')
+        followup = next((f for f in context.get('pendingFollowups', []) if f['id'] == followup_id), None)
         if (not isinstance(title, str) or not 2 <= len(title.strip()) <= 28
                 or not isinstance(action, str) or not 8 <= len(action.strip()) <= 180
-                or not isinstance(refs, list) or not refs or any(not isinstance(r, str) or r not in context['paragraphs'] for r in refs)
+                or not isinstance(refs, list) or (not refs and followup is None)
+                or any(not isinstance(r, str) or r not in context['paragraphs'] for r in refs)
+                or (followup_id is not None and followup is None)
                 or not isinstance(interactions, list)
                 or not isinstance(mentions, list)
                 or not isinstance(uses, list)
@@ -132,6 +142,9 @@ def validate_choices(data, context, package):
                                         'mentionOnly': list(dict.fromkeys(mentions))}})
         if uses:
             result[-1]['dependencies']['useItems'] = list(dict.fromkeys(uses))
+        if followup is not None:
+            result[-1]['dependencies']['followupId'] = followup_id
+            result[-1]['evidence'].append(followup['evidence'])
         actions.append(normalized)
     if not result:
         raise ValueError('没有通过公开依据与角色可用性检查的方向')
@@ -154,6 +167,8 @@ def restored_choices(choices, context, package):
                   'paragraphIds': dependencies.get('paragraphIds'),
                   'interactWith': dependencies.get('interactWith'), 'mentionOnly': dependencies.get('mentionOnly'),
                   'useItems': dependencies.get('useItems', [])}
+        if 'followupId' in dependencies:
+            option['followupId'] = dependencies['followupId']
         try:
             checked = validate_choices({'choices': [option]}, context, package)[0]
         except ValueError:

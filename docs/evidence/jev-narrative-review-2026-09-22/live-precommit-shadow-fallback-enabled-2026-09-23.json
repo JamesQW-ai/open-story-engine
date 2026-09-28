@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "jev-precommit-shadow/0.1",
+  "status": "completed",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3",
+    "cjk": 102610
+  },
+  "action": "我指出伤者仍有呼吸，只询问守门弟子是否能通传执事，听完回应再决定；我留在原地，不移动。",
+  "writerModel": "deepseek-v4-flash",
+  "providerCalls": 8,
+  "jev": {
+    "shadow": true,
+    "status": "ok",
+    "requestId": "jev-precommit-precommit-action",
+    "model": "~typesafe/jev-latest",
+    "preflight": {
+      "ok": true,
+      "reason": "preflight_passed"
+    },
+    "inputFields": [
+      "allowedEvidence",
+      "allowedMechanisms",
+      "branchState",
+      "candidateNarrative",
+      "context",
+      "patchHint",
+      "playerAction",
+      "resultContract",
+      "reviewMeta"
+    ],
+    "decision": "allow_with_patch",
+    "reason": "bounded_anomaly_or_model_patch",
+    "reasonCodes": [
+      "bounded_anomaly"
+    ],
+    "review": {
+      "ruleSetVersion": "jev-review-rules/0.3",
+      "decision": "allow_with_patch",
+      "reason": "bounded_anomaly_or_model_patch",
+      "reasonCodes": [
+        "bounded_anomaly"
+      ],
+      "layers": {
+        "L0": {
+          "status": "pass",
+          "fatalRisks": {
+            "hard_state_conflict": 0.04,
+            "agency_violation": 0.06,
+            "knowledge_leak": 0.06,
+            "future_fact_leak": 0.05
+          },
+          "blockingRisks": {
+            "hard_state_conflict": 0.04,
+            "agency_violation": 0.06,
+            "knowledge_leak": 0.06,
+            "future_fact_leak": 0.05,
+            "unsupported_claim": 0.16000000000000003
+          },
+          "threshold": 0.65
+        },
+        "L1": {
+          "directDecision": "allow",
+          "boundedAnomaly": 0.75,
+          "missingPatchSupport": 0.19
+        },
+        "L2": {
+          "decision": "allow_with_patch",
+          "codeOwned": true
+        },
+        "L3": {
+          "scores": {
+            "state_consistency": 96,
+            "agency_scope": 94,
+            "knowledge_boundary": 94,
+            "future_boundary": 95,
+            "grounding": 84,
+            "repair_support": 81,
+            "minimum_observational_score": 81
+          },
+          "scoreIsObservational": true
+        }
+      }
+    },
+    "answers": {
+      "review_decision": {
+        "type": "choice",
+        "choice": "allow",
+        "probabilities": {
+          "rewrite": 0.01,
+          "allow_with_patch": 0.25,
+          "reject": 0,
+          "allow": 0.74
+        },
+        "confidence": 0.64
+      },
+      "hard_state_conflict": {
+        "type": "noul",
+        "noul": 0.04
+      },
+      "agency_violation": {
+        "type": "noul",
+        "noul": 0.06
+      },
+      "knowledge_leak": {
+        "type": "noul",
+        "noul": 0.06
+      },
+      "future_fact_leak": {
+        "type": "noul",
+        "noul": 0.05
+      },
+      "claim_supported": {
+        "type": "noul",
+        "noul": 0.84
+      },
+      "bounded_anomaly": {
+        "type": "noul",
+        "noul": 0.75
+      },
+      "missing_patch_support": {
+        "type": "noul",
+        "noul": 0.19
+      }
+    },
+    "resolvedModel": "typesafe/jev-1.13-20260917",
+    "provider": "TypeSafe",
+    "usage": {
+      "input_tokens": 5196,
+      "output_tokens": 179,
+      "cost": 0.000218232
+    },
+    "durationMs": 5900
+  },
+  "jevWallMs": 5900,
+  "commitStartedAfterJev": true,
+  "commitMs": 215,
+  "turnStatus": "written",
+  "committed": true,
+  "branchId": "branch_d06ce3b4-09da-450f-9da2-0fff4d44bfed",
+  "narrativeChars": 298,
+  "totalElapsedMs": 36505,
+  "ordering": [
+    "writer_generation",
+    "jev_review_before_commit",
+    "story_commit"
+  ],
+  "workersStopped": true,
+  "limitations": [
+    "这是一次隔离的 monkeypatch 端到端验证，不是生产代码接入。",
+    "Jev shadow 在提交前调用但不阻断提交；本次仅验证时序和真实候选审核。",
+    "仍需更多动作和人工阅读后再决定是否启用阻断闸门。"
+  ]
+}

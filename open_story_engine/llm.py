@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import socket
 import time
 from dataclasses import dataclass
@@ -10,6 +11,7 @@ from queue import Empty, Queue
 from threading import Lock, Thread, local
 from typing import Any, Callable, Dict, List, Optional
 from urllib.error import HTTPError, URLError
+from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
 
@@ -31,6 +33,32 @@ class Completion:
     body_was_streamed: bool = False
 
 
+def _is_openrouter_deepseek_route(base_url: str, model: str) -> bool:
+    """Prevent accidental billable DeepSeek traffic through OpenRouter."""
+    host = (urlparse(base_url).hostname or "").lower()
+    return host in {"openrouter.ai", "www.openrouter.ai"} and "deepseek" in model.lower()
+
+
+def writer_config_from_env() -> Dict[str, str]:
+    """Resolve the selected DeepSeek writer route without mixing Jev settings."""
+    route = os.environ.get("STORY_LLM_ROUTE", "relay").strip().lower() or "relay"
+    if route not in {"direct", "relay"}:
+        raise ValueError("STORY_LLM_ROUTE 仅支持 direct 或 relay")
+    if route == "direct":
+        return {
+            "route": route,
+            "base_url": os.environ.get("STORY_LLM_DIRECT_BASE_URL", "").strip(),
+            "api_key": os.environ.get("STORY_LLM_DIRECT_API_KEY", "").strip(),
+            "model": os.environ.get("STORY_LLM_DIRECT_MODEL", "").strip(),
+        }
+    return {
+        "route": route,
+        "base_url": os.environ.get("STORY_LLM_BASE_URL", "").strip(),
+        "api_key": os.environ.get("STORY_LLM_API_KEY", "").strip(),
+        "model": os.environ.get("STORY_LLM_MODEL", "").strip(),
+    }
+
+
 class OpenAICompatibleGateway:
     def __init__(
         self,
@@ -43,17 +71,26 @@ class OpenAICompatibleGateway:
         allow_transport_fallback: bool = True,
         reasoning_effort: Optional[str] = None,
         first_delta_timeout_seconds: Optional[int] = None,
+        text_max_tokens: Optional[int] = None,
     ) -> None:
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.model = model
+        if _is_openrouter_deepseek_route(self.base_url, self.model):
+            raise ValueError(
+                "禁止通过 OpenRouter 调用 DeepSeek；请改用 DeepSeek 直连或公司中转地址"
+            )
         self.stream = stream
         self.timeout_seconds = timeout_seconds
         self.max_tokens = max_tokens
+        # Keep direct callers backward-compatible while allowing the player
+        # API to use a smaller prose budget than structured reviews.
+        self.text_max_tokens = text_max_tokens if text_max_tokens is not None else max_tokens
         self.allow_transport_fallback = allow_transport_fallback
         self.reasoning_effort = reasoning_effort
         self.first_delta_timeout_seconds = first_delta_timeout_seconds
         self._transport_local = local()
+        self._remaining_calls_lock = Lock()
         # Only the fixed JSON, no-fallback live evaluation sets this budget.
         self.remaining_calls: Optional[int] = None
 
@@ -64,11 +101,13 @@ class OpenAICompatibleGateway:
         # pickled/deep-copied.  A copied gateway must start with fresh metrics;
         # the request configuration and live call budget remain shared values.
         state.pop("_transport_local", None)
+        state.pop("_remaining_calls_lock", None)
         return state
 
     def __setstate__(self, state):
         self.__dict__.update(state)
         self._transport_local = local()
+        self._remaining_calls_lock = Lock()
 
     def _reset_transport_metrics(self) -> Dict[str, Any]:
         metrics: Dict[str, Any] = {"_started": time.monotonic()}
@@ -152,14 +191,22 @@ class OpenAICompatibleGateway:
     ) -> Completion:
         request_stream = self.stream if stream_override is None else stream_override
         if self.remaining_calls is not None:
-            if self.remaining_calls <= 0:
-                raise LlmError("已达到真实模型验收调用上限", "model_call_limit")
-            self.remaining_calls -= 1
+            with self._remaining_calls_lock:
+                if self.remaining_calls <= 0:
+                    raise LlmError("已达到真实模型验收调用上限", "model_call_limit")
+                self.remaining_calls -= 1
+        request_max_tokens = self.text_max_tokens if response_format is None else self.max_tokens
+        if response_format is not None:
+            try:
+                configured_json_budget = int(os.environ.get("STORY_LLM_JSON_MAX_TOKENS", str(self.max_tokens)))
+            except ValueError:
+                configured_json_budget = self.max_tokens
+            request_max_tokens = min(self.max_tokens, max(1024, configured_json_budget))
         request_body = {
             "model": self.model,
             "messages": messages,
             "temperature": 0.35,
-            "max_tokens": self.max_tokens,
+            "max_tokens": request_max_tokens,
             "stream": request_stream,
         }
         if response_format is not None:

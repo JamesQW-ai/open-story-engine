@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "jev-real-longform-review-fixture/0.1",
+  "source": {
+    "packageId": "taixu-relics-part1",
+    "packageVersion": "0.1.3",
+    "title": "《太虚遗录》",
+    "sourceEvidence": "docs/evidence/context-management-2026-09-22/real-rerun2-summary-2026-09-22.json",
+    "humanReviewRequired": true
+  },
+  "description": "当前官方十万字长篇真实回放正文的独立 Jev 审核探针；标签是工程初始标签，不计入正式质量通过。",
+  "cases": [
+    {
+      "id": "taixu_inform_rerun2",
+      "expectedDecision": "allow",
+      "context": "《太虚遗录》第一部，外门试炼当前 beat。玩家扮演顾长离，已确认手中有木牌和一粒包好的金屑；陆照临在场。玩家本回合只陈述准备带着金屑和木牌去后坡试炼、按规矩取青露草，暂不出发、不追问。公开规则包括日落前取回青露草、不得越过白线、不得争抢伤人。",
+      "branchState": "package=taixu-relics-part1@0.1.3; location=trial_field; player_has_token=true; player_has_gold_flake=true; lu_present=true; departure_authorized=false; bell_rung=false",
+      "playerAction": "我说明准备带着这粒金屑和木牌去后坡试炼，按规矩取青露草；此刻只说明这个打算，听回应，不出发。",
+      "resultContract": "必须保留陈述打算、陆照临当场回应和原地停止点；不得把打算写成已经出发，不得替玩家作决定，不得新增未登记事实。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "“我打算先带着这粒金屑和木牌去后坡试炼，按规矩取青露草。”你把包着金屑的纸片和木牌一并按在掌心，话说得平直，没有绕弯，也没有追问他的来历。\n\n陆照临听完，目光在你掌上停了停，又抬回你脸上。他没有伸手，也没有追问金屑的事，只点了点头：“规矩我听过。日落前取回青露草，白线不能越，不能争抢伤人。”他顿了一下，语气不重，“你要带着它进去，是你的打算。我不拦你，也不替你拿主意。”\n\n他说完便不再多言，侧身让开半步，像是把路和决定都留在你这边。钟声还没响，你仍站在原地。"
+    },
+    {
+      "id": "taixu_ask_basis_rerun1",
+      "expectedDecision": "allow",
+      "context": "《太虚遗录》第一部，外门试炼当前 beat。顾长离已经看见木牌刻痕中的金屑，并把一粒金屑包在纸里；陆照临在场，但没有亲眼看见金屑，也没有获知其来源。玩家只询问陆照临怎么看、有什么依据，不交出纸包、不移动。",
+      "branchState": "package=taixu-relics-part1@0.1.3; location=trial_field; token_mark_observed=true; gold_flake_known_by=[player]; lu_saw_gold_flake=false; paper_packet_held=true; movement_authorized=false",
+      "playerAction": "我向陆照临指出木牌刻痕里的金屑，只询问他怎么看、有什么依据，听完再决定。",
+      "resultContract": "保留玩家已观察到的金屑和纸包；陆照临只能说明自己看到的木头、黑泥和公开信息；双方留在原地。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你把木牌翻过来，指尖点在背面那道刻痕上。黑泥嵌在笔画里，不细看只当是旧木积垢。\n\n“刻痕里夹着金屑。”你说，声音压得不高，只够两个人听见，“我刮下一粒，包在纸里了。”\n\n纸包就捏在你另一只手里，薄薄一层，没有递出去的意思。陆照临的目光落在你指着的刻痕上，又抬起来看你，没伸手。\n\n“你怎么看？”你问，“有什么依据？”\n\n他沉默了一息，眉心微微收拢。然后他摇头。\n\n“我没见过这种木牌，也没听过刻痕里会夹金屑的事。”他说得平直，没有绕弯子，“你让我看，我只能看见黑泥和木头。金屑是你说的，我没亲眼见着，也认不出那是什么金、打哪儿来的。”他说完仍站在原地，纸包留在你掌心里。"
+    },
+    {
+      "id": "taixu_brief_wait_rerun3",
+      "expectedDecision": "allow",
+      "context": "《太虚遗录》第一部，外门试炼当前 beat。顾长离手里有木牌和包好的金屑；陆照临在原处；试炼钟尚未响。玩家要求收好物品、留在原地、暂不行动，等待钟响或回应。",
+      "branchState": "package=taixu-relics-part1@0.1.3; location=trial_field; token_held=true; packet_held=true; lu_present=true; bell_rung=false; player_action_scope=wait_only",
+      "playerAction": "我留在原地，把纸包和木牌收好，暂不行动，等试炼钟响或陆照临回应。",
+      "resultContract": "只写收好物品和等待；不得转场、提前写钟响、替玩家作决定或新增状态。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "纸包和木牌贴着掌心，还带着方才握紧的温度。你把纸包折口压平，连同木牌一并收进衣内，贴着腰侧放稳，手垂下来时顺势按了按，确认不会滑脱。\n\n石壁上的旧剑痕在余光里横斜，场边新弟子压低的交谈声时断时续。你留在原处，没有挪步，也没有开口。\n\n陆照临还站在你面前。他若开口，你听得见；钟若响，你也听得见。眼下两样都还没有来。"
+    },
+    {
+      "id": "taixu_empty_failed_draft",
+      "expectedDecision": "reject",
+      "context": "《太虚遗录》第一部，外门试炼当前 beat。上一轮真实模型请求没有产生候选正文，只有明确的生成失败回执。",
+      "branchState": "package=taixu-relics-part1@0.1.3; draft_status=missing; no_candidate_text=true",
+      "playerAction": "我留在原地等待。",
+      "resultContract": "没有候选正文时不得审核通过，也不得写入或回放。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "",
+      "reviewMeta": {"evidenceSufficient": false}
+    }
+  ]
+}

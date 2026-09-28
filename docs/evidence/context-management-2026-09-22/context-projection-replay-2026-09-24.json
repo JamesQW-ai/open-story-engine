@@ -1,0 +1,1884 @@
+{
+  "schemaVersion": "context-projection-replay/0.1",
+  "recordedAt": "2026-09-24",
+  "status": "projection_only_no_model",
+  "purpose": "P2 固定长篇上下文体积与阶段边界回放；不代表正文质量或真实模型验收",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3",
+    "title": "《太虚遗录》",
+    "sourceCjk": 102610
+  },
+  "sampleDesign": {
+    "sampleCount": 49,
+    "officialOpeningActionsPerEntry": 2,
+    "fixedHoldActionsPerEntry": 1,
+    "continuationSamples": 28,
+    "syntheticContinuationSamples": 21,
+    "persistedContinuationSamples": 7,
+    "entryPointCount": 7,
+    "modelCalls": 0,
+    "qualityComparison": "unavailable_without_model_replay",
+    "continuationMode": "synthetic_lineage_shape_plus_disposable_temp_store_commit"
+  },
+  "comparison": {
+    "full": "ContextBundle.as_dict()",
+    "compressedEquivalent": "ContextBundle.project('chapter')",
+    "sameSourceContextSha256": true,
+    "hashMeaning": "projection traces back to the same source bundle; not semantic equivalence",
+    "requiredHardFieldsPresent": true,
+    "hiddenAuthoritativeStateExcluded": true,
+    "recursiveBoundaryScanPassed": true,
+    "syntheticLineageContinuityWindowCovered": true,
+    "persistedBranchCommitCovered": true,
+    "fullVsCompressedQuality": "not_run"
+  },
+  "aggregate": {
+    "fullChars": {
+      "min": 6599,
+      "p50": 8562,
+      "p95": 46888.8,
+      "max": 47006
+    },
+    "chapterProjectionChars": {
+      "min": 4669,
+      "p50": 6716,
+      "p95": 40677.2,
+      "max": 40726
+    },
+    "fullEstimatedTokens": {
+      "min": 2216,
+      "p50": 2699,
+      "p95": 15068.2,
+      "max": 15101
+    },
+    "chapterProjectionEstimatedTokens": {
+      "min": 1716,
+      "p50": 2188,
+      "p95": 13485.6,
+      "max": 13528
+    },
+    "meanCharReductionPercent": 21.01,
+    "meanEstimatedTokenReductionPercent": 17.11
+  },
+  "samples": [
+    {
+      "sampleId": "entry_lu_gate-official-1",
+      "entryPointId": "entry_lu_gate",
+      "sourceCharacterId": "character_ae4cb42b9b49",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "23b88c76365c3af3c75a6dbfcd608a2561c35c23466cf9d987ca78f27aaa41cc",
+      "full": {
+        "serializedChars": 8545,
+        "estimatedTokens": 2644
+      },
+      "chapterProjection": {
+        "serializedChars": 6699,
+        "estimatedTokens": 2166
+      },
+      "reduction": {
+        "chars": 1846,
+        "estimatedTokens": 478,
+        "charsPercent": 21.6,
+        "estimatedTokensPercent": 18.08
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_gate-official-1-turn2",
+      "entryPointId": "entry_lu_gate",
+      "sourceCharacterId": "character_ae4cb42b9b49",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "2221034213286c7e9d00e037b5bc55f85700447c358ed5e01b5d2ebae01ac60e",
+      "full": {
+        "serializedChars": 6620,
+        "estimatedTokens": 2216
+      },
+      "chapterProjection": {
+        "serializedChars": 4684,
+        "estimatedTokens": 1716
+      },
+      "reduction": {
+        "chars": 1936,
+        "estimatedTokens": 500,
+        "charsPercent": 29.24,
+        "estimatedTokensPercent": 22.56
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_gate-official-2",
+      "entryPointId": "entry_lu_gate",
+      "sourceCharacterId": "character_ae4cb42b9b49",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "67674168e06965157ef4b125903eef248c69f394a9595f0bf6ec01f1c3c86b7f",
+      "full": {
+        "serializedChars": 8546,
+        "estimatedTokens": 2645
+      },
+      "chapterProjection": {
+        "serializedChars": 6700,
+        "estimatedTokens": 2167
+      },
+      "reduction": {
+        "chars": 1846,
+        "estimatedTokens": 478,
+        "charsPercent": 21.6,
+        "estimatedTokensPercent": 18.07
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_gate-official-2-turn2",
+      "entryPointId": "entry_lu_gate",
+      "sourceCharacterId": "character_ae4cb42b9b49",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "5fdeabe58f568fae9b84ad7dd9975d1f2be5e2df57231b03e8aa8f4867503d30",
+      "full": {
+        "serializedChars": 6621,
+        "estimatedTokens": 2217
+      },
+      "chapterProjection": {
+        "serializedChars": 4685,
+        "estimatedTokens": 1717
+      },
+      "reduction": {
+        "chars": 1936,
+        "estimatedTokens": 500,
+        "charsPercent": 29.24,
+        "estimatedTokensPercent": 22.55
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_gate-hold",
+      "entryPointId": "entry_lu_gate",
+      "sourceCharacterId": "character_ae4cb42b9b49",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "1ce55488b04c34a3230e5e563d5b322d7630eb569e306bbdb2b7d26ddddd8254",
+      "full": {
+        "serializedChars": 8562,
+        "estimatedTokens": 2666
+      },
+      "chapterProjection": {
+        "serializedChars": 6716,
+        "estimatedTokens": 2188
+      },
+      "reduction": {
+        "chars": 1846,
+        "estimatedTokens": 478,
+        "charsPercent": 21.56,
+        "estimatedTokensPercent": 17.93
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_gate-hold-turn2",
+      "entryPointId": "entry_lu_gate",
+      "sourceCharacterId": "character_ae4cb42b9b49",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "6b451673fda00116e4f5a15a57102aa52aafa1916e3749d154adbc8d0a70a968",
+      "full": {
+        "serializedChars": 6599,
+        "estimatedTokens": 2240
+      },
+      "chapterProjection": {
+        "serializedChars": 4669,
+        "estimatedTokens": 1741
+      },
+      "reduction": {
+        "chars": 1930,
+        "estimatedTokens": 499,
+        "charsPercent": 29.25,
+        "estimatedTokensPercent": 22.28
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_gate-persisted-turn2",
+      "entryPointId": "entry_lu_gate",
+      "sourceCharacterId": "character_ae4cb42b9b49",
+      "actionSource": "persisted_official_direction",
+      "turnVariant": "persisted_continuation",
+      "lineageKind": "persisted_temp_branch",
+      "stateTransition": "apply_branch_patch_validated_and_temp_store_append",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "b3a1de4a33a5d2cbe4aea993b0cee41213a1895dae68be5c862c52fa504fd677",
+      "full": {
+        "serializedChars": 6849,
+        "estimatedTokens": 2315
+      },
+      "chapterProjection": {
+        "serializedChars": 4815,
+        "estimatedTokens": 1770
+      },
+      "reduction": {
+        "chars": 2034,
+        "estimatedTokens": 545,
+        "charsPercent": 29.7,
+        "estimatedTokensPercent": 23.54
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_gu_trial-official-1",
+      "entryPointId": "entry_gu_trial",
+      "sourceCharacterId": "character_e663361ab1c7",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "fb4872a8a71552c78ab42c1700c1544a8a2a8e2a8681f6a22c5746ec05fb6d04",
+      "full": {
+        "serializedChars": 8170,
+        "estimatedTokens": 2552
+      },
+      "chapterProjection": {
+        "serializedChars": 6255,
+        "estimatedTokens": 2058
+      },
+      "reduction": {
+        "chars": 1915,
+        "estimatedTokens": 494,
+        "charsPercent": 23.44,
+        "estimatedTokensPercent": 19.36
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_gu_trial-official-1-turn2",
+      "entryPointId": "entry_gu_trial",
+      "sourceCharacterId": "character_e663361ab1c7",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "15cda6e978565e79932524c8912b6f0a5fe3d9a126a7ad71c822cb2f89683ab9",
+      "full": {
+        "serializedChars": 21964,
+        "estimatedTokens": 6961
+      },
+      "chapterProjection": {
+        "serializedChars": 17721,
+        "estimatedTokens": 5884
+      },
+      "reduction": {
+        "chars": 4243,
+        "estimatedTokens": 1077,
+        "charsPercent": 19.32,
+        "estimatedTokensPercent": 15.47
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_gu_trial-official-2",
+      "entryPointId": "entry_gu_trial",
+      "sourceCharacterId": "character_e663361ab1c7",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "fad044a87c3cfa19a6c7ef6823e5d229ea7f318579c1601d60047761ad84dc57",
+      "full": {
+        "serializedChars": 8150,
+        "estimatedTokens": 2532
+      },
+      "chapterProjection": {
+        "serializedChars": 6235,
+        "estimatedTokens": 2038
+      },
+      "reduction": {
+        "chars": 1915,
+        "estimatedTokens": 494,
+        "charsPercent": 23.5,
+        "estimatedTokensPercent": 19.51
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_gu_trial-official-2-turn2",
+      "entryPointId": "entry_gu_trial",
+      "sourceCharacterId": "character_e663361ab1c7",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "06841abea43295050acb0585caf459ada5457a51a0a4b51a5692618497ec8c61",
+      "full": {
+        "serializedChars": 21930,
+        "estimatedTokens": 6927
+      },
+      "chapterProjection": {
+        "serializedChars": 17687,
+        "estimatedTokens": 5850
+      },
+      "reduction": {
+        "chars": 4243,
+        "estimatedTokens": 1077,
+        "charsPercent": 19.35,
+        "estimatedTokensPercent": 15.55
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_gu_trial-hold",
+      "entryPointId": "entry_gu_trial",
+      "sourceCharacterId": "character_e663361ab1c7",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "f95b87c4b3c73fffaaea9f31a68632b0df54db71e63f7031b88a5fd1e25f290e",
+      "full": {
+        "serializedChars": 8172,
+        "estimatedTokens": 2559
+      },
+      "chapterProjection": {
+        "serializedChars": 6257,
+        "estimatedTokens": 2064
+      },
+      "reduction": {
+        "chars": 1915,
+        "estimatedTokens": 495,
+        "charsPercent": 23.43,
+        "estimatedTokensPercent": 19.34
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_gu_trial-hold-turn2",
+      "entryPointId": "entry_gu_trial",
+      "sourceCharacterId": "character_e663361ab1c7",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "1014aeffae6fd7e293804b4fa4f202ce8393d9762e28b4f47ed3f0e262a3dde7",
+      "full": {
+        "serializedChars": 21918,
+        "estimatedTokens": 6960
+      },
+      "chapterProjection": {
+        "serializedChars": 17681,
+        "estimatedTokens": 5885
+      },
+      "reduction": {
+        "chars": 4237,
+        "estimatedTokens": 1075,
+        "charsPercent": 19.33,
+        "estimatedTokensPercent": 15.45
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_gu_trial-persisted-turn2",
+      "entryPointId": "entry_gu_trial",
+      "sourceCharacterId": "character_e663361ab1c7",
+      "actionSource": "persisted_official_direction",
+      "turnVariant": "persisted_continuation",
+      "lineageKind": "persisted_temp_branch",
+      "stateTransition": "apply_branch_patch_validated_and_temp_store_append",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "f9ad54c659f9aa287042a75019b9e75cd1c64174e7adea5e172ce0f3a63f6936",
+      "full": {
+        "serializedChars": 22245,
+        "estimatedTokens": 7117
+      },
+      "chapterProjection": {
+        "serializedChars": 17904,
+        "estimatedTokens": 5996
+      },
+      "reduction": {
+        "chars": 4341,
+        "estimatedTokens": 1121,
+        "charsPercent": 19.51,
+        "estimatedTokensPercent": 15.75
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_gallery-official-1",
+      "entryPointId": "entry_ye_gallery",
+      "sourceCharacterId": "character_766c4e16f65d",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "cde752e5eae1f0a26a5b1462b6f86115e6ece9eb664face2f8c21988a085968f",
+      "full": {
+        "serializedChars": 8372,
+        "estimatedTokens": 2678
+      },
+      "chapterProjection": {
+        "serializedChars": 6359,
+        "estimatedTokens": 2156
+      },
+      "reduction": {
+        "chars": 2013,
+        "estimatedTokens": 522,
+        "charsPercent": 24.04,
+        "estimatedTokensPercent": 19.49
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_gallery-official-1-turn2",
+      "entryPointId": "entry_ye_gallery",
+      "sourceCharacterId": "character_766c4e16f65d",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "5767e642e9d7b078dd35de8bd78bbbd6ebccaf18a9f7a3d7e6a587fe1bd58427",
+      "full": {
+        "serializedChars": 28283,
+        "estimatedTokens": 8672
+      },
+      "chapterProjection": {
+        "serializedChars": 22431,
+        "estimatedTokens": 7132
+      },
+      "reduction": {
+        "chars": 5852,
+        "estimatedTokens": 1540,
+        "charsPercent": 20.69,
+        "estimatedTokensPercent": 17.76
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_gallery-official-2",
+      "entryPointId": "entry_ye_gallery",
+      "sourceCharacterId": "character_766c4e16f65d",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "3925cff1b9e6d294848e0cd30152611e652e6e8305cc25410ed34e70506d8300",
+      "full": {
+        "serializedChars": 8356,
+        "estimatedTokens": 2662
+      },
+      "chapterProjection": {
+        "serializedChars": 6343,
+        "estimatedTokens": 2140
+      },
+      "reduction": {
+        "chars": 2013,
+        "estimatedTokens": 522,
+        "charsPercent": 24.09,
+        "estimatedTokensPercent": 19.61
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_gallery-official-2-turn2",
+      "entryPointId": "entry_ye_gallery",
+      "sourceCharacterId": "character_766c4e16f65d",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "c763f9b8edd32fb0247c28ea617540ad438ed78526977114a95bb8fccfcc3094",
+      "full": {
+        "serializedChars": 28255,
+        "estimatedTokens": 8644
+      },
+      "chapterProjection": {
+        "serializedChars": 22403,
+        "estimatedTokens": 7104
+      },
+      "reduction": {
+        "chars": 5852,
+        "estimatedTokens": 1540,
+        "charsPercent": 20.71,
+        "estimatedTokensPercent": 17.82
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_gallery-hold",
+      "entryPointId": "entry_ye_gallery",
+      "sourceCharacterId": "character_766c4e16f65d",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "ece603c355aee8cdc8c5984dfb12fda89a0c0faa301fc3ab0e36b7906004329f",
+      "full": {
+        "serializedChars": 8373,
+        "estimatedTokens": 2683
+      },
+      "chapterProjection": {
+        "serializedChars": 6360,
+        "estimatedTokens": 2161
+      },
+      "reduction": {
+        "chars": 2013,
+        "estimatedTokens": 522,
+        "charsPercent": 24.04,
+        "estimatedTokensPercent": 19.46
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_gallery-hold-turn2",
+      "entryPointId": "entry_ye_gallery",
+      "sourceCharacterId": "character_766c4e16f65d",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "5c12bcd7c2c836348fe625de6d869dced342b8ddb3c82fb4bf59a7066cea8b10",
+      "full": {
+        "serializedChars": 28236,
+        "estimatedTokens": 8670
+      },
+      "chapterProjection": {
+        "serializedChars": 22390,
+        "estimatedTokens": 7132
+      },
+      "reduction": {
+        "chars": 5846,
+        "estimatedTokens": 1538,
+        "charsPercent": 20.7,
+        "estimatedTokensPercent": 17.74
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_gallery-persisted-turn2",
+      "entryPointId": "entry_ye_gallery",
+      "sourceCharacterId": "character_766c4e16f65d",
+      "actionSource": "persisted_official_direction",
+      "turnVariant": "persisted_continuation",
+      "lineageKind": "persisted_temp_branch",
+      "stateTransition": "apply_branch_patch_validated_and_temp_store_append",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "e2161946b2b937fc32b6a6aef5b91880c2111dfd0da7faea65ccbd30b8f3fed4",
+      "full": {
+        "serializedChars": 28487,
+        "estimatedTokens": 8763
+      },
+      "chapterProjection": {
+        "serializedChars": 22537,
+        "estimatedTokens": 7179
+      },
+      "reduction": {
+        "chars": 5950,
+        "estimatedTokens": 1584,
+        "charsPercent": 20.89,
+        "estimatedTokensPercent": 18.08
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_shen_register-official-1",
+      "entryPointId": "entry_shen_register",
+      "sourceCharacterId": "character_aa4580d38571",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "c53b610c6993b4c3af41026ac1e9c72e702f659396f63137b4ce481a3c2e115c",
+      "full": {
+        "serializedChars": 8135,
+        "estimatedTokens": 2573
+      },
+      "chapterProjection": {
+        "serializedChars": 6274,
+        "estimatedTokens": 2090
+      },
+      "reduction": {
+        "chars": 1861,
+        "estimatedTokens": 483,
+        "charsPercent": 22.88,
+        "estimatedTokensPercent": 18.77
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_shen_register-official-1-turn2",
+      "entryPointId": "entry_shen_register",
+      "sourceCharacterId": "character_aa4580d38571",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "cea326bfce3c4b9a122b12782d1b7a1810ad5d0ac25a6a44732e2caa8a96beaa",
+      "full": {
+        "serializedChars": 20520,
+        "estimatedTokens": 6606
+      },
+      "chapterProjection": {
+        "serializedChars": 16034,
+        "estimatedTokens": 5447
+      },
+      "reduction": {
+        "chars": 4486,
+        "estimatedTokens": 1159,
+        "charsPercent": 21.86,
+        "estimatedTokensPercent": 17.54
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_shen_register-official-2",
+      "entryPointId": "entry_shen_register",
+      "sourceCharacterId": "character_aa4580d38571",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "c2a49335eea4be66fef468a5e4e86a43f8318beb9f4f5f954ff277be7a8c1f2c",
+      "full": {
+        "serializedChars": 8137,
+        "estimatedTokens": 2575
+      },
+      "chapterProjection": {
+        "serializedChars": 6276,
+        "estimatedTokens": 2092
+      },
+      "reduction": {
+        "chars": 1861,
+        "estimatedTokens": 483,
+        "charsPercent": 22.87,
+        "estimatedTokensPercent": 18.76
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_shen_register-official-2-turn2",
+      "entryPointId": "entry_shen_register",
+      "sourceCharacterId": "character_aa4580d38571",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "4dd7560e9b2da8b62651315b4a8ad0956a797c2171949b759c3530568be0ad27",
+      "full": {
+        "serializedChars": 20524,
+        "estimatedTokens": 6610
+      },
+      "chapterProjection": {
+        "serializedChars": 16038,
+        "estimatedTokens": 5451
+      },
+      "reduction": {
+        "chars": 4486,
+        "estimatedTokens": 1159,
+        "charsPercent": 21.86,
+        "estimatedTokensPercent": 17.53
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_shen_register-hold",
+      "entryPointId": "entry_shen_register",
+      "sourceCharacterId": "character_aa4580d38571",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "9805fd50ae0291a09195aa18a3b75132a7b3f87d699ea8312609d78287ebfdcf",
+      "full": {
+        "serializedChars": 8128,
+        "estimatedTokens": 2571
+      },
+      "chapterProjection": {
+        "serializedChars": 6267,
+        "estimatedTokens": 2088
+      },
+      "reduction": {
+        "chars": 1861,
+        "estimatedTokens": 483,
+        "charsPercent": 22.9,
+        "estimatedTokensPercent": 18.79
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_shen_register-hold-turn2",
+      "entryPointId": "entry_shen_register",
+      "sourceCharacterId": "character_aa4580d38571",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "54ce5af92dcc0bc5eeb64480418116d55ed4c88a15413b20f1750985d3a6748b",
+      "full": {
+        "serializedChars": 20459,
+        "estimatedTokens": 6590
+      },
+      "chapterProjection": {
+        "serializedChars": 15979,
+        "estimatedTokens": 5432
+      },
+      "reduction": {
+        "chars": 4480,
+        "estimatedTokens": 1158,
+        "charsPercent": 21.9,
+        "estimatedTokensPercent": 17.57
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_shen_register-persisted-turn2",
+      "entryPointId": "entry_shen_register",
+      "sourceCharacterId": "character_aa4580d38571",
+      "actionSource": "persisted_official_direction",
+      "turnVariant": "persisted_continuation",
+      "lineageKind": "persisted_temp_branch",
+      "stateTransition": "apply_branch_patch_validated_and_temp_store_append",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "3aee7c3425a886f4a688955ed34c7885f364a0bdfd8497c99153d700b2c3abc2",
+      "full": {
+        "serializedChars": 20686,
+        "estimatedTokens": 6678
+      },
+      "chapterProjection": {
+        "serializedChars": 16102,
+        "estimatedTokens": 5473
+      },
+      "reduction": {
+        "chars": 4584,
+        "estimatedTokens": 1205,
+        "charsPercent": 22.16,
+        "estimatedTokensPercent": 18.04
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_ledger-official-1",
+      "entryPointId": "entry_lu_ledger",
+      "sourceCharacterId": "character_37531636ecf5",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "177acc2d0708d89fff8a5d711f94c5024554abc77d7ca4e5b9e705424c5b4c70",
+      "full": {
+        "serializedChars": 8166,
+        "estimatedTokens": 2591
+      },
+      "chapterProjection": {
+        "serializedChars": 6300,
+        "estimatedTokens": 2108
+      },
+      "reduction": {
+        "chars": 1866,
+        "estimatedTokens": 483,
+        "charsPercent": 22.85,
+        "estimatedTokensPercent": 18.64
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_ledger-official-1-turn2",
+      "entryPointId": "entry_lu_ledger",
+      "sourceCharacterId": "character_37531636ecf5",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "42d86d4b25da8f301a2510db3e5814de31ed390b441f3c9eab0598df98441764",
+      "full": {
+        "serializedChars": 38083,
+        "estimatedTokens": 12661
+      },
+      "chapterProjection": {
+        "serializedChars": 32362,
+        "estimatedTokens": 11100
+      },
+      "reduction": {
+        "chars": 5721,
+        "estimatedTokens": 1561,
+        "charsPercent": 15.02,
+        "estimatedTokensPercent": 12.33
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_ledger-official-2",
+      "entryPointId": "entry_lu_ledger",
+      "sourceCharacterId": "character_37531636ecf5",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "acf50ebc7963798f8e5383a0c37e3980e173fc17aa70127922cec8b4aea55a19",
+      "full": {
+        "serializedChars": 8168,
+        "estimatedTokens": 2593
+      },
+      "chapterProjection": {
+        "serializedChars": 6302,
+        "estimatedTokens": 2110
+      },
+      "reduction": {
+        "chars": 1866,
+        "estimatedTokens": 483,
+        "charsPercent": 22.85,
+        "estimatedTokensPercent": 18.63
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_ledger-official-2-turn2",
+      "entryPointId": "entry_lu_ledger",
+      "sourceCharacterId": "character_37531636ecf5",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "226baeab23ec9a94adcc5601878fc0b6f1816bab973f1884001e6594c7330a9b",
+      "full": {
+        "serializedChars": 38087,
+        "estimatedTokens": 12665
+      },
+      "chapterProjection": {
+        "serializedChars": 32366,
+        "estimatedTokens": 11104
+      },
+      "reduction": {
+        "chars": 5721,
+        "estimatedTokens": 1561,
+        "charsPercent": 15.02,
+        "estimatedTokensPercent": 12.33
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_ledger-hold",
+      "entryPointId": "entry_lu_ledger",
+      "sourceCharacterId": "character_37531636ecf5",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "dc4a00f43980d34580687678fbce8b256e6daf73f78d08093eeaafa9056a23db",
+      "full": {
+        "serializedChars": 8169,
+        "estimatedTokens": 2598
+      },
+      "chapterProjection": {
+        "serializedChars": 6303,
+        "estimatedTokens": 2115
+      },
+      "reduction": {
+        "chars": 1866,
+        "estimatedTokens": 483,
+        "charsPercent": 22.84,
+        "estimatedTokensPercent": 18.59
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_ledger-hold-turn2",
+      "entryPointId": "entry_lu_ledger",
+      "sourceCharacterId": "character_37531636ecf5",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "b91208031ad78ea9284d8ceb2494cb544490155de464101b3312c2d08499e23e",
+      "full": {
+        "serializedChars": 38040,
+        "estimatedTokens": 12663
+      },
+      "chapterProjection": {
+        "serializedChars": 32325,
+        "estimatedTokens": 11103
+      },
+      "reduction": {
+        "chars": 5715,
+        "estimatedTokens": 1560,
+        "charsPercent": 15.02,
+        "estimatedTokensPercent": 12.32
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_lu_ledger-persisted-turn2",
+      "entryPointId": "entry_lu_ledger",
+      "sourceCharacterId": "character_37531636ecf5",
+      "actionSource": "persisted_official_direction",
+      "turnVariant": "persisted_continuation",
+      "lineageKind": "persisted_temp_branch",
+      "stateTransition": "apply_branch_patch_validated_and_temp_store_append",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "43692ecda793b45317ab50fdc9c6f966a764a1c964194ba59f27925a761e9db2",
+      "full": {
+        "serializedChars": 38267,
+        "estimatedTokens": 12726
+      },
+      "chapterProjection": {
+        "serializedChars": 32448,
+        "estimatedTokens": 11121
+      },
+      "reduction": {
+        "chars": 5819,
+        "estimatedTokens": 1605,
+        "charsPercent": 15.21,
+        "estimatedTokensPercent": 12.61
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_xiao_edict-official-1",
+      "entryPointId": "entry_xiao_edict",
+      "sourceCharacterId": "character_b96c85e62843",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "72d71412604035273cf75f2550f6916476272cbfe99ae79ce9bb9547004b86b6",
+      "full": {
+        "serializedChars": 8235,
+        "estimatedTokens": 2584
+      },
+      "chapterProjection": {
+        "serializedChars": 6273,
+        "estimatedTokens": 2080
+      },
+      "reduction": {
+        "chars": 1962,
+        "estimatedTokens": 504,
+        "charsPercent": 23.83,
+        "estimatedTokensPercent": 19.5
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_xiao_edict-official-1-turn2",
+      "entryPointId": "entry_xiao_edict",
+      "sourceCharacterId": "character_b96c85e62843",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "5263b18365f33f8231d78c3a32e7a2b922481738d6e73bd3d20ceff65b9f46fb",
+      "full": {
+        "serializedChars": 39094,
+        "estimatedTokens": 12881
+      },
+      "chapterProjection": {
+        "serializedChars": 33110,
+        "estimatedTokens": 11258
+      },
+      "reduction": {
+        "chars": 5984,
+        "estimatedTokens": 1623,
+        "charsPercent": 15.31,
+        "estimatedTokensPercent": 12.6
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_xiao_edict-official-2",
+      "entryPointId": "entry_xiao_edict",
+      "sourceCharacterId": "character_b96c85e62843",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "8f5c9ded6550c361a8a2493f072a591f782293db1ea5277ffcd8f5244d83f640",
+      "full": {
+        "serializedChars": 8230,
+        "estimatedTokens": 2579
+      },
+      "chapterProjection": {
+        "serializedChars": 6268,
+        "estimatedTokens": 2075
+      },
+      "reduction": {
+        "chars": 1962,
+        "estimatedTokens": 504,
+        "charsPercent": 23.84,
+        "estimatedTokensPercent": 19.54
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_xiao_edict-official-2-turn2",
+      "entryPointId": "entry_xiao_edict",
+      "sourceCharacterId": "character_b96c85e62843",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "09fe34e0af079d377123c1b6044e2ce67dd170723ea4fc1f21932607b83a70a9",
+      "full": {
+        "serializedChars": 39087,
+        "estimatedTokens": 12874
+      },
+      "chapterProjection": {
+        "serializedChars": 33103,
+        "estimatedTokens": 11251
+      },
+      "reduction": {
+        "chars": 5984,
+        "estimatedTokens": 1623,
+        "charsPercent": 15.31,
+        "estimatedTokensPercent": 12.61
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_xiao_edict-hold",
+      "entryPointId": "entry_xiao_edict",
+      "sourceCharacterId": "character_b96c85e62843",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "39c8da853eaed5fbad54c1816ddae93b031fe42315c16e5895499f4b3e821cb1",
+      "full": {
+        "serializedChars": 8226,
+        "estimatedTokens": 2580
+      },
+      "chapterProjection": {
+        "serializedChars": 6264,
+        "estimatedTokens": 2076
+      },
+      "reduction": {
+        "chars": 1962,
+        "estimatedTokens": 504,
+        "charsPercent": 23.85,
+        "estimatedTokensPercent": 19.53
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_xiao_edict-hold-turn2",
+      "entryPointId": "entry_xiao_edict",
+      "sourceCharacterId": "character_b96c85e62843",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "b0b4a7af811ac2294f1b692068874671808c9beaa29479d27a7cff135108973c",
+      "full": {
+        "serializedChars": 39031,
+        "estimatedTokens": 12863
+      },
+      "chapterProjection": {
+        "serializedChars": 33053,
+        "estimatedTokens": 11241
+      },
+      "reduction": {
+        "chars": 5978,
+        "estimatedTokens": 1622,
+        "charsPercent": 15.32,
+        "estimatedTokensPercent": 12.61
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_xiao_edict-persisted-turn2",
+      "entryPointId": "entry_xiao_edict",
+      "sourceCharacterId": "character_b96c85e62843",
+      "actionSource": "persisted_official_direction",
+      "turnVariant": "persisted_continuation",
+      "lineageKind": "persisted_temp_branch",
+      "stateTransition": "apply_branch_patch_validated_and_temp_store_append",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "920708a92e0d834179ea7d3965e060d195d3810fd4a11426838dc9915201c15b",
+      "full": {
+        "serializedChars": 39250,
+        "estimatedTokens": 12925
+      },
+      "chapterProjection": {
+        "serializedChars": 33168,
+        "estimatedTokens": 11256
+      },
+      "reduction": {
+        "chars": 6082,
+        "estimatedTokens": 1669,
+        "charsPercent": 15.5,
+        "estimatedTokensPercent": 12.91
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_qingming_hall-official-1",
+      "entryPointId": "entry_ye_qingming_hall",
+      "sourceCharacterId": "character_2cf2b083593b",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "143d94852ee05e163f1b2209d157bfe5cb08f896e32efeef1b4111e2fa183bf4",
+      "full": {
+        "serializedChars": 8418,
+        "estimatedTokens": 2699
+      },
+      "chapterProjection": {
+        "serializedChars": 6374,
+        "estimatedTokens": 2168
+      },
+      "reduction": {
+        "chars": 2044,
+        "estimatedTokens": 531,
+        "charsPercent": 24.28,
+        "estimatedTokensPercent": 19.67
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_qingming_hall-official-1-turn2",
+      "entryPointId": "entry_ye_qingming_hall",
+      "sourceCharacterId": "character_2cf2b083593b",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "98d164801074ab6a91ed78cfc3740d713ef0593293795611dd31bfbb327cec2c",
+      "full": {
+        "serializedChars": 46940,
+        "estimatedTokens": 15101
+      },
+      "chapterProjection": {
+        "serializedChars": 40726,
+        "estimatedTokens": 13528
+      },
+      "reduction": {
+        "chars": 6214,
+        "estimatedTokens": 1573,
+        "charsPercent": 13.24,
+        "estimatedTokensPercent": 10.42
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_qingming_hall-official-2",
+      "entryPointId": "entry_ye_qingming_hall",
+      "sourceCharacterId": "character_2cf2b083593b",
+      "actionSource": "official_opening_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "06f7197387c795b40c0cf1d74998509c9a5b9363bc98f054fe47b29a00a3bea3",
+      "full": {
+        "serializedChars": 8396,
+        "estimatedTokens": 2677
+      },
+      "chapterProjection": {
+        "serializedChars": 6352,
+        "estimatedTokens": 2146
+      },
+      "reduction": {
+        "chars": 2044,
+        "estimatedTokens": 531,
+        "charsPercent": 24.34,
+        "estimatedTokensPercent": 19.84
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_qingming_hall-official-2-turn2",
+      "entryPointId": "entry_ye_qingming_hall",
+      "sourceCharacterId": "character_2cf2b083593b",
+      "actionSource": "official_opening_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "83c5c9a2592c20c27fd97e3e9853038facbf4500485fe76c737f20fbcb3346db",
+      "full": {
+        "serializedChars": 46906,
+        "estimatedTokens": 15067
+      },
+      "chapterProjection": {
+        "serializedChars": 40692,
+        "estimatedTokens": 13494
+      },
+      "reduction": {
+        "chars": 6214,
+        "estimatedTokens": 1573,
+        "charsPercent": 13.25,
+        "estimatedTokensPercent": 10.44
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_qingming_hall-hold",
+      "entryPointId": "entry_ye_qingming_hall",
+      "sourceCharacterId": "character_2cf2b083593b",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "entry",
+      "lineageKind": "entry_root",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 1,
+      "continuityWindowCount": 1,
+      "contextSha256": "f4e67323751dcc69020301b9695825f3ceb56206dc7e864d86baab887facea96",
+      "full": {
+        "serializedChars": 8399,
+        "estimatedTokens": 2684
+      },
+      "chapterProjection": {
+        "serializedChars": 6355,
+        "estimatedTokens": 2154
+      },
+      "reduction": {
+        "chars": 2044,
+        "estimatedTokens": 530,
+        "charsPercent": 24.34,
+        "estimatedTokensPercent": 19.75
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_qingming_hall-hold-turn2",
+      "entryPointId": "entry_ye_qingming_hall",
+      "sourceCharacterId": "character_2cf2b083593b",
+      "actionSource": "fixed_hold_action",
+      "turnVariant": "continuation",
+      "lineageKind": "synthetic_fixed_replay",
+      "stateTransition": "apply_branch_patch_validated_no_persist",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "ce92b672d13a6dc2b16edee85a9b0ffa203b0c9045296e0e98843defe8f5af36",
+      "full": {
+        "serializedChars": 46863,
+        "estimatedTokens": 15069
+      },
+      "chapterProjection": {
+        "serializedChars": 40655,
+        "estimatedTokens": 13498
+      },
+      "reduction": {
+        "chars": 6208,
+        "estimatedTokens": 1571,
+        "charsPercent": 13.25,
+        "estimatedTokensPercent": 10.43
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    },
+    {
+      "sampleId": "entry_ye_qingming_hall-persisted-turn2",
+      "entryPointId": "entry_ye_qingming_hall",
+      "sourceCharacterId": "character_2cf2b083593b",
+      "actionSource": "persisted_official_direction",
+      "turnVariant": "persisted_continuation",
+      "lineageKind": "persisted_temp_branch",
+      "stateTransition": "apply_branch_patch_validated_and_temp_store_append",
+      "lineageDepth": 2,
+      "continuityWindowCount": 2,
+      "contextSha256": "b5f4910c8f156625bb81b9d861abfa1037d40796a02a5b70de00e7a59d063a6d",
+      "full": {
+        "serializedChars": 47006,
+        "estimatedTokens": 15091
+      },
+      "chapterProjection": {
+        "serializedChars": 40694,
+        "estimatedTokens": 13473
+      },
+      "reduction": {
+        "chars": 6312,
+        "estimatedTokens": 1618,
+        "charsPercent": 13.43,
+        "estimatedTokensPercent": 10.72
+      },
+      "requiredFieldsPresent": {
+        "hardConstraints.currentBeat": true,
+        "hardConstraints.actionContract": true,
+        "turnIntent.rawInput": true,
+        "turnIntent.selectedDirection": true,
+        "outputContract": true,
+        "contextSha256": true
+      },
+      "hiddenAuthoritativeStateKeys": [],
+      "projectionBoundaryViolations": [],
+      "projectionStage": "chapter"
+    }
+  ],
+  "acceptance": {
+    "projectionMeasurementPassed": true,
+    "defaultEnablement": "blocked_until_real_or_fixed_prose_quality_comparison",
+    "jevExperiment": "deferred"
+  }
+}

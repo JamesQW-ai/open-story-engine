@@ -211,7 +211,7 @@ class SceneLibrary:
                     self.asset(package_id, version, card['id'])
                 except (OSError, ValueError):
                     continue
-                return {'id': card['id'], 'alt': card['alt'], 'source': 'published',
+                return {'id': card['id'], 'asset_key': card['sha256'], 'alt': card['alt'], 'source': 'published',
                         'url': f"/api/v1/scene-assets/{package_id}/{version}/{card['id']}"}
         return None
 

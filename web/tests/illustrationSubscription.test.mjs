@@ -5,7 +5,7 @@ import { subscribeIllustration } from '../src/components/illustrationSubscriptio
 const settle = () => new Promise(resolve => setImmediate(resolve))
 function fixture() {
   let id = 0, serial = 0, subscriber = null, errors = 0
-  const requests = [], shown = [], releases = [], timers = new Map(), listeners = new Map()
+  const requests = [], shown = [], releases = [], timers = new Map(), delays = new Map(), listeners = new Map()
   const controller = subscribeIllustration({
     prepare: (id, draw) => new Promise((resolve, reject) => requests.push({ id, draw, resolve, reject })),
     release: async id => { releases.push(id) },
@@ -13,7 +13,7 @@ function fixture() {
     ready: result => shown.push(result),
     error: () => { errors++ },
   }, { newSubscriber: () => `image-${++serial}`, window: {
-    setTimeout: fn => { timers.set(++id, fn); return id }, clearTimeout: id => timers.delete(id),
+    setTimeout: (fn, delay) => { timers.set(++id, fn); delays.set(id, delay); return id }, clearTimeout: id => timers.delete(id),
     addEventListener: (name, fn) => listeners.set(name, fn), removeEventListener: name => listeners.delete(name),
   } })
   return { ...controller, requests, shown, releases, timers, listeners, subscriber: () => subscriber, errors: () => errors,
@@ -21,7 +21,8 @@ function fixture() {
     resolve: async (i, status = 'ready', can_generate = false) => {
       requests[i].resolve({ items: [{ status }], can_generate, revision: i }); await settle()
     },
-    tick: async () => { const pending = [...timers.values()]; timers.clear(); pending.forEach(fn => fn()); await settle() },
+    expire: async () => { [...timers].filter(([id]) => delays.get(id) === 80_000).forEach(([id, fn]) => { timers.delete(id); fn() }); await settle() },
+    tick: async () => { [...timers].filter(([id]) => delays.get(id) < 80_000).forEach(([id, fn]) => { timers.delete(id); fn() }); await settle() },
   }
 }
 
@@ -54,7 +55,7 @@ test('image page restoration isolates late responses and never repeats a draw re
   await f.resolve(2, 'generating'); await f.resolve(1)
   assert.deepEqual(f.shown.map(r => r.revision), [0, 2])
   assert.ok(f.releases.every(id => id === 'image-1'))
-  assert.equal(f.timers.size, 1); f.cleanup()
+  assert.equal(f.timers.size, 2); f.cleanup()
 })
 
 test('cancel suppresses late image and stops requests without affecting another lease', async () => {
@@ -77,4 +78,19 @@ test('image errors retry within a fixed limit and old errors cannot schedule wor
   f.requests[3].reject(Error('late')); await settle()
   assert.equal(f.timers.size, 0)
   assert.equal(f.errors(), 1)
+})
+
+test('hung image request releases at the page deadline and late success stays hidden', async () => {
+  const f = fixture()
+  await f.resolve(0, 'idle', true)
+  f.draw()
+  assert.equal(f.requests.length, 2)
+  await f.expire()
+  assert.equal(f.errors(), 1)
+  assert.equal(f.subscriber(), null)
+  assert.equal(f.timers.size, 0)
+  await f.resolve(1)
+  assert.deepEqual(f.shown.map(r => r.revision), [0])
+  assert.ok(f.releases.length > 0)
+  f.cleanup()
 })

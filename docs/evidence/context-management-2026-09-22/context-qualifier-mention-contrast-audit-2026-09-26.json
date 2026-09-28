@@ -1,0 +1,3823 @@
+{
+  "schemaVersion": "context-qualifier-mention-contrast-audit/0.1",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-qualifier-mention-contrast-2026-09-26.json",
+  "sourceSha256": "6124fe5ae349816b2a0ad0f98a4b3abe46641b5cf41f0a7f07eb72ea4601a046",
+  "originalCalls": 12,
+  "newModelCalls": 0,
+  "actualInputsVerified": true,
+  "allScoresReproduced": true,
+  "cases": [
+    {
+      "caseId": "prefix:mention",
+      "status": "mismatched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老被描述为站在议事殿内，位置在边界内部。",
+            "subject": "E58c174e7405e-1",
+            "boundary": "E58c174e7405e-2",
+            "core": [
+              "P1-U1-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premiseUnits": []
+              }
+            ]
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老被描述为站在议事殿内，位置在边界内部。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "可能"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 9,
+              "end": 13,
+              "quote": "守门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 15,
+              "end": 18,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U1",
+                "start": 9,
+                "end": 20,
+                "quote": "守门长老站在议事殿内。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 20,
+                "quote": "说出“可能”二字的守门长老站在议事殿内。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 3,
+                "end": 5,
+                "quote": "可能"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 9,
+                  "end": 20,
+                  "quote": "守门长老站在议事殿内。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老被描述为站在议事殿内，位置在边界内部。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": [],
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "守门长老站在议事殿内。",
+                    "occurrence": 0
+                  }
+                ]
+              }
+            ],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "守门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老站在议事殿内。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "说出“可能”二字的守门长老站在议事殿内。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "守门长老被描述为站在议事殿内，位置在边界内部。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U1-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ],
+            "status": "needs_review",
+            "normal": null
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "mismatched",
+        "matchedTargets": [],
+        "missingTargets": [
+          0
+        ],
+        "extraItems": [
+          0
+        ],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": false
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老被描述为站在议事殿内，位置在边界内部。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U1-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老被描述为站在议事殿内，位置在边界内部。",
+            "subject": "E58c174e7405e-1",
+            "boundary": "E58c174e7405e-2",
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U1-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "prefix:operator",
+      "status": "matched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老可能站在议事殿内，表示其位置在边界内。",
+            "subject": "E6898857fd3de-1",
+            "boundary": "E6898857fd3de-2",
+            "core": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premiseUnits": []
+              }
+            ]
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老可能站在议事殿内，表示其位置在边界内。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "可能"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 4,
+              "quote": "守门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 8,
+              "end": 11,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 13,
+                "quote": "守门长老可能站在议事殿内。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 13,
+                "quote": "守门长老可能站在议事殿内。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 4,
+                "end": 6,
+                "quote": "可能"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 13,
+                  "quote": "守门长老可能站在议事殿内。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老可能站在议事殿内，表示其位置在边界内。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": [],
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "守门长老可能站在议事殿内。",
+                    "occurrence": 0
+                  }
+                ]
+              }
+            ],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "守门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老可能站在议事殿内。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老可能站在议事殿内。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "守门长老可能站在议事殿内，表示其位置在边界内。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ],
+            "status": "needs_review",
+            "normal": null
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": true
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老可能站在议事殿内，表示其位置在边界内。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老可能站在议事殿内，表示其位置在边界内。",
+            "subject": "E6898857fd3de-1",
+            "boundary": "E6898857fd3de-2",
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "in_core:mention",
+      "status": "mismatched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老在议事殿内，位置为内部。",
+            "subject": "Ee9b61fec24d5-1",
+            "boundary": "Ee9b61fec24d5-2",
+            "core": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premiseUnits": []
+              }
+            ]
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老在议事殿内，位置为内部。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "可能"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 4,
+              "quote": "守门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 5,
+              "end": 8,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 18,
+                "quote": "守门长老在议事殿内说出“可能”二字。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 18,
+                "quote": "守门长老在议事殿内说出“可能”二字。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 12,
+                "end": 14,
+                "quote": "可能"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 18,
+                  "quote": "守门长老在议事殿内说出“可能”二字。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老在议事殿内，位置为内部。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": [],
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "守门长老在议事殿内说出“可能”二字。",
+                    "occurrence": 0
+                  }
+                ]
+              }
+            ],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "守门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老在议事殿内说出“可能”二字。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老在议事殿内说出“可能”二字。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "守门长老在议事殿内，位置为内部。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ],
+            "status": "needs_review",
+            "normal": null
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "mismatched",
+        "matchedTargets": [],
+        "missingTargets": [
+          0
+        ],
+        "extraItems": [
+          0
+        ],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": true
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老在议事殿内，位置为内部。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老在议事殿内，位置为内部。",
+            "subject": "Ee9b61fec24d5-1",
+            "boundary": "Ee9b61fec24d5-2",
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "in_core:operator",
+      "status": "matched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老被表述为可能在议事殿内，位置为内部。",
+            "subject": "E9dd28978a667-1",
+            "boundary": "E9dd28978a667-2",
+            "core": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premiseUnits": []
+              }
+            ]
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老被表述为可能在议事殿内，位置为内部。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "可能"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 4,
+              "quote": "守门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 7,
+              "end": 10,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 12,
+                "quote": "守门长老可能在议事殿内。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 12,
+                "quote": "守门长老可能在议事殿内。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 4,
+                "end": 6,
+                "quote": "可能"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 12,
+                  "quote": "守门长老可能在议事殿内。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老被表述为可能在议事殿内，位置为内部。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": [],
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "守门长老可能在议事殿内。",
+                    "occurrence": 0
+                  }
+                ]
+              }
+            ],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "守门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老可能在议事殿内。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老可能在议事殿内。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "守门长老被表述为可能在议事殿内，位置为内部。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ],
+            "status": "needs_review",
+            "normal": null
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": true
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老被表述为可能在议事殿内，位置为内部。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老被表述为可能在议事殿内，位置为内部。",
+            "subject": "E9dd28978a667-1",
+            "boundary": "E9dd28978a667-2",
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "unquoted:mention",
+      "status": "matched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老站在议事殿内，明确表示其在边界内部。",
+            "subject": "E56f372505af7-1",
+            "boundary": "E56f372505af7-2",
+            "core": [
+              "P1-U1-S2"
+            ],
+            "limitations": []
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老站在议事殿内，明确表示其在边界内部。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 10,
+              "end": 14,
+              "quote": "守门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 16,
+              "end": 19,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U1",
+                "start": 10,
+                "end": 21,
+                "quote": "守门长老站在议事殿内。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U1",
+                "start": 10,
+                "end": 21,
+                "quote": "守门长老站在议事殿内。"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老站在议事殿内，明确表示其在边界内部。",
+            "limitations": [],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "守门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老站在议事殿内。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老站在议事殿内。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "守门长老站在议事殿内，明确表示其在边界内部。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S2"
+            ],
+            "limitations": [],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            }
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": true
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老站在议事殿内，明确表示其在边界内部。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S2"
+            ],
+            "limitations": []
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老站在议事殿内，明确表示其在边界内部。",
+            "subject": "E56f372505af7-1",
+            "boundary": "E56f372505af7-2",
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S2"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "unquoted:operator",
+      "status": "matched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老或许站在议事殿内，表示可能位于边界内部。",
+            "subject": "E4f36236b8768-1",
+            "boundary": "E4f36236b8768-2",
+            "core": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premiseUnits": []
+              }
+            ]
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老或许站在议事殿内，表示可能位于边界内部。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "或许"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 4,
+              "quote": "守门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 8,
+              "end": 11,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 13,
+                "quote": "守门长老或许站在议事殿内。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 13,
+                "quote": "守门长老或许站在议事殿内。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 4,
+                "end": 6,
+                "quote": "或许"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 13,
+                  "quote": "守门长老或许站在议事殿内。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老或许站在议事殿内，表示可能位于边界内部。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premise": [],
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "守门长老或许站在议事殿内。",
+                    "occurrence": 0
+                  }
+                ]
+              }
+            ],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "守门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老或许站在议事殿内。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老或许站在议事殿内。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "守门长老或许站在议事殿内，表示可能位于边界内部。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ],
+            "status": "needs_review",
+            "normal": null
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": true
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老或许站在议事殿内，表示可能位于边界内部。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老或许站在议事殿内，表示可能位于边界内部。",
+            "subject": "E4f36236b8768-1",
+            "boundary": "E4f36236b8768-2",
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "denial:mention",
+      "status": "matched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋位于议事殿内，原文明确表述为站在议事殿内。",
+            "subject": "E05ce272d4198-1",
+            "boundary": "E05ce272d4198-2",
+            "core": [
+              "P1-U1-S2"
+            ],
+            "limitations": []
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋位于议事殿内，原文明确表述为站在议事殿内。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 9,
+              "end": 12,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 14,
+              "end": 17,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U1",
+                "start": 9,
+                "end": 19,
+                "quote": "沈砚秋站在议事殿内。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U1",
+                "start": 9,
+                "end": 19,
+                "quote": "沈砚秋站在议事殿内。"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋位于议事殿内，原文明确表述为站在议事殿内。",
+            "limitations": [],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "沈砚秋站在议事殿内。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "沈砚秋站在议事殿内。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "沈砚秋位于议事殿内，原文明确表述为站在议事殿内。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S2"
+            ],
+            "limitations": [],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            }
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": true
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋位于议事殿内，原文明确表述为站在议事殿内。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S2"
+            ],
+            "limitations": []
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋位于议事殿内，原文明确表述为站在议事殿内。",
+            "subject": "E05ce272d4198-1",
+            "boundary": "E05ce272d4198-2",
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S2"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "denial:operator",
+      "status": "matched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋被讨论为在议事殿内，但整句由“没有人敢断定”限定，位置内容保留。",
+            "subject": "Ee19dda8f9eb4-1",
+            "boundary": "Ee19dda8f9eb4-2",
+            "core": [
+              "P1-U1-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "没有人敢断定",
+                  "occurrence": 0
+                },
+                "premiseUnits": []
+              }
+            ]
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "沈砚秋被讨论为在议事殿内，但整句由“没有人敢断定”限定，位置内容保留。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "没有人敢断定"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 6,
+              "end": 9,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 10,
+              "end": 13,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U1",
+                "start": 6,
+                "end": 15,
+                "quote": "沈砚秋在议事殿内。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 15,
+                "quote": "没有人敢断定沈砚秋在议事殿内。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 6,
+                "quote": "没有人敢断定"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 6,
+                  "end": 15,
+                  "quote": "沈砚秋在议事殿内。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "沈砚秋被讨论为在议事殿内，但整句由“没有人敢断定”限定，位置内容保留。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "没有人敢断定",
+                  "occurrence": 0
+                },
+                "premise": [],
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "沈砚秋在议事殿内。",
+                    "occurrence": 0
+                  }
+                ]
+              }
+            ],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "沈砚秋在议事殿内。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "没有人敢断定沈砚秋在议事殿内。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "沈砚秋被讨论为在议事殿内，但整句由“没有人敢断定”限定，位置内容保留。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U1-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "没有人敢断定",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ],
+            "status": "needs_review",
+            "normal": null
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": true
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋被讨论为在议事殿内，但整句由“没有人敢断定”限定，位置内容保留。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U1-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "没有人敢断定",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋被讨论为在议事殿内，但整句由“没有人敢断定”限定，位置内容保留。",
+            "subject": "Ee19dda8f9eb4-1",
+            "boundary": "Ee19dda8f9eb4-2",
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S1",
+              "P1-U1-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "没有人敢断定",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "neighbour:mention",
+      "status": "matched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "outside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋位于议事殿外，明确在边界之外。",
+            "subject": "E93f90c79f4c2-2",
+            "boundary": "E93f90c79f4c2-3",
+            "core": [
+              "P1-U2-S1"
+            ],
+            "limitations": []
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋位于议事殿外，明确在边界之外。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U2",
+              "start": 13,
+              "end": 16,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U2",
+              "start": 17,
+              "end": 20,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U2",
+                "start": 13,
+                "end": 22,
+                "quote": "沈砚秋在议事殿外。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U2",
+                "start": 13,
+                "end": 22,
+                "quote": "沈砚秋在议事殿外。"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋位于议事殿外，明确在边界之外。",
+            "limitations": [],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U2",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U2",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "沈砚秋在议事殿外。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "沈砚秋在议事殿外。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "沈砚秋位于议事殿外，明确在边界之外。",
+            "subject": {
+              "segmentId": "P1-U2-S1",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U2-S1"
+            ],
+            "limitations": [],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            }
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": true
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋位于议事殿外，明确在边界之外。",
+            "subject": {
+              "segmentId": "P1-U2-S1",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U2-S1"
+            ],
+            "limitations": []
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "outside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋位于议事殿外，明确在边界之外。",
+            "subject": "E93f90c79f4c2-2",
+            "boundary": "E93f90c79f4c2-3",
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U2-S1"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "neighbour:operator",
+      "status": "matched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "outside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋可能在议事殿外，表示其相对议事殿边界的外侧位置。",
+            "subject": "E47a5a7269135-2",
+            "boundary": "E47a5a7269135-3",
+            "core": [
+              "P1-U2-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U2-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premiseUnits": []
+              }
+            ]
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "沈砚秋可能在议事殿外，表示其相对议事殿边界的外侧位置。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "可能"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U2",
+              "start": 13,
+              "end": 16,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U2",
+              "start": 19,
+              "end": 22,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U2",
+                "start": 13,
+                "end": 24,
+                "quote": "沈砚秋可能在议事殿外。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U2",
+                "start": 13,
+                "end": 24,
+                "quote": "沈砚秋可能在议事殿外。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U2",
+                "start": 16,
+                "end": 18,
+                "quote": "可能"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U2",
+                  "start": 13,
+                  "end": 24,
+                  "quote": "沈砚秋可能在议事殿外。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "沈砚秋可能在议事殿外，表示其相对议事殿边界的外侧位置。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U2",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": [],
+                "scope": [
+                  {
+                    "unitId": "P1-U2",
+                    "quote": "沈砚秋可能在议事殿外。",
+                    "occurrence": 0
+                  }
+                ]
+              }
+            ],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U2",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U2",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "沈砚秋可能在议事殿外。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "沈砚秋可能在议事殿外。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "沈砚秋可能在议事殿外，表示其相对议事殿边界的外侧位置。",
+            "subject": {
+              "segmentId": "P1-U2-S1",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U2-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U2-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ],
+            "status": "needs_review",
+            "normal": null
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": true
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋可能在议事殿外，表示其相对议事殿边界的外侧位置。",
+            "subject": {
+              "segmentId": "P1-U2-S1",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U2-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U2-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "outside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋可能在议事殿外，表示其相对议事殿边界的外侧位置。",
+            "subject": "E47a5a7269135-2",
+            "boundary": "E47a5a7269135-3",
+            "core": [
+              "P1-U2-S1"
+            ],
+            "qualified": [
+              "P1-U2-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U2-S1",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "two_people:first_operator",
+      "status": "matched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老被推测在议事殿内，位置为内部。",
+            "subject": "Ee8b02fbd0fc3-1",
+            "boundary": "Ee8b02fbd0fc3-2",
+            "core": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premiseUnits": []
+              }
+            ]
+          },
+          {
+            "position": {
+              "value": "outside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋在议事殿外，位置为外部。",
+            "subject": "Ee8b02fbd0fc3-3",
+            "boundary": "Ee8b02fbd0fc3-4",
+            "core": [
+              "P1-U2-S2"
+            ],
+            "limitations": []
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老被推测在议事殿内，位置为内部。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "或许"
+              }
+            ]
+          },
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋在议事殿外，位置为外部。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 4,
+              "quote": "守门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 7,
+              "end": 10,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 12,
+                "quote": "守门长老或许在议事殿内，"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 12,
+                "quote": "守门长老或许在议事殿内，"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 4,
+                "end": 6,
+                "quote": "或许"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 12,
+                  "quote": "守门长老或许在议事殿内，"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        },
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U2",
+              "start": 22,
+              "end": 25,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U2",
+              "start": 26,
+              "end": 29,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U2",
+                "start": 22,
+                "end": 31,
+                "quote": "沈砚秋在议事殿外。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U2",
+                "start": 22,
+                "end": 31,
+                "quote": "沈砚秋在议事殿外。"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "守门长老被推测在议事殿内，位置为内部。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premise": [],
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "守门长老或许在议事殿内，",
+                    "occurrence": 0
+                  }
+                ]
+              }
+            ],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "守门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老或许在议事殿内，",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老或许在议事殿内，",
+                  "occurrence": 0
+                }
+              ]
+            }
+          },
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋在议事殿外，位置为外部。",
+            "limitations": [],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U2",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U2",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "沈砚秋在议事殿外。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "沈砚秋在议事殿外。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "守门长老被推测在议事殿内，位置为内部。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ],
+            "status": "needs_review",
+            "normal": null
+          },
+          {
+            "reason": "沈砚秋在议事殿外，位置为外部。",
+            "subject": {
+              "segmentId": "P1-U2-S2",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S2"
+            ],
+            "qualified": [
+              "P1-U2-S2"
+            ],
+            "limitations": [],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            }
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0,
+          1
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": true
+          },
+          {
+            "itemIndex": 1,
+            "position": true,
+            "scope": true
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老被推测在议事殿内，位置为内部。",
+            "subject": {
+              "segmentId": "P1-U1-S1",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S1",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          },
+          {
+            "position": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋在议事殿外，位置为外部。",
+            "subject": {
+              "segmentId": "P1-U2-S2",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S2"
+            ],
+            "qualified": [
+              "P1-U2-S2"
+            ],
+            "limitations": []
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老被推测在议事殿内，位置为内部。",
+            "subject": "Ee8b02fbd0fc3-1",
+            "boundary": "Ee8b02fbd0fc3-2",
+            "core": [
+              "P1-U1-S1"
+            ],
+            "qualified": [
+              "P1-U1-S1"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U1-S1",
+                  "quote": "或许",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          },
+          {
+            "position": {
+              "value": "outside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋在议事殿外，位置为外部。",
+            "subject": "Ee8b02fbd0fc3-3",
+            "boundary": "Ee8b02fbd0fc3-4",
+            "core": [
+              "P1-U2-S2"
+            ],
+            "qualified": [
+              "P1-U2-S2"
+            ],
+            "limitations": []
+          }
+        ]
+      }
+    },
+    {
+      "caseId": "two_people:second_operator",
+      "status": "matched",
+      "proposedResponse": {
+        "qualifier-unit-premises/0.1": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老在议事殿内，表示位于边界内。",
+            "subject": "E8b96805e7a38-1",
+            "boundary": "E8b96805e7a38-2",
+            "core": [
+              "P1-U1-S2"
+            ],
+            "limitations": []
+          },
+          {
+            "position": {
+              "value": "outside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋可能在议事殿外，表示可能位于边界外。",
+            "subject": "E8b96805e7a38-3",
+            "boundary": "E8b96805e7a38-4",
+            "core": [
+              "P1-U2-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U2-S2",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premiseUnits": []
+              }
+            ]
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老在议事殿内，表示位于边界内。",
+            "limitations": []
+          },
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "沈砚秋可能在议事殿外，表示可能位于边界外。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "可能"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 9,
+              "end": 13,
+              "quote": "守门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 14,
+              "end": 17,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U1",
+                "start": 9,
+                "end": 19,
+                "quote": "守门长老在议事殿内，"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U1",
+                "start": 9,
+                "end": 19,
+                "quote": "守门长老在议事殿内，"
+              }
+            ]
+          },
+          "limitations": []
+        },
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U2",
+              "start": 20,
+              "end": 23,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U2",
+              "start": 26,
+              "end": 29,
+              "quote": "议事殿"
+            },
+            "positionCore": [
+              {
+                "unitId": "P1-U2",
+                "start": 20,
+                "end": 31,
+                "quote": "沈砚秋可能在议事殿外。"
+              }
+            ],
+            "qualifiedPosition": [
+              {
+                "unitId": "P1-U2",
+                "start": 20,
+                "end": 31,
+                "quote": "沈砚秋可能在议事殿外。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U2",
+                "start": 23,
+                "end": 25,
+                "quote": "可能"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U2",
+                  "start": 20,
+                  "end": 31,
+                  "quote": "沈砚秋可能在议事殿外。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "expandedResponse": {
+        "schemaVersion": "qualifier-scope/0.2",
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老在议事殿内，表示位于边界内。",
+            "limitations": [],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "守门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老在议事殿内，",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老在议事殿内，",
+                  "occurrence": 0
+                }
+              ]
+            }
+          },
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "沈砚秋可能在议事殿外，表示可能位于边界外。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U2",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": [],
+                "scope": [
+                  {
+                    "unitId": "P1-U2",
+                    "quote": "沈砚秋可能在议事殿外。",
+                    "occurrence": 0
+                  }
+                ]
+              }
+            ],
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U2",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U2",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "positionCore": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "沈砚秋可能在议事殿外。",
+                  "occurrence": 0
+                }
+              ],
+              "qualifiedPosition": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "沈砚秋可能在议事殿外。",
+                  "occurrence": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "decodedSelection": {
+        "schemaVersion": "qualifier-selection/0.1",
+        "items": [
+          {
+            "reason": "守门长老在议事殿内，表示位于边界内。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S2"
+            ],
+            "limitations": [],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            }
+          },
+          {
+            "reason": "沈砚秋可能在议事殿外，表示可能位于边界外。",
+            "subject": {
+              "segmentId": "P1-U2-S2",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S2"
+            ],
+            "qualified": [
+              "P1-U2-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U2-S2",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ],
+            "status": "needs_review",
+            "normal": null
+          }
+        ]
+      },
+      "fieldDiagnostics": [],
+      "scopeDiagnostics": [],
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0,
+          1
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      },
+      "contentScore": {
+        "complete": true,
+        "items": [
+          {
+            "itemIndex": 0,
+            "position": true,
+            "scope": true
+          },
+          {
+            "itemIndex": 1,
+            "position": true,
+            "scope": true
+          }
+        ],
+        "missingExpectedItems": []
+      },
+      "decodedResponse": {
+        "schemaVersion": "qualifier-selection/0.3",
+        "items": [
+          {
+            "position": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "守门长老在议事殿内，表示位于边界内。",
+            "subject": {
+              "segmentId": "P1-U1-S2",
+              "quote": "守门长老",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U1-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S2"
+            ],
+            "limitations": []
+          },
+          {
+            "position": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "沈砚秋可能在议事殿外，表示可能位于边界外。",
+            "subject": {
+              "segmentId": "P1-U2-S2",
+              "quote": "沈砚秋",
+              "occurrence": 0
+            },
+            "boundary": {
+              "segmentId": "P1-U2-S2",
+              "quote": "议事殿",
+              "occurrence": 0
+            },
+            "core": [
+              "P1-U2-S2"
+            ],
+            "qualified": [
+              "P1-U2-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U2-S2",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      },
+      "decodedProposal": {
+        "qualifier-entity-refs/0.2": [
+          {
+            "position": {
+              "value": "inside",
+              "polarity": "positive"
+            },
+            "reason": "守门长老在议事殿内，表示位于边界内。",
+            "subject": "E8b96805e7a38-1",
+            "boundary": "E8b96805e7a38-2",
+            "core": [
+              "P1-U1-S2"
+            ],
+            "qualified": [
+              "P1-U1-S2"
+            ],
+            "limitations": []
+          },
+          {
+            "position": {
+              "value": "outside",
+              "polarity": "positive"
+            },
+            "reason": "沈砚秋可能在议事殿外，表示可能位于边界外。",
+            "subject": "E8b96805e7a38-3",
+            "boundary": "E8b96805e7a38-4",
+            "core": [
+              "P1-U2-S2"
+            ],
+            "qualified": [
+              "P1-U2-S2"
+            ],
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "segmentId": "P1-U2-S2",
+                  "quote": "可能",
+                  "occurrence": 0
+                },
+                "premise": []
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "matched": 10,
+    "mismatched": 2,
+    "invalid_response": 0,
+    "model_error": 0,
+    "harness_error": 0,
+    "not_run": 0
+  },
+  "requiresSemanticReview": true,
+  "acceptance": false,
+  "productionEnablement": false
+}

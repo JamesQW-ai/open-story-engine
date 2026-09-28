@@ -1,0 +1,309 @@
+{
+  "schemaVersion": "context-qualifier-heldout/0.1",
+  "labelAuthor": "Codex",
+  "scope": "chapter-033 议事殿；相对前序限定开发集的新场景留出。1 段原文、8 条人工控制稿，不是自然生产分布。",
+  "source": {
+    "path": "docs/太虚遗录-第一部/太虚遗录-第一部-合并.txt",
+    "sha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+    "cjk": 102610,
+    "packageId": "taixu-relics-part1",
+    "version": "0.1.3",
+    "chapterPath": "content/packages/taixu-relics-part1/0.1.3/modules/chapters/chapter-033.json",
+    "chapterSha256": "bd272efb4016550a8057be3944566bdd0f7505b033c2c36b63893b727398a257",
+    "sceneId": "chapter-033:council-before-shen-entry",
+    "sceneSpan": {
+      "start": 81700,
+      "end": 81908,
+      "quote": "掌门闭关未出，九位长老在议事殿分成两列。左列主张立即关闭天门，右列主张趁门缝尚未稳定时进入其中，夺回被太虚遗脉吸收的残印。\n\n“持印者已经进入门内。”守门长老说，“若不封门，灵脉会继续倒灌。”\n\n“封门便等于放弃两枚残印。”开门长老反驳，“三百年前的封存工程已经证明，太虚遗脉无法被永久压制。”\n\n议事殿中央摆着一只黑漆木盒。盒盖上刻着陆照临的名字，名字旁边有一道被削去的空白。\n\n沈砚秋站在殿外，没有人邀请她入席。"
+    }
+  },
+  "entities": {
+    "scene:shen": {
+      "kind": "scene_person",
+      "mentions": [
+        "沈砚秋"
+      ]
+    },
+    "scene:gate_elder": {
+      "kind": "scene_person",
+      "mentions": [
+        "守门长老"
+      ]
+    },
+    "scene:opening_elder": {
+      "kind": "scene_person",
+      "mentions": [
+        "开门长老"
+      ]
+    },
+    "scene:council_hall": {
+      "kind": "scene_boundary",
+      "mentions": [
+        "议事殿",
+        "殿"
+      ]
+    }
+  },
+  "entitySources": {
+    "scene:shen": [
+      {
+        "start": 81891,
+        "end": 81894,
+        "quote": "沈砚秋"
+      }
+    ],
+    "scene:gate_elder": [
+      {
+        "start": 81775,
+        "end": 81779,
+        "quote": "守门长老"
+      }
+    ],
+    "scene:opening_elder": [
+      {
+        "start": 81812,
+        "end": 81816,
+        "quote": "开门长老"
+      }
+    ],
+    "scene:council_hall": [
+      {
+        "start": 81712,
+        "end": 81715,
+        "quote": "议事殿"
+      },
+      {
+        "start": 81896,
+        "end": 81897,
+        "quote": "殿"
+      }
+    ]
+  },
+  "aliasReview": "殿仅在该议事殿场景内指代议事殿，不跨场景推广。",
+  "frozenImplementationHashes": {
+    "test_support/prompts/context_qualifier_evidence.md": "03608475123225be785df32272e4c91d6bf1645da190d17ef89912dc543f1527",
+    "test_support/context_qualifier_evidence.py": "fcbb91232c501ea465ef183f10ed64b171271d52d922f15103999f4cbcfbcf0c",
+    "test_support/context_fullscan.py": "f42e891b1aa70039d5f06e248a4bced8c04842b7659cdb2fce1e2149eadd0494"
+  },
+  "cases": [
+    {
+      "id": "source_position",
+      "draft": "沈砚秋站在殿外，没有人邀请她入席。",
+      "draftSha256": "d303f70b5959e6798dcfa3d4fa8437eabb95be5d9216632bd886e27341391f5b",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "origin": "source_excerpt",
+      "labelRationale": "原文静态位置；后半句入席邀请缺失不是另一个位置命题。"
+    },
+    {
+      "id": "negative_position",
+      "draft": "沈砚秋不在议事殿内。黑漆木盒仍摆在中央。",
+      "draftSha256": "874e6d41d2b8a2dd758b280d35bd37ad8e3fddbb268b11cd1c554b7d7220335a",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "negative",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "origin": "synthetic_scene_control",
+      "labelRationale": "保留内侧的否定，不推导为外侧。"
+    },
+    {
+      "id": "inferred_position",
+      "draft": "开门长老想必仍在议事殿内。木盒的盖子合着。",
+      "draftSha256": "071b2cd507b0acf95f4f91157abdd44c236d5aacca76880d448a6c276d7655bd",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        }
+      ],
+      "origin": "synthetic_scene_control",
+      "labelRationale": "想必表示推测；不得作无条件当前位置。"
+    },
+    {
+      "id": "explicit_uncertainty",
+      "draft": "沈砚秋大概还在议事殿外。纸页轻轻响了一声。",
+      "draftSha256": "21c420fcb35369194be2ceddad3c6cef8d05f3039ca4f7457bfef5dd16f7a5ec",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        }
+      ],
+      "origin": "synthetic_scene_control",
+      "labelRationale": "大概限制位置判断的确定性。"
+    },
+    {
+      "id": "word_mention",
+      "draft": "说出“可能”二字的守门长老站在议事殿内。",
+      "draftSha256": "37e2435ec7b1977a03f09be6a323e3634ed6c75a7e8459fa3c35d60eaa76fe30",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "origin": "synthetic_scene_control",
+      "labelRationale": "可能是被提及的字词，不是位置判断的限定；定语不另算位置命题。"
+    },
+    {
+      "id": "condition_and_inference",
+      "draft": "若议事尚未散场，守门长老也许还在议事殿内。",
+      "draftSha256": "6594e1b6f939268edd932eaca582382bd527413205881175da6f618ee68807da",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1",
+            "P1-U2"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "condition",
+            "modality"
+          ]
+        }
+      ],
+      "origin": "synthetic_scene_control",
+      "labelRationale": "若给出前提，也许独立表示可能性；保留两项。"
+    },
+    {
+      "id": "two_people",
+      "draft": "守门长老在议事殿内而沈砚秋留在议事殿外。",
+      "draftSha256": "6158f5119e03f7e130590ff538337067483c312238863c60453d7951a0bc625e",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        },
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "origin": "synthetic_scene_control",
+      "labelRationale": "同一单元两名主体分别提取，不能以一条抵消另一条。"
+    },
+    {
+      "id": "unrelated_uncertainty",
+      "draft": "开门长老可能会开口。沈砚秋不在议事殿内。",
+      "draftSha256": "496c180b732bd43058d47351c3d19b40bb82c5eaad54531b19ea82f6ccefeb81",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U2"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "negative",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "origin": "synthetic_scene_control",
+      "labelRationale": "前句可能开口不限制后句位置的明确否定。"
+    },
+    {
+      "id": "denied_certainty",
+      "draft": "没有人敢断定沈砚秋在议事殿内。",
+      "draftSha256": "62f919353550d84505f792814ad8165113b5012ed6fafedeb18fde06327fd1c3",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "needs_review",
+          "expectedNormal": null,
+          "expectedLimitations": [
+            "modality"
+          ]
+        }
+      ],
+      "origin": "synthetic_scene_control",
+      "labelRationale": "否定断定能力不是否定内侧；整条为位置不确定性，保留待复核。"
+    }
+  ]
+}

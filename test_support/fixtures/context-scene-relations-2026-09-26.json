@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "scene-relation-experiment/0.1",
+  "relationFixtureSha256": "360112ea882f975cae8a1a56777163c3b40a6009b50af3bf4b2a2d6afbad4fc1",
+  "scope": {
+    "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+    "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+    "packageId": "taixu-relics-part1",
+    "packageVersion": "0.1.3",
+    "sceneId": "beat_chapter_001"
+  },
+  "entities": [
+    {
+      "id": "scene:wounded_stranger",
+      "kind": "scene_person",
+      "source": {
+        "id": "module:currentBeat:beat_chapter_001",
+        "span": {
+          "start": 11,
+          "end": 15,
+          "quote": "陌生伤者"
+        },
+        "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+      }
+    },
+    {
+      "id": "scene:sealing_line",
+      "kind": "scene_boundary",
+      "source": {
+        "id": "module:currentBeat:beat_chapter_001",
+        "span": {
+          "start": 21,
+          "end": 24,
+          "quote": "封山线"
+        },
+        "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+      }
+    }
+  ],
+  "facts": [
+    {
+      "id": "wounded-side",
+      "normal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "outside",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "source": {
+        "id": "module:currentBeat:beat_chapter_001",
+        "span": {
+          "start": 11,
+          "end": 25,
+          "quote": "陌生伤者与空灯被挡在封山线外"
+        },
+        "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+      }
+    }
+  ],
+  "mappings": [
+    {
+      "id": "position_out",
+      "origin": "position_out",
+      "draftSha256": "e1bb77fd10e54e4eef107fddefe0bf15bfac056ba2c4000226cb8313501e4117",
+      "statement": "伤者在封山线外。",
+      "span": {
+        "start": 0,
+        "end": 8,
+        "quote": "伤者在封山线外。"
+      },
+      "normal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "outside",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      }
+    },
+    {
+      "id": "position_in",
+      "origin": "position_in",
+      "draftSha256": "8decb3772ba5155b9d362123361fe6402d8445d167627b90ead3a1e5cc4b9a48",
+      "statement": "伤者在封山线内。",
+      "span": {
+        "start": 0,
+        "end": 8,
+        "quote": "伤者在封山线内。"
+      },
+      "normal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "inside",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      }
+    },
+    {
+      "id": "position_not_out",
+      "origin": "position_not_out",
+      "draftSha256": "22d171aa5a528f335cc9c249d466f5f028d6fc06066c1b405edd9e3c385bb010",
+      "statement": "伤者不在封山线外。",
+      "span": {
+        "start": 0,
+        "end": 9,
+        "quote": "伤者不在封山线外。"
+      },
+      "normal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "outside",
+        "polarity": "negative",
+        "time": "snapshot",
+        "condition": null
+      }
+    },
+    {
+      "id": "position_not_in",
+      "origin": "position_not_in",
+      "draftSha256": "69514dd56cf12282eeab8fc29a39923453b972b9d0fbdb815243b56d5bb9f763",
+      "statement": "伤者不在封山线内。",
+      "span": {
+        "start": 0,
+        "end": 9,
+        "quote": "伤者不在封山线内。"
+      },
+      "normal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "inside",
+        "polarity": "negative",
+        "time": "snapshot",
+        "condition": null
+      }
+    },
+    {
+      "id": "original_C10",
+      "origin": "recorded_v11:C10",
+      "draftSha256": "be082fef3489604f9b9a906a1bcc355aa50fec14bb5aa085980843c0486507aa",
+      "statement": "伏着的伤者在封山线内。",
+      "span": {
+        "start": 65,
+        "end": 86,
+        "quote": "目光从你脸上移到封山线内那道伏着的人影上，"
+      },
+      "normal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "inside",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      }
+    }
+  ]
+}

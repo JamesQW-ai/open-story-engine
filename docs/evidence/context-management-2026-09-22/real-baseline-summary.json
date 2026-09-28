@@ -1,0 +1,557 @@
+{
+  "schema": "context-real-baseline-summary/0.1",
+  "recordedAt": "2026-09-22",
+  "purpose": "上下文管理工程第一阶段第2项：三个受控真实场景基线",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3"
+  },
+  "identity": {
+    "entry_point_id": "entry_gu_trial",
+    "source_character_id": "character_e663361ab1c7"
+  },
+  "model": {
+    "planner": "openai",
+    "model": "deepseek-v4-flash",
+    "baseUrl": "https://api.deepseek.com",
+    "stream": true,
+    "qualityReview": false,
+    "transportFallback": false,
+    "apiKeyRecorded": false
+  },
+  "databaseBoundary": {
+    "formalDatabase": "/Users/James/open-story-engine/data/open-story-engine.sqlite",
+    "formalDatabaseSha256After": "8aa7dd302f5d0f16eb3cf08831ce46ff82227d13fd44b72e679f71d3b606c911",
+    "formalDatabaseSha256Before": "8aa7dd302f5d0f16eb3cf08831ce46ff82227d13fd44b72e679f71d3b606c911",
+    "formalDatabaseModified": false,
+    "isolatedRunsDirectory": "/tmp/open-story-engine-context-baseline-20260922/real-baseline-runs",
+    "formalTurnDraftsSha256Before": "6c976bfdb873a77033a536206a2b2548032da846a3abf59adbb9f1e6b168c916",
+    "formalTurnDraftsModified": false
+  },
+  "scenes": [
+    {
+      "id": "inform",
+      "input": "我告诉陆照临，我打算先带着这粒金屑和木牌参加后坡试炼，按规矩取青露草；此刻只说明这个打算，听听他的回应，不再追问，也不出发。",
+      "status": "written",
+      "elapsedSeconds": 34.104,
+      "sessionId": "969db7a2-e9cf-5dfd-a6a1-76f153c3e3bc",
+      "parentBranchId": "branch_5328e9c9-60ba-4a86-93d7-62994df8dd98",
+      "openingCjk": 240,
+      "narrativeText": "钟声还没响。石壁上的旧剑痕在斜阳里拉出细长的影子，场边的新弟子三三两两压着嗓子说话。你把包着金屑的纸片和木牌一并按在掌心，转向陆照临。\n\n“我打算先带着这粒金屑和木牌去后坡，按规矩取青露草。”\n\n话说得平，没有解释金屑的来历，也没有提你心里的疑处。说完你便停住，看着他。\n\n陆照临的目光在你掌心那两样东西上落了落，又抬回你脸上。他没有伸手，也没有追问金屑是什么，只略一颔首：“木牌是入场凭据，带着不碍事。后坡药圃在白线以内，取草时别越界——执事方才说的三条，越一条就取消资格。”\n\n他顿了顿，补了一句：“至于那粒金屑，我没见过，也说不上它和试炼有什么干系。”\n\n风从石径那头过来，卷起些碎草屑。他不再多言，退开半步，像是把接下来的路留给你自己走。",
+      "narrativeCjk": 273,
+      "summary": "自定行动：我告诉陆照临，我打算先带已推进，新的风险和选择仍然存在。",
+      "planning": {
+        "citations": [
+          {
+            "kind": "branch_node",
+            "ref": "branch_5328e9c9-60ba-4a86-93d7-62994df8dd98",
+            "rationale": "承接已确认的上一节点。"
+          }
+        ],
+        "confidence": "medium",
+        "stateChangeProposals": []
+      },
+      "actionIntent": {
+        "input": "我告诉陆照临，我打算先带着这粒金屑和木牌参加后坡试炼，按规矩取青露草；此刻只说明这个打算，听听他的回应，不再追问，也不出发。",
+        "requirements": {
+          "A1": {
+            "mode": "result",
+            "summary": "顾长离向陆照临说明自己打算带着金屑和木牌参加后坡试炼、按规矩取青露草。"
+          },
+          "A2": {
+            "mode": "result",
+            "summary": "说明内容包含“先带金屑与木牌参加后坡试炼”这一打算。"
+          },
+          "A3": {
+            "mode": "result",
+            "summary": "说明内容包含“按规矩取青露草”。"
+          },
+          "A4": {
+            "mode": "constraint",
+            "summary": "本回合只陈述打算，不把打算变成已执行行动。"
+          },
+          "A5": {
+            "mode": "result",
+            "summary": "陆照临对这番说明作出当场回应。"
+          },
+          "A6": {
+            "mode": "constraint",
+            "summary": "顾长离不再追问陆照临。"
+          },
+          "A7": {
+            "mode": "constraint",
+            "summary": "顾长离留在原地，不出发去后坡或药圃。"
+          }
+        }
+      },
+      "consequenceReview": "reader-consequences/7",
+      "authorityReview": {
+        "decision": "allow",
+        "issues": [],
+        "checks": [
+          {
+            "stepId": "S1",
+            "authorized": true,
+            "basis": "player_input",
+            "quote": "我告诉陆照临，我打算先带着这粒金屑和木牌参加后坡试炼，按规矩取青露草；此刻只说明这个打算，听听他的回应，不再追问，也不出发。",
+            "reason": "玩家明确授权顾长离向陆照临说明打算，并限定只说明、等待回应、不追问、不出发。"
+          },
+          {
+            "stepId": "S2",
+            "authorized": true,
+            "basis": "causal_reaction",
+            "quote": "听听他的回应",
+            "reason": "玩家明确要求听取陆照临的回应，因此陆照临就所听内容作出简短回应是直接因果反应；步骤限定不替她决定是否出发，符合玩家停止点。"
+          }
+        ],
+        "stateChecks": [
+          {
+            "changeId": "C1",
+            "authorized": true,
+            "reason": "顾长离当面告知陆照临自己的试炼打算，陆照临听见后自然获知该信息；这是S1授权行动的直接结果。"
+          }
+        ],
+        "premiseChecks": [
+          {
+            "id": "K1",
+            "kind": "after_step",
+            "verdict": "supported",
+            "sources": [],
+            "stepIds": [
+              "S1"
+            ],
+            "missingEvidence": [],
+            "reason": "该知识是顾长离在S1中说出打算后才成立，S1由玩家输入授权，符合after_step。"
+          },
+          {
+            "id": "K2",
+            "kind": "unknown",
+            "verdict": "supported",
+            "sources": [],
+            "stepIds": [],
+            "missingEvidence": [],
+            "reason": "陆照临的具体回应内容在行动前确实未知，规划将其标为unknown，未夹带具体信息，符合要求。"
+          },
+          {
+            "id": "O1",
+            "kind": "restriction",
+            "verdict": "supported",
+            "sources": [
+              {
+                "id": "history-branch_5328e9c9-60ba-4a86-93d7-62994df8dd98-P3",
+                "quote": "你听过北河城，却不认识他；这只是第一次互通姓名，他为何来到这里，你还不知道。"
+              }
+            ],
+            "stepIds": [],
+            "missingEvidence": [],
+            "reason": "上一段正文明确顾长离不认识陆照临、不知道他为何来，该限制有直接证据。"
+          },
+          {
+            "id": "O2",
+            "kind": "restriction",
+            "verdict": "supported",
+            "sources": [
+              {
+                "id": "history-branch_5328e9c9-60ba-4a86-93d7-62994df8dd98-P3",
+                "quote": "这只是第一次互通姓名"
+              }
+            ],
+            "stepIds": [],
+            "missingEvidence": [],
+            "reason": "两人刚互通姓名，陆照临未见证刮金屑的完整经过，也无从得知顾长离内心推断，该限制成立。"
+          },
+          {
+            "id": "O3",
+            "kind": "restriction",
+            "verdict": "supported",
+            "sources": [
+              {
+                "id": "history-branch_5328e9c9-60ba-4a86-93d7-62994df8dd98-P2",
+                "quote": "围在场边的新弟子正等着钟响。"
+              },
+              {
+                "id": "history-branch_5328e9c9-60ba-4a86-93d7-62994df8dd98-P4",
+                "quote": "钟声随时会响"
+              }
+            ],
+            "stepIds": [],
+            "missingEvidence": [],
+            "reason": "上一段正文表明钟声尚未响，后坡药圃与青露草的实际情形尚未确认，该限制有直接证据。"
+          }
+        ]
+      },
+      "sceneChecks": [
+        {
+          "paragraphId": "P1",
+          "playerDecision": "none",
+          "background": "supported",
+          "sources": [
+            {
+              "id": "history-branch_5328e9c9-60ba-4a86-93d7-62994df8dd98-P2",
+              "quote": "这里是玄霄宗半山的试炼场，石壁上留着旧剑痕。"
+            },
+            {
+              "id": "history-branch_5328e9c9-60ba-4a86-93d7-62994df8dd98-P1",
+              "quote": "你已刮下一粒，用纸包好。"
+            }
+          ],
+          "quote": "",
+          "issue": "",
+          "backgroundClaims": [
+            {
+              "claim": "钟声还没响。石壁上的旧剑痕在斜阳里拉出细长的影子，场边的新弟子三三两两压着嗓子说话。你把包着金屑的纸片和木牌一并按在掌心，转向陆照临。",
+              "sources": [
+                {
+                  "id": "history-branch_5328e9c9-60ba-4a86-93d7-62994df8dd98-P2",
+                  "quote": "这里是玄霄宗半山的试炼场，石壁上留着旧剑痕。"
+                },
+                {
+                  "id": "history-branch_5328e9c9-60ba-4a86-93d7-62994df8dd98-P1",
+                  "quote": "你已刮下一粒，用纸包好。"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "paragraphId": "P2",
+          "playerDecision": "authorized",
+          "background": "none",
+          "sources": [],
+          "quote": "",
+          "issue": ""
+        },
+        {
+          "paragraphId": "P3",
+          "playerDecision": "none",
+          "background": "none",
+          "sources": [],
+          "quote": "",
+          "issue": ""
+        },
+        {
+          "paragraphId": "P4",
+          "playerDecision": "none",
+          "background": "supported",
+          "sources": [
+            {
+              "id": "opening-2",
+              "quote": "试炼要求日落前取回青露草，另有白线、禁止争抢伤人和进入封闭区域的规定。"
+            },
+            {
+              "id": "history-branch_5328e9c9-60ba-4a86-93d7-62994df8dd98-P2",
+              "quote": "负责试炼的执事刚说完：不许争抢，不许伤人，不许进入封闭区域。"
+            }
+          ],
+          "quote": "",
+          "issue": "",
+          "backgroundClaims": [
+            {
+              "claim": "陆照临的目光在你掌心那两样东西上落了落，又抬回你脸上。他没有伸手，也没有追问金屑是什么，只略一颔首：“木牌是入场凭据，带着不碍事。后坡药圃在白线以内，取草时别越界——执事方才说的三条，越一条就取消资格。”",
+              "sources": [
+                {
+                  "id": "opening-2",
+                  "quote": "试炼要求日落前取回青露草，另有白线、禁止争抢伤人和进入封闭区域的规定。"
+                },
+                {
+                  "id": "history-branch_5328e9c9-60ba-4a86-93d7-62994df8dd98-P2",
+                  "quote": "负责试炼的执事刚说完：不许争抢，不许伤人，不许进入封闭区域。"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "paragraphId": "P5",
+          "playerDecision": "none",
+          "background": "none",
+          "sources": [],
+          "quote": "",
+          "issue": ""
+        },
+        {
+          "paragraphId": "P6",
+          "playerDecision": "none",
+          "background": "none",
+          "sources": [],
+          "quote": "",
+          "issue": ""
+        }
+      ],
+      "eventChecks": [
+        {
+          "id": "O1",
+          "verdict": "supported",
+          "reason": "顾长离把纸片和木牌按在掌心并转向陆照临，是授权告知前的自然动作，未改变持有。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O2",
+          "verdict": "supported",
+          "reason": "直接兑现向陆照临说明打算的台词。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O3",
+          "verdict": "supported",
+          "reason": "说完停住、不追问、不解释，符合只说明并听回应的限制。",
+          "stepIds": [
+            "S1"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O4",
+          "verdict": "supported",
+          "reason": "陆照临就木牌和后坡规矩作出简短回应，未替玩家决定出发。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [
+            "C1"
+          ],
+          "introductionIds": []
+        },
+        {
+          "id": "O5",
+          "verdict": "supported",
+          "reason": "陆照临表示没见过金屑、说不上干系，属于其当场能说的范围。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        },
+        {
+          "id": "O6",
+          "verdict": "supported",
+          "reason": "陆照临不再多言并退开半步，是回应后的自然收束，未迫使玩家出发。",
+          "stepIds": [
+            "S2"
+          ],
+          "changeIds": [],
+          "introductionIds": []
+        }
+      ],
+      "readerOutcome": {
+        "actions": [
+          {
+            "id": "A1",
+            "requirement": "我告诉陆照临",
+            "status": "performed",
+            "summary": "顾长离当面向陆照临说明了自己的打算。",
+            "evidence": "“我打算先带着这粒金屑和木牌去后坡，按规矩取青露草。”"
+          },
+          {
+            "id": "A2",
+            "requirement": "我打算先带着这粒金屑和木牌参加后坡试炼",
+            "status": "performed",
+            "summary": "说明中包含先带金屑与木牌去后坡参加试炼。",
+            "evidence": "“我打算先带着这粒金屑和木牌去后坡，按规矩取青露草。”"
+          },
+          {
+            "id": "A3",
+            "requirement": "按规矩取青露草",
+            "status": "performed",
+            "summary": "说明中包含按规矩取青露草。",
+            "evidence": "“我打算先带着这粒金屑和木牌去后坡，按规矩取青露草。”"
+          },
+          {
+            "id": "A4",
+            "requirement": "此刻只说明这个打算",
+            "status": "performed",
+            "summary": "只陈述打算，未把打算变成已执行行动。",
+            "evidence": "话说得平，没有解释金屑的来历，也没有提你心里的疑处。说完你便停住，看着他。"
+          },
+          {
+            "id": "A5",
+            "requirement": "听听他的回应",
+            "status": "performed",
+            "summary": "陆照临就木牌、后坡规矩和金屑作出当场回应。",
+            "evidence": "陆照临的目光在你掌心那两样东西上落了落，又抬回你脸上。他没有伸手，也没有追问金屑是什么，只略一颔首：“木牌是入场凭据，带着不碍事。后坡药圃在白线以内，取草时别越界——执事方才说的三条，越一条就取消资格。”"
+          },
+          {
+            "id": "A6",
+            "requirement": "不再追问",
+            "status": "performed",
+            "summary": "顾长离说完停住，未再追问。",
+            "evidence": "话说得平，没有解释金屑的来历，也没有提你心里的疑处。说完你便停住，看着他。"
+          },
+          {
+            "id": "A7",
+            "requirement": "也不出发",
+            "status": "performed",
+            "summary": "顾长离仍留在半山试炼场，没有出发。",
+            "evidence": "风从石径那头过来，卷起些碎草屑。他不再多言，退开半步，像是把接下来的路留给你自己走。"
+          }
+        ],
+        "action": {
+          "status": "performed",
+          "summary": "顾长离当面向陆照临说明了自己的打算。；说明中包含先带金屑与木牌去后坡参加试炼。；说明中包含按规矩取青露草。；只陈述打算，未把打算变成已执行行动。；陆照临就木牌、后坡规矩和金屑作出当场回应。；顾长离说完停住，未再追问。；顾长离仍留在半山试炼场，没有出发。",
+          "evidence": "“我打算先带着这粒金屑和木牌去后坡，按规矩取青露草。”"
+        },
+        "clues": [],
+        "relationships": []
+      },
+      "branchStateSummary": {
+        "playerLocationId": "location_open_trial",
+        "sourceProgress": "chapter_011",
+        "derivedTurn": 0,
+        "derivedCharacters": [],
+        "derivedItems": [],
+        "derivedEvents": []
+      }
+    },
+    {
+      "id": "ask_basis",
+      "input": "我向陆照临指出木牌刻痕里的金屑，只询问他对此怎么看、有什么依据。听完回应再决定，暂不交出纸包，也不离开原地。",
+      "status": "failed",
+      "elapsedSeconds": 94.532,
+      "sessionId": "8e58cbd7-75ae-5b0c-99bd-60161f97bbda",
+      "parentBranchId": "branch_2266c5ca-3a71-4655-aeb0-af70021b7372",
+      "openingCjk": 240,
+      "failure": {
+        "metrics": {
+          "first_text_ms": 16688,
+          "ready_hit": false,
+          "selection_count": 1,
+          "ready_hits": 0,
+          "queue_ms": 1,
+          "complete_ms": 94314,
+          "reported_tokens": 134720,
+          "calls": 20,
+          "unreported_calls": 0,
+          "tokens": 134720
+        },
+        "usage": {
+          "reported_tokens": 134720,
+          "calls": 20,
+          "unreported_calls": 0
+        },
+        "error": {
+          "code": "generation_failed",
+          "message": "这次续写未能完成，请重试或调整行动。",
+          "status": 503
+        },
+        "failureAudits": [
+          {
+            "operation": "branch_planner",
+            "error": "正文存在未登记的持续状态变化：{'entityId': 'character_ae4cb42b9b49', 'attribute': '已知木牌刻痕夹金屑', 'value': True}",
+            "callCount": 41,
+            "stages": [
+              "result_contract",
+              "result_contract",
+              "scene_plan",
+              "action_authority",
+              "chapter",
+              "scene_draft_metrics",
+              "fact_extraction",
+              "action_review",
+              "scene_grounding",
+              "independent_review_result",
+              "scope_review",
+              "scope_review_result",
+              "scene_evidence_repair",
+              "scene_evidence_repair",
+              "independent_review_result",
+              "validation",
+              "local_repair_record",
+              "local_repair",
+              "local_repair_validation",
+              "scene_draft_metrics",
+              "fact_extraction",
+              "action_review",
+              "scene_grounding",
+              "independent_review_result",
+              "scope_review",
+              "scope_review_result",
+              "validation",
+              "local_repair_record",
+              "local_repair",
+              "local_repair_validation",
+              "scene_draft_metrics",
+              "fact_extraction",
+              "action_review",
+              "scene_grounding",
+              "independent_review_result",
+              "scope_review",
+              "scope_review_result",
+              "scene_evidence_repair",
+              "scene_evidence_repair",
+              "independent_review_result",
+              "validation"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "brief_wait",
+      "input": "我留在原地，把纸包和木牌收好，暂不行动，等试炼钟响或陆照临回应。请简短写完，不替我作决定，不转场。",
+      "status": "failed",
+      "elapsedSeconds": 17.084,
+      "sessionId": "5ff2df80-204b-587e-ac46-6218499f0af8",
+      "parentBranchId": "branch_84bbe48f-92b9-48e4-9e5e-77cf882906cc",
+      "openingCjk": 240,
+      "failure": {
+        "metrics": {
+          "first_text_ms": null,
+          "ready_hit": false,
+          "selection_count": 1,
+          "ready_hits": 0,
+          "queue_ms": 1,
+          "complete_ms": 16861,
+          "reported_tokens": 22678,
+          "calls": 3,
+          "unreported_calls": 0,
+          "tokens": 22678
+        },
+        "usage": {
+          "reported_tokens": 22678,
+          "calls": 3,
+          "unreported_calls": 0
+        },
+        "error": {
+          "code": "generation_failed",
+          "message": "这次续写未能完成，请重试或调整行动。",
+          "status": 503
+        },
+        "failureAudits": [
+          {
+            "operation": "branch_planner",
+            "error": "行动计划越权：S2 中陆照临主动说“自己也要等钟”并移开视线，属于新增NPC台词与动作，输入只授权玩家等待钟响或陆照临回应，未授权陆照临主动发言或改变姿态。；S3 中试炼钟在本回合响起，但输入是“等试炼钟响或陆照临回应”，等待条件尚未满足，钟响属于提前推进环境事件；应停在等待状态，由玩家决定是否继续等待或行动。；C2 登记陆照临“知道顾长离把木牌与纸片收好、选择原地等钟”，但上一段并未实际发生收好动作，且陆照临是否亲眼看见收物过程未获授权；该状态变化依赖S1执行，而S1本身是玩家本轮才提出的动作，不能作为已发生前史。；玩家只授权等待陆照临回应，未授权陆照临主动说“自己也要等钟”或移开视线；NPC反应不能新增台词和姿态改变。",
+            "callCount": 4,
+            "stages": [
+              "result_contract",
+              "result_contract",
+              "scene_plan",
+              "action_authority"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "observations": [
+    "告知场景成功写入，正文与计划将场景停在陆照临回应后，未替玩家决定是否出发。",
+    "询问依据场景失败：模型反复修复后仍产生未登记的 NPC 持续状态“已知木牌刻痕夹金屑”，现有校验拒绝写入。",
+    "短等待场景失败：现有行动权校验拒绝提前响钟、未授权 NPC 台词/动作及未被见证的 NPC 知识更新。",
+    "三个场景均从同一官方入口独立创建会话，成功正文为动态短场景；失败场景没有写入正式分支。"
+  ],
+  "manualReviewRequired": true,
+  "manualReviewScope": [
+    "确认告知正文的事实、视角、停点和自然语言质量。",
+    "确认询问依据失败属于应保留的安全拒绝，还是暴露了“已知事实登记”上下文缺口。",
+    "确认短等待失败的越权拦截符合产品边界，并决定后续上下文管理是否需要显式表达等待条件。"
+  ],
+  "fullEvidencePath": "/tmp/open-story-engine-context-baseline-20260922/real-baseline-runs/report.json"
+}

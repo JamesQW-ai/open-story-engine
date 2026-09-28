@@ -224,8 +224,11 @@ class PlayApiTests(unittest.TestCase):
                 "parent_branch_id": root, "text": "许川把手机递给唐栖", "request_id": "stream-failed",
             })
         events = self.stream_events(response)
-        self.assertEqual([event for event, _ in events], ["delta", "reset", "delta", "error"])
+        self.assertEqual([event for event, _ in events], ["error"])
         self.assertEqual(events[-1][1]["code"], "generation_failed")
+        self.assertTrue(events[-1][1]["retryable"])
+        self.assertFalse(events[-1][1]["candidateShown"])
+        self.assertTrue(events[-1][1]["previousBranchUnchanged"])
         self.assertNotIn('test transport', response.text)
         self.assertEqual(len(self.client.get(f"/api/v1/sessions/{sid}/branches").json()["branches"]), 1)
         retry = self.stream_events(self.client.post(f"/api/v1/sessions/{sid}/branches/stream", json={
@@ -339,11 +342,21 @@ class PlayApiTests(unittest.TestCase):
         self.assertEqual(body["status"], "written")
         self.assertEqual(body["branch"]["parentId"], root_id)
 
+    def test_continue_requires_request_id(self):
+        session_id = self.create_session().json()["session"]["id"]
+        root = self.client.get(f"/api/v1/sessions/{session_id}/branches").json()["branches"][0]
+        response = self.client.post(f"/api/v1/sessions/{session_id}/branches", json={
+            "parent_branch_id": root["id"], "direction_id": "direction_missing",
+        })
+        self.assertEqual(response.status_code, 422)
+        self.assertEqual(len(self.client.get(f"/api/v1/sessions/{session_id}/branches").json()["branches"]), 1)
+
     def test_invalid_direction_rejected_without_write(self):
         session_id = self.create_session().json()["session"]["id"]
         branches = self.client.get(f"/api/v1/sessions/{session_id}/branches").json()["branches"]
         response = self.client.post(f"/api/v1/sessions/{session_id}/branches", json={
             "parent_branch_id": branches[0]["id"], "direction_id": "direction_missing",
+            "request_id": "invalid-direction",
         })
         self.assertEqual(response.status_code, 409)
         self.assertEqual(response.json()["error"]["code"], "play_rejected")
@@ -395,7 +408,7 @@ class PlayApiTests(unittest.TestCase):
 
     def test_unknown_session_returns_404(self):
         response = self.client.post("/api/v1/sessions/session_missing/branches", json={
-            "parent_branch_id": "branch_x", "direction_id": "direction_x",
+            "parent_branch_id": "branch_x", "direction_id": "direction_x", "request_id": "unknown-session",
         })
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.json()["error"]["code"], "session_not_found")

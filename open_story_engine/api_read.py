@@ -21,9 +21,10 @@ from .scene_library import SceneLibrary
 
 
 class ReadError(Exception):
-    def __init__(self, status: int, code: str, message: str) -> None:
+    def __init__(self, status: int, code: str, message: str, details: dict[str, Any] | None = None) -> None:
         super().__init__(message)
         self.status, self.code, self.message = status, code, message
+        self.details = details or {}
 
 
 class ReadOnlySessionStore(SessionStore):

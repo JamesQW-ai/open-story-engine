@@ -1,0 +1,151 @@
+{
+  "schema": "context-real-rerun-followup/0.1",
+  "recordedAt": "2026-09-22",
+  "purpose": "修复多余要求ID、规则来源绑定及写前知识分类后的定向实时复核",
+  "runs": [
+    {
+      "source": "/tmp/open-story-engine-context-reruns2-20260922/inform.json",
+      "scene": {
+        "id": "inform",
+        "status": "written",
+        "elapsedSeconds": 35.82,
+        "firstTextMs": 17232,
+        "actualCjk": 194,
+        "error": null,
+        "code": null,
+        "branchId": "branch_cddef190-cc52-499b-aad6-fbf70b3fd1c3",
+        "metrics": {
+          "first_text_ms": 17056,
+          "ready_hit": false,
+          "selection_count": 1,
+          "ready_hits": 0,
+          "queue_ms": 1,
+          "complete_ms": 35435,
+          "reported_tokens": 54365,
+          "calls": 10,
+          "unreported_calls": 0,
+          "tokens": 54365,
+          "commit_ms": 202,
+          "committed": true,
+          "result_reused": false,
+          "committed_branch_id": "branch_cddef190-cc52-499b-aad6-fbf70b3fd1c3",
+          "selection_to_complete_ms": 35819
+        },
+        "narrativeText": "“我打算先带着这粒金屑和木牌去后坡试炼，按规矩取青露草。”你把包着金屑的纸片和木牌一并按在掌心，话说得平直，没有绕弯，也没有追问他的来历。\n\n陆照临听完，目光在你掌上停了停，又抬回你脸上。他没有伸手，也没有追问金屑的事，只点了点头：“规矩我听过。日落前取回青露草，白线不能越，不能争抢伤人。”他顿了一下，语气不重，“你要带着它进去，是你的打算。我不拦你，也不替你拿主意。”\n\n他说完便不再多言，侧身让开半步，像是把路和决定都留在你这边。钟声还没响，你仍站在原地。"
+      }
+    },
+    {
+      "source": "/tmp/open-story-engine-context-reruns2-20260922/brief_wait.json",
+      "scene": {
+        "id": "brief_wait",
+        "status": "failed",
+        "elapsedSeconds": 15.69,
+        "firstTextMs": null,
+        "actualCjk": 0,
+        "error": "这次续写未能完成，请重试或调整行动。",
+        "code": "generation_failed",
+        "branchId": null,
+        "metrics": {
+          "first_text_ms": null,
+          "ready_hit": false,
+          "selection_count": 1,
+          "ready_hits": 0,
+          "queue_ms": 1,
+          "complete_ms": 15502,
+          "reported_tokens": 24263,
+          "calls": 4,
+          "unreported_calls": 0,
+          "tokens": 24263
+        },
+        "narrativeText": ""
+      },
+      "result": "首次仍因已有事实K1误标after_step失败"
+    },
+    {
+      "source": "/tmp/open-story-engine-context-reruns3-20260922/brief_wait.json",
+      "scene": {
+        "id": "brief_wait",
+        "status": "written",
+        "elapsedSeconds": 23.73,
+        "firstTextMs": 9038,
+        "actualCjk": 170,
+        "error": null,
+        "code": null,
+        "branchId": "branch_30a34d1c-ebc5-461f-a34e-de1ca3999929",
+        "metrics": {
+          "first_text_ms": 8862,
+          "ready_hit": false,
+          "selection_count": 1,
+          "ready_hits": 0,
+          "queue_ms": 1,
+          "complete_ms": 23347,
+          "reported_tokens": 38627,
+          "calls": 7,
+          "unreported_calls": 0,
+          "tokens": 38627,
+          "commit_ms": 205,
+          "committed": true,
+          "result_reused": false,
+          "committed_branch_id": "branch_30a34d1c-ebc5-461f-a34e-de1ca3999929",
+          "selection_to_complete_ms": 23733
+        },
+        "narrativeText": "纸包还捏在指间，金屑隔着薄纸几乎感觉不到分量。你把纸沿原来的折痕重新叠紧，塞进袖中，又低头看了一眼木牌——刻痕里的黑泥仍在，那点金屑的来处依旧没有答案。木牌握进掌心，边缘硌着指节，你把它收在身侧，没有挂回腰间。\n\n陆照临还站在原处，没有开口。石壁上的旧剑痕在日光里泛着浅灰，场边的新弟子各自守着位置，偶尔有人低声说话，声音压得很低。你留在原地，没有走向石径，也没有再翻看木牌。\n\n钟还没有响。"
+      },
+      "result": "补充premiseChecks修复指令后成功写入"
+    },
+    {
+      "source": "/tmp/open-story-engine-context-reruns4-20260922/brief_wait.json",
+      "scene": {
+        "id": "brief_wait",
+        "status": "written",
+        "elapsedSeconds": 29.09,
+        "firstTextMs": 11869,
+        "actualCjk": 135,
+        "error": null,
+        "code": null,
+        "branchId": "branch_5e0305ab-9c24-4c0d-bce9-e9cd0c5b4c97",
+        "metrics": {
+          "first_text_ms": 11689,
+          "ready_hit": false,
+          "selection_count": 1,
+          "ready_hits": 0,
+          "queue_ms": 2,
+          "complete_ms": 28702,
+          "reported_tokens": 46399,
+          "calls": 8,
+          "unreported_calls": 0,
+          "tokens": 46399,
+          "commit_ms": 202,
+          "committed": true,
+          "result_reused": false,
+          "committed_branch_id": "branch_5e0305ab-9c24-4c0d-bce9-e9cd0c5b4c97",
+          "selection_to_complete_ms": 29090
+        },
+        "narrativeText": "纸包和木牌贴着掌心，还带着方才握紧的温度。你把纸包折口压平，连同木牌一并收进衣内，贴着腰侧放稳，手垂下来时顺势按了按，确认不会滑脱。\n\n石壁上的旧剑痕在余光里横斜，场边新弟子压低的交谈声时断时续。你留在原处，没有挪步，也没有开口。\n\n陆照临还站在你面前。他若开口，你听得见；钟若响，你也听得见。眼下两样都还没有来。"
+      },
+      "result": "加入具体物理/感官细节来源门槛后仍成功写入；措辞替换后的同类细节保留为人工复核项"
+    }
+  ],
+  "humanReviewFindings": [
+    {
+      "scene": "inform",
+      "severity": "P2",
+      "finding": "正文仍出现“目光在你掌上停了停”等可接受当场反应；规则台词已按同句来源约束通过。"
+    },
+    {
+      "scene": "brief_wait_followup",
+      "severity": "P2",
+      "finding": "门槛拦截了薄纸/分量等词后，模型改写为“握紧的温度、剑痕横斜、交谈声”等同类具体细节；需人工确认来源或继续扩展语义级感官事实检测。"
+    }
+  ],
+  "deterministicGates": {
+    "inform": "written",
+    "brief_wait": "written",
+    "noFormalDatabaseWrites": true,
+    "brief_wait_followup": "written"
+  },
+  "evidencePaths": [
+    "/tmp/open-story-engine-context-reruns2-20260922",
+    "/tmp/open-story-engine-context-reruns3-20260922"
+  ]
+}

@@ -18,6 +18,148 @@ class StoryPackageError(ValueError):
 NEW_CHARACTER_PROFILE_FIELD_IDS = frozenset({"name", "gender", "age", "occupation", "sourceRelationship", "background"})
 
 
+STATE_VISIBILITY_SCHEMA_VERSIONS = {"state-visibility/0.1", "state-visibility/0.2"}
+STATE_VISIBILITY_VALUES = {"player_known", "character_known", "public_world_fact", "author_truth"}
+_STATE_VISIBILITY_TEMPLATE = re.compile(r"\{([^{}]+)\}")
+_STATE_VISIBILITY_FIELD = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
+
+
+def _state_visibility_pointer_segments(pointer: str, label: str) -> List[str]:
+    if not isinstance(pointer, str) or not pointer.startswith("/") or "*" in pointer:
+        raise StoryPackageError(f"{label} 必须是非通配 JSON Pointer。")
+    segments = pointer[1:].split("/")
+    decoded: List[str] = []
+    for segment in segments:
+        if re.search(r"~(?![01])", segment):
+            raise StoryPackageError(f"{label} 包含无效 JSON Pointer 转义。")
+        decoded.append(segment.replace("~1", "/").replace("~0", "~"))
+    return decoded
+
+
+def _state_visibility_template_names(pointer: str, label: str) -> List[str]:
+    names = _STATE_VISIBILITY_TEMPLATE.findall(pointer)
+    if not names or any(not _STATE_VISIBILITY_FIELD.fullmatch(name) for name in names):
+        raise StoryPackageError(f"{label} 包含无效模板字段。")
+    return names
+
+
+def _state_visibility_state_fields(package: Dict[str, Any]) -> Set[str]:
+    model = package.get("stateModel")
+    if not isinstance(model, dict):
+        return set()
+    runtime_fields = model.get("runtimeStateFields", [])
+    location_fields = model.get("locationReferenceFields", [])
+    fields: Set[str] = {
+        field for field in runtime_fields if isinstance(field, str)
+    } if isinstance(runtime_fields, list) else set()
+    if isinstance(location_fields, list):
+        fields.update(field for field in location_fields if isinstance(field, str))
+    monotonic = model.get("monotonicEnums", {})
+    if isinstance(monotonic, dict):
+        fields.update(field for field in monotonic if isinstance(field, str))
+    # These are normalized branch-state identifiers used by the runtime even
+    # when a package's declarative stateModel predates the visibility contract.
+    fields.update({"playerCharacterId", "playerLocationId"})
+    return fields
+
+
+def validate_state_visibility_declaration(package: Dict[str, Any], declaration: Any) -> None:
+    """Validate an optional package-level state visibility declaration.
+
+    Absence is intentionally valid while packages remain in ``audit_fallback``.
+    The validator checks declaration shape only; concrete paths are checked when
+    the declaration is expanded against a normalized branch state.
+    """
+    if declaration is None:
+        return
+    if not isinstance(declaration, dict):
+        raise StoryPackageError("stateVisibility 必须是对象。")
+    schema_version = declaration.get("schemaVersion")
+    if schema_version not in STATE_VISIBILITY_SCHEMA_VERSIONS:
+        raise StoryPackageError("stateVisibility.schemaVersion 不受支持。")
+    paths = declaration.get("paths")
+    if not isinstance(paths, dict):
+        raise StoryPackageError("stateVisibility.paths 必须是对象。")
+    for pointer, audience in paths.items():
+        _state_visibility_pointer_segments(pointer, "stateVisibility.paths 键")
+        if "{" in pointer or "}" in pointer:
+            raise StoryPackageError("stateVisibility.paths 不支持模板字段。")
+        if not isinstance(audience, str) or audience not in STATE_VISIBILITY_VALUES:
+            raise StoryPackageError("stateVisibility.paths 可见性无效。")
+    templates = declaration.get("pathTemplates", {})
+    if schema_version == "state-visibility/0.1" and "pathTemplates" in declaration:
+        raise StoryPackageError("state-visibility/0.1 不支持 pathTemplates。")
+    if not isinstance(templates, dict):
+        raise StoryPackageError("stateVisibility.pathTemplates 必须是对象。")
+    for pointer, audience in templates.items():
+        _state_visibility_pointer_segments(pointer, "stateVisibility.pathTemplates 键")
+        _state_visibility_template_names(pointer, "stateVisibility.pathTemplates 键")
+        if not isinstance(audience, str) or audience not in STATE_VISIBILITY_VALUES:
+            raise StoryPackageError("stateVisibility.pathTemplates 可见性无效。")
+    # Keep declarations tied to fields that the package can expose through its
+    # normalized state contract. Runtime expansion still checks actual values.
+    if templates and not isinstance(package.get("stateModel"), dict):
+        raise StoryPackageError("stateVisibility.pathTemplates 需要 package.stateModel。")
+    known_fields = _state_visibility_state_fields(package)
+    for pointer in templates:
+        for field in _STATE_VISIBILITY_TEMPLATE.findall(pointer):
+            if field not in known_fields:
+                raise StoryPackageError("stateVisibility.pathTemplates 引用了未声明状态字段: " + field)
+
+
+def _state_visibility_leaf_paths(state: Any, prefix: str = "") -> Set[str]:
+    if isinstance(state, dict):
+        paths: Set[str] = set()
+        for key, value in state.items():
+            if not isinstance(key, str):
+                raise StoryPackageError("normalized state 的键必须是字符串。")
+            escaped = key.replace("~", "~0").replace("/", "~1")
+            paths.update(_state_visibility_leaf_paths(value, prefix + "/" + escaped))
+        return paths
+    if isinstance(state, list):
+        paths = set()
+        for index, value in enumerate(state):
+            paths.update(_state_visibility_leaf_paths(value, prefix + "/" + str(index)))
+        return paths
+    return {prefix} if prefix else set()
+
+
+def expand_state_visibility(
+    declaration: Any,
+    normalized_state: Dict[str, Any],
+    package: Dict[str, Any],
+) -> Dict[str, str]:
+    """Expand visibility paths after checking them against package state fields."""
+    if declaration is None:
+        return {}
+    validate_state_visibility_declaration(package, declaration)
+    if not isinstance(normalized_state, dict):
+        raise StoryPackageError("normalized state 必须是对象。")
+    leaves = _state_visibility_leaf_paths(normalized_state)
+    expanded: Dict[str, str] = {}
+
+    def add(pointer: str, audience: str) -> None:
+        if pointer not in leaves:
+            raise StoryPackageError("stateVisibility 必须指向现有叶子字段: " + pointer)
+        previous = expanded.get(pointer)
+        if previous is not None and previous != audience:
+            raise StoryPackageError("stateVisibility 同一路径声明了冲突可见性: " + pointer)
+        expanded[pointer] = audience
+
+    for pointer, audience in declaration.get("paths", {}).items():
+        add(pointer, audience)
+    for template, audience in declaration.get("pathTemplates", {}).items():
+        def replace(match: re.Match[str]) -> str:
+            field = match.group(1)
+            value = normalized_state.get(field)
+            if not isinstance(value, str) or not value:
+                raise StoryPackageError("stateVisibility.pathTemplates 无法解析状态字段: " + field)
+            return value.replace("~", "~0").replace("/", "~1")
+        concrete = _STATE_VISIBILITY_TEMPLATE.sub(replace, template)
+        add(concrete, audience)
+    return expanded
+
+
 class _SegmentedIndexEntries:
     """Resolve catalogued index segments only when one of their entries is used."""
 
@@ -522,6 +664,8 @@ def load_runtime_story_package(path: Union[str, Path], lazy: bool = False) -> Di
         "relationships": read_entities("relationships", "relationship"),
         "timeline": timeline, "moduleIndexSha256": _canonical_json_sha256(index),
     }
+    if "stateVisibility" in state:
+        projection["stateVisibility"] = copy.deepcopy(state["stateVisibility"])
     if lazy:
         _validate_runtime_projection(projection)
     else:
@@ -625,6 +769,8 @@ def _load_segmented_runtime_projection(
         "items": read_entities("items", "item"), "relationships": read_entities("relationships", "relationship"),
         "timeline": timeline, "moduleIndexSha256": _canonical_json_sha256(index),
     }
+    if "stateVisibility" in state:
+        projection["stateVisibility"] = copy.deepcopy(state["stateVisibility"])
     if lazy:
         _validate_runtime_projection(projection)
     else:
@@ -662,6 +808,7 @@ def _validate_runtime_projection(package: Dict[str, Any]) -> None:
         raise StoryPackageError("运行期投影缺少叙事图起点。")
     if not all(isinstance(package.get(name), list) for name in ("characters", "locations", "items", "timeline")):
         raise StoryPackageError("运行期投影实体或时间线索引无效。")
+    validate_state_visibility_declaration(package, package.get("stateVisibility"))
 
 
 def validate_story_package(package: Dict[str, Any]) -> None:
@@ -731,6 +878,7 @@ def validate_story_package(package: Dict[str, Any]) -> None:
                 raise StoryPackageError(f"方向引用的后续叙事锚点不存在: {direction.get('id')}")
     beats = graph.get("beats", [])
     validate_state_model(package, beats)
+    validate_state_visibility_declaration(package, package.get("stateVisibility"))
     validate_arc_model(package, beats)
     validate_entry_model(package, beats, ids)
 

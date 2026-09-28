@@ -11,6 +11,7 @@ from open_story_engine.api_turn_drafts import digest, visible_choices
 from open_story_engine.cocreation import MockPlanner
 from open_story_engine.llm import LlmError
 from open_story_engine.reader_consequences import initial_goals, planning_context
+from open_story_engine.storage import SessionStore
 from test_support.longform import longform_cases
 from tests_api.test_longform_route_closure import LongformRouteClosureTests
 
@@ -53,6 +54,110 @@ class LongformClosingPlanningTests(unittest.TestCase):
         self.play.drafts.wait(job)
         self.play.drafts.release_selection(job)
         return binding, snapshot, payload, job, copy.deepcopy(job['artifact'])
+
+    def test_snapshot_reads_history_once_and_rechecks_after_cache_hit(self):
+        original = SessionStore.lineage_with_fingerprint
+        calls = []
+        def counted(store, sid, bid):
+            calls.append((sid, bid))
+            return original(store, sid, bid)
+        with patch.object(SessionStore, 'lineage_with_fingerprint', counted), \
+                patch('open_story_engine.api_play.journey', side_effect=AssertionError('journal rendered')):
+            first, snapshot = self.play._turn_snapshot(self.sid, self.parent)
+            second, cached = self.play._turn_snapshot(self.sid, self.parent)
+        self.assertEqual(calls, [(self.sid, self.parent)] * 2)
+        self.assertEqual(first, second)
+        self.assertIs(snapshot, cached)
+        self.plan('normal')
+        changed, current = self.play._turn_snapshot(self.sid, self.parent)
+        self.assertNotEqual(first['closing_digest'], changed['closing_digest'])
+        self.assertEqual(current.frozen_closing_intent['intended_type'], 'normal')
+        self.assertIsNone(snapshot.frozen_closing_intent)
+
+    def test_snapshot_status_matches_journal_and_rejects_newly_ended_route(self):
+        from open_story_engine.api_journey import journey, route_status, save_preferences
+        branches = [self.parent, self.append()]
+        for bid in branches:
+            with self.read.store() as store:
+                nodes = store.lineage(self.sid, bid)
+                self.assertEqual(route_status(store, self.sid, nodes, self.package),
+                                 journey(store, self.sid, bid, self.package)['status'])
+            self.play._turn_snapshot(self.sid, bid)
+        store = SessionStore(str(self.read.database_path))
+        try:
+            save_preferences(store, self.sid, ended={self.parent: 'ended_early'})
+        finally:
+            store.close()
+        for bid in branches:
+            with self.assertRaises(ReadError) as error:
+                self.play._turn_snapshot(self.sid, bid)
+            self.assertEqual(error.exception.code, 'route_ended')
+
+    def test_snapshot_rejects_corrupt_intent_after_cached_read(self):
+        from open_story_engine.route_lifecycle import save_record
+        self.play._turn_snapshot(self.sid, self.parent)
+        store = SessionStore(str(self.read.database_path))
+        try:
+            save_record(store, self.sid, self.parent, {'intent': 'invalid'})
+            store.connection.commit()
+        finally:
+            store.close()
+        with self.assertRaises(ReadError) as error:
+            self.play._turn_snapshot(self.sid, self.parent)
+        self.assertEqual(error.exception.code, 'route_history_unavailable')
+
+    def change_summary(self, bid):
+        store = SessionStore(str(self.read.database_path))
+        try:
+            node = store.branch(self.sid, bid)
+            node['summary'] = '临时库中的来源变更探针'
+            with store.connection:
+                store.connection.execute('UPDATE branch_nodes SET node_json=? WHERE id=?',
+                                         (json.dumps(node, ensure_ascii=False), bid))
+        finally:
+            store.close()
+
+    def test_ancestor_change_invalidates_snapshot_but_sibling_change_does_not(self):
+        left, right = self.append(), self.append()
+        before, frozen = self.play._turn_snapshot(self.sid, right)
+        self.change_summary(left)
+        unchanged, reused = self.play._turn_snapshot(self.sid, right)
+        self.assertEqual(before, unchanged)
+        self.assertIs(frozen, reused)
+        self.change_summary(self.parent)
+        after, fresh = self.play._turn_snapshot(self.sid, right)
+        self.assertEqual(before['parent_digest'], after['parent_digest'])
+        self.assertNotEqual(before['lineage_digest'], after['lineage_digest'])
+        self.assertIsNot(fresh, frozen)
+        self.assertEqual(fresh.history[0]['summary'], '临时库中的来源变更探针')
+        self.assertNotEqual(frozen.history[0]['summary'], fresh.history[0]['summary'])
+
+    def test_ancestor_change_rejects_old_enqueue_and_commit_without_writes(self):
+        root = self.parent
+        self.parent = self.play.continue_turn(self.sid, root, text='留在原地观察周围',
+                                             request_id='history-parent')['branch']['id']
+        binding, snapshot, payload, job, artifact = self.ready()
+        self.change_summary(root)
+        with self.read.store() as store:
+            before = store.connection.iterdump()
+            before = list(before)
+        with patch.object(self.play.drafts, 'ensure', side_effect=AssertionError('stale enqueue')):
+            with self.assertRaises(ReadError) as error:
+                self.play._ensure_turn(binding, payload, snapshot)
+        self.assertEqual(error.exception.code, 'draft_expired')
+        with self.assertRaises(ReadError) as error:
+            self.play._commit_turn(job, artifact, payload, 'stale-history')
+        self.assertEqual(error.exception.code, 'draft_expired')
+        with self.read.store() as store:
+            self.assertEqual(list(store.connection.iterdump()), before)
+
+    def test_legacy_binding_without_history_digest_cannot_enqueue(self):
+        binding, snapshot = self.play._turn_snapshot(self.sid, self.parent)
+        binding.pop('lineage_digest')
+        with patch.object(self.play.drafts, 'ensure', side_effect=AssertionError('legacy enqueue')):
+            with self.assertRaises(ReadError) as error:
+                self.play._ensure_turn(binding, {'text': '留在原地观察'}, snapshot)
+        self.assertEqual(error.exception.code, 'draft_expired')
 
     def test_actual_model_planning_input_receives_each_intent_without_ending_authority(self):
         for mode in ('normal', 'deviation', 'failure'):

@@ -1,0 +1,188 @@
+{
+  "schemaVersion": "context-field-map/0.1",
+  "recordedAt": "2026-09-22",
+  "scope": {
+    "package": "taixu-relics-part1@0.1.3",
+    "purpose": "阶段0字段来源盘点；只读，不改变提示和权威状态"
+  },
+  "fields": [
+    {
+      "field": "moduleContext",
+      "source": "open_story_engine/module_context.py:ModuleContextResolver.resolve",
+      "authority": "confirmed_evidence",
+      "content": [
+        "world",
+        "currentChapter",
+        "currentBeat",
+        "narrativeBrief",
+        "priorNarrativeBrief",
+        "actionContract",
+        "characters",
+        "locations",
+        "items",
+        "characterDetails",
+        "characterIdentityEvidence",
+        "sourceDialogueContext",
+        "continuityText"
+      ],
+      "visibility": "package-and-current-route",
+      "excludes": [
+        "reader/原著全文",
+        "未来beat",
+        "其他分支"
+      ]
+    },
+    {
+      "field": "turnMaterial",
+      "source": "open_story_engine/api_routes.py:turn_material",
+      "authority": "style_only",
+      "content": [
+        "current scene summary",
+        "reader interlude guardrails when applicable"
+      ],
+      "visibility": "current-route",
+      "excludes": [
+        "future rescue",
+        "unconfirmed transitions",
+        "new evidence"
+      ]
+    },
+    {
+      "field": "factSheet",
+      "source": "open_story_engine/api_routes.py:fact_sheet",
+      "authority": "confirmed_evidence",
+      "content": [
+        "role facts",
+        "fixed relationships",
+        "registered evidence constraints",
+        "route-specific prohibitions"
+      ],
+      "visibility": "current-route",
+      "excludes": [
+        "unregistered tools",
+        "new witnesses",
+        "invented dates",
+        "author-only facts"
+      ]
+    },
+    {
+      "field": "planningContext",
+      "source": "open_story_engine/reader_consequences.py:planning_context",
+      "authority": "authoritative",
+      "content": [
+        "player persona",
+        "projected branch state",
+        "goals",
+        "threads",
+        "closure projection",
+        "characters",
+        "locations",
+        "items",
+        "criticalHistory",
+        "opening context",
+        "hard rules",
+        "locked history"
+      ],
+      "visibility": "current-branch",
+      "excludes": [
+        "raw branchLedger",
+        "unconfirmed model output"
+      ]
+    },
+    {
+      "field": "sceneKnowledge",
+      "source": "open_story_engine/reader_scene_review.py:scene_knowledge",
+      "authority": "confirmed_evidence",
+      "content": [
+        "publicEvidence",
+        "sourceKinds",
+        "unresolvedQuestions",
+        "evidenceBoundary",
+        "allowedNewContent",
+        "speakerBoundary",
+        "answerBoundary"
+      ],
+      "visibility": "public-and-current-route",
+      "excludes": [
+        "internal state as NPC knowledge",
+        "unknown facts upgraded by absence"
+      ]
+    },
+    {
+      "field": "publicSceneEvidence",
+      "source": "open_story_engine/reader_scene_review.py:public_scene_evidence",
+      "authority": "confirmed_evidence",
+      "content": [
+        "opening known facts",
+        "identity",
+        "recent lineage summaries and accepted narrative paragraphs"
+      ],
+      "visibility": "current-lineage",
+      "excludes": [
+        "future branches",
+        "unaccepted draft text"
+      ]
+    },
+    {
+      "field": "resultContract",
+      "source": "open_story_engine/api_narrative.py:PlayerNarrativePlanner.plan",
+      "authority": "current_action_contract",
+      "content": [
+        "atomic requirements",
+        "steps",
+        "stateChanges",
+        "scenePlan",
+        "knowledge and observation limits"
+      ],
+      "visibility": "current-turn",
+      "excludes": [
+        "requirements not present in player input",
+        "unvalidated state updates"
+      ]
+    },
+    {
+      "field": "authoritativeState",
+      "source": "open_story_engine/reader_consequences.py:prompt_state and parent.branchState",
+      "authority": "authoritative",
+      "content": [
+        "location",
+        "character outcomes",
+        "item ownership/location",
+        "goals",
+        "threads",
+        "derived state"
+      ],
+      "visibility": "current-branch",
+      "excludes": [
+        "branchLedger transaction history from prompt projection"
+      ]
+    },
+    {
+      "field": "readingHistory",
+      "source": "open_story_engine/api_narrative.py:reading_history(context.lineage)",
+      "authority": "recent_prose",
+      "content": [
+        "bounded recent accepted lineage summaries/text"
+      ],
+      "visibility": "current-lineage",
+      "excludes": [
+        "whole novel",
+        "future nodes",
+        "unaccepted drafts"
+      ]
+    }
+  ],
+  "priorityOrder": [
+    "hardSpec",
+    "confirmed dynamicMemory / confirmed event",
+    "current turn intent",
+    "shortTermMemory",
+    "unconfirmed evidence",
+    "styleGuide / style sample"
+  ],
+  "known_gaps": [
+    "没有统一ContextBundle和contextSha256",
+    "各阶段在api_narrative.py仍分别拼接上下文",
+    "当前审计尚未统一记录每次调用的来源ID、排除项和上下文哈希"
+  ]
+}

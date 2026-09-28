@@ -276,7 +276,15 @@ class ModuleContextResolver:
                                if cue.get("lineRange", {}).get("start", end + 1) <= end
                                <= cue.get("lineRange", {}).get("end", -1) <= current_line
                                and entry["text"] in cue.get("text", "")), entry)
-                identity = {"name": name, "text": source["text"], "lineRange": copy.deepcopy(source["lineRange"])}
+                evidence_paragraph_id = source.get("evidenceParagraphId") or entry.get("evidenceParagraphId")
+                if not isinstance(evidence_paragraph_id, str) or not evidence_paragraph_id.strip():
+                    continue
+                identity = {
+                    "name": name,
+                    "evidenceParagraphId": evidence_paragraph_id,
+                    "text": source["text"],
+                    "lineRange": copy.deepcopy(source["lineRange"]),
+                }
                 if source is entry:
                     # A bounded cue may omit the reveal at the end of the
                     # same source paragraph. Keep the two excerpts separate.
@@ -428,11 +436,23 @@ class ModuleContextResolver:
                     seen_fact_ids.add(fact["id"])
                     relevant_facts.append(copy.deepcopy(fact))
         prompt_world = copy.deepcopy(world_module["world"])
-        # Facts with no source chapter are package-wide fallback constraints.
-        prompt_world["immutableFacts"] = relevant_facts or [
-            copy.deepcopy(fact) for fact in prompt_world.get("immutableFacts", [])
-            if not isinstance(fact, dict) or "sourceChapterId" not in fact
-        ]
+        # Keep module facts first, then activate package world facts whose
+        # source evidence is already within the current confirmed line. This
+        # also supports packages that store immutable facts only in world.json.
+        for fact in prompt_world.get("immutableFacts", []):
+            if not isinstance(fact, dict) or not isinstance(fact.get("id"), str):
+                if not isinstance(fact, dict):
+                    relevant_facts.append(copy.deepcopy(fact))
+                continue
+            evidence_end = fact.get("lineRange", {}).get("end")
+            if "sourceChapterId" in fact and (
+                not isinstance(evidence_end, int) or evidence_end > current_line
+            ):
+                continue
+            if fact["id"] not in seen_fact_ids:
+                seen_fact_ids.add(fact["id"])
+                relevant_facts.append(copy.deepcopy(fact))
+        prompt_world["immutableFacts"] = relevant_facts
         previous_line = 0
         parent_state = context.get("parent", {}).get("branchState")
         if isinstance(parent_state, dict):
@@ -446,19 +466,50 @@ class ModuleContextResolver:
             cue_end = cue.get("lineRange", {}).get("end")
             target = previous_cues if isinstance(cue_end, int) and cue_end <= previous_line else current_cues
             target.append(copy.deepcopy(cue))
+        previous_beat_summaries = []
+        previous_beat_summary_ids = []
+        for module in related_modules[1:]:
+            beat = module.get("beat")
+            if not isinstance(beat, dict) or not isinstance(beat.get("summary"), str):
+                continue
+            previous_beat_summaries.append(beat["summary"])
+            previous_beat_summary_ids.append(
+                beat["id"] if isinstance(beat.get("id"), str) and beat["id"].strip() else ""
+            )
+        current_fact_ids = [
+            fact["id"] for fact in current_module.get("facts", [])
+            if isinstance(fact, dict) and isinstance(fact.get("id"), str) and fact["id"].strip()
+        ]
+        current_progress = current_beat.get("branchState", {}).get("sourceProgress")
+        if not isinstance(current_progress, str) or not current_progress.strip():
+            current_progress = context.get("parent", {}).get("branchState", {}).get("sourceProgress")
+        # Package-level facts may not be copied into the chapter module. When
+        # their authored sourceProgress points at this beat, expose that
+        # relationship explicitly so selection does not depend on wording
+        # overlap with the player's action.
+        if isinstance(current_progress, str) and current_progress.strip():
+            current_fact_ids.extend(
+                fact["id"] for fact in prompt_world.get("immutableFacts", [])
+                if isinstance(fact, dict)
+                and isinstance(fact.get("id"), str)
+                and fact["id"].strip()
+                and fact.get("sourceProgress") == current_progress
+            )
+        current_fact_ids = list(dict.fromkeys(current_fact_ids))
+        current_beat_projection = {"id": current_beat["id"], "summary": current_summary}
+        if current_fact_ids:
+            current_beat_projection["contextRefs"] = {"factIds": current_fact_ids}
         return {
             "world": prompt_world,
             "currentChapter": copy.deepcopy(current_module["chapter"]),
-            "currentBeat": {"id": current_beat["id"], "summary": current_summary},
+            "currentBeat": current_beat_projection,
             "narrativeBrief": current_cues,
             "priorNarrativeBrief": previous_cues,
             "previousSourceLine": previous_line,
             "actionContract": copy.deepcopy(current_beat.get("actionContract", {})),
             "modulePaths": sorted(set(self.last_resolved_paths)),
-            "previousBeatSummaries": [
-                module["beat"]["summary"] for module in related_modules[1:]
-                if isinstance(module.get("beat"), dict) and isinstance(module["beat"].get("summary"), str)
-            ],
+            "previousBeatSummaries": previous_beat_summaries,
+            "previousBeatSummaryIds": previous_beat_summary_ids,
             "characters": characters,
             "locations": locations,
             "items": items,
@@ -494,6 +545,7 @@ class ModuleContextResolver:
             "world": world, "currentChapter": {"id": entry["sourceChapterId"], "title": entry["chapterTitle"]},
             "currentBeat": {"id": entry["beatId"], "summary": entry["openingSummary"]},
             "narrativeBrief": [], "priorNarrativeBrief": [], "previousBeatSummaries": [],
+            "previousBeatSummaryIds": [],
             "previousSourceLine": opening["sourceCutoffLine"], "actionContract": {},
             "openingContext": copy.deepcopy(opening), "continuityContract": copy.deepcopy(contract["continuityContract"]),
             "characters": [{"id": player["sourceCharacterId"], "name": player["name"], "description": opening["identity"]}],

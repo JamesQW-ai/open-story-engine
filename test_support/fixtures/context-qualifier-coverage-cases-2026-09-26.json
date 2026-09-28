@@ -1,0 +1,614 @@
+{
+  "schemaVersion": "coverage-cases/0.1",
+  "scope": "Synthetic controls using registered names from the frozen official long novel; scope_controls test unresolved accounting only, not semantic extraction success.",
+  "cases": [
+    {
+      "id": "control:location_mention",
+      "draft": "沈砚秋提到了议事殿。",
+      "draftSha256": "8242f8049c37eabe6d7f8f7119634b9db4feb3d40bf6c47543b7e2a3a55b2690",
+      "sceneKey": "hall",
+      "cohort": "negative_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [],
+      "selectionExpectations": []
+    },
+    {
+      "id": "control:object_position",
+      "draft": "沈砚秋的木盒在议事殿内。",
+      "draftSha256": "7ff329262164027d1a1c1a9d3adae98e2b3fc611f870014d9df55a2884d171ec",
+      "sceneKey": "hall",
+      "cohort": "negative_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [],
+      "selectionExpectations": []
+    },
+    {
+      "id": "control:quoted_words",
+      "draft": "沈砚秋说出“可能在议事殿内”这几个字。",
+      "draftSha256": "b0d3f5c9b3f9364184343dc8cae680bff83094c0f76d72f02f88170633b0f81c",
+      "sceneKey": "hall",
+      "cohort": "negative_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [],
+      "selectionExpectations": []
+    },
+    {
+      "id": "control:mixed_people",
+      "draft": "沈砚秋提到议事殿而守门长老在议事殿内。",
+      "draftSha256": "54b21e7cae64c07e459e953193b31237cb18ec4b136f935e605c6e346d7b621e",
+      "sceneKey": "hall",
+      "cohort": "mixed_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:gate_elder",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S2"
+              ],
+              "qualified": [
+                "P1-U1-S2"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        }
+      ]
+    },
+    {
+      "id": "scope:pronoun",
+      "draft": "她在议事殿内。",
+      "draftSha256": "78844d9c8a464d040a6936a1cd3486e73b5418835f332ccb3aefd4469e07ee3e",
+      "sceneKey": "hall",
+      "cohort": "scope_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [],
+      "selectionExpectations": []
+    },
+    {
+      "id": "scope:cross_sentence",
+      "draft": "沈砚秋停步。她在议事殿内。",
+      "draftSha256": "8e13f875f8c6037ab84e4b14041cbeaf42a58fabfe42d6029532f9ca7d6c936f",
+      "sceneKey": "hall",
+      "cohort": "scope_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [],
+      "selectionExpectations": []
+    },
+    {
+      "id": "control:adjunct_mention",
+      "draft": "沈砚秋在议事殿外抄写“或许”二字。",
+      "draftSha256": "3ef6b0f3b415650f7c47c0feeb346e6b8597032936e4453c1139e364fd9e8995",
+      "sceneKey": "hall",
+      "cohort": "positive_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "outside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S1"
+              ],
+              "qualified": [
+                "P1-U1-S1"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        }
+      ]
+    },
+    {
+      "id": "control:negative_position",
+      "draft": "沈砚秋不在议事殿内。",
+      "draftSha256": "bd026f959ffc0480008131102ffe48eaa0d90bfd19abe7e2e99692293fd9d228",
+      "sceneKey": "hall",
+      "cohort": "positive_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "negative",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "negative",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S1"
+              ],
+              "qualified": [
+                "P1-U1-S1"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        }
+      ]
+    }
+  ],
+  "expectations": {
+    "prefix:mention": {
+      "draftSha256": "37e2435ec7b1977a03f09be6a323e3634ed6c75a7e8459fa3c35d60eaa76fe30",
+      "decisions": {
+        "C845f823daa87b44b-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "prefix:operator": {
+      "draftSha256": "4a05b39e4537544e848894b431dd614771506c76efc48804c1af47b91c31997d",
+      "decisions": {
+        "C0b23d647dde3bf8d-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "in_core:mention": {
+      "draftSha256": "78ad78d3ded8cb7bffd4f4524c72487d068832eab9bd96fec310dd3e64a11aa8",
+      "decisions": {
+        "C4a2f1343a0be276c-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "in_core:operator": {
+      "draftSha256": "30c4069ba3daf8aa428a136ffdeb5352cd8a9dca885be04ee650a88434450823",
+      "decisions": {
+        "Cbefcf6f4cc39d34c-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "unquoted:mention": {
+      "draftSha256": "923528967969ec37079e881eb0fe281092d52a0925a9fd1b81ff39f82d7f850f",
+      "decisions": {
+        "Cb092f5c8cc6209b4-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "unquoted:operator": {
+      "draftSha256": "2643588d026ee9cb4ca3154a76d79689f6cd5c7418b36d2cbc1d219b50e482a1",
+      "decisions": {
+        "C61b5476087a6d4a0-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "denial:mention": {
+      "draftSha256": "c9efa5f370bce385b20ae959d9b20b2b08222bcf169aa2d24265bb99c12674fe",
+      "decisions": {
+        "C7b542ba706a6e054-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "denial:operator": {
+      "draftSha256": "62f919353550d84505f792814ad8165113b5012ed6fafedeb18fde06327fd1c3",
+      "decisions": {
+        "Cd2ed38a9d3309a15-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "neighbour:mention": {
+      "draftSha256": "51bd8e83e78f2a0650b48c8773e46f2a75c03cf4be839d4d7da5f6fcb4d747af",
+      "decisions": {
+        "Cb7dfd2e85286c0af-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "neighbour:operator": {
+      "draftSha256": "21a719ad540f3874ef53a76c431c1caed9dad86b527e0cbc3823b3338d848024",
+      "decisions": {
+        "C05b6f666ec893993-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "two_people:first_operator": {
+      "draftSha256": "e98b6701bbaee0e88041922ebbcb748d413e9f697ec2f1409fc9cc2d760453c1",
+      "decisions": {
+        "C2a4b7abadf656a9d-1": "position",
+        "C2a4b7abadf656a9d-2": "position"
+      },
+      "pendingUnits": []
+    },
+    "two_people:second_operator": {
+      "draftSha256": "31e1496ad6407edeab33ca710f94b54fa7491d11111a45bf1a0f1ba277107a32",
+      "decisions": {
+        "Cf519717e759e4d94-1": "position",
+        "Cf519717e759e4d94-2": "position"
+      },
+      "pendingUnits": []
+    },
+    "gate:original_condition": {
+      "draftSha256": "b2f6e11f32ffd5afc54972a5e30f880277438d64c28c7996f431173ccaece335",
+      "decisions": {
+        "C60693c697b4335f0-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_boundary"
+          ]
+        },
+        {
+          "unitId": "P1-U3",
+          "reasons": [
+            "no_registered_person",
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "gate:plain_emphasis": {
+      "draftSha256": "9dee620b1b5182beefdc77db7d7bef8a2fe48d4c85a7f0dd628318c519c01842",
+      "decisions": {
+        "C1f3a03f5782edac6-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "gate:possibility": {
+      "draftSha256": "51a355ca140fea96e9d84832e299ae0fc486955e45a28f1b847a57cc1633d863",
+      "decisions": {
+        "C91bf42f4dc8eb532-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "gate:both": {
+      "draftSha256": "e22e5e324e5528df5611ec3a1a3a813740fb54c2edac47316e13307fdb4cda03",
+      "decisions": {
+        "Ce74489ca1fc295f7-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "gate:condition_paraphrase": {
+      "draftSha256": "650130aa8299fd6407bee079cea528649d0be6e1a688f037cd8801c25bff0e40",
+      "decisions": {
+        "C60351531dd80b706-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "gate:possibility_paraphrase": {
+      "draftSha256": "d9777f3fb3d8e732eef3123da7ca8fee7829756809f98223fb93133163e5b176",
+      "decisions": {
+        "Cfba4d3676439c120-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "gate:both_paraphrase": {
+      "draftSha256": "38fa9f9013a04d7735a7921cef1d44555b181c4a9248b94d4daf4b956efdefad",
+      "decisions": {
+        "C42e2b04fb56ff720-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "gate:unrelated_possibility": {
+      "draftSha256": "55a29e423fcf56b399f1f95348ef01c630dc4339bff2c52145a07ae771e56d9a",
+      "decisions": {
+        "C8e0ffd2b2ac547f3-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "gate:unrelated_condition": {
+      "draftSha256": "9803a2b3e1c20a69627d651297617024c06ac925134bbaeca6cc3eb4066dccee",
+      "decisions": {
+        "Cfeeed2ca1635f516-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_person",
+            "no_registered_boundary"
+          ]
+        },
+        {
+          "unitId": "P1-U2",
+          "reasons": [
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "hall:source_position": {
+      "draftSha256": "d303f70b5959e6798dcfa3d4fa8437eabb95be5d9216632bd886e27341391f5b",
+      "decisions": {
+        "C412cc5b4a4e86494-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U2",
+          "reasons": [
+            "no_registered_person",
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "hall:negative_position": {
+      "draftSha256": "874e6d41d2b8a2dd758b280d35bd37ad8e3fddbb268b11cd1c554b7d7220335a",
+      "decisions": {
+        "C791766bc6ca9f5e9-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U2",
+          "reasons": [
+            "no_registered_person",
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "hall:inferred_position": {
+      "draftSha256": "071b2cd507b0acf95f4f91157abdd44c236d5aacca76880d448a6c276d7655bd",
+      "decisions": {
+        "C153f36b47be175f9-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U2",
+          "reasons": [
+            "no_registered_person",
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "hall:explicit_uncertainty": {
+      "draftSha256": "21c420fcb35369194be2ceddad3c6cef8d05f3039ca4f7457bfef5dd16f7a5ec",
+      "decisions": {
+        "C7725a8ad913d1872-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U2",
+          "reasons": [
+            "no_registered_person",
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "hall:word_mention": {
+      "draftSha256": "37e2435ec7b1977a03f09be6a323e3634ed6c75a7e8459fa3c35d60eaa76fe30",
+      "decisions": {
+        "C845f823daa87b44b-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "hall:condition_and_inference": {
+      "draftSha256": "6594e1b6f939268edd932eaca582382bd527413205881175da6f618ee68807da",
+      "decisions": {
+        "Cb7b60a45393abef5-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_person",
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "hall:two_people": {
+      "draftSha256": "6158f5119e03f7e130590ff538337067483c312238863c60453d7951a0bc625e",
+      "decisions": {
+        "C6b962503b68c9ed6-1": "position",
+        "C6b962503b68c9ed6-2": "position"
+      },
+      "pendingUnits": []
+    },
+    "hall:unrelated_uncertainty": {
+      "draftSha256": "496c180b732bd43058d47351c3d19b40bb82c5eaad54531b19ea82f6ccefeb81",
+      "decisions": {
+        "C4fa96f062fa723c5-1": "position"
+      },
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_boundary"
+          ]
+        }
+      ]
+    },
+    "hall:denied_certainty": {
+      "draftSha256": "62f919353550d84505f792814ad8165113b5012ed6fafedeb18fde06327fd1c3",
+      "decisions": {
+        "Cd2ed38a9d3309a15-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "control:location_mention": {
+      "draftSha256": "8242f8049c37eabe6d7f8f7119634b9db4feb3d40bf6c47543b7e2a3a55b2690",
+      "decisions": {
+        "Cb39d1bf67a5fbf0b-1": "non_position"
+      },
+      "pendingUnits": []
+    },
+    "control:object_position": {
+      "draftSha256": "7ff329262164027d1a1c1a9d3adae98e2b3fc611f870014d9df55a2884d171ec",
+      "decisions": {
+        "C8be2b0cbe4e347a7-1": "non_position"
+      },
+      "pendingUnits": []
+    },
+    "control:quoted_words": {
+      "draftSha256": "b0d3f5c9b3f9364184343dc8cae680bff83094c0f76d72f02f88170633b0f81c",
+      "decisions": {
+        "C777f58729127be8e-1": "non_position"
+      },
+      "pendingUnits": []
+    },
+    "control:mixed_people": {
+      "draftSha256": "54b21e7cae64c07e459e953193b31237cb18ec4b136f935e605c6e346d7b621e",
+      "decisions": {
+        "C973f08e6620d5e4d-1": "non_position",
+        "C973f08e6620d5e4d-2": "position"
+      },
+      "pendingUnits": []
+    },
+    "scope:pronoun": {
+      "draftSha256": "78844d9c8a464d040a6936a1cd3486e73b5418835f332ccb3aefd4469e07ee3e",
+      "decisions": {},
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_person"
+          ]
+        }
+      ]
+    },
+    "scope:cross_sentence": {
+      "draftSha256": "8e13f875f8c6037ab84e4b14041cbeaf42a58fabfe42d6029532f9ca7d6c936f",
+      "decisions": {},
+      "pendingUnits": [
+        {
+          "unitId": "P1-U1",
+          "reasons": [
+            "no_registered_boundary"
+          ]
+        },
+        {
+          "unitId": "P1-U2",
+          "reasons": [
+            "no_registered_person"
+          ]
+        }
+      ]
+    },
+    "control:adjunct_mention": {
+      "draftSha256": "3ef6b0f3b415650f7c47c0feeb346e6b8597032936e4453c1139e364fd9e8995",
+      "decisions": {
+        "Cc134187f1976ddc5-1": "position"
+      },
+      "pendingUnits": []
+    },
+    "control:negative_position": {
+      "draftSha256": "bd026f959ffc0480008131102ffe48eaa0d90bfd19abe7e2e99692293fd9d228",
+      "decisions": {
+        "C2e7e0373bafcb156-1": "position"
+      },
+      "pendingUnits": []
+    }
+  }
+}

@@ -50,6 +50,28 @@ class SceneLibraryTests(unittest.TestCase):
         self.assertEqual(service.view('one', 'b')['items'], [])
         self.assertIsNone(self.library.resolve('book', '0.1.1', self.node))
 
+    def test_public_asset_is_consumed_once_per_session_across_branches_and_restart(self):
+        read, gateway = Mock(), Mock(available=False)
+        read.branch_view.return_value = self.node
+        directory = self.root / 'private'
+        service = media_service(read, directory, gateway)
+        service.library = self.library
+        read.session.return_value = {'storyPackageId': 'book', 'storyPackageVersion': '0.1.0'}
+        self.addCleanup(service.close)
+
+        first = service.ensure('one', 'opening', subscriber='tab')
+        repeated = service.ensure('one', 'later-branch', subscriber='tab')
+        self.assertEqual(first['items'][0]['source'], 'published')
+        self.assertEqual(repeated['items'], [])
+
+        restored = media_service(read, directory, gateway)
+        restored.library = self.library
+        read.session.return_value = {'storyPackageId': 'book', 'storyPackageVersion': '0.1.0'}
+        self.addCleanup(restored.close)
+        self.assertEqual(restored.ensure('one', 'after-restart', subscriber='tab')['items'], [])
+        self.assertEqual(restored.ensure('two', 'opening', subscriber='tab')['items'][0]['source'], 'published')
+        gateway.generate.assert_not_called()
+
     def test_same_beat_does_not_override_unknown_dead_departed_or_injured_character(self):
         self.card['beats'] = ['beat']
         self.card['characters'] = {'gu': {'outcome': {'status': 'alive', 'injury': 'none'}, 'appearance_version': 'gu-v1'}}

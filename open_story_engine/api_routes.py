@@ -301,6 +301,30 @@ def fact_sheet(package, before, interlude=False):
     return facts
 
 
+def fact_sheet_items(package, before, interlude=False):
+    """Return stable, addressable hard-fact items for focused prompt injection."""
+    raw = fact_sheet(package, before, interlude)
+    if not isinstance(raw, str) or not raw.strip():
+        return []
+    items = []
+    seen_ids = {}
+    for sentence in (part.strip() for part in re.split(r'(?<=[。！？；\n])', raw)):
+        if not sentence:
+            continue
+        digest = hashlib.sha256(sentence.encode('utf-8')).hexdigest()[:12]
+        occurrence = seen_ids.get(digest, 0) + 1
+        seen_ids[digest] = occurrence
+        fact_id = 'hard-fact-' + digest
+        if occurrence > 1:
+            fact_id += '-' + str(occurrence)
+        items.append({
+            'id': fact_id,
+            'text': sentence,
+            'authority': 'hard_constraint',
+        })
+    return items
+
+
 def check_reviewed_ending(package, before, body, ending, interlude=False):
     """Require extracted story outcomes to agree with the pending state patch."""
     current = scene(package, before)

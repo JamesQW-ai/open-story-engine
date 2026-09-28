@@ -1,0 +1,258 @@
+{
+  "schemaVersion": "assertion-locator-controls/0.1",
+  "purpose": "仅验证逐字定位，不证明说话人、断言归属或嵌套语义；不增加原44条模型诊断样本",
+  "cases": [
+    {
+      "id": "self_report",
+      "sourceCaseId": "frame:self_report",
+      "draft": "沈砚秋低声说：“我在议事殿内。”",
+      "draftSha256": "0e3474b9ed18d9eb8e7d161134ff19e9c40f37bdc2bc08191c82e0f4bf507089",
+      "source": "original_diagnostic",
+      "selections": [
+        {
+          "role": "speech_cue",
+          "ref": [
+            "P1-U1",
+            "低声说",
+            0
+          ],
+          "expectedStart": 3,
+          "expectedEnd": 6
+        },
+        {
+          "role": "reported_content",
+          "ref": [
+            "P1-U1",
+            "我在议事殿内",
+            0
+          ],
+          "expectedStart": 8,
+          "expectedEnd": 14
+        }
+      ]
+    },
+    {
+      "id": "other_report",
+      "sourceCaseId": "frame:other_report",
+      "draft": "沈砚秋说守门长老在议事殿内。",
+      "draftSha256": "13eff7235d08f68d7e7b7253db95e8b3532f722be1b79ea405b3e341b9813e21",
+      "source": "original_diagnostic",
+      "selections": [
+        {
+          "role": "speech_cue",
+          "ref": [
+            "P1-U1",
+            "说",
+            0
+          ],
+          "expectedStart": 3,
+          "expectedEnd": 4
+        },
+        {
+          "role": "reported_content",
+          "ref": [
+            "P1-U1",
+            "守门长老在议事殿内",
+            0
+          ],
+          "expectedStart": 4,
+          "expectedEnd": 13
+        }
+      ]
+    },
+    {
+      "id": "position_and_words",
+      "sourceCaseId": "frame:position_and_quote",
+      "draft": "沈砚秋在议事殿内念出“我在殿外”。",
+      "draftSha256": "bc0a35abedf85316490798f37d2ca74e4f4e7f77fc55d3225fe69e8a59a00589",
+      "source": "original_diagnostic",
+      "selections": [
+        {
+          "role": "narrated_content",
+          "ref": [
+            "P1-U1",
+            "沈砚秋在议事殿内",
+            0
+          ],
+          "expectedStart": 0,
+          "expectedEnd": 8
+        },
+        {
+          "role": "word_content",
+          "ref": [
+            "P1-U1",
+            "我在殿外",
+            0
+          ],
+          "expectedStart": 11,
+          "expectedEnd": 15
+        }
+      ]
+    },
+    {
+      "id": "word_only",
+      "sourceCaseId": "control:quoted_words",
+      "draft": "沈砚秋说出“可能在议事殿内”这几个字。",
+      "draftSha256": "b0d3f5c9b3f9364184343dc8cae680bff83094c0f76d72f02f88170633b0f81c",
+      "source": "original_diagnostic",
+      "selections": [
+        {
+          "role": "word_content",
+          "ref": [
+            "P1-U1",
+            "可能在议事殿内",
+            0
+          ],
+          "expectedStart": 6,
+          "expectedEnd": 13
+        },
+        {
+          "role": "speech_cue",
+          "ref": [
+            "P1-U1",
+            "说出",
+            0
+          ],
+          "expectedStart": 3,
+          "expectedEnd": 5
+        }
+      ]
+    },
+    {
+      "id": "dual_origin",
+      "sourceCaseId": "frame:self_report",
+      "draft": "沈砚秋站在议事殿内并说“我在殿外”。",
+      "draftSha256": "e3280789af02b6f196d7c10f1a104224421d350f21b8c411dcae65f62a0eb3da",
+      "source": "design_control_using_same_registered_entities",
+      "selections": [
+        {
+          "role": "narrated_content",
+          "ref": [
+            "P1-U1",
+            "沈砚秋站在议事殿内",
+            0
+          ],
+          "expectedStart": 0,
+          "expectedEnd": 9
+        },
+        {
+          "role": "speech_cue",
+          "ref": [
+            "P1-U1",
+            "说",
+            0
+          ],
+          "expectedStart": 10,
+          "expectedEnd": 11
+        },
+        {
+          "role": "reported_content",
+          "ref": [
+            "P1-U1",
+            "我在殿外",
+            0
+          ],
+          "expectedStart": 12,
+          "expectedEnd": 16
+        }
+      ]
+    },
+    {
+      "id": "repeated_quote",
+      "sourceCaseId": "frame:self_report",
+      "draft": "沈砚秋念出“殿内”和“殿内”。",
+      "draftSha256": "9d3dcea22c77a5a919e40a23099f590be33397b5aaf0fc740ecffc351cea2bdf",
+      "source": "design_control_using_same_registered_entities",
+      "selections": [
+        {
+          "role": "first_word",
+          "ref": [
+            "P1-U1",
+            "殿内",
+            0
+          ],
+          "expectedStart": 6,
+          "expectedEnd": 8
+        },
+        {
+          "role": "second_word",
+          "ref": [
+            "P1-U1",
+            "殿内",
+            1
+          ],
+          "expectedStart": 11,
+          "expectedEnd": 13
+        }
+      ]
+    },
+    {
+      "id": "nested_pending",
+      "sourceCaseId": "frame:self_report",
+      "draft": "沈砚秋说：“守门长老说‘我在殿内’。”",
+      "draftSha256": "035dcf86efc361b3a44203c5df0a0dd16f54f70aaa8014e6e09fc79177d0e278",
+      "source": "design_control_using_same_registered_entities",
+      "selections": [
+        {
+          "role": "outer_cue",
+          "ref": [
+            "P1-U1",
+            "说",
+            0
+          ],
+          "expectedStart": 3,
+          "expectedEnd": 4
+        },
+        {
+          "role": "inner_cue",
+          "ref": [
+            "P1-U1",
+            "说",
+            1
+          ],
+          "expectedStart": 10,
+          "expectedEnd": 11
+        },
+        {
+          "role": "inner_content",
+          "ref": [
+            "P1-U1",
+            "我在殿内",
+            0
+          ],
+          "expectedStart": 12,
+          "expectedEnd": 16
+        }
+      ]
+    },
+    {
+      "id": "unknown_speaker_pending",
+      "sourceCaseId": "frame:self_report",
+      "draft": "有人说沈砚秋在议事殿内。",
+      "draftSha256": "29f05729b8023a28612ba644ac467471b7b6ae892846c123e926c133b1dd3364",
+      "source": "design_control_using_same_registered_entities",
+      "selections": [
+        {
+          "role": "unknown_speaker_words",
+          "ref": [
+            "P1-U1",
+            "有人",
+            0
+          ],
+          "expectedStart": 0,
+          "expectedEnd": 2
+        },
+        {
+          "role": "reported_content",
+          "ref": [
+            "P1-U1",
+            "沈砚秋在议事殿内",
+            0
+          ],
+          "expectedStart": 3,
+          "expectedEnd": 11
+        }
+      ]
+    }
+  ]
+}

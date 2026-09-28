@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "delivery-validation/1",
+  "status": "deterministic_checks_passed_real_quality_blocked",
+  "date": "2026-09-27",
+  "productAcceptance": false,
+  "checks": {
+    "api": {
+      "passed": 522,
+      "failed": 0,
+      "seconds": 81.282,
+      "log": "api-final.log"
+    },
+    "repairAndMemory": {
+      "passed": 82,
+      "failed": 0,
+      "log": "targeted-repair.log"
+    },
+    "promptIntegration": {
+      "passed": 33,
+      "failed": 0,
+      "log": "prompt-integration.log"
+    },
+    "frontend": {
+      "passed": 50,
+      "failed": 0,
+      "buildExitCode": 0,
+      "bundler": "Vite 6.4.3",
+      "buildSeconds": 0.567
+    },
+    "sceneLibrary": {
+      "books": 1,
+      "assets": 57,
+      "liveRules": 1,
+      "errors": 0,
+      "log": "scene-library.json"
+    },
+    "desktopFailurePath": {
+      "source": "temporary_database_fault_injection",
+      "previousPageRetained": true,
+      "retryVisible": true,
+      "retryPreservesPage": true,
+      "imageLoaded": true,
+      "consoleErrors": 0,
+      "screenshots": [
+        "ui-failure.png",
+        "ui-failure-retry.png"
+      ]
+    },
+    "diffCheck": {
+      "exitCode": 0
+    },
+    "core": {
+      "passed": 646,
+      "failed": 0,
+      "seconds": 687.629,
+      "python": "3.12",
+      "command": ".venv-api/bin/python -B -m test_support.run core",
+      "log": "core-final.log"
+    }
+  },
+  "realModel": {
+    "attempts": [
+      "attempt-01/report.json",
+      "attempt-02/report.json",
+      "attempt-03/report.json"
+    ],
+    "totalHttpCallsAcrossAttempts": 87,
+    "separateGroundingProbeCalls": 2,
+    "semanticAcceptance": false,
+    "finalRepairSourceFilterHasLiveValidation": false
+  },
+  "limitations": [
+    "前三次真实实验均未通过整体验收；旧候选入账、位置/空间前提漏判和比喻误判分别记录。",
+    "最终修复取证旁路与动态记忆保留有回归覆盖，未追加真实生成试验。"
+  ],
+  "sourceHashes": {
+    "open_story_engine/api_play.py": "95415972d87e4dcec0b28d1076da540d3b85c681471c5c771d98b0d3b00addf8",
+    "open_story_engine/api_narrative.py": "ffa61bf40226863258ad401f38a291c0d85034f349faf7f88ccbbca0b0ba8bde",
+    "open_story_engine/api_turn_drafts.py": "24000714498a0c3b47e14a812e5981f437321d74168ecacd394605df86c00005",
+    "open_story_engine/context_bundle.py": "f1075400c8df2bab29952fdb1f9562bbae8c4d282606bed067341f1ce46d88c3",
+    "open_story_engine/dynamic_memory.py": "e32fa2018a114d4d973e1b5bc495ac049759d0affe4d1ed3d2a177bc8aded65f",
+    "test_support/delivery_smoke.py": "1e38ef459ad006cc6ca3002a47d3ce19adccb07666fda5b8fb50e8e2e7aa85ce"
+  },
+  "rulesVersion": "prepared-player-turn/32+prompt-catalog/1:e399916b1e1c85bb5636fb156941e9f18a1320080f401c337ba99c60619aa0dd",
+  "promptVersion": "prompt-catalog/1:e399916b1e1c85bb5636fb156941e9f18a1320080f401c337ba99c60619aa0dd"
+}

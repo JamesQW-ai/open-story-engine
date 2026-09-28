@@ -1,0 +1,5882 @@
+{
+  "schemaVersion": "jev-narrative-review-report/0.1",
+  "ruleSetVersion": "jev-review-rules/0.3",
+  "generatedAt": "2026-09-22T10:19:54Z",
+  "endpoint": "https://openrouter.ai/api/alpha/decisions",
+  "configuredModel": "~typesafe/jev-latest",
+  "repeat": 1,
+  "resolvedModels": [
+    "typesafe/jev-1.13-20260917"
+  ],
+  "questionIds": [
+    "review_decision",
+    "hard_state_conflict",
+    "agency_violation",
+    "knowledge_leak",
+    "future_fact_leak",
+    "claim_supported",
+    "bounded_anomaly",
+    "missing_patch_support"
+  ],
+  "caseCount": 40,
+  "successCount": 40,
+  "errorCount": 0,
+  "quality": {
+    "directDecisionAccuracy": 1.0,
+    "derivedDecisionAccuracy": 0.5,
+    "directCorrect": 40,
+    "derivedCorrect": 20,
+    "expectedLabels": {
+      "realbeat_001_beat_chapter_001": "allow",
+      "realbeat_002_beat_chapter_004": "allow",
+      "realbeat_003_beat_chapter_010": "allow",
+      "realbeat_004_beat_chapter_013": "allow",
+      "realbeat_005_beat_chapter_020": "allow",
+      "realbeat_006_beat_chapter_027": "allow",
+      "realbeat_007_beat_chapter_033": "allow",
+      "realbeat_008_beat_chapter_039": "allow",
+      "realbeat_009_beat_chapter_044": "allow",
+      "realbeat_010_beat_chapter_052": "allow",
+      "realbeat_011_beat_chapter_060": "allow",
+      "realbeat_012_beat_chapter_063": "allow",
+      "realbeat_013_beat_chapter_066": "allow",
+      "realbeat_014_beat_chapter_073": "allow",
+      "realbeat_015_beat_chapter_076": "allow",
+      "realbeat_016_beat_chapter_083": "allow",
+      "realbeat_017_beat_chapter_086": "allow",
+      "realbeat_018_beat_chapter_094": "allow",
+      "realbeat_019_beat_chapter_101": "allow",
+      "realbeat_020_beat_chapter_107": "allow",
+      "realbeat_021_beat_chapter_110": "allow",
+      "realbeat_022_beat_chapter_116": "allow",
+      "realbeat_023_beat_chapter_120": "allow",
+      "realbeat_024_beat_chapter_125": "allow",
+      "realbeat_025_beat_chapter_134": "allow",
+      "realbeat_026_beat_chapter_139": "allow",
+      "realbeat_027_beat_chapter_146": "allow",
+      "realbeat_028_beat_chapter_151": "allow",
+      "realbeat_029_beat_chapter_156": "allow",
+      "realbeat_030_beat_chapter_162": "allow",
+      "realbeat_031_beat_chapter_171": "allow",
+      "realbeat_032_beat_chapter_176": "allow",
+      "realbeat_033_beat_chapter_185": "allow",
+      "realbeat_034_beat_chapter_194": "allow",
+      "realbeat_035_beat_chapter_213": "allow",
+      "realbeat_036_beat_chapter_222": "allow",
+      "realbeat_037_beat_chapter_229": "allow",
+      "realbeat_038_beat_chapter_236": "allow",
+      "realbeat_039_beat_chapter_250": "allow",
+      "realbeat_040_beat_chapter_255": "allow"
+    },
+    "derivedMismatchIds": [
+      "realbeat_003_beat_chapter_010",
+      "realbeat_006_beat_chapter_027",
+      "realbeat_011_beat_chapter_060",
+      "realbeat_013_beat_chapter_066",
+      "realbeat_014_beat_chapter_073",
+      "realbeat_015_beat_chapter_076",
+      "realbeat_016_beat_chapter_083",
+      "realbeat_017_beat_chapter_086",
+      "realbeat_018_beat_chapter_094",
+      "realbeat_020_beat_chapter_107",
+      "realbeat_021_beat_chapter_110",
+      "realbeat_022_beat_chapter_116",
+      "realbeat_023_beat_chapter_120",
+      "realbeat_025_beat_chapter_134",
+      "realbeat_026_beat_chapter_139",
+      "realbeat_031_beat_chapter_171",
+      "realbeat_032_beat_chapter_176",
+      "realbeat_033_beat_chapter_185",
+      "realbeat_037_beat_chapter_229",
+      "realbeat_040_beat_chapter_255"
+    ],
+    "derivedConfusionMatrix": {
+      "allow": {
+        "allow": 20,
+        "allow_with_patch": 20
+      }
+    },
+    "byExpectedDecision": {
+      "allow": {
+        "count": 40,
+        "correct": 20,
+        "accuracy": 0.5
+      }
+    },
+    "reasonCodeCounts": {
+      "allow": 20,
+      "bounded_anomaly": 20
+    },
+    "expectedReasonCodeMatches": {},
+    "preflightRejected": 0
+  },
+  "latencyMs": {
+    "p50": 876,
+    "p95": 1148,
+    "p99": 1309,
+    "min": 807,
+    "max": 1309,
+    "mean": 910
+  },
+  "inputChars": {
+    "context": {
+      "min": 152,
+      "max": 288,
+      "mean": 201
+    },
+    "branchState": {
+      "min": 233,
+      "max": 233,
+      "mean": 233
+    },
+    "playerAction": {
+      "min": 28,
+      "max": 28,
+      "mean": 28
+    },
+    "resultContract": {
+      "min": 30,
+      "max": 30,
+      "mean": 30
+    },
+    "candidateNarrative": {
+      "min": 126,
+      "max": 259,
+      "mean": 174
+    },
+    "total": {
+      "min": 569,
+      "max": 838,
+      "mean": 666
+    }
+  },
+  "stability": {
+    "caseCount": 40,
+    "stableCaseCount": 40,
+    "unstableCaseCount": 0,
+    "decisionsByCase": {
+      "realbeat_001_beat_chapter_001": [
+        "allow"
+      ],
+      "realbeat_002_beat_chapter_004": [
+        "allow"
+      ],
+      "realbeat_003_beat_chapter_010": [
+        "allow_with_patch"
+      ],
+      "realbeat_004_beat_chapter_013": [
+        "allow"
+      ],
+      "realbeat_005_beat_chapter_020": [
+        "allow"
+      ],
+      "realbeat_006_beat_chapter_027": [
+        "allow_with_patch"
+      ],
+      "realbeat_007_beat_chapter_033": [
+        "allow"
+      ],
+      "realbeat_008_beat_chapter_039": [
+        "allow"
+      ],
+      "realbeat_009_beat_chapter_044": [
+        "allow"
+      ],
+      "realbeat_010_beat_chapter_052": [
+        "allow"
+      ],
+      "realbeat_011_beat_chapter_060": [
+        "allow_with_patch"
+      ],
+      "realbeat_012_beat_chapter_063": [
+        "allow"
+      ],
+      "realbeat_013_beat_chapter_066": [
+        "allow_with_patch"
+      ],
+      "realbeat_014_beat_chapter_073": [
+        "allow_with_patch"
+      ],
+      "realbeat_015_beat_chapter_076": [
+        "allow_with_patch"
+      ],
+      "realbeat_016_beat_chapter_083": [
+        "allow_with_patch"
+      ],
+      "realbeat_017_beat_chapter_086": [
+        "allow_with_patch"
+      ],
+      "realbeat_018_beat_chapter_094": [
+        "allow_with_patch"
+      ],
+      "realbeat_019_beat_chapter_101": [
+        "allow"
+      ],
+      "realbeat_020_beat_chapter_107": [
+        "allow_with_patch"
+      ],
+      "realbeat_021_beat_chapter_110": [
+        "allow_with_patch"
+      ],
+      "realbeat_022_beat_chapter_116": [
+        "allow_with_patch"
+      ],
+      "realbeat_023_beat_chapter_120": [
+        "allow_with_patch"
+      ],
+      "realbeat_024_beat_chapter_125": [
+        "allow"
+      ],
+      "realbeat_025_beat_chapter_134": [
+        "allow_with_patch"
+      ],
+      "realbeat_026_beat_chapter_139": [
+        "allow_with_patch"
+      ],
+      "realbeat_027_beat_chapter_146": [
+        "allow"
+      ],
+      "realbeat_028_beat_chapter_151": [
+        "allow"
+      ],
+      "realbeat_029_beat_chapter_156": [
+        "allow"
+      ],
+      "realbeat_030_beat_chapter_162": [
+        "allow"
+      ],
+      "realbeat_031_beat_chapter_171": [
+        "allow_with_patch"
+      ],
+      "realbeat_032_beat_chapter_176": [
+        "allow_with_patch"
+      ],
+      "realbeat_033_beat_chapter_185": [
+        "allow_with_patch"
+      ],
+      "realbeat_034_beat_chapter_194": [
+        "allow"
+      ],
+      "realbeat_035_beat_chapter_213": [
+        "allow"
+      ],
+      "realbeat_036_beat_chapter_222": [
+        "allow"
+      ],
+      "realbeat_037_beat_chapter_229": [
+        "allow_with_patch"
+      ],
+      "realbeat_038_beat_chapter_236": [
+        "allow"
+      ],
+      "realbeat_039_beat_chapter_250": [
+        "allow"
+      ],
+      "realbeat_040_beat_chapter_255": [
+        "allow_with_patch"
+      ]
+    }
+  },
+  "records": [
+    {
+      "id": "realbeat_001_beat_chapter_001",
+      "recordKey": "realbeat_001_beat_chapter_001",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-001",
+        "chapterTitle": "山门雨夜",
+        "beatId": "beat_chapter_001",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-001/beat_chapter_001.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 5, \"start\": 5}",
+          "{\"end\": 7, \"start\": 7}",
+          "{\"end\": 9, \"start\": 9}",
+          "{\"end\": 11, \"start\": 11}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 282,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 256,
+        "total": 829
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.02,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.02,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.5,
+            "missingPatchSupport": 0.12
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 98,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 88,
+              "minimum_observational_score": 88
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "reject": 0,
+            "rewrite": 0.01,
+            "allow_with_patch": 0.05,
+            "allow": 0.94
+          },
+          "confidence": 0.93
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.5
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.12
+        }
+      },
+      "durationMs": 1309,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2422,
+        "output_tokens": 179,
+        "cost": 0.000101724
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_002_beat_chapter_004",
+      "recordKey": "realbeat_002_beat_chapter_004",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-002",
+        "chapterTitle": "入门登记",
+        "beatId": "beat_chapter_004",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-002/beat_chapter_004.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 5, \"start\": 5}",
+          "{\"end\": 7, \"start\": 7}",
+          "{\"end\": 9, \"start\": 9}",
+          "{\"end\": 11, \"start\": 11}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 282,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 256,
+        "total": 829
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.53,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 98,
+              "knowledge_boundary": 97,
+              "future_boundary": 98,
+              "grounding": 96,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.94,
+            "allow_with_patch": 0.05,
+            "reject": 0,
+            "rewrite": 0.01
+          },
+          "confidence": 0.92
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.53
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 962,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2422,
+        "output_tokens": 179,
+        "cost": 0.000101724
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_003_beat_chapter_010",
+      "recordKey": "realbeat_003_beat_chapter_010",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-003",
+        "chapterTitle": "外门试炼",
+        "beatId": "beat_chapter_010",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-003/beat_chapter_010.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-008"
+        ],
+        "lineRanges": [
+          "{\"end\": 137, \"start\": 137}",
+          "{\"end\": 139, \"start\": 139}",
+          "{\"end\": 141, \"start\": 141}",
+          "{\"end\": 151, \"start\": 151}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 181,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 155,
+        "total": 627
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.04,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.04,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.7,
+            "missingPatchSupport": 0.14
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 96,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 97,
+              "repair_support": 86,
+              "minimum_observational_score": 86
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.07,
+            "reject": 0,
+            "allow": 0.92,
+            "rewrite": 0.01
+          },
+          "confidence": 0.9
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.04
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.7
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.14
+        }
+      },
+      "durationMs": 916,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2208,
+        "output_tokens": 179,
+        "cost": 9.2736e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_004_beat_chapter_013",
+      "recordKey": "realbeat_004_beat_chapter_013",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-004",
+        "chapterTitle": "夜巡缺席",
+        "beatId": "beat_chapter_013",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-004/beat_chapter_013.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-009"
+        ],
+        "lineRanges": [
+          "{\"end\": 313, \"start\": 313}",
+          "{\"end\": 315, \"start\": 315}",
+          "{\"end\": 317, \"start\": 317}",
+          "{\"end\": 329, \"start\": 329}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 241,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 215,
+        "total": 747
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.62,
+            "missingPatchSupport": 0.16
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 84,
+              "minimum_observational_score": 84
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.07,
+            "allow": 0.92,
+            "rewrite": 0.01,
+            "reject": 0
+          },
+          "confidence": 0.88
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.62
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.16
+        }
+      },
+      "durationMs": 872,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2328,
+        "output_tokens": 179,
+        "cost": 9.7776e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_005_beat_chapter_020",
+      "recordKey": "realbeat_005_beat_chapter_020",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-005",
+        "chapterTitle": "废井之下",
+        "beatId": "beat_chapter_020",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-005/beat_chapter_020.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-013"
+        ],
+        "lineRanges": [
+          "{\"end\": 457, \"start\": 457}",
+          "{\"end\": 459, \"start\": 459}",
+          "{\"end\": 461, \"start\": 461}",
+          "{\"end\": 481, \"start\": 481}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 198,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 172,
+        "total": 661
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.41,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 97,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.96,
+            "reject": 0,
+            "allow_with_patch": 0.03,
+            "rewrite": 0.01
+          },
+          "confidence": 0.95
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.41
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 880,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2246,
+        "output_tokens": 179,
+        "cost": 9.4332e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_006_beat_chapter_027",
+      "recordKey": "realbeat_006_beat_chapter_027",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-006",
+        "chapterTitle": "半枚残印",
+        "beatId": "beat_chapter_027",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-006/beat_chapter_027.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 623, \"start\": 623}",
+          "{\"end\": 625, \"start\": 625}",
+          "{\"end\": 627, \"start\": 627}",
+          "{\"end\": 629, \"start\": 629}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 212,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 186,
+        "total": 689
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.69,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.94,
+            "rewrite": 0.01,
+            "allow_with_patch": 0.05,
+            "reject": 0
+          },
+          "confidence": 0.93
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.69
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 871,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2276,
+        "output_tokens": 179,
+        "cost": 9.5592e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_007_beat_chapter_033",
+      "recordKey": "realbeat_007_beat_chapter_033",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-007",
+        "chapterTitle": "雨廊来客",
+        "beatId": "beat_chapter_033",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-007/beat_chapter_033.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 801, \"start\": 801}",
+          "{\"end\": 803, \"start\": 803}",
+          "{\"end\": 805, \"start\": 805}",
+          "{\"end\": 807, \"start\": 807}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 152,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 126,
+        "total": 569
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.58,
+            "missingPatchSupport": 0.14
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 86,
+              "minimum_observational_score": 86
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.98,
+            "reject": 0,
+            "allow_with_patch": 0.02,
+            "rewrite": 0
+          },
+          "confidence": 0.96
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.58
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.14
+        }
+      },
+      "durationMs": 833,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2146,
+        "output_tokens": 179,
+        "cost": 9.0132e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_008_beat_chapter_039",
+      "recordKey": "realbeat_008_beat_chapter_039",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-008",
+        "chapterTitle": "封山钟响",
+        "beatId": "beat_chapter_039",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-008/beat_chapter_039.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-010"
+        ],
+        "lineRanges": [
+          "{\"end\": 1011, \"start\": 1011}",
+          "{\"end\": 1013, \"start\": 1013}",
+          "{\"end\": 1015, \"start\": 1015}",
+          "{\"end\": 1029, \"start\": 1029}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 166,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 140,
+        "total": 597
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.55,
+            "missingPatchSupport": 0.15
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 98,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 85,
+              "minimum_observational_score": 85
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "rewrite": 0.01,
+            "reject": 0,
+            "allow_with_patch": 0.03,
+            "allow": 0.96
+          },
+          "confidence": 0.95
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.55
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.15
+        }
+      },
+      "durationMs": 861,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2179,
+        "output_tokens": 179,
+        "cost": 9.1518e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_009_beat_chapter_044",
+      "recordKey": "realbeat_009_beat_chapter_044",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-009",
+        "chapterTitle": "旧档无名",
+        "beatId": "beat_chapter_044",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-009/beat_chapter_044.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-011"
+        ],
+        "lineRanges": [
+          "{\"end\": 1194, \"start\": 1194}",
+          "{\"end\": 1196, \"start\": 1196}",
+          "{\"end\": 1198, \"start\": 1198}",
+          "{\"end\": 1214, \"start\": 1214}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 274,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 248,
+        "total": 813
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.04,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.04,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.050000000000000044
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.6,
+            "missingPatchSupport": 0.16
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 96,
+              "future_boundary": 97,
+              "grounding": 95,
+              "repair_support": 84,
+              "minimum_observational_score": 84
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.92,
+            "reject": 0,
+            "rewrite": 0.01,
+            "allow_with_patch": 0.07
+          },
+          "confidence": 0.89
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.04
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.95
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.6
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.16
+        }
+      },
+      "durationMs": 872,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2398,
+        "output_tokens": 179,
+        "cost": 0.000100716
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_010_beat_chapter_052",
+      "recordKey": "realbeat_010_beat_chapter_052",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-010",
+        "chapterTitle": "下山旧路",
+        "beatId": "beat_chapter_052",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-010/beat_chapter_052.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-011"
+        ],
+        "lineRanges": [
+          "{\"end\": 1354, \"start\": 1354}",
+          "{\"end\": 1356, \"start\": 1356}",
+          "{\"end\": 1358, \"start\": 1358}",
+          "{\"end\": 1374, \"start\": 1374}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 206,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 180,
+        "total": 677
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.04,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.04,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.6,
+            "missingPatchSupport": 0.14
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 96,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 86,
+              "minimum_observational_score": 86
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.1,
+            "reject": 0,
+            "allow": 0.89,
+            "rewrite": 0.01
+          },
+          "confidence": 0.85
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.04
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.6
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.14
+        }
+      },
+      "durationMs": 904,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2270,
+        "output_tokens": 179,
+        "cost": 9.534e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_011_beat_chapter_060",
+      "recordKey": "realbeat_011_beat_chapter_060",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-011",
+        "chapterTitle": "旧驿道",
+        "beatId": "beat_chapter_060",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-011/beat_chapter_060.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-016"
+        ],
+        "lineRanges": [
+          "{\"end\": 1542, \"start\": 1542}",
+          "{\"end\": 1544, \"start\": 1544}",
+          "{\"end\": 1546, \"start\": 1546}",
+          "{\"end\": 1572, \"start\": 1572}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 166,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 141,
+        "total": 598
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.85,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 98,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.98,
+            "rewrite": 0,
+            "allow_with_patch": 0.02,
+            "reject": 0
+          },
+          "confidence": 0.97
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.85
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 846,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2181,
+        "output_tokens": 179,
+        "cost": 9.1602e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_012_beat_chapter_063",
+      "recordKey": "realbeat_012_beat_chapter_063",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-012",
+        "chapterTitle": "无灯镇",
+        "beatId": "beat_chapter_063",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-012/beat_chapter_063.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 1725, \"start\": 1725}",
+          "{\"end\": 1727, \"start\": 1727}",
+          "{\"end\": 1729, \"start\": 1729}",
+          "{\"end\": 1731, \"start\": 1731}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 165,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 140,
+        "total": 596
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.52,
+            "missingPatchSupport": 0.12
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 98,
+              "grounding": 97,
+              "repair_support": 88,
+              "minimum_observational_score": 88
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "reject": 0,
+            "allow": 0.98,
+            "rewrite": 0,
+            "allow_with_patch": 0.02
+          },
+          "confidence": 0.98
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.52
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.12
+        }
+      },
+      "durationMs": 878,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2184,
+        "output_tokens": 179,
+        "cost": 9.1728e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_013_beat_chapter_066",
+      "recordKey": "realbeat_013_beat_chapter_066",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-013",
+        "chapterTitle": "镇中借宿",
+        "beatId": "beat_chapter_066",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-013/beat_chapter_066.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 1897, \"start\": 1897}",
+          "{\"end\": 1899, \"start\": 1899}",
+          "{\"end\": 1901, \"start\": 1901}",
+          "{\"end\": 1903, \"start\": 1903}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 221,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 195,
+        "total": 707
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.78,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.02,
+            "allow": 0.98,
+            "reject": 0,
+            "rewrite": 0
+          },
+          "confidence": 0.97
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.78
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 837,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2293,
+        "output_tokens": 179,
+        "cost": 9.6306e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_014_beat_chapter_073",
+      "recordKey": "realbeat_014_beat_chapter_073",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-014",
+        "chapterTitle": "第二盏灯",
+        "beatId": "beat_chapter_073",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-014/beat_chapter_073.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 2116, \"start\": 2116}",
+          "{\"end\": 2118, \"start\": 2118}",
+          "{\"end\": 2120, \"start\": 2120}",
+          "{\"end\": 2122, \"start\": 2122}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 232,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 206,
+        "total": 729
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.67,
+            "missingPatchSupport": 0.11
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 98,
+              "grounding": 97,
+              "repair_support": 89,
+              "minimum_observational_score": 89
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "rewrite": 0,
+            "reject": 0,
+            "allow": 0.99,
+            "allow_with_patch": 0.01
+          },
+          "confidence": 0.99
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.67
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.11
+        }
+      },
+      "durationMs": 856,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2312,
+        "output_tokens": 179,
+        "cost": 9.7104e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_015_beat_chapter_076",
+      "recordKey": "realbeat_015_beat_chapter_076",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-015",
+        "chapterTitle": "归墟盟约",
+        "beatId": "beat_chapter_076",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-015/beat_chapter_076.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 2298, \"start\": 2298}",
+          "{\"end\": 2300, \"start\": 2300}",
+          "{\"end\": 2302, \"start\": 2302}",
+          "{\"end\": 2304, \"start\": 2304}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 158,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 132,
+        "total": 581
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.82,
+            "missingPatchSupport": 0.12
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 98,
+              "grounding": 97,
+              "repair_support": 88,
+              "minimum_observational_score": 88
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.02,
+            "reject": 0,
+            "allow": 0.98,
+            "rewrite": 0
+          },
+          "confidence": 0.97
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.82
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.12
+        }
+      },
+      "durationMs": 896,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2163,
+        "output_tokens": 179,
+        "cost": 9.0846e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_016_beat_chapter_083",
+      "recordKey": "realbeat_016_beat_chapter_083",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-016",
+        "chapterTitle": "灵脉城门",
+        "beatId": "beat_chapter_083",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-016/beat_chapter_083.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-009"
+        ],
+        "lineRanges": [
+          "{\"end\": 2482, \"start\": 2482}",
+          "{\"end\": 2484, \"start\": 2484}",
+          "{\"end\": 2486, \"start\": 2486}",
+          "{\"end\": 2498, \"start\": 2498}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 163,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 137,
+        "total": 591
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.04,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.04
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.04,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.04,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.78,
+            "missingPatchSupport": 0.12
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 96,
+              "knowledge_boundary": 97,
+              "future_boundary": 96,
+              "grounding": 96,
+              "repair_support": 88,
+              "minimum_observational_score": 88
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.97,
+            "rewrite": 0.01,
+            "reject": 0,
+            "allow_with_patch": 0.02
+          },
+          "confidence": 0.97
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.04
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.04
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.78
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.12
+        }
+      },
+      "durationMs": 870,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2172,
+        "output_tokens": 179,
+        "cost": 9.1224e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_017_beat_chapter_086",
+      "recordKey": "realbeat_017_beat_chapter_086",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-017",
+        "chapterTitle": "顾氏旧印",
+        "beatId": "beat_chapter_086",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-017/beat_chapter_086.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 2695, \"start\": 2695}",
+          "{\"end\": 2697, \"start\": 2697}",
+          "{\"end\": 2699, \"start\": 2699}",
+          "{\"end\": 2701, \"start\": 2701}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 219,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 193,
+        "total": 703
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.050000000000000044
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.69,
+            "missingPatchSupport": 0.14
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 95,
+              "repair_support": 86,
+              "minimum_observational_score": 86
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.09,
+            "rewrite": 0.01,
+            "reject": 0,
+            "allow": 0.9
+          },
+          "confidence": 0.87
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.95
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.69
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.14
+        }
+      },
+      "durationMs": 872,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2290,
+        "output_tokens": 179,
+        "cost": 9.618e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_018_beat_chapter_094",
+      "recordKey": "realbeat_018_beat_chapter_094",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-018",
+        "chapterTitle": "被删去的年代",
+        "beatId": "beat_chapter_094",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-018/beat_chapter_094.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-013"
+        ],
+        "lineRanges": [
+          "{\"end\": 2878, \"start\": 2878}",
+          "{\"end\": 2880, \"start\": 2880}",
+          "{\"end\": 2882, \"start\": 2882}",
+          "{\"end\": 2902, \"start\": 2902}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 173,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 145,
+        "total": 609
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.8,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 98,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "reject": 0,
+            "allow_with_patch": 0.06,
+            "allow": 0.93,
+            "rewrite": 0.01
+          },
+          "confidence": 0.91
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.8
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 1208,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2198,
+        "output_tokens": 179,
+        "cost": 9.2316e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_019_beat_chapter_101",
+      "recordKey": "realbeat_019_beat_chapter_101",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-019",
+        "chapterTitle": "引灯人现身",
+        "beatId": "beat_chapter_101",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-019/beat_chapter_101.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-016"
+        ],
+        "lineRanges": [
+          "{\"end\": 3075, \"start\": 3075}",
+          "{\"end\": 3077, \"start\": 3077}",
+          "{\"end\": 3079, \"start\": 3079}",
+          "{\"end\": 3105, \"start\": 3105}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 204,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 177,
+        "total": 672
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.64,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "rewrite": 0,
+            "allow_with_patch": 0.02,
+            "allow": 0.98,
+            "reject": 0
+          },
+          "confidence": 0.96
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.64
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 876,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2254,
+        "output_tokens": 179,
+        "cost": 9.4668e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_020_beat_chapter_107",
+      "recordKey": "realbeat_020_beat_chapter_107",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-020",
+        "chapterTitle": "旧墟落雪",
+        "beatId": "beat_chapter_107",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-020/beat_chapter_107.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 3279, \"start\": 3279}",
+          "{\"end\": 3281, \"start\": 3281}",
+          "{\"end\": 3283, \"start\": 3283}",
+          "{\"end\": 3285, \"start\": 3285}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 177,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 151,
+        "total": 619
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.68,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 98,
+              "knowledge_boundary": 97,
+              "future_boundary": 98,
+              "grounding": 97,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.04,
+            "allow": 0.96,
+            "rewrite": 0,
+            "reject": 0
+          },
+          "confidence": 0.94
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.68
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 835,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2199,
+        "output_tokens": 179,
+        "cost": 9.2358e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_021_beat_chapter_110",
+      "recordKey": "realbeat_021_beat_chapter_110",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-021",
+        "chapterTitle": "三方来使",
+        "beatId": "beat_chapter_110",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-021/beat_chapter_110.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 3481, \"start\": 3481}",
+          "{\"end\": 3483, \"start\": 3483}",
+          "{\"end\": 3485, \"start\": 3485}",
+          "{\"end\": 3487, \"start\": 3487}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 177,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 151,
+        "total": 619
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.82,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 98,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 97,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "reject": 0,
+            "allow_with_patch": 0.01,
+            "allow": 0.99,
+            "rewrite": 0
+          },
+          "confidence": 0.98
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.82
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 885,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2194,
+        "output_tokens": 179,
+        "cost": 9.2148e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_022_beat_chapter_116",
+      "recordKey": "realbeat_022_beat_chapter_116",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-022",
+        "chapterTitle": "借火修行",
+        "beatId": "beat_chapter_116",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-022/beat_chapter_116.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 3649, \"start\": 3649}",
+          "{\"end\": 3651, \"start\": 3651}",
+          "{\"end\": 3653, \"start\": 3653}",
+          "{\"end\": 3655, \"start\": 3655}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 220,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 194,
+        "total": 705
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.76,
+            "missingPatchSupport": 0.14
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 86,
+              "minimum_observational_score": 86
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.03,
+            "allow": 0.97,
+            "reject": 0,
+            "rewrite": 0
+          },
+          "confidence": 0.95
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.76
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.14
+        }
+      },
+      "durationMs": 958,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2298,
+        "output_tokens": 179,
+        "cost": 9.6516e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_023_beat_chapter_120",
+      "recordKey": "realbeat_023_beat_chapter_120",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-023",
+        "chapterTitle": "顾氏旧债",
+        "beatId": "beat_chapter_120",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-023/beat_chapter_120.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 3839, \"start\": 3839}",
+          "{\"end\": 3841, \"start\": 3841}",
+          "{\"end\": 3843, \"start\": 3843}",
+          "{\"end\": 3845, \"start\": 3845}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 188,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 162,
+        "total": 641
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.83,
+            "missingPatchSupport": 0.14
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 86,
+              "minimum_observational_score": 86
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.05,
+            "allow": 0.94,
+            "reject": 0,
+            "rewrite": 0.01
+          },
+          "confidence": 0.92
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.83
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.14
+        }
+      },
+      "durationMs": 1009,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2218,
+        "output_tokens": 179,
+        "cost": 9.3156e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_024_beat_chapter_125",
+      "recordKey": "realbeat_024_beat_chapter_125",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-024",
+        "chapterTitle": "沈砚秋的证词",
+        "beatId": "beat_chapter_125",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-024/beat_chapter_125.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 4023, \"start\": 4023}",
+          "{\"end\": 4025, \"start\": 4025}",
+          "{\"end\": 4027, \"start\": 4027}",
+          "{\"end\": 4029, \"start\": 4029}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 172,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 144,
+        "total": 607
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.42,
+            "missingPatchSupport": 0.12
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 97,
+              "repair_support": 88,
+              "minimum_observational_score": 88
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.99,
+            "reject": 0,
+            "rewrite": 0,
+            "allow_with_patch": 0.01
+          },
+          "confidence": 0.98
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.42
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.12
+        }
+      },
+      "durationMs": 1148,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2184,
+        "output_tokens": 179,
+        "cost": 9.1728e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_025_beat_chapter_134",
+      "recordKey": "realbeat_025_beat_chapter_134",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-025",
+        "chapterTitle": "金丹劫前",
+        "beatId": "beat_chapter_134",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-025/beat_chapter_134.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 4225, \"start\": 4225}",
+          "{\"end\": 4227, \"start\": 4227}",
+          "{\"end\": 4229, \"start\": 4229}",
+          "{\"end\": 4231, \"start\": 4231}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 175,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 149,
+        "total": 615
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.67,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 97,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "rewrite": 0,
+            "reject": 0,
+            "allow_with_patch": 0.01,
+            "allow": 0.99
+          },
+          "confidence": 0.98
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.67
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 872,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2196,
+        "output_tokens": 179,
+        "cost": 9.2232e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_026_beat_chapter_139",
+      "recordKey": "realbeat_026_beat_chapter_139",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-026",
+        "chapterTitle": "誓言与背叛",
+        "beatId": "beat_chapter_139",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-026/beat_chapter_139.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 4431, \"start\": 4431}",
+          "{\"end\": 4433, \"start\": 4433}",
+          "{\"end\": 4435, \"start\": 4435}",
+          "{\"end\": 4437, \"start\": 4437}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 182,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 155,
+        "total": 628
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.67,
+            "missingPatchSupport": 0.15
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 98,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 85,
+              "minimum_observational_score": 85
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.03,
+            "reject": 0,
+            "allow": 0.96,
+            "rewrite": 0.01
+          },
+          "confidence": 0.96
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.67
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.15
+        }
+      },
+      "durationMs": 887,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2210,
+        "output_tokens": 179,
+        "cost": 9.282e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_027_beat_chapter_146",
+      "recordKey": "realbeat_027_beat_chapter_146",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-027",
+        "chapterTitle": "无相镜",
+        "beatId": "beat_chapter_146",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-027/beat_chapter_146.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-006"
+        ],
+        "lineRanges": [
+          "{\"end\": 4613, \"start\": 4613}",
+          "{\"end\": 4615, \"start\": 4615}",
+          "{\"end\": 4617, \"start\": 4617}",
+          "{\"end\": 4623, \"start\": 4623}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 224,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 199,
+        "total": 714
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.64,
+            "missingPatchSupport": 0.15
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 85,
+              "minimum_observational_score": 85
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.03,
+            "rewrite": 0,
+            "allow": 0.97,
+            "reject": 0
+          },
+          "confidence": 0.95
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.64
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.15
+        }
+      },
+      "durationMs": 897,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2298,
+        "output_tokens": 179,
+        "cost": 9.6516e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_028_beat_chapter_151",
+      "recordKey": "realbeat_028_beat_chapter_151",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-028",
+        "chapterTitle": "一纸封天令",
+        "beatId": "beat_chapter_151",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-028/beat_chapter_151.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-011"
+        ],
+        "lineRanges": [
+          "{\"end\": 4821, \"start\": 4821}",
+          "{\"end\": 4823, \"start\": 4823}",
+          "{\"end\": 4825, \"start\": 4825}",
+          "{\"end\": 4841, \"start\": 4841}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 153,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 126,
+        "total": 570
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.59,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.03,
+            "reject": 0,
+            "allow": 0.96,
+            "rewrite": 0.01
+          },
+          "confidence": 0.95
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.59
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 840,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2146,
+        "output_tokens": 179,
+        "cost": 9.0132e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_029_beat_chapter_156",
+      "recordKey": "realbeat_029_beat_chapter_156",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-029",
+        "chapterTitle": "失去的童年",
+        "beatId": "beat_chapter_156",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-029/beat_chapter_156.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-008"
+        ],
+        "lineRanges": [
+          "{\"end\": 5035, \"start\": 5035}",
+          "{\"end\": 5037, \"start\": 5037}",
+          "{\"end\": 5039, \"start\": 5039}",
+          "{\"end\": 5049, \"start\": 5049}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 185,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 158,
+        "total": 634
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.05,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.05,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.050000000000000044
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.61,
+            "missingPatchSupport": 0.17
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 95,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 95,
+              "repair_support": 83,
+              "minimum_observational_score": 83
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.14,
+            "allow": 0.84,
+            "reject": 0,
+            "rewrite": 0.02
+          },
+          "confidence": 0.79
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.05
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.95
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.61
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.17
+        }
+      },
+      "durationMs": 862,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2217,
+        "output_tokens": 179,
+        "cost": 9.3114e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_030_beat_chapter_162",
+      "recordKey": "realbeat_030_beat_chapter_162",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-030",
+        "chapterTitle": "城中最后一夜",
+        "beatId": "beat_chapter_162",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-030/beat_chapter_162.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-010"
+        ],
+        "lineRanges": [
+          "{\"end\": 5245, \"start\": 5245}",
+          "{\"end\": 5247, \"start\": 5247}",
+          "{\"end\": 5249, \"start\": 5249}",
+          "{\"end\": 5263, \"start\": 5263}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 162,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 134,
+        "total": 587
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.54,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 98,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 97,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.98,
+            "reject": 0,
+            "rewrite": 0,
+            "allow_with_patch": 0.02
+          },
+          "confidence": 0.96
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.54
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 836,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2169,
+        "output_tokens": 179,
+        "cost": 9.1098e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_031_beat_chapter_171",
+      "recordKey": "realbeat_031_beat_chapter_171",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-031",
+        "chapterTitle": "天门初鸣",
+        "beatId": "beat_chapter_171",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-031/beat_chapter_171.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-010"
+        ],
+        "lineRanges": [
+          "{\"end\": 5445, \"start\": 5445}",
+          "{\"end\": 5447, \"start\": 5447}",
+          "{\"end\": 5449, \"start\": 5449}",
+          "{\"end\": 5463, \"start\": 5463}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 213,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 187,
+        "total": 691
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.84,
+            "missingPatchSupport": 0.14
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 98,
+              "grounding": 97,
+              "repair_support": 86,
+              "minimum_observational_score": 86
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.97,
+            "allow_with_patch": 0.03,
+            "reject": 0,
+            "rewrite": 0
+          },
+          "confidence": 0.95
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.84
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.14
+        }
+      },
+      "durationMs": 867,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2272,
+        "output_tokens": 179,
+        "cost": 9.5424e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_032_beat_chapter_176",
+      "recordKey": "realbeat_032_beat_chapter_176",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-032",
+        "chapterTitle": "失去名字的人",
+        "beatId": "beat_chapter_176",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-032/beat_chapter_176.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-012"
+        ],
+        "lineRanges": [
+          "{\"end\": 5657, \"start\": 5657}",
+          "{\"end\": 5659, \"start\": 5659}",
+          "{\"end\": 5661, \"start\": 5661}",
+          "{\"end\": 5679, \"start\": 5679}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 200,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 172,
+        "total": 663
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.79,
+            "missingPatchSupport": 0.16
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 84,
+              "minimum_observational_score": 84
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.91,
+            "rewrite": 0.01,
+            "reject": 0,
+            "allow_with_patch": 0.08
+          },
+          "confidence": 0.88
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.79
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.16
+        }
+      },
+      "durationMs": 858,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2250,
+        "output_tokens": 179,
+        "cost": 9.45e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_033_beat_chapter_185",
+      "recordKey": "realbeat_033_beat_chapter_185",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-033",
+        "chapterTitle": "宗门内战",
+        "beatId": "beat_chapter_185",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-033/beat_chapter_185.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 5846, \"start\": 5846}",
+          "{\"end\": 5848, \"start\": 5848}",
+          "{\"end\": 5850, \"start\": 5850}",
+          "{\"end\": 5852, \"start\": 5852}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 255,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 229,
+        "total": 775
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.04,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.04,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.71,
+            "missingPatchSupport": 0.14
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 96,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 86,
+              "minimum_observational_score": 86
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.97,
+            "reject": 0,
+            "allow_with_patch": 0.03,
+            "rewrite": 0
+          },
+          "confidence": 0.96
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.04
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.71
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.14
+        }
+      },
+      "durationMs": 870,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2358,
+        "output_tokens": 179,
+        "cost": 9.9036e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_034_beat_chapter_194",
+      "recordKey": "realbeat_034_beat_chapter_194",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-034",
+        "chapterTitle": "归墟盟主",
+        "beatId": "beat_chapter_194",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-034/beat_chapter_194.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 6068, \"start\": 6068}",
+          "{\"end\": 6070, \"start\": 6070}",
+          "{\"end\": 6072, \"start\": 6072}",
+          "{\"end\": 6074, \"start\": 6074}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 220,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 194,
+        "total": 705
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.02,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.02,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.39,
+            "missingPatchSupport": 0.14
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 98,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 97,
+              "repair_support": 86,
+              "minimum_observational_score": 86
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.98,
+            "rewrite": 0,
+            "allow_with_patch": 0.02,
+            "reject": 0
+          },
+          "confidence": 0.97
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.39
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.14
+        }
+      },
+      "durationMs": 949,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2288,
+        "output_tokens": 179,
+        "cost": 9.6096e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_035_beat_chapter_213",
+      "recordKey": "realbeat_035_beat_chapter_213",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-035",
+        "chapterTitle": "金丹之后",
+        "beatId": "beat_chapter_213",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-035/beat_chapter_213.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 6264, \"start\": 6264}",
+          "{\"end\": 6266, \"start\": 6266}",
+          "{\"end\": 6268, \"start\": 6268}",
+          "{\"end\": 6270, \"start\": 6270}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 164,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 138,
+        "total": 593
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.46,
+            "missingPatchSupport": 0.14
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 98,
+              "grounding": 97,
+              "repair_support": 86,
+              "minimum_observational_score": 86
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.03,
+            "reject": 0,
+            "rewrite": 0,
+            "allow": 0.97
+          },
+          "confidence": 0.96
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.46
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.14
+        }
+      },
+      "durationMs": 899,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2178,
+        "output_tokens": 179,
+        "cost": 9.1476e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_036_beat_chapter_222",
+      "recordKey": "realbeat_036_beat_chapter_222",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-036",
+        "chapterTitle": "天门之下",
+        "beatId": "beat_chapter_222",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-036/beat_chapter_222.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 6502, \"start\": 6502}",
+          "{\"end\": 6504, \"start\": 6504}",
+          "{\"end\": 6506, \"start\": 6506}",
+          "{\"end\": 6508, \"start\": 6508}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 205,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 179,
+        "total": 675
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.04,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.04,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.02,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.55,
+            "missingPatchSupport": 0.14
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 96,
+              "knowledge_boundary": 97,
+              "future_boundary": 98,
+              "grounding": 96,
+              "repair_support": 86,
+              "minimum_observational_score": 86
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.03,
+            "rewrite": 0,
+            "reject": 0,
+            "allow": 0.97
+          },
+          "confidence": 0.95
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.04
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.55
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.14
+        }
+      },
+      "durationMs": 839,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2268,
+        "output_tokens": 179,
+        "cost": 9.5256e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_037_beat_chapter_229",
+      "recordKey": "realbeat_037_beat_chapter_229",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-037",
+        "chapterTitle": "最后一盏引路灯",
+        "beatId": "beat_chapter_229",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-037/beat_chapter_229.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-013"
+        ],
+        "lineRanges": [
+          "{\"end\": 6694, \"start\": 6694}",
+          "{\"end\": 6696, \"start\": 6696}",
+          "{\"end\": 6698, \"start\": 6698}",
+          "{\"end\": 6718, \"start\": 6718}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 175,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 146,
+        "total": 612
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.73,
+            "missingPatchSupport": 0.16
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 84,
+              "minimum_observational_score": 84
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow": 0.95,
+            "reject": 0,
+            "allow_with_patch": 0.04,
+            "rewrite": 0.01
+          },
+          "confidence": 0.93
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.73
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.16
+        }
+      },
+      "durationMs": 807,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2196,
+        "output_tokens": 179,
+        "cost": 9.2232e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_038_beat_chapter_236",
+      "recordKey": "realbeat_038_beat_chapter_236",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-038",
+        "chapterTitle": "归墟开门",
+        "beatId": "beat_chapter_236",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-038/beat_chapter_236.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-016"
+        ],
+        "lineRanges": [
+          "{\"end\": 6904, \"start\": 6904}",
+          "{\"end\": 6906, \"start\": 6906}",
+          "{\"end\": 6908, \"start\": 6908}",
+          "{\"end\": 6934, \"start\": 6934}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 162,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 136,
+        "total": 589
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.03,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.53,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 97,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "rewrite": 0.01,
+            "allow_with_patch": 0.02,
+            "allow": 0.97,
+            "reject": 0
+          },
+          "confidence": 0.96
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.53
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 878,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2168,
+        "output_tokens": 179,
+        "cost": 9.1056e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_039_beat_chapter_250",
+      "recordKey": "realbeat_039_beat_chapter_250",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-039",
+        "chapterTitle": "记忆洪流",
+        "beatId": "beat_chapter_250",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-039/beat_chapter_250.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 7122, \"start\": 7122}",
+          "{\"end\": 7124, \"start\": 7124}",
+          "{\"end\": 7126, \"start\": 7126}",
+          "{\"end\": 7128, \"start\": 7128}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 242,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 216,
+        "total": 749
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.02,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.030000000000000027
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.62,
+            "missingPatchSupport": 0.13
+          },
+          "L2": {
+            "decision": "allow",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 98,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 97,
+              "repair_support": 87,
+              "minimum_observational_score": 87
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "reject": 0,
+            "allow": 0.97,
+            "rewrite": 0,
+            "allow_with_patch": 0.03
+          },
+          "confidence": 0.95
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.97
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.62
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.13
+        }
+      },
+      "durationMs": 898,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2336,
+        "output_tokens": 179,
+        "cost": 9.8112e-05
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    },
+    {
+      "id": "realbeat_040_beat_chapter_255",
+      "recordKey": "realbeat_040_beat_chapter_255",
+      "attempt": 1,
+      "expectedDecision": "allow",
+      "variant": "real_beat_allow",
+      "expectedReasonCodes": [],
+      "realSource": {
+        "packageId": "taixu-relics-part1",
+        "packageVersion": "0.1.3",
+        "chapterId": "chapter-040",
+        "chapterTitle": "无人签名的诏书",
+        "beatId": "beat_chapter_255",
+        "path": "content/packages/taixu-relics-part1/0.1.3/modules/beats/chapter-040/beat_chapter_255.json",
+        "evidenceParagraphIds": [
+          "paragraph-001",
+          "paragraph-002",
+          "paragraph-003",
+          "paragraph-004"
+        ],
+        "lineRanges": [
+          "{\"end\": 7342, \"start\": 7342}",
+          "{\"end\": 7344, \"start\": 7344}",
+          "{\"end\": 7346, \"start\": 7346}",
+          "{\"end\": 7348, \"start\": 7348}"
+        ]
+      },
+      "directDecision": "allow",
+      "derivedDecision": "allow_with_patch",
+      "preflight": {
+        "ok": true,
+        "reason": "preflight_passed"
+      },
+      "inputChars": {
+        "context": 288,
+        "branchState": 233,
+        "playerAction": 28,
+        "resultContract": 30,
+        "candidateNarrative": 259,
+        "total": 838
+      },
+      "review": {
+        "ruleSetVersion": "jev-review-rules/0.3",
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "layers": {
+          "L0": {
+            "status": "pass",
+            "fatalRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.04,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03
+            },
+            "blockingRisks": {
+              "hard_state_conflict": 0.03,
+              "agency_violation": 0.04,
+              "knowledge_leak": 0.03,
+              "future_fact_leak": 0.03,
+              "unsupported_claim": 0.040000000000000036
+            },
+            "threshold": 0.65
+          },
+          "L1": {
+            "directDecision": "allow",
+            "boundedAnomaly": 0.78,
+            "missingPatchSupport": 0.17
+          },
+          "L2": {
+            "decision": "allow_with_patch",
+            "codeOwned": true
+          },
+          "L3": {
+            "scores": {
+              "state_consistency": 97,
+              "agency_scope": 96,
+              "knowledge_boundary": 97,
+              "future_boundary": 97,
+              "grounding": 96,
+              "repair_support": 83,
+              "minimum_observational_score": 83
+            },
+            "scoreIsObservational": true
+          }
+        }
+      },
+      "answers": {
+        "review_decision": {
+          "type": "choice",
+          "choice": "allow",
+          "probabilities": {
+            "allow_with_patch": 0.05,
+            "allow": 0.94,
+            "rewrite": 0.01,
+            "reject": 0
+          },
+          "confidence": 0.92
+        },
+        "hard_state_conflict": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "agency_violation": {
+          "type": "noul",
+          "noul": 0.04
+        },
+        "knowledge_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "future_fact_leak": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "claim_supported": {
+          "type": "noul",
+          "noul": 0.96
+        },
+        "bounded_anomaly": {
+          "type": "noul",
+          "noul": 0.78
+        },
+        "missing_patch_support": {
+          "type": "noul",
+          "noul": 0.17
+        }
+      },
+      "durationMs": 1081,
+      "model": "typesafe/jev-1.13-20260917",
+      "usage": {
+        "input_tokens": 2436,
+        "output_tokens": 179,
+        "cost": 0.000102312
+      },
+      "provider": "TypeSafe",
+      "status": "ok"
+    }
+  ]
+}

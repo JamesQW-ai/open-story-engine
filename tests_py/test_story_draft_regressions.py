@@ -1213,6 +1213,7 @@ class StoryDraftRegressions(unittest.TestCase):
     def test_fact_activation_and_character_details_use_exact_source_evidence(self):
         resolver = ModuleContextResolver.for_package(self.path, self.package)
         scope = resolver.resolve(self.context, self.selected, self.resolved)
+        self.assertTrue(scope["world"]["immutableFacts"])
         self.assertTrue(all(fact.get("lineRange", {}).get("end", 0) <= 81 for fact in scope["world"]["immutableFacts"]))
         late_fact = next(fact for fact in self.package["world"]["immutableFacts"] if fact.get("lineRange", {}).get("start") == 107)
         self.assertEqual(late_fact["sourceProgress"], "chapter_003")

@@ -161,8 +161,12 @@ def validate_plan(data, requirements, context):
     if data.get('readingIntent', 'normal') not in ('brief', 'normal'):
         raise ValueError('readingIntent 须为 brief 或 normal')
     entries = data.get('requirements')
-    if not isinstance(entries, dict) or set(entries) != set(requirements):
-        raise ValueError('结果契约必须覆盖每项原始输入')
+    actual = set(entries) if isinstance(entries, dict) else set()
+    expected = set(requirements)
+    if actual != expected:
+        missing = '、'.join(sorted(expected - actual)) or '无'
+        extra = '、'.join(sorted(actual - expected)) or '无'
+        raise ValueError(f'结果契约必须只使用原始要求ID；缺少：{missing}；多余：{extra}；不得新增要求')
     for item in entries.values():
         if not isinstance(item, dict) or item.get('mode') not in ('result', 'attempt', 'constraint') or not isinstance(item.get('summary'), str) or not item['summary'].strip():
             raise ValueError('结果契约缺少行动性质或结果')
@@ -261,6 +265,11 @@ def projected_state(state, plan, package=None):
 def validate_review(data, plan, body, reader_outcome):
     if data.get('checkedConsequences') is not True:
         raise ValueError('未完整核对人物后果和目标契约')
+    return bind_state_evidence(data, plan, body, reader_outcome)
+
+
+def bind_state_evidence(data, plan, body, reader_outcome):
+    """Bind structured consequences to prose without a quality verdict."""
     for action in reader_outcome['actions']:
         if plan['requirements'][action['id']]['mode'] != 'attempt' and action['status'] != 'performed':
             raise ValueError('指定结果或限制未兑现，不能以尝试受阻通过：' + action['requirement'])
@@ -299,25 +308,42 @@ def public_summary(update, package, state=None):
 
 
 def commit_consequences(context, state, result, branch_id):
-    """Only reviewed prose can authorize these reserved state changes."""
+    """Commit only consequences bound to this action and immutable prose."""
     update = result.get('consequenceUpdate')
     if update is None:
         return state
+    if 'deliveryReceipt' in result:
+        from .narrative_delivery import validate_commit
+        validate_commit(context, result)
+        return _apply_update(context, state, result, branch_id)
     if not enabled(context['package']):
         raise ValueError('当前故事不支持人物后果契约')
     from .api_reader_quality import action_requirements
     action = context.get('playerDirection') or result['actionIntent']['input']
+    if 'stateReceipt' in result:
+        context = {**context, 'narrativePolicy': 'context_only'}
     validate_plan(update, action_requirements(action), context)
-    if update.get('decision') != 'ready' or result.get('consequenceReview') != VERSION:
+    if update.get('decision') != 'ready':
         raise ValueError('未校验的结果不能提交')
-    if result.get('reviewedNarrativeSha256') != hashlib.sha256(result['narrativeText'].encode()).hexdigest():
-        raise ValueError('提交正文与已审查全文不符，须重新核对')
-    reader_actions.validate_authority(result.get('authorityReview'), update, action, context['parent']['narrativeText'])
-    events = reader_actions.validate_observations({'events': result.get('observedEvents')}, result['narrativeText'])
-    reader_actions.validate_events({'eventChecks': result.get('eventChecks')}, events, update, context['parent']['branchState'], context['package'])
+    if 'stateReceipt' in result:
+        from .state_receipt import validate_commit
+        validate_commit(context, result, update, state)
+    else:
+        if result.get('consequenceReview') != VERSION:
+            raise ValueError('未校验的结果不能提交')
+        if result.get('reviewedNarrativeSha256') != hashlib.sha256(result['narrativeText'].encode()).hexdigest():
+            raise ValueError('提交正文与已审查全文不符，须重新核对')
+        reader_actions.validate_authority(result.get('authorityReview'), update, action, context['parent']['narrativeText'])
+        events = reader_actions.validate_observations({'events': result.get('observedEvents')}, result['narrativeText'])
+        reader_actions.validate_events({'eventChecks': result.get('eventChecks')}, events, update, context['parent']['branchState'], context['package'])
     for item in update['outcomes'] + update['goalUpdates'] + update.get('threadUpdates', []) + update['stateChanges'] + reader_actions.introductions(update):
         if not isinstance(item.get('evidence'), str) or not item['evidence'].strip() or item['evidence'] not in result['narrativeText']:
             raise ValueError('结果证据与提交正文不符')
+    return _apply_update(context, state, result, branch_id)
+
+
+def _apply_update(context, state, result, branch_id):
+    update = result['consequenceUpdate']
     next_state = reader_actions.project(state, update, context['package'])
     ledger = next_state.setdefault('characterOutcomeStates', {})
     for item in update['outcomes']:
@@ -347,7 +373,8 @@ def commit_consequences(context, state, result, branch_id):
             goals.append({**record, 'id': new_id, 'title': item['successor'], 'status': 'active', 'previousGoalId': item['id']})
     unavailable = {cid for cid, o in ledger.items() if o.get('status') in ('dead', 'departed') and o.get('permanence') == 'permanent'}
     for goal in goals:
-        if goal['status'] == 'active' and unavailable.intersection(goal['dependencies']):
+        if ('deliveryReceipt' not in result and goal['status'] == 'active'
+                and unavailable.intersection(goal['dependencies'])):
             raise ValueError('当前目标仍依赖已永久下线人物，需要转化或放下')
     next_state['goalLedger'] = goals
     next_state[reader_threads.STATE_KEY] = reader_threads.commit(

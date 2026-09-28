@@ -1,0 +1,638 @@
+{
+  "schemaVersion": "writer-failure-diagnostics/0.1",
+  "status": "completed",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3",
+    "cjk": 102610
+  },
+  "records": [
+    {
+      "label": "observe_and_ask_1",
+      "action": "我指出伤者仍有呼吸，只询问守门弟子是否能通传执事，听完回应再决定；我留在原地，不移动。",
+      "traceStart": 0,
+      "status": "error",
+      "code": "generation_failed",
+      "error": "这次续写未能完成，请重试或调整行动。",
+      "committed": false,
+      "draft": {
+        "status": "failed",
+        "error": {
+          "code": "generation_failed",
+          "message": "这次续写未能完成，请重试或调整行动。",
+          "status": 503
+        },
+        "metrics": {
+          "first_text_ms": null,
+          "ready_hit": false,
+          "selection_count": 1,
+          "ready_hits": 0,
+          "queue_ms": 1,
+          "complete_ms": 91029,
+          "reported_tokens": 0,
+          "calls": 2,
+          "unreported_calls": 2,
+          "tokens": null
+        },
+        "previousAttempts": 0,
+        "failureAuditKeys": [],
+        "retainedDraft": false
+      },
+      "elapsedMs": 91230,
+      "traceEnd": 2,
+      "providerTrace": [
+        {
+          "mode": "json",
+          "status": "failed",
+          "durationMs": 45456,
+          "errorType": "LlmError",
+          "errorCode": "transport_error",
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "durationMs": 45456,
+                "responseHeadersMs": 452
+              }
+            }
+          ]
+        },
+        {
+          "mode": "json",
+          "status": "failed",
+          "durationMs": 45473,
+          "errorType": "LlmError",
+          "errorCode": "transport_error",
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "durationMs": 45473,
+                "responseHeadersMs": 469
+              }
+            }
+          ]
+        }
+      ],
+      "generationErrors": [
+        {
+          "type": "LlmError",
+          "code": "transport_error",
+          "message": "JSON 响应超时",
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "failureKind": null,
+              "retryReason": "transient_provider_failure",
+              "transport": {
+                "responseMode": "json",
+                "durationMs": 45456,
+                "responseHeadersMs": 452
+              }
+            },
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "durationMs": 45473,
+                "responseHeadersMs": 469
+              }
+            }
+          ],
+          "draftUsage": {
+            "reported_tokens": 0,
+            "calls": 2,
+            "unreported_calls": 2
+          },
+          "draftAuditsCount": 1,
+          "retainedBody": false
+        }
+      ]
+    },
+    {
+      "label": "observe_and_ask_2",
+      "action": "我指出伤者仍有呼吸，只询问守门弟子是否能通传执事，听完回应再决定；我留在原地，不移动。",
+      "traceStart": 2,
+      "status": "written",
+      "committed": true,
+      "narrativeChars": 357,
+      "elapsedMs": 38487,
+      "traceEnd": 11,
+      "providerTrace": [
+        {
+          "mode": "json",
+          "status": "completed",
+          "durationMs": 6718,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 6718,
+                "responseHeadersMs": 461,
+                "completeBodyMs": 6718
+              }
+            }
+          ],
+          "contentEmpty": false
+        },
+        {
+          "mode": "json",
+          "status": "completed",
+          "durationMs": 4767,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 4767,
+                "responseHeadersMs": 376,
+                "completeBodyMs": 4767
+              }
+            }
+          ],
+          "contentEmpty": false
+        },
+        {
+          "mode": "json",
+          "status": "completed",
+          "durationMs": 4040,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 4040,
+                "responseHeadersMs": 360,
+                "completeBodyMs": 4039
+              }
+            }
+          ],
+          "contentEmpty": false
+        },
+        {
+          "mode": "sse",
+          "status": "completed",
+          "durationMs": 3688,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": true,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "sse",
+                "httpStatus": 200,
+                "durationMs": 3688,
+                "responseHeadersMs": 1355,
+                "completeBodyMs": 3688
+              }
+            }
+          ],
+          "contentEmpty": false
+        },
+        {
+          "mode": "json",
+          "status": "completed",
+          "durationMs": 3159,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 3159,
+                "responseHeadersMs": 283,
+                "completeBodyMs": 3158
+              }
+            }
+          ],
+          "contentEmpty": false
+        },
+        {
+          "mode": "json",
+          "status": "completed",
+          "durationMs": 5629,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 5629,
+                "responseHeadersMs": 518,
+                "completeBodyMs": 5629
+              }
+            }
+          ],
+          "contentEmpty": false
+        },
+        {
+          "mode": "json",
+          "status": "completed",
+          "durationMs": 6074,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 6074,
+                "responseHeadersMs": 324,
+                "completeBodyMs": 6074
+              }
+            }
+          ],
+          "contentEmpty": false
+        },
+        {
+          "mode": "json",
+          "status": "completed",
+          "durationMs": 1394,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 1394,
+                "responseHeadersMs": 264,
+                "completeBodyMs": 1394
+              }
+            }
+          ],
+          "contentEmpty": false
+        },
+        {
+          "mode": "json",
+          "status": "completed",
+          "durationMs": 2319,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 2319,
+                "responseHeadersMs": 296,
+                "completeBodyMs": 2318
+              }
+            }
+          ],
+          "contentEmpty": false
+        }
+      ],
+      "generationErrors": [
+        {
+          "type": "LlmError",
+          "code": "transport_error",
+          "message": "JSON 响应超时",
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "failureKind": null,
+              "retryReason": "transient_provider_failure",
+              "transport": {
+                "responseMode": "json",
+                "durationMs": 45456,
+                "responseHeadersMs": 452
+              }
+            },
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "durationMs": 45473,
+                "responseHeadersMs": 469
+              }
+            }
+          ],
+          "draftUsage": {
+            "reported_tokens": 0,
+            "calls": 2,
+            "unreported_calls": 2
+          },
+          "draftAuditsCount": 1,
+          "retainedBody": false
+        }
+      ]
+    }
+  ],
+  "providerCalls": 11,
+  "writerModel": "deepseek-v4-flash",
+  "providerTrace": [
+    {
+      "mode": "json",
+      "status": "failed",
+      "durationMs": 45456,
+      "errorType": "LlmError",
+      "errorCode": "transport_error",
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "durationMs": 45456,
+            "responseHeadersMs": 452
+          }
+        }
+      ]
+    },
+    {
+      "mode": "json",
+      "status": "failed",
+      "durationMs": 45473,
+      "errorType": "LlmError",
+      "errorCode": "transport_error",
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "durationMs": 45473,
+            "responseHeadersMs": 469
+          }
+        }
+      ]
+    },
+    {
+      "mode": "json",
+      "status": "completed",
+      "durationMs": 6718,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 6718,
+            "responseHeadersMs": 461,
+            "completeBodyMs": 6718
+          }
+        }
+      ],
+      "contentEmpty": false
+    },
+    {
+      "mode": "json",
+      "status": "completed",
+      "durationMs": 4767,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 4767,
+            "responseHeadersMs": 376,
+            "completeBodyMs": 4767
+          }
+        }
+      ],
+      "contentEmpty": false
+    },
+    {
+      "mode": "json",
+      "status": "completed",
+      "durationMs": 4040,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 4040,
+            "responseHeadersMs": 360,
+            "completeBodyMs": 4039
+          }
+        }
+      ],
+      "contentEmpty": false
+    },
+    {
+      "mode": "sse",
+      "status": "completed",
+      "durationMs": 3688,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": true,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 3688,
+            "responseHeadersMs": 1355,
+            "completeBodyMs": 3688
+          }
+        }
+      ],
+      "contentEmpty": false
+    },
+    {
+      "mode": "json",
+      "status": "completed",
+      "durationMs": 3159,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 3159,
+            "responseHeadersMs": 283,
+            "completeBodyMs": 3158
+          }
+        }
+      ],
+      "contentEmpty": false
+    },
+    {
+      "mode": "json",
+      "status": "completed",
+      "durationMs": 5629,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 5629,
+            "responseHeadersMs": 518,
+            "completeBodyMs": 5629
+          }
+        }
+      ],
+      "contentEmpty": false
+    },
+    {
+      "mode": "json",
+      "status": "completed",
+      "durationMs": 6074,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 6074,
+            "responseHeadersMs": 324,
+            "completeBodyMs": 6074
+          }
+        }
+      ],
+      "contentEmpty": false
+    },
+    {
+      "mode": "json",
+      "status": "completed",
+      "durationMs": 1394,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 1394,
+            "responseHeadersMs": 264,
+            "completeBodyMs": 1394
+          }
+        }
+      ],
+      "contentEmpty": false
+    },
+    {
+      "mode": "json",
+      "status": "completed",
+      "durationMs": 2319,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 2319,
+            "responseHeadersMs": 296,
+            "completeBodyMs": 2318
+          }
+        }
+      ],
+      "contentEmpty": false
+    }
+  ],
+  "workersStopped": true,
+  "limitations": [
+    "仅记录 provider 传输阶段的类型化信息，不保存提示词、密钥或完整原始响应。",
+    "这是隔离诊断，不改动生产代码或正式存档。"
+  ]
+}

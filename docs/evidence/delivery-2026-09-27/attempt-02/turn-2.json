@@ -1,0 +1,928 @@
+{
+  "status": "written",
+  "request_id": "delivery-2",
+  "deduplicated": false,
+  "branch": {
+    "narrativeText": "雨还在下。你站在封山青石与山门之间，脚下石阶被水浸得发暗。怀里的引荐文书纸边已经潮了，你把那叠纸往衣襟深处按了按，指腹压过折角，让它贴住里衣，再拢紧外袍的襟口。雨点砸在斗笠上，顺着边缘滴落，文书没有沾到新的水痕。\n\n你没有把它递给任何人。守门弟子那边没有动静，你也没有开口。收好文书之后，你停在原处，双手垂回身侧，不再往前走，也不去碰别的什么。山门上的灯在雨幕里晃着，光被风吹得细长，照不到门内。",
+    "summary": "自定行动：仍留在原地，把手中的引荐已推进，新的风险和选择仍然存在。",
+    "factDeltas": [],
+    "openThreads": [
+      "陌生伤者是否能得到救助",
+      "空灯与父亲失踪是否有关",
+      "尚未完成的当前目标"
+    ],
+    "nextDirections": [
+      {
+        "id": "direction_chapter_001_to_002",
+        "title": "关键推进：拒绝",
+        "summary": "可眼前这盏灯没有火，灯底的石屑却像一粒凝固的星，贴着泥水，拒绝被冲走。",
+        "canonicalBeatId": "beat_chapter_002",
+        "statePatch": {
+          "sourceProgress": "chapter_002",
+          "playerLocationId": "location_9c23a624e6b0"
+        }
+      }
+    ],
+    "storyArc": {
+      "activeGoal": "自定行动：留在原地，向守门弟子说明",
+      "currentPhase": "自定行动：仍留在原地，把手中的引荐",
+      "goalDisposition": "continued",
+      "chapter": {
+        "title": "《太虚遗录》·共创篇",
+        "status": "continuing"
+      }
+    },
+    "planning": {
+      "citations": [
+        {
+          "kind": "branch_node",
+          "ref": "branch_603a10bb-7397-4839-a473-24b4cdc41233",
+          "rationale": "承接已确认的上一节点。"
+        }
+      ],
+      "confidence": "medium",
+      "stateChangeProposals": []
+    },
+    "readingProfile": {
+      "level": "dynamic",
+      "targetCjk": [
+        80,
+        160
+      ],
+      "reason": "本回合只有一次收好文书并停下的动作，无交锋与新信息，宜用简短篇幅写动作过程、雨夜环境与收束，不引入新事件或NPC回应。",
+      "hardMinimum": false,
+      "minCjk": 80,
+      "maxCjk": 1500,
+      "lengthPolicy": "final_visible_prose_dynamic_80_1500",
+      "actualCjk": 174,
+      "expansionApplied": false
+    },
+    "naturalEnding": false,
+    "branchAdditions": {
+      "locations": [],
+      "characters": [],
+      "items": [],
+      "relationships": [],
+      "clues": [],
+      "events": [],
+      "characterReveals": [],
+      "changes": []
+    },
+    "sceneChecks": [
+      {
+        "paragraphId": "P1",
+        "playerDecision": "authorized",
+        "background": "supported",
+        "sources": [
+          {
+            "id": "module:priorNarrativeBrief:paragraph-001",
+            "quote": "雨从酉时开始下。"
+          },
+          {
+            "id": "module:priorNarrativeBrief:paragraph-003",
+            "quote": "山门外立着一块半人高的青石，石面刻着“封山”二字"
+          },
+          {
+            "id": "module:priorNarrativeBrief:paragraph-004",
+            "quote": "陆照临摸了摸怀里的引荐文书。纸边已经潮了。"
+          }
+        ],
+        "quote": "",
+        "issue": "",
+        "backgroundClaims": [
+          {
+            "claim": "雨还在下。你站在封山青石与山门之间，脚下石阶被水浸得发暗。怀里的引荐文书纸边已经潮了，你把那叠纸往衣襟深处按了按，指腹压过折角，让它贴住里衣，再拢紧外袍的襟口。雨点砸在斗笠上，顺着边缘滴落，文书没有沾到新的水痕。",
+            "sources": [
+              {
+                "id": "module:priorNarrativeBrief:paragraph-001",
+                "quote": "雨从酉时开始下。"
+              },
+              {
+                "id": "module:priorNarrativeBrief:paragraph-003",
+                "quote": "山门外立着一块半人高的青石，石面刻着“封山”二字"
+              },
+              {
+                "id": "module:priorNarrativeBrief:paragraph-004",
+                "quote": "陆照临摸了摸怀里的引荐文书。纸边已经潮了。"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "paragraphId": "P2",
+        "playerDecision": "authorized",
+        "background": "supported",
+        "sources": [
+          {
+            "id": "module:priorNarrativeBrief:paragraph-003",
+            "quote": "几盏灯悬在雨幕里，灯焰被风吹成细长的一线"
+          }
+        ],
+        "quote": "",
+        "issue": "",
+        "backgroundClaims": [
+          {
+            "claim": "你没有把它递给任何人。守门弟子那边没有动静，你也没有开口。收好文书之后，你停在原处，双手垂回身侧，不再往前走，也不去碰别的什么。山门上的灯在雨幕里晃着，光被风吹得细长，照不到门内。",
+            "sources": [
+              {
+                "id": "module:priorNarrativeBrief:paragraph-003",
+                "quote": "几盏灯悬在雨幕里，灯焰被风吹成细长的一线"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actionIntent": {
+      "input": "仍留在原地，把手中的引荐文书收好，不交给别人。然后停下，不开始其他行动。",
+      "requirements": {
+        "A1": {
+          "mode": "constraint",
+          "summary": "陆照临全程留在玄霄宗山门原地，不移动位置"
+        },
+        "A2": {
+          "mode": "result",
+          "summary": "陆照临把引荐文书收回怀中贴身收好"
+        },
+        "A3": {
+          "mode": "constraint",
+          "summary": "引荐文书始终留在陆照临手中，不交给任何人"
+        },
+        "A4": {
+          "mode": "result",
+          "summary": "收好文书后陆照临停下，不再继续动作"
+        },
+        "A5": {
+          "mode": "constraint",
+          "summary": "本回合不开始任何其他行动，不推进押送、救助或问灯"
+        }
+      }
+    },
+    "consequenceUpdate": {
+      "decision": "ready",
+      "requirements": {
+        "A1": {
+          "mode": "constraint",
+          "summary": "陆照临全程留在玄霄宗山门原地，不移动位置"
+        },
+        "A2": {
+          "mode": "result",
+          "summary": "陆照临把引荐文书收回怀中贴身收好"
+        },
+        "A3": {
+          "mode": "constraint",
+          "summary": "引荐文书始终留在陆照临手中，不交给任何人"
+        },
+        "A4": {
+          "mode": "result",
+          "summary": "收好文书后陆照临停下，不再继续动作"
+        },
+        "A5": {
+          "mode": "constraint",
+          "summary": "本回合不开始任何其他行动，不推进押送、救助或问灯"
+        }
+      },
+      "method": "陆照临此刻站在玄霄宗山门外，引荐文书本就在他怀中（纸边已潮）。他只需把文书往怀里按实、拢紧衣襟，使文书贴身收好；全程双脚不动，也不向守门弟子或任何人递出文书。收好后即停住，不做下一步。",
+      "outcomes": [],
+      "goalUpdates": [],
+      "threadUpdates": [],
+      "steps": [
+        {
+          "id": "S1",
+          "actorId": "character_ae4cb42b9b49",
+          "action": "留在山门原地，把怀中的引荐文书收回贴身收好，不交给任何人，随后停下不再动作",
+          "requirementIds": [
+            "A1",
+            "A2",
+            "A3",
+            "A4",
+            "A5"
+          ],
+          "authority": "player",
+          "causeStepId": null,
+          "usedItemIds": []
+        }
+      ],
+      "introductions": {
+        "characters": [],
+        "items": [],
+        "locations": []
+      },
+      "stateChanges": [
+        {
+          "id": "C1",
+          "entityId": "character_ae4cb42b9b49",
+          "attribute": "引荐文书状态",
+          "before": null,
+          "value": "已贴身收好，未交出",
+          "stepId": "S1",
+          "reason": "陆照临把文书收回怀中收好，未递给任何人",
+          "evidence": "雨还在下。你站在封山青石与山门之间，脚下石阶被水浸得发暗。怀里的引荐文书纸边已经潮了，你把那叠纸往衣襟深处按了按，指腹压过折角，让它贴住里衣，再拢紧外袍的襟口。雨点砸在斗笠上，顺着边缘滴落，文书没有沾到新的水痕。"
+        }
+      ],
+      "scenePlan": {
+        "start": "承接山门外雨中的停留，陆照临站在封山青石与山门之间，没有移动。",
+        "beats": [
+          {
+            "purpose": "兑现玩家唯一授权动作：原地不动，把引荐文书收回怀中收好，不交给别人，然后停住",
+            "stepIds": [
+              "S1"
+            ]
+          }
+        ],
+        "outcome": "文书被贴身收好，仍在陆照临手中；他留在原地，没有开始任何新行动，也没有向守门弟子递出文书。",
+        "stop": "停在陆照临收好文书、静立原地的收束处，把下一步决定留给玩家。",
+        "targetCjk": [
+          80,
+          160
+        ],
+        "lengthReason": "本回合只有一次收好文书并停下的动作，无交锋与新信息，宜用简短篇幅写动作过程、雨夜环境与收束，不引入新事件或NPC回应。",
+        "knowledge": [
+          {
+            "speakerId": "character_ae4cb42b9b49",
+            "statement": "引荐文书仍在陆照临怀中，纸边已潮；他本应在山门落锁前把文书交给执事",
+            "status": "fact",
+            "sources": [
+              {
+                "id": "module:priorNarrativeBrief:paragraph-004",
+                "quote": "陆照临摸了摸怀里的引荐文书。纸边已经潮了。他本应在山门落锁前把文书交给执事，成为玄霄宗最普通的一名外门弟子。"
+              }
+            ]
+          },
+          {
+            "speakerId": "character_ae4cb42b9b49",
+            "statement": "山门外立着刻有“封山”二字的青石，山门悬着几盏灯",
+            "status": "fact",
+            "sources": [
+              {
+                "id": "module:priorNarrativeBrief:paragraph-003",
+                "quote": "山门外立着一块半人高的青石，石面刻着“封山”二字"
+              }
+            ]
+          }
+        ],
+        "observationLimits": [
+          "雨夜光线昏暗，山门内情形不可见",
+          "守门弟子是否仍在近处、是否注意到陆照临收文书的动作，资料未说明，保持未知",
+          "本回合不产生任何NPC回应或环境新事件"
+        ]
+      },
+      "readingIntent": "brief"
+    },
+    "consequenceReview": "reader-consequences/7",
+    "reviewedNarrativeSha256": "b5698ed987b18b0f58dcb008fad0e9474ca733cde82cfe7a43fb5869d07526f1",
+    "authorityReview": {
+      "decision": "allow",
+      "issues": [],
+      "checks": [
+        {
+          "stepId": "S1",
+          "authorized": true,
+          "basis": "player_input",
+          "quote": "仍留在原地，把手中的引荐文书收好，不交给别人。然后停下，不开始其他行动。",
+          "reason": "玩家明确授权留在原地、把引荐文书收好且不交给别人、随后停下不开始其他行动。该步骤完全对应输入，未增加额外动作、姿态改变或NPC互动。"
+        }
+      ],
+      "stateChecks": [
+        {
+          "changeId": "C1",
+          "authorized": true,
+          "reason": "玩家输入明确要求把手中的引荐文书收好、不交给别人，因此将文书状态登记为已贴身收好且未交出，属于对玩家授权动作的直接记录，未越权改变物品归属或位置。"
+        }
+      ],
+      "premiseChecks": [
+        {
+          "id": "K1",
+          "kind": "existing",
+          "verdict": "supported",
+          "sources": [
+            {
+              "id": "module:priorNarrativeBrief:paragraph-004",
+              "quote": "陆照临摸了摸怀里的引荐文书。纸边已经潮了。他本应在山门落锁前把文书交给执事，成为玄霄宗最普通的一名外门弟子。"
+            }
+          ],
+          "stepIds": [],
+          "missingEvidence": [],
+          "reason": "引荐文书在陆照临怀中、纸边已潮、本应交给执事，均直接来自既有叙事资料，属于已存在的物理与背景事实，且与玩家角色自身知识一致。"
+        },
+        {
+          "id": "K2",
+          "kind": "existing",
+          "verdict": "supported",
+          "sources": [
+            {
+              "id": "module:priorNarrativeBrief:paragraph-003",
+              "quote": "山门外立着一块半人高的青石，石面刻着“封山”二字"
+            }
+          ],
+          "stepIds": [],
+          "missingEvidence": [],
+          "reason": "封山青石与山门悬灯均为既有场景事实，来源为前序叙事资料，属于可见物理条件，不依赖本轮动作。"
+        },
+        {
+          "id": "O1",
+          "kind": "restriction",
+          "verdict": "supported",
+          "sources": [
+            {
+              "id": "module:priorNarrativeBrief:paragraph-002",
+              "quote": "陆照临走完最后一百级石阶时，天已经黑透。"
+            },
+            {
+              "id": "module:priorNarrativeBrief:paragraph-003",
+              "quote": "几盏灯悬在雨幕里，灯焰被风吹成细长的一线"
+            }
+          ],
+          "stepIds": [],
+          "missingEvidence": [],
+          "reason": "该条为否定性写作限制，仅说明雨夜昏暗、山门内情形不可见，不新增任何肯定事实，与既有雨夜光线条件一致。"
+        },
+        {
+          "id": "O2",
+          "kind": "unknown",
+          "verdict": "supported",
+          "sources": [],
+          "stepIds": [],
+          "missingEvidence": [],
+          "reason": "该条仅承认守门弟子是否仍在近处、是否注意到收文书动作未知，未夹带具体观察结论或新事实，符合unknown分类。"
+        },
+        {
+          "id": "O3",
+          "kind": "restriction",
+          "verdict": "supported",
+          "sources": [],
+          "stepIds": [],
+          "missingEvidence": [],
+          "reason": "该条为否定性写作限制，禁止本回合产生NPC回应或环境新事件，不提供新事实，与玩家输入“然后停下，不开始其他行动”的收束要求一致。"
+        }
+      ]
+    },
+    "observedEvents": [
+      {
+        "id": "O1",
+        "paragraphId": "P1",
+        "actor": "character_ae4cb42b9b49",
+        "mode": "actual",
+        "summary": "陆照临站在封山青石与山门之间，把怀里潮了边的引荐文书往衣襟深处按，贴住里衣并拢紧外袍襟口，文书没有沾到新的水痕。",
+        "changes": [
+          {
+            "entityId": "character_ae4cb42b9b49",
+            "attribute": "引荐文书状态",
+            "value": "已贴身收好，未交出"
+          }
+        ],
+        "introduced": [],
+        "usedItemIds": [
+          "item_open_letter"
+        ],
+        "quote": "雨还在下。你站在封山青石与山门之间，脚下石阶被水浸得发暗。怀里的引荐文书纸边已经潮了，你把那叠纸往衣襟深处按了按，指腹压过折角，让它贴住里衣，再拢紧外袍的襟口。雨点砸在斗笠上，顺着边缘滴落，文书没有沾到新的水痕。"
+      },
+      {
+        "id": "O2",
+        "paragraphId": "P2",
+        "actor": "character_ae4cb42b9b49",
+        "mode": "actual",
+        "summary": "陆照临没有把文书递给任何人，也没有向守门弟子开口；收好文书后停在原处，双手垂回身侧，不再往前走，也不去碰别的什么。",
+        "changes": [],
+        "introduced": [],
+        "usedItemIds": [],
+        "quote": "你没有把它递给任何人。守门弟子那边没有动静，你也没有开口。收好文书之后，你停在原处，双手垂回身侧，不再往前走，也不去碰别的什么。山门上的灯在雨幕里晃着，光被风吹得细长，照不到门内。"
+      }
+    ],
+    "eventChecks": [
+      {
+        "id": "O1",
+        "verdict": "supported",
+        "reason": "正文写他站在封山青石与山门之间，把潮了边的引荐文书往衣襟深处按、贴住里衣并拢紧外袍襟口，文书未沾新水痕，与授权动作一致。",
+        "stepIds": [
+          "S1"
+        ],
+        "changeIds": [
+          "C1"
+        ],
+        "introductionIds": []
+      },
+      {
+        "id": "O2",
+        "verdict": "supported",
+        "reason": "正文写他没有把文书递给任何人、没有开口，收好后停在原处、双手垂回身侧、不再往前走也不碰别的，符合不交出、停下、不开始其他行动的限制。",
+        "stepIds": [
+          "S1"
+        ],
+        "changeIds": [],
+        "introductionIds": []
+      }
+    ],
+    "readerOutcome": {
+      "actions": [
+        {
+          "id": "A1",
+          "requirement": "仍留在原地",
+          "status": "performed",
+          "summary": "陆照临始终站在封山青石与山门之间，双脚未移动。",
+          "evidence": "雨还在下。你站在封山青石与山门之间，脚下石阶被水浸得发暗。怀里的引荐文书纸边已经潮了，你把那叠纸往衣襟深处按了按，指腹压过折角，让它贴住里衣，再拢紧外袍的襟口。雨点砸在斗笠上，顺着边缘滴落，文书没有沾到新的水痕。"
+        },
+        {
+          "id": "A2",
+          "requirement": "把手中的引荐文书收好",
+          "status": "performed",
+          "summary": "他把引荐文书往衣襟深处按实，贴住里衣并拢紧外袍襟口，文书已贴身收好。",
+          "evidence": "雨还在下。你站在封山青石与山门之间，脚下石阶被水浸得发暗。怀里的引荐文书纸边已经潮了，你把那叠纸往衣襟深处按了按，指腹压过折角，让它贴住里衣，再拢紧外袍的襟口。雨点砸在斗笠上，顺着边缘滴落，文书没有沾到新的水痕。"
+        },
+        {
+          "id": "A3",
+          "requirement": "不交给别人",
+          "status": "performed",
+          "summary": "文书没有递给任何人，守门弟子那边没有动静，他也没有开口。",
+          "evidence": "你没有把它递给任何人。守门弟子那边没有动静，你也没有开口。收好文书之后，你停在原处，双手垂回身侧，不再往前走，也不去碰别的什么。山门上的灯在雨幕里晃着，光被风吹得细长，照不到门内。"
+        },
+        {
+          "id": "A4",
+          "requirement": "然后停下",
+          "status": "performed",
+          "summary": "收好文书后他停在原处，双手垂回身侧，不再往前走。",
+          "evidence": "你没有把它递给任何人。守门弟子那边没有动静，你也没有开口。收好文书之后，你停在原处，双手垂回身侧，不再往前走，也不去碰别的什么。山门上的灯在雨幕里晃着，光被风吹得细长，照不到门内。"
+        },
+        {
+          "id": "A5",
+          "requirement": "不开始其他行动",
+          "status": "performed",
+          "summary": "他没有去碰别的什么，也没有推进押送、救助或问灯等行动。",
+          "evidence": "你没有把它递给任何人。守门弟子那边没有动静，你也没有开口。收好文书之后，你停在原处，双手垂回身侧，不再往前走，也不去碰别的什么。山门上的灯在雨幕里晃着，光被风吹得细长，照不到门内。"
+        }
+      ],
+      "action": {
+        "status": "performed",
+        "summary": "陆照临始终站在封山青石与山门之间，双脚未移动。；他把引荐文书往衣襟深处按实，贴住里衣并拢紧外袍襟口，文书已贴身收好。；文书没有递给任何人，守门弟子那边没有动静，他也没有开口。；收好文书后他停在原处，双手垂回身侧，不再往前走。；他没有去碰别的什么，也没有推进押送、救助或问灯等行动。",
+        "evidence": "雨还在下。你站在封山青石与山门之间，脚下石阶被水浸得发暗。怀里的引荐文书纸边已经潮了，你把那叠纸往衣襟深处按了按，指腹压过折角，让它贴住里衣，再拢紧外袍的襟口。雨点砸在斗笠上，顺着边缘滴落，文书没有沾到新的水痕。"
+      },
+      "clues": [],
+      "relationships": []
+    },
+    "id": "branch_6c2529dd-3846-41c5-bfe1-18fc4499c112",
+    "parentId": "branch_603a10bb-7397-4839-a473-24b4cdc41233",
+    "sourceNodeRef": "node_source_continuity",
+    "branchState": {
+      "playerLocationId": "location_open_gate",
+      "sourceProgress": "chapter_001",
+      "freeTextProgress": 2,
+      "storyScope": "source",
+      "derivativeStage": "inactive",
+      "derivedTurn": 0,
+      "derivedLocations": [],
+      "derivedCharacters": [],
+      "derivedItems": [],
+      "derivedCharacterReveals": [],
+      "derivedRelationships": [],
+      "derivedClues": [],
+      "derivedEvents": [],
+      "branchLedger": {
+        "schemaVersion": "branch-state-ledger/0.1",
+        "entries": [
+          {
+            "id": "ledger_000001_1b7c9b2106c2",
+            "sequence": 1,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:freeTextProgress",
+            "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+            "before": 0,
+            "after": 1,
+            "source": {
+              "kind": "player_direction",
+              "ref": "direction_free_feefbfc001a7",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000002_4620406fea6b",
+            "sequence": 2,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:goalLedger",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": null,
+            "after": [
+              {
+                "id": "opening-goal-1",
+                "title": "陌生伤者是否能得到救助",
+                "status": "active",
+                "characterId": "character_ae4cb42b9b49",
+                "dependencies": [],
+                "source": "opening",
+                "evidence": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+                "causeBranchId": null
+              },
+              {
+                "id": "opening-goal-2",
+                "title": "空灯与父亲失踪是否有关",
+                "status": "active",
+                "characterId": "character_ae4cb42b9b49",
+                "dependencies": [],
+                "source": "opening",
+                "evidence": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+                "causeBranchId": null
+              }
+            ],
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_603a10bb-7397-4839-a473-24b4cdc41233",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000003_0d5dbb51ff01",
+            "sequence": 3,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:freeTextProgress",
+            "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+            "before": 1,
+            "after": 2,
+            "source": {
+              "kind": "player_direction",
+              "ref": "direction_free_6d5de0a182bb",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000004_58b4e008923a",
+            "sequence": 4,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:readerEntityStates",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": null,
+            "after": {
+              "character_ae4cb42b9b49": {
+                "引荐文书状态": "已贴身收好，未交出"
+              }
+            },
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_6c2529dd-3846-41c5-bfe1-18fc4499c112",
+              "nodeRef": "node_source_continuity"
+            }
+          }
+        ]
+      },
+      "playerCharacterId": "character_ae4cb42b9b49",
+      "characterLocationIds": {
+        "character_ae4cb42b9b49": "location_open_gate"
+      },
+      "itemOwnerCharacterIds": {
+        "item_open_letter": "character_ae4cb42b9b49"
+      },
+      "itemLocationIds": {},
+      "characterOutcomeStates": {},
+      "threadLedger": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "open",
+          "source": "opening",
+          "openedBranchId": null,
+          "causeBranchId": null,
+          "reason": "",
+          "evidence": "",
+          "priority": "unknown",
+          "recoveryWindow": "unknown"
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "open",
+          "source": "opening",
+          "openedBranchId": null,
+          "causeBranchId": null,
+          "reason": "",
+          "evidence": "",
+          "priority": "unknown",
+          "recoveryWindow": "unknown"
+        }
+      ],
+      "goalLedger": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "active",
+          "characterId": "character_ae4cb42b9b49",
+          "dependencies": [],
+          "source": "opening",
+          "evidence": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+          "causeBranchId": null
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "active",
+          "characterId": "character_ae4cb42b9b49",
+          "dependencies": [],
+          "source": "opening",
+          "evidence": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+          "causeBranchId": null
+        }
+      ],
+      "readerEntityStates": {
+        "character_ae4cb42b9b49": {
+          "引荐文书状态": "已贴身收好，未交出"
+        }
+      }
+    },
+    "canonicalRelation": "diverged",
+    "selectedDirectionId": "direction_free_6d5de0a182bb",
+    "selectedDirection": {
+      "id": "direction_free_6d5de0a182bb",
+      "title": "自定行动：仍留在原地，把手中的引荐",
+      "summary": "仍留在原地，把手中的引荐文书收好，不交给别人。然后停下，不开始其他行动。",
+      "statePatch": {
+        "freeTextProgress": 2
+      },
+      "isFreeText": true
+    },
+    "playerDirection": "仍留在原地，把手中的引荐文书收好，不交给别人。然后停下，不开始其他行动。",
+    "requestId": "delivery-2",
+    "createdAt": "2026-09-27T14:09:46.655Z",
+    "contextId": "ctx-14f4c2a31d14d480",
+    "kind": "generated",
+    "readerChoices": [
+      {
+        "id": "reader-f557d6e36505f161",
+        "title": "向守门弟子递出文书",
+        "summary": "我走向守门弟子，取出怀里的引荐文书递过去，说明来意，然后停在原地等对方答复，不擅自进门。",
+        "evidence": [
+          "雨还在下。你站在封山青石与山门之间，脚下石阶被水浸得发暗。怀里的引荐文书纸边已经潮了，你把那叠纸往衣襟深处按了按，指腹压过折角，让它贴住里衣，再拢紧外袍的襟口。雨点砸在斗笠上，顺着边缘滴落，文书没有沾到新的水痕。",
+          "你没有把它递给任何人。守门弟子那边没有动静，你也没有开口。收好文书之后，你停在原处，双手垂回身侧，不再往前走，也不去碰别的什么。山门上的灯在雨幕里晃着，光被风吹得细长，照不到门内。"
+        ],
+        "dependencies": {
+          "version": "reader-choice-dependencies/3",
+          "contextDigest": "dd98b9e21209a1c76018c7016075010bd0fb0823923b33522240bf50cab02cd8",
+          "paragraphIds": [
+            "P1",
+            "P2"
+          ],
+          "interactWith": [],
+          "mentionOnly": [],
+          "useItems": [
+            "item_open_letter"
+          ]
+        }
+      },
+      {
+        "id": "reader-4aa951f26ac170ba",
+        "title": "先问空灯的事",
+        "summary": "我向守门弟子开口，询问山门上那盏空灯为何挂着、近来可有什么异常，问完等对方回应，不急着递文书。",
+        "evidence": [
+          "你没有把它递给任何人。守门弟子那边没有动静，你也没有开口。收好文书之后，你停在原处，双手垂回身侧，不再往前走，也不去碰别的什么。山门上的灯在雨幕里晃着，光被风吹得细长，照不到门内。"
+        ],
+        "dependencies": {
+          "version": "reader-choice-dependencies/3",
+          "contextDigest": "dd98b9e21209a1c76018c7016075010bd0fb0823923b33522240bf50cab02cd8",
+          "paragraphIds": [
+            "P2"
+          ],
+          "interactWith": [],
+          "mentionOnly": []
+        }
+      },
+      {
+        "id": "reader-80eeac0efe5efea9",
+        "title": "退到檐下避雨再等",
+        "summary": "我退到山门附近能避雨的地方，收好文书，观察守门弟子的动静和山门内外的情形，等雨小些或有人先开口再决定下一步。",
+        "evidence": [
+          "雨还在下。你站在封山青石与山门之间，脚下石阶被水浸得发暗。怀里的引荐文书纸边已经潮了，你把那叠纸往衣襟深处按了按，指腹压过折角，让它贴住里衣，再拢紧外袍的襟口。雨点砸在斗笠上，顺着边缘滴落，文书没有沾到新的水痕。",
+          "你没有把它递给任何人。守门弟子那边没有动静，你也没有开口。收好文书之后，你停在原处，双手垂回身侧，不再往前走，也不去碰别的什么。山门上的灯在雨幕里晃着，光被风吹得细长，照不到门内。"
+        ],
+        "dependencies": {
+          "version": "reader-choice-dependencies/3",
+          "contextDigest": "dd98b9e21209a1c76018c7016075010bd0fb0823923b33522240bf50cab02cd8",
+          "paragraphIds": [
+            "P1",
+            "P2"
+          ],
+          "interactWith": [],
+          "mentionOnly": [],
+          "useItems": [
+            "item_open_letter"
+          ]
+        }
+      }
+    ],
+    "turnInput": {
+      "text": "仍留在原地，把手中的引荐文书收好，不交给别人。然后停下，不开始其他行动。"
+    },
+    "preparedTurnKey": "ac12340e48daf40d1d5483dd3128d7804a4107d0b3cfc2d2a2f51c2fbadd0290",
+    "preparedAttemptId": "d826aae8bcc642feb20d0a6282350c30",
+    "routeOutline": {
+      "version": "route-outline/3",
+      "branch_id": "branch_6c2529dd-3846-41c5-bfe1-18fc4499c112",
+      "root_branch_id": "branch_fa73dc65-d462-4246-a074-9ffcbec10711",
+      "binding_digest": "cc6e060e9f521cc780b829bc25a09f19a2cd02dea8aeccbcd5fa510d3b2cf889",
+      "structure": {
+        "volume": null,
+        "arc": "arc_source_chapter_001",
+        "beat": "beat_chapter_001",
+        "source_progress": "chapter_001"
+      },
+      "goals": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "active",
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_fa73dc65-d462-4246-a074-9ffcbec10711",
+            "ref": "opening-goal-1",
+            "quote": "陌生伤者是否能得到救助"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "active",
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_fa73dc65-d462-4246-a074-9ffcbec10711",
+            "ref": "opening-goal-2",
+            "quote": "空灯与父亲失踪是否有关"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "open",
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_fa73dc65-d462-4246-a074-9ffcbec10711",
+            "ref": "opening-thread-1",
+            "quote": "陌生伤者是否能得到救助"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "open",
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_fa73dc65-d462-4246-a074-9ffcbec10711",
+            "ref": "opening-thread-2",
+            "quote": "空灯与父亲失踪是否有关"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "conflicts": [],
+      "steps": [
+        {
+          "id": "goal:opening-goal-1",
+          "kind": "pursue_goal",
+          "target_id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "blockers": [],
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_fa73dc65-d462-4246-a074-9ffcbec10711",
+            "ref": "opening-goal-1",
+            "quote": "陌生伤者是否能得到救助"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "goal:opening-goal-2",
+          "kind": "pursue_goal",
+          "target_id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "blockers": [],
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_fa73dc65-d462-4246-a074-9ffcbec10711",
+            "ref": "opening-goal-2",
+            "quote": "空灯与父亲失踪是否有关"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "thread:opening-thread-1",
+          "kind": "address_thread",
+          "target_id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "blockers": [],
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_fa73dc65-d462-4246-a074-9ffcbec10711",
+            "ref": "opening-thread-1",
+            "quote": "陌生伤者是否能得到救助"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "thread:opening-thread-2",
+          "kind": "address_thread",
+          "target_id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "blockers": [],
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_fa73dc65-d462-4246-a074-9ffcbec10711",
+            "ref": "opening-thread-2",
+            "quote": "空灯与父亲失踪是否有关"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ]
+    },
+    "sessionId": "8fc4cb18-e022-4a9c-ba6e-eddddbb667df",
+    "sequence": 2
+  },
+  "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+}

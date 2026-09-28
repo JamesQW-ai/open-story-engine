@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "scene-relation-review/0.1",
+  "reviewer": "Codex",
+  "scope": "offline_experiment",
+  "artifactDigest": "5b25d067fbd8f874fd1de37ad8450d603d5d343201eb154f556ecb98126b63b6",
+  "entityIds": [
+    "scene:wounded_stranger",
+    "scene:sealing_line"
+  ],
+  "factIds": [
+    "wounded-side"
+  ],
+  "mappingIds": [
+    "position_out",
+    "position_in",
+    "position_not_out",
+    "position_not_in",
+    "original_C10"
+  ],
+  "limitations": "Codex 基于公开原文逐项复核的固定实验输入；不是独立人工验收，不授予生产状态权威，也不证明自动映射成功。",
+  "checks": [
+    "陌生伤者和封山线仅为此场景局部实体，不赋予真实身份或全局角色 ID。",
+    "来源明确在线外；正文 C10 原始片段与冻结命题均明确在线内。",
+    "肯否随完整命题保存；无条件或过去时态被丢弃。",
+    "本版只比较同快照的唯一所在侧；不从不在内推导一定在外。",
+    "来源全文哈希绑定，不能只因旧引文仍存在就沿用旧位置关系。"
+  ]
+}

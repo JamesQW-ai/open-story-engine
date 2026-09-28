@@ -43,3 +43,9 @@ docs/releases/2026-09-03-mvp-foundation.md
 # 本机运行数据、实时插图缓存与浏览器调试记录。
 /data/
 /.playwright-cli/
+
+# 游玩原始存档和异步图片缓存只保留本地；导出的游玩记录与验证证据正常提交。
+/docs/evidence/**/*.sqlite
+/docs/evidence/**/*.sqlite-*
+/docs/evidence/**/illustrations/
+/build/

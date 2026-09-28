@@ -173,8 +173,11 @@ class LongformPlayTests(unittest.TestCase):
                 "parent_branch_id": root, "text": "留在原地观察周围", "request_id": "stream-failed",
             })
         events = self.stream_events(response)
-        self.assertEqual([event for event, _ in events], ["delta", "reset", "delta", "error"])
+        self.assertEqual([event for event, _ in events], ["error"])
         self.assertEqual(events[-1][1]["code"], "generation_failed")
+        self.assertTrue(events[-1][1]["retryable"])
+        self.assertFalse(events[-1][1]["candidateShown"])
+        self.assertTrue(events[-1][1]["previousBranchUnchanged"])
         self.assertNotIn('test transport', response.text)
         self.assertEqual(len(self.client.get(f"/api/v1/sessions/{sid}/branches").json()["branches"]), 1)
         retry = self.stream_events(self.client.post(f"/api/v1/sessions/{sid}/branches/stream", json={
@@ -264,11 +267,21 @@ class LongformPlayTests(unittest.TestCase):
         self.assertEqual(body["status"], "written")
         self.assertEqual(body["branch"]["parentId"], root_id)
 
+    def test_continue_requires_request_id(self):
+        session_id = self.create_session().json()["session"]["id"]
+        root = self.client.get(f"/api/v1/sessions/{session_id}/branches").json()["branches"][0]
+        response = self.client.post(f"/api/v1/sessions/{session_id}/branches", json={
+            "parent_branch_id": root["id"], "direction_id": "direction_missing",
+        })
+        self.assertEqual(response.status_code, 422)
+        self.assertEqual(len(self.client.get(f"/api/v1/sessions/{session_id}/branches").json()["branches"]), 1)
+
     def test_invalid_direction_rejected_without_write(self):
         session_id = self.create_session().json()["session"]["id"]
         branches = self.client.get(f"/api/v1/sessions/{session_id}/branches").json()["branches"]
         response = self.client.post(f"/api/v1/sessions/{session_id}/branches", json={
             "parent_branch_id": branches[0]["id"], "direction_id": "direction_missing",
+            "request_id": "invalid-direction",
         })
         self.assertEqual(response.status_code, 409)
         self.assertEqual(response.json()["error"]["code"], "play_rejected")
@@ -285,7 +298,7 @@ class LongformPlayTests(unittest.TestCase):
         url = f'/api/v1/sessions/{sid}/branches/stream'
         failed = self.client.post(url, json=payload)
         events = self.stream_events(failed)
-        self.assertTrue(any(event == 'delta' for event, _ in events))
+        self.assertNotIn('delta', [event for event, _ in events])
         self.assertEqual(events[-1][0], 'error')
         self.assertNotIn('done', [event for event, _ in events])
         self.assertNotIn('private database failure', failed.text)
@@ -301,6 +314,26 @@ class LongformPlayTests(unittest.TestCase):
             self.assertEqual(db.execute('SELECT count(*) FROM branch_nodes WHERE session_id=?', (sid,)).fetchone()[0], 2)
             self.assertEqual(db.execute('SELECT count(*) FROM turn_requests WHERE session_id=?', (sid,)).fetchone()[0], 1)
             self.assertEqual(db.execute('SELECT count(*) FROM direction_evaluations WHERE session_id=?', (sid,)).fetchone()[0], 1)
+
+    def test_forged_prepared_memory_rejects_entire_commit(self):
+        from open_story_engine.api_turn_drafts import TurnSnapshot
+        body = self.create_session().json()
+        sid, bid = body['session']['id'], body['branch']['id']
+        with sqlite3.connect(self.database) as db:
+            before = list(db.iterdump())
+        original = TurnSnapshot.artifact
+        def forged(snapshot, outcome):
+            artifact = original(snapshot, outcome)
+            if artifact.get('node'):
+                artifact['node']['contextMemory'] = {'records': [{'content': '未经审核的伪造记忆'}]}
+            return artifact
+        with patch.object(TurnSnapshot, 'artifact', forged):
+            response = self.client.post(f'/api/v1/sessions/{sid}/branches', json={
+                'parent_branch_id': bid, 'text': '留在原地观察周围', 'request_id': 'forged-memory',
+            })
+        self.assertEqual(response.status_code, 409, response.text)
+        with sqlite3.connect(self.database) as db:
+            self.assertEqual(before, list(db.iterdump()))
 
     def test_concurrent_duplicate_streams_commit_one_branch(self):
         body = self.create_session().json()

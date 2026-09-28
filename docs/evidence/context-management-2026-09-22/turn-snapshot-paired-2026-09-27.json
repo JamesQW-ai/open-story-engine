@@ -1,0 +1,1201 @@
+{
+  "schemaVersion": "turn-snapshot-benchmark/1",
+  "modelCalls": 0,
+  "semanticAcceptance": false,
+  "scope": "actual _turn_snapshot, including package verification and complete lineage binding; excludes enqueue, generation, review and commit",
+  "control": "current history validation plus reconstructed old repeated reads and journal rendering, not a historical release",
+  "cachePolicy": "application snapshot cache cleared per sample; alternating paired order; OS cache uncontrolled",
+  "python": "3.12.14",
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "sourceHashes": {
+    "test_support/turn_snapshot_benchmark.py": "3c2c4266adef7891186566c1b659b21f2b2248377e15da98fa7ac27e9a8e8316",
+    "test_support/dynamic_memory_read_benchmark.py": "107f8dffce02f762f539a217ceb0f59bbb8690b13a377c62f46260924c52bf27",
+    "test_support/dynamic_memory_benchmark.py": "b1bd9a515409482dcf0204f8b93bd35710f91d404dbccae1bb29294f9e635091",
+    "test_support/longform.py": "0be0a045e1a9f78bfa6efe7a982e794f732509b76ef20b46e6433b1645081989",
+    "open_story_engine/api_play.py": "14c578d31ba84d578f40408cf9177943fc5c5ae0bfb449be57a52336f208f06f",
+    "open_story_engine/api_turn_drafts.py": "7b9df0c543d7032b9b46019aaa28d12e1cf89d26495b6908beb95bea6e388000",
+    "open_story_engine/api_read.py": "c9dcf55153a8fa7761ab47293cb08441c3ab978ef791f5d880d9393a0e2a7889",
+    "open_story_engine/api_journey.py": "6012f6527a235e2fe27b98fbb5f40411665bdf6e16aa9779f58df9e38915fc7c",
+    "open_story_engine/storage.py": "17068aefbf72206baab41e10219e0f165f0edd014fdadf389fe6f468094181ee",
+    "open_story_engine/route_lifecycle.py": "9c560b78d0d1c3ddaef1705f377de5ee2d2663700395e2f51d319c5d2601207a",
+    "open_story_engine/dynamic_memory.py": "53da0a236335243468848df256b8e64e93d7417466c176de163eb31358843632"
+  },
+  "rows": [
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "goal",
+      "turns": 32,
+      "repeats": 5,
+      "fixtureInputSha256": "2e9cc674497d8fe37a74859c5d83afcb79ad7a312a26760943f28c1866c85fce",
+      "databaseUnchanged": true,
+      "bindingSha256": "c679f2b73b04accae787457d884fbd96e7b7c2793ef1c9557debed9c04c422c2",
+      "selectedSources": [
+        "memory:goal:memory-bench-31:goal-97dfd1f3809d2156"
+      ],
+      "memoryChars": 22,
+      "timings": {
+        "shared_reads": [
+          {
+            "lineageMs": 1.445417,
+            "packageMs": 6.480416,
+            "routeMs": 0.245125,
+            "closingMs": 0.02525,
+            "historyDigestMs": 1.735709,
+            "snapshotMs": 0.004541,
+            "otherMs": 0.4727080000000008,
+            "totalMs": 10.409166
+          },
+          {
+            "lineageMs": 1.4345,
+            "packageMs": 5.807333,
+            "routeMs": 0.211334,
+            "closingMs": 0.022375,
+            "historyDigestMs": 1.717625,
+            "snapshotMs": 0.001583,
+            "otherMs": 0.6111250000000013,
+            "totalMs": 9.805875
+          },
+          {
+            "lineageMs": 1.45425,
+            "packageMs": 5.994667,
+            "routeMs": 0.208334,
+            "closingMs": 0.02225,
+            "historyDigestMs": 1.718042,
+            "snapshotMs": 0.001667,
+            "otherMs": 0.5728740000000005,
+            "totalMs": 9.972084
+          },
+          {
+            "lineageMs": 1.440791,
+            "packageMs": 5.895625,
+            "routeMs": 0.221292,
+            "closingMs": 0.022833,
+            "historyDigestMs": 1.729208,
+            "snapshotMs": 0.00175,
+            "otherMs": 0.6083759999999998,
+            "totalMs": 9.919875
+          },
+          {
+            "lineageMs": 1.494667,
+            "packageMs": 6.061334,
+            "routeMs": 0.216375,
+            "closingMs": 0.021833,
+            "historyDigestMs": 1.716042,
+            "snapshotMs": 0.001667,
+            "otherMs": 0.5778739999999996,
+            "totalMs": 10.089792
+          }
+        ],
+        "repeated_reads_control": [
+          {
+            "lineageMs": 4.324875,
+            "packageMs": 5.847417,
+            "routeMs": 155.79279200000002,
+            "closingMs": 0.09683300000000017,
+            "historyDigestMs": 1.792291,
+            "snapshotMs": 0.003333,
+            "otherMs": 0.5563339999999641,
+            "totalMs": 168.413875
+          },
+          {
+            "lineageMs": 4.244584,
+            "packageMs": 5.989542,
+            "routeMs": 141.28675,
+            "closingMs": 0.10591600000000034,
+            "historyDigestMs": 1.766667,
+            "snapshotMs": 0.002208,
+            "otherMs": 0.5437489999999912,
+            "totalMs": 153.939416
+          },
+          {
+            "lineageMs": 4.222541,
+            "packageMs": 5.595291,
+            "routeMs": 148.33004200000002,
+            "closingMs": 0.11129100000000003,
+            "historyDigestMs": 1.794166,
+            "snapshotMs": 0.003209,
+            "otherMs": 0.48912599999999884,
+            "totalMs": 160.545666
+          },
+          {
+            "lineageMs": 4.347958,
+            "packageMs": 6.209333,
+            "routeMs": 141.899792,
+            "closingMs": 0.1097079999999997,
+            "historyDigestMs": 1.814417,
+            "snapshotMs": 0.002,
+            "otherMs": 0.5854170000000067,
+            "totalMs": 154.968625
+          },
+          {
+            "lineageMs": 4.273667,
+            "packageMs": 5.847166,
+            "routeMs": 147.292541,
+            "closingMs": 0.12195800000000023,
+            "historyDigestMs": 1.851459,
+            "snapshotMs": 0.003292,
+            "otherMs": 0.482167000000004,
+            "totalMs": 159.87225
+          }
+        ]
+      },
+      "metrics": {
+        "shared_reads": {
+          "lineageMs": {
+            "medianMs": 1.445417,
+            "p95Ms": 1.494667
+          },
+          "packageMs": {
+            "medianMs": 5.994667,
+            "p95Ms": 6.480416
+          },
+          "routeMs": {
+            "medianMs": 0.216375,
+            "p95Ms": 0.245125
+          },
+          "closingMs": {
+            "medianMs": 0.022375,
+            "p95Ms": 0.02525
+          },
+          "historyDigestMs": {
+            "medianMs": 1.718042,
+            "p95Ms": 1.735709
+          },
+          "snapshotMs": {
+            "medianMs": 0.001667,
+            "p95Ms": 0.004541
+          },
+          "otherMs": {
+            "medianMs": 0.5778739999999996,
+            "p95Ms": 0.6111250000000013
+          },
+          "totalMs": {
+            "medianMs": 9.972084,
+            "p95Ms": 10.409166
+          }
+        },
+        "repeated_reads_control": {
+          "lineageMs": {
+            "medianMs": 4.273667,
+            "p95Ms": 4.347958
+          },
+          "packageMs": {
+            "medianMs": 5.847417,
+            "p95Ms": 6.209333
+          },
+          "routeMs": {
+            "medianMs": 147.292541,
+            "p95Ms": 155.79279200000002
+          },
+          "closingMs": {
+            "medianMs": 0.1097079999999997,
+            "p95Ms": 0.12195800000000023
+          },
+          "historyDigestMs": {
+            "medianMs": 1.794166,
+            "p95Ms": 1.851459
+          },
+          "snapshotMs": {
+            "medianMs": 0.003209,
+            "p95Ms": 0.003333
+          },
+          "otherMs": {
+            "medianMs": 0.5437489999999912,
+            "p95Ms": 0.5854170000000067
+          },
+          "totalMs": {
+            "medianMs": 159.87225,
+            "p95Ms": 168.413875
+          }
+        }
+      },
+      "lineageReads": {
+        "shared_reads": 1,
+        "repeated_reads_control": 3
+      }
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "goal",
+      "turns": 128,
+      "repeats": 5,
+      "fixtureInputSha256": "049aaac57db8b65880e755a5ccecadbc50216388c391c837bcedc7cc1468de25",
+      "databaseUnchanged": true,
+      "bindingSha256": "c5748fa54db15892bc5c3b4a304fae24f5232c7a70fd2eb53dcd88018281bc58",
+      "selectedSources": [
+        "memory:goal:memory-bench-127:goal-bc7f3b59610b70bf"
+      ],
+      "memoryChars": 22,
+      "timings": {
+        "shared_reads": [
+          {
+            "lineageMs": 13.3305,
+            "packageMs": 6.269083,
+            "routeMs": 0.247041,
+            "closingMs": 0.034167,
+            "historyDigestMs": 16.499667,
+            "snapshotMs": 0.00325,
+            "otherMs": 0.677624999999999,
+            "totalMs": 37.061333
+          },
+          {
+            "lineageMs": 27.965958,
+            "packageMs": 6.221166,
+            "routeMs": 0.250542,
+            "closingMs": 0.0355,
+            "historyDigestMs": 16.677084,
+            "snapshotMs": 0.003917,
+            "otherMs": 0.8054580000000016,
+            "totalMs": 51.959625
+          },
+          {
+            "lineageMs": 13.241417,
+            "packageMs": 6.254083,
+            "routeMs": 0.25325,
+            "closingMs": 0.036625,
+            "historyDigestMs": 16.824459,
+            "snapshotMs": 0.004083,
+            "otherMs": 0.8180419999999984,
+            "totalMs": 37.431959
+          },
+          {
+            "lineageMs": 13.51825,
+            "packageMs": 6.578833,
+            "routeMs": 0.242375,
+            "closingMs": 0.035708,
+            "historyDigestMs": 16.201584,
+            "snapshotMs": 0.003166,
+            "otherMs": 0.7902919999999938,
+            "totalMs": 37.370208
+          },
+          {
+            "lineageMs": 13.125375,
+            "packageMs": 6.504542,
+            "routeMs": 0.263959,
+            "closingMs": 0.035,
+            "historyDigestMs": 16.042625,
+            "snapshotMs": 0.003,
+            "otherMs": 0.8158739999999938,
+            "totalMs": 36.790375
+          }
+        ],
+        "repeated_reads_control": [
+          {
+            "lineageMs": 57.388125,
+            "packageMs": 6.151208,
+            "routeMs": 226.849042,
+            "closingMs": 1.0282079999999993,
+            "historyDigestMs": 16.255458,
+            "snapshotMs": 0.004083,
+            "otherMs": 0.8917089999999916,
+            "totalMs": 308.567833
+          },
+          {
+            "lineageMs": 57.913667000000004,
+            "packageMs": 6.122084,
+            "routeMs": 223.828625,
+            "closingMs": 0.7581239999999951,
+            "historyDigestMs": 16.462875,
+            "snapshotMs": 0.007041,
+            "otherMs": 0.9027919999999767,
+            "totalMs": 305.995208
+          },
+          {
+            "lineageMs": 39.119125,
+            "packageMs": 6.121125,
+            "routeMs": 244.193124,
+            "closingMs": 0.7766670000000033,
+            "historyDigestMs": 16.638041,
+            "snapshotMs": 0.004458,
+            "otherMs": 0.9513349999999718,
+            "totalMs": 307.803875
+          },
+          {
+            "lineageMs": 40.073125,
+            "packageMs": 6.090333,
+            "routeMs": 248.377167,
+            "closingMs": 0.9355830000000012,
+            "historyDigestMs": 16.475,
+            "snapshotMs": 0.003833,
+            "otherMs": 1.0203339999999912,
+            "totalMs": 312.975375
+          },
+          {
+            "lineageMs": 52.987415999999996,
+            "packageMs": 6.54675,
+            "routeMs": 221.963334,
+            "closingMs": 0.8573760000000004,
+            "historyDigestMs": 16.786958,
+            "snapshotMs": 0.004292,
+            "otherMs": 0.8616240000000062,
+            "totalMs": 300.00775
+          }
+        ]
+      },
+      "metrics": {
+        "shared_reads": {
+          "lineageMs": {
+            "medianMs": 13.3305,
+            "p95Ms": 27.965958
+          },
+          "packageMs": {
+            "medianMs": 6.269083,
+            "p95Ms": 6.578833
+          },
+          "routeMs": {
+            "medianMs": 0.250542,
+            "p95Ms": 0.263959
+          },
+          "closingMs": {
+            "medianMs": 0.0355,
+            "p95Ms": 0.036625
+          },
+          "historyDigestMs": {
+            "medianMs": 16.499667,
+            "p95Ms": 16.824459
+          },
+          "snapshotMs": {
+            "medianMs": 0.00325,
+            "p95Ms": 0.004083
+          },
+          "otherMs": {
+            "medianMs": 0.8054580000000016,
+            "p95Ms": 0.8180419999999984
+          },
+          "totalMs": {
+            "medianMs": 37.370208,
+            "p95Ms": 51.959625
+          }
+        },
+        "repeated_reads_control": {
+          "lineageMs": {
+            "medianMs": 52.987415999999996,
+            "p95Ms": 57.913667000000004
+          },
+          "packageMs": {
+            "medianMs": 6.122084,
+            "p95Ms": 6.54675
+          },
+          "routeMs": {
+            "medianMs": 226.849042,
+            "p95Ms": 248.377167
+          },
+          "closingMs": {
+            "medianMs": 0.8573760000000004,
+            "p95Ms": 1.0282079999999993
+          },
+          "historyDigestMs": {
+            "medianMs": 16.475,
+            "p95Ms": 16.786958
+          },
+          "snapshotMs": {
+            "medianMs": 0.004292,
+            "p95Ms": 0.007041
+          },
+          "otherMs": {
+            "medianMs": 0.9027919999999767,
+            "p95Ms": 1.0203339999999912
+          },
+          "totalMs": {
+            "medianMs": 307.803875,
+            "p95Ms": 312.975375
+          }
+        }
+      },
+      "lineageReads": {
+        "shared_reads": 1,
+        "repeated_reads_control": 3
+      }
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "goal",
+      "turns": 512,
+      "repeats": 5,
+      "fixtureInputSha256": "0bce690313c700afe5de44f2648e282ba33c264413e7b4ebbae4703ccbcd75b3",
+      "databaseUnchanged": true,
+      "bindingSha256": "e1df207d35fd0431977044306a037857b671efda15e414dac0b9930a8f07682f",
+      "selectedSources": [
+        "memory:goal:memory-bench-511:goal-0c14539111e1f006"
+      ],
+      "memoryChars": 22,
+      "timings": {
+        "shared_reads": [
+          {
+            "lineageMs": 264.359542,
+            "packageMs": 6.256375,
+            "routeMs": 0.333875,
+            "closingMs": 0.076042,
+            "historyDigestMs": 215.383917,
+            "snapshotMs": 0.004875,
+            "otherMs": 1.435707999999977,
+            "totalMs": 487.850334
+          },
+          {
+            "lineageMs": 169.052042,
+            "packageMs": 6.209958,
+            "routeMs": 0.323583,
+            "closingMs": 0.084083,
+            "historyDigestMs": 219.286583,
+            "snapshotMs": 0.004167,
+            "otherMs": 1.5292089999999803,
+            "totalMs": 396.489625
+          },
+          {
+            "lineageMs": 406.068541,
+            "packageMs": 6.341,
+            "routeMs": 0.361708,
+            "closingMs": 0.076458,
+            "historyDigestMs": 218.694333,
+            "snapshotMs": 0.004541,
+            "otherMs": 1.6807520000000977,
+            "totalMs": 633.227333
+          },
+          {
+            "lineageMs": 355.657166,
+            "packageMs": 6.45975,
+            "routeMs": 0.340959,
+            "closingMs": 0.080875,
+            "historyDigestMs": 308.289125,
+            "snapshotMs": 0.00425,
+            "otherMs": 1.5068330000000287,
+            "totalMs": 672.338958
+          },
+          {
+            "lineageMs": 330.848125,
+            "packageMs": 6.36825,
+            "routeMs": 0.340709,
+            "closingMs": 0.079709,
+            "historyDigestMs": 229.5635,
+            "snapshotMs": 0.0045,
+            "otherMs": 1.635165000000029,
+            "totalMs": 568.839958
+          }
+        ],
+        "repeated_reads_control": [
+          {
+            "lineageMs": 1165.97375,
+            "packageMs": 6.157875,
+            "routeMs": 1626.969167,
+            "closingMs": 14.820165999999915,
+            "historyDigestMs": 223.207167,
+            "snapshotMs": 0.004208,
+            "otherMs": 1.8718330000001515,
+            "totalMs": 3039.004166
+          },
+          {
+            "lineageMs": 1307.902625,
+            "packageMs": 6.077042,
+            "routeMs": 1366.128334,
+            "closingMs": 15.750958000000082,
+            "historyDigestMs": 217.015083,
+            "snapshotMs": 0.004375,
+            "otherMs": 1.8099580000002788,
+            "totalMs": 2914.688375
+          },
+          {
+            "lineageMs": 1232.088626,
+            "packageMs": 6.186375,
+            "routeMs": 1366.197083,
+            "closingMs": 14.518250000000023,
+            "historyDigestMs": 215.954959,
+            "snapshotMs": 0.004166,
+            "otherMs": 1.7500829999999041,
+            "totalMs": 2836.699542
+          },
+          {
+            "lineageMs": 1230.274333,
+            "packageMs": 6.150333,
+            "routeMs": 1635.691167,
+            "closingMs": 13.297666999999933,
+            "historyDigestMs": 216.125125,
+            "snapshotMs": 0.004291,
+            "otherMs": 1.725500000000011,
+            "totalMs": 3103.268416
+          },
+          {
+            "lineageMs": 1069.985125,
+            "packageMs": 6.775584,
+            "routeMs": 1640.995583,
+            "closingMs": 13.803376000000014,
+            "historyDigestMs": 207.331166,
+            "snapshotMs": 0.004083,
+            "otherMs": 1.7952910000003612,
+            "totalMs": 2940.690208
+          }
+        ]
+      },
+      "metrics": {
+        "shared_reads": {
+          "lineageMs": {
+            "medianMs": 330.848125,
+            "p95Ms": 406.068541
+          },
+          "packageMs": {
+            "medianMs": 6.341,
+            "p95Ms": 6.45975
+          },
+          "routeMs": {
+            "medianMs": 0.340709,
+            "p95Ms": 0.361708
+          },
+          "closingMs": {
+            "medianMs": 0.079709,
+            "p95Ms": 0.084083
+          },
+          "historyDigestMs": {
+            "medianMs": 219.286583,
+            "p95Ms": 308.289125
+          },
+          "snapshotMs": {
+            "medianMs": 0.0045,
+            "p95Ms": 0.004875
+          },
+          "otherMs": {
+            "medianMs": 1.5292089999999803,
+            "p95Ms": 1.6807520000000977
+          },
+          "totalMs": {
+            "medianMs": 568.839958,
+            "p95Ms": 672.338958
+          }
+        },
+        "repeated_reads_control": {
+          "lineageMs": {
+            "medianMs": 1230.274333,
+            "p95Ms": 1307.902625
+          },
+          "packageMs": {
+            "medianMs": 6.157875,
+            "p95Ms": 6.775584
+          },
+          "routeMs": {
+            "medianMs": 1626.969167,
+            "p95Ms": 1640.995583
+          },
+          "closingMs": {
+            "medianMs": 14.518250000000023,
+            "p95Ms": 15.750958000000082
+          },
+          "historyDigestMs": {
+            "medianMs": 216.125125,
+            "p95Ms": 223.207167
+          },
+          "snapshotMs": {
+            "medianMs": 0.004208,
+            "p95Ms": 0.004375
+          },
+          "otherMs": {
+            "medianMs": 1.7952910000003612,
+            "p95Ms": 1.8718330000001515
+          },
+          "totalMs": {
+            "medianMs": 2940.690208,
+            "p95Ms": 3103.268416
+          }
+        }
+      },
+      "lineageReads": {
+        "shared_reads": 1,
+        "repeated_reads_control": 3
+      }
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "thread",
+      "turns": 32,
+      "repeats": 5,
+      "fixtureInputSha256": "79e456e0e770eeb96fb2b5e7f8b5eb91b49c5b693ed40780e435e0cdb8d94288",
+      "databaseUnchanged": true,
+      "bindingSha256": "e9e8e98e153f076051f5129def1932c4fd28423d119bbd7108f22a8eb47f1532",
+      "selectedSources": [
+        "memory:thread:memory-bench-31:thread-97dfd1f3809d2156"
+      ],
+      "memoryChars": 24,
+      "timings": {
+        "shared_reads": [
+          {
+            "lineageMs": 1.550458,
+            "packageMs": 5.92225,
+            "routeMs": 0.219125,
+            "closingMs": 0.023292,
+            "historyDigestMs": 1.833542,
+            "snapshotMs": 0.001916,
+            "otherMs": 0.46041699999999963,
+            "totalMs": 10.011
+          },
+          {
+            "lineageMs": 1.538709,
+            "packageMs": 6.358666,
+            "routeMs": 0.226583,
+            "closingMs": 0.024041,
+            "historyDigestMs": 1.823875,
+            "snapshotMs": 0.001708,
+            "otherMs": 0.6865019999999991,
+            "totalMs": 10.660084
+          },
+          {
+            "lineageMs": 1.579417,
+            "packageMs": 6.003916,
+            "routeMs": 0.219625,
+            "closingMs": 0.022542,
+            "historyDigestMs": 1.797958,
+            "snapshotMs": 0.001833,
+            "otherMs": 0.6238339999999987,
+            "totalMs": 10.249125
+          },
+          {
+            "lineageMs": 1.478,
+            "packageMs": 6.049541,
+            "routeMs": 0.218167,
+            "closingMs": 0.023208,
+            "historyDigestMs": 1.782042,
+            "snapshotMs": 0.001667,
+            "otherMs": 0.6054160000000017,
+            "totalMs": 10.158041
+          },
+          {
+            "lineageMs": 1.638208,
+            "packageMs": 6.085209,
+            "routeMs": 0.233875,
+            "closingMs": 0.022334,
+            "historyDigestMs": 1.811,
+            "snapshotMs": 0.001541,
+            "otherMs": 0.601833000000001,
+            "totalMs": 10.394
+          }
+        ],
+        "repeated_reads_control": [
+          {
+            "lineageMs": 5.094417,
+            "packageMs": 6.080709,
+            "routeMs": 146.95862499999998,
+            "closingMs": 0.105958,
+            "historyDigestMs": 1.870958,
+            "snapshotMs": 0.002208,
+            "otherMs": 0.6764170000000149,
+            "totalMs": 160.789292
+          },
+          {
+            "lineageMs": 4.826793,
+            "packageMs": 6.104542,
+            "routeMs": 359.355207,
+            "closingMs": 0.11587499999999973,
+            "historyDigestMs": 1.899,
+            "snapshotMs": 0.002917,
+            "otherMs": 0.5969160000000215,
+            "totalMs": 372.90125
+          },
+          {
+            "lineageMs": 4.354958,
+            "packageMs": 5.660958,
+            "routeMs": 143.37691700000002,
+            "closingMs": 0.10845899999999986,
+            "historyDigestMs": 1.917,
+            "snapshotMs": 0.002125,
+            "otherMs": 0.5051659999999742,
+            "totalMs": 155.925583
+          },
+          {
+            "lineageMs": 4.3295840000000005,
+            "packageMs": 6.088292,
+            "routeMs": 154.150167,
+            "closingMs": 0.1124579999999995,
+            "historyDigestMs": 1.839959,
+            "snapshotMs": 0.002125,
+            "otherMs": 0.5545399999999745,
+            "totalMs": 167.077125
+          },
+          {
+            "lineageMs": 4.398417,
+            "packageMs": 5.991542,
+            "routeMs": 142.86266700000002,
+            "closingMs": 0.11991799999999997,
+            "historyDigestMs": 1.886042,
+            "snapshotMs": 0.002167,
+            "otherMs": 0.5038299999999651,
+            "totalMs": 155.764583
+          }
+        ]
+      },
+      "metrics": {
+        "shared_reads": {
+          "lineageMs": {
+            "medianMs": 1.550458,
+            "p95Ms": 1.638208
+          },
+          "packageMs": {
+            "medianMs": 6.049541,
+            "p95Ms": 6.358666
+          },
+          "routeMs": {
+            "medianMs": 0.219625,
+            "p95Ms": 0.233875
+          },
+          "closingMs": {
+            "medianMs": 0.023208,
+            "p95Ms": 0.024041
+          },
+          "historyDigestMs": {
+            "medianMs": 1.811,
+            "p95Ms": 1.833542
+          },
+          "snapshotMs": {
+            "medianMs": 0.001708,
+            "p95Ms": 0.001916
+          },
+          "otherMs": {
+            "medianMs": 0.6054160000000017,
+            "p95Ms": 0.6865019999999991
+          },
+          "totalMs": {
+            "medianMs": 10.249125,
+            "p95Ms": 10.660084
+          }
+        },
+        "repeated_reads_control": {
+          "lineageMs": {
+            "medianMs": 4.398417,
+            "p95Ms": 5.094417
+          },
+          "packageMs": {
+            "medianMs": 6.080709,
+            "p95Ms": 6.104542
+          },
+          "routeMs": {
+            "medianMs": 146.95862499999998,
+            "p95Ms": 359.355207
+          },
+          "closingMs": {
+            "medianMs": 0.1124579999999995,
+            "p95Ms": 0.11991799999999997
+          },
+          "historyDigestMs": {
+            "medianMs": 1.886042,
+            "p95Ms": 1.917
+          },
+          "snapshotMs": {
+            "medianMs": 0.002167,
+            "p95Ms": 0.002917
+          },
+          "otherMs": {
+            "medianMs": 0.5545399999999745,
+            "p95Ms": 0.6764170000000149
+          },
+          "totalMs": {
+            "medianMs": 160.789292,
+            "p95Ms": 372.90125
+          }
+        }
+      },
+      "lineageReads": {
+        "shared_reads": 1,
+        "repeated_reads_control": 3
+      }
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "thread",
+      "turns": 128,
+      "repeats": 5,
+      "fixtureInputSha256": "538c33c2e58abb79e48c41334d69c0dd4beb4382ef2143c9d31b2326932b8706",
+      "databaseUnchanged": true,
+      "bindingSha256": "0011d318b1ea35ba0a6a2f362b294e8a1e81c17a37c902d0bb2879b6fde22b4c",
+      "selectedSources": [
+        "memory:thread:memory-bench-127:thread-bc7f3b59610b70bf"
+      ],
+      "memoryChars": 24,
+      "timings": {
+        "shared_reads": [
+          {
+            "lineageMs": 21.95875,
+            "packageMs": 6.078292,
+            "routeMs": 0.24625,
+            "closingMs": 0.034583,
+            "historyDigestMs": 17.705208,
+            "snapshotMs": 0.002667,
+            "otherMs": 0.7347080000000048,
+            "totalMs": 46.760458
+          },
+          {
+            "lineageMs": 13.066542,
+            "packageMs": 6.064125,
+            "routeMs": 0.233292,
+            "closingMs": 0.035209,
+            "historyDigestMs": 17.662334,
+            "snapshotMs": 0.002958,
+            "otherMs": 0.7979569999999967,
+            "totalMs": 37.862417
+          },
+          {
+            "lineageMs": 17.29175,
+            "packageMs": 6.096042,
+            "routeMs": 0.237375,
+            "closingMs": 0.034083,
+            "historyDigestMs": 17.246792,
+            "snapshotMs": 0.003084,
+            "otherMs": 0.8120410000000007,
+            "totalMs": 41.721167
+          },
+          {
+            "lineageMs": 13.253333,
+            "packageMs": 6.173083,
+            "routeMs": 0.241667,
+            "closingMs": 0.0345,
+            "historyDigestMs": 17.644917,
+            "snapshotMs": 0.004208,
+            "otherMs": 0.8049999999999997,
+            "totalMs": 38.156708
+          },
+          {
+            "lineageMs": 13.244,
+            "packageMs": 6.122334,
+            "routeMs": 0.242916,
+            "closingMs": 0.035792,
+            "historyDigestMs": 17.899917,
+            "snapshotMs": 0.002958,
+            "otherMs": 0.8292910000000049,
+            "totalMs": 38.377208
+          }
+        ],
+        "repeated_reads_control": [
+          {
+            "lineageMs": 39.158375,
+            "packageMs": 6.051,
+            "routeMs": 219.984458,
+            "closingMs": 0.9952500000000004,
+            "historyDigestMs": 17.983833,
+            "snapshotMs": 0.003875,
+            "otherMs": 1.1589170000000308,
+            "totalMs": 285.335708
+          },
+          {
+            "lineageMs": 48.535542,
+            "packageMs": 6.290042,
+            "routeMs": 218.505916,
+            "closingMs": 0.7580410000000004,
+            "historyDigestMs": 17.232916,
+            "snapshotMs": 0.004084,
+            "otherMs": 0.8612919999999917,
+            "totalMs": 292.187833
+          },
+          {
+            "lineageMs": 40.136373,
+            "packageMs": 6.058792,
+            "routeMs": 219.26629200000002,
+            "closingMs": 0.8129170000000006,
+            "historyDigestMs": 17.638708,
+            "snapshotMs": 0.003833,
+            "otherMs": 0.9925849999999627,
+            "totalMs": 284.9095
+          },
+          {
+            "lineageMs": 48.294291,
+            "packageMs": 6.219625,
+            "routeMs": 220.194041,
+            "closingMs": 0.919833999999998,
+            "historyDigestMs": 18.537125,
+            "snapshotMs": 0.004,
+            "otherMs": 1.09941699999996,
+            "totalMs": 295.268333
+          },
+          {
+            "lineageMs": 42.871001,
+            "packageMs": 6.072625,
+            "routeMs": 217.646083,
+            "closingMs": 0.8148750000000007,
+            "historyDigestMs": 17.927708,
+            "snapshotMs": 0.004,
+            "otherMs": 0.8371659999999679,
+            "totalMs": 286.173458
+          }
+        ]
+      },
+      "metrics": {
+        "shared_reads": {
+          "lineageMs": {
+            "medianMs": 13.253333,
+            "p95Ms": 21.95875
+          },
+          "packageMs": {
+            "medianMs": 6.096042,
+            "p95Ms": 6.173083
+          },
+          "routeMs": {
+            "medianMs": 0.241667,
+            "p95Ms": 0.24625
+          },
+          "closingMs": {
+            "medianMs": 0.034583,
+            "p95Ms": 0.035792
+          },
+          "historyDigestMs": {
+            "medianMs": 17.662334,
+            "p95Ms": 17.899917
+          },
+          "snapshotMs": {
+            "medianMs": 0.002958,
+            "p95Ms": 0.004208
+          },
+          "otherMs": {
+            "medianMs": 0.8049999999999997,
+            "p95Ms": 0.8292910000000049
+          },
+          "totalMs": {
+            "medianMs": 38.377208,
+            "p95Ms": 46.760458
+          }
+        },
+        "repeated_reads_control": {
+          "lineageMs": {
+            "medianMs": 42.871001,
+            "p95Ms": 48.535542
+          },
+          "packageMs": {
+            "medianMs": 6.072625,
+            "p95Ms": 6.290042
+          },
+          "routeMs": {
+            "medianMs": 219.26629200000002,
+            "p95Ms": 220.194041
+          },
+          "closingMs": {
+            "medianMs": 0.8148750000000007,
+            "p95Ms": 0.9952500000000004
+          },
+          "historyDigestMs": {
+            "medianMs": 17.927708,
+            "p95Ms": 18.537125
+          },
+          "snapshotMs": {
+            "medianMs": 0.004,
+            "p95Ms": 0.004084
+          },
+          "otherMs": {
+            "medianMs": 0.9925849999999627,
+            "p95Ms": 1.1589170000000308
+          },
+          "totalMs": {
+            "medianMs": 286.173458,
+            "p95Ms": 295.268333
+          }
+        }
+      },
+      "lineageReads": {
+        "shared_reads": 1,
+        "repeated_reads_control": 3
+      }
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "thread",
+      "turns": 512,
+      "repeats": 5,
+      "fixtureInputSha256": "2f11ac7b84ed1c6ba71a229c6d4581e0758fe8f63c1d3c44a18df377d8d42e13",
+      "databaseUnchanged": true,
+      "bindingSha256": "54766b55a4981e893889e06d29c9a1436d2444d96c54f36dd0ac3888d7ddf7d9",
+      "selectedSources": [
+        "memory:thread:memory-bench-511:thread-0c14539111e1f006"
+      ],
+      "memoryChars": 24,
+      "timings": {
+        "shared_reads": [
+          {
+            "lineageMs": 181.336084,
+            "packageMs": 6.485583,
+            "routeMs": 0.345583,
+            "closingMs": 0.082166,
+            "historyDigestMs": 231.504208,
+            "snapshotMs": 0.004541,
+            "otherMs": 1.5038769999999886,
+            "totalMs": 421.262042
+          },
+          {
+            "lineageMs": 167.761542,
+            "packageMs": 6.203,
+            "routeMs": 0.339167,
+            "closingMs": 0.07725,
+            "historyDigestMs": 231.318542,
+            "snapshotMs": 0.005292,
+            "otherMs": 1.5208729999999946,
+            "totalMs": 407.225666
+          },
+          {
+            "lineageMs": 165.517041,
+            "packageMs": 6.39725,
+            "routeMs": 0.317917,
+            "closingMs": 0.076916,
+            "historyDigestMs": 233.521625,
+            "snapshotMs": 0.004792,
+            "otherMs": 1.502334000000019,
+            "totalMs": 407.337875
+          },
+          {
+            "lineageMs": 166.572625,
+            "packageMs": 6.10775,
+            "routeMs": 0.309042,
+            "closingMs": 0.077542,
+            "historyDigestMs": 230.680667,
+            "snapshotMs": 0.004459,
+            "otherMs": 1.4902480000000082,
+            "totalMs": 405.242333
+          },
+          {
+            "lineageMs": 177.363,
+            "packageMs": 6.27975,
+            "routeMs": 0.326584,
+            "closingMs": 0.0785,
+            "historyDigestMs": 228.861833,
+            "snapshotMs": 0.00425,
+            "otherMs": 1.4727910000000293,
+            "totalMs": 414.386708
+          }
+        ],
+        "repeated_reads_control": [
+          {
+            "lineageMs": 575.556375,
+            "packageMs": 6.228667,
+            "routeMs": 1349.8597909999999,
+            "closingMs": 15.356750000000005,
+            "historyDigestMs": 232.96425,
+            "snapshotMs": 0.00425,
+            "otherMs": 1.9791260000001785,
+            "totalMs": 2181.949209
+          },
+          {
+            "lineageMs": 573.075416,
+            "packageMs": 6.516792,
+            "routeMs": 1362.1715419999998,
+            "closingMs": 14.345165999999978,
+            "historyDigestMs": 225.226875,
+            "snapshotMs": 0.0045,
+            "otherMs": 1.823917000000165,
+            "totalMs": 2183.164208
+          },
+          {
+            "lineageMs": 540.970251,
+            "packageMs": 6.190333,
+            "routeMs": 1383.494666,
+            "closingMs": 15.060042000000067,
+            "historyDigestMs": 231.000625,
+            "snapshotMs": 0.00425,
+            "otherMs": 1.959208000000217,
+            "totalMs": 2178.679375
+          },
+          {
+            "lineageMs": 555.033874,
+            "packageMs": 6.252416,
+            "routeMs": 1373.36175,
+            "closingMs": 15.355709000000047,
+            "historyDigestMs": 225.394125,
+            "snapshotMs": 0.00425,
+            "otherMs": 1.8671259999996437,
+            "totalMs": 2177.26925
+          },
+          {
+            "lineageMs": 518.03275,
+            "packageMs": 23.959541,
+            "routeMs": 1379.80575,
+            "closingMs": 14.998417000000018,
+            "historyDigestMs": 231.550792,
+            "snapshotMs": 0.004416,
+            "otherMs": 1.8025840000000244,
+            "totalMs": 2170.15425
+          }
+        ]
+      },
+      "metrics": {
+        "shared_reads": {
+          "lineageMs": {
+            "medianMs": 167.761542,
+            "p95Ms": 181.336084
+          },
+          "packageMs": {
+            "medianMs": 6.27975,
+            "p95Ms": 6.485583
+          },
+          "routeMs": {
+            "medianMs": 0.326584,
+            "p95Ms": 0.345583
+          },
+          "closingMs": {
+            "medianMs": 0.077542,
+            "p95Ms": 0.082166
+          },
+          "historyDigestMs": {
+            "medianMs": 231.318542,
+            "p95Ms": 233.521625
+          },
+          "snapshotMs": {
+            "medianMs": 0.004541,
+            "p95Ms": 0.005292
+          },
+          "otherMs": {
+            "medianMs": 1.502334000000019,
+            "p95Ms": 1.5208729999999946
+          },
+          "totalMs": {
+            "medianMs": 407.337875,
+            "p95Ms": 421.262042
+          }
+        },
+        "repeated_reads_control": {
+          "lineageMs": {
+            "medianMs": 555.033874,
+            "p95Ms": 575.556375
+          },
+          "packageMs": {
+            "medianMs": 6.252416,
+            "p95Ms": 23.959541
+          },
+          "routeMs": {
+            "medianMs": 1373.36175,
+            "p95Ms": 1383.494666
+          },
+          "closingMs": {
+            "medianMs": 15.060042000000067,
+            "p95Ms": 15.356750000000005
+          },
+          "historyDigestMs": {
+            "medianMs": 231.000625,
+            "p95Ms": 232.96425
+          },
+          "snapshotMs": {
+            "medianMs": 0.00425,
+            "p95Ms": 0.0045
+          },
+          "otherMs": {
+            "medianMs": 1.8671259999996437,
+            "p95Ms": 1.9791260000001785
+          },
+          "totalMs": {
+            "medianMs": 2178.679375,
+            "p95Ms": 2183.164208
+          }
+        }
+      },
+      "lineageReads": {
+        "shared_reads": 1,
+        "repeated_reads_control": 3
+      }
+    }
+  ]
+}

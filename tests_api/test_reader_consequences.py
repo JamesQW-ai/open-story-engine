@@ -52,7 +52,7 @@ def grounded(body, requirements=None, *, repair_count=0):
     from open_story_engine.reader_scene_review import grounding_claims, dialogue_units
     return {'checks': [dict(id=k, verdict='supported', kind='current', sources=[], scopeViolations=[], reason='当前授权动作')
                        for k in grounding_claims(body)],
-            'knowledgeChecks': [dict(id=k, speakerId=GU, kind='current', verdict='supported', accessSources=[], missingEvidence=[], reason='当前对话') for k in dialogue_units(body)],
+            'knowledgeChecks': [dict(id=k, speakerId=GU, speakerName='顾长离', premises=[], kind='current', verdict='supported', accessSources=[], missingEvidence=[], reason='当前对话') for k in dialogue_units(body)],
             'repairChecks': [dict(id=f'R{i+1}', verdict='resolved', paragraphIds=['P1'], reason='错误已移除') for i in range(repair_count)],
             'scopeChecks': [dict(id=k, verdict='satisfied', paragraphIds=['P1'], reason='当前正文完整执行要求')
                             for k in (requirements or {'A1': ''})]}
@@ -184,7 +184,11 @@ class ConsequenceTests(unittest.TestCase):
             self.assertEqual(result['decision'], decision)
         candidate = copy.deepcopy(self.plan)
         candidate['requirements'] = {}
-        with self.assertRaises(ValueError):
+        with self.assertRaisesRegex(ValueError, '缺少：A1'):
+            rc.validate_plan(candidate, self.requirements, self.context)
+        candidate = copy.deepcopy(self.plan)
+        candidate['requirements']['A8'] = {'mode': 'attempt', 'summary': '模型补充的NPC回应'}
+        with self.assertRaisesRegex(ValueError, '多余：A8'):
             rc.validate_plan(candidate, self.requirements, self.context)
 
     def test_permanent_departure_removes_presence_but_does_not_grant_items(self):
@@ -382,6 +386,11 @@ class ConsequenceTests(unittest.TestCase):
             enqueue('本回合杀死陆照临', BODY, self.plan['outcomes'])
             killed = play.continue_turn(sid, root['id'], text='本回合杀死陆照临', request_id='kill')['branch']
             cause = killed['id']
+            self.assertEqual(killed['contextMemory']['schemaVersion'], 'committed-outcome-memory/2')
+            self.assertEqual(killed['contextMemory']['records'][0]['memory']['status'], 'confirmed')
+            repeated = play.continue_turn(sid, root['id'], text='本回合杀死陆照临', request_id='kill')
+            self.assertTrue(repeated['deduplicated'])
+            self.assertEqual(repeated['branch']['contextMemory'], killed['contextMemory'])
             current = killed
             for i in range(5):
                 action = '留在原地观察周围'
@@ -408,6 +417,14 @@ class ConsequenceTests(unittest.TestCase):
             with read.store() as store:
                 restored_branch = store.branch(sid, current['id'])
                 history = store.lineage(sid, current['id'])
+            from open_story_engine.dynamic_memory import select as select_memory
+            selected_memory, _, memory_audit = select_memory(
+                dict(package=self.package, parent=restored_branch, lineage=history,
+                     playerDirection='查看陆照临留下的痕迹'), restored_branch['branchState'], {})
+            self.assertEqual(memory_audit['selectedCount'], 1)
+            self.assertEqual(selected_memory[0]['content'], '陆照临已死亡。')
+            self.assertEqual(selected_memory[0]['branchId'], restored_branch['id'])
+            self.assertNotIn('contextMemory', restored_branch)
             self.assertEqual(len(visible_choices(restored_branch, self.package, self.contract, history)), 1)
             with self.assertRaisesRegex(ValueError, '永久下线'):
                 ra.validate_plan(candidate, {**self.context, 'parent': restored_branch})

@@ -228,6 +228,18 @@ class SceneEvidenceTests(unittest.TestCase):
             complete_with_retry(gateway, 'complete_text', [])
         self.assertEqual(gateway.complete_text.call_count, 2)
 
+    def test_transport_fallback_failure_does_not_start_another_full_retry(self):
+        from unittest.mock import Mock
+        gateway = Mock()
+        error = LlmError('both transports failed', 'transport_error')
+        error.observations = [
+            {'outcome': 'failed', 'retryReason': 'transport_fallback'},
+        ]
+        gateway.complete_json.side_effect = error
+        with self.assertRaises(LlmError):
+            complete_with_retry(gateway, 'complete_json', [], stage='scene_review')
+        self.assertEqual(gateway.complete_json.call_count, 1)
+
     def test_character_cards_require_present_scene_not_memory_or_another_route(self):
         character = {'id': 'tang', 'name': '唐栖', 'menuDescription': '调查者'}
         nodes = [{'sequence': 0, 'narrativeText': '你想起唐栖下午留下的语音。“唐栖究竟在哪？”你问。'}]

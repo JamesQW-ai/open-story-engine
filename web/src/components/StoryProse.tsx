@@ -1,12 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { api } from '../api/client'
 import type { SceneIllustrations, PublishedScene } from '../api/types'
-import { readingSections } from './readingLayout'
+import { illustrationAnchor, readingSections } from './readingLayout'
 import { subscribeIllustration } from './illustrationSubscription'
+import { illustrationAssetKey, readIllustrationHistory, rememberIllustration } from './illustrationHistory'
 
 function SceneImage({ url, alt, shown }: { url: string; alt: string; shown: () => void }) {
   const ref = useRef<HTMLImageElement>(null)
   const [loaded, setLoaded] = useState(false)
+  const [failed, setFailed] = useState(false)
   useEffect(() => {
     if (!loaded || !ref.current) return
     const observer = new IntersectionObserver((entries) => {
@@ -15,32 +17,13 @@ function SceneImage({ url, alt, shown }: { url: string; alt: string; shown: () =
     observer.observe(ref.current)
     return () => observer.disconnect()
   }, [loaded, shown])
-  return <img ref={ref} src={url} alt={alt} onLoad={() => setLoaded(true)}
+  if (failed) return <p className="muted">插图暂未加载，故事照常继续。</p>
+  return <img onError={() => setFailed(true)} ref={ref} src={url} alt={alt} onLoad={() => setLoaded(true)}
     loading="eager" decoding="async" width="1536" height="1024" />
 }
 
-function illustrationHistoryKey(sessionId: string) {
-  return `story-illustrations-used:${sessionId}`
-}
-
-function readIllustrationHistory(sessionId: string): Record<string, string> {
-  try {
-    const parsed = JSON.parse(sessionStorage.getItem(illustrationHistoryKey(sessionId)) ?? '{}')
-    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed as Record<string, string> : {}
-  } catch {
-    return {}
-  }
-}
-
-function rememberIllustration(sessionId: string, assetKey: string, branchId: string) {
-  try {
-    const history = readIllustrationHistory(sessionId)
-    history[assetKey] = branchId
-    sessionStorage.setItem(illustrationHistoryKey(sessionId), JSON.stringify(history))
-  } catch { /* Storage is optional; reading must continue. */ }
-}
-
-export function StoryProse({ text, streaming, sessionId, branchId, fixedOpeningImage }: {
+export function StoryProse({ text, fullText = text, streaming, sessionId, branchId, fixedOpeningImage }: {
+  fullText?: string
   fixedOpeningImage?: PublishedScene | null
   text: string
   title: string
@@ -56,11 +39,16 @@ export function StoryProse({ text, streaming, sessionId, branchId, fixedOpeningI
   const subscription = useRef('')
   const opened = useRef(0)
   const shown = useRef(false)
+  const visibleAssets = useRef(new Set<string>())
+  const defaultAnchor = illustrationAnchor(fullText)
+  const hasFixedImage = Boolean(fixedOpeningImage)
+  const automatic = defaultAnchor !== null && !hasFixedImage
   useEffect(() => {
     setArt(null)
     opened.current = 0
     shown.current = false
-    if (streaming || !sessionId || !branchId || !text.trim()) return
+    if (!sessionId || !branchId || !fullText.trim() || hasFixedImage) return
+    let requested = false
     const request = subscribeIllustration({
       prepare: (subscriber, draw) => api.illustrations(sessionId, branchId, subscriber, draw),
       release: subscriber => api.releaseIllustrations(sessionId, branchId, subscriber),
@@ -68,7 +56,15 @@ export function StoryProse({ text, streaming, sessionId, branchId, fixedOpeningI
         subscription.current = subscriber ?? ''
         if (subscriber) { opened.current = performance.now(); shown.current = false }
       },
-      ready: result => setArt({ branch: branchId, value: result }),
+      ready: result => {
+        const shouldDraw = result.automatic ?? automatic
+        setArt({ branch: branchId, value: shouldDraw && requested && result.can_generate
+          ? { ...result, can_generate: false } : result })
+        if (shouldDraw && result.can_generate && !requested) {
+          requested = true
+          request.draw()
+        }
+      },
       error: () => setArt({ branch: branchId, value: { available: false, can_generate: false,
         items: [{ index: 0, status: 'failed', alt: '', source: 'private' }] } }),
     })
@@ -86,39 +82,45 @@ export function StoryProse({ text, streaming, sessionId, branchId, fixedOpeningI
       drawRequest.current = () => undefined
       cancelRequest.current = () => undefined
     }
-  }, [sessionId, branchId, streaming])
-  const activeArt = !streaming && art && art.branch === branchId ? art.value : null
+  }, [sessionId, branchId, automatic, hasFixedImage])
+  const activeArt = art && art.branch === branchId ? art.value : null
+  const anchor = illustrationAnchor(fullText, activeArt?.automatic === true)
   const sections = readingSections(text)
-  const inlineArt = sections.length > 1
-    ? Math.max(0, Math.floor(sections.length / 2) - 1)
-    : Math.max(0, sections.length - 1)
-  const fixedOpeningKey = fixedOpeningImage?.id || fixedOpeningImage?.url
-  const showFixedOpeningImage = Boolean(fixedOpeningImage && (!sessionId || !fixedOpeningKey
-    || !readIllustrationHistory(sessionId)[fixedOpeningKey]))
+  const fullParagraphs = readingSections(fullText).flatMap(section => section.paragraphs)
+  const visibleHere = (key?: string) => {
+    if (!key || !sessionId) return true
+    if (visibleAssets.current.has(key)) return true
+    if (readIllustrationHistory(sessionId)[key]) return false
+    visibleAssets.current.add(key)
+    return true
+  }
+  const showFixedOpeningImage = fixedOpeningImage && branchId && visibleHere(illustrationAssetKey(fixedOpeningImage))
   const imageItems = (activeArt?.items ?? []).filter((image, index, all) => {
-    const key = image.id ?? image.url ?? `index:${image.index ?? index}`
-    return all.findIndex(candidate => (candidate.id ?? candidate.url ?? `index:${candidate.index}`) === key) === index
+    const key = illustrationAssetKey(image) ?? `index:${image.index ?? index}`
+    return all.findIndex(candidate => (illustrationAssetKey(candidate) ?? `index:${candidate.index}`) === key) === index
   }).filter((image) => {
     // Every image asset is displayed at most once in a reading session.
     // Compatibility decides whether an asset can match; session history
     // decides whether this reader has already seen it.
-    const key = image.id ?? image.url
+    const key = illustrationAssetKey(image)
     if (!sessionId || !key) return true
-    return !readIllustrationHistory(sessionId)[key]
+    return visibleHere(key)
   })
   const imageBlock = () => <>
-    {activeArt?.can_generate && <button className="text-button" onClick={() => drawRequest.current()}>绘制这一幕</button>}
+    {((!activeArt && automatic) || (activeArt?.can_generate && (activeArt.automatic ?? automatic))) && <div className="illustration-placeholder" role="status"><p className="muted">正在准备这一幕的插图，正文继续展开。</p></div>}
+    {activeArt?.can_generate && !(activeArt.automatic ?? automatic) && <button className="text-button" onClick={() => drawRequest.current()}>绘制这一幕</button>}
     {imageItems.map((image) => <div key={image.id ?? image.url ?? image.index}>
       {image.status === 'ready' && image.url && <figure className="reading-illustration">
         <SceneImage key={image.url} url={image.url} alt={image.alt} shown={() => {
           if (!shown.current && sessionId && branchId) {
             shown.current = true
-            rememberIllustration(sessionId, image.id ?? image.url ?? `index:${image.index}`, branchId)
+            const key = illustrationAssetKey(image)
+            if (key) rememberIllustration(sessionId, key, branchId)
             void api.shownIllustration(sessionId, branchId, subscription.current, performance.now() - opened.current).catch(() => undefined)
           }
         }} />
       </figure>}
-      {(image.status === 'queued' || image.status === 'generating') && <div className="illustration-placeholder" aria-live="polite"><p className="muted">插图正在绘制，你可以继续阅读或行动。</p><button className="text-button" onClick={() => cancelRequest.current()}>取消本页配图</button></div>}
+      {(image.status === 'queued' || image.status === 'generating') && <div aria-live="polite"><p className="muted">插图正在绘制，你可以继续阅读或行动。</p><button className="text-button" onClick={() => cancelRequest.current()}>取消本页配图</button></div>}
       {image.status === 'cancelled' && <p className="muted">{image.reason === 'deadline' ? '这一幕绘制超时' : '本页配图已停止'}，故事照常继续。</p>}
       {image.status === 'failed' && <p className="muted">这一幕暂未绘成，故事照常继续。</p>}
     </div>)}
@@ -128,15 +130,22 @@ export function StoryProse({ text, streaming, sessionId, branchId, fixedOpeningI
       <SceneImage url={fixedOpeningImage.url} alt={fixedOpeningImage.alt} shown={() => {
         if (!shown.current && sessionId && branchId) {
           shown.current = true
-          rememberIllustration(sessionId, fixedOpeningImage.id || fixedOpeningImage.url, branchId)
+          const key = illustrationAssetKey(fixedOpeningImage)
+          if (key) rememberIllustration(sessionId, key, branchId)
+          void api.viewIllustrations(sessionId, branchId, new AbortController().signal).catch(() => undefined)
           void api.shownIllustration(sessionId, branchId, subscription.current, performance.now() - opened.current).catch(() => undefined)
         }
       }} />
     </figure>}
     {sections.map((section, i) => <section className="reading-section" key={i} aria-busy={streaming}>
-      {section.paragraphs.map((p, j) => <p className="passage" key={j}>{p}</p>)}
-      {fixedOpeningImage === undefined && i === inlineArt && imageBlock()}
+      {section.paragraphs.map((p, j) => {
+        const index = sections.slice(0, i).reduce((count, item) => count + item.paragraphs.length, 0) + j
+        return <Fragment key={j}>
+          <p className="passage">{p}</p>
+          {!hasFixedImage && index === anchor && p === fullParagraphs[index] && <div className="inline-scene-slot">{imageBlock()}</div>}
+        </Fragment>
+      })}
+      {!hasFixedImage && anchor === null && !streaming && i === sections.length - 1 && imageBlock()}
     </section>)}
-    {fixedOpeningImage === undefined && !sections.length && imageBlock()}
   </>
 }

@@ -1,0 +1,212 @@
+{
+  "schemaVersion": "context-bundle-contract-evidence/0.3",
+  "recordedAt": "2026-09-22",
+  "status": "stage1-contract-verified-stage2-builder-budget-audit-wired",
+  "threeLayerReview": {
+    "status": "rules-draft-pending-manual-review",
+    "ruleDocument": "docs/context-management-three-layer-rules-2026-09-23.md",
+    "reviewedAt": "2026-09-23",
+    "manualReviewRequired": true,
+    "mapping": {
+      "hardSpec": [
+        "hardConstraints",
+        "authoritativeState",
+        "stateVisibility",
+        "outputContract"
+      ],
+      "shortTermMemory": [
+        "turnIntent",
+        "continuityWindow"
+      ],
+      "dynamicMemory": [
+        "dynamicMemory"
+      ],
+      "dynamicMemoryReadOnlyProjection": [
+        "allowedEvidence",
+        "provenance"
+      ]
+    },
+    "blockingBeforeLifecycleAndPlannerIntegration": [
+      "冻结 dynamicMemory 的 candidate/confirmed/rejected/unknown 生命周期",
+      "冻结短期记忆过期和分支切换规则",
+      "冻结动态记忆晋升、冲突保留和分支继承规则",
+      "在阶段 2 装配器中沿用四类 visibility 规则并保持玩家投影不泄露 author_truth",
+      "确认业务包级 stateVisibility 的声明位置、版本和缺失策略"
+    ],
+    "ruleFreezeReviewDocument": "docs/context-management-rule-freeze-review-2026-09-23.md"
+  },
+  "implementation": [
+    {
+      "path": "open_story_engine/context_bundle.py",
+      "scope": [
+        "ContextBundle schema",
+        "ContextBundleBuilder deterministic assembly from bounded module context",
+        "canonical_sha256",
+        "from_dict/as_dict",
+        "stage projections",
+        "exclude style-only samples from player-stage evidence projections",
+        "evidence, dynamicMemory and provenance validation",
+        "deep immutability and hash field policy",
+        "bounded selectedDirection title/summary in short-term turnIntent projection",
+        "continuityWindow bounded current-branch confirmed-entry validation",
+        "builder caps combined continuityWindow sources to latest lineage entries",
+        "dynamicMemory inheritance and conflict link shape validation",
+        "dynamicMemory append-only transition guard",
+        "stateVisibility source recorded for explicit or migration fallback",
+        "direct bundle creation validates the complete branch shape",
+        "stage projections retain parent context identity"
+      ]
+    },
+    {
+      "path": "open_story_engine/context_budget.py",
+      "scope": [
+        "confirmed dynamicMemory is included in protected budget accounting and preserved after soft-item omission",
+        "CJK-aware portable token estimate marked as estimated",
+        "budget reduction records omitted sources and selected token metadata",
+        "budget calculation uses the selected stage projection",
+        "confirmed recent prose and dialogue remain budgetable soft evidence",
+        "hidden dynamic memory is excluded from player-stage budget accounting",
+        "negative reserved output is rejected"
+      ]
+    },
+    {
+      "path": "tests_py/test_context_bundle.py",
+      "scope": [
+        "hash stability",
+        "branch/rejected evidence isolation",
+        "unknown kind",
+        "duplicate source",
+        "controlled visibility",
+        "dynamic memory shape and candidate branch isolation",
+        "dynamic memory status and source traceability",
+        "player projection visibility filtering",
+        "authoritative state leaf whitelist",
+        "dynamic memory source permission matching",
+        "state visibility path and audience validation",
+        "dynamic memory canonical ordering",
+        "priority order",
+        "deep immutability",
+        "audit field hash exclusion",
+        "package validation",
+        "round trip",
+        "projection traceability",
+        "builder bounded module context and explicit state visibility",
+        "lineage evidence current-branch binding",
+        "opening knowledge and unknown-boundary mapping",
+        "bounded character/location/item context",
+        "explicit validated_state_patch and protected-field rejection",
+        "package evidence scope and untraceable evidence rejection",
+        "planner audit bundle recording and protected patch exclusion",
+        "five read-only stage projection boundaries and style evidence isolation",
+        "projection compatibility report records path presence only and excludes prompt values",
+        "real longform core prompt integration audit across all official identity entrances",
+        "selectedDirection type, blank, and length rejection",
+        "continuityWindow overflow, missing-field, branch, and status rejection",
+        "dynamicMemory parent, inheritance, and conflict link validation",
+        "dynamicMemory transition allow and reject cases",
+        "builder combined continuity window cap",
+        "budget preserves dynamic memory",
+        "CJK token estimate avoids four-character undercount",
+        "direct creation validates branch optional fields",
+        "projection carries parent context ID",
+        "Planner records configured budget audit and controlled budget rejection",
+        "confirmed recent prose can be omitted by budget",
+        "chapter budget ignores hidden dynamic memory",
+        "negative reserved output rejection"
+      ]
+    },
+    {
+      "path": "open_story_engine/cocreation.py",
+      "scope": [
+        "LlmPlanner module-context audit bundle recording",
+        "parentBranchId and lineageHead binding",
+        "apply_branch_patch validation marker before bundle recording",
+        "protected state patch projection with explicit exclusions",
+        "complete bundle snapshot in promptContext audit",
+        "chapter projection compatibility field inventory in promptContext audit",
+        "conservative default player state visibility whitelist",
+        "rejected bundle status without prompt or write-path changes",
+        "bundle rejection cleanup, module/package prompt compatibility integration audit, and PlayerNarrativePlanner read-only audit wiring",
+        "mode-aware state_json and selectedDirection title/summary compatibility candidates",
+        "selectedDirection nested structure and length validation at bundle boundaries"
+      ]
+    }
+  ],
+  "exitChecks": {
+    "sameSemanticInputSameHash": true,
+    "contextIdExcludedFromHash": true,
+    "schemaAndPackageErrorsFailBeforeModel": true,
+    "crossBranchEvidenceRejected": true,
+    "rejectedEvidenceRejected": true,
+    "unsupportedEvidenceKindRejected": true,
+    "controlledVisibilityRejected": true,
+    "playerProjectionExcludesAuthorTruth": true,
+    "playerProjectionExcludesProvenanceMetadata": true,
+    "authoritativeStatePlayerProjectionIsWhitelisted": true,
+    "stateVisibilityLeafWhitelistValidated": true,
+    "dynamicMemoryShapeAndBranchRulesRejected": true,
+    "dynamicMemoryStatusAuthorityValidityRejected": true,
+    "dynamicMemorySourceTraceabilityRejected": true,
+    "dynamicMemorySourcePermissionsMatch": true,
+    "builderExcludesFutureModuleFields": true,
+    "builderRequiresExplicitBranchAndStateVisibility": true,
+    "builderBindsLineageEvidenceToCurrentBranch": true,
+    "builderPreservesOpeningKnowledgeBoundaries": true,
+    "builderPreservesBoundedEntityContext": true,
+    "builderRejectsUnvalidatedStatePatch": true,
+    "builderUsesPackageScopeForModuleEvidence": true,
+    "builderRejectsUntraceableModuleEvidence": true,
+    "dynamicMemoryOrderCanonicalized": true,
+    "priorityOrderExposedForTests": true,
+    "bundleDeeplyImmutable": true,
+    "nonSemanticAuditFieldsExcludedFromHash": true,
+    "duplicateSourceIdRejected": true,
+    "projectionRetainsPackageBranchProvenance": true,
+    "plannerRecordsAuditBundle": true,
+    "plannerRequiresStateLayerValidationMarker": true,
+    "protectedPatchExclusionsRecorded": true,
+    "completeBundleSnapshotRecorded": true,
+    "defaultPlayerStateVisibilityIsConservative": true,
+    "fiveStageProjectionBoundariesCovered": true,
+    "playerStageEvidenceExcludesStyleOnlySamples": true,
+    "plannerRecordsChapterProjectionCompatibility": true,
+    "projectionCompatibilityAuditExcludesPromptValues": true,
+    "projectionCompatibilityComparisonIsPathPresenceOnly": true,
+    "promptMigrationNotPerformed": true,
+    "modelCalls": 0,
+    "realLongformCorePromptAudit": true,
+    "allOfficialIdentityEntrancesCovered": true,
+    "playerNarrativePlannerMigrationNotPerformed": true,
+    "playerNarrativePlannerReadOnlyAuditWired": true,
+    "selectedDirectionProjectionIsBounded": true,
+    "titleSummaryNoLongerUseRawInput": true,
+    "selectedDirectionContractValidated": true,
+    "continuityWindowBoundedAndConfirmed": true,
+    "builderCapsCombinedContinuityWindow": true,
+    "dynamicMemoryLinksValidated": true,
+    "dynamicMemoryTransitionGuardValidated": true,
+    "stateVisibilitySourceAudited": true,
+    "budgetPreservesDynamicMemory": true,
+    "cjkTokenEstimateAudited": true,
+    "directCreateBranchShapeValidated": true,
+    "projectionCarriesParentContextId": true,
+    "configuredBudgetAuditWired": true,
+    "stageProjectionBudgetAudited": true,
+    "softConfirmedEvidenceCanBeOmitted": true,
+    "negativeReservedOutputRejected": true
+  },
+  "validation": {
+    "targeted": "42 passed (38 context bundle + 4 prompt integration)",
+    "core": "92 passed",
+    "api": "blocked: .venv-api/bin/python not found",
+    "gitDiffCheck": "passed"
+  },
+  "remainingForStage2": [
+    "回合入口现已接线为只读审计，并提供保守的玩家状态白名单；业务包级 stateVisibility 声明仍未冻结",
+    "core prompt 与 PlayerNarrativePlanner 已完成只读兼容审计，但尚未把任何 Planner 阶段迁移到 bundle projection",
+    "尚未实现 dynamicMemory 的晋升、失效、冲突保留和分支继承流水线",
+    "authoritativeState 的具体业务字段仍由现有状态校验负责，契约层只校验对象结构",
+    "budget audit 已按 chapter 投影计数并接入 Planner，但正文提示仍未消费 reduced bundle；真实模型 tokenizer 校准和正式提示迁移仍等待三层规则人工冻结",
+    "已形成规则冻结评审稿；在人工确认 stateVisibility、短期记忆 TTL 和 dynamicMemory 生命周期前，不进入正式提示迁移"
+  ]
+}

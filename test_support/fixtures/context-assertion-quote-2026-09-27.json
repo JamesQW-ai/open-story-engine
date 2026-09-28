@@ -1,0 +1,1875 @@
+{
+  "schemaVersion": "assertion-quote-references/0.1",
+  "purpose": "冻结参考；旧44条与4条设计控制分开统计，范围一致不代表语义真值",
+  "additionalCases": [
+    {
+      "id": "design:dual_origin",
+      "draft": "沈砚秋站在议事殿内并说“我在殿外”。",
+      "draftSha256": "e3280789af02b6f196d7c10f1a104224421d350f21b8c411dcae65f62a0eb3da",
+      "sceneKey": "hall",
+      "cohort": "quote_design_controls"
+    },
+    {
+      "id": "design:repeated_quote",
+      "draft": "沈砚秋念出“殿内”和“殿内”。",
+      "draftSha256": "9d3dcea22c77a5a919e40a23099f590be33397b5aaf0fc740ecffc351cea2bdf",
+      "sceneKey": "hall",
+      "cohort": "quote_design_controls"
+    },
+    {
+      "id": "design:nested_pending",
+      "draft": "沈砚秋说：“守门长老说‘我在殿内’。”",
+      "draftSha256": "035dcf86efc361b3a44203c5df0a0dd16f54f70aaa8014e6e09fc79177d0e278",
+      "sceneKey": "hall",
+      "cohort": "quote_design_controls"
+    },
+    {
+      "id": "design:unknown_speaker_pending",
+      "draft": "有人说沈砚秋在议事殿内。",
+      "draftSha256": "29f05729b8023a28612ba644ac467471b7b6ae892846c123e926c133b1dd3364",
+      "sceneKey": "hall",
+      "cohort": "quote_design_controls"
+    }
+  ],
+  "cases": [
+    {
+      "caseId": "prefix:mention",
+      "draftSha256": "37e2435ec7b1977a03f09be6a323e3634ed6c75a7e8459fa3c35d60eaa76fe30",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E58c174e7405e-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E58c174e7405e-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老站在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E58c174e7405e-1": "position"
+      }
+    },
+    {
+      "caseId": "prefix:operator",
+      "draftSha256": "4a05b39e4537544e848894b431dd614771506c76efc48804c1af47b91c31997d",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E6898857fd3de-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E6898857fd3de-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老可能站在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U1",
+                      "可能",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E6898857fd3de-1": "position"
+      }
+    },
+    {
+      "caseId": "in_core:mention",
+      "draftSha256": "78ad78d3ded8cb7bffd4f4524c72487d068832eab9bd96fec310dd3e64a11aa8",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Ee9b61fec24d5-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Ee9b61fec24d5-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老在议事殿内说出“可能”二字。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Ee9b61fec24d5-1": "position"
+      }
+    },
+    {
+      "caseId": "in_core:operator",
+      "draftSha256": "30c4069ba3daf8aa428a136ffdeb5352cd8a9dca885be04ee650a88434450823",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E9dd28978a667-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E9dd28978a667-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老可能在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U1",
+                      "可能",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E9dd28978a667-1": "position"
+      }
+    },
+    {
+      "caseId": "unquoted:mention",
+      "draftSha256": "923528967969ec37079e881eb0fe281092d52a0925a9fd1b81ff39f82d7f850f",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E56f372505af7-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E56f372505af7-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老站在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E56f372505af7-1": "position"
+      }
+    },
+    {
+      "caseId": "unquoted:operator",
+      "draftSha256": "2643588d026ee9cb4ca3154a76d79689f6cd5c7418b36d2cbc1d219b50e482a1",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E4f36236b8768-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E4f36236b8768-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老或许站在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U1",
+                      "或许",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E4f36236b8768-1": "position"
+      }
+    },
+    {
+      "caseId": "denial:mention",
+      "draftSha256": "c9efa5f370bce385b20ae959d9b20b2b08222bcf169aa2d24265bb99c12674fe",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E05ce272d4198-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E05ce272d4198-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "沈砚秋站在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E05ce272d4198-1": "position"
+      }
+    },
+    {
+      "caseId": "denial:operator",
+      "draftSha256": "62f919353550d84505f792814ad8165113b5012ed6fafedeb18fde06327fd1c3",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Ee19dda8f9eb4-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Ee19dda8f9eb4-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "沈砚秋在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U1",
+                      "没有人敢断定",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Ee19dda8f9eb4-1": "position"
+      }
+    },
+    {
+      "caseId": "neighbour:mention",
+      "draftSha256": "51bd8e83e78f2a0650b48c8773e46f2a75c03cf4be839d4d7da5f6fcb4d747af",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E93f90c79f4c2-2",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E93f90c79f4c2-3",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U2",
+                  "沈砚秋在议事殿外。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E93f90c79f4c2-2": "position"
+      }
+    },
+    {
+      "caseId": "neighbour:operator",
+      "draftSha256": "21a719ad540f3874ef53a76c431c1caed9dad86b527e0cbc3823b3338d848024",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E47a5a7269135-2",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E47a5a7269135-3",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U2",
+                  "沈砚秋可能在议事殿外。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U2",
+                      "可能",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E47a5a7269135-2": "position"
+      }
+    },
+    {
+      "caseId": "two_people:first_operator",
+      "draftSha256": "e98b6701bbaee0e88041922ebbcb748d413e9f697ec2f1409fc9cc2d760453c1",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Ee8b02fbd0fc3-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Ee8b02fbd0fc3-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老或许在议事殿内，",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U1",
+                      "或许",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [
+                  "P1-U2"
+                ],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          },
+          {
+            "subject": "Ee8b02fbd0fc3-3",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Ee8b02fbd0fc3-4",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U2",
+                  "沈砚秋在议事殿外。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [
+                  "P1-U1"
+                ],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Ee8b02fbd0fc3-1": "position",
+        "Ee8b02fbd0fc3-3": "position"
+      }
+    },
+    {
+      "caseId": "two_people:second_operator",
+      "draftSha256": "31e1496ad6407edeab33ca710f94b54fa7491d11111a45bf1a0f1ba277107a32",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E8b96805e7a38-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E8b96805e7a38-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老在议事殿内，",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [
+                  "P1-U2"
+                ],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          },
+          {
+            "subject": "E8b96805e7a38-3",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E8b96805e7a38-4",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U2",
+                  "沈砚秋可能在议事殿外。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U2",
+                      "可能",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [
+                  "P1-U1"
+                ],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E8b96805e7a38-1": "position",
+        "E8b96805e7a38-3": "position"
+      }
+    },
+    {
+      "caseId": "gate:original_condition",
+      "draftSha256": "b2f6e11f32ffd5afc54972a5e30f880277438d64c28c7996f431173ccaece335",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E59c43a34f59e-2",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E59c43a34f59e-3",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U2",
+                  "伤者就在封山线内。",
+                  0
+                ],
+                "conditions": [
+                  {
+                    "units": [
+                      "P1-U1"
+                    ],
+                    "cue": [
+                      "P1-U1",
+                      "如果",
+                      0
+                    ]
+                  }
+                ],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E59c43a34f59e-2": "position"
+      }
+    },
+    {
+      "caseId": "gate:plain_emphasis",
+      "draftSha256": "9dee620b1b5182beefdc77db7d7bef8a2fe48d4c85a7f0dd628318c519c01842",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E878879d1dad9-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E878879d1dad9-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "伤者就在封山线内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E878879d1dad9-1": "position"
+      }
+    },
+    {
+      "caseId": "gate:possibility",
+      "draftSha256": "51a355ca140fea96e9d84832e299ae0fc486955e45a28f1b847a57cc1633d863",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E36eb7ad6cef4-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E36eb7ad6cef4-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "伤者可能在封山线内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U1",
+                      "可能",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E36eb7ad6cef4-1": "position"
+      }
+    },
+    {
+      "caseId": "gate:both",
+      "draftSha256": "e22e5e324e5528df5611ec3a1a3a813740fb54c2edac47316e13307fdb4cda03",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Ec63446961881-2",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Ec63446961881-3",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U2",
+                  "伤者也可能在封山线内。",
+                  0
+                ],
+                "conditions": [
+                  {
+                    "units": [
+                      "P1-U1"
+                    ],
+                    "cue": [
+                      "P1-U1",
+                      "如果",
+                      0
+                    ]
+                  }
+                ],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U2",
+                      "可能",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Ec63446961881-2": "position"
+      }
+    },
+    {
+      "caseId": "gate:condition_paraphrase",
+      "draftSha256": "650130aa8299fd6407bee079cea528649d0be6e1a688f037cd8801c25bff0e40",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E7c8d1c08e176-2",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E7c8d1c08e176-3",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U2",
+                  "伤者便在封山线外。",
+                  0
+                ],
+                "conditions": [
+                  {
+                    "units": [
+                      "P1-U1"
+                    ],
+                    "cue": [
+                      "P1-U1",
+                      "只要",
+                      0
+                    ]
+                  }
+                ],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E7c8d1c08e176-2": "position"
+      }
+    },
+    {
+      "caseId": "gate:possibility_paraphrase",
+      "draftSha256": "d9777f3fb3d8e732eef3123da7ca8fee7829756809f98223fb93133163e5b176",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E7e945bb10031-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E7e945bb10031-2",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "伤者或许在封山线外。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U1",
+                      "或许",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E7e945bb10031-1": "position"
+      }
+    },
+    {
+      "caseId": "gate:both_paraphrase",
+      "draftSha256": "38fa9f9013a04d7735a7921cef1d44555b181c4a9248b94d4daf4b956efdefad",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Eda695f6878bf-2",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Eda695f6878bf-3",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U2",
+                  "伤者或许在封山线外。",
+                  0
+                ],
+                "conditions": [
+                  {
+                    "units": [
+                      "P1-U1"
+                    ],
+                    "cue": [
+                      "P1-U1",
+                      "只要",
+                      0
+                    ]
+                  }
+                ],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U2",
+                      "或许",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Eda695f6878bf-2": "position"
+      }
+    },
+    {
+      "caseId": "gate:unrelated_possibility",
+      "draftSha256": "55a29e423fcf56b399f1f95348ef01c630dc4339bff2c52145a07ae771e56d9a",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E6ba08365c99c-2",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E6ba08365c99c-3",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U2",
+                  "伤者就在封山线内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E6ba08365c99c-2": "position"
+      }
+    },
+    {
+      "caseId": "gate:unrelated_condition",
+      "draftSha256": "9803a2b3e1c20a69627d651297617024c06ac925134bbaeca6cc3eb4066dccee",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Eeb42b94c78e0-2",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Eeb42b94c78e0-3",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U3",
+                  "伤者在封山线外。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Eeb42b94c78e0-2": "position"
+      }
+    },
+    {
+      "caseId": "hall:source_position",
+      "draftSha256": "d303f70b5959e6798dcfa3d4fa8437eabb95be5d9216632bd886e27341391f5b",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E854093b4845a-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E854093b4845a-2",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "沈砚秋站在殿外，",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [
+                  "P1-U2"
+                ],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E854093b4845a-1": "position"
+      }
+    },
+    {
+      "caseId": "hall:negative_position",
+      "draftSha256": "874e6d41d2b8a2dd758b280d35bd37ad8e3fddbb268b11cd1c554b7d7220335a",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Ef98c1abfef5d-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Ef98c1abfef5d-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "negative"
+                },
+                "core": [
+                  "P1-U1",
+                  "沈砚秋不在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Ef98c1abfef5d-1": "position"
+      }
+    },
+    {
+      "caseId": "hall:inferred_position",
+      "draftSha256": "071b2cd507b0acf95f4f91157abdd44c236d5aacca76880d448a6c276d7655bd",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E5fa1380af6f6-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E5fa1380af6f6-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "开门长老想必仍在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U1",
+                      "想必",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E5fa1380af6f6-1": "position"
+      }
+    },
+    {
+      "caseId": "hall:explicit_uncertainty",
+      "draftSha256": "21c420fcb35369194be2ceddad3c6cef8d05f3039ca4f7457bfef5dd16f7a5ec",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Ea5ee19b090c8-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Ea5ee19b090c8-2",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "沈砚秋大概还在议事殿外。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U1",
+                      "大概",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Ea5ee19b090c8-1": "position"
+      }
+    },
+    {
+      "caseId": "hall:word_mention",
+      "draftSha256": "37e2435ec7b1977a03f09be6a323e3634ed6c75a7e8459fa3c35d60eaa76fe30",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E58c174e7405e-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E58c174e7405e-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老站在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E58c174e7405e-1": "position"
+      }
+    },
+    {
+      "caseId": "hall:condition_and_inference",
+      "draftSha256": "6594e1b6f939268edd932eaca582382bd527413205881175da6f618ee68807da",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E5dfd23f0fd37-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E5dfd23f0fd37-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U2",
+                  "守门长老也许还在议事殿内。",
+                  0
+                ],
+                "conditions": [
+                  {
+                    "units": [
+                      "P1-U1"
+                    ],
+                    "cue": [
+                      "P1-U1",
+                      "若",
+                      0
+                    ]
+                  }
+                ],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U2",
+                      "也许",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E5dfd23f0fd37-1": "position"
+      }
+    },
+    {
+      "caseId": "hall:two_people",
+      "draftSha256": "6158f5119e03f7e130590ff538337067483c312238863c60453d7951a0bc625e",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E654663ff45ac-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E654663ff45ac-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老在议事殿内而",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          },
+          {
+            "subject": "E654663ff45ac-3",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E654663ff45ac-4",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "沈砚秋留在议事殿外。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E654663ff45ac-1": "position",
+        "E654663ff45ac-3": "position"
+      }
+    },
+    {
+      "caseId": "hall:unrelated_uncertainty",
+      "draftSha256": "496c180b732bd43058d47351c3d19b40bb82c5eaad54531b19ea82f6ccefeb81",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Ef8d8ed322d79-2",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Ef8d8ed322d79-3",
+                "position": {
+                  "value": "inside",
+                  "polarity": "negative"
+                },
+                "core": [
+                  "P1-U2",
+                  "沈砚秋不在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Ef8d8ed322d79-2": "position"
+      }
+    },
+    {
+      "caseId": "hall:denied_certainty",
+      "draftSha256": "62f919353550d84505f792814ad8165113b5012ed6fafedeb18fde06327fd1c3",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Ee19dda8f9eb4-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Ee19dda8f9eb4-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "沈砚秋在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [
+                  {
+                    "kind": "modality",
+                    "cue": [
+                      "P1-U1",
+                      "没有人敢断定",
+                      0
+                    ]
+                  }
+                ],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Ee19dda8f9eb4-1": "position"
+      }
+    },
+    {
+      "caseId": "control:location_mention",
+      "draftSha256": "8242f8049c37eabe6d7f8f7119634b9db4feb3d40bf6c47543b7e2a3a55b2690",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E1225d5ed2a85-1",
+            "resolution": "absent",
+            "basis": [
+              "P1-U1",
+              "沈砚秋提到了议事殿。",
+              0
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E1225d5ed2a85-1": "no_position"
+      }
+    },
+    {
+      "caseId": "control:object_position",
+      "draftSha256": "7ff329262164027d1a1c1a9d3adae98e2b3fc611f870014d9df55a2884d171ec",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E8785129ccfa6-1",
+            "resolution": "absent",
+            "basis": [
+              "P1-U1",
+              "沈砚秋的木盒在议事殿内。",
+              0
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E8785129ccfa6-1": "other_entity"
+      }
+    },
+    {
+      "caseId": "control:quoted_words",
+      "draftSha256": "b0d3f5c9b3f9364184343dc8cae680bff83094c0f76d72f02f88170633b0f81c",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Ea15644cc5d26-1",
+            "resolution": "absent",
+            "basis": [
+              "P1-U1",
+              "沈砚秋说出“可能在议事殿内”这几个字。",
+              0
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Ea15644cc5d26-1": "word_mention"
+      }
+    },
+    {
+      "caseId": "control:mixed_people",
+      "draftSha256": "54b21e7cae64c07e459e953193b31237cb18ec4b136f935e605c6e346d7b621e",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E861215ae5a0a-1",
+            "resolution": "absent",
+            "basis": [
+              "P1-U1",
+              "沈砚秋提到议事殿而守门长老在议事殿内。",
+              0
+            ]
+          },
+          {
+            "subject": "E861215ae5a0a-3",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E861215ae5a0a-4",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E861215ae5a0a-1": "no_position",
+        "E861215ae5a0a-3": "position"
+      }
+    },
+    {
+      "caseId": "scope:pronoun",
+      "draftSha256": "78844d9c8a464d040a6936a1cd3486e73b5418835f332ccb3aefd4469e07ee3e",
+      "reference": {
+        "assertion-quote/0.1": []
+      },
+      "legacyAttributions": {}
+    },
+    {
+      "caseId": "scope:cross_sentence",
+      "draftSha256": "8e13f875f8c6037ab84e4b14041cbeaf42a58fabfe42d6029532f9ca7d6c936f",
+      "reference": {
+        "assertion-quote/0.1": []
+      },
+      "legacyAttributions": {}
+    },
+    {
+      "caseId": "control:adjunct_mention",
+      "draftSha256": "3ef6b0f3b415650f7c47c0feeb346e6b8597032936e4453c1139e364fd9e8995",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Eefdc3b7ae610-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Eefdc3b7ae610-2",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "沈砚秋在议事殿外抄写“或许”二字。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Eefdc3b7ae610-1": "position"
+      }
+    },
+    {
+      "caseId": "control:negative_position",
+      "draftSha256": "bd026f959ffc0480008131102ffe48eaa0d90bfd19abe7e2e99692293fd9d228",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E2806ce9b0d91-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E2806ce9b0d91-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "negative"
+                },
+                "core": [
+                  "P1-U1",
+                  "沈砚秋不在议事殿内。",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E2806ce9b0d91-1": "position"
+      }
+    },
+    {
+      "caseId": "frame:name_words",
+      "draftSha256": "e3a409d1b82d3628dfddafefb49ad12d4e504d7a691751e65b17f3755fc3694f",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E8f712cb959a0-1",
+            "resolution": "absent",
+            "basis": [
+              "P1-U1",
+              "“沈砚秋”三个字写在议事殿内的纸上。",
+              0
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E8f712cb959a0-1": "word_mention"
+      }
+    },
+    {
+      "caseId": "frame:portrait",
+      "draftSha256": "8d2b9159d7497c0472755139db45ebb8a88e1cafe4a82825746ff92e23f0299a",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Eabaf7e20bfe6-1",
+            "resolution": "absent",
+            "basis": [
+              "P1-U1",
+              "守门长老的画像挂在议事殿外。",
+              0
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Eabaf7e20bfe6-1": "other_entity"
+      }
+    },
+    {
+      "caseId": "frame:mixed_ownership",
+      "draftSha256": "499ed5a2e5a9fad36dfb5ab129bc6a20002669aacca6946be18950c9ca2b6d94",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E5ec1fa5d15c1-2",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E5ec1fa5d15c1-1",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "议事殿内的沈砚秋提到了",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          },
+          {
+            "subject": "E5ec1fa5d15c1-3",
+            "resolution": "absent",
+            "basis": [
+              "P1-U1",
+              "议事殿内的沈砚秋提到了守门长老。",
+              0
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E5ec1fa5d15c1-2": "position",
+        "E5ec1fa5d15c1-3": "other_entity"
+      }
+    },
+    {
+      "caseId": "frame:position_and_quote",
+      "draftSha256": "bc0a35abedf85316490798f37d2ca74e4f4e7f77fc55d3225fe69e8a59a00589",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E604537cca6a2-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E604537cca6a2-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "沈砚秋在议事殿内",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "E604537cca6a2-1": "position"
+      }
+    },
+    {
+      "caseId": "frame:self_report",
+      "draftSha256": "0e3474b9ed18d9eb8e7d161134ff19e9c40f37bdc2bc08191c82e0f4bf507089",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Ecdeee09f3769-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Ecdeee09f3769-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "我在议事殿内",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": {
+                  "speaker": "Ecdeee09f3769-1",
+                  "cue": [
+                    "P1-U1",
+                    "低声说",
+                    0
+                  ],
+                  "scope": [
+                    "P1-U1",
+                    "沈砚秋低声说：“我在议事殿内。”",
+                    0
+                  ],
+                  "subjectMention": [
+                    "P1-U1",
+                    "我",
+                    0
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Ecdeee09f3769-1": "unresolved"
+      }
+    },
+    {
+      "caseId": "frame:other_report",
+      "draftSha256": "13eff7235d08f68d7e7b7253db95e8b3532f722be1b79ea405b3e341b9813e21",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "Efdd5a0e3878a-1",
+            "resolution": "absent",
+            "basis": [
+              "P1-U1",
+              "沈砚秋说守门长老在议事殿内。",
+              0
+            ]
+          },
+          {
+            "subject": "Efdd5a0e3878a-2",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "Efdd5a0e3878a-3",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "守门长老在议事殿内",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": {
+                  "speaker": "Efdd5a0e3878a-1",
+                  "cue": [
+                    "P1-U1",
+                    "说",
+                    0
+                  ],
+                  "scope": [
+                    "P1-U1",
+                    "沈砚秋说守门长老在议事殿内。",
+                    0
+                  ],
+                  "subjectMention": [
+                    "P1-U1",
+                    "守门长老",
+                    0
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": {
+        "Efdd5a0e3878a-1": "other_entity",
+        "Efdd5a0e3878a-2": "unresolved"
+      }
+    },
+    {
+      "caseId": "design:dual_origin",
+      "draftSha256": "e3280789af02b6f196d7c10f1a104224421d350f21b8c411dcae65f62a0eb3da",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E1e375f2c56a0-1",
+            "resolution": "positions",
+            "items": [
+              {
+                "boundary": "E1e375f2c56a0-2",
+                "position": {
+                  "value": "inside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "沈砚秋站在议事殿内",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": null
+              },
+              {
+                "boundary": "E1e375f2c56a0-3",
+                "position": {
+                  "value": "outside",
+                  "polarity": "positive"
+                },
+                "core": [
+                  "P1-U1",
+                  "我在殿外",
+                  0
+                ],
+                "conditions": [],
+                "modifiers": [],
+                "nonPremiseUnits": [],
+                "unresolvedUnits": [],
+                "origin": {
+                  "speaker": "E1e375f2c56a0-1",
+                  "cue": [
+                    "P1-U1",
+                    "说",
+                    0
+                  ],
+                  "scope": [
+                    "P1-U1",
+                    "沈砚秋站在议事殿内并说“我在殿外”。",
+                    0
+                  ],
+                  "subjectMention": [
+                    "P1-U1",
+                    "我",
+                    0
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": null
+    },
+    {
+      "caseId": "design:repeated_quote",
+      "draftSha256": "9d3dcea22c77a5a919e40a23099f590be33397b5aaf0fc740ecffc351cea2bdf",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E3c338733bdf7-1",
+            "resolution": "absent",
+            "basis": [
+              "P1-U1",
+              "沈砚秋念出“殿内”和“殿内”。",
+              0
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": null
+    },
+    {
+      "caseId": "design:nested_pending",
+      "draftSha256": "035dcf86efc361b3a44203c5df0a0dd16f54f70aaa8014e6e09fc79177d0e278",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E6894691b6b46-1",
+            "resolution": "unresolved",
+            "basis": [
+              "P1-U1",
+              "沈砚秋说：“守门长老说‘我在殿内’。”",
+              0
+            ]
+          },
+          {
+            "subject": "E6894691b6b46-2",
+            "resolution": "unresolved",
+            "basis": [
+              "P1-U1",
+              "沈砚秋说：“守门长老说‘我在殿内’。”",
+              0
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": null
+    },
+    {
+      "caseId": "design:unknown_speaker_pending",
+      "draftSha256": "29f05729b8023a28612ba644ac467471b7b6ae892846c123e926c133b1dd3364",
+      "reference": {
+        "assertion-quote/0.1": [
+          {
+            "subject": "E29f859fa55c7-1",
+            "resolution": "unresolved",
+            "basis": [
+              "P1-U1",
+              "有人说沈砚秋在议事殿内。",
+              0
+            ]
+          }
+        ]
+      },
+      "legacyAttributions": null
+    }
+  ]
+}

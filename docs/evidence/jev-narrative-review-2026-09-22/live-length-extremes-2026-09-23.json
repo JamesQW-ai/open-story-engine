@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "live-length-extremes/0.1",
+  "package": "taixu-relics-part1@0.1.3",
+  "sourceCjk": 102610,
+  "route": "direct",
+  "model": "deepseek-v4-flash",
+  "database": "temporary",
+  "config": {
+    "timeoutSeconds": 30,
+    "firstDeltaTimeoutSeconds": 15,
+    "textMaxTokens": 2048,
+    "jsonMaxTokens": 8192,
+    "parallelReviews": true,
+    "userVisibleRule": "正文仅在审核完成并成功提交后回放"
+  },
+  "records": [
+    {
+      "label": "short_lower_bound_success",
+      "action": "我停在原地，等一声回应。",
+      "status": "written",
+      "targetCjk": [80, 160],
+      "actualCjk": 208,
+      "wallMs": 23501,
+      "firstVisibleTextMs": 23499,
+      "firstGeneratedTextMs": 12756,
+      "visibleChars": 243,
+      "calls": 8,
+      "branchWritten": true,
+      "note": "短动作没有强行填充到80字；正文完整通过审核后提交并回放。实际正文略高于规划上界，但仍在1500字契约内。"
+    },
+    {
+      "label": "long_candidate_generation_failed",
+      "action": "我不跨过封山线，先观察伤者的呼吸、引路灯和封山石裂痕，再向守门弟子说明我只想确认伤者是否还能撑到执事到来，并请他回答铁链为何响；听完后我仍留在石阶外，整理父亲陆沉舟失踪与这盏灯的关联，最后只根据当场得到的回应决定下一步。",
+      "status": "generation_failed",
+      "failureStage": "generation",
+      "wallMs": 25794,
+      "firstVisibleTextMs": null,
+      "firstGeneratedTextMs": null,
+      "visibleChars": 0,
+      "calls": 4,
+      "branchWritten": false,
+      "errorCode": "generation_failed",
+      "note": "长动作未形成候选正文，不能用内部生成耗时代替用户首字时间。"
+    },
+    {
+      "label": "long_candidate_second_review_failed",
+      "action": "我不跨过封山线，先观察伤者的呼吸、引路灯和封山石裂痕，再向守门弟子说明我只想确认伤者是否还能撑到执事到来，并请他回答铁链为何响；听完后我仍留在石阶外，整理父亲陆沉舟失踪与这盏灯的关联，最后只根据当场得到的回应决定下一步。",
+      "status": "generation_failed",
+      "failureStage": "second_review",
+      "wallMs": 39959,
+      "firstVisibleTextMs": null,
+      "firstGeneratedTextMs": 17524,
+      "visibleChars": 0,
+      "calls": 10,
+      "branchWritten": false,
+      "errorCode": "generation_failed",
+      "reviewAttempts": 2,
+      "repairAttempted": true,
+      "fallbackMode": "preserve_previous_branch",
+      "note": "模型曾生成候选，但二次审核未通过；候选正文未回放，原分支保持不变。"
+    },
+    {
+      "label": "long_budget_4096_diagnostic",
+      "status": "generation_failed",
+      "textMaxTokens": 4096,
+      "wallMs": 57054,
+      "firstVisibleTextMs": null,
+      "firstGeneratedTextMs": 23168,
+      "visibleChars": 0,
+      "calls": 13,
+      "branchWritten": false,
+      "errorCode": "generation_failed",
+      "failureStage": "second_review",
+      "reviewAttempts": 2,
+      "repairAttempted": true,
+      "note": "仅进程内提高正文预算到4096仍在二次审核失败，且等待增加；不能据此把正式预算提高到4096。"
+    }
+  ],
+  "conclusion": {
+    "shortExtreme": "已获得真实成功样本，当前配置用户首字约23.5秒。",
+    "longExtreme": "尚未获得真实成功的1500字上界样本；当前多次长动作在生成或二次审核失败，用户首字为0。",
+    "optimization": "正式直连环境已将总超时从45秒收紧到30秒、正文首段等待从30秒收紧到15秒；正文仍用2048，结构化审核仍用8192。",
+    "safety": "所有失败均未回放候选正文、未写入新分支，保留可重试错误。"
+  },
+  "limitations": [
+    "长篇幅上界的真实通过样本需要 writer 首稿和审核同时稳定后再补测；本文件不把失败或内部首段时间伪装成首字通过时间。",
+    "每个记录均使用临时数据库；本批次不改变正式故事状态。"
+  ]
+}

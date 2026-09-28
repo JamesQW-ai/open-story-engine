@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "context-semantic-audit/0.1",
+  "reviewer": "Codex",
+  "humanAcceptance": false,
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-grounding-frozen-v11-2026-09-25.json",
+  "sourceSha256": "f999bcdf130a048b03516843726d88e4b8937f9eaffc8370c2e859ff7c7f20b0",
+  "scope": "固定原稿与原响应的本地复核；零新增模型调用，不修改原始证据。",
+  "expected": "rejected",
+  "expectedRejectedQuotes": [
+    {
+      "paragraphId": "P1",
+      "quote": "胸口还在动",
+      "reason": "来源确认伤者仍活着及手边抓着空灯，不包含胸口起伏这一具体体征；原稿自行新增。"
+    }
+  ],
+  "actualValidations": {
+    "grounding": {
+      "status": "allowed"
+    },
+    "knowledge": {
+      "status": "allowed"
+    },
+    "scope": {
+      "status": "allowed"
+    },
+    "boundaries": {
+      "status": "allowed"
+    }
+  },
+  "assessment": "false_negative",
+  "qualityAcceptance": false,
+  "nextEvaluationRequirements": [
+    "同一原稿和来源输入比较候选审核器，不能重写失败稿后计为修复通过",
+    "增加来源否定、主体替换、条件改变的反例，避免关键词匹配充当蕴含证明",
+    "保留普通动作、合法等待和已确认事实的正例，同时统计误报和漏报",
+    "只修格式不得改写正文或把unsupported降为current"
+  ],
+  "formalSessionWrites": 0,
+  "jevCalls": 0
+}

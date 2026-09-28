@@ -1,0 +1,1223 @@
+{
+  "schemaVersion": "context-qualifier-heldout-audit/0.1",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-qualifier-heldout-2026-09-26.json",
+  "sourceSha256": "57c5509d9ae067a30a9c235c5060333baac170cba0362668130e1c1c2533eb51",
+  "originalCalls": 9,
+  "newModelCalls": 0,
+  "actualInputsVerified": true,
+  "allScoresReproduced": true,
+  "cases": [
+    {
+      "caseId": "source_position",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "殿",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "沈砚秋站在殿外，",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [],
+            "reason": "明确表述沈砚秋站在殿外，主体与边界可解析，无否定或不确定限定。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确表述沈砚秋站在殿外，主体与边界可解析，无否定或不确定限定。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 3,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 5,
+              "end": 6,
+              "quote": "殿"
+            },
+            "position": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 8,
+                "quote": "沈砚秋站在殿外，"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "negative_position",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "negative",
+              "time": "snapshot",
+              "condition": null
+            },
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "沈砚秋不在议事殿内。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [],
+            "reason": "明确否定沈砚秋位于议事殿内，保留原侧为内并取否定极性。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "negative",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确否定沈砚秋位于议事殿内，保留原侧为内并取否定极性。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 3,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 5,
+              "end": 8,
+              "quote": "议事殿"
+            },
+            "position": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 10,
+                "quote": "沈砚秋不在议事殿内。"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "inferred_position",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "开门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "开门长老想必仍在议事殿内。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "想必",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "开门长老想必仍在议事殿内。",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": []
+              }
+            ],
+            "reason": "位置命题含认识不确定性词“想必”，不能作为当前事实。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "位置命题含认识不确定性词“想必”，不能作为当前事实。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "想必"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 4,
+              "quote": "开门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 8,
+              "end": 11,
+              "quote": "议事殿"
+            },
+            "position": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 13,
+                "quote": "开门长老想必仍在议事殿内。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 4,
+                "end": 6,
+                "quote": "想必"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 13,
+                  "quote": "开门长老想必仍在议事殿内。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "explicit_uncertainty",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "沈砚秋大概还在议事殿外。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "大概",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "沈砚秋大概还在议事殿外。",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": []
+              }
+            ],
+            "reason": "位置命题含认识不确定性词“大概”，需复核。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "位置命题含认识不确定性词“大概”，需复核。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "大概"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 3,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 7,
+              "end": 10,
+              "quote": "议事殿"
+            },
+            "position": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 12,
+                "quote": "沈砚秋大概还在议事殿外。"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 3,
+                "end": 5,
+                "quote": "大概"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 12,
+                  "quote": "沈砚秋大概还在议事殿外。"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "word_mention",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "守门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老站在议事殿内",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [],
+            "reason": "主体与边界可解析，位置为肯定陈述，无认识限定。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "主体与边界可解析，位置为肯定陈述，无认识限定。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 9,
+              "end": 13,
+              "quote": "守门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 15,
+              "end": 18,
+              "quote": "议事殿"
+            },
+            "position": [
+              {
+                "unitId": "P1-U1",
+                "start": 9,
+                "end": 19,
+                "quote": "守门长老站在议事殿内"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "condition_and_inference",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1",
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U2",
+                "quote": "守门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U2",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "守门长老也许还在议事殿内",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [
+              {
+                "kind": "condition",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "若",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U2",
+                    "quote": "守门长老也许还在议事殿内",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "若议事尚未散场，",
+                    "occurrence": 0
+                  }
+                ]
+              },
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U2",
+                  "quote": "也许",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U2",
+                    "quote": "守门长老也许还在议事殿内",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": []
+              }
+            ],
+            "reason": "位置命题依赖“议事尚未散场”前提，且“也许”表示认识不确定性，不能作为当前事实。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1",
+              "P1-U2"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "位置命题依赖“议事尚未散场”前提，且“也许”表示认识不确定性，不能作为当前事实。",
+            "limitations": [
+              {
+                "kind": "condition",
+                "quote": "若"
+              },
+              {
+                "kind": "modality",
+                "quote": "也许"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U2",
+              "start": 8,
+              "end": 12,
+              "quote": "守门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U2",
+              "start": 16,
+              "end": 19,
+              "quote": "议事殿"
+            },
+            "position": [
+              {
+                "unitId": "P1-U2",
+                "start": 8,
+                "end": 20,
+                "quote": "守门长老也许还在议事殿内"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "condition",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 1,
+                "quote": "若"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U2",
+                  "start": 8,
+                  "end": 20,
+                  "quote": "守门长老也许还在议事殿内"
+                }
+              ],
+              "premise": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 0,
+                  "end": 8,
+                  "quote": "若议事尚未散场，"
+                }
+              ]
+            },
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U2",
+                "start": 12,
+                "end": 14,
+                "quote": "也许"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U2",
+                  "start": 8,
+                  "end": 20,
+                  "quote": "守门长老也许还在议事殿内"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "two_people",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "守门长老",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "守门长老在议事殿内",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [],
+            "reason": "明确表达守门长老位于议事殿内。"
+          },
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 1
+              },
+              "position": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "沈砚秋留在议事殿外",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [],
+            "reason": "明确表达沈砚秋留在议事殿外。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:gate_elder",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确表达守门长老位于议事殿内。",
+            "limitations": []
+          },
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "outside",
+              "polarity": "positive",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确表达沈砚秋留在议事殿外。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 0,
+              "end": 4,
+              "quote": "守门长老"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 5,
+              "end": 8,
+              "quote": "议事殿"
+            },
+            "position": [
+              {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 9,
+                "quote": "守门长老在议事殿内"
+              }
+            ]
+          },
+          "limitations": []
+        },
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 10,
+              "end": 13,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 15,
+              "end": 18,
+              "quote": "议事殿"
+            },
+            "position": [
+              {
+                "unitId": "P1-U1",
+                "start": 10,
+                "end": 19,
+                "quote": "沈砚秋留在议事殿外"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0,
+          1
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "unrelated_uncertainty",
+      "status": "matched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "negative",
+              "time": "snapshot",
+              "condition": null
+            },
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U2",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U2",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U2",
+                  "quote": "沈砚秋不在议事殿内。",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [],
+            "reason": "明确否定沈砚秋位于议事殿内，保留原侧为 inside 且 polarity 为 negative。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U2"
+            ],
+            "status": "candidate",
+            "normal": {
+              "subject": "scene:shen",
+              "relation": "boundary_side",
+              "object": "scene:council_hall",
+              "value": "inside",
+              "polarity": "negative",
+              "time": "snapshot",
+              "condition": null
+            },
+            "reason": "明确否定沈砚秋位于议事殿内，保留原侧为 inside 且 polarity 为 negative。",
+            "limitations": []
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U2",
+              "start": 10,
+              "end": 13,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U2",
+              "start": 15,
+              "end": 18,
+              "quote": "议事殿"
+            },
+            "position": [
+              {
+                "unitId": "P1-U2",
+                "start": 10,
+                "end": 20,
+                "quote": "沈砚秋不在议事殿内。"
+              }
+            ]
+          },
+          "limitations": []
+        }
+      ],
+      "issues": [],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    },
+    {
+      "caseId": "denied_certainty",
+      "status": "mismatched",
+      "proposedResponse": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "anchors": {
+              "subject": {
+                "unitId": "P1-U1",
+                "quote": "沈砚秋",
+                "occurrence": 0
+              },
+              "boundary": {
+                "unitId": "P1-U1",
+                "quote": "议事殿",
+                "occurrence": 0
+              },
+              "position": [
+                {
+                  "unitId": "P1-U1",
+                  "quote": "沈砚秋在议事殿内",
+                  "occurrence": 0
+                }
+              ]
+            },
+            "limitations": [
+              {
+                "kind": "modality",
+                "cue": {
+                  "unitId": "P1-U1",
+                  "quote": "没有人敢断定",
+                  "occurrence": 0
+                },
+                "scope": [
+                  {
+                    "unitId": "P1-U1",
+                    "quote": "沈砚秋在议事殿内",
+                    "occurrence": 0
+                  }
+                ],
+                "premise": []
+              }
+            ],
+            "reason": "位置命题被“没有人敢断定”修饰，表示认识不确定性，不能作为当前事实。"
+          }
+        ]
+      },
+      "projection": {
+        "items": [
+          {
+            "unitIds": [
+              "P1-U1"
+            ],
+            "status": "needs_review",
+            "normal": null,
+            "reason": "位置命题被“没有人敢断定”修饰，表示认识不确定性，不能作为当前事实。",
+            "limitations": [
+              {
+                "kind": "modality",
+                "quote": "没有人敢断定"
+              }
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "anchors": {
+            "subject": {
+              "unitId": "P1-U1",
+              "start": 6,
+              "end": 9,
+              "quote": "沈砚秋"
+            },
+            "boundary": {
+              "unitId": "P1-U1",
+              "start": 10,
+              "end": 13,
+              "quote": "议事殿"
+            },
+            "position": [
+              {
+                "unitId": "P1-U1",
+                "start": 6,
+                "end": 14,
+                "quote": "沈砚秋在议事殿内"
+              }
+            ]
+          },
+          "limitations": [
+            {
+              "kind": "modality",
+              "cue": {
+                "unitId": "P1-U1",
+                "start": 0,
+                "end": 6,
+                "quote": "没有人敢断定"
+              },
+              "scope": [
+                {
+                  "unitId": "P1-U1",
+                  "start": 6,
+                  "end": 14,
+                  "quote": "沈砚秋在议事殿内"
+                }
+              ],
+              "premise": []
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "itemIndex": 0,
+          "code": "modality_cue_outside_position",
+          "kind": "modality"
+        }
+      ],
+      "semanticStatus": "unverified",
+      "reviewRequired": true,
+      "productionEnablement": false,
+      "extractionScore": {
+        "status": "matched",
+        "matchedTargets": [
+          0
+        ],
+        "missingTargets": [],
+        "extraItems": [],
+        "duplicateItems": [],
+        "requiresSemanticReview": true,
+        "productionEnablement": false
+      }
+    }
+  ],
+  "summary": {
+    "matched": 8,
+    "mismatched": 1,
+    "invalid_response": 0,
+    "model_error": 0,
+    "harness_error": 0,
+    "not_run": 0
+  },
+  "requiresSemanticReview": true,
+  "acceptance": false,
+  "productionEnablement": false
+}

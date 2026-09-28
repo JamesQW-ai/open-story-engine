@@ -16,16 +16,26 @@ from .api_read import ReadError
 from .storage import prepared_branch
 from .prompts import catalog_version
 
-RULES_VERSION = 'prepared-player-turn/19+' + catalog_version()
+RULES_VERSION = 'prepared-player-turn/52+' + catalog_version()
 TERMINAL = {'ready', 'failed', 'expired'}
 LEASE_SECONDS = 45
 TTL_SECONDS = 600
 MAX_JOBS = 128
 MAX_RELEASED_SUBSCRIPTIONS = 4096
+APPROVED_STREAM_CHUNK_SIZE = 96
 
 
 def digest(value):
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+
+
+def lineage_digest(nodes):
+    """Bind every ordered ancestor, with only one node's JSON allocated at once."""
+    result = hashlib.sha256(b'turn-lineage/1\n')
+    for node in nodes:
+        result.update(digest(node).encode('ascii'))
+        result.update(b'\n')
+    return result.hexdigest()
 
 
 def reported_usage(completion):
@@ -109,6 +119,9 @@ class TurnSnapshot:
         self.evaluation = None
         self.node = None
         self.derived_update = None
+        # Shadow Jev is observational and may finish after the committed
+        # replay. Block mode never uses this field and remains pre-commit.
+        self.deferred_jev_review = None
         self.on_validating = lambda: None
         self.usage = dict(reported_tokens=0, calls=0, unreported_calls=0)
 
@@ -155,7 +168,8 @@ class TurnSnapshot:
 
     def artifact(self, outcome):
         return dict(outcome=outcome, node=self.node, evaluation=self.evaluation,
-                    audits=self.audits, derived=self.derived_update, usage=self.usage)
+                    audits=self.audits, derived=self.derived_update, usage=self.usage,
+                    deferredJevReview=self.deferred_jev_review)
 
 
 class TurnDrafts:
@@ -233,7 +247,7 @@ class TurnDrafts:
             with self._db() as db:
                 db.execute('DELETE FROM turn_drafts WHERE key=?', (old,))
 
-    def ensure(self, binding, payload, snapshot, subscriber=None, foreground=False, retry=False):
+    def ensure(self, binding, payload, snapshot, subscriber=None, foreground=False, retry=False, request_id=None):
         with self.condition:
             if self.closed:
                 raise ReadError(503, 'draft_unavailable', '故事准备服务已关闭，请稍后重试。')
@@ -242,10 +256,13 @@ class TurnDrafts:
                 raise ReadError(409, 'subscription_released', '此页面订阅已结束，请重新打开阅读页。')
             self._initialize()
             self._sweep()
-            if binding.get('request_id'):
+            effective_request_id = request_id or binding.get('request_id')
+            if effective_request_id:
                 for existing in self.jobs.values():
                     prior = existing['binding']
-                    if prior.get('session_id') == binding['session_id'] and prior.get('request_id') == binding['request_id'] and prior != binding:
+                    prior_request_id = existing.get('request_id') or prior.get('request_id')
+                    if (prior.get('session_id') == binding['session_id']
+                            and prior_request_id == effective_request_id and prior != binding):
                         raise ReadError(409, 'request_conflict', '同一请求不能用于不同的行动')
             key = digest(binding)
             job = self.jobs.get(key)
@@ -262,13 +279,17 @@ class TurnDrafts:
                         metrics=copy.deepcopy(job['metrics']),
                         error=copy.deepcopy(job.get('error', {})),
                         failure_audits=copy.deepcopy(job.get('failure_audits', []))))
-                job = dict(key=key, attempt_id=uuid.uuid4().hex, binding=binding, payload=payload, status='queued', created=time.time(),
+                job = dict(key=key, attempt_id=uuid.uuid4().hex, binding=binding, request_id=effective_request_id,
+                           payload=payload, status='queued', created=time.time(),
                            subscribers=subscribers, selected=False, selected_waiters=0, text='', revision=0, events=[], metrics={'first_text_ms': None}, snapshot=snapshot,
                            previous_attempts=previous_attempts)
                 self.jobs[key] = job
                 self._save(job)
             if not job.get('attempt_id'):
                 job['attempt_id'] = uuid.uuid4().hex
+                self._save(job)
+            if effective_request_id and not job.get('request_id'):
+                job['request_id'] = effective_request_id
                 self._save(job)
             if subscriber:
                 job['subscribers'][subscriber] = time.time() + LEASE_SECONDS
@@ -352,13 +373,24 @@ class TurnDrafts:
                         )
                         if job['status'] == 'failed' and retained:
                             job['retained_draft'] = {'text': retained, 'status': 'unconfirmed'}
-                            # Repair resets may have cleared the last complete
-                            # draft. Restore it before the terminal error event.
+                            # Keep the last complete body as diagnostic evidence
+                            # only.  It remains unconfirmed and is never replayed
+                            # to the player after a failed review.
                             job['text'] = retained
-                            job['events'].extend([('reset', ''), ('delta', retained)])
+                        details = dict(getattr(error, 'details', {}) if isinstance(error, ReadError) else {})
+                        for attr, key in (('review_attempts', 'reviewAttempts'),
+                                          ('repair_attempted', 'repairAttempted'),
+                                          ('failure_stage', 'failureStage'),
+                                          ('fallback_mode', 'fallbackMode')):
+                            if hasattr(error, attr):
+                                details[key] = getattr(error, attr)
                         job['error'] = {'code': error.code if isinstance(error, ReadError) else ('play_rejected' if isinstance(error, ValueError) else 'generation_failed'),
                                         'message': '这次续写未能完成，请重试或调整行动。',
-                                        'status': error.status if isinstance(error, ReadError) else (409 if isinstance(error, ValueError) else 503)}
+                                        'status': error.status if isinstance(error, ReadError) else (409 if isinstance(error, ValueError) else 503),
+                                        'retryable': True,
+                                        'candidateShown': False,
+                                        'previousBranchUnchanged': True,
+                                        **details}
                         logging.getLogger(__name__).warning('Prepared turn failed: %s', type(error).__name__)
                         self._finish(job, started)
         finally:
@@ -390,28 +422,49 @@ class TurnDrafts:
         self.condition.notify_all()
 
     def wait(self, job, stream=None, reset=None):
-        offset = 0
+        """Wait for a reviewed artifact without exposing an uncommitted draft.
+
+        ``stream`` and ``reset`` remain accepted for compatibility with older
+        callers, but replay is deliberately performed by ``replay_approved``
+        after the story commit succeeds.
+        """
         while True:
             with self.condition:
-                events = job['events'][offset:]
-                offset += len(events)
                 status = job['status']
-                if status not in TERMINAL and not events:
+                if status not in TERMINAL:
                     self.condition.wait(timeout=0.25)
-            for event, text in events:
-                if event == 'reset' and reset:
-                    reset('draft_repair')
-                elif event == 'delta' and stream:
-                    stream(text)
             if status == 'ready':
                 return job['artifact']
             if status in ('failed', 'expired'):
-                if status == 'failed' and not events and offset == 0 and stream and reset:
-                    retained = job.get('retained_draft', {}).get('text')
-                    if retained:
-                        reset('unconfirmed_draft')
-                        stream(retained)
-                raise ReadError(job.get('error', {}).get('status', 503), job.get('error', {}).get('code', 'generation_failed'), '这次续写未能完成，请重试或调整行动。')
+                # retained_draft is diagnostic evidence only.  It has not
+                # passed the full review and must not be displayed or committed.
+                failure = job.get('error', {})
+                raise ReadError(failure.get('status', 503), failure.get('code', 'generation_failed'),
+                                '这次续写未能完成，请重试或调整行动。',
+                                {key: failure[key] for key in ('retryable', 'candidateShown', 'previousBranchUnchanged',
+                                                               'reviewAttempts', 'repairAttempted', 'failureStage', 'fallbackMode')
+                                 if key in failure})
+
+    def replay_approved(self, job, stream=None, first_visible_ms=None):
+        """Replay only a reviewed artifact after its branch commit succeeds."""
+        if not stream:
+            return
+        with self.condition:
+            if job.get('status') != 'ready':
+                return
+            artifact = job.get('artifact') or {}
+            node = artifact.get('node') if isinstance(artifact, dict) else None
+            text = node.get('narrativeText') if isinstance(node, dict) else None
+            if not isinstance(text, str) or not text:
+                text = job.get('text', '')
+            if text:
+                job['metrics']['first_visible_text_ms'] = (
+                    first_visible_ms if first_visible_ms is not None
+                    else job['metrics'].get('complete_ms')
+                )
+                self._save(job)
+        for start in range(0, len(text), APPROVED_STREAM_CHUNK_SIZE):
+            stream(text[start:start + APPROVED_STREAM_CHUNK_SIZE])
 
     def release_selection(self, job):
         with self.condition:

@@ -1,0 +1,316 @@
+{
+  "status": "written",
+  "request_id": "delivery-1",
+  "deduplicated": false,
+  "branch": {
+    "sourceNodeRef": "node_source_continuity",
+    "branchState": {
+      "playerLocationId": "location_open_gate",
+      "sourceProgress": "chapter_001",
+      "freeTextProgress": 0,
+      "storyScope": "source",
+      "derivativeStage": "inactive",
+      "derivedTurn": 0,
+      "derivedLocations": [],
+      "derivedCharacters": [],
+      "derivedItems": [],
+      "derivedCharacterReveals": [],
+      "derivedRelationships": [],
+      "derivedClues": [],
+      "derivedEvents": [],
+      "branchLedger": {
+        "schemaVersion": "branch-state-ledger/0.1",
+        "entries": []
+      },
+      "playerCharacterId": "character_ae4cb42b9b49",
+      "characterLocationIds": {
+        "character_ae4cb42b9b49": "location_open_gate"
+      },
+      "itemOwnerCharacterIds": {
+        "item_open_letter": "character_ae4cb42b9b49"
+      },
+      "itemLocationIds": {},
+      "characterOutcomeStates": {},
+      "threadLedger": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "open",
+          "source": "opening",
+          "openedBranchId": null,
+          "causeBranchId": null,
+          "reason": "",
+          "evidence": "",
+          "priority": "unknown",
+          "recoveryWindow": "unknown"
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "open",
+          "source": "opening",
+          "openedBranchId": null,
+          "causeBranchId": null,
+          "reason": "",
+          "evidence": "",
+          "priority": "unknown",
+          "recoveryWindow": "unknown"
+        }
+      ]
+    },
+    "narrativeText": "雨还在下。你站在封山线外原来的位置，脚没有挪动。守门弟子就在几步外，侧身对着你和伤者之间的空隙，手按在腰间的牌令上。\n\n你开口，声音不高，只说了这一句：\n\n“老人让我来问山门的灯。”\n\n说完，你停住。文书还揣在怀里，没有取出来。伤者和那盏空灯仍在你视线边缘，你没有往那边走，也没有伸手去碰任何东西。\n\n守门弟子转过头来看你。他的目光在你湿透的斗笠上停了一下，又扫过你垂在身侧、冻裂的手，眉头微微收紧。他没有立刻答话，只是把按在牌令上的手指收拢了些，像是在掂量这句话的分量。\n\n雨声填满了你们之间的间隙。他张了张嘴，似乎要问什么，却又先朝伤者那边瞥了一眼，才把视线收回来，重新落在你脸上。",
+    "summary": "本回合未改变已确认状态，等待下一次明确行动。",
+    "factDeltas": [],
+    "openThreads": [
+      "陌生伤者是否能得到救助",
+      "空灯与父亲失踪是否有关"
+    ],
+    "nextDirections": [
+      {
+        "id": "arc:arc_source_chapter_001",
+        "title": "推进：山门雨夜",
+        "summary": "三年前，陆沉舟离开北河城，说要替宗门押送一批引路灯。",
+        "directionLevel": "arc",
+        "arcId": "arc_source_chapter_001"
+      }
+    ],
+    "storyArc": null,
+    "planning": {
+      "citations": [
+        {
+          "kind": "branch_node",
+          "ref": "branch_40efa992-04c9-4c0b-be7d-e4e48ddb756f",
+          "rationale": "保守分支只承接已确认的父节点。"
+        }
+      ],
+      "confidence": "low",
+      "stateChangeProposals": []
+    },
+    "canonicalRelation": "diverged",
+    "selectedDirectionId": "direction_conservative_0cc2858a80a8",
+    "selectedDirection": {
+      "id": "direction_conservative_0cc2858a80a8",
+      "title": "承接当前行动",
+      "summary": "承接当前行动的结果。",
+      "statePatch": {},
+      "isFreeText": true
+    },
+    "playerDirection": "留在原地，向守门弟子说明老人让我来问山门的灯。只说出这句话，然后等待，不靠近伤者，不移动物品。",
+    "requestId": "delivery-1",
+    "fallbackMode": "candidate_selected_pending_patch",
+    "fallbackReason": "second_review_failed_best_candidate",
+    "candidateSelection": {
+      "strategy": "quality_then_patch",
+      "selectedRevision": 1,
+      "qualityScore": 991,
+      "pendingPatch": true,
+      "issueTypes": [
+        "background"
+      ]
+    },
+    "readingProfile": {
+      "actualCjk": 293,
+      "fallback": false
+    },
+    "naturalEnding": false,
+    "id": "branch_7015cbe5-c4c0-4815-bc95-cd4afe362334",
+    "kind": "generated",
+    "parentId": "branch_40efa992-04c9-4c0b-be7d-e4e48ddb756f",
+    "createdAt": "2026-09-27T13:55:45.156Z",
+    "turnInput": {
+      "text": "留在原地，向守门弟子说明老人让我来问山门的灯。只说出这句话，然后等待，不靠近伤者，不移动物品。"
+    },
+    "preparedTurnKey": "7fec96713a0d090b49126256c7be13d01e791858443a4a3860e6419184ae1c04",
+    "preparedAttemptId": "cc446971099c428d9044ce10260a64c2",
+    "routeOutline": {
+      "version": "route-outline/3",
+      "branch_id": "branch_7015cbe5-c4c0-4815-bc95-cd4afe362334",
+      "root_branch_id": "branch_40efa992-04c9-4c0b-be7d-e4e48ddb756f",
+      "binding_digest": "d210180302517e14c48b50d6bab012594ddef3ea0cbd2cba4c58c91cc0238bb1",
+      "structure": {
+        "volume": null,
+        "arc": "arc_source_chapter_001",
+        "beat": "beat_chapter_001",
+        "source_progress": "chapter_001"
+      },
+      "goals": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "unknown",
+          "evidence": null,
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": null,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "unknown",
+          "evidence": null,
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": null,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "open",
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_40efa992-04c9-4c0b-be7d-e4e48ddb756f",
+            "ref": "opening-thread-1",
+            "quote": "陌生伤者是否能得到救助"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "open",
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_40efa992-04c9-4c0b-be7d-e4e48ddb756f",
+            "ref": "opening-thread-2",
+            "quote": "空灯与父亲失踪是否有关"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "conflicts": [],
+      "steps": [
+        {
+          "id": "goal:opening-goal-1",
+          "kind": "verify_status",
+          "target_id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "blockers": [],
+          "evidence": null,
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": null,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "goal:opening-goal-2",
+          "kind": "verify_status",
+          "target_id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "blockers": [],
+          "evidence": null,
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": null,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "thread:opening-thread-1",
+          "kind": "address_thread",
+          "target_id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "blockers": [],
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_40efa992-04c9-4c0b-be7d-e4e48ddb756f",
+            "ref": "opening-thread-1",
+            "quote": "陌生伤者是否能得到救助"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "thread:opening-thread-2",
+          "kind": "address_thread",
+          "target_id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "blockers": [],
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_40efa992-04c9-4c0b-be7d-e4e48ddb756f",
+            "ref": "opening-thread-2",
+            "quote": "空灯与父亲失踪是否有关"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ]
+    },
+    "sessionId": "6bf860ff-9f63-4425-b5c8-db09d916a9fd",
+    "sequence": 1
+  },
+  "reason": "已承接当前行动的可读候选正文，剧情状态保持不变。"
+}

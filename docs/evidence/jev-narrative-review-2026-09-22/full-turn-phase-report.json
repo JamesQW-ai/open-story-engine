@@ -1,0 +1,157 @@
+{
+  "schemaVersion": "jev-full-turn-phase-report/0.1",
+  "status": "phase_measurement_only",
+  "integratedRuntime": false,
+  "generatedAt": "2026-09-22",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3",
+    "cjk": 102610
+  },
+  "reviewModel": [
+    "typesafe/jev-1.13-20260917"
+  ],
+  "records": [
+    {
+      "id": "taixu_inform_rerun2",
+      "expectedDecision": "allow",
+      "jevDecision": "allow",
+      "generation": {
+        "status": "written",
+        "actualCjk": 194,
+        "firstTextMs": 17232,
+        "completeMs": 35819,
+        "selectionToCompleteMs": 35819,
+        "commitMs": 202,
+        "sourceElapsedMs": 35820,
+        "branchId": "branch_cddef190-cc52-499b-aad6-fbf70b3fd1c3"
+      },
+      "jevReview": {
+        "durationMs": 1799,
+        "status": "ok",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "model": "typesafe/jev-1.13-20260917"
+      },
+      "serializedPhaseSumEstimateMs": 37618,
+      "measurementNote": "生成与 Jev 审核来自独立回放；此字段仅为顺序相加估计，不是已接入运行时端到端耗时。"
+    },
+    {
+      "id": "taixu_ask_basis_rerun1",
+      "expectedDecision": "allow",
+      "jevDecision": "allow",
+      "generation": {
+        "status": "written",
+        "actualCjk": 275,
+        "firstTextMs": 12550,
+        "completeMs": 180255,
+        "selectionToCompleteMs": 180255,
+        "commitMs": 211,
+        "sourceElapsedMs": 180260,
+        "branchId": "branch_ddc4683d-dd1b-4015-ae9b-812f95ce10bc"
+      },
+      "jevReview": {
+        "durationMs": 834,
+        "status": "ok",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "model": "typesafe/jev-1.13-20260917"
+      },
+      "serializedPhaseSumEstimateMs": 181089,
+      "measurementNote": "生成与 Jev 审核来自独立回放；此字段仅为顺序相加估计，不是已接入运行时端到端耗时。"
+    },
+    {
+      "id": "taixu_brief_wait_rerun3",
+      "expectedDecision": "allow",
+      "jevDecision": "allow",
+      "generation": {
+        "status": "written",
+        "actualCjk": 170,
+        "firstTextMs": 9038,
+        "completeMs": 23733,
+        "selectionToCompleteMs": 23733,
+        "commitMs": 205,
+        "sourceElapsedMs": 23730,
+        "branchId": "branch_30a34d1c-ebc5-461f-a34e-de1ca3999929"
+      },
+      "jevReview": {
+        "durationMs": 869,
+        "status": "ok",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "model": "typesafe/jev-1.13-20260917"
+      },
+      "serializedPhaseSumEstimateMs": 24602,
+      "measurementNote": "生成与 Jev 审核来自独立回放；此字段仅为顺序相加估计，不是已接入运行时端到端耗时。"
+    },
+    {
+      "id": "taixu_empty_failed_draft",
+      "expectedDecision": "reject",
+      "jevDecision": "reject",
+      "generation": {
+        "status": "failed",
+        "actualCjk": 0,
+        "firstTextMs": null,
+        "completeMs": 15502,
+        "selectionToCompleteMs": null,
+        "commitMs": null,
+        "sourceElapsedMs": 15690,
+        "branchId": null
+      },
+      "jevReview": {
+        "durationMs": 930,
+        "status": "ok",
+        "preflight": {
+          "ok": false,
+          "reason": "insufficient_evidence"
+        },
+        "model": "typesafe/jev-1.13-20260917"
+      },
+      "serializedPhaseSumEstimateMs": 16432,
+      "measurementNote": "生成与 Jev 审核来自独立回放；此字段仅为顺序相加估计，不是已接入运行时端到端耗时。"
+    }
+  ],
+  "summary": {
+    "successfulGenerationBeats": {
+      "count": 3,
+      "p50Ms": 35819,
+      "p95Ms": 180255,
+      "maxMs": 180255,
+      "meanMs": 79936
+    },
+    "jevReviewRequests": {
+      "count": 4,
+      "p50Ms": 930,
+      "p95Ms": 1799,
+      "maxMs": 1799,
+      "meanMs": 1108
+    },
+    "serializedPhaseSumEstimates": {
+      "count": 4,
+      "p50Ms": 37618,
+      "p95Ms": 181089,
+      "maxMs": 181089,
+      "meanMs": 64935
+    },
+    "successfulGenerationBeatCount": 3,
+    "failedGenerationBeatCount": 1,
+    "reviewDecisionAccuracy": 1.0
+  },
+  "limitations": [
+    "Jev 当前仅作为独立审核探针运行，尚未接入项目生成提交链，因此没有可宣称的端到端完整回合耗时。",
+    "四条真实候选中三条为成功生成 beat，一条为空失败草稿；它们覆盖当前包但不能替代大量连续真实 beat。",
+    "ask_basis 使用已有真实回放的 complete/commit 指标，其余成功 beat 使用后续复核指标；不同回放批次不可用于严格单次请求比较。",
+    "serializedPhaseSumEstimateMs 只是生成完成后再调用审核的顺序相加估计，未计入真实适配器、排队、序列化和重试开销。"
+  ],
+  "sources": {
+    "generationRerun1": "/Users/James/open-story-engine/docs/evidence/context-management-2026-09-22/real-rerun-summary-2026-09-22.json",
+    "generationRerun2": "/Users/James/open-story-engine/docs/evidence/context-management-2026-09-22/real-rerun2-summary-2026-09-22.json",
+    "jevReview": "/Users/James/open-story-engine/docs/evidence/jev-narrative-review-2026-09-22/live-real-longform-report.json"
+  }
+}

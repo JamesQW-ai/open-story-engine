@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "jev-real-conservative-fallback/0.1",
+  "status": "completed",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3",
+    "cjk": 102610
+  },
+  "source": "natural_live_action",
+  "writerRoute": "direct",
+  "writerModel": "deepseek-v4-flash",
+  "jevMode": "shadow",
+  "scenario": "second_review_fail_conservative_fallback",
+  "statusCode": 200,
+  "requestElapsedMs": 45427,
+  "firstVisibleTextMs": 45230,
+  "visibleCharacterCount": 54,
+  "branchWritten": true,
+  "fallbackMode": "conservative_approved",
+  "fallbackReason": "second_review_failed",
+  "branchStateUnchanged": true,
+  "candidateShown": false,
+  "writer": {
+    "completeMs": 45052,
+    "commitMs": 178,
+    "calls": 14,
+    "reportedTokens": 84693,
+    "unreportedCalls": 1
+  },
+  "jev": {
+    "status": "ok",
+    "decision": "allow",
+    "durationMs": 1088,
+    "model": "typesafe/jev-1.13-20260917"
+  },
+  "ordering": [
+    "writer_two_reviews_failed",
+    "conservative_fallback_validated",
+    "jev_review",
+    "commit",
+    "branch_written",
+    "approved_replay"
+  ],
+  "limitations": [
+    "这是单条自然真实 fallback 样本，不能估计该路径的质量或 P50/P95。",
+    "Jev 处于 shadow，不阻断本次提交；正式 block 仍关闭。"
+  ]
+}

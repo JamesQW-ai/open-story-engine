@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "company-relay-contract-check/0.2",
+  "recordedAt": "2026-09-23",
+  "route": {
+    "kind": "company_relay",
+    "baseUrl": "http://152.70.196.2:8080/v1",
+    "model": "deepseek-v4-pro:cloud"
+  },
+  "scope": "official longform taixu-relics-part1@0.1.3; contracts-only; bounded live check",
+  "status": "completed",
+  "providerCalls": 4,
+  "completions": [
+    {
+      "ms": 28963,
+      "error": null,
+      "usage": [
+        8426,
+        false
+      ]
+    },
+    {
+      "ms": 45006,
+      "error": "transport_error",
+      "usage": null
+    },
+    {
+      "ms": 20753,
+      "error": null,
+      "usage": [
+        4835,
+        false
+      ]
+    },
+    {
+      "ms": 1586,
+      "error": "draft_cancelled",
+      "usage": null
+    }
+  ],
+  "checks": [
+    {
+      "name": "injury_contract",
+      "status": "passed",
+      "ms": 28967
+    },
+    {
+      "name": "goal_change_contract",
+      "status": "failed",
+      "code": "transport_error",
+      "ms": 45008
+    },
+    {
+      "name": "dynamic_choice_contract",
+      "status": "passed",
+      "ms": 20757
+    },
+    {
+      "name": "provider_stream_cancel_without_commit",
+      "status": "passed",
+      "ms": 1598
+    }
+  ],
+  "workersStopped": true,
+  "acceptance": "not narrative quality acceptance; first run had one relay transport_error, minimal retry passed goal_change_contract",
+  "retry": {
+    "maxCalls": 2,
+    "providerCalls": 2,
+    "checks": [
+      {
+        "name": "injury_contract",
+        "status": "passed",
+        "ms": 17507
+      },
+      {
+        "name": "goal_change_contract",
+        "status": "passed",
+        "ms": 18592
+      },
+      {
+        "name": "dynamic_choice_contract",
+        "status": "failed",
+        "code": "AssertionError",
+        "ms": 1
+      },
+      {
+        "name": "provider_stream_cancel_without_commit",
+        "status": "failed",
+        "code": "AssertionError",
+        "ms": 9
+      }
+    ],
+    "interpretation": "goal_change_contract 在最小重试中通过；其余失败由调用预算耗尽触发，不计为模型质量失败。"
+  }
+}

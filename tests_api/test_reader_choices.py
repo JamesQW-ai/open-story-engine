@@ -31,6 +31,22 @@ class ReaderChoiceTests(unittest.TestCase):
         opening = {'kind': 'source_entry', 'openingActions': [{'title': str(i), 'summary': '行动'} for i in range(4)]}
         self.assertEqual(len(visible_choices(opening, {})), 4)
 
+    def test_followup_choice_uses_saved_issue_without_marking_it_resolved(self):
+        from open_story_engine.reader_choices import restored_choices
+        issue = dict(id='followup-one', summary='侧门是否仍能通行', status='open',
+                     evidence='先前有人说侧门封死了。')
+        context = {**self.context, 'pendingFollowups': [issue]}
+        option = dict(title='确认侧门状况', action='我去查看侧门的封条和门闩，确认是否仍有通行办法。',
+                      paragraphIds=[], followupId=issue['id'], interactWith=[])
+        before = copy.deepcopy(context)
+        choices = validate_choices({'choices': [option]}, context, self.package)
+        self.assertEqual(choices[0]['evidence'], [issue['evidence']])
+        self.assertEqual(restored_choices(choices, context, self.package), choices)
+        self.assertEqual(context, before)
+        self.assertEqual(restored_choices(choices, {**context, 'pendingFollowups': []}, self.package), [])
+        with self.assertRaises(ValueError):
+            validate_choices({'choices': [{**option, 'followupId': 'invented'}]}, context, self.package)
+
     def test_unknown_people_dead_interactions_and_fake_evidence_are_rejected(self):
         for invalid in [dict(self.option, paragraphIds=['P99']), dict(self.option, interactWith=['hidden']),
                         dict(self.option, action='我向未见之人询问现在应该怎么做。')]:
@@ -156,6 +172,23 @@ class ReaderChoiceTests(unittest.TestCase):
         self.assertEqual(node, before)
         sibling = choice_context(fixture.package, fixture.contract, [root], root)
         self.assertEqual(next(i for i in sibling['items'] if i['id'] == token)['state'], {})
+
+    def test_menu_carries_only_current_place_name_and_does_not_relocate_people(self):
+        from tests_api.test_reader_consequences import ConsequenceTests, GU, LU
+        fixture = ConsequenceTests()
+        fixture.setUp()
+        root = dict(fixture.root, sequence=0)
+        node = copy.deepcopy(root)
+        state = node['branchState']
+        state.setdefault('derivedLocations', []).append(dict(id='location_storage', name='器物房', summary='库房西架'))
+        state['playerLocationId'] = 'location_storage'
+        state['characterLocationIds'][GU] = 'location_storage'
+        before = copy.deepcopy(node)
+        context = choice_context(fixture.package, fixture.contract, [root], node)
+        self.assertEqual(context['currentLocation'], dict(id='location_storage', name='器物房'))
+        self.assertFalse(next(p for p in context['people'] if p['id'] == LU)['available'])
+        self.assertNotIn('locations', context)
+        self.assertEqual(node, before)
 
     def test_item_knowledge_requires_inventory_or_committed_public_evidence(self):
         package = {'characters': [], 'items': [], 'story': {}}

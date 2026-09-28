@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "writer-route-connectivity-probe/0.1",
+  "recordedAt": "2026-09-23",
+  "request": {
+    "type": "small_non_stream_json",
+    "maxTokens": 128,
+    "reasoningEffort": "none",
+    "formalDatabaseTouched": false
+  },
+  "routes": [
+    {
+      "route": "direct",
+      "baseUrlHost": "api.deepseek.com",
+      "model": "deepseek-v4-flash",
+      "status": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 1073,
+      "responseHeadersMs": 612,
+      "completeBodyMs": 1073
+    },
+    {
+      "route": "relay",
+      "baseUrlHost": "152.70.196.2",
+      "basePath": "/v1",
+      "model": "deepseek-v4.1-flash:cloud",
+      "status": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 1431,
+      "responseHeadersMs": 1431,
+      "completeBodyMs": 1431
+    }
+  ],
+  "notes": [
+    "Both writer routes accepted the current credentials and returned a minimal JSON response.",
+    "The first direct probe used only 16 tokens and returned truncated reasoning_content without JSON; it was rerun with 128 tokens and reasoning_effort=none, then passed.",
+    "This is connectivity evidence only, not a longform generation, latency, or narrative quality acceptance result."
+  ]
+}

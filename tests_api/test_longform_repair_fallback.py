@@ -26,6 +26,7 @@ class RepairFailureGateway:
         self.body = body
         self.empty_retry = empty_retry
         self.calls = []
+        self.json_payloads = []
         self.contract = dict(decision='ready', readingIntent='brief',
             requirements={'A1': {'mode': 'result', 'summary': action}},
             method='留在当前地点', outcomes=[], goalUpdates=[],
@@ -43,6 +44,7 @@ class RepairFailureGateway:
 
     def complete_json(self, messages, *_args):
         payload = json.loads(messages[1]['content'])
+        self.json_payloads.append(payload)
         if 'problem' in payload and 'paragraphs' in payload:
             self.calls.append('repair')
             if self.empty_retry:
@@ -115,12 +117,16 @@ class LongformRepairFallbackTests(unittest.TestCase):
         with sqlite3.connect(self.read.database_path) as db:
             before = list(db.iterdump())
         events = []
-        with self.assertRaises(ReadError):
+        from open_story_engine.api_narrative import select_repair_evidence
+        with patch('open_story_engine.api_narrative.select_repair_evidence', wraps=select_repair_evidence) as select_evidence, self.assertRaises(ReadError):
             self.play.continue_turn(self.sid, self.parent, text=self.action, request_id='repair-failure',
                 stream=lambda text: events.append(('delta', text)), stream_reset=lambda reason: events.append(('reset', reason)))
+        selected_pool = select_evidence.call_args.kwargs['evidence']
+        self.assertTrue(selected_pool)
+        self.assertTrue(any(key.startswith('module:opening:visibleItems:') for key in selected_pool))
+        self.assertFalse(any(key.startswith('module:opening:evidence:') for key in selected_pool))
         self.assertEqual(gateway.calls, ['plan', 'authority', 'prose', 'repair', 'repair'])
-        self.assertEqual(events[-2][0], 'reset')
-        self.assertEqual(events[-1], ('delta', self.body))
+        self.assertEqual(events, [])
         with sqlite3.connect(self.read.database_path) as db:
             self.assertEqual(before, list(db.iterdump()))
         with self.play.drafts.condition:
@@ -138,6 +144,33 @@ class LongformRepairFallbackTests(unittest.TestCase):
         self.assertEqual(records[0]['outcome'], 'failed')
         self.assertIn('式介绍', records[0]['issues'])
         self.assertIn('injected repair', records[0]['failureReason'])
+        repair_payload = next(payload for payload in gateway.json_payloads
+                              if 'problem' in payload and 'paragraphs' in payload)
+        self.assertEqual(repair_payload['contextInjection']['stage'], 'repair')
+        self.assertEqual(
+            records[0]['contextProjection']['contextSha256'],
+            repair_payload['contextInjection']['contextSha256'],
+        )
+        self.assertNotIn('contextProjection', repair_payload)
+        self.assertNotIn('package', repair_payload['contextInjection'])
+        self.assertIsInstance(repair_payload['scene'], dict)
+        self.assertIn('currentScene', repair_payload['scene'])
+        self.assertIn('playerAction', repair_payload['scene'])
+        self.assertNotIn('resultContract', repair_payload['scene'])
+        self.assertIn('repairFactsSelection', records[0])
+        self.assertIn(records[0]['repairFactsSelection']['source'], {'context_bundle', 'legacy_fact_sheet'})
+        if 'fixedFacts' in repair_payload['scene']:
+            self.assertLessEqual(len(repair_payload['scene']['fixedFacts']), 10)
+            self.assertEqual(
+                records[0]['repairFactsSelection']['selectedChars'],
+                sum(len(item['text']) for item in repair_payload['scene']['fixedFacts']),
+            )
+        self.assertLessEqual(len(repair_payload['sceneEvidence']), 8)
+        self.assertLessEqual(sum(len(value) for value in repair_payload['sceneEvidence'].values()), 6000)
+        self.assertEqual(
+            records[0]['repairEvidenceSelection']['selectedSourceIds'],
+            list(repair_payload['sceneEvidence']),
+        )
         self.play.drafts.close()
         restored = PlayService(self.read, Path(self.temp))
         self.addCleanup(restored.drafts.close)
@@ -147,8 +180,8 @@ class LongformRepairFallbackTests(unittest.TestCase):
         shown, resets = [], []
         with self.assertRaises(ReadError):
             restored.drafts.wait(recovered, shown.append, resets.append)
-        self.assertEqual(shown, [self.body])
-        self.assertEqual(resets, ['unconfirmed_draft'])
+        self.assertEqual(shown, [])
+        self.assertEqual(resets, [])
         self.assertEqual(recovered['failure_audits'], audits)
 
     def test_empty_retry_cannot_erase_last_readable_failed_draft(self):
@@ -160,13 +193,60 @@ class LongformRepairFallbackTests(unittest.TestCase):
         with self.assertRaises(ReadError):
             self.play.continue_turn(self.sid, self.parent, text=self.action, request_id='empty-retry',
                 stream=lambda text: events.append(('delta', text)), stream_reset=lambda reason: events.append(('reset', reason)))
-        self.assertEqual(gateway.calls, ['plan', 'authority', 'prose', 'repair', 'prose', 'prose', 'prose'])
+        self.assertEqual(gateway.calls, ['plan', 'authority', 'prose', 'repair', 'prose'])
         job = next(iter(self.play.drafts.jobs.values()))
         self.assertEqual(job.get('retained_draft'), {'text': self.body, 'status': 'unconfirmed'})
-        self.assertEqual(events[-1], ('delta', self.body))
+        self.assertEqual(events, [])
         self.assertNotIn('artifact', job)
         with sqlite3.connect(self.read.database_path) as db:
             self.assertEqual(before, list(db.iterdump()))
+
+    def test_legacy_fallback_flag_cannot_commit_failed_review(self):
+        original = self.body.split('\n\n')[0]
+        response = json.dumps({'replacements': [{'paragraphId': 'P1', 'text': original + '你仍未移动。'}]}, ensure_ascii=False)
+        self.play._planner = PlayerNarrativePlanner(RepairAuditGateway(self.cid, self.action, self.body, response))
+        with sqlite3.connect(self.read.database_path) as db:
+            before = list(db.iterdump())
+        events = []
+        with patch.dict(os.environ, {'STORY_LLM_CONSERVATIVE_FALLBACK': 'true'}):
+            with self.assertRaises(ReadError):
+                self.play.continue_turn(self.sid, self.parent, text=self.action,
+                                        request_id='legacy-fallback', stream=events.append)
+        self.assertEqual(events, [])
+        with sqlite3.connect(self.read.database_path) as db:
+            self.assertEqual(before, list(db.iterdump()))
+        with self.play.drafts.condition:
+            job = next(j for j in self.play.drafts.jobs.values() if j['binding'].get('request_id') == 'legacy-fallback')
+            self.assertEqual(job['status'], 'failed')
+            self.assertNotIn('artifact', job)
+            self.assertEqual(job['retained_draft']['status'], 'unconfirmed')
+            self.assertTrue(job['retained_draft']['text'])
+            self.assertTrue(job['failure_audits'])
+
+    def test_readable_rejected_candidate_cannot_be_promoted_by_legacy_flag(self):
+        body = '\n\n'.join(self.paragraphs)
+        error = LlmError('两版完整审核均未通过', 'model_output_rejected')
+        error.retained_body = body
+        error.review_attempts = 2
+        error.failure_stage = 'second_review'
+        error.candidate_history = [{'revision': 1, 'body': body,
+            'actualCjk': len(body), 'issueTypes': ['background'],
+            'problem': {'issues': [{'type': 'background', 'quote': body[:12]}]}}]
+        with sqlite3.connect(self.read.database_path) as db:
+            before = list(db.iterdump())
+        events = []
+        with patch.dict(os.environ, {'STORY_LLM_CONSERVATIVE_FALLBACK': 'true'}), \
+                patch('open_story_engine.api_play.CoCreationService.continue_free_text', side_effect=error):
+            with self.assertRaises(ReadError):
+                self.play.continue_turn(self.sid, self.parent, text=self.action,
+                                        request_id='rejected-candidate', stream=events.append)
+        self.assertEqual(events, [])
+        with sqlite3.connect(self.read.database_path) as db:
+            self.assertEqual(before, list(db.iterdump()))
+        job = next(j for j in self.play.drafts.jobs.values() if j['binding'].get('request_id') == 'rejected-candidate')
+        self.assertEqual(job['status'], 'failed')
+        self.assertEqual(job['retained_draft'], {'text': body, 'status': 'unconfirmed'})
+        self.assertNotIn('artifact', job)
 
     def test_player_repairs_reject_both_core_and_scene_placeholder_markers(self):
         body = '\n\n'.join(self.paragraphs)

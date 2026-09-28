@@ -1,0 +1,286 @@
+{
+  "schemaVersion": "qualifier-frame-cases/0.1",
+  "scope": "保留原38条标签，新增6条归属控制；两个转述控制仅验证未决路由，不算位置语义提取通过。",
+  "cases": [
+    {
+      "id": "frame:name_words",
+      "sceneKey": "hall",
+      "draft": "“沈砚秋”三个字写在议事殿内的纸上。",
+      "draftSha256": "e3a409d1b82d3628dfddafefb49ad12d4e504d7a691751e65b17f3755fc3694f",
+      "cohort": "attribution_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [],
+      "selectionExpectations": []
+    },
+    {
+      "id": "frame:portrait",
+      "sceneKey": "hall",
+      "draft": "守门长老的画像挂在议事殿外。",
+      "draftSha256": "8d2b9159d7497c0472755139db45ebb8a88e1cafe4a82825746ff92e23f0299a",
+      "cohort": "attribution_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [],
+      "selectionExpectations": []
+    },
+    {
+      "id": "frame:mixed_ownership",
+      "sceneKey": "hall",
+      "draft": "议事殿内的沈砚秋提到了守门长老。",
+      "draftSha256": "499ed5a2e5a9fad36dfb5ab129bc6a20002669aacca6946be18950c9ca2b6d94",
+      "cohort": "attribution_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S1",
+                "P1-U1-S2"
+              ],
+              "qualified": [
+                "P1-U1-S1",
+                "P1-U1-S2"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        }
+      ]
+    },
+    {
+      "id": "frame:position_and_quote",
+      "sceneKey": "hall",
+      "draft": "沈砚秋在议事殿内念出“我在殿外”。",
+      "draftSha256": "bc0a35abedf85316490798f37d2ca74e4f4e7f77fc55d3225fe69e8a59a00589",
+      "cohort": "attribution_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [
+        {
+          "unitIds": [
+            "P1-U1"
+          ],
+          "expectedStatus": "candidate",
+          "expectedNormal": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "expectedLimitations": []
+        }
+      ],
+      "selectionExpectations": [
+        {
+          "position": {
+            "subject": "scene:shen",
+            "relation": "boundary_side",
+            "object": "scene:council_hall",
+            "value": "inside",
+            "polarity": "positive",
+            "time": "snapshot",
+            "condition": null
+          },
+          "spans": [
+            {
+              "core": [
+                "P1-U1-S1"
+              ],
+              "qualified": [
+                "P1-U1-S1"
+              ]
+            }
+          ],
+          "conditionPremises": [],
+          "controlCue": null
+        }
+      ]
+    },
+    {
+      "id": "frame:self_report",
+      "sceneKey": "hall",
+      "draft": "沈砚秋低声说：“我在议事殿内。”",
+      "draftSha256": "0e3474b9ed18d9eb8e7d161134ff19e9c40f37bdc2bc08191c82e0f4bf507089",
+      "cohort": "scope_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [],
+      "selectionExpectations": []
+    },
+    {
+      "id": "frame:other_report",
+      "sceneKey": "hall",
+      "draft": "沈砚秋说守门长老在议事殿内。",
+      "draftSha256": "13eff7235d08f68d7e7b7253db95e8b3532f722be1b79ea405b3e341b9813e21",
+      "cohort": "scope_controls",
+      "origin": "synthetic_scene_control",
+      "targets": [],
+      "selectionExpectations": []
+    }
+  ],
+  "attributions": {
+    "prefix:mention": {
+      "E58c174e7405e-1": "position"
+    },
+    "prefix:operator": {
+      "E6898857fd3de-1": "position"
+    },
+    "in_core:mention": {
+      "Ee9b61fec24d5-1": "position"
+    },
+    "in_core:operator": {
+      "E9dd28978a667-1": "position"
+    },
+    "unquoted:mention": {
+      "E56f372505af7-1": "position"
+    },
+    "unquoted:operator": {
+      "E4f36236b8768-1": "position"
+    },
+    "denial:mention": {
+      "E05ce272d4198-1": "position"
+    },
+    "denial:operator": {
+      "Ee19dda8f9eb4-1": "position"
+    },
+    "neighbour:mention": {
+      "E93f90c79f4c2-2": "position"
+    },
+    "neighbour:operator": {
+      "E47a5a7269135-2": "position"
+    },
+    "two_people:first_operator": {
+      "Ee8b02fbd0fc3-1": "position",
+      "Ee8b02fbd0fc3-3": "position"
+    },
+    "two_people:second_operator": {
+      "E8b96805e7a38-1": "position",
+      "E8b96805e7a38-3": "position"
+    },
+    "gate:original_condition": {
+      "E59c43a34f59e-2": "position"
+    },
+    "gate:plain_emphasis": {
+      "E878879d1dad9-1": "position"
+    },
+    "gate:possibility": {
+      "E36eb7ad6cef4-1": "position"
+    },
+    "gate:both": {
+      "Ec63446961881-2": "position"
+    },
+    "gate:condition_paraphrase": {
+      "E7c8d1c08e176-2": "position"
+    },
+    "gate:possibility_paraphrase": {
+      "E7e945bb10031-1": "position"
+    },
+    "gate:both_paraphrase": {
+      "Eda695f6878bf-2": "position"
+    },
+    "gate:unrelated_possibility": {
+      "E6ba08365c99c-2": "position"
+    },
+    "gate:unrelated_condition": {
+      "Eeb42b94c78e0-2": "position"
+    },
+    "hall:source_position": {
+      "E854093b4845a-1": "position"
+    },
+    "hall:negative_position": {
+      "Ef98c1abfef5d-1": "position"
+    },
+    "hall:inferred_position": {
+      "E5fa1380af6f6-1": "position"
+    },
+    "hall:explicit_uncertainty": {
+      "Ea5ee19b090c8-1": "position"
+    },
+    "hall:word_mention": {
+      "E58c174e7405e-1": "position"
+    },
+    "hall:condition_and_inference": {
+      "E5dfd23f0fd37-1": "position"
+    },
+    "hall:two_people": {
+      "E654663ff45ac-1": "position",
+      "E654663ff45ac-3": "position"
+    },
+    "hall:unrelated_uncertainty": {
+      "Ef8d8ed322d79-2": "position"
+    },
+    "hall:denied_certainty": {
+      "Ee19dda8f9eb4-1": "position"
+    },
+    "control:location_mention": {
+      "E1225d5ed2a85-1": "no_position"
+    },
+    "control:object_position": {
+      "E8785129ccfa6-1": "other_entity"
+    },
+    "control:quoted_words": {
+      "Ea15644cc5d26-1": "word_mention"
+    },
+    "control:mixed_people": {
+      "E861215ae5a0a-1": "no_position",
+      "E861215ae5a0a-3": "position"
+    },
+    "scope:pronoun": {},
+    "scope:cross_sentence": {},
+    "control:adjunct_mention": {
+      "Eefdc3b7ae610-1": "position"
+    },
+    "control:negative_position": {
+      "E2806ce9b0d91-1": "position"
+    },
+    "frame:name_words": {
+      "E8f712cb959a0-1": "word_mention"
+    },
+    "frame:portrait": {
+      "Eabaf7e20bfe6-1": "other_entity"
+    },
+    "frame:mixed_ownership": {
+      "E5ec1fa5d15c1-2": "position",
+      "E5ec1fa5d15c1-3": "other_entity"
+    },
+    "frame:position_and_quote": {
+      "E604537cca6a2-1": "position"
+    },
+    "frame:self_report": {
+      "Ecdeee09f3769-1": "unresolved"
+    },
+    "frame:other_report": {
+      "Efdd5a0e3878a-1": "other_entity",
+      "Efdd5a0e3878a-2": "unresolved"
+    }
+  }
+}

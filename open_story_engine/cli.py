@@ -17,7 +17,7 @@ from .module_context import ModuleContextResolver
 from .authoring import StoryAuthoringError, compile_entry_model
 from .package_builder import StoryPackageBuildError, analyze_standard_novel, audit_story_package, audit_story_package_modules, build_source_reader, build_story_package, build_story_package_modules, read_story_package_modules, write_story_package_modules
 from .environment import load_env_file
-from .llm import LlmError, OpenAICompatibleGateway
+from .llm import LlmError, OpenAICompatibleGateway, writer_config_from_env
 from .play import PlayerTurnService
 from .source import SourceNovelError, draft_entry_review, inspect_standard_novel
 from .storage import SessionStore
@@ -245,45 +245,67 @@ def create_cocreation_runtime() -> tuple[Any, Any, NarrativeReviewer, str]:
         return MockPlanner(), DirectionEvaluator(), NarrativeReviewer(), "Mock Planner（仅结构测试）+ Direction Evaluator"
     if mode != "openai":
         raise ValueError("STORY_PLANNER 仅支持 mock 或 openai")
-    required = {key: os.environ.get(key, "").strip() for key in ("STORY_LLM_BASE_URL", "STORY_LLM_API_KEY", "STORY_LLM_MODEL")}
-    if not all(required.values()):
-        raise ValueError("使用 STORY_PLANNER=openai 时必须设置 STORY_LLM_BASE_URL、STORY_LLM_API_KEY 与 STORY_LLM_MODEL")
+    required = writer_config_from_env()
+    if not all(required[key] for key in ("base_url", "api_key", "model")):
+        prefix = "STORY_LLM_DIRECT_" if required["route"] == "direct" else "STORY_LLM_"
+        raise ValueError(f"使用 STORY_PLANNER=openai 时必须设置 {prefix}BASE_URL、{prefix}API_KEY 与 {prefix}MODEL")
     stream = environment_bool("STORY_LLM_STREAM", True)
     timeout = environment_integer("STORY_LLM_TIMEOUT_SECONDS", 30, 5, 120)
     first_delta_timeout = environment_integer("STORY_LLM_FIRST_DELTA_TIMEOUT_SECONDS", 30, 5, 120)
     max_tokens = environment_integer("STORY_LLM_MAX_TOKENS", 8192, 1024, 8192)
+    text_max_tokens = environment_integer("STORY_LLM_TEXT_MAX_TOKENS", 4096, 1024, max_tokens)
+    context_window = environment_integer("STORY_LLM_CONTEXT_WINDOW_TOKENS", 0, 0, 1_000_000)
+    reserved_output = environment_integer("STORY_LLM_CONTEXT_RESERVED_OUTPUT_TOKENS", 0, 0, 200_000)
+    projection_mode = os.environ.get(
+        "STORY_CONTEXT_PROJECTION_STATE_VISIBILITY_MODE", "audit_fallback",
+    ).strip()
     allow_transport_fallback = environment_bool("STORY_LLM_TRANSPORT_FALLBACK", True)
     reasoning_effort = environment_reasoning_effort()
     planner = LlmPlanner(
         OpenAICompatibleGateway(
-            required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"],
-            stream, timeout, max_tokens, allow_transport_fallback=allow_transport_fallback,
+            required["base_url"], required["api_key"], required["model"],
+            stream, timeout, max_tokens, text_max_tokens=text_max_tokens,
+            allow_transport_fallback=allow_transport_fallback,
             reasoning_effort=reasoning_effort,
             first_delta_timeout_seconds=first_delta_timeout,
         ),
         minimum_narrative_characters=2000,
         verify_source_facts=True,
+        context_window_tokens=context_window or None,
+        reserved_output_tokens=reserved_output,
+        context_projection={"stateVisibilityMode": projection_mode},
     )
     evaluator = DirectionEvaluator()
     reviewer: NarrativeReviewer = NarrativeReviewer()
     if environment_bool("STORY_LLM_QUALITY_REVIEW", False):
-        reviewer = LlmNarrativeReviewer(OpenAICompatibleGateway(required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"], False, timeout, reasoning_effort=reasoning_effort, first_delta_timeout_seconds=first_delta_timeout))
-    return planner, evaluator, reviewer, f"LLM Planner（{required['STORY_LLM_MODEL']}，正文 {'SSE' if stream else 'JSON'}）+ 本地方向判定"
+        reviewer = LlmNarrativeReviewer(OpenAICompatibleGateway(required["base_url"], required["api_key"], required["model"], False, timeout, reasoning_effort=reasoning_effort, first_delta_timeout_seconds=first_delta_timeout))
+    return planner, evaluator, reviewer, f"LLM Planner（{required['model']}，正文 {'SSE' if stream else 'JSON'}，{required['route']}）+ 本地方向判定"
 
 
 def create_live_evaluation_runtime() -> tuple[LlmPlanner, DirectionEvaluator, NarrativeReviewer, str]:
-    required = {key: os.environ.get(key, "").strip() for key in ("STORY_LLM_BASE_URL", "STORY_LLM_API_KEY", "STORY_LLM_MODEL")}
-    if not all(required.values()):
-        raise ValueError("真实模型评估必须设置 STORY_LLM_BASE_URL、STORY_LLM_API_KEY 与 STORY_LLM_MODEL")
+    required = writer_config_from_env()
+    if not all(required[key] for key in ("base_url", "api_key", "model")):
+        prefix = "STORY_LLM_DIRECT_" if required["route"] == "direct" else "STORY_LLM_"
+        raise ValueError(f"真实模型评估必须设置 {prefix}BASE_URL、{prefix}API_KEY 与 {prefix}MODEL")
     max_tokens = environment_integer("STORY_LLM_MAX_TOKENS", 8192, 1024, 8192)
+    context_window = environment_integer("STORY_LLM_CONTEXT_WINDOW_TOKENS", 0, 0, 1_000_000)
+    reserved_output = environment_integer("STORY_LLM_CONTEXT_RESERVED_OUTPUT_TOKENS", 0, 0, 200_000)
+    projection_mode = os.environ.get(
+        "STORY_CONTEXT_PROJECTION_STATE_VISIBILITY_MODE", "audit_fallback",
+    ).strip()
     reasoning_effort = environment_reasoning_effort()
     gateway_args = (
-        required["STORY_LLM_BASE_URL"], required["STORY_LLM_API_KEY"], required["STORY_LLM_MODEL"],
+        required["base_url"], required["api_key"], required["model"],
         False, 60, max_tokens, False, reasoning_effort,
     )
-    planner = LlmPlanner(OpenAICompatibleGateway(*gateway_args), minimum_narrative_characters=2000, verify_source_facts=True)
+    planner = LlmPlanner(
+        OpenAICompatibleGateway(*gateway_args), minimum_narrative_characters=2000,
+        verify_source_facts=True, context_window_tokens=context_window or None,
+        reserved_output_tokens=reserved_output,
+        context_projection={"stateVisibilityMode": projection_mode},
+    )
     evaluator = DirectionEvaluator()
-    return planner, evaluator, NarrativeReviewer(), f"LLM Planner（{required['STORY_LLM_MODEL']}，纯正文，JSON 传输，60 秒，无传输降级）+ 本地方向判定"
+    return planner, evaluator, NarrativeReviewer(), f"LLM Planner（{required['model']}，纯正文，JSON 传输，60 秒，无传输降级，{required['route']}）+ 本地方向判定"
 
 
 @dataclass(frozen=True)

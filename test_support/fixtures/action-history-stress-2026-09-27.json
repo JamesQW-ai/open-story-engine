@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "action-history-labels/1",
+  "packageId": "taixu-relics-part1",
+  "packageVersion": "0.1.3",
+  "novelSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+  "characterId": "character_ae4cb42b9b49",
+  "labelOrigin": "assistant_authored_controls_not_independent_human_review",
+  "scope": "新增复杂表达与跨页压力控制；原文引用经官方长篇开场核对，回合排列为合成。开发者自审，非独立人工评审或真实正文验收。memoryCases 沿用上一轮控制，不计为新增案例。",
+  "historyCases": [
+    {
+      "id": "paraphrase-document",
+      "action": "确认推荐信是否仍在我掌中",
+      "source": "visibleItems.0",
+      "expectedPrior": true,
+      "reason": "推荐信和掌中改写引荐文书及手中，仍需物品归属依据。"
+    },
+    {
+      "id": "paraphrase-father",
+      "action": "追问家父杳无音讯的经过",
+      "source": "knownFacts.0",
+      "expectedPrior": true,
+      "reason": "家父杳无音讯改写父亲失踪，需要保持生死未确认边界。"
+    },
+    {
+      "id": "paraphrase-lamp",
+      "action": "观察那盏未点燃的照明器物",
+      "source": "visibleItems.1",
+      "expectedPrior": true,
+      "reason": "此控制只有空灯作为灯具先行对象；改写仍需持物归属依据。"
+    },
+    {
+      "id": "anchored-pronoun",
+      "action": "照他说的做",
+      "source": "knownFacts.1",
+      "parent": "你记起老人交代的话。",
+      "expectedPrior": true,
+      "reason": "父页明确承接老人交代，指代有已知锚点。"
+    },
+    {
+      "id": "explicit-paraphrase",
+      "action": "确认推荐信是否仍在我掌中",
+      "source": "visibleItems.0",
+      "explicit": true,
+      "expectedPrior": true,
+      "reason": "明确来源绑定应保护无词面重合的计划引用。"
+    },
+    {
+      "id": "module-explicit-document",
+      "action": "照先前的线索核对",
+      "source": "visibleItems.0",
+      "priorAsModule": true,
+      "explicit": true,
+      "expectedPrior": true,
+      "reason": "公开的模块历史摘要仍在冻结包内，计划明确引用，不应仅因两条连续性名额已满而丢引用。"
+    },
+    {
+      "id": "module-explicit-father",
+      "action": "继续追问",
+      "source": "knownFacts.0",
+      "priorAsModule": true,
+      "explicit": true,
+      "expectedPrior": true,
+      "reason": "计划明确引用冻结包内前事摘要，须传递到行动审核。"
+    },
+    {
+      "id": "module-named-document",
+      "action": "阅读引荐文书",
+      "source": "visibleItems.0",
+      "priorAsModule": true,
+      "expectedPrior": true,
+      "reason": "明确点名的对象有公开历史来源，词面筛选仅扫描连续性窗口会遗漏。"
+    },
+    {
+      "id": "gap-one-document",
+      "action": "阅读引荐文书",
+      "source": "visibleItems.0",
+      "between": [
+        "雨势未变。"
+      ],
+      "expectedPrior": true,
+      "reason": "隔一页仍需先前物品归属，检查该证据是否已在建包时丢失。"
+    },
+    {
+      "id": "gap-three-document",
+      "action": "阅读引荐文书",
+      "source": "visibleItems.0",
+      "between": [
+        "雨势未变。",
+        "你侧耳倾听。",
+        "你停了片刻。"
+      ],
+      "expectedPrior": true,
+      "reason": "更多中间页不应被误报为具备长期承接能力；无已确认记忆时如实记录缺失。"
+    },
+    {
+      "id": "gap-parent-anchor",
+      "action": "照他说的做",
+      "source": "knownFacts.1",
+      "between": [
+        "雨势未变。"
+      ],
+      "parent": "你记起老人交代的话。",
+      "expectedPrior": true,
+      "reason": "父页锚点明确但具体交代位于窗口外；需区分指代锚点与承接内容。"
+    },
+    {
+      "id": "ambiguous-pronoun",
+      "action": "按那个人的意思继续",
+      "source": "visibleItems.0",
+      "expectedPrior": false,
+      "reason": "父页没有指向文书的绑定，不得臆测一个先行对象。"
+    },
+    {
+      "id": "homonym-clerk-document",
+      "action": "向值守文书询问执事的去向",
+      "source": "visibleItems.0",
+      "expectedPrior": false,
+      "reason": "行动中的值守文书指职务人员，来源中的引荐文书指纸件，不能因同词误选；行动本身不证明该人员存在。"
+    },
+    {
+      "id": "shared-time-other-event",
+      "action": "三年前那封家信是否寄出",
+      "source": "knownFacts.0",
+      "expectedPrior": false,
+      "reason": "同为三年前不证明家信与父亲押灯失踪有关；提问不确立寄信事实。"
+    }
+  ],
+  "memoryCases": [
+    {
+      "id": "active-goal",
+      "profile": "goal",
+      "turns": 1,
+      "actionMode": "target",
+      "expectedCurrent": true,
+      "reason": "当前明确点名的未完成目标需保留。"
+    },
+    {
+      "id": "open-thread",
+      "profile": "thread",
+      "turns": 1,
+      "actionMode": "target",
+      "expectedCurrent": true,
+      "reason": "当前明确点名的未结问题需保留。"
+    },
+    {
+      "id": "completed-goal",
+      "profile": "goal",
+      "turns": 4,
+      "actionMode": "target",
+      "expectedCurrent": true,
+      "reason": "已完成状态取代旧进行中状态，不能复活旧事实。"
+    },
+    {
+      "id": "resolved-thread",
+      "profile": "thread",
+      "turns": 4,
+      "actionMode": "target",
+      "expectedCurrent": true,
+      "reason": "已解决状态取代旧待处理状态。"
+    },
+    {
+      "id": "irrelevant-goal",
+      "profile": "goal",
+      "turns": 1,
+      "actionMode": "unrelated",
+      "expectedCurrent": false,
+      "reason": "无关目标不得仅因存在账本就进入动态记忆。"
+    },
+    {
+      "id": "irrelevant-thread",
+      "profile": "thread",
+      "turns": 1,
+      "actionMode": "unrelated",
+      "expectedCurrent": false,
+      "reason": "无关问题不得堆入动态记忆。"
+    },
+    {
+      "id": "invalid-goal-source",
+      "profile": "goal",
+      "turns": 1,
+      "actionMode": "target",
+      "tamper": true,
+      "expectedCurrent": false,
+      "reason": "来源正文变化使回执失效，不得仍当确认记忆。"
+    },
+    {
+      "id": "invalid-thread-source",
+      "profile": "thread",
+      "turns": 1,
+      "actionMode": "target",
+      "tamper": true,
+      "expectedCurrent": false,
+      "reason": "来源正文变化使回执失效，不得仍当确认记忆。"
+    }
+  ]
+}

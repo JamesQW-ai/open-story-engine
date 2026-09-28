@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import sqlite3
 import uuid
@@ -402,6 +403,39 @@ class SessionStore:
             result.append(current)
             current = self.branch(session_id, current["parentId"]) if current.get("parentId") else None
         return list(reversed(result))
+
+    def lineage_with_fingerprint(self, session_id: str, node_id: str):
+        """Read complete history and bind its stored bytes in the same transaction.
+
+        No persisted hashes or cross-request cache: even formatting-only changes
+        conservatively invalidate a draft. Parsed history remains unchanged.
+        """
+        nodes, fingerprints, visited = [], [], set()
+        current_id = node_id
+        while True:
+            if current_id in visited:
+                raise ValueError('共创分支存在循环')
+            visited.add(current_id)
+            row = self.connection.execute(
+                'SELECT * FROM branch_nodes WHERE session_id=? AND id=?', (session_id, current_id)).fetchone()
+            if row is None:
+                raise ValueError(f'共创分支节点不存在: {current_id}')
+            node = load(row['node_json'])
+            if node['id'] != row['id'] or (node.get('parentId') or None) != row['parent_id']:
+                raise ValueError('共创分支内容与存储关系不一致')
+            node.update(sessionId=row['session_id'], sequence=row['sequence'])
+            nodes.append(node)
+            raw_sha = hashlib.sha256(row['node_json'].encode('utf-8')).hexdigest()
+            fingerprints.append(hashlib.sha256(dump([
+                row['id'], row['session_id'], row['sequence'], row['parent_id'], raw_sha,
+            ]).encode('utf-8')).digest())
+            current_id = node.get('parentId')
+            if not current_id:
+                break
+        result = hashlib.sha256(b'stored-lineage/1\n')
+        for fingerprint in reversed(fingerprints):
+            result.update(fingerprint)
+        return list(reversed(nodes)), result.hexdigest()
 
     def save_direction_evaluation(self, session_id: str, parent_id: str, player_direction: str, evaluation: Dict[str, Any], request_id: Optional[str] = None) -> Dict[str, Any]:
         with self.connection:

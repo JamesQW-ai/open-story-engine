@@ -1,0 +1,419 @@
+{
+  "schemaVersion": "context-proposition-audit/0.1",
+  "recordedAt": "2026-09-26T08:49:42.219575+00:00",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-proposition-eval-2026-09-26.json",
+  "sourceSha256": "fd287a2494b1e8a91df98c8f939db446c7020c132db6e0db5d0242eceeff0fe3",
+  "labelsSha256": "9ab11de1ec76b4099bea4bac13189428c853d239660c9e60002a5ab863458697",
+  "allStatusesReproduced": true,
+  "newModelCalls": 0,
+  "originalModelCalls": 12,
+  "rawModels": [
+    "deepseek-flash"
+  ],
+  "finishReasons": [
+    "stop"
+  ],
+  "originalEvidenceHashes": {
+    "docs/evidence/context-management-2026-09-22/context-claim-request-diagnostic-2026-09-25.json": "c4ef3636dff6480b7f5c4abf260f60ea5a2817b3aa548cfe4540298c3069e632",
+    "docs/evidence/context-management-2026-09-22/context-claim-rescore-2026-09-26.json": "3105c6082517e1c9a56c1ced4a19d672361f2d6a6cac30dd9c4d5a4381828e1d",
+    "docs/evidence/context-management-2026-09-22/context-claim-pipeline-2026-09-25.json": "5e08b2eb6106860471486a2fe3e9a3601a7385f084dcf833b5e779b061b55200",
+    "docs/evidence/context-management-2026-09-22/context-claim-pipeline-audit-2026-09-25.json": "258341deee3d01a8d009100a0528cfc72ecd37f8bd1fd7ab23cd2b85782b7c2a",
+    "docs/evidence/context-management-2026-09-22/context-claim-pipeline-2026-09-25-v2.json": "c6d5268d386c7921f7d53d801ca8b96c9847e10c966d0640a40da7d41af913bc",
+    "docs/evidence/context-management-2026-09-22/context-indexed-pipeline-2026-09-26.json": "41d60b8168ff8bef78e91d9b62a6f9abf02de3ffba621ad564520652988ea1ba",
+    "docs/evidence/context-management-2026-09-22/context-indexed-audit-2026-09-26.json": "1ffb9c6747d285bc9b0038b517ffdf34f843e148634bbe31574d470c45e13b60"
+  },
+  "counts": {
+    "totalPropositions": 34,
+    "scoredPropositions": 33,
+    "pendingPropositions": 1,
+    "fullMatches": 29,
+    "basisOnlyMismatches": 3,
+    "verdictMismatches": 1,
+    "verdictMatches": 32
+  },
+  "requestDurationMedianMs": 1182.0,
+  "usage": {
+    "input": 13763,
+    "output": 2391
+  },
+  "cases": [
+    {
+      "caseId": "recorded_v11",
+      "status": "mismatched",
+      "matchedPropositions": [
+        "C1",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C8",
+        "C9",
+        "C11",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "mismatches": [
+        {
+          "id": "C2",
+          "statement": "你在催促守门弟子时朝他迈出半步。",
+          "expectedVerdict": "nonfactual",
+          "actualVerdict": "nonfactual",
+          "allowedBases": [
+            "ordinary_reaction"
+          ],
+          "actualBasis": "authorized_action"
+        },
+        {
+          "id": "C10",
+          "statement": "伏着的伤者在封山线内。",
+          "expectedVerdict": "contradicted",
+          "actualVerdict": "supported",
+          "allowedBases": [
+            ""
+          ],
+          "actualBasis": ""
+        },
+        {
+          "id": "C15",
+          "statement": "守门弟子的姿态像在等你说完。",
+          "expectedVerdict": "nonfactual",
+          "actualVerdict": "nonfactual",
+          "allowedBases": [
+            "ordinary_reaction"
+          ],
+          "actualBasis": "expressed_uncertainty"
+        },
+        {
+          "id": "C16",
+          "statement": "守门弟子的姿态也像在等别的什么。",
+          "expectedVerdict": "nonfactual",
+          "actualVerdict": "nonfactual",
+          "allowedBases": [
+            "ordinary_reaction"
+          ],
+          "actualBasis": "expressed_uncertainty"
+        }
+      ],
+      "pendingAnnotations": [
+        {
+          "id": "C7",
+          "statement": "你猜测在落锁前挪入伤者，伤者兴许还有救。",
+          "expectedVerdict": "needs_review",
+          "actualVerdict": "nonfactual",
+          "allowedBases": [
+            ""
+          ],
+          "actualBasis": "expressed_uncertainty"
+        }
+      ],
+      "verdictPairs": [
+        {
+          "expected": "supported",
+          "actual": "supported"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "unsupported",
+          "actual": "unsupported"
+        },
+        {
+          "expected": "supported",
+          "actual": "supported"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "contradicted",
+          "actual": "supported"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "supported",
+          "actual": "supported"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        }
+      ],
+      "requiresSemanticReview": true
+    },
+    {
+      "caseId": "supported_life",
+      "status": "matched",
+      "matchedPropositions": [
+        "C1",
+        "C2"
+      ],
+      "mismatches": [],
+      "pendingAnnotations": [],
+      "verdictPairs": [
+        {
+          "expected": "supported",
+          "actual": "supported"
+        },
+        {
+          "expected": "supported",
+          "actual": "supported"
+        }
+      ],
+      "requiresSemanticReview": true
+    },
+    {
+      "caseId": "ordinary_action",
+      "status": "matched",
+      "matchedPropositions": [
+        "C1",
+        "C2"
+      ],
+      "mismatches": [],
+      "pendingAnnotations": [],
+      "verdictPairs": [
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        }
+      ],
+      "requiresSemanticReview": true
+    },
+    {
+      "caseId": "legal_wait",
+      "status": "matched",
+      "matchedPropositions": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "mismatches": [],
+      "pendingAnnotations": [],
+      "verdictPairs": [
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        }
+      ],
+      "requiresSemanticReview": true
+    },
+    {
+      "caseId": "honest_unknown",
+      "status": "matched",
+      "matchedPropositions": [
+        "C1",
+        "C2"
+      ],
+      "mismatches": [],
+      "pendingAnnotations": [],
+      "verdictPairs": [
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        },
+        {
+          "expected": "nonfactual",
+          "actual": "nonfactual"
+        }
+      ],
+      "requiresSemanticReview": true
+    },
+    {
+      "caseId": "supported_negation",
+      "status": "matched",
+      "matchedPropositions": [
+        "C1"
+      ],
+      "mismatches": [],
+      "pendingAnnotations": [],
+      "verdictPairs": [
+        {
+          "expected": "supported",
+          "actual": "supported"
+        }
+      ],
+      "requiresSemanticReview": true
+    },
+    {
+      "caseId": "reported_history",
+      "status": "matched",
+      "matchedPropositions": [
+        "C1",
+        "C2"
+      ],
+      "mismatches": [],
+      "pendingAnnotations": [],
+      "verdictPairs": [
+        {
+          "expected": "supported",
+          "actual": "supported"
+        },
+        {
+          "expected": "supported",
+          "actual": "supported"
+        }
+      ],
+      "requiresSemanticReview": true
+    },
+    {
+      "caseId": "derived_symptom",
+      "status": "matched",
+      "matchedPropositions": [
+        "C1"
+      ],
+      "mismatches": [],
+      "pendingAnnotations": [],
+      "verdictPairs": [
+        {
+          "expected": "unsupported",
+          "actual": "unsupported"
+        }
+      ],
+      "requiresSemanticReview": true
+    },
+    {
+      "caseId": "negated_life",
+      "status": "matched",
+      "matchedPropositions": [
+        "C1"
+      ],
+      "mismatches": [],
+      "pendingAnnotations": [],
+      "verdictPairs": [
+        {
+          "expected": "contradicted",
+          "actual": "contradicted"
+        }
+      ],
+      "requiresSemanticReview": true
+    },
+    {
+      "caseId": "swapped_subject",
+      "status": "matched",
+      "matchedPropositions": [
+        "C1",
+        "C2"
+      ],
+      "mismatches": [],
+      "pendingAnnotations": [],
+      "verdictPairs": [
+        {
+          "expected": "unsupported",
+          "actual": "unsupported"
+        },
+        {
+          "expected": "unsupported",
+          "actual": "unsupported"
+        }
+      ],
+      "requiresSemanticReview": true
+    },
+    {
+      "caseId": "expanded_permission",
+      "status": "matched",
+      "matchedPropositions": [
+        "C1"
+      ],
+      "mismatches": [],
+      "pendingAnnotations": [],
+      "verdictPairs": [
+        {
+          "expected": "unsupported",
+          "actual": "unsupported"
+        }
+      ],
+      "requiresSemanticReview": true
+    },
+    {
+      "caseId": "reported_to_completed",
+      "status": "matched",
+      "matchedPropositions": [
+        "C1"
+      ],
+      "mismatches": [],
+      "pendingAnnotations": [],
+      "verdictPairs": [
+        {
+          "expected": "unsupported",
+          "actual": "unsupported"
+        }
+      ],
+      "requiresSemanticReview": true
+    }
+  ],
+  "findings": [
+    {
+      "severity": "P1",
+      "caseId": "recorded_v11",
+      "propositionId": "C10",
+      "finding": "相反位置被误当支持",
+      "detail": "命题在封山线内；模型引用来源被挡在封山线外，却返回 supported 并声称一致。引用真实存在不代表蕴含成立。"
+    },
+    {
+      "severity": "P2",
+      "caseId": "recorded_v11",
+      "propositionIds": [
+        "C2",
+        "C15",
+        "C16"
+      ],
+      "finding": "非事实依据分类不一致",
+      "detail": "非事实总判定一致，但普通动作被归 authorized_action，姿态推测被归 expressed_uncertainty；保留冻结评分，不将之报告为事实漏报。"
+    },
+    {
+      "severity": "pending",
+      "caseId": "recorded_v11",
+      "propositionId": "C7",
+      "finding": "救助猜测边界未冻结",
+      "detail": "本轮模型判 nonfactual；该项预先标 needs_review，仍不计分，不因为模型给出判断就确认标签。"
+    }
+  ],
+  "acceptance": false,
+  "productionEnablement": false,
+  "limitations": [
+    "固定命题由 Codex 复核整理，不测试自动提取；输入改变，不能和旧三阶段分数直接作因果比较。",
+    "定向开发集，不是留出集；来源支持诊断不能替代权限、隐私可见性、状态提交或完整正文验收。"
+  ]
+}

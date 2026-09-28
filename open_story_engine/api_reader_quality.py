@@ -164,6 +164,11 @@ def validate_action_requirements(data, requirements, body):
         raise ValueError('行动核对缺少明确的问题列表')
     if data['issues']:
         raise ValueError('行动或连续性未闭合：' + '；'.join(str(i) for i in data['issues'][:3]))
+    return bind_action_results(data, requirements, body)
+
+
+def bind_action_results(data, requirements, body):
+    """Validate action IDs and result evidence, without quality-review issues."""
     actions = data.get('actions')
     if not isinstance(actions, list) or len(actions) != len(requirements):
         raise ValueError('复合行动必须逐项核对，不能遗漏用户要求')

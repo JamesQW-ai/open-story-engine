@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "context-grounding-reference-replay/0.1",
+  "recordedAt": "2026-09-25T08:24:50.987600+00:00",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-final-guard-validation-2026-09-25.json",
+  "sourceSha256": "557cad0cfdb5a4164df3a8383a9ca29b6cd0e78a8e59b4f0e5da0bceedaa1302",
+  "promptVersion": "prompt-catalog/1:554a9871484c134a8763f9fce36816bd26b8bbdd2adcf80357b9b8e09c1ec539",
+  "mode": "offline_saved_response_only",
+  "modelCalls": 0,
+  "formalSessionWrites": 0,
+  "acceptance": false,
+  "boundary": "同一份请求与响应只更换本地引用证据绑定；没有调用新提示或重新生成正文，不代表最终代码的全链实测。",
+  "cases": [
+    {
+      "caseId": "recorded_mixed_failure",
+      "evidenceIds": [
+        "module:currentBeat:beat_chapter_001",
+        "module:opening:identity",
+        "module:opening:appearance",
+        "module:opening:knownFacts:0",
+        "module:opening:knownFacts:1",
+        "module:opening:knownFacts:2",
+        "module:opening:relationships:0",
+        "module:opening:relationships:1",
+        "module:opening:relationships:2",
+        "module:opening:visibleItems:0",
+        "module:opening:visibleItems:1",
+        "module:opening:evidence:0",
+        "module:opening:evidence:1",
+        "module:opening:evidence:2",
+        "module:opening:evidence:3",
+        "module:opening:evidence:4",
+        "branch:lineage:branch_c351324c-e8f7-4a85-9c01-839a8c231e5a"
+      ],
+      "validation": {
+        "grounding": {
+          "status": "rejected",
+          "violations": [
+            {
+              "paragraphId": "P2",
+              "claim": "人若留在外面，撑不到天亮。”",
+              "reason": "“撑不到天亮”是对存活期限的预测，公开来源只证明伤者仍活着，无依据支持拖延后果。",
+              "type": "background"
+            },
+            {
+              "paragraphId": "P4",
+              "claim": "“封山线内不得擅入，这是门规。”",
+              "reason": "规矩或资格结论必须由同一句公开来源同时支持规则与对象：守门弟子声称门规，来源支持其守门职责。",
+              "type": "background"
+            },
+            {
+              "paragraphId": "P5",
+              "claim": "落锁的时辰近了。",
+              "reason": "“落锁的时辰近了”是对时辰的推断，公开来源无具体落锁时间依据。",
+              "type": "background"
+            }
+          ],
+          "unlocated": []
+        },
+        "knowledge": {
+          "status": "rejected",
+          "violations": [
+            {
+              "paragraphId": "P2",
+              "type": "background",
+              "claim": "“他还活着。”",
+              "reason": "陆照临基于刚看到的体表征象说出“他还活着”，属当前判断。；当前草稿只能证明先告知后转述，不能证明观察前提或既往事实"
+            },
+            {
+              "paragraphId": "P2",
+              "type": "background",
+              "claim": "“喉间有血沫，胸口还在起伏。人若留在外面，撑不到天亮。”",
+              "reason": "陆照临可基于体表征象说血沫与起伏，但“撑不到天亮”是缺依据的存活期限预测。；当前草稿只能证明先告知后转述，不能证明观察前提或既往事实；伤者若留在外面撑不到天亮的存活期限依据"
+            },
+            {
+              "paragraphId": "P4",
+              "type": "background",
+              "claim": "“封山线内不得擅入，这是门规。”",
+              "reason": "守门弟子作为守门人声称门规，来源支持其守门职责。；人物获知来源不存在、尚未发生或引用了自己的发言"
+            }
+          ],
+          "unlocated": []
+        },
+        "scope": {
+          "status": "allowed"
+        },
+        "boundaries": {
+          "status": "allowed"
+        }
+      }
+    },
+    {
+      "caseId": "request_then_wait",
+      "evidenceIds": [
+        "module:currentBeat:beat_chapter_001",
+        "module:opening:identity",
+        "module:opening:appearance",
+        "module:opening:knownFacts:0",
+        "module:opening:knownFacts:1",
+        "module:opening:knownFacts:2",
+        "module:opening:relationships:0",
+        "module:opening:relationships:1",
+        "module:opening:relationships:2",
+        "module:opening:visibleItems:0",
+        "module:opening:visibleItems:1",
+        "module:opening:evidence:0",
+        "module:opening:evidence:1",
+        "module:opening:evidence:2",
+        "module:opening:evidence:3",
+        "module:opening:evidence:4",
+        "branch:lineage:branch_c351324c-e8f7-4a85-9c01-839a8c231e5a"
+      ],
+      "validation": {
+        "grounding": {
+          "status": "allowed"
+        },
+        "knowledge": {
+          "status": "allowed"
+        },
+        "scope": {
+          "status": "allowed"
+        },
+        "boundaries": {
+          "status": "allowed"
+        }
+      }
+    }
+  ]
+}

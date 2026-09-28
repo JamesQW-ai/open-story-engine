@@ -1,0 +1,1350 @@
+{
+  "schemaVersion": "jev-real-candidate-selection/0.1",
+  "status": "completed",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3",
+    "cjk": 102610
+  },
+  "writerRoute": "direct",
+  "writerModel": "deepseek-v4-flash",
+  "jevMode": "shadow",
+  "action": "我观察门上的封山刻痕和伤者呼吸，只向守门弟子询问能否通传救助，既不移动也不触碰铁链。",
+  "requestElapsedMs": 31905,
+  "firstVisibleTextMs": 31899,
+  "resetCount": 0,
+  "resets": [],
+  "visibleTextCjk": 268,
+  "visibleText": "雨线斜过山门，你站在原地没动，目光先落在门扇上。\n\n铁链横过门缝，链节间压着几道刻痕，深浅不一。旧痕里积着暗色水垢，边缘被雨水泡得发白；靠下的一道却新，石粉还没被冲净，水痕顺着刻槽往外渗，像刚划开不久。你辨不出这些刻痕的用意，只能看出新旧不同。\n\n伤者倒在青石内侧，胸口起伏很浅，隔一会儿才抽一下，喉间随着呼吸冒出细碎血沫，被雨水一冲就散。人还活着，但撑不了太久的样子。\n\n你没有迈步，也没有去碰铁链。\n\n“能否通传一声，请人来救他？”你朝守门弟子开口，声音压过雨声。\n\n守门弟子按着剑柄，视线在你和伤者之间转了一回，没有立刻答话。片刻后他才说：“通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。你若要等，就站在这条线外等。”",
+  "resultStatus": "written",
+  "resultCode": null,
+  "fallbackMode": "candidate_selected_pending_patch",
+  "fallbackReason": "second_review_failed_best_candidate",
+  "candidateSelection": {
+    "strategy": "quality_then_patch",
+    "selectedRevision": 0,
+    "qualityScore": 932,
+    "pendingPatch": true,
+    "issueTypes": [
+      "background"
+    ]
+  },
+  "branchStateUnchanged": true,
+  "selectedDirectionStatePatch": {},
+  "narrativeText": "雨线斜过山门，你站在原地没动，目光先落在门扇上。\n\n铁链横过门缝，链节间压着几道刻痕，深浅不一。旧痕里积着暗色水垢，边缘被雨水泡得发白；靠下的一道却新，石粉还没被冲净，水痕顺着刻槽往外渗，像刚划开不久。你辨不出这些刻痕的用意，只能看出新旧不同。\n\n伤者倒在青石内侧，胸口起伏很浅，隔一会儿才抽一下，喉间随着呼吸冒出细碎血沫，被雨水一冲就散。人还活着，但撑不了太久的样子。\n\n你没有迈步，也没有去碰铁链。\n\n“能否通传一声，请人来救他？”你朝守门弟子开口，声音压过雨声。\n\n守门弟子按着剑柄，视线在你和伤者之间转了一回，没有立刻答话。片刻后他才说：“通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。你若要等，就站在这条线外等。”",
+  "auditSummary": [
+    {
+      "operation": "branch_planner",
+      "fallbackMode": null,
+      "stateMutation": null,
+      "callObservations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 4809,
+            "responseHeadersMs": 510,
+            "completeBodyMs": 4809
+          },
+          "generationStage": "result_contract",
+          "revision": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 4005,
+            "responseHeadersMs": 460,
+            "completeBodyMs": 4005
+          },
+          "generationStage": "result_contract",
+          "revision": 1
+        },
+        {
+          "generationStage": "scene_plan",
+          "plan": {
+            "start": "雨仍在下，陆照临站在封山石外，引荐文书在怀里受潮，伤者倒在青石内侧，空灯仍在其手边。",
+            "beats": [
+              {
+                "purpose": "兑现观察：写清门上封山刻痕的形态、新旧水痕，以及伤者呼吸的起伏与喉间血沫，同时明确陆照临没有移动、没有触碰铁链。",
+                "stepIds": [
+                  "S1"
+                ]
+              },
+              {
+                "purpose": "兑现询问：陆照临只向守门弟子问能否通传救助，不递文书、不越线。",
+                "stepIds": [
+                  "S2"
+                ]
+              },
+              {
+                "purpose": "兑现回应：守门弟子按职责当场答复，说明通传与否的当场态度，不替玩家决定下一步。",
+                "stepIds": [
+                  "S3"
+                ]
+              }
+            ],
+            "outcome": "陆照临看清封山刻痕与伤者呼吸状态，并向守门弟子提出通传救助的询问，得到守门弟子的当场回应；他始终未移动、未触碰铁链。",
+            "stop": "停在守门弟子回应之后，把是否继续等待、是否交出文书、是否越过封山线等决定留给玩家。",
+            "targetCjk": [
+              80,
+              250
+            ],
+            "lengthReason": "本回合包含一次观察、一次询问和一次NPC回应，需要写清刻痕与呼吸的可观察细节、询问的边界以及守门弟子的当场态度，篇幅适中。",
+            "knowledge": [
+              {
+                "speakerId": "character_ae4cb42b9b49",
+                "statement": "陆照临询问守门弟子能否通传救助。",
+                "status": "pending",
+                "sources": [],
+                "afterStepId": "S2"
+              },
+              {
+                "speakerId": "character_766c4e16f65d",
+                "statement": "守门弟子对能否通传救助的当场回应。",
+                "status": "pending",
+                "sources": [],
+                "afterStepId": "S3"
+              }
+            ],
+            "observationLimits": [
+              "陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。",
+              "守门弟子是否通传由其当场决定，陆照临不能替其决定，也不能越过封山线或触碰铁链。",
+              "伤者呼吸状态可观察，但其能否获救仍未知。"
+            ]
+          }
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 3190,
+            "responseHeadersMs": 421,
+            "completeBodyMs": 3189
+          },
+          "generationStage": "action_authority",
+          "evidenceAttempt": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 2592,
+            "responseHeadersMs": 371,
+            "firstEventMs": 397,
+            "firstContentMs": 779,
+            "completeBodyMs": 2592
+          },
+          "generationStage": "chapter",
+          "revision": 0
+        },
+        {
+          "generationStage": "scene_draft_metrics",
+          "revision": 0,
+          "actualCjk": 268,
+          "paragraphs": 6,
+          "pacing": {
+            "level": "dynamic",
+            "targetCjk": [
+              80,
+              250
+            ],
+            "reason": "本回合包含一次观察、一次询问和一次NPC回应，需要写清刻痕与呼吸的可观察细节、询问的边界以及守门弟子的当场态度，篇幅适中。",
+            "hardMinimum": false,
+            "minCjk": 80,
+            "maxCjk": 1500,
+            "lengthPolicy": "final_visible_prose_dynamic_80_1500"
+          }
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 2842,
+            "responseHeadersMs": 446,
+            "completeBodyMs": 2842
+          },
+          "generationStage": "fact_extraction",
+          "revision": 0,
+          "extractionAttempt": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 4153,
+            "responseHeadersMs": 533,
+            "completeBodyMs": 4153
+          },
+          "generationStage": "action_review",
+          "revision": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 4515,
+            "responseHeadersMs": 476,
+            "completeBodyMs": 4515
+          },
+          "generationStage": "scene_grounding",
+          "revision": 0
+        },
+        {
+          "generationStage": "independent_review_result",
+          "revision": 0,
+          "review": {
+            "checks": [
+              {
+                "id": "P1-C1",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "当前目光落向门扇，未越界。"
+              },
+              {
+                "id": "P2-C1",
+                "kind": "inference",
+                "verdict": "unsupported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "铁链横过门缝、刻痕深浅不一等观察细节无公开来源支持。"
+              },
+              {
+                "id": "P2-C2",
+                "kind": "inference",
+                "verdict": "unsupported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "水垢、石粉、水痕渗流及‘刚划开不久’的推断均无公开来源。"
+              },
+              {
+                "id": "P2-C3",
+                "kind": "unknown",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "承认辨不出用意，仅知新旧不同。"
+              },
+              {
+                "id": "P3-C1",
+                "kind": "inference",
+                "verdict": "unsupported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "胸口起伏浅、血沫等具体呼吸细节无公开来源支持。"
+              },
+              {
+                "id": "P3-C2",
+                "kind": "inference",
+                "verdict": "unsupported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "‘撑不了太久’的预后推断无公开来源支持。"
+              },
+              {
+                "id": "P4-C1",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "未移动、未触碰铁链，符合限制。"
+              },
+              {
+                "id": "P5-C1",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "当前向守门弟子询问通传救助。"
+              },
+              {
+                "id": "P5-C2",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "当前朝守门弟子开口说话。"
+              },
+              {
+                "id": "P6-C1",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "守门弟子当场按剑、视线移动、未答话。"
+              },
+              {
+                "id": "P6-C2",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "守门弟子当场回应，未替玩家决定。"
+              },
+              {
+                "id": "P6-C3",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "守门弟子当场要求在线外等。"
+              }
+            ],
+            "scopeChecks": [
+              {
+                "id": "A1",
+                "verdict": "satisfied",
+                "paragraphIds": [
+                  "P1",
+                  "P2",
+                  "P3"
+                ],
+                "reason": "目光先落门扇，观察刻痕与伤者呼吸，未越界。"
+              },
+              {
+                "id": "A2",
+                "verdict": "satisfied",
+                "paragraphIds": [
+                  "P5",
+                  "P6"
+                ],
+                "reason": "只向守门弟子询问能否通传救助，未向他人询问。"
+              },
+              {
+                "id": "A3",
+                "verdict": "satisfied",
+                "paragraphIds": [
+                  "P4"
+                ],
+                "reason": "明确未迈步、未触碰铁链。"
+              }
+            ],
+            "boundaryChecks": [
+              {
+                "id": "O1",
+                "verdict": "violated",
+                "paragraphIds": [
+                  "P2",
+                  "P3"
+                ],
+                "reason": "正文新增刻痕深浅、水垢、石粉、水痕及伤者呼吸细节，超出肉眼观察且无来源。"
+              },
+              {
+                "id": "O2",
+                "verdict": "satisfied",
+                "paragraphIds": [
+                  "P4",
+                  "P5",
+                  "P6"
+                ],
+                "reason": "未替守门弟子决定，未越线或触碰铁链。"
+              },
+              {
+                "id": "O3",
+                "verdict": "violated",
+                "paragraphIds": [
+                  "P3"
+                ],
+                "reason": "‘撑不了太久’对能否获救作出预后推断，超出未知边界。"
+              }
+            ],
+            "knowledgeChecks": [
+              {
+                "id": "D1",
+                "speakerId": "character_ae4cb42b9b49",
+                "kind": "current",
+                "verdict": "supported",
+                "accessSources": [],
+                "missingEvidence": [],
+                "reason": "陆照临当场询问能否通传救助，属当前意愿。"
+              },
+              {
+                "id": "D2",
+                "speakerId": "character_37531636ecf5",
+                "kind": "current",
+                "verdict": "supported",
+                "accessSources": [],
+                "missingEvidence": [],
+                "reason": "守门弟子当场回应通传与等待条件，属当前决定。"
+              }
+            ]
+          }
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 1199,
+            "responseHeadersMs": 370,
+            "completeBodyMs": 1199
+          },
+          "generationStage": "scope_review",
+          "revision": 0
+        },
+        {
+          "generationStage": "scope_review_result",
+          "revision": 0,
+          "review": {
+            "scopeChecks": [
+              {
+                "id": "A2",
+                "counterexamples": [],
+                "verdict": "satisfied",
+                "paragraphIds": [
+                  "P5"
+                ],
+                "reason": "原话限定只向守门弟子询问能否通传救助。P5中主角只向守门弟子开口询问“能否通传一声，请人来救他”，未向其他人询问或提出其他请求；P6中守门弟子回应通传可以报上去，未出现主角向他人询问或越界请求。全文无违反该限定的反证。"
+              }
+            ]
+          }
+        },
+        {
+          "generationStage": "validation",
+          "revision": 0,
+          "outcome": "failed",
+          "error": "场景审查未通过：P2：铁链横过门缝、刻痕深浅不一等观察细节无公开来源支持。；P2：水垢、石粉、水痕渗流及‘刚划开不久’的推断均无公开来源。；P3：胸口起伏浅、血沫等具体呼吸细节无公开来源支持。；P3：‘撑不了太久’的预后推断无公开来源支持。；P2：陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文新增刻痕深浅、水垢、石粉、水痕及伤者呼吸细节，超出肉眼观察且无来源。；P3：陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文新增刻痕深浅、水垢、石粉、水痕及伤者呼吸细节，超出肉眼观察且无来源。；P3：伤者呼吸状态可观察，但其能否获救仍未知。：‘撑不了太久’对能否获救作出预后推断，超出未知边界。",
+          "repairIssues": {
+            "issues": [
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "铁链横过门缝、刻痕深浅不一等观察细节无公开来源支持。",
+                "quote": "铁链横过门缝，链节间压着几道刻痕，深浅不一。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "水垢、石粉、水痕渗流及‘刚划开不久’的推断均无公开来源。",
+                "quote": "旧痕里积着暗色水垢，边缘被雨水泡得发白；靠下的一道却新，石粉还没被冲净，水痕顺着刻槽往外渗，像刚划开不久。"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "胸口起伏浅、血沫等具体呼吸细节无公开来源支持。",
+                "quote": "伤者倒在青石内侧，胸口起伏很浅，隔一会儿才抽一下，喉间随着呼吸冒出细碎血沫，被雨水一冲就散。"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "‘撑不了太久’的预后推断无公开来源支持。",
+                "quote": "人还活着，但撑不了太久的样子。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文新增刻痕深浅、水垢、石粉、水痕及伤者呼吸细节，超出肉眼观察且无来源。",
+                "quote": "铁链横过门缝，链节间压着几道刻痕，深浅不一。旧痕里积着暗色水垢，边缘被雨水泡得发白；靠下的一道却新，石粉还没被冲净，水痕顺着刻槽往外渗，像刚划开不久。你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文新增刻痕深浅、水垢、石粉、水痕及伤者呼吸细节，超出肉眼观察且无来源。",
+                "quote": "伤者倒在青石内侧，胸口起伏很浅，隔一会儿才抽一下，喉间随着呼吸冒出细碎血沫，被雨水一冲就散。人还活着，但撑不了太久的样子。"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "伤者呼吸状态可观察，但其能否获救仍未知。：‘撑不了太久’对能否获救作出预后推断，超出未知边界。",
+                "quote": "伤者倒在青石内侧，胸口起伏很浅，隔一会儿才抽一下，喉间随着呼吸冒出细碎血沫，被雨水一冲就散。人还活着，但撑不了太久的样子。"
+              }
+            ],
+            "unlocatedIssues": []
+          }
+        },
+        {
+          "generationStage": "local_repair_record",
+          "revision": 0,
+          "beforeBody": "雨线斜过山门，你站在原地没动，目光先落在门扇上。\n\n铁链横过门缝，链节间压着几道刻痕，深浅不一。旧痕里积着暗色水垢，边缘被雨水泡得发白；靠下的一道却新，石粉还没被冲净，水痕顺着刻槽往外渗，像刚划开不久。你辨不出这些刻痕的用意，只能看出新旧不同。\n\n伤者倒在青石内侧，胸口起伏很浅，隔一会儿才抽一下，喉间随着呼吸冒出细碎血沫，被雨水一冲就散。人还活着，但撑不了太久的样子。\n\n你没有迈步，也没有去碰铁链。\n\n“能否通传一声，请人来救他？”你朝守门弟子开口，声音压过雨声。\n\n守门弟子按着剑柄，视线在你和伤者之间转了一回，没有立刻答话。片刻后他才说：“通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。你若要等，就站在这条线外等。”",
+          "afterBody": "雨线斜过山门，你站在原地没动，目光先落在门扇上。\n\n门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。\n\n倒在雨里的陌生人仍活着，手边抓着那盏没有点燃的灯。\n\n你没有迈步，也没有去碰铁链。\n\n“能否通传一声，请人来救他？”你朝守门弟子开口，声音压过雨声。\n\n守门弟子按着剑柄，视线在你和伤者之间转了一回，没有立刻答话。片刻后他才说：“通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。你若要等，就站在这条线外等。”",
+          "issues": {
+            "issues": [
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "铁链横过门缝、刻痕深浅不一等观察细节无公开来源支持。",
+                "quote": "铁链横过门缝，链节间压着几道刻痕，深浅不一。",
+                "beforeOccurrences": 1
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "水垢、石粉、水痕渗流及‘刚划开不久’的推断均无公开来源。",
+                "quote": "旧痕里积着暗色水垢，边缘被雨水泡得发白；靠下的一道却新，石粉还没被冲净，水痕顺着刻槽往外渗，像刚划开不久。",
+                "beforeOccurrences": 1
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "胸口起伏浅、血沫等具体呼吸细节无公开来源支持。",
+                "quote": "伤者倒在青石内侧，胸口起伏很浅，隔一会儿才抽一下，喉间随着呼吸冒出细碎血沫，被雨水一冲就散。",
+                "beforeOccurrences": 1
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "‘撑不了太久’的预后推断无公开来源支持。",
+                "quote": "人还活着，但撑不了太久的样子。",
+                "beforeOccurrences": 1
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文新增刻痕深浅、水垢、石粉、水痕及伤者呼吸细节，超出肉眼观察且无来源。",
+                "quote": "铁链横过门缝，链节间压着几道刻痕，深浅不一。旧痕里积着暗色水垢，边缘被雨水泡得发白；靠下的一道却新，石粉还没被冲净，水痕顺着刻槽往外渗，像刚划开不久。你辨不出这些刻痕的用意，只能看出新旧不同。",
+                "beforeOccurrences": 1
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文新增刻痕深浅、水垢、石粉、水痕及伤者呼吸细节，超出肉眼观察且无来源。",
+                "quote": "伤者倒在青石内侧，胸口起伏很浅，隔一会儿才抽一下，喉间随着呼吸冒出细碎血沫，被雨水一冲就散。人还活着，但撑不了太久的样子。",
+                "beforeOccurrences": 1
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "伤者呼吸状态可观察，但其能否获救仍未知。：‘撑不了太久’对能否获救作出预后推断，超出未知边界。",
+                "quote": "伤者倒在青石内侧，胸口起伏很浅，隔一会儿才抽一下，喉间随着呼吸冒出细碎血沫，被雨水一冲就散。人还活着，但撑不了太久的样子。",
+                "beforeOccurrences": 1
+              }
+            ],
+            "unlocatedIssues": []
+          },
+          "issueTypes": [
+            "background"
+          ],
+          "repairResponse": "{\n  \"replacements\": [\n    {\n      \"paragraphId\": \"P2\",\n      \"text\": \"门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。\"\n    },\n    {\n      \"paragraphId\": \"P3\",\n      \"text\": \"倒在雨里的陌生人仍活着，手边抓着那盏没有点燃的灯。\"\n    }\n  ]\n}",
+          "outcome": "failed_full_review",
+          "failureReason": "场景审查未通过：P2：“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。；P3：“仍活着”与“没有点燃的灯”在sceneEvidence中有依据（opening-3），但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。；P6：“山门将闭”在sceneEvidence中有依据（opening-3），但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P2：“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。；P3：“仍活着”与“没有点燃的灯”在sceneEvidence中有依据，但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。；P6：“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P6：“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P2：封山纹样、刻痕新旧差异均无公开来源支持；仅凭肉眼无法断定。；P2：陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文写出封山纹样与刻痕新旧差异，超出肉眼观察且无来源。；P2：仍写封山纹样与刻痕新旧差异，超出肉眼观察且无来源。；P2：我观察门上的封山刻痕和伤者呼吸：P2新增封山纹样与刻痕新旧差异，超出仅观察呼吸和刻痕的授权且无来源。",
+          "failureStage": "full_review",
+          "failureCode": "validation_error",
+          "failureIssues": {
+            "issues": [
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "“仍活着”与“没有点燃的灯”在sceneEvidence中有依据（opening-3），但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。",
+                "quote": "倒在雨里的陌生人仍活着，手边抓着那盏没有点燃的灯。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "background",
+                "reason": "“山门将闭”在sceneEvidence中有依据（opening-3），但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。",
+                "quote": "门扇上刻着封山纹样"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "“仍活着”与“没有点燃的灯”在sceneEvidence中有依据，但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。",
+                "quote": "倒在雨里的陌生人仍活着，手边抓着那盏没有点燃的灯。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "background",
+                "reason": "“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "执事来不来、何时来，我不能替你定。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "state",
+                "reason": "“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "守门弟子按着剑柄，视线在你和伤者之间转了一回，没有立刻答话。片刻后他才说：“通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。你若要等，就站在这条线外等。”"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "封山纹样、刻痕新旧差异均无公开来源支持；仅凭肉眼无法断定。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文写出封山纹样与刻痕新旧差异，超出肉眼观察且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "仍写封山纹样与刻痕新旧差异，超出肉眼观察且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "action",
+                "reason": "我观察门上的封山刻痕和伤者呼吸：P2新增封山纹样与刻痕新旧差异，超出仅观察呼吸和刻痕的授权且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              }
+            ],
+            "unlocatedIssues": []
+          },
+          "failureIssueTypes": [
+            "action",
+            "background",
+            "state"
+          ],
+          "repairEvidenceSelection": {
+            "selectedSourceIds": [
+              "history-branch_384b2a35-3d2e-4813-9309-17b3b9d42eb4-P3",
+              "history-branch_384b2a35-3d2e-4813-9309-17b3b9d42eb4-P2",
+              "opening-3",
+              "history-branch_384b2a35-3d2e-4813-9309-17b3b9d42eb4-P1",
+              "opening-identity"
+            ],
+            "selectedChars": 275,
+            "omittedSourceCount": 2,
+            "maxItems": 8,
+            "maxChars": 6000
+          },
+          "repairFactsSelection": {
+            "selectedFactIds": [],
+            "selectedChars": 0,
+            "omittedFactCount": 0,
+            "maxItems": 10,
+            "maxChars": 3200,
+            "source": "legacy_fact_sheet"
+          },
+          "contextProjection": {
+            "stage": "repair",
+            "contextId": "ctx-ff9662b2966f5de6",
+            "contextSha256": "e6ffae1cadda42067e541190b2ecf62d42668ce443454514864527382672f0b0",
+            "allowedEvidenceSourceIds": [
+              "module:currentBeat:beat_chapter_001",
+              "module:opening:identity",
+              "module:opening:appearance",
+              "module:opening:knownFacts:0",
+              "module:opening:knownFacts:1",
+              "module:opening:knownFacts:2",
+              "module:opening:relationships:0",
+              "module:opening:relationships:1",
+              "module:opening:relationships:2",
+              "module:opening:visibleItems:0",
+              "module:opening:visibleItems:1",
+              "module:opening:evidence:0",
+              "module:opening:evidence:1",
+              "module:opening:evidence:2",
+              "module:opening:evidence:3",
+              "module:opening:evidence:4",
+              "branch:lineage:branch_384b2a35-3d2e-4813-9309-17b3b9d42eb4"
+            ],
+            "continuityWindowCount": 1,
+            "dynamicMemoryCount": 0
+          }
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 910,
+            "responseHeadersMs": 409,
+            "completeBodyMs": 910
+          },
+          "generationStage": "local_repair",
+          "revision": 0
+        },
+        {
+          "generationStage": "local_repair_validation",
+          "revision": 0,
+          "outcome": "pending_full_review"
+        },
+        {
+          "generationStage": "scene_draft_metrics",
+          "revision": 1,
+          "actualCjk": 180,
+          "paragraphs": 6,
+          "pacing": {
+            "level": "dynamic",
+            "targetCjk": [
+              80,
+              250
+            ],
+            "reason": "本回合包含一次观察、一次询问和一次NPC回应，需要写清刻痕与呼吸的可观察细节、询问的边界以及守门弟子的当场态度，篇幅适中。",
+            "hardMinimum": false,
+            "minCjk": 80,
+            "maxCjk": 1500,
+            "lengthPolicy": "final_visible_prose_dynamic_80_1500"
+          }
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 2719,
+            "responseHeadersMs": 488,
+            "completeBodyMs": 2719
+          },
+          "generationStage": "fact_extraction",
+          "revision": 1,
+          "extractionAttempt": 0
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 5709,
+            "responseHeadersMs": 441,
+            "completeBodyMs": 5709
+          },
+          "generationStage": "action_review",
+          "revision": 1
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 5250,
+            "responseHeadersMs": 387,
+            "completeBodyMs": 5250
+          },
+          "generationStage": "scene_grounding",
+          "revision": 1
+        },
+        {
+          "generationStage": "independent_review_result",
+          "revision": 1,
+          "review": {
+            "checks": [
+              {
+                "id": "P1-C1",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "当前站位与目光落点，无越界动作。"
+              },
+              {
+                "id": "P2-C1",
+                "kind": "background",
+                "verdict": "unsupported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "封山纹样、刻痕新旧差异均无公开来源支持；仅凭肉眼无法断定。"
+              },
+              {
+                "id": "P3-C1",
+                "kind": "background",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [
+                  {
+                    "id": "opening-3",
+                    "quote": "伤者仍活着，手边抓着空灯"
+                  }
+                ],
+                "reason": "伤者活着、手边有未点燃的灯，与公开来源一致。"
+              },
+              {
+                "id": "P4-C1",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "未移动、未触碰铁链，符合限制。"
+              },
+              {
+                "id": "P5-C1",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "向守门弟子询问通传救助，属授权范围。"
+              },
+              {
+                "id": "P5-C2",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "朝守门弟子开口，属当前动作。"
+              },
+              {
+                "id": "P6-C1",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "守门弟子按剑、视线移动、未答话，属当场反应。"
+              },
+              {
+                "id": "P6-C2",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "守门弟子当场回应，未替玩家决定。"
+              },
+              {
+                "id": "P6-C3",
+                "kind": "current",
+                "verdict": "supported",
+                "scopeViolations": [],
+                "sources": [],
+                "reason": "要求站在线外等，属当场表态。"
+              }
+            ],
+            "scopeChecks": [
+              {
+                "id": "A1",
+                "verdict": "violated",
+                "paragraphIds": [
+                  "P2"
+                ],
+                "reason": "P2新增封山纹样与刻痕新旧差异，超出仅观察呼吸和刻痕的授权且无来源。"
+              },
+              {
+                "id": "A2",
+                "verdict": "satisfied",
+                "paragraphIds": [
+                  "P5",
+                  "P6"
+                ],
+                "reason": "仅向守门弟子询问通传救助，未向他人提问或自行决定。"
+              },
+              {
+                "id": "A3",
+                "verdict": "satisfied",
+                "paragraphIds": [
+                  "P4"
+                ],
+                "reason": "明确未迈步、未触碰铁链。"
+              }
+            ],
+            "boundaryChecks": [
+              {
+                "id": "O1",
+                "verdict": "violated",
+                "paragraphIds": [
+                  "P2"
+                ],
+                "reason": "正文写出封山纹样与刻痕新旧差异，超出肉眼观察且无来源。"
+              },
+              {
+                "id": "O2",
+                "verdict": "satisfied",
+                "paragraphIds": [
+                  "P4",
+                  "P5",
+                  "P6"
+                ],
+                "reason": "未替守门弟子决定，未越线或触碰铁链。"
+              },
+              {
+                "id": "O3",
+                "verdict": "satisfied",
+                "paragraphIds": [
+                  "P3"
+                ],
+                "reason": "仅写伤者仍活着，未推断能否获救。"
+              }
+            ],
+            "knowledgeChecks": [
+              {
+                "id": "D1",
+                "speakerId": "character_ae4cb42b9b49",
+                "kind": "current",
+                "verdict": "supported",
+                "accessSources": [],
+                "missingEvidence": [],
+                "reason": "陆照临当场询问能否通传救助，属当前提问。"
+              },
+              {
+                "id": "D2",
+                "speakerId": "character_37531636ecf5",
+                "kind": "current",
+                "verdict": "supported",
+                "accessSources": [],
+                "missingEvidence": [],
+                "reason": "守门弟子当场回应通传与山门将闭，属当前表态。"
+              }
+            ],
+            "repairChecks": [
+              {
+                "id": "R1",
+                "verdict": "resolved",
+                "paragraphIds": [],
+                "reason": "铁链横过门缝、刻痕深浅不一等观察细节已删除。"
+              },
+              {
+                "id": "R2",
+                "verdict": "resolved",
+                "paragraphIds": [],
+                "reason": "水垢、石粉、水痕及刚划开不久的推断已删除。"
+              },
+              {
+                "id": "R3",
+                "verdict": "resolved",
+                "paragraphIds": [],
+                "reason": "胸口起伏浅、血沫等呼吸细节已删除。"
+              },
+              {
+                "id": "R4",
+                "verdict": "resolved",
+                "paragraphIds": [],
+                "reason": "撑不了太久的预后推断已删除。"
+              },
+              {
+                "id": "R5",
+                "verdict": "retained",
+                "paragraphIds": [
+                  "P2"
+                ],
+                "reason": "仍写封山纹样与刻痕新旧差异，超出肉眼观察且无来源。"
+              },
+              {
+                "id": "R6",
+                "verdict": "resolved",
+                "paragraphIds": [],
+                "reason": "伤者呼吸细节已删除。"
+              },
+              {
+                "id": "R7",
+                "verdict": "resolved",
+                "paragraphIds": [],
+                "reason": "撑不了太久的预后推断已删除。"
+              }
+            ]
+          }
+        },
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 1189,
+            "responseHeadersMs": 306,
+            "completeBodyMs": 1189
+          },
+          "generationStage": "scope_review",
+          "revision": 1
+        },
+        {
+          "generationStage": "scope_review_result",
+          "revision": 1,
+          "review": {
+            "scopeChecks": [
+              {
+                "id": "A2",
+                "counterexamples": [],
+                "verdict": "satisfied",
+                "paragraphIds": [
+                  "P5",
+                  "P6"
+                ],
+                "reason": "原话限定为只向守门弟子询问能否通传救助。P5中“你朝守门弟子开口”并问“能否通传一声，请人来救他？”，对象是守门弟子，内容为通传救助；P6守门弟子回应通传事宜，未出现向其他人询问或提出其他请求。全文无违反该限定的反证。"
+              }
+            ]
+          }
+        },
+        {
+          "generationStage": "local_repair_record",
+          "revision": 1,
+          "beforeBody": "雨线斜过山门，你站在原地没动，目光先落在门扇上。\n\n门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。\n\n倒在雨里的陌生人仍活着，手边抓着那盏没有点燃的灯。\n\n你没有迈步，也没有去碰铁链。\n\n“能否通传一声，请人来救他？”你朝守门弟子开口，声音压过雨声。\n\n守门弟子按着剑柄，视线在你和伤者之间转了一回，没有立刻答话。片刻后他才说：“通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。你若要等，就站在这条线外等。”",
+          "afterBody": null,
+          "issues": {
+            "issues": [
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "“仍活着”与“没有点燃的灯”在sceneEvidence中有依据（opening-3），但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。",
+                "quote": "倒在雨里的陌生人仍活着，手边抓着那盏没有点燃的灯。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "background",
+                "reason": "“山门将闭”在sceneEvidence中有依据（opening-3），但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。",
+                "quote": "门扇上刻着封山纹样"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "“仍活着”与“没有点燃的灯”在sceneEvidence中有依据，但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。",
+                "quote": "倒在雨里的陌生人仍活着，手边抓着那盏没有点燃的灯。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "background",
+                "reason": "“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "执事来不来、何时来，我不能替你定。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "state",
+                "reason": "“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "守门弟子按着剑柄，视线在你和伤者之间转了一回，没有立刻答话。片刻后他才说：“通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。你若要等，就站在这条线外等。”"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "封山纹样、刻痕新旧差异均无公开来源支持；仅凭肉眼无法断定。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文写出封山纹样与刻痕新旧差异，超出肉眼观察且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "仍写封山纹样与刻痕新旧差异，超出肉眼观察且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "action",
+                "reason": "我观察门上的封山刻痕和伤者呼吸：P2新增封山纹样与刻痕新旧差异，超出仅观察呼吸和刻痕的授权且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              }
+            ],
+            "unlocatedIssues": []
+          },
+          "issueTypes": [
+            "action",
+            "background",
+            "state"
+          ],
+          "repairResponse": null,
+          "outcome": "rejected",
+          "failureReason": "场景审查未通过：P2：“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。；P3：“仍活着”与“没有点燃的灯”在sceneEvidence中有依据（opening-3），但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。；P6：“山门将闭”在sceneEvidence中有依据（opening-3），但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P2：“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。；P3：“仍活着”与“没有点燃的灯”在sceneEvidence中有依据，但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。；P6：“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P6：“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P2：封山纹样、刻痕新旧差异均无公开来源支持；仅凭肉眼无法断定。；P2：陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文写出封山纹样与刻痕新旧差异，超出肉眼观察且无来源。；P2：仍写封山纹样与刻痕新旧差异，超出肉眼观察且无来源。；P2：我观察门上的封山刻痕和伤者呼吸：P2新增封山纹样与刻痕新旧差异，超出仅观察呼吸和刻痕的授权且无来源。",
+          "failureStage": "second_review",
+          "failureCode": "validation_error",
+          "failureIssues": {
+            "issues": [
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "“仍活着”与“没有点燃的灯”在sceneEvidence中有依据（opening-3），但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。",
+                "quote": "倒在雨里的陌生人仍活着，手边抓着那盏没有点燃的灯。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "background",
+                "reason": "“山门将闭”在sceneEvidence中有依据（opening-3），但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。",
+                "quote": "门扇上刻着封山纹样"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "“仍活着”与“没有点燃的灯”在sceneEvidence中有依据，但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。",
+                "quote": "倒在雨里的陌生人仍活着，手边抓着那盏没有点燃的灯。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "background",
+                "reason": "“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "执事来不来、何时来，我不能替你定。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "state",
+                "reason": "“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "守门弟子按着剑柄，视线在你和伤者之间转了一回，没有立刻答话。片刻后他才说：“通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。你若要等，就站在这条线外等。”"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "封山纹样、刻痕新旧差异均无公开来源支持；仅凭肉眼无法断定。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文写出封山纹样与刻痕新旧差异，超出肉眼观察且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "仍写封山纹样与刻痕新旧差异，超出肉眼观察且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "action",
+                "reason": "我观察门上的封山刻痕和伤者呼吸：P2新增封山纹样与刻痕新旧差异，超出仅观察呼吸和刻痕的授权且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              }
+            ],
+            "unlocatedIssues": []
+          },
+          "failureIssueTypes": [
+            "action",
+            "background",
+            "state"
+          ],
+          "contextProjection": {
+            "stage": "repair",
+            "contextId": "ctx-ff9662b2966f5de6",
+            "contextSha256": "e6ffae1cadda42067e541190b2ecf62d42668ce443454514864527382672f0b0",
+            "allowedEvidenceSourceIds": [
+              "module:currentBeat:beat_chapter_001",
+              "module:opening:identity",
+              "module:opening:appearance",
+              "module:opening:knownFacts:0",
+              "module:opening:knownFacts:1",
+              "module:opening:knownFacts:2",
+              "module:opening:relationships:0",
+              "module:opening:relationships:1",
+              "module:opening:relationships:2",
+              "module:opening:visibleItems:0",
+              "module:opening:visibleItems:1",
+              "module:opening:evidence:0",
+              "module:opening:evidence:1",
+              "module:opening:evidence:2",
+              "module:opening:evidence:3",
+              "module:opening:evidence:4",
+              "branch:lineage:branch_384b2a35-3d2e-4813-9309-17b3b9d42eb4"
+            ],
+            "continuityWindowCount": 1,
+            "dynamicMemoryCount": 0
+          }
+        },
+        {
+          "generationStage": "validation",
+          "revision": 1,
+          "outcome": "failed",
+          "error": "场景审查未通过：P2：“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。；P3：“仍活着”与“没有点燃的灯”在sceneEvidence中有依据（opening-3），但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。；P6：“山门将闭”在sceneEvidence中有依据（opening-3），但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P2：“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。；P3：“仍活着”与“没有点燃的灯”在sceneEvidence中有依据，但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。；P6：“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P6：“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P2：封山纹样、刻痕新旧差异均无公开来源支持；仅凭肉眼无法断定。；P2：陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文写出封山纹样与刻痕新旧差异，超出肉眼观察且无来源。；P2：仍写封山纹样与刻痕新旧差异，超出肉眼观察且无来源。；P2：我观察门上的封山刻痕和伤者呼吸：P2新增封山纹样与刻痕新旧差异，超出仅观察呼吸和刻痕的授权且无来源。",
+          "repairIssues": {
+            "issues": [
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "“仍活着”与“没有点燃的灯”在sceneEvidence中有依据（opening-3），但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。",
+                "quote": "倒在雨里的陌生人仍活着，手边抓着那盏没有点燃的灯。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "background",
+                "reason": "“山门将闭”在sceneEvidence中有依据（opening-3），但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。",
+                "quote": "门扇上刻着封山纹样"
+              },
+              {
+                "paragraphId": "P3",
+                "type": "background",
+                "reason": "“仍活着”与“没有点燃的灯”在sceneEvidence中有依据，但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。",
+                "quote": "倒在雨里的陌生人仍活着，手边抓着那盏没有点燃的灯。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "background",
+                "reason": "“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "执事来不来、何时来，我不能替你定。"
+              },
+              {
+                "paragraphId": "P6",
+                "type": "state",
+                "reason": "“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。",
+                "quote": "守门弟子按着剑柄，视线在你和伤者之间转了一回，没有立刻答话。片刻后他才说：“通传可以报上去，但山门将闭，执事来不来、何时来，我不能替你定。你若要等，就站在这条线外等。”"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "封山纹样、刻痕新旧差异均无公开来源支持；仅凭肉眼无法断定。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文写出封山纹样与刻痕新旧差异，超出肉眼观察且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "background",
+                "reason": "仍写封山纹样与刻痕新旧差异，超出肉眼观察且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              },
+              {
+                "paragraphId": "P2",
+                "type": "action",
+                "reason": "我观察门上的封山刻痕和伤者呼吸：P2新增封山纹样与刻痕新旧差异，超出仅观察呼吸和刻痕的授权且无来源。",
+                "quote": "门扇上刻着封山纹样，你辨不出这些刻痕的用意，只能看出新旧不同。"
+              }
+            ],
+            "unlocatedIssues": []
+          }
+        }
+      ],
+      "error": "场景审查未通过：P2：“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。；P3：“仍活着”与“没有点燃的灯”在sceneEvidence中有依据（opening-3），但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。；P6：“山门将闭”在sceneEvidence中有依据（opening-3），但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P2：“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。；P3：“仍活着”与“没有点燃的灯”在sceneEvidence中有依据，但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。；P6：“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P6：“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P2：封山纹样、刻痕新旧差异均无公开来源支持；仅凭肉眼无法断定。；P2：陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文写出封山纹样与刻痕新旧差异，超出肉眼观察且无来源。；P2：仍写封山纹样与刻痕新旧差异，超出肉眼观察且无来源。；P2：我观察门上的封山刻痕和伤者呼吸：P2新增封山纹样与刻痕新旧差异，超出仅观察呼吸和刻痕的授权且无来源。"
+    },
+    {
+      "operation": "candidate_selection",
+      "fallbackMode": "candidate_selected_pending_patch",
+      "stateMutation": false,
+      "callObservations": [
+        {
+          "generationStage": "candidate_selection",
+          "outcome": "approved",
+          "reason": "second_review_failed_best_candidate",
+          "stateMutation": false,
+          "selectedRevision": 0,
+          "selectedCharacterCount": 320,
+          "selectedSha256": "d9f7582fd44989fda376124eff92b3a75cbaa2b13a1aab3d1d7d71ac44125eb4",
+          "candidates": [
+            {
+              "revision": 0,
+              "qualityScore": 932,
+              "actualCjk": 268,
+              "issueTypes": [
+                "background"
+              ],
+              "candidateSha256": "d9f7582fd44989fda376124eff92b3a75cbaa2b13a1aab3d1d7d71ac44125eb4"
+            },
+            {
+              "revision": 1,
+              "qualityScore": 839,
+              "actualCjk": 180,
+              "issueTypes": [
+                "action",
+                "background",
+                "state"
+              ],
+              "candidateSha256": "5dbf32aebd489494569602400b3ef5a9a00a9e9a6a3e9330984c1dd0b32b5fad"
+            }
+          ]
+        }
+      ],
+      "error": "场景审查未通过：P2：“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。；P3：“仍活着”与“没有点燃的灯”在sceneEvidence中有依据（opening-3），但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。；P6：“山门将闭”在sceneEvidence中有依据（opening-3），但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P2：“封山纹样”这一具体图案名称无公开来源支持；sceneEvidence中仅有“封山石上新裂的水痕”和“铁链又响了”，未说明门扇刻有封山纹样。；P3：“仍活着”与“没有点燃的灯”在sceneEvidence中有依据，但“倒在雨里”的具体状态未在公开来源中明确，属于新增感官细节。；P6：“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P6：“山门将闭”有sceneEvidence支持，但“执事来不来、何时来，我不能替你定”是守门弟子对自身权限的陈述，无公开来源支持其能否决定执事行动；属于NPC自行补充未授权背景。；P2：封山纹样、刻痕新旧差异均无公开来源支持；仅凭肉眼无法断定。；P2：陆照临只能凭肉眼观察门上封山刻痕与伤者呼吸，无法据此断定刻痕来历、伤者身份或空灯成因。：正文写出封山纹样与刻痕新旧差异，超出肉眼观察且无来源。；P2：仍写封山纹样与刻痕新旧差异，超出肉眼观察且无来源。；P2：我观察门上的封山刻痕和伤者呼吸：P2新增封山纹样与刻痕新旧差异，超出仅观察呼吸和刻痕的授权且无来源。"
+    },
+    {
+      "id": 3,
+      "operation": "jev_runtime_review",
+      "model": "typesafe/jev-1.13-20260917",
+      "error": null,
+      "callObservations": [
+        {
+          "generationStage": "jev_runtime_review",
+          "status": "ok",
+          "decision": "allow_with_patch",
+          "durationMs": 5400,
+          "deferredUntilAfterReplay": true
+        }
+      ],
+      "promptContext": {
+        "mode": "shadow",
+        "stateFields": [
+          "allowedEvidence",
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract",
+          "reviewMeta"
+        ]
+      }
+    }
+  ],
+  "jobMetrics": {
+    "first_text_ms": 12906,
+    "ready_hit": false,
+    "selection_count": 1,
+    "ready_hits": 0,
+    "queue_ms": 2,
+    "complete_ms": 31510,
+    "reported_tokens": 76034,
+    "calls": 13,
+    "unreported_calls": 0,
+    "tokens": 76034,
+    "commit_ms": 208,
+    "committed": true,
+    "result_reused": false,
+    "committed_branch_id": "branch_767bd901-a9d2-4969-982d-96f1a63fc1cf",
+    "selection_to_complete_ms": 31897,
+    "first_visible_text_ms": 31718
+  },
+  "databaseUnchanged": true,
+  "error": null,
+  "limitations": [
+    "单条真实回合，不能估计该路径的质量或延迟分位数。",
+    "Jev 为 shadow，只记录审核结果，不阻断或改变本次提交。",
+    "若本次 writer 首轮通过，则不会自然进入候选选优路径。",
+    "本次把 shadow Jev 改为正文回放后后台审计；JEV_RUNTIME_REVIEW_MODE=block 仍保持提交前阻断。",
+    "单条真实回合不能估计 P50/P95；还需多条正常通过和失败样本复测。"
+  ],
+  "executedAt": "2026-09-24",
+  "comparison": {
+    "previousEvidence": "live-candidate-selection-2026-09-24.json",
+    "previousFirstVisibleTextMs": 48189,
+    "currentFirstVisibleTextMs": 31899,
+    "reductionMs": 16290,
+    "reductionPercent": 33.8,
+    "priorDeferredShadowMeasurementMs": 32377,
+    "deltaFromPriorDeferredShadowMs": 478
+  }
+}

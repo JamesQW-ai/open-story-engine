@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "context-claim-pipeline-audit/0.1",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-claim-pipeline-2026-09-25-v2.json",
+  "sourceSha256": "c6d5268d386c7921f7d53d801ca8b96c9847e10c966d0640a40da7d41af913bc",
+  "verification": "离线逐项复算状态、比对实际输入、提示与脚本哈希；另由 Codex 复核保存的原始响应。",
+  "actualCalls": 18,
+  "newModelCalls": 0,
+  "rawModels": [
+    "deepseek-flash"
+  ],
+  "finishReasons": [
+    "stop"
+  ],
+  "allStatusesReproduced": true,
+  "positivesMatched": 1,
+  "negativesMatched": 3,
+  "cases": [
+    {
+      "caseId": "recorded_v11",
+      "expected": "reject",
+      "status": "invalid_extraction"
+    },
+    {
+      "caseId": "supported_life",
+      "expected": "allow",
+      "status": "invalid_extraction"
+    },
+    {
+      "caseId": "ordinary_action",
+      "expected": "allow",
+      "status": "invalid_extraction"
+    },
+    {
+      "caseId": "legal_wait",
+      "expected": "allow",
+      "status": "invalid_extraction"
+    },
+    {
+      "caseId": "honest_unknown",
+      "expected": "allow",
+      "status": "extraction_error"
+    },
+    {
+      "caseId": "supported_negation",
+      "expected": "allow",
+      "status": "matched"
+    },
+    {
+      "caseId": "reported_history",
+      "expected": "allow",
+      "status": "invalid_extraction"
+    },
+    {
+      "caseId": "derived_symptom",
+      "expected": "reject",
+      "status": "matched"
+    },
+    {
+      "caseId": "negated_life",
+      "expected": "reject",
+      "status": "matched"
+    },
+    {
+      "caseId": "swapped_subject",
+      "expected": "reject",
+      "status": "invalid_extraction"
+    },
+    {
+      "caseId": "expanded_permission",
+      "expected": "reject",
+      "status": "matched"
+    },
+    {
+      "caseId": "reported_to_completed",
+      "expected": "reject",
+      "status": "extraction_error"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "P1",
+      "cases": [
+        "recorded_v11",
+        "supported_life",
+        "ordinary_action",
+        "legal_wait",
+        "reported_history",
+        "swapped_subject"
+      ],
+      "finding": "原文重新抄写引入重复或多余字符，六例无法完成逐字分区；原始坏稿和主体替换未进入核对，不计成功拦截。"
+    },
+    {
+      "severity": "P1",
+      "cases": [
+        "honest_unknown"
+      ],
+      "finding": "你说这一独立动作单元提取为你说了话，并未失真；具体话语已经在另一单元完整提取，核对器却要求动作单元重复承载话语内容而误判 lossy。"
+    },
+    {
+      "severity": "P1",
+      "cases": [
+        "reported_to_completed"
+      ],
+      "finding": "提取逐字保留原稿完成事实，核对器却以来源只有意图为由判提取 lossy；unsupported 本身正确，但提取忠实度与事实支持度混淆，不能记整例通过。"
+    }
+  ],
+  "acceptance": false,
+  "productionEnablement": false,
+  "limitations": [
+    "同一官方入口的定向集，无独立留出集",
+    "当前 direct 路由与上一轮 relay 不同，不作策略效果因果比较",
+    "未完成的两阶段案例不能用于完整审核耗时比较"
+  ]
+}

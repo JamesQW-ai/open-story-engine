@@ -94,6 +94,24 @@ class GeneralActionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'before'):
             ra.validate_plan(self.plan, self.context)
 
+    def test_same_turn_custom_knowledge_accepts_presence_marker(self):
+        self.change(LU, '已知木牌刻痕夹金屑', '听顾长离告知：她刮下一粒金屑包在纸中')
+        ra.validate_plan(self.plan, self.context)
+        body = '你告诉陆照临，木牌刻痕里夹着金屑。'
+        events = observed(body)['events']
+        events[0]['changes'] = [dict(entityId=LU, attribute='已知木牌刻痕夹金屑', value=True)]
+        checks = checked(body)
+        checks[0]['changeIds'] = ['C1']
+        ra.validate_events({'eventChecks': checks}, events, self.plan, self.state, self.package)
+
+    def test_wait_only_input_cannot_materialize_future_reaction(self):
+        waiting = plan({'A1': '我留在原地，暂不行动，等试炼钟响或陆照临回应'})
+        waiting['steps'].append(dict(id='S2', actorId=LU, action='回答并移动目光',
+                                     requirementIds=['A1'], authority='reaction', causeStepId='S1'))
+        with self.assertRaisesRegex(ValueError, '等待条件尚未满足'):
+            ra.validate_plan(waiting, self.context)
+        ra.validate_plan(plan({'A1': '我留在原地，暂不行动，等试炼钟响或陆照临回应'}), self.context)
+
     def test_structural_transfer_and_put_down_keep_single_location(self):
         item = next(i for i, owner in self.state['itemOwnerCharacterIds'].items() if owner == GU)
         self.change(item, 'ownerCharacterId', LU, GU)
@@ -377,7 +395,18 @@ class GeneralActionTests(unittest.TestCase):
         gateway.complete_text.assert_not_called()
 
     def test_semantic_issues_repair_together_then_run_full_review(self):
+        self._check_semantic_repair()
+
+    def test_semantic_repair_reuses_bundle_history_in_full_review(self):
+        from open_story_engine.module_context import ModuleContextResolver
+        from test_support.longform import longform_cases
+        case = next(case for case in longform_cases() if case['package_id'] == self.package['id'])
+        resolver = ModuleContextResolver.for_package(case['path'], self.package)
+        self._check_semantic_repair(resolver)
+
+    def _check_semantic_repair(self, resolver=None):
         from open_story_engine.api_narrative import PlayerNarrativePlanner
+        from open_story_engine.api_reader_quality import action_requirements
         from open_story_engine.llm import Completion
         body = '你留在原地等候，没有离开当前的位置。\n\n你答应同行。\n\n他曾见过古碑。\n\n风掠过场边，他仍站着，没有带你前往别处。'
         corrected = body.replace('你答应同行。', '你仍未决定。').replace('他曾见过古碑。', '他没有提供依据。')
@@ -394,7 +423,13 @@ class GeneralActionTests(unittest.TestCase):
             for x in (self.plan, authority(self.plan), observed(body), bad, grounded(body), repair, observed(corrected), review(corrected), grounded(corrected, repair_count=2))]
         context = {**self.context, 'characterDetails': []}
         selected = dict(id='custom', title=context['playerDirection'], summary=context['playerDirection'], isFreeText=True, statePatch={'freeTextProgress': 1})
-        result, audit = PlayerNarrativePlanner(gateway).plan(context, selected, self.state)
+        if resolver:
+            from open_story_engine.context_bundle import ContextBundleBuilder
+            projected, _ = ContextBundleBuilder.project_selected_state_patch(selected)
+            context.update(validatedStatePatch=projected['statePatch'], validatedStatePatchSource='apply_branch_patch')
+        result, audit = PlayerNarrativePlanner(
+            gateway, context_resolver=resolver, require_context_bundle=resolver is not None,
+        ).plan(context, selected, self.state)
         payload = json.loads(gateway.complete_json.call_args_list[5].args[0][1]['content'])
         self.assertEqual({v['paragraphId'] for v in payload['problem']['issues']}, {'P2', 'P3'})
         self.assertNotIn('他曾见过古碑', str(payload['paragraphs']))
@@ -407,6 +442,19 @@ class GeneralActionTests(unittest.TestCase):
             recheck = json.loads(gateway.complete_json.call_args_list[index].args[0][1]['content'])
             self.assertEqual(recheck['priorRepairIssues'], record['issues'])
             self.assertNotIn('beforeBody', recheck)
+        original = json.loads(gateway.complete_json.call_args_list[3].args[0][1]['content'])
+        recheck = json.loads(gateway.complete_json.call_args_list[7].args[0][1]['content'])
+        self.assertEqual(original['previous'], recheck['previous'])
+        self.assertEqual(original['previous']['schemaVersion'], 'action-review-history/1')
+        self.assertEqual(original['requirements'], action_requirements(context['playerDirection']))
+        self.assertEqual(original['previous']['coverage'], 'context_bundle' if resolver else 'legacy_parent_only')
+        if resolver:
+            self.assertEqual(original['previous']['contextSha256'],
+                             audit['promptContext']['contextBundle']['contextSha256'])
+        for entry in original['previous']['sourceReferences']:
+            self.assertIn(entry['sourceId'], original['sceneEvidence'])
+        self.assertEqual(audit['promptContext']['actionReviewHistory']['selectedSourceIds'],
+                         [entry['sourceId'] for entry in original['previous']['sourceReferences']])
         self.assertIn('originalParagraphCjk', payload)
 
     def test_independent_scope_review_repairs_violation_missed_by_first_review(self):

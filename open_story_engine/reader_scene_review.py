@@ -1,12 +1,49 @@
 """Bounded public context and paragraph-level agency/background review."""
+import hashlib
 import re
-from .reader_actions import ActionEvidenceError
+from .reader_actions import ActionEvidenceError, registry
 
 
-def scene_knowledge(context, *, include_evidence=True):
+_BOUNDARY_RELATION = re.compile(
+    r'(?P<subject>[^，。！？；：]{2,30}?)(?:在|位于|处于)'
+    r'(?P<boundary>[^，。！？；：]{1,30}?)(?:以内|以外|之内|之外|内侧|外侧)'
+)
+_BOUNDARY_END = re.compile(r'[。！？；]')
+_RULE_CLAIM = re.compile(r'(?:不碍规矩|符合规矩|违反规矩|按规矩|允许|可以|禁止|不许|不得|取消资格)')
+_RULE_SOURCE = re.compile(r'(?:规矩|允许|可以|禁止|不许|不得|取消资格|违规|白线)')
+_RULE_STOP_BIGRAMS = {'不碍', '符合', '违反', '按规', '规矩', '允许', '可以', '禁止', '不许', '不得', '取消', '资格'}
+_CONCRETE_DETAIL = re.compile(r'(?:薄纸|厚纸|分量|重量|黑泥|泛着|低声|声音压得|硌着|硌在)')
+
+
+def _source_entails_boundary_relation(quote, subject, boundary):
+    """Require the two entities and their boundary relation in one source sentence."""
+    for sentence in _BOUNDARY_END.split(quote):
+        if subject in sentence and boundary in sentence and re.search(r'(?:在|位于|处于).*(?:以内|以外|之内|之外|内侧|外侧)', sentence):
+            return True
+    return False
+
+
+def _source_entails_rule_claim(quote, claim):
+    """Require a rule source sentence to mention both the rule and its object."""
+    claim_terms = {term for term in re.findall(r'[\u3400-\u4dbf\u4e00-\u9fff]{2}', claim)
+                   if term not in _RULE_STOP_BIGRAMS}
+    for sentence in _BOUNDARY_END.split(quote):
+        if _RULE_SOURCE.search(sentence) and (not claim_terms or any(term in sentence for term in claim_terms)):
+            return True
+    return False
+
+
+def _source_entails_concrete_detail(quote, claim):
+    """Require a source sentence when prose asserts a concrete material detail."""
+    terms = {term for term in re.findall(r'[\u3400-\u4dbf\u4e00-\u9fff]{2}', claim)
+             if term not in {'感觉', '不到', '仍在', '低声', '声音', '几乎'}}
+    return any(any(term in sentence for term in terms) for sentence in _BOUNDARY_END.split(quote))
+
+
+def scene_knowledge(context, *, include_evidence=True, evidence=None):
     """Keep public evidence distinct from internal state and absent evidence."""
     opening = context['contract'].get('openingContext', {})
-    evidence = public_scene_evidence(context)
+    evidence = public_scene_evidence(context) if evidence is None else dict(evidence)
     return {**({'publicEvidence': evidence} if include_evidence else {}),
             'sourceKinds': {key: 'history_scene' if key.startswith('history-') else 'opening_fact' for key in evidence},
             'unresolvedQuestions': opening.get('unresolvedQuestions', []),
@@ -30,11 +67,33 @@ def dialogue_units(body):
             for i, match in enumerate(re.finditer(r'“[^”]+”|「[^」]+」|『[^』]+』|"[^"\n]+"', body))}
 
 
+def scene_speaker_candidates(context, body, evidence, introductions=None):
+    """Build review-only candidates, not an assertion of presence or identity."""
+    narration = body
+    for unit in dialogue_units(body).values():
+        narration = narration.replace(unit['quote'], '')
+    player_id = context['contract']['persona'].get('sourceCharacterId')
+    entities = registry(context['package'], context['parent']['branchState'], introductions)
+    people = {key: entity['name'] for key, entity in entities.items()
+              if entity['kind'] == 'character' and (key == player_id or entity['name'] in narration)}
+    # Only explicit public role names; no inferred roles or registration writes.
+    for relation in context['contract'].get('openingContext', {}).get('relationships', []):
+        name = relation.get('name') if isinstance(relation, dict) else None
+        if (not isinstance(name, str) or not name or name not in narration
+                or name in people.values() or not any(name in text for text in evidence.values())):
+            continue
+        if any(e['kind'] == 'character' and e['name'] == name for e in entities.values()):
+            continue
+        key = 'scene-speaker:' + hashlib.sha256(name.encode()).hexdigest()[:16]
+        people[key] = name
+    return people
+
+
 def repair_targets(problem):
     return {f'R{i+1}': issue for i, issue in enumerate(problem.get('issues', []))} if isinstance(problem, dict) else {}
 
 
-def validate_knowledge_access(data, body, evidence, people, player_id):
+def validate_knowledge_access(data, body, evidence, people, player_id, *, speaker_names=None):
     units = dialogue_units(body)
     if not units:
         return
@@ -57,6 +116,52 @@ def validate_knowledge_access(data, body, evidence, people, player_id):
             raise ValueError('对白核对须注明说话人、知识类型、获知来源及缺证内容')
         reason = check['reason']
         unsupported = check['verdict'] != 'supported' or bool(check['missingEvidence'])
+        has_factual_premises = False
+        if speaker_names is not None:
+            if check.get('speakerName') != speaker_names.get(check['speakerId']):
+                raise ValueError('对白说话人姓名与候选编号不一致：' + check['id'])
+            premises = check.get('premises')
+            if not isinstance(premises, list):
+                raise ValueError('对白缺少独立事实前提列表：' + check['id'])
+            has_factual_premises = False
+            for premise in premises:
+                if (not isinstance(premise, dict) or not isinstance(premise.get('quote'), str)
+                        or not premise['quote'].strip() or premise['quote'] not in unit['quote']):
+                    raise ValueError('对白事实前提未绑定当前台词或分类无效：' + check['id'])
+                # The player may put a directly visible observation in the
+                # inventory, although the prompt asks for it to remain in the
+                # main current check.  The full paragraph grounding pass is
+                # still authoritative for this player-side fallback.  NPC
+                # inventories never get this escape hatch: their current
+                # label cannot hide a facility, rule, or other premise.
+                if (check['speakerId'] == player_id and premise.get('sources') in ([], None)
+                        and premise.get('verdict') in ('supported', 'unsupported')):
+                    continue
+                # A model may repeat a pure uncertainty as a premise.  It has
+                # no factual authority and is safe to ignore when it carries
+                # no source; external NPC premises remain strict below.
+                if (premise.get('kind') == 'unknown' and premise.get('sources') in ([], None)
+                        and premise.get('verdict') == 'supported'):
+                    continue
+                if premise.get('kind') not in ('background', 'reported', 'inference'):
+                    raise ValueError('对白事实前提未绑定当前台词或分类无效：' + check['id'])
+                has_factual_premises = True
+                # quote must remain a verbatim fragment of the dialogue.  claim
+                # is the normalized factual proposition used for evidence
+                # checking, so facilities and rules can be audited without
+                # requiring the dialogue to literally say "exists".
+                claim = premise.get('claim', premise['quote'])
+                if not isinstance(claim, str) or not claim.strip():
+                    raise ValueError('对白事实前提缺少可核对claim：' + check['id'])
+                claim_id = unit['paragraphId'] + '-C1'
+                try:
+                    validate_grounding({'checks': [{**premise, 'id': claim_id}]},
+                                       {claim_id: {'claim': claim}}, evidence=evidence)
+                except SceneReviewError as error:
+                    # The normalized proposition is for entailment checking;
+                    # repairs must point back to the actual words in this draft.
+                    violations.extend({**violation, 'claim': premise['quote']}
+                                      for violation in error.violations)
         for source in check['accessSources']:
             if not isinstance(source, dict) or not isinstance(source.get('id'), str) or not isinstance(source.get('quote'), str):
                 raise ValueError('人物获知来源格式无效')
@@ -75,7 +180,8 @@ def validate_knowledge_access(data, body, evidence, people, player_id):
             if len(quote.strip()) < 4 or quote not in available:
                 unsupported = True
                 reason += '；人物获知来源不存在、尚未发生或引用了自己的发言'
-        if (check['speakerId'] != player_id and check['kind'] in ('background', 'reported', 'inference')
+        if (check['speakerId'] != player_id
+                and (has_factual_premises or check['kind'] in ('background', 'reported', 'inference'))
                 and not check['accessSources']):
             unsupported = True
             reason += '；未提供该NPC获得信息的途径'
@@ -136,13 +242,14 @@ def validate_scene_boundaries(data, body, boundaries):
 
 
 def combined_scene_issues(review, body, events, grounding, *, evidence=None, requirements=None, focused=None, boundaries=None,
-                          people=None, player_id=None, repair_issues=None):
+                          people=None, player_id=None, repair_issues=None, speaker_names=None):
     """Merge independent semantic findings so one edit fixes the whole round."""
     violations, unlocated, format_errors = [], [], {}
     for index, validate in enumerate((lambda: reject_review_issues(review, body, events),
                      lambda: validate_grounding(grounding, grounding_claims(body), evidence=evidence),
                      lambda: validate_scene_boundaries(grounding, body, boundaries),
-                     lambda: validate_knowledge_access(grounding, body, evidence or {}, people, player_id) if people is not None else None,
+                     lambda: validate_knowledge_access(grounding, body, evidence or {}, people, player_id,
+                                                       speaker_names=speaker_names) if people is not None else None,
                      lambda: validate_repair_resolution(grounding, body, repair_targets(repair_issues)),
                      lambda: validate_scope(grounding, requirements, body) if requirements is not None else None,
                      lambda: validate_scope(focused, exclusive_requirements(requirements), body, focused=True) if focused is not None else None)):
@@ -195,12 +302,19 @@ def reject_review_issues(data, body, events=()):
     paragraphs = {f'P{i+1}': p for i, p in enumerate(body.split('\n\n'))}
     event_paragraphs = {e['id']: e['paragraphId'] for e in events
                         if isinstance(e.get('id'), str) and isinstance(e.get('paragraphId'), str)}
-    violations, unlocated = [], []
+    violations, unlocated, stale_quotes = [], [], []
 
     def add(pid, kind, reason, quote=None):
         reason = str(reason or '审查报告语义问题，但未说明原因')
         if not isinstance(pid, str) or pid not in paragraphs:
             unlocated.append(reason)
+            return
+        # An explicit quotation of an earlier draft is not a defect in the
+        # current paragraph. Fail the review's evidence contract instead of
+        # converting it into a whole-paragraph repair target. Other correctly
+        # located rejections below must still be retained.
+        if quote not in (None, '') and (not isinstance(quote, str) or quote not in paragraphs[pid]):
+            stale_quotes.append(pid)
             return
         precise = isinstance(quote, str) and len(quote.strip()) >= 4 and quote in paragraphs[pid]
         issue = dict(paragraphId=pid, type=kind, reason=reason, claim=quote if precise else paragraphs[pid])
@@ -238,6 +352,8 @@ def reject_review_issues(data, body, events=()):
             add(pid, 'state', check.get('reason') or '正文越出行动契约')
     if violations or unlocated:
         raise SceneReviewError(violations, unlocated)
+    if stale_quotes:
+        raise ActionEvidenceError('审查错误引文不在当前段落，不能沿用旧稿问题：' + ','.join(stale_quotes))
 
 
 def repair_paragraphs(body, error):
@@ -250,8 +366,11 @@ def repair_paragraphs(body, error):
 
 
 def public_scene_evidence(context):
-    # Only public opening facts and committed summaries.  Prior narrative prose
-    # is validation input, never a later writing prompt or evidence source.
+    # Only public opening facts and bounded committed summaries.  Prior
+    # narrative prose remains validation input, never a later writing prompt or
+    # evidence source: registering whole paragraphs here would let a new draft
+    # cite an earlier model draft as if it were authoritative context and would
+    # recreate the stacking problem this projection is meant to avoid.
     evidence = {}
     opening = context['contract'].get('openingContext', {})
     for i, text in enumerate(opening.get('knownFacts', [])):
@@ -264,19 +383,11 @@ def public_scene_evidence(context):
         outcome = node.get('readerOutcome') or {}
         action = outcome.get('action') if isinstance(outcome, dict) else {}
         action = action if isinstance(action, dict) else {}
-        summaries = [value.strip() for value in (
-            node.get('summary'), node.get('playerDirection'), action.get('summary'))
-                     if isinstance(value, str) and value.strip()]
+        summaries = list(dict.fromkeys(value.strip() for value in (
+            node.get('summary'), action.get('summary'))
+                     if isinstance(value, str) and value.strip()))
         if summaries:
             evidence[f"history-{node['id']}-P1"] = '；'.join(summaries)[:900]
-        narrative = node.get('narrativeText')
-        if isinstance(narrative, str):
-            for index, paragraph in enumerate(narrative.split('\n\n'), 1):
-                paragraph = paragraph.strip()
-                # Keep whole, readable paragraphs; oversized generated/source
-                # blocks are not useful as a grounding quote.
-                if paragraph and len(paragraph) <= 900:
-                    evidence[f"history-{node['id']}-P{index}"] = paragraph
     return evidence
 
 
@@ -324,14 +435,46 @@ def validate_scene_review(data, body, evidence, events=()):
     return checks
 
 
+def grounding_input_evidence(payload):
+    """Bind citations to the exact input of this independent review.
+
+    Internal state and non-player knowledge may constrain a review, but cannot
+    become public factual support merely because the reviewer can see them.
+    """
+    if 'contextProjection' not in payload:
+        evidence = payload.get('sceneEvidence')
+        if not isinstance(evidence, dict) or any(
+                not isinstance(key, str) or not isinstance(value, str)
+                for key, value in evidence.items()):
+            raise ValueError('独立核对缺少有效公开证据')
+        return dict(evidence)
+    projection = payload['contextProjection']
+    if (not isinstance(projection, dict) or projection.get('stage') != 'grounding_review'
+            or not isinstance(projection.get('allowedEvidence'), list)):
+        raise ValueError('独立核对证据投影无效')
+    evidence, seen = {}, set()
+    for item in projection['allowedEvidence']:
+        if (not isinstance(item, dict) or not isinstance(item.get('sourceId'), str)
+                or not item['sourceId'].strip() or item['sourceId'] in seen
+                or not isinstance(item.get('content'), str) or not item['content'].strip()):
+            raise ValueError('独立核对证据编号重复或内容无效')
+        seen.add(item['sourceId'])
+        if (item.get('visibility') in ('player_known', 'public_world_fact')
+                and item.get('authority') in ('authoritative', 'confirmed_evidence')
+                and item.get('validity') == 'confirmed'):
+            evidence[item['sourceId']] = item['content']
+    return evidence
+
+
 def grounding_claims(body):
     # Independent coverage must not inherit the first review's classifications.
     # Split mechanically, without trying to infer which sentences are factual.
     # Keep paragraph ids stable for bounded repairs and include full draft in the
     # review input so quotes spanning sentence boundaries retain their speaker.
+    # Separate a new quotation from its narration prefix; both remain verbatim.
     return {f'P{i+1}-C{j+1}': {'claim': sentence, 'paragraphId': f'P{i+1}'}
             for i, paragraph in enumerate(body.split('\n\n'))
-            for j, sentence in enumerate(re.findall(r'[^。！？]+[。！？]*[”」』]*', paragraph))
+            for j, sentence in enumerate(re.findall(r'[“「『]?[^。！？“「『]+[。！？]*[”」』]*', paragraph))
             if sentence.strip()}
 
 
@@ -360,6 +503,25 @@ def validate_grounding(data, claims, *, evidence=None):
             if check.get('verdict') == 'supported' and kind in ('background', 'reported', 'inference') and not sources:
                 violations.append({'paragraphId': check['id'].split('-C')[0], 'claim': claims[check['id']]['claim'],
                                    'reason': '既有背景或推断前提没有公开来源：' + check['reason']})
+            if check.get('verdict') == 'supported' and kind in ('background', 'reported', 'inference'):
+                claim = claims[check['id']]['claim']
+                relation = _BOUNDARY_RELATION.search(claim)
+                if relation and not any(_source_entails_boundary_relation(ref.get('quote', ''),
+                                                                           relation.group('subject'),
+                                                                           relation.group('boundary'))
+                                       for ref in sources if isinstance(ref, dict)):
+                    violations.append({'paragraphId': check['id'].split('-C')[0], 'claim': claim,
+                                       'reason': '空间边界关系必须由同一条公开来源同时支持主体与边界：' + check['reason']})
+                if _RULE_CLAIM.search(claim) and not any(_source_entails_rule_claim(ref.get('quote', ''), claim)
+                                                        for ref in sources if isinstance(ref, dict)):
+                    violations.append({'paragraphId': check['id'].split('-C')[0], 'claim': claim,
+                                       'reason': '规矩或资格结论必须由同一句公开来源同时支持规则与对象：' + check['reason']})
+            if check.get('verdict') == 'supported' and _CONCRETE_DETAIL.search(claims[check['id']]['claim']):
+                claim = claims[check['id']]['claim']
+                if not any(_source_entails_concrete_detail(ref.get('quote', ''), claim)
+                           for ref in sources if isinstance(ref, dict)):
+                    violations.append({'paragraphId': check['id'].split('-C')[0], 'claim': claim,
+                                       'reason': '具体物理或感官细节必须由公开来源逐字支持，不能用当场气氛代替：' + check['reason']})
         if check.get('verdict') != 'supported':
             violations.append({'paragraphId': check['id'].split('-C')[0], 'claim': claims[check['id']]['claim'],
                                'reason': str(check.get('reason', '未获明确支持'))})

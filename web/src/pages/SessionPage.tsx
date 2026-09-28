@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { prepareOpeningImage } from '../components/openingImage'
 import { StoryProse } from '../components/StoryProse'
+import { replayProse } from '../components/proseReplay'
 import { RouteClosurePanel } from '../components/RouteClosurePanel'
 import { CharacterGraph } from '../components/CharacterGraph'
 import { GraphPortrait } from '../components/GraphPortrait'
@@ -61,6 +62,8 @@ export function SessionPage() {
   const [loading, setLoading] = useState(true)
   const [writing, setWriting] = useState(false)
   const [streamText, setStreamText] = useState('')
+  const [replaying, setReplaying] = useState(false)
+  const [openingSessionId, setOpeningSessionId] = useState<string>()
   const streamController = useRef<AbortController | null>(null)
   const replayController = useRef<AbortController | null>(null)
   const [playable, setPlayable] = useState(false)
@@ -135,35 +138,19 @@ export function SessionPage() {
     replayController.current?.abort()
     const controller = new AbortController()
     replayController.current = controller
-    const characters = Array.from(text)
-    if (!characters.length) return Promise.resolve()
     setWriting(true)
+    setReplaying(true)
     setStreamText('')
-    return new Promise<void>((resolve) => {
-      let offset = 0
-      let timer = 0
-      const finish = () => {
-        window.clearInterval(timer)
-        controller.signal.removeEventListener('abort', finish)
-        if (seq === selecting.current && !controller.signal.aborted) {
-          setStreamText('')
-          setWriting(false)
-        }
-        resolve()
+    return replayProse(text, setStreamText, controller.signal).finally(() => {
+      if (seq === selecting.current && !controller.signal.aborted) {
+        setStreamText('')
+        setReplaying(false)
+        setWriting(false)
       }
-      controller.signal.addEventListener('abort', finish, { once: true })
-      timer = window.setInterval(() => {
-        if (seq !== selecting.current || controller.signal.aborted) {
-          finish()
-          return
-        }
-        offset = Math.min(characters.length, offset + 24)
-        setStreamText(characters.slice(0, offset).join(''))
-        if (offset >= characters.length) finish()
-      }, 18)
     })
   }
-  async function selectBranch(id: string, readyBranch?: BranchView, preserveReading = false) {
+
+  async function selectBranch(id: string, readyBranch?: BranchView, preserveReading = false, reveal = !preserveReading) {
     if (!preserveReading) {
       readingTiming.current?.finish('interrupted')
       readingTiming.current = null
@@ -171,6 +158,7 @@ export function SessionPage() {
     const seq = ++selecting.current
     imageController.current?.abort()
     replayController.current?.abort()
+    setReplaying(false)
     if (!preserveReading) setLoading(true)
     setJournal(null)
     setJournalError('')
@@ -205,9 +193,10 @@ export function SessionPage() {
       }
       setSelected(branch)
       setLoading(false)
-      if (!preserveReading && branch.narrativeText?.trim()) {
+      if (reveal && branch.narrativeText?.trim()) {
         await replaySavedText(branch.narrativeText, seq)
       }
+      if (seq !== selecting.current) return
       if (branch.canonicalRelation === 'on_line' && !branch.narrativeText?.trim() && !preserveReading) {
         api
           .getSourceChapter(sessionId, id)
@@ -281,18 +270,18 @@ export function SessionPage() {
     streamController.current = controller
     try {
       const entry = opening.catalog.entries.find((e) => e.id === opening.request.entry_point_id)
-      const image = await prepareOpeningImage(entry?.opening_image, controller.signal)
-      if (controller.signal.aborted) return
-      setOpeningImage(image)
+      // Image loading runs beside the opening request; it never delays prose.
+      setOpeningImage(entry?.opening_image ?? null)
       const result = await api.streamOpening(opening.request,
-        (text) => setStreamText((previous) => previous + text),
-        () => setStreamText(''), controller.signal)
+        () => undefined, () => undefined, controller.signal)
       if (controller.signal.aborted) return
       readingTiming.current?.confirm(result.branch.id, result.session.id)
+      setOpeningSessionId(result.session.id)
       setSelected(result.branch)
       setOpeningBranch(result.branch.id)
       setLoading(false)
-      setStreamText('')
+      await replaySavedText(result.branch.narrativeText, selecting.current)
+      if (controller.signal.aborted) return
       navigate(`/sessions/${result.session.id}`, { replace: true, state: {
         openingKey: opening.request.request_id, focus: result.branch.id, preserveScroll: true,
       } })
@@ -353,6 +342,7 @@ export function SessionPage() {
       profileRequest.current++
       streamController.current?.abort()
       imageController.current?.abort()
+      replayController.current?.abort()
     }
   }, [sessionId])
   // Opening completion replaces /sessions/new inside the same reader. Only
@@ -412,20 +402,23 @@ export function SessionPage() {
     beginReadingTiming(payload.request_id, 'turn')
     setWriting(true)
     setStreamText('')
-    streamController.current = new AbortController()
-    requestAnimationFrame(() =>
-      article.current?.scrollIntoView({ block: 'start' }),
-    )
+    const controller = new AbortController()
+    streamController.current = controller
+    requestAnimationFrame(() => {
+      article.current?.scrollTo(0, 0)
+      article.current?.scrollIntoView({ block: 'start' })
+    })
     setNotice('')
     setRetryable(false)
     try {
       const result = await api.streamTurn(
         sessionId,
         payload,
-        (chunk) => setStreamText((text) => text + chunk),
-        () => setStreamText(''),
-        streamController.current.signal,
+        () => undefined,
+        () => undefined,
+        controller.signal,
       )
+      if (controller.signal.aborted) return
       if (result.status === 'rejected' || !result.branch) {
         readingTiming.current?.finish('failed')
         setNotice('这次行动未能继续故事，请换一个方向或调整描述。')
@@ -451,8 +444,8 @@ export function SessionPage() {
             ],
       )
       readingTiming.current?.confirm(branch.id)
-      await selectBranch(branch.id, branch, !result.deduplicated)
-      setStreamText('')
+      await selectBranch(branch.id, branch, true, true)
+      if (controller.signal.aborted) return
       allBranches()
         .then(setBranches)
         .catch(() =>
@@ -460,8 +453,9 @@ export function SessionPage() {
         )
       if (result.deduplicated) setNotice('已恢复上次生成的内容。')
     } catch (e) {
+      if (controller.signal.aborted) return
       readingTiming.current?.finish('failed')
-      setNotice('这次续写尚未确认，故事仍停在上一页。你可以重试本回合。')
+      setNotice(`这次续写尚未完成，上一页已保留。${messageOf(e)}`)
       setRetryable(true)
     } finally {
       locked.current = false
@@ -481,8 +475,8 @@ export function SessionPage() {
     void runTurn(next)
   }
   const currentChoices = choicesParent === selected?.id ? choices : []
-  const readingText = writing
-    ? streamText || chapter?.text || selected?.narrativeText || ''
+  const readingText = replaying
+    ? streamText
     : (chapter?.text ?? selected?.narrativeText ?? '')
   useEffect(() => {
     if (!playable || loading || writing || sessionId === 'new' || !selected?.parentId ||
@@ -491,9 +485,9 @@ export function SessionPage() {
     return observeReadingDisplay(article.current, () => api.recordReadingDisplay(sessionId, branchId))
   }, [playable, loading, writing, sessionId, selected?.id, selected?.parentId, selected?.narrativeText])
   useEffect(() => {
-    readingTiming.current?.rendered(readingText, writing, selected?.id,
+    readingTiming.current?.rendered(writing && !replaying ? '' : readingText, writing, selected?.id,
       choicesVisible && choicesParent === selected?.id && currentChoices.length > 0)
-  }, [readingText, writing, selected?.id, choicesVisible, choicesParent, currentChoices.length])
+  }, [readingText, writing, replaying, selected?.id, choicesVisible, choicesParent, currentChoices.length])
   if (!session && !opening)
     return (
       <main className="page">
@@ -567,25 +561,31 @@ export function SessionPage() {
               }
             />
           )}
-          {(loading || (writing && !streamText)) && !opening ? (
-            <Loading text={writing ? '正在续写…' : '正在读取这一页…'} />
+          {notice && <div className="notice reader-feedback" role="alert">
+            <span>{notice}</span>
+            {retryable && attempt.current && <button disabled={writing} className="button subtle"
+              onClick={() => attempt.current && void runTurn(attempt.current)}>重试本回合</button>}
+          </div>}
+          {writing && !replaying && <div className="generation-banner"><Loading text={selected ? '正在生成下一段，请稍候。上一页仍可回看。' : '故事正在展开，请稍候…'} /></div>}
+          {loading && !writing ? (
+            <Loading text="正在读取这一页…" />
           ) : selected || opening ? (
             <div
-              className={`story-column ${writing ? 'streaming-prose' : ''}`}
+              className={`story-column ${replaying ? 'streaming-prose' : ''}`}
               aria-busy={writing}
             >
               <StoryProse
                 key={opening && (!selected || selected.id === openingBranch) ? opening.request.request_id : selected?.id}
                 text={readingText}
-                sessionId={sessionId}
+                fullText={selected?.narrativeText ?? readingText}
+                sessionId={sessionId === 'new' ? openingSessionId : sessionId}
                 branchId={selected?.id}
                 title={storyTitle}
                 place={place ?? undefined}
                 opening={!selected || selected.kind === 'source_entry'}
-                fixedOpeningImage={opening && (!selected || selected.id === openingBranch) && (sessionId === 'new' || !writing) ? openingImage : !writing && restoredImage?.branch === selected?.id ? restoredImage?.image : undefined}
-                streaming={writing}
+                fixedOpeningImage={opening && (!selected || selected.id === openingBranch) ? openingImage : restoredImage?.branch === selected?.id ? restoredImage?.image : undefined}
+                streaming={replaying}
               />
-              {sessionId === 'new' && writing && !streamText && <Loading text="故事正在展开…" />}
               {selected && (parent || children.length > 0) && <div className="page-turner">
                 <button
                   className="text-button"
@@ -625,12 +625,12 @@ export function SessionPage() {
           <section className="choice-dock" aria-label="选择故事方向">
             <div className="choice-dock-inner">
               <div className="divider">
-                <span>{writing ? '续写中…' : '你的行动'}</span>
+                <span>{writing ? replaying ? '故事正在展开…' : '续写中…' : '你的行动'}</span>
               </div>
               {writing ? (
                 <div className="generation-status" role="status">
                   <span className="loader" />
-                  正在续写 · {elapsed} 秒
+                  {replaying ? '正文正在展开' : `正在生成 · ${elapsed} 秒`}
                 </div>
               ) : routeEnded ? (
                 <div className="route-ending">
@@ -725,28 +725,6 @@ export function SessionPage() {
                 <p className="muted">
                   当前可以阅读已保存的故事，续写服务暂未开启。
                 </p>
-              )}
-              {notice && (
-                <div className="notice" role="alert">
-                  <span>{notice}</span>
-                  {!!streamText && !writing && (
-                    <details className="unfinished-prose" open>
-                      <summary>未确认草稿 · 未计入故事进展</summary>
-                      {streamText.split(/\n\s*\n/).filter(Boolean).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
-                    </details>
-                  )}
-                  {retryable && attempt.current && (
-                    <button
-                      disabled={writing}
-                      className="button subtle"
-                      onClick={() =>
-                        attempt.current && void runTurn(attempt.current)
-                      }
-                    >
-                      重试本回合
-                    </button>
-                  )}
-                </div>
               )}
             </div>
           </section>

@@ -10,7 +10,7 @@ export function subscribeIllustration<T extends { items: { status: string }[]; c
   },
   env = { window, newSubscriber: () => crypto.randomUUID() as string },
 ) {
-  type Lease = { id: string; timer?: number; pending: boolean; wantDraw: boolean; drawing: boolean; failures: number }
+  type Lease = { id: string; timer?: number; deadline?: number; pending: boolean; wantDraw: boolean; drawing: boolean; failures: number }
   let active: Lease | null = null
   let disposed = false
   const release = (lease: Lease) => {
@@ -20,6 +20,14 @@ export function subscribeIllustration<T extends { items: { status: string }[]; c
     if (active !== lease) return
     env.window.clearTimeout(lease.timer)
     lease.timer = env.window.setTimeout(() => void poll(lease), delay)
+  }
+  const boundWait = (lease: Lease) => {
+    if (lease.deadline !== undefined) return
+    lease.deadline = env.window.setTimeout(() => {
+      if (active !== lease) return
+      stop()
+      callbacks.error?.()
+    }, 80_000)
   }
   async function poll(lease: Lease) {
     if (active !== lease || lease.pending) return
@@ -32,16 +40,21 @@ export function subscribeIllustration<T extends { items: { status: string }[]; c
       if (active !== lease) return
       lease.failures = 0
       if (draw && result.can_generate) lease.drawing = false
+      const pending = result.items.some(item => ['queued', 'generating'].includes(item.status))
+      if (!pending) {
+        env.window.clearTimeout(lease.deadline)
+        lease.deadline = undefined
+      }
       callbacks.ready(result)
-      if (result.items.some(item => ['queued', 'generating'].includes(item.status))) schedule(lease, 1500)
+      if (pending) schedule(lease, 1500)
     } catch {
       lease.drawing = false
       if (++lease.failures < 3) schedule(lease, 4000)
-      else if (active === lease) callbacks.error?.()
+      else if (active === lease) { stop(); callbacks.error?.() }
     } finally {
       lease.pending = false
       if (active !== lease) release(lease)
-      else if (lease.wantDraw) schedule(lease, 0)
+      else if (lease.wantDraw) { boundWait(lease); schedule(lease, 0) }
     }
   }
   const stop = () => {
@@ -49,6 +62,7 @@ export function subscribeIllustration<T extends { items: { status: string }[]; c
     if (!lease) return
     active = null
     env.window.clearTimeout(lease.timer)
+    env.window.clearTimeout(lease.deadline)
     callbacks.subscription(null)
     release(lease)
   }
@@ -57,6 +71,7 @@ export function subscribeIllustration<T extends { items: { status: string }[]; c
     const lease: Lease = { id: env.newSubscriber(), pending: false, wantDraw: false, drawing: false, failures: 0 }
     active = lease
     callbacks.subscription(lease.id)
+    boundWait(lease)
     void poll(lease)
   }
   const resume = (event: PageTransitionEvent) => { if (event.persisted) start() }
@@ -69,6 +84,7 @@ export function subscribeIllustration<T extends { items: { status: string }[]; c
       if (!lease || lease.drawing) return
       lease.drawing = true
       lease.wantDraw = true
+      boundWait(lease)
       void poll(lease)
     },
     cancel: stop,

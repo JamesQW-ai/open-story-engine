@@ -1,0 +1,366 @@
+{
+  "schemaVersion": "context-relation-audit/0.1",
+  "fixtureSha256": "360112ea882f975cae8a1a56777163c3b40a6009b50af3bf4b2a2d6afbad4fc1",
+  "harnessSha256": "bb9f49f6eca7a28f570a8c96d347b9faa0e445093c1b80fbcc5c8bd04c04916d",
+  "bindings": {
+    "test_support/fixtures/context-semantic-cases-2026-09-25.json": "f12aceabf4802fba8b4fc9a7a0b1d0a5eb2359e6458d8f7e8af4e6bb82d6f2dc",
+    "test_support/fixtures/context-proposition-labels-2026-09-26.json": "9ab11de1ec76b4099bea4bac13189428c853d239660c9e60002a5ab863458697",
+    "docs/evidence/context-management-2026-09-22/context-grounding-frozen-v11-2026-09-25.json": "f999bcdf130a048b03516843726d88e4b8937f9eaffc8370c2e859ff7c7f20b0",
+    "content/packages/taixu-relics-part1/0.1.3/package.json": "94f8591c009e3733c9ac505b5ef63554912003de3ebdd2143045099cbe019dcd",
+    "content/packages/taixu-relics-part1/0.1.3/modules/package-index.json": "95a3fc1cd6e200778a9b260e65210144f027c4311dd9edc14f9367e210a741d1",
+    "content/packages/taixu-relics-part1/0.1.3/modules/state-schema.json": "fa6e023bc0228b4797cb81251f82ba738c15d8996f21590b780c04f575f088b9",
+    "docs/evidence/context-management-2026-09-22/context-proposition-eval-2026-09-26.json": "fd287a2494b1e8a91df98c8f939db446c7020c132db6e0db5d0242eceeff0fe3"
+  },
+  "snapshot": {
+    "snapshot_id": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+    "branch_id": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+    "locations": [
+      {
+        "subject": "character_ae4cb42b9b49",
+        "value": "location_open_gate",
+        "paths": [
+          "/playerLocationId",
+          "/characterLocationIds/character_ae4cb42b9b49"
+        ]
+      }
+    ]
+  },
+  "scope": "当前可见性声明应用于冻结历史快照的离线能力诊断；非生产、非自动语义提取。",
+  "textCases": [
+    {
+      "id": "position_out",
+      "axis": "position",
+      "expectedVerdict": "supported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "position_in",
+      "axis": "position",
+      "expectedVerdict": "contradicted",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "position_not_out",
+      "axis": "position",
+      "expectedVerdict": "contradicted",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "position_not_in",
+      "axis": "position",
+      "expectedVerdict": "supported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "alive",
+      "axis": "negation",
+      "expectedVerdict": "supported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "not_alive",
+      "axis": "negation",
+      "expectedVerdict": "contradicted",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "not_registered",
+      "axis": "negation",
+      "expectedVerdict": "supported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "registered",
+      "axis": "negation",
+      "expectedVerdict": "contradicted",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "actor_lu",
+      "axis": "subject",
+      "expectedVerdict": "supported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "actor_guard",
+      "axis": "subject",
+      "expectedVerdict": "unsupported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "time_three",
+      "axis": "time",
+      "expectedVerdict": "supported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "time_two",
+      "axis": "time",
+      "expectedVerdict": "unsupported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "intended",
+      "axis": "completion",
+      "expectedVerdict": "supported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "completed",
+      "axis": "completion",
+      "expectedVerdict": "unsupported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "order_after",
+      "axis": "order",
+      "expectedVerdict": "supported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    },
+    {
+      "id": "order_before",
+      "axis": "order",
+      "expectedVerdict": "unsupported",
+      "localVerdict": "needs_review",
+      "reason": "no_trusted_text_to_relation_mapping"
+    }
+  ],
+  "structuredControls": [
+    {
+      "id": "same_location",
+      "claim": {
+        "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+        "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+        "subject": "character_ae4cb42b9b49",
+        "relation": "exact_location_id",
+        "object": "location_open_gate",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "expectedVerdict": "supported",
+      "result": {
+        "verdict": "supported",
+        "reason": "exact_public_field_comparison",
+        "sources": [
+          {
+            "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+            "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+            "path": "/playerLocationId",
+            "value": "location_open_gate"
+          },
+          {
+            "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+            "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+            "path": "/characterLocationIds/character_ae4cb42b9b49",
+            "value": "location_open_gate"
+          }
+        ],
+        "proseAcceptance": false
+      },
+      "matched": true
+    },
+    {
+      "id": "negated_location",
+      "claim": {
+        "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+        "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+        "subject": "character_ae4cb42b9b49",
+        "relation": "exact_location_id",
+        "object": "location_open_gate",
+        "polarity": "negative",
+        "time": "snapshot",
+        "condition": null
+      },
+      "expectedVerdict": "contradicted",
+      "result": {
+        "verdict": "contradicted",
+        "reason": "exact_public_field_comparison",
+        "sources": [
+          {
+            "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+            "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+            "path": "/playerLocationId",
+            "value": "location_open_gate"
+          },
+          {
+            "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+            "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+            "path": "/characterLocationIds/character_ae4cb42b9b49",
+            "value": "location_open_gate"
+          }
+        ],
+        "proseAcceptance": false
+      },
+      "matched": true
+    },
+    {
+      "id": "other_subject",
+      "claim": {
+        "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+        "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+        "subject": "scene:wounded_stranger",
+        "relation": "exact_location_id",
+        "object": "location_open_gate",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "expectedVerdict": "needs_review",
+      "result": {
+        "verdict": "needs_review",
+        "reason": "public_subject_not_covered",
+        "sources": [],
+        "proseAcceptance": false
+      },
+      "matched": true
+    },
+    {
+      "id": "boundary_relation",
+      "claim": {
+        "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+        "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+        "subject": "character_ae4cb42b9b49",
+        "relation": "side_of_boundary",
+        "object": "inside",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "expectedVerdict": "needs_review",
+      "result": {
+        "verdict": "needs_review",
+        "reason": "relation_not_covered",
+        "sources": [],
+        "proseAcceptance": false
+      },
+      "matched": true
+    },
+    {
+      "id": "historical_time",
+      "claim": {
+        "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+        "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+        "subject": "character_ae4cb42b9b49",
+        "relation": "exact_location_id",
+        "object": "location_open_gate",
+        "polarity": "positive",
+        "time": "three_years_ago",
+        "condition": null
+      },
+      "expectedVerdict": "needs_review",
+      "result": {
+        "verdict": "needs_review",
+        "reason": "qualifier_not_covered",
+        "sources": [],
+        "proseAcceptance": false
+      },
+      "matched": true
+    },
+    {
+      "id": "conditional_location",
+      "claim": {
+        "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+        "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+        "subject": "character_ae4cb42b9b49",
+        "relation": "exact_location_id",
+        "object": "location_open_gate",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": "before_lock"
+      },
+      "expectedVerdict": "needs_review",
+      "result": {
+        "verdict": "needs_review",
+        "reason": "qualifier_not_covered",
+        "sources": [],
+        "proseAcceptance": false
+      },
+      "matched": true
+    },
+    {
+      "id": "sibling_branch",
+      "claim": {
+        "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+        "branchId": "diagnostic-sibling",
+        "subject": "character_ae4cb42b9b49",
+        "relation": "exact_location_id",
+        "object": "location_open_gate",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "expectedVerdict": "needs_review",
+      "result": {
+        "verdict": "needs_review",
+        "reason": "snapshot_mismatch",
+        "sources": [],
+        "proseAcceptance": false
+      },
+      "matched": true
+    },
+    {
+      "id": "stale_snapshot",
+      "claim": {
+        "snapshotId": "diagnostic-stale",
+        "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+        "subject": "character_ae4cb42b9b49",
+        "relation": "exact_location_id",
+        "object": "location_open_gate",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "expectedVerdict": "needs_review",
+      "result": {
+        "verdict": "needs_review",
+        "reason": "snapshot_mismatch",
+        "sources": [],
+        "proseAcceptance": false
+      },
+      "matched": true
+    }
+  ],
+  "summary": {
+    "textCases": 16,
+    "textNeedsReview": 16,
+    "structuredControls": 8,
+    "structuredMatches": 8
+  },
+  "priorFailure": {
+    "artifact": "docs/evidence/context-management-2026-09-22/context-proposition-eval-2026-09-26.json",
+    "caseId": "recorded_v11",
+    "propositionId": "C10",
+    "rawVerdict": "supported",
+    "rawSources": [
+      {
+        "id": "module:currentBeat:beat_chapter_001",
+        "quote": "陌生伤者与空灯被挡在封山线外"
+      }
+    ],
+    "rawReason": "公开事实确认伤者被挡在封山线外，与本命题一致。",
+    "localVerdict": "needs_review",
+    "reason": "伤者与封山线的关系未建模；未用文本标签或模型字段代替权威状态。"
+  },
+  "modelCalls": 0,
+  "formalSessionWrites": 0,
+  "temporarySessionWrites": 0,
+  "jevCalls": 0,
+  "acceptance": false,
+  "productionEnablement": false
+}

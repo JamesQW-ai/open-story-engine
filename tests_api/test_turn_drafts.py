@@ -104,6 +104,35 @@ class TurnDraftTests(unittest.TestCase):
             release.set()
             manager.close()
 
+    def test_choice_request_id_conflict_is_checked_without_changing_prepared_binding(self):
+        started = threading.Event()
+        release = threading.Event()
+
+        def generate(snapshot, payload, delta, reset, validating, check):
+            started.set()
+            self.assertTrue(release.wait(5))
+            return {'node': {}}
+
+        manager = TurnDrafts(self.root / 'choice-request-id.sqlite', generate)
+        try:
+            first = manager.ensure(
+                {'session_id': 's', 'parent_branch_id': 'p', 'choice_id': 'a'},
+                {'direction_id': 'a'}, None, foreground=True, request_id='same-request',
+            )
+            self.assertTrue(started.wait(5))
+            with self.assertRaisesRegex(ReadError, '同一请求不能用于不同的行动'):
+                manager.ensure(
+                    {'session_id': 's', 'parent_branch_id': 'p', 'choice_id': 'b'},
+                    {'direction_id': 'b'}, None, foreground=True, request_id='same-request',
+                )
+            self.assertNotIn('request_id', first['binding'])
+            self.assertEqual(first['request_id'], 'same-request')
+        finally:
+            release.set()
+            with manager.condition:
+                manager.condition.wait_for(lambda: first['status'] in ('ready', 'failed', 'expired'), 5)
+            manager.close()
+
     def test_one_disconnected_waiter_does_not_cancel_shared_generation(self):
         before = self.counts()
         release = threading.Event()
@@ -134,9 +163,11 @@ class TurnDraftTests(unittest.TestCase):
                                  text='留在原地观察周围', request_id='shared')
             try:
                 waiters.wait(5)
+                # Draft generation is buffered until commit; release the
+                # shared worker before waiting for the post-commit replay.
+                release.set()
                 with self.assertRaises(ConnectionError):
                     first.result(5)
-                release.set()
                 self.assertEqual(second.result(10)['status'], 'written')
                 self.assertEqual(len(calls), 1)
                 self.assertEqual(self.counts()[0], before[0] + 1)
@@ -144,7 +175,7 @@ class TurnDraftTests(unittest.TestCase):
             finally:
                 release.set()
 
-    def test_failed_revision_retains_complete_unconfirmed_body_without_committing(self):
+    def test_failed_revision_retains_complete_unconfirmed_body_without_displaying_or_committing(self):
         from open_story_engine.llm import LlmError
         before = self.counts()
         retained = '你留在原地。\n\n他回答还不知道。'
@@ -154,13 +185,17 @@ class TurnDraftTests(unittest.TestCase):
             stream('半句')
             error = LlmError('连接中断', 'provider_timeout')
             error.retained_body = retained
+            error.review_attempts = 2
+            error.repair_attempted = True
+            error.failure_stage = 'second_review'
+            error.fallback_mode = 'preserve_previous_branch'
             raise error
         self.play.drafts.generate = generate
         chunks = []
         with self.assertRaises(ReadError):
             self.play.continue_turn(self.sid, self.parent, text='留在原地', request_id='failed-body',
                                     stream=chunks.append, stream_reset=lambda _: chunks.clear())
-        self.assertEqual(''.join(chunks), retained)
+        self.assertEqual(chunks, [])
         self.assertEqual(self.counts(), before)
         self.play.drafts.close()
         restored = TurnDrafts(self.play.drafts.path, generate)
@@ -169,11 +204,17 @@ class TurnDraftTests(unittest.TestCase):
         job = next(j for j in restored.jobs.values() if j['binding'].get('request_id') == 'failed-body')
         self.assertEqual(job['status'], 'failed')
         self.assertEqual(job['retained_draft']['status'], 'unconfirmed')
+        self.assertEqual(job['error']['reviewAttempts'], 2)
+        self.assertTrue(job['error']['repairAttempted'])
+        self.assertEqual(job['error']['failureStage'], 'second_review')
+        self.assertEqual(job['error']['fallbackMode'], 'preserve_previous_branch')
+        self.assertFalse(job['error']['candidateShown'])
+        self.assertTrue(job['error']['previousBranchUnchanged'])
         self.assertNotIn('artifact', job)
         chunks.clear()
         with self.assertRaises(ReadError):
             restored.wait(job, chunks.append, lambda _: chunks.clear())
-        self.assertEqual(''.join(chunks), retained)
+        self.assertEqual(chunks, [])
 
     def setUp(self):
         self.temp = TemporaryDirectory()
@@ -234,6 +275,27 @@ class TurnDraftTests(unittest.TestCase):
     def select(self, choice, request='click'):
         return self.play.continue_turn(self.sid, self.parent, choice_id=choice['id'], draft_id=choice['draft_id'], subscriber_id='reader', request_id=request)
 
+    def test_legacy_fallback_artifacts_cannot_commit_or_replay(self):
+        choices = self.play.prepare_choices(self.sid, self.parent, 'reader')['choices']
+        self.ready(choices)
+        job = self.play.drafts.jobs[choices[0]['draft_id']]
+        original = copy.deepcopy(job['artifact'])
+        before = self.counts()
+        for part in ('node', 'outcome'):
+            for mode in ('conservative_approved', 'candidate_selected_pending_patch'):
+                with self.subTest(part=part, mode=mode):
+                    job['artifact'] = copy.deepcopy(original)
+                    job['artifact'][part]['fallbackMode'] = mode
+                    events = []
+                    with self.assertRaises(ReadError) as caught:
+                        self.play.continue_turn(self.sid, self.parent, choice_id=choices[0]['id'],
+                            draft_id=choices[0]['draft_id'], request_id=part + mode, stream=events.append)
+                    self.assertEqual(caught.exception.code, 'draft_unreviewed')
+                    self.assertEqual(events, [])
+                    self.assertEqual(self.counts(), before)
+        job['artifact'] = original
+        self.assertEqual(self.select(choices[0])['status'], 'written')
+
     def test_ready_unselected_never_writes_and_parallel_clicks_commit_once(self):
         before = self.counts()
         choices = self.play.prepare_choices(self.sid, self.parent, 'reader')['choices']
@@ -273,6 +335,9 @@ class TurnDraftTests(unittest.TestCase):
         )
         self.assertEqual(result['status'], 'written')
         self.assertEqual(''.join(chunks), expected)
+        metrics = self.play.drafts.jobs[choice['draft_id']]['metrics']
+        self.assertIsNotNone(metrics.get('first_visible_text_ms'))
+        self.assertGreaterEqual(metrics['first_visible_text_ms'], metrics.get('complete_ms', 0))
 
     def test_ready_survives_restart_without_a_model_call(self):
         choices = self.play.prepare_choices(self.sid, self.parent, 'reader')['choices']

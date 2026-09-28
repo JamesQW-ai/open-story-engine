@@ -66,7 +66,15 @@ class OfficialOpeningApiTests(unittest.TestCase):
                 catalog = client.get('/api/v1/packages/taixu-relics-part1/0.1.3').json()
                 self.assertTrue(catalog['package']['context_preview']['available'])
                 self.assertEqual(len(catalog['characters']), 7)
-                expected_art = {'陆照临': 'gate-detail-v1', '顾长离': 'trial-detail-v1', '叶观澜': 'gallery-detail-v1'}
+                expected_art = {
+                    '陆照临': 'gate-detail-v1',
+                    '顾长离': 'trial-detail-v1',
+                    '叶观澜': 'gallery-detail-v1',
+                    '沈砚秋': 'opening-shen-register-v1',
+                    '陆沉舟': 'opening-lu-chenzhou-inscription-v1',
+                    '萧问蝉': 'opening-xiao-edict-v1',
+                    '叶青冥': 'opening-ye-qingming-ancestral-v1',
+                }
                 for character in catalog['characters']:
                     entry = next(e for e in catalog['entries'] if e['id'] == character['defaultEntryPointId'])
                     if character['name'] in expected_art:

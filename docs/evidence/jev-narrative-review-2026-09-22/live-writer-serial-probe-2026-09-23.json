@@ -1,0 +1,1095 @@
+{
+  "schemaVersion": "writer-failure-diagnostics/0.1",
+  "status": "completed",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3",
+    "cjk": 102610
+  },
+  "records": [
+    {
+      "label": "observe_and_ask_probe",
+      "action": "我指出伤者仍有呼吸，只询问守门弟子是否能通传执事，听完回应再决定；我留在原地，不移动。",
+      "traceStart": 0,
+      "status": "error",
+      "code": "generation_failed",
+      "error": "这次续写未能完成，请重试或调整行动。",
+      "committed": false,
+      "draft": {
+        "status": "failed",
+        "error": {
+          "code": "generation_failed",
+          "message": "这次续写未能完成，请重试或调整行动。",
+          "status": 503
+        },
+        "metrics": {
+          "first_text_ms": 11216,
+          "ready_hit": false,
+          "selection_count": 1,
+          "ready_hits": 0,
+          "queue_ms": 1,
+          "complete_ms": 105643,
+          "reported_tokens": 109920,
+          "calls": 18,
+          "unreported_calls": 4,
+          "tokens": null
+        },
+        "previousAttempts": 0,
+        "failureAuditKeys": [],
+        "retainedDraft": true
+      },
+      "elapsedMs": 105904,
+      "traceEnd": 18,
+      "providerTrace": [
+        {
+          "mode": "json",
+          "startedAt": 0.417664458,
+          "stageHint": "你是互动小说本回合结果规划器。玩家未读原著，原著未来不是必须发生的事实。\n硬规则：`scenePlan.knowledge` 中每条既有知识的 `status`",
+          "status": "completed",
+          "durationMs": 5818,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 5818,
+                "responseHeadersMs": 563,
+                "completeBodyMs": 5818
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 6.235984375
+        },
+        {
+          "mode": "json",
+          "startedAt": 6.238712208,
+          "stageHint": "你只审核玩家行动授权，不写小说，不补剧情。独立读取原始输入及上一段已经发生的正文，规划器的解释不构成证据。\n返回JSON {\"decision\":\"allow|",
+          "status": "completed",
+          "durationMs": 4663,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 4663,
+                "responseHeadersMs": 322,
+                "completeBodyMs": 4663
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 10.901574375
+        },
+        {
+          "mode": "sse",
+          "startedAt": 10.912397708,
+          "stageHint": "你是中文互动小说叙事者。玩家称为“你”，限知视角，直接承接上一回合终点，完成本回合授权行动。依scenePlan的起点、过程、结果与停止点组织正文，不把前情当新",
+          "status": "completed",
+          "durationMs": 2677,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": true,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "sse",
+                "httpStatus": 200,
+                "durationMs": 2677,
+                "responseHeadersMs": 290,
+                "completeBodyMs": 2677
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 13.58948275
+        },
+        {
+          "mode": "json",
+          "startedAt": 13.642651083,
+          "stageHint": "你是小说事实提取器，不评价作者意图。只阅读前文、当前事实及新正文，不知道玩家想要什么。\n对每一个段落提取事实，返回JSON {\"events\":[{\"id\":\"",
+          "status": "completed",
+          "durationMs": 3517,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 3517,
+                "responseHeadersMs": 394,
+                "completeBodyMs": 3517
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 17.159743791
+        },
+        {
+          "mode": "json",
+          "startedAt": 17.164979541,
+          "stageHint": "审查本回合是否逐项兑现玩家行动及限制。返回JSON：{\"issues\":[],\"actions\":[{\"id\":\"A1\",\"status\":\"performed",
+          "status": "completed",
+          "durationMs": 6540,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 6539,
+                "responseHeadersMs": 718,
+                "completeBodyMs": 6539
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 23.704511583
+        },
+        {
+          "mode": "json",
+          "startedAt": 23.704643708,
+          "stageHint": "你独立核对互动小说的原始行动范围与背景依据。输入 requirements 是程序从玩家原话拆出的全部条款，draft 是完整正文，paragraphs 是程序",
+          "status": "completed",
+          "durationMs": 15285,
+          "usedTransportFallback": true,
+          "bodyWasStreamed": true,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "durationMs": 15285,
+                "responseHeadersMs": 334
+              }
+            },
+            {
+              "attempt": 2,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": "json_transport_fallback",
+              "transport": {
+                "responseMode": "sse",
+                "httpStatus": 200,
+                "durationMs": 7949,
+                "responseHeadersMs": 364,
+                "completeBodyMs": 7948
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 38.989326541
+        },
+        {
+          "mode": "json",
+          "startedAt": 39.035615208,
+          "stageHint": "你只核对用户原话中的范围，不审查背景、状态、字数或文学性。每条要求扫描完整正文，尤其是“只、仅、不、暂、再决定”限定。对每条先找反证，再找满足的证据。“做过要求",
+          "status": "completed",
+          "durationMs": 1558,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 1558,
+                "responseHeadersMs": 302,
+                "completeBodyMs": 1558
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 40.593818416
+        },
+        {
+          "mode": "json",
+          "startedAt": 40.597396541,
+          "stageHint": "玩家角色是陆照临。正文全程以第二人称“你”指代这个角色，NPC 使用名字或他/她。严禁“你是某某，你是一个……”的身份说明，直接从感官、动作、对话切入，不必句句",
+          "status": "completed",
+          "durationMs": 1386,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 1385,
+                "responseHeadersMs": 345,
+                "completeBodyMs": 1385
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 41.982910333
+        },
+        {
+          "mode": "json",
+          "startedAt": 41.985921791,
+          "stageHint": "你是小说事实提取器，不评价作者意图。只阅读前文、当前事实及新正文，不知道玩家想要什么。\n对每一个段落提取事实，返回JSON {\"events\":[{\"id\":\"",
+          "status": "completed",
+          "durationMs": 3138,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 3138,
+                "responseHeadersMs": 406,
+                "completeBodyMs": 3137
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 45.123551791
+        },
+        {
+          "mode": "json",
+          "startedAt": 45.127008916,
+          "stageHint": "审查本回合是否逐项兑现玩家行动及限制。返回JSON：{\"issues\":[],\"actions\":[{\"id\":\"A1\",\"status\":\"performed",
+          "status": "completed",
+          "durationMs": 14004,
+          "usedTransportFallback": true,
+          "bodyWasStreamed": true,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "durationMs": 14004,
+                "responseHeadersMs": 715
+              }
+            },
+            {
+              "attempt": 2,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": "json_transport_fallback",
+              "transport": {
+                "responseMode": "sse",
+                "httpStatus": 200,
+                "durationMs": 6970,
+                "responseHeadersMs": 431,
+                "completeBodyMs": 6969
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 59.130653791
+        },
+        {
+          "mode": "json",
+          "startedAt": 59.150876666,
+          "stageHint": "你独立核对互动小说的原始行动范围与背景依据。输入 requirements 是程序从玩家原话拆出的全部条款，draft 是完整正文，paragraphs 是程序",
+          "status": "completed",
+          "durationMs": 15407,
+          "usedTransportFallback": true,
+          "bodyWasStreamed": true,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "durationMs": 15407,
+                "responseHeadersMs": 451
+              }
+            },
+            {
+              "attempt": 2,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": "json_transport_fallback",
+              "transport": {
+                "responseMode": "sse",
+                "httpStatus": 200,
+                "durationMs": 7954,
+                "responseHeadersMs": 417,
+                "completeBodyMs": 7953
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 74.558196291
+        },
+        {
+          "mode": "json",
+          "startedAt": 74.581988375,
+          "stageHint": "你只核对用户原话中的范围，不审查背景、状态、字数或文学性。每条要求扫描完整正文，尤其是“只、仅、不、暂、再决定”限定。对每条先找反证，再找满足的证据。“做过要求",
+          "status": "completed",
+          "durationMs": 1603,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 1603,
+                "responseHeadersMs": 276,
+                "completeBodyMs": 1603
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 76.185381916
+        },
+        {
+          "mode": "json",
+          "startedAt": 76.18703425,
+          "stageHint": "玩家角色是陆照临。正文全程以第二人称“你”指代这个角色，NPC 使用名字或他/她。严禁“你是某某，你是一个……”的身份说明，直接从感官、动作、对话切入，不必句句",
+          "status": "completed",
+          "durationMs": 1616,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 1616,
+                "responseHeadersMs": 328,
+                "completeBodyMs": 1616
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 77.803273083
+        },
+        {
+          "mode": "sse",
+          "startedAt": 77.812301708,
+          "stageHint": "你是中文互动小说叙事者。玩家称为“你”，限知视角，直接承接上一回合终点，完成本回合授权行动。依scenePlan的起点、过程、结果与停止点组织正文，不把前情当新",
+          "status": "completed",
+          "durationMs": 2729,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": true,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "sse",
+                "httpStatus": 200,
+                "durationMs": 2729,
+                "responseHeadersMs": 386,
+                "completeBodyMs": 2729
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 80.541809333
+        },
+        {
+          "mode": "json",
+          "startedAt": 80.546464583,
+          "stageHint": "你是小说事实提取器，不评价作者意图。只阅读前文、当前事实及新正文，不知道玩家想要什么。\n对每一个段落提取事实，返回JSON {\"events\":[{\"id\":\"",
+          "status": "completed",
+          "durationMs": 3021,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 3021,
+                "responseHeadersMs": 327,
+                "completeBodyMs": 3021
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 83.567779916
+        },
+        {
+          "mode": "json",
+          "startedAt": 83.571116458,
+          "stageHint": "审查本回合是否逐项兑现玩家行动及限制。返回JSON：{\"issues\":[],\"actions\":[{\"id\":\"A1\",\"status\":\"performed",
+          "status": "completed",
+          "durationMs": 5916,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 5916,
+                "responseHeadersMs": 518,
+                "completeBodyMs": 5916
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 89.4872905
+        },
+        {
+          "mode": "json",
+          "startedAt": 89.487414875,
+          "stageHint": "你独立核对互动小说的原始行动范围与背景依据。输入 requirements 是程序从玩家原话拆出的全部条款，draft 是完整正文，paragraphs 是程序",
+          "status": "completed",
+          "durationMs": 15106,
+          "usedTransportFallback": true,
+          "bodyWasStreamed": true,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "failed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "durationMs": 15106,
+                "responseHeadersMs": 530
+              }
+            },
+            {
+              "attempt": 2,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": "json_transport_fallback",
+              "transport": {
+                "responseMode": "sse",
+                "httpStatus": 200,
+                "durationMs": 7681,
+                "responseHeadersMs": 316,
+                "completeBodyMs": 7679
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 104.593585666
+        },
+        {
+          "mode": "json",
+          "startedAt": 104.615210833,
+          "stageHint": "你只核对用户原话中的范围，不审查背景、状态、字数或文学性。每条要求扫描完整正文，尤其是“只、仅、不、暂、再决定”限定。对每条先找反证，再找满足的证据。“做过要求",
+          "status": "completed",
+          "durationMs": 1339,
+          "usedTransportFallback": false,
+          "bodyWasStreamed": false,
+          "observations": [
+            {
+              "attempt": 1,
+              "outcome": "completed",
+              "failureKind": null,
+              "retryReason": null,
+              "transport": {
+                "responseMode": "json",
+                "httpStatus": 200,
+                "durationMs": 1338,
+                "responseHeadersMs": 313,
+                "completeBodyMs": 1338
+              }
+            }
+          ],
+          "contentEmpty": false,
+          "finishedAt": 105.9537275
+        }
+      ],
+      "generationErrors": [
+        {
+          "type": "LlmError",
+          "code": "model_output_rejected",
+          "message": "场景审查未通过：P5：“我该不该为这事去传，我也做不了主”隐含宗门有关于是否为未入门者通传执事的规矩或权限限制，公开来源中无此规则或该NPC获知途径，属无依据背景。；P6：“我只能守在这里”隐含守门弟子职责范围禁止离开岗位去通传或放行的规则，公开来源中无此规则或该NPC获知途径，属无依据背景。；P5：“我该不该为这事去传，我也做不了主”隐含宗门有关于是否为未入门者通传执事的规矩或权限限制，公开来源中无此规则或该NPC获知途径，属无依据背景。；P6：“我只能守在这里”隐含守门弟子职责范围禁止离开岗位去通传或放行的规则，公开来源中无此规则或该NPC获知途径，属无依据背景。",
+          "observations": [],
+          "draftUsage": {
+            "reported_tokens": 109920,
+            "calls": 18,
+            "unreported_calls": 4
+          },
+          "draftAuditsCount": 1,
+          "retainedBody": true
+        }
+      ]
+    }
+  ],
+  "providerCalls": 22,
+  "writerModel": "deepseek-v4-flash",
+  "providerTrace": [
+    {
+      "mode": "json",
+      "startedAt": 0.417664458,
+      "stageHint": "你是互动小说本回合结果规划器。玩家未读原著，原著未来不是必须发生的事实。\n硬规则：`scenePlan.knowledge` 中每条既有知识的 `status`",
+      "status": "completed",
+      "durationMs": 5818,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 5818,
+            "responseHeadersMs": 563,
+            "completeBodyMs": 5818
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 6.235984375
+    },
+    {
+      "mode": "json",
+      "startedAt": 6.238712208,
+      "stageHint": "你只审核玩家行动授权，不写小说，不补剧情。独立读取原始输入及上一段已经发生的正文，规划器的解释不构成证据。\n返回JSON {\"decision\":\"allow|",
+      "status": "completed",
+      "durationMs": 4663,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 4663,
+            "responseHeadersMs": 322,
+            "completeBodyMs": 4663
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 10.901574375
+    },
+    {
+      "mode": "sse",
+      "startedAt": 10.912397708,
+      "stageHint": "你是中文互动小说叙事者。玩家称为“你”，限知视角，直接承接上一回合终点，完成本回合授权行动。依scenePlan的起点、过程、结果与停止点组织正文，不把前情当新",
+      "status": "completed",
+      "durationMs": 2677,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": true,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 2677,
+            "responseHeadersMs": 290,
+            "completeBodyMs": 2677
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 13.58948275
+    },
+    {
+      "mode": "json",
+      "startedAt": 13.642651083,
+      "stageHint": "你是小说事实提取器，不评价作者意图。只阅读前文、当前事实及新正文，不知道玩家想要什么。\n对每一个段落提取事实，返回JSON {\"events\":[{\"id\":\"",
+      "status": "completed",
+      "durationMs": 3517,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 3517,
+            "responseHeadersMs": 394,
+            "completeBodyMs": 3517
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 17.159743791
+    },
+    {
+      "mode": "json",
+      "startedAt": 17.164979541,
+      "stageHint": "审查本回合是否逐项兑现玩家行动及限制。返回JSON：{\"issues\":[],\"actions\":[{\"id\":\"A1\",\"status\":\"performed",
+      "status": "completed",
+      "durationMs": 6540,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 6539,
+            "responseHeadersMs": 718,
+            "completeBodyMs": 6539
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 23.704511583
+    },
+    {
+      "mode": "json",
+      "startedAt": 23.704643708,
+      "stageHint": "你独立核对互动小说的原始行动范围与背景依据。输入 requirements 是程序从玩家原话拆出的全部条款，draft 是完整正文，paragraphs 是程序",
+      "status": "completed",
+      "durationMs": 15285,
+      "usedTransportFallback": true,
+      "bodyWasStreamed": true,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "durationMs": 15285,
+            "responseHeadersMs": 334
+          }
+        },
+        {
+          "attempt": 2,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": "json_transport_fallback",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 7949,
+            "responseHeadersMs": 364,
+            "completeBodyMs": 7948
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 38.989326541
+    },
+    {
+      "mode": "json",
+      "startedAt": 39.035615208,
+      "stageHint": "你只核对用户原话中的范围，不审查背景、状态、字数或文学性。每条要求扫描完整正文，尤其是“只、仅、不、暂、再决定”限定。对每条先找反证，再找满足的证据。“做过要求",
+      "status": "completed",
+      "durationMs": 1558,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 1558,
+            "responseHeadersMs": 302,
+            "completeBodyMs": 1558
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 40.593818416
+    },
+    {
+      "mode": "json",
+      "startedAt": 40.597396541,
+      "stageHint": "玩家角色是陆照临。正文全程以第二人称“你”指代这个角色，NPC 使用名字或他/她。严禁“你是某某，你是一个……”的身份说明，直接从感官、动作、对话切入，不必句句",
+      "status": "completed",
+      "durationMs": 1386,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 1385,
+            "responseHeadersMs": 345,
+            "completeBodyMs": 1385
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 41.982910333
+    },
+    {
+      "mode": "json",
+      "startedAt": 41.985921791,
+      "stageHint": "你是小说事实提取器，不评价作者意图。只阅读前文、当前事实及新正文，不知道玩家想要什么。\n对每一个段落提取事实，返回JSON {\"events\":[{\"id\":\"",
+      "status": "completed",
+      "durationMs": 3138,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 3138,
+            "responseHeadersMs": 406,
+            "completeBodyMs": 3137
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 45.123551791
+    },
+    {
+      "mode": "json",
+      "startedAt": 45.127008916,
+      "stageHint": "审查本回合是否逐项兑现玩家行动及限制。返回JSON：{\"issues\":[],\"actions\":[{\"id\":\"A1\",\"status\":\"performed",
+      "status": "completed",
+      "durationMs": 14004,
+      "usedTransportFallback": true,
+      "bodyWasStreamed": true,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "durationMs": 14004,
+            "responseHeadersMs": 715
+          }
+        },
+        {
+          "attempt": 2,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": "json_transport_fallback",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 6970,
+            "responseHeadersMs": 431,
+            "completeBodyMs": 6969
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 59.130653791
+    },
+    {
+      "mode": "json",
+      "startedAt": 59.150876666,
+      "stageHint": "你独立核对互动小说的原始行动范围与背景依据。输入 requirements 是程序从玩家原话拆出的全部条款，draft 是完整正文，paragraphs 是程序",
+      "status": "completed",
+      "durationMs": 15407,
+      "usedTransportFallback": true,
+      "bodyWasStreamed": true,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "durationMs": 15407,
+            "responseHeadersMs": 451
+          }
+        },
+        {
+          "attempt": 2,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": "json_transport_fallback",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 7954,
+            "responseHeadersMs": 417,
+            "completeBodyMs": 7953
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 74.558196291
+    },
+    {
+      "mode": "json",
+      "startedAt": 74.581988375,
+      "stageHint": "你只核对用户原话中的范围，不审查背景、状态、字数或文学性。每条要求扫描完整正文，尤其是“只、仅、不、暂、再决定”限定。对每条先找反证，再找满足的证据。“做过要求",
+      "status": "completed",
+      "durationMs": 1603,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 1603,
+            "responseHeadersMs": 276,
+            "completeBodyMs": 1603
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 76.185381916
+    },
+    {
+      "mode": "json",
+      "startedAt": 76.18703425,
+      "stageHint": "玩家角色是陆照临。正文全程以第二人称“你”指代这个角色，NPC 使用名字或他/她。严禁“你是某某，你是一个……”的身份说明，直接从感官、动作、对话切入，不必句句",
+      "status": "completed",
+      "durationMs": 1616,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 1616,
+            "responseHeadersMs": 328,
+            "completeBodyMs": 1616
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 77.803273083
+    },
+    {
+      "mode": "sse",
+      "startedAt": 77.812301708,
+      "stageHint": "你是中文互动小说叙事者。玩家称为“你”，限知视角，直接承接上一回合终点，完成本回合授权行动。依scenePlan的起点、过程、结果与停止点组织正文，不把前情当新",
+      "status": "completed",
+      "durationMs": 2729,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": true,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 2729,
+            "responseHeadersMs": 386,
+            "completeBodyMs": 2729
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 80.541809333
+    },
+    {
+      "mode": "json",
+      "startedAt": 80.546464583,
+      "stageHint": "你是小说事实提取器，不评价作者意图。只阅读前文、当前事实及新正文，不知道玩家想要什么。\n对每一个段落提取事实，返回JSON {\"events\":[{\"id\":\"",
+      "status": "completed",
+      "durationMs": 3021,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 3021,
+            "responseHeadersMs": 327,
+            "completeBodyMs": 3021
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 83.567779916
+    },
+    {
+      "mode": "json",
+      "startedAt": 83.571116458,
+      "stageHint": "审查本回合是否逐项兑现玩家行动及限制。返回JSON：{\"issues\":[],\"actions\":[{\"id\":\"A1\",\"status\":\"performed",
+      "status": "completed",
+      "durationMs": 5916,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 5916,
+            "responseHeadersMs": 518,
+            "completeBodyMs": 5916
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 89.4872905
+    },
+    {
+      "mode": "json",
+      "startedAt": 89.487414875,
+      "stageHint": "你独立核对互动小说的原始行动范围与背景依据。输入 requirements 是程序从玩家原话拆出的全部条款，draft 是完整正文，paragraphs 是程序",
+      "status": "completed",
+      "durationMs": 15106,
+      "usedTransportFallback": true,
+      "bodyWasStreamed": true,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "durationMs": 15106,
+            "responseHeadersMs": 530
+          }
+        },
+        {
+          "attempt": 2,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": "json_transport_fallback",
+          "transport": {
+            "responseMode": "sse",
+            "httpStatus": 200,
+            "durationMs": 7681,
+            "responseHeadersMs": 316,
+            "completeBodyMs": 7679
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 104.593585666
+    },
+    {
+      "mode": "json",
+      "startedAt": 104.615210833,
+      "stageHint": "你只核对用户原话中的范围，不审查背景、状态、字数或文学性。每条要求扫描完整正文，尤其是“只、仅、不、暂、再决定”限定。对每条先找反证，再找满足的证据。“做过要求",
+      "status": "completed",
+      "durationMs": 1339,
+      "usedTransportFallback": false,
+      "bodyWasStreamed": false,
+      "observations": [
+        {
+          "attempt": 1,
+          "outcome": "completed",
+          "failureKind": null,
+          "retryReason": null,
+          "transport": {
+            "responseMode": "json",
+            "httpStatus": 200,
+            "durationMs": 1338,
+            "responseHeadersMs": 313,
+            "completeBodyMs": 1338
+          }
+        }
+      ],
+      "contentEmpty": false,
+      "finishedAt": 105.9537275
+    }
+  ],
+  "workersStopped": true,
+  "limitations": [
+    "仅记录 provider 传输阶段的类型化信息，不保存提示词、密钥或完整原始响应。",
+    "这是隔离诊断，不改动生产代码或正式存档。"
+  ]
+}

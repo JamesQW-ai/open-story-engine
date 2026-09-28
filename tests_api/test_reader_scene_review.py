@@ -47,12 +47,13 @@ class SceneReviewTests(unittest.TestCase):
         body = '他说：“我不知道来处。我没去过后坡。”\n\n你没有追问。'
         claims = grounding_claims(body)
         self.assertEqual(''.join(c['claim'] for c in claims.values()), body.replace('\n\n', ''))
-        self.assertEqual(set(claims), {'P1-C1', 'P1-C2', 'P2-C1'})
-        data = {'checks': [dict(id='P1-C1', kind='unknown', verdict='supported', sources=[], reason='只承认不知道'),
+        self.assertEqual(set(claims), {'P1-C1', 'P1-C2', 'P1-C3', 'P2-C1'})
+        data = {'checks': [dict(id='P1-C1', kind='current', verdict='supported', sources=[], reason='说话动作'),
+                           dict(id='P1-C2', kind='unknown', verdict='supported', sources=[], reason='只承认不知道'),
                            dict(id='P2-C1', kind='current', verdict='supported', sources=[], reason='没有追问')]}
         with self.assertRaisesRegex(ValueError, '遗漏'):
             validate_grounding(data, claims, evidence={})
-        data['checks'].append(dict(id='P1-C2', kind='background', verdict='supported', sources=[], reason='声称从未进后坡'))
+        data['checks'].append(dict(id='P1-C3', kind='background', verdict='supported', sources=[], reason='声称从未进后坡'))
         with self.assertRaises(SceneGroundingError) as error:
             validate_grounding(data, claims, evidence={})
         self.assertIn('没去过', error.exception.violations[0]['claim'])
@@ -67,6 +68,44 @@ class SceneReviewTests(unittest.TestCase):
             data['checks'][0]['sources'] = [bad]
             with self.assertRaisesRegex(ValueError, '公开资料'):
                 validate_grounding(data, claims, evidence={'opening-1': '日落前回来，不得越界。'})
+
+    def test_boundary_relation_cannot_be_composed_from_separate_sources(self):
+        body = '后坡药圃在白线以内。'
+        claims = grounding_claims(body)
+        data = {'checks': [dict(id='P1-C1', kind='background', verdict='supported',
+                                sources=[dict(id='opening-1', quote='后坡药圃沿石径可见。'),
+                                         dict(id='opening-2', quote='越过白线取消资格。')],
+                                reason='分别提到地点和边界') ]}
+        with self.assertRaises(SceneGroundingError) as error:
+            validate_grounding(data, claims, evidence={
+                'opening-1': '后坡药圃沿石径可见。',
+                'opening-2': '越过白线取消资格。',
+            })
+        self.assertIn('同一条公开来源', error.exception.violations[0]['reason'])
+        data['checks'][0]['sources'] = [dict(id='opening-3', quote='后坡药圃在白线以内。')]
+        validate_grounding(data, claims, evidence={'opening-3': '后坡药圃在白线以内。'})
+
+    def test_rule_conclusion_cannot_use_unrelated_background_source(self):
+        body = '带着木牌去后坡不碍规矩。'
+        claims = grounding_claims(body)
+        data = {'checks': [dict(id='P1-C1', kind='background', verdict='supported',
+                                sources=[dict(id='opening-1', quote='你和陆照临第一次互通姓名。')],
+                                reason='规则结论') ]}
+        with self.assertRaises(SceneGroundingError) as error:
+            validate_grounding(data, claims, evidence={'opening-1': '你和陆照临第一次互通姓名。'})
+        self.assertIn('规矩或资格结论', error.exception.violations[0]['reason'])
+        data['checks'][0]['sources'] = [dict(id='opening-2', quote='带着木牌进入试炼不算违规。')]
+        validate_grounding(data, claims, evidence={'opening-2': '带着木牌进入试炼不算违规。'})
+
+    def test_concrete_material_detail_requires_public_source(self):
+        body = '金屑隔着薄纸几乎感觉不到分量。'
+        claims = grounding_claims(body)
+        data = {'checks': [dict(id='P1-C1', kind='current', verdict='supported', sources=[], reason='当场观察')]}
+        with self.assertRaises(SceneGroundingError) as error:
+            validate_grounding(data, claims, evidence={})
+        self.assertIn('具体物理或感官细节', error.exception.violations[0]['reason'])
+        data['checks'][0]['sources'] = [dict(id='opening-1', quote='纸片很薄，几乎没有分量。')]
+        validate_grounding(data, claims, evidence={'opening-1': '纸片很薄，几乎没有分量。'})
 
     def test_bad_source_reference_cannot_mask_another_semantic_rejection(self):
         from tests_api.test_reader_consequences import grounded
@@ -166,10 +205,13 @@ class SceneReviewTests(unittest.TestCase):
         self.assertEqual([v['paragraphId'] for v in error.exception.violations], ['P1'])
         self.assertIn('无效段号仍拒绝', str(error.exception))
 
-    def test_only_public_selected_lineage_and_whole_paragraphs_are_sources(self):
+    def test_public_evidence_uses_selected_committed_summaries_not_raw_prose_or_intent(self):
         context = {'contract': {'openingContext': {'knownFacts': ['你已刮出金屑。'], 'unknownBoundaries': ['秘密来历'], 'evidence': ['未来秘密']}},
-                   'lineage': [{'id': 'old', 'narrativeText': '旧资料'}, {'id': 'a', 'narrativeText': '你已拿着纸包。'},
-                               {'id': 'b', 'narrativeText': '他说不清来历。'}, {'id': 'c', 'narrativeText': '长' * 9100 + '\n\n你等着。'}]}
+                   'lineage': [{'id': 'old', 'summary': '旧资料'},
+                               {'id': 'a', 'summary': '你已拿着纸包。', 'narrativeText': '未确认的描写。'},
+                               {'id': 'b', 'readerOutcome': {'action': {'summary': '他说不清来历。'}}},
+                               {'id': 'c', 'summary': '你等着。', 'playerDirection': '强行过线。',
+                                'narrativeText': '长' * 9100 + '\n\n尚未登记的台词。'}]}
         evidence = public_scene_evidence(context)
         self.assertEqual(set(evidence.values()), {'你已刮出金屑。', '你已拿着纸包。', '他说不清来历。', '你等着。'})
         self.assertNotIn('秘密', str(evidence))
@@ -271,7 +313,7 @@ class SceneReviewTests(unittest.TestCase):
         checks = validate_scene_review({'sceneChecks': [dict(paragraphId='P1', playerDecision='none', background='supported', sources=refs)]}, body, {'F1': refs[0]['quote']})
         claims = grounding_claims(body)
         self.assertEqual(''.join(c['claim'] for c in claims.values()), body)
-        self.assertEqual(set(claims), {'P1-C1', 'P1-C2'})
+        self.assertEqual(set(claims), {'P1-C1', 'P1-C2', 'P1-C3'})
 
     def test_independent_review_covers_paragraphs_first_review_calls_none(self):
         body = '你看着他。\n\n他说这里没有试金石。'

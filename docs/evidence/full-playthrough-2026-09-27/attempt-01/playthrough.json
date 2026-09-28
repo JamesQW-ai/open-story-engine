@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "public-api-playthrough/1",
+  "status": "failed",
+  "operations": [
+    {
+      "number": 0,
+      "path": "/sessions/stream",
+      "payload": {
+        "package": {
+          "package_id": "taixu-relics-part1",
+          "version": "0.1.3"
+        },
+        "entry_point_id": "entry_lu_gate",
+        "source_character_id": "character_ae4cb42b9b49",
+        "identity_opening": true,
+        "request_id": "playthrough-a9ababbca8ed4d13acb8bf81babaab7a"
+      },
+      "status": "written",
+      "httpStatus": 200,
+      "branchId": "branch_cbe20d98-16a6-431b-9657-606a0f9b713a",
+      "prose": "雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。\n\n眼前就有一盏灯。它没有点燃，被倒在雨里的陌生人抓在手边。石阶曾透出三息青白光，如今封山石上新裂的水痕仍在。守门弟子按住剑柄，不许你靠近。\n\n你已经请他们叫执事来，得到的却是质问。伤者喉间涌出血沫，半句话断在雨声里。山门上的铁链又响了；你还没有跨过封山线，也没有接过那盏灯。门一旦合拢，人和线索都会留在外面。",
+      "elapsedMs": 208
+    },
+    {
+      "number": 1,
+      "path": "/sessions/63734c8a-22cb-5d5e-8c10-554ce9be3ba5/branches/stream",
+      "payload": {
+        "parent_branch_id": "branch_cbe20d98-16a6-431b-9657-606a0f9b713a",
+        "text": "请守门弟子救人。指出伤者尚有呼吸，争取在落锁前让他得到救助。",
+        "request_id": "playthrough-0489ce0e9abd470482a8207f2e4ec5b8"
+      },
+      "status": "failed",
+      "httpStatus": 200,
+      "errorType": "RuntimeError",
+      "error": "{\"code\": \"generation_failed\", \"status\": 503, \"message\": \"这次续写未能完成，请重试或调整行动。\", \"retryable\": true, \"candidateShown\": false, \"previousBranchUnchanged\": true, \"reviewAttempts\": 2, \"repairAttempted\": true, \"failureStage\": \"second_review\", \"fallbackMode\": \"preserve_previous_branch\"}",
+      "elapsedMs": 50195
+    }
+  ],
+  "acceptance": "pending",
+  "userVisibleFailures": 1,
+  "replayIsLiveGeneration": false,
+  "sessionId": "63734c8a-22cb-5d5e-8c10-554ce9be3ba5",
+  "branchId": "branch_cbe20d98-16a6-431b-9657-606a0f9b713a"
+}

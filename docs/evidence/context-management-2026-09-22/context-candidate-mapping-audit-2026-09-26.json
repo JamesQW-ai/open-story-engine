@@ -1,0 +1,265 @@
+{
+  "schemaVersion": "context-candidate-mapping-audit/0.1",
+  "recordedAt": "2026-09-26T09:26:13.799196+00:00",
+  "sourceArtifact": "docs/evidence/context-management-2026-09-22/context-candidate-mapping-2026-09-26.json",
+  "sourceSha256": "5eacff97a4b4bb4b40e8a407b10b681a18b0b215955b12158d12477119e55a15",
+  "allStatusesReproduced": true,
+  "inputsBlindToGoldAndSource": true,
+  "rawModels": [
+    "deepseek-flash"
+  ],
+  "finishReasons": [
+    "stop"
+  ],
+  "requestMedianMs": 882.5,
+  "usage": {
+    "input": 5701,
+    "output": 795
+  },
+  "originalCalls": 10,
+  "newModelCalls": 0,
+  "cases": [
+    {
+      "caseId": "position_out",
+      "status": "mapped",
+      "normal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "outside",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "limitations": [],
+      "semanticReview": "与原文及冻结映射一致",
+      "existingReviewedMappingDiagnostic": {
+        "verdict": "supported",
+        "reason": "reviewed_boundary_relation_comparison",
+        "sources": [
+          {
+            "id": "module:currentBeat:beat_chapter_001",
+            "span": {
+              "start": 11,
+              "end": 25,
+              "quote": "陌生伤者与空灯被挡在封山线外"
+            },
+            "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+          }
+        ],
+        "proseAcceptance": false
+      }
+    },
+    {
+      "caseId": "position_in",
+      "status": "mapped",
+      "normal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "inside",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "limitations": [],
+      "semanticReview": "与原文及冻结映射一致",
+      "existingReviewedMappingDiagnostic": {
+        "verdict": "contradicted",
+        "reason": "reviewed_boundary_relation_comparison",
+        "sources": [
+          {
+            "id": "module:currentBeat:beat_chapter_001",
+            "span": {
+              "start": 11,
+              "end": 25,
+              "quote": "陌生伤者与空灯被挡在封山线外"
+            },
+            "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+          }
+        ],
+        "proseAcceptance": false
+      }
+    },
+    {
+      "caseId": "position_not_out",
+      "status": "mapped",
+      "normal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "outside",
+        "polarity": "negative",
+        "time": "snapshot",
+        "condition": null
+      },
+      "limitations": [],
+      "semanticReview": "与原文及冻结映射一致",
+      "existingReviewedMappingDiagnostic": {
+        "verdict": "contradicted",
+        "reason": "reviewed_boundary_relation_comparison",
+        "sources": [
+          {
+            "id": "module:currentBeat:beat_chapter_001",
+            "span": {
+              "start": 11,
+              "end": 25,
+              "quote": "陌生伤者与空灯被挡在封山线外"
+            },
+            "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+          }
+        ],
+        "proseAcceptance": false
+      }
+    },
+    {
+      "caseId": "position_not_in",
+      "status": "mapped",
+      "normal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "inside",
+        "polarity": "negative",
+        "time": "snapshot",
+        "condition": null
+      },
+      "limitations": [],
+      "semanticReview": "与原文及冻结映射一致",
+      "existingReviewedMappingDiagnostic": {
+        "verdict": "supported",
+        "reason": "reviewed_boundary_relation_comparison",
+        "sources": [
+          {
+            "id": "module:currentBeat:beat_chapter_001",
+            "span": {
+              "start": 11,
+              "end": 25,
+              "quote": "陌生伤者与空灯被挡在封山线外"
+            },
+            "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+          }
+        ],
+        "proseAcceptance": false
+      }
+    },
+    {
+      "caseId": "original_C10",
+      "status": "mapped",
+      "normal": {
+        "subject": "scene:wounded_stranger",
+        "relation": "boundary_side",
+        "object": "scene:sealing_line",
+        "value": "inside",
+        "polarity": "positive",
+        "time": "snapshot",
+        "condition": null
+      },
+      "limitations": [],
+      "semanticReview": "与原文及冻结映射一致",
+      "existingReviewedMappingDiagnostic": {
+        "verdict": "contradicted",
+        "reason": "reviewed_boundary_relation_comparison",
+        "sources": [
+          {
+            "id": "module:currentBeat:beat_chapter_001",
+            "span": {
+              "start": 11,
+              "end": 25,
+              "quote": "陌生伤者与空灯被挡在封山线外"
+            },
+            "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+          }
+        ],
+        "proseAcceptance": false
+      }
+    },
+    {
+      "caseId": "past",
+      "status": "abstained",
+      "normal": null,
+      "limitations": [
+        {
+          "kind": "time",
+          "quote": "昨天"
+        }
+      ],
+      "semanticReview": "限定或未解析实体已保留，没有压缩为当前肯定位置"
+    },
+    {
+      "caseId": "condition",
+      "status": "abstained",
+      "normal": null,
+      "limitations": [
+        {
+          "kind": "condition",
+          "quote": "如果守门弟子放行"
+        }
+      ],
+      "semanticReview": "限定或未解析实体已保留，没有压缩为当前肯定位置"
+    },
+    {
+      "caseId": "possible",
+      "status": "abstained",
+      "normal": null,
+      "limitations": [
+        {
+          "kind": "modality",
+          "quote": "可能"
+        }
+      ],
+      "semanticReview": "限定或未解析实体已保留，没有压缩为当前肯定位置"
+    },
+    {
+      "caseId": "unknown_subject",
+      "status": "abstained",
+      "normal": null,
+      "limitations": [
+        {
+          "kind": "unresolved_subject",
+          "quote": "守门弟子"
+        }
+      ],
+      "semanticReview": "限定或未解析实体已保留，没有压缩为当前肯定位置"
+    },
+    {
+      "caseId": "unknown_boundary",
+      "status": "abstained",
+      "normal": null,
+      "limitations": [
+        {
+          "kind": "unresolved_object",
+          "quote": "宗门结界"
+        }
+      ],
+      "semanticReview": "限定或未解析实体已保留，没有压缩为当前肯定位置"
+    }
+  ],
+  "priorEvidenceHashes": {
+    "docs/evidence/context-management-2026-09-22/context-claim-request-diagnostic-2026-09-25.json": "c4ef3636dff6480b7f5c4abf260f60ea5a2817b3aa548cfe4540298c3069e632",
+    "docs/evidence/context-management-2026-09-22/context-claim-rescore-2026-09-26.json": "3105c6082517e1c9a56c1ced4a19d672361f2d6a6cac30dd9c4d5a4381828e1d",
+    "docs/evidence/context-management-2026-09-22/context-claim-pipeline-2026-09-25.json": "5e08b2eb6106860471486a2fe3e9a3601a7385f084dcf833b5e779b061b55200",
+    "docs/evidence/context-management-2026-09-22/context-claim-pipeline-audit-2026-09-25.json": "258341deee3d01a8d009100a0528cfc72ecd37f8bd1fd7ab23cd2b85782b7c2a",
+    "docs/evidence/context-management-2026-09-22/context-claim-pipeline-2026-09-25-v2.json": "c6d5268d386c7921f7d53d801ca8b96c9847e10c966d0640a40da7d41af913bc",
+    "docs/evidence/context-management-2026-09-22/context-indexed-pipeline-2026-09-26.json": "41d60b8168ff8bef78e91d9b62a6f9abf02de3ffba621ad564520652988ea1ba",
+    "docs/evidence/context-management-2026-09-22/context-indexed-audit-2026-09-26.json": "1ffb9c6747d285bc9b0038b517ffdf34f843e148634bbe31574d470c45e13b60",
+    "docs/evidence/context-management-2026-09-22/context-proposition-eval-2026-09-26.json": "fd287a2494b1e8a91df98c8f939db446c7020c132db6e0db5d0242eceeff0fe3"
+  },
+  "summary": {
+    "mapped": 5,
+    "abstained": 5,
+    "mismatched": 0,
+    "invalid_response": 0,
+    "model_error": 0,
+    "harness_error": 0,
+    "not_run": 0
+  },
+  "reviewRecordsWritten": 0,
+  "acceptance": false,
+  "productionEnablement": false,
+  "limitations": [
+    "目标原文范围由程序提供，未测试全稿自动定位和命题覆盖。",
+    "固定开发集、单次运行、Codex 语义复审，不是独立留出集或多人审核。",
+    "已有受审映射的离线关系比较不等于把模型候选写入权威状态。"
+  ]
+}

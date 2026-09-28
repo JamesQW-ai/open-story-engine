@@ -1,0 +1,4171 @@
+{
+  "schemaVersion": "jev-shadow-replay-report/0.1",
+  "status": "shadow_only",
+  "integratedRuntime": false,
+  "model": "~typesafe/jev-latest",
+  "endpoint": "https://openrouter.ai/api/alpha/decisions",
+  "package": {
+    "id": "taixu-relics-part1",
+    "version": "0.1.3",
+    "cjk": 102610
+  },
+  "caseCount": 34,
+  "providerReviewCount": 31,
+  "preflightRejectedCount": 3,
+  "quality": {
+    "derivedCorrect": 34,
+    "derivedAccuracy": 1.0
+  },
+  "latencyMs": {
+    "count": 31,
+    "p50": 1015,
+    "p95": 2276,
+    "max": 6069,
+    "mean": 1432
+  },
+  "records": [
+    {
+      "id": "pass_consistent",
+      "expectedDecision": "allow",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-pass_consistent",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow",
+          "reason": "no_blocking_signal",
+          "reasonCodes": [
+            "allow"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.06,
+                "knowledge_leak": 0.06,
+                "future_fact_leak": 0.12
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.06,
+                "knowledge_leak": 0.06,
+                "future_fact_leak": 0.12,
+                "unsupported_claim": 0.47
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow",
+              "boundedAnomaly": 0.19,
+              "missingPatchSupport": 0.23
+            },
+            "L2": {
+              "decision": "allow",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 96,
+                "agency_scope": 94,
+                "knowledge_boundary": 94,
+                "future_boundary": 88,
+                "grounding": 53,
+                "repair_support": 77,
+                "minimum_observational_score": 53
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow",
+            "probabilities": {
+              "allow": 0.53,
+              "reject": 0.03,
+              "allow_with_patch": 0.32,
+              "rewrite": 0.12
+            },
+            "confidence": 0.37
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.06
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.06
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.12
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.53
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.19
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.23
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1873,
+          "output_tokens": 179,
+          "cost": 7.8666e-05
+        },
+        "durationMs": 981
+      },
+      "wallMs": 981,
+      "generation": null
+    },
+    {
+      "id": "environment_small_hallucination",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-environment_small_hallucination",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "patchHint",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "model_rewrite",
+        "reasonCodes": [
+          "model_rewrite"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "model_rewrite",
+          "reasonCodes": [
+            "model_rewrite"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.1,
+                "agency_violation": 0.36,
+                "knowledge_leak": 0.24,
+                "future_fact_leak": 0.38
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.1,
+                "agency_violation": 0.36,
+                "knowledge_leak": 0.24,
+                "future_fact_leak": 0.38,
+                "unsupported_claim": 0.47
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.67,
+              "missingPatchSupport": 0.45
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 90,
+                "agency_scope": 64,
+                "knowledge_boundary": 76,
+                "future_boundary": 62,
+                "grounding": 53,
+                "repair_support": 55,
+                "minimum_observational_score": 53
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "allow_with_patch": 0.22,
+              "reject": 0.06,
+              "allow": 0.02,
+              "rewrite": 0.7
+            },
+            "confidence": 0.6
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.36
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.24
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.38
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.53
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.67
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.45
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1927,
+          "output_tokens": 179,
+          "cost": 8.0934e-05
+        },
+        "durationMs": 4922
+      },
+      "wallMs": 4922,
+      "generation": null
+    },
+    {
+      "id": "false_death_ambiguous",
+      "expectedDecision": "allow_with_patch",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-false_death_ambiguous",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "patchHint",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow_with_patch",
+          "reason": "bounded_anomaly_or_model_patch",
+          "reasonCodes": [
+            "bounded_anomaly"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.05,
+                "agency_violation": 0.07,
+                "knowledge_leak": 0.07,
+                "future_fact_leak": 0.05
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.05,
+                "agency_violation": 0.07,
+                "knowledge_leak": 0.07,
+                "future_fact_leak": 0.05,
+                "unsupported_claim": 0.06000000000000005
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow_with_patch",
+              "boundedAnomaly": 0.95,
+              "missingPatchSupport": 0.26
+            },
+            "L2": {
+              "decision": "allow_with_patch",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 95,
+                "agency_scope": 93,
+                "knowledge_boundary": 93,
+                "future_boundary": 95,
+                "grounding": 94,
+                "repair_support": 74,
+                "minimum_observational_score": 74
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow_with_patch",
+            "probabilities": {
+              "allow": 0.06,
+              "allow_with_patch": 0.93,
+              "rewrite": 0.01,
+              "reject": 0
+            },
+            "confidence": 0.9
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.07
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.07
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.94
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.95
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.26
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1947,
+          "output_tokens": 181,
+          "cost": 8.1774e-05
+        },
+        "durationMs": 6069
+      },
+      "wallMs": 6070,
+      "generation": null
+    },
+    {
+      "id": "replica_item_ambiguous",
+      "expectedDecision": "allow_with_patch",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-replica_item_ambiguous",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "patchHint",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow_with_patch",
+          "reason": "bounded_anomaly_or_model_patch",
+          "reasonCodes": [
+            "bounded_anomaly"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.13,
+                "knowledge_leak": 0.18,
+                "future_fact_leak": 0.06
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.13,
+                "knowledge_leak": 0.18,
+                "future_fact_leak": 0.06,
+                "unsupported_claim": 0.09999999999999998
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow_with_patch",
+              "boundedAnomaly": 0.84,
+              "missingPatchSupport": 0.3
+            },
+            "L2": {
+              "decision": "allow_with_patch",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 96,
+                "agency_scope": 87,
+                "knowledge_boundary": 82,
+                "future_boundary": 94,
+                "grounding": 90,
+                "repair_support": 70,
+                "minimum_observational_score": 70
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow_with_patch",
+            "probabilities": {
+              "rewrite": 0.03,
+              "reject": 0,
+              "allow_with_patch": 0.89,
+              "allow": 0.08
+            },
+            "confidence": 0.86
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.13
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.18
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.06
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.9
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.84
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.3
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1932,
+          "output_tokens": 181,
+          "cost": 8.1144e-05
+        },
+        "durationMs": 941
+      },
+      "wallMs": 941,
+      "generation": null
+    },
+    {
+      "id": "explicit_death_conflict",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-explicit_death_conflict",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.97,
+                "agency_violation": 0.86,
+                "knowledge_leak": 0.31,
+                "future_fact_leak": 0.43
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.97,
+                "agency_violation": 0.86,
+                "knowledge_leak": 0.31,
+                "future_fact_leak": 0.43,
+                "unsupported_claim": 0.98
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.02,
+              "missingPatchSupport": 0.9
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 3,
+                "agency_scope": 14,
+                "knowledge_boundary": 69,
+                "future_boundary": 57,
+                "grounding": 2,
+                "repair_support": 10,
+                "minimum_observational_score": 2
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "reject": 0.01,
+              "rewrite": 0.99,
+              "allow": 0,
+              "allow_with_patch": 0
+            },
+            "confidence": 0.98
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.97
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.86
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.31
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.43
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.9
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1858,
+          "output_tokens": 179,
+          "cost": 7.8036e-05
+        },
+        "durationMs": 874
+      },
+      "wallMs": 874,
+      "generation": null
+    },
+    {
+      "id": "unique_weapon_restored",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-unique_weapon_restored",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.99,
+                "agency_violation": 0.98,
+                "knowledge_leak": 0.23,
+                "future_fact_leak": 0.31
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.99,
+                "agency_violation": 0.98,
+                "knowledge_leak": 0.23,
+                "future_fact_leak": 0.31,
+                "unsupported_claim": 0.99
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.02,
+              "missingPatchSupport": 0.93
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 1,
+                "agency_scope": 2,
+                "knowledge_boundary": 77,
+                "future_boundary": 69,
+                "grounding": 1,
+                "repair_support": 7,
+                "minimum_observational_score": 1
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "reject": 0.01,
+              "allow": 0,
+              "rewrite": 0.99,
+              "allow_with_patch": 0
+            },
+            "confidence": 0.98
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.99
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.98
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.23
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.31
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.01
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.93
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1852,
+          "output_tokens": 179,
+          "cost": 7.7784e-05
+        },
+        "durationMs": 943
+      },
+      "wallMs": 943,
+      "generation": null
+    },
+    {
+      "id": "unauthorized_agency",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-unauthorized_agency",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation",
+          "future_fact_leak"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation",
+            "future_fact_leak"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.91,
+                "agency_violation": 0.99,
+                "knowledge_leak": 0.21,
+                "future_fact_leak": 0.83
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.91,
+                "agency_violation": 0.99,
+                "knowledge_leak": 0.21,
+                "future_fact_leak": 0.83,
+                "unsupported_claim": 0.99
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.02,
+              "missingPatchSupport": 0.89
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 9,
+                "agency_scope": 1,
+                "knowledge_boundary": 79,
+                "future_boundary": 17,
+                "grounding": 1,
+                "repair_support": 11,
+                "minimum_observational_score": 1
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "rewrite": 1,
+              "reject": 0,
+              "allow_with_patch": 0,
+              "allow": 0
+            },
+            "confidence": 1
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.91
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.99
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.21
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.83
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.01
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.89
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1846,
+          "output_tokens": 179,
+          "cost": 7.7532e-05
+        },
+        "durationMs": 1170
+      },
+      "wallMs": 1170,
+      "generation": null
+    },
+    {
+      "id": "knowledge_leak",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-knowledge_leak",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation",
+          "knowledge_leak",
+          "future_fact_leak"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation",
+            "knowledge_leak",
+            "future_fact_leak"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.88,
+                "agency_violation": 0.73,
+                "knowledge_leak": 0.98,
+                "future_fact_leak": 0.91
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.88,
+                "agency_violation": 0.73,
+                "knowledge_leak": 0.98,
+                "future_fact_leak": 0.91,
+                "unsupported_claim": 0.98
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.05,
+              "missingPatchSupport": 0.87
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 12,
+                "agency_scope": 27,
+                "knowledge_boundary": 2,
+                "future_boundary": 9,
+                "grounding": 2,
+                "repair_support": 13,
+                "minimum_observational_score": 2
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "allow": 0,
+              "allow_with_patch": 0,
+              "reject": 0,
+              "rewrite": 1
+            },
+            "confidence": 0.99
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.88
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.73
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.98
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.91
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.87
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1867,
+          "output_tokens": 179,
+          "cost": 7.8414e-05
+        },
+        "durationMs": 1224
+      },
+      "wallMs": 1224,
+      "generation": null
+    },
+    {
+      "id": "future_beat_leak",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-future_beat_leak",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "knowledge_leak",
+          "future_fact_leak"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "knowledge_leak",
+            "future_fact_leak"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.8,
+                "agency_violation": 0.57,
+                "knowledge_leak": 0.89,
+                "future_fact_leak": 0.99
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.8,
+                "agency_violation": 0.57,
+                "knowledge_leak": 0.89,
+                "future_fact_leak": 0.99,
+                "unsupported_claim": 0.98
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.03,
+              "missingPatchSupport": 0.75
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 20,
+                "agency_scope": 43,
+                "knowledge_boundary": 11,
+                "future_boundary": 1,
+                "grounding": 2,
+                "repair_support": 25,
+                "minimum_observational_score": 1
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "rewrite": 1,
+              "allow": 0,
+              "reject": 0,
+              "allow_with_patch": 0
+            },
+            "confidence": 1
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.8
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.57
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.89
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.99
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.03
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.75
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1874,
+          "output_tokens": 179,
+          "cost": 7.8708e-05
+        },
+        "durationMs": 1015
+      },
+      "wallMs": 1015,
+      "generation": null
+    },
+    {
+      "id": "unsupported_explanation",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-unsupported_explanation",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "agency_violation",
+          "future_fact_leak"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "agency_violation",
+            "future_fact_leak"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.54,
+                "agency_violation": 0.74,
+                "knowledge_leak": 0.61,
+                "future_fact_leak": 0.77
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.54,
+                "agency_violation": 0.74,
+                "knowledge_leak": 0.61,
+                "future_fact_leak": 0.77,
+                "unsupported_claim": 0.97
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.03,
+              "missingPatchSupport": 0.96
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 46,
+                "agency_scope": 26,
+                "knowledge_boundary": 39,
+                "future_boundary": 23,
+                "grounding": 3,
+                "repair_support": 4,
+                "minimum_observational_score": 3
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "reject": 0,
+              "rewrite": 1,
+              "allow": 0,
+              "allow_with_patch": 0
+            },
+            "confidence": 1
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.54
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.74
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.61
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.77
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.03
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.03
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.96
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1875,
+          "output_tokens": 179,
+          "cost": 7.875e-05
+        },
+        "durationMs": 909
+      },
+      "wallMs": 909,
+      "generation": null
+    },
+    {
+      "id": "mixed_repair_and_fatal",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-mixed_repair_and_fatal",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.87,
+                "agency_violation": 0.98,
+                "knowledge_leak": 0.23,
+                "future_fact_leak": 0.53
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.87,
+                "agency_violation": 0.98,
+                "knowledge_leak": 0.23,
+                "future_fact_leak": 0.53,
+                "unsupported_claim": 0.98
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.06,
+              "missingPatchSupport": 0.8
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 13,
+                "agency_scope": 2,
+                "knowledge_boundary": 77,
+                "future_boundary": 47,
+                "grounding": 2,
+                "repair_support": 20,
+                "minimum_observational_score": 2
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "allow_with_patch": 0,
+              "reject": 0,
+              "allow": 0,
+              "rewrite": 1
+            },
+            "confidence": 0.99
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.87
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.98
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.23
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.53
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.06
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.8
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1872,
+          "output_tokens": 179,
+          "cost": 7.8624e-05
+        },
+        "durationMs": 909
+      },
+      "wallMs": 909,
+      "generation": null
+    },
+    {
+      "id": "uncertain_identity",
+      "expectedDecision": "allow_with_patch",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-uncertain_identity",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "patchHint",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow_with_patch",
+          "reason": "bounded_anomaly_or_model_patch",
+          "reasonCodes": [
+            "bounded_anomaly"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.05,
+                "agency_violation": 0.07,
+                "knowledge_leak": 0.2,
+                "future_fact_leak": 0.11
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.05,
+                "agency_violation": 0.07,
+                "knowledge_leak": 0.2,
+                "future_fact_leak": 0.11,
+                "unsupported_claim": 0.22999999999999998
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow_with_patch",
+              "boundedAnomaly": 0.87,
+              "missingPatchSupport": 0.39
+            },
+            "L2": {
+              "decision": "allow_with_patch",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 95,
+                "agency_scope": 93,
+                "knowledge_boundary": 80,
+                "future_boundary": 89,
+                "grounding": 77,
+                "repair_support": 61,
+                "minimum_observational_score": 61
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow_with_patch",
+            "probabilities": {
+              "allow_with_patch": 0.83,
+              "reject": 0.01,
+              "allow": 0.11,
+              "rewrite": 0.05
+            },
+            "confidence": 0.77
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.07
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.11
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.77
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.87
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.39
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1929,
+          "output_tokens": 181,
+          "cost": 8.1018e-05
+        },
+        "durationMs": 1024
+      },
+      "wallMs": 1024,
+      "generation": null
+    },
+    {
+      "id": "pass_long_context_noise",
+      "expectedDecision": "allow",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-pass_long_context_noise",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow",
+          "reason": "no_blocking_signal",
+          "reasonCodes": [
+            "allow"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.06,
+                "knowledge_leak": 0.09,
+                "future_fact_leak": 0.06
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.06,
+                "knowledge_leak": 0.09,
+                "future_fact_leak": 0.06,
+                "unsupported_claim": 0.22999999999999998
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow",
+              "boundedAnomaly": 0.34,
+              "missingPatchSupport": 0.21
+            },
+            "L2": {
+              "decision": "allow",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 96,
+                "agency_scope": 94,
+                "knowledge_boundary": 91,
+                "future_boundary": 94,
+                "grounding": 77,
+                "repair_support": 79,
+                "minimum_observational_score": 77
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow",
+            "probabilities": {
+              "allow": 0.69,
+              "allow_with_patch": 0.25,
+              "reject": 0.01,
+              "rewrite": 0.05
+            },
+            "confidence": 0.6
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.06
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.09
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.06
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.77
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.34
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.21
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 2446,
+          "output_tokens": 179,
+          "cost": 0.000102732
+        },
+        "durationMs": 1072
+      },
+      "wallMs": 1072,
+      "generation": null
+    },
+    {
+      "id": "pass_multi_character_scope",
+      "expectedDecision": "allow",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-pass_multi_character_scope",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow",
+          "reason": "no_blocking_signal",
+          "reasonCodes": [
+            "allow"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.06,
+                "knowledge_leak": 0.06,
+                "future_fact_leak": 0.07
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.06,
+                "knowledge_leak": 0.06,
+                "future_fact_leak": 0.07,
+                "unsupported_claim": 0.52
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow",
+              "boundedAnomaly": 0.28,
+              "missingPatchSupport": 0.28
+            },
+            "L2": {
+              "decision": "allow",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 96,
+                "agency_scope": 94,
+                "knowledge_boundary": 94,
+                "future_boundary": 93,
+                "grounding": 48,
+                "repair_support": 72,
+                "minimum_observational_score": 48
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow",
+            "probabilities": {
+              "allow": 0.68,
+              "allow_with_patch": 0.19,
+              "reject": 0.02,
+              "rewrite": 0.11
+            },
+            "confidence": 0.57
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.06
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.06
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.07
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.48
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.28
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.28
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1887,
+          "output_tokens": 179,
+          "cost": 7.9254e-05
+        },
+        "durationMs": 870
+      },
+      "wallMs": 871,
+      "generation": null
+    },
+    {
+      "id": "pass_observation_stays_uncertain",
+      "expectedDecision": "allow_with_patch",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-pass_observation_stays_uncertain",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow_with_patch",
+          "reason": "bounded_anomaly_or_model_patch",
+          "reasonCodes": [
+            "bounded_anomaly"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.06,
+                "knowledge_leak": 0.05,
+                "future_fact_leak": 0.04
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.06,
+                "knowledge_leak": 0.05,
+                "future_fact_leak": 0.04,
+                "unsupported_claim": 0.08999999999999997
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow",
+              "boundedAnomaly": 0.91,
+              "missingPatchSupport": 0.16
+            },
+            "L2": {
+              "decision": "allow_with_patch",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 96,
+                "agency_scope": 94,
+                "knowledge_boundary": 95,
+                "future_boundary": 96,
+                "grounding": 91,
+                "repair_support": 84,
+                "minimum_observational_score": 84
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow",
+            "probabilities": {
+              "allow": 0.87,
+              "rewrite": 0.01,
+              "allow_with_patch": 0.12,
+              "reject": 0
+            },
+            "confidence": 0.82
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.06
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.91
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.91
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.16
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1863,
+          "output_tokens": 179,
+          "cost": 7.8246e-05
+        },
+        "durationMs": 1267
+      },
+      "wallMs": 1267,
+      "generation": null
+    },
+    {
+      "id": "pass_style_noise_only",
+      "expectedDecision": "allow",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-pass_style_noise_only",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow",
+        "reason": "no_blocking_signal",
+        "reasonCodes": [
+          "allow"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow",
+          "reason": "no_blocking_signal",
+          "reasonCodes": [
+            "allow"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.03,
+                "agency_violation": 0.05,
+                "knowledge_leak": 0.04,
+                "future_fact_leak": 0.04
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.03,
+                "agency_violation": 0.05,
+                "knowledge_leak": 0.04,
+                "future_fact_leak": 0.04,
+                "unsupported_claim": 0.20999999999999996
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow",
+              "boundedAnomaly": 0.13,
+              "missingPatchSupport": 0.22
+            },
+            "L2": {
+              "decision": "allow",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 97,
+                "agency_scope": 95,
+                "knowledge_boundary": 96,
+                "future_boundary": 96,
+                "grounding": 79,
+                "repair_support": 78,
+                "minimum_observational_score": 78
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow",
+            "probabilities": {
+              "allow": 0.68,
+              "allow_with_patch": 0.22,
+              "reject": 0.01,
+              "rewrite": 0.08
+            },
+            "confidence": 0.58
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.03
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.79
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.13
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.22
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1865,
+          "output_tokens": 179,
+          "cost": 7.833e-05
+        },
+        "durationMs": 2116
+      },
+      "wallMs": 2116,
+      "generation": null
+    },
+    {
+      "id": "repairable_replica_key",
+      "expectedDecision": "allow_with_patch",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-repairable_replica_key",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "patchHint",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow_with_patch",
+          "reason": "bounded_anomaly_or_model_patch",
+          "reasonCodes": [
+            "bounded_anomaly"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.14,
+                "knowledge_leak": 0.1,
+                "future_fact_leak": 0.04
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.14,
+                "knowledge_leak": 0.1,
+                "future_fact_leak": 0.04,
+                "unsupported_claim": 0.09999999999999998
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow_with_patch",
+              "boundedAnomaly": 0.93,
+              "missingPatchSupport": 0.19
+            },
+            "L2": {
+              "decision": "allow_with_patch",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 96,
+                "agency_scope": 86,
+                "knowledge_boundary": 90,
+                "future_boundary": 96,
+                "grounding": 90,
+                "repair_support": 81,
+                "minimum_observational_score": 81
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow_with_patch",
+            "probabilities": {
+              "reject": 0,
+              "rewrite": 0.02,
+              "allow": 0.32,
+              "allow_with_patch": 0.66
+            },
+            "confidence": 0.54
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.14
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.9
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.93
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.19
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1919,
+          "output_tokens": 181,
+          "cost": 8.0598e-05
+        },
+        "durationMs": 1910
+      },
+      "wallMs": 1910,
+      "generation": null
+    },
+    {
+      "id": "repairable_unknown_sound",
+      "expectedDecision": "allow_with_patch",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-repairable_unknown_sound",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "patchHint",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow_with_patch",
+          "reason": "bounded_anomaly_or_model_patch",
+          "reasonCodes": [
+            "bounded_anomaly"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.07,
+                "knowledge_leak": 0.06,
+                "future_fact_leak": 0.05
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.07,
+                "knowledge_leak": 0.06,
+                "future_fact_leak": 0.05,
+                "unsupported_claim": 0.09999999999999998
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow",
+              "boundedAnomaly": 0.94,
+              "missingPatchSupport": 0.14
+            },
+            "L2": {
+              "decision": "allow_with_patch",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 96,
+                "agency_scope": 93,
+                "knowledge_boundary": 94,
+                "future_boundary": 95,
+                "grounding": 90,
+                "repair_support": 86,
+                "minimum_observational_score": 86
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow",
+            "probabilities": {
+              "reject": 0,
+              "allow": 0.61,
+              "rewrite": 0.01,
+              "allow_with_patch": 0.38
+            },
+            "confidence": 0.49
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.07
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.06
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.9
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.94
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.14
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1918,
+          "output_tokens": 179,
+          "cost": 8.0556e-05
+        },
+        "durationMs": 1360
+      },
+      "wallMs": 1360,
+      "generation": null
+    },
+    {
+      "id": "repairable_identity_glimpse",
+      "expectedDecision": "allow_with_patch",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-repairable_identity_glimpse",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "patchHint",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow_with_patch",
+          "reason": "bounded_anomaly_or_model_patch",
+          "reasonCodes": [
+            "bounded_anomaly"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.05,
+                "agency_violation": 0.05,
+                "knowledge_leak": 0.09,
+                "future_fact_leak": 0.05
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.05,
+                "agency_violation": 0.05,
+                "knowledge_leak": 0.09,
+                "future_fact_leak": 0.05,
+                "unsupported_claim": 0.06999999999999995
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow_with_patch",
+              "boundedAnomaly": 0.95,
+              "missingPatchSupport": 0.26
+            },
+            "L2": {
+              "decision": "allow_with_patch",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 95,
+                "agency_scope": 95,
+                "knowledge_boundary": 91,
+                "future_boundary": 95,
+                "grounding": 93,
+                "repair_support": 74,
+                "minimum_observational_score": 74
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow_with_patch",
+            "probabilities": {
+              "allow": 0.23,
+              "allow_with_patch": 0.76,
+              "rewrite": 0.01,
+              "reject": 0
+            },
+            "confidence": 0.68
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.09
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.93
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.95
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.26
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1934,
+          "output_tokens": 181,
+          "cost": 8.1228e-05
+        },
+        "durationMs": 1017
+      },
+      "wallMs": 1017,
+      "generation": null
+    },
+    {
+      "id": "repairable_cold_draft_only",
+      "expectedDecision": "allow_with_patch",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-repairable_cold_draft_only",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "patchHint",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "allow_with_patch",
+        "reason": "bounded_anomaly_or_model_patch",
+        "reasonCodes": [
+          "bounded_anomaly"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "allow_with_patch",
+          "reason": "bounded_anomaly_or_model_patch",
+          "reasonCodes": [
+            "bounded_anomaly"
+          ],
+          "layers": {
+            "L0": {
+              "status": "pass",
+              "fatalRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.09,
+                "knowledge_leak": 0.06,
+                "future_fact_leak": 0.04
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.04,
+                "agency_violation": 0.09,
+                "knowledge_leak": 0.06,
+                "future_fact_leak": 0.04,
+                "unsupported_claim": 0.14
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "allow",
+              "boundedAnomaly": 0.94,
+              "missingPatchSupport": 0.18
+            },
+            "L2": {
+              "decision": "allow_with_patch",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 96,
+                "agency_scope": 91,
+                "knowledge_boundary": 94,
+                "future_boundary": 96,
+                "grounding": 86,
+                "repair_support": 82,
+                "minimum_observational_score": 82
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "allow",
+            "probabilities": {
+              "reject": 0,
+              "allow_with_patch": 0.29,
+              "rewrite": 0.01,
+              "allow": 0.7
+            },
+            "confidence": 0.6
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.09
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.06
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.86
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.94
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.18
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1923,
+          "output_tokens": 179,
+          "cost": 8.0766e-05
+        },
+        "durationMs": 1624
+      },
+      "wallMs": 1624,
+      "generation": null
+    },
+    {
+      "id": "rewrite_unsupported_environment_claim",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-rewrite_unsupported_environment_claim",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "patchHint",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation",
+          "knowledge_leak",
+          "future_fact_leak"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation",
+            "knowledge_leak",
+            "future_fact_leak"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.69,
+                "agency_violation": 0.68,
+                "knowledge_leak": 0.88,
+                "future_fact_leak": 0.9
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.69,
+                "agency_violation": 0.68,
+                "knowledge_leak": 0.88,
+                "future_fact_leak": 0.9,
+                "unsupported_claim": 0.98
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.02,
+              "missingPatchSupport": 0.9
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 31,
+                "agency_scope": 32,
+                "knowledge_boundary": 12,
+                "future_boundary": 10,
+                "grounding": 2,
+                "repair_support": 10,
+                "minimum_observational_score": 2
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "reject": 0.02,
+              "allow_with_patch": 0,
+              "rewrite": 0.98,
+              "allow": 0
+            },
+            "confidence": 0.97
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.69
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.68
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.88
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.9
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.9
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1900,
+          "output_tokens": 179,
+          "cost": 7.98e-05
+        },
+        "durationMs": 2276
+      },
+      "wallMs": 2276,
+      "generation": null
+    },
+    {
+      "id": "fatal_guardian_revived",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-fatal_guardian_revived",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.96,
+                "agency_violation": 0.75,
+                "knowledge_leak": 0.09,
+                "future_fact_leak": 0.15
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.96,
+                "agency_violation": 0.75,
+                "knowledge_leak": 0.09,
+                "future_fact_leak": 0.15,
+                "unsupported_claim": 0.97
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.04,
+              "missingPatchSupport": 0.89
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 4,
+                "agency_scope": 25,
+                "knowledge_boundary": 91,
+                "future_boundary": 85,
+                "grounding": 3,
+                "repair_support": 11,
+                "minimum_observational_score": 3
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "allow": 0,
+              "allow_with_patch": 0,
+              "reject": 0.01,
+              "rewrite": 0.99
+            },
+            "confidence": 0.99
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.96
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.75
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.09
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.15
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.03
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.89
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1831,
+          "output_tokens": 179,
+          "cost": 7.6902e-05
+        },
+        "durationMs": 1389
+      },
+      "wallMs": 1389,
+      "generation": null
+    },
+    {
+      "id": "fatal_consumed_artifact",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-fatal_consumed_artifact",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.98,
+                "agency_violation": 0.93,
+                "knowledge_leak": 0.14,
+                "future_fact_leak": 0.1
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.98,
+                "agency_violation": 0.93,
+                "knowledge_leak": 0.14,
+                "future_fact_leak": 0.1,
+                "unsupported_claim": 0.98
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.03,
+              "missingPatchSupport": 0.9
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 2,
+                "agency_scope": 7,
+                "knowledge_boundary": 86,
+                "future_boundary": 90,
+                "grounding": 2,
+                "repair_support": 10,
+                "minimum_observational_score": 2
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "reject": 0.01,
+              "allow_with_patch": 0,
+              "rewrite": 0.99,
+              "allow": 0
+            },
+            "confidence": 0.99
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.98
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.93
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.14
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.03
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.9
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1836,
+          "output_tokens": 179,
+          "cost": 7.7112e-05
+        },
+        "durationMs": 978
+      },
+      "wallMs": 978,
+      "generation": null
+    },
+    {
+      "id": "fatal_branch_jump",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-fatal_branch_jump",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "knowledge_leak",
+          "future_fact_leak"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "knowledge_leak",
+            "future_fact_leak"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.28,
+                "agency_violation": 0.33,
+                "knowledge_leak": 0.88,
+                "future_fact_leak": 0.97
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.28,
+                "agency_violation": 0.33,
+                "knowledge_leak": 0.88,
+                "future_fact_leak": 0.97,
+                "unsupported_claim": 0.97
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.05,
+              "missingPatchSupport": 0.78
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 72,
+                "agency_scope": 67,
+                "knowledge_boundary": 12,
+                "future_boundary": 3,
+                "grounding": 3,
+                "repair_support": 22,
+                "minimum_observational_score": 3
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "allow_with_patch": 0,
+              "allow": 0,
+              "rewrite": 1,
+              "reject": 0
+            },
+            "confidence": 0.99
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.28
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.33
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.88
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.97
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.03
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.78
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1861,
+          "output_tokens": 179,
+          "cost": 7.8162e-05
+        },
+        "durationMs": 850
+      },
+      "wallMs": 850,
+      "generation": null
+    },
+    {
+      "id": "fatal_location_teleport",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-fatal_location_teleport",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation",
+          "future_fact_leak"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation",
+            "future_fact_leak"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.89,
+                "agency_violation": 0.98,
+                "knowledge_leak": 0.24,
+                "future_fact_leak": 0.87
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.89,
+                "agency_violation": 0.98,
+                "knowledge_leak": 0.24,
+                "future_fact_leak": 0.87,
+                "unsupported_claim": 0.98
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.05,
+              "missingPatchSupport": 0.87
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 11,
+                "agency_scope": 2,
+                "knowledge_boundary": 76,
+                "future_boundary": 13,
+                "grounding": 2,
+                "repair_support": 13,
+                "minimum_observational_score": 2
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "reject": 0,
+              "rewrite": 1,
+              "allow": 0,
+              "allow_with_patch": 0
+            },
+            "confidence": 0.99
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.89
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.98
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.24
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.87
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.87
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1825,
+          "output_tokens": 179,
+          "cost": 7.665e-05
+        },
+        "durationMs": 967
+      },
+      "wallMs": 967,
+      "generation": null
+    },
+    {
+      "id": "fatal_unrequested_attack",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-fatal_unrequested_attack",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.93,
+                "agency_violation": 0.99,
+                "knowledge_leak": 0.11,
+                "future_fact_leak": 0.25
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.93,
+                "agency_violation": 0.99,
+                "knowledge_leak": 0.11,
+                "future_fact_leak": 0.25,
+                "unsupported_claim": 0.99
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.03,
+              "missingPatchSupport": 0.84
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 7,
+                "agency_scope": 1,
+                "knowledge_boundary": 89,
+                "future_boundary": 75,
+                "grounding": 1,
+                "repair_support": 16,
+                "minimum_observational_score": 1
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "allow_with_patch": 0,
+              "allow": 0,
+              "reject": 0.01,
+              "rewrite": 0.99
+            },
+            "confidence": 0.99
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.93
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.99
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.11
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.25
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.01
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.03
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.84
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1817,
+          "output_tokens": 179,
+          "cost": 7.6314e-05
+        },
+        "durationMs": 933
+      },
+      "wallMs": 933,
+      "generation": null
+    },
+    {
+      "id": "fatal_unrequested_item",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-fatal_unrequested_item",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.8,
+                "agency_violation": 0.98,
+                "knowledge_leak": 0.2,
+                "future_fact_leak": 0.31
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.8,
+                "agency_violation": 0.98,
+                "knowledge_leak": 0.2,
+                "future_fact_leak": 0.31,
+                "unsupported_claim": 0.99
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.03,
+              "missingPatchSupport": 0.85
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 20,
+                "agency_scope": 2,
+                "knowledge_boundary": 80,
+                "future_boundary": 69,
+                "grounding": 1,
+                "repair_support": 15,
+                "minimum_observational_score": 1
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "reject": 0,
+              "allow": 0,
+              "allow_with_patch": 0,
+              "rewrite": 1
+            },
+            "confidence": 1
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.8
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.98
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.31
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.01
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.03
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.85
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1813,
+          "output_tokens": 179,
+          "cost": 7.6146e-05
+        },
+        "durationMs": 866
+      },
+      "wallMs": 867,
+      "generation": null
+    },
+    {
+      "id": "fatal_unrequested_exit",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-fatal_unrequested_exit",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.91,
+                "agency_violation": 0.98,
+                "knowledge_leak": 0.1,
+                "future_fact_leak": 0.61
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.91,
+                "agency_violation": 0.98,
+                "knowledge_leak": 0.1,
+                "future_fact_leak": 0.61,
+                "unsupported_claim": 0.98
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.05,
+              "missingPatchSupport": 0.82
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 9,
+                "agency_scope": 2,
+                "knowledge_boundary": 90,
+                "future_boundary": 39,
+                "grounding": 2,
+                "repair_support": 18,
+                "minimum_observational_score": 2
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "rewrite": 1,
+              "allow_with_patch": 0,
+              "allow": 0,
+              "reject": 0
+            },
+            "confidence": 0.99
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.91
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.98
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.61
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.05
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.82
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1817,
+          "output_tokens": 179,
+          "cost": 7.6314e-05
+        },
+        "durationMs": 902
+      },
+      "wallMs": 902,
+      "generation": null
+    },
+    {
+      "id": "fatal_private_code",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-fatal_private_code",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "knowledge_leak",
+          "future_fact_leak"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "knowledge_leak",
+            "future_fact_leak"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.78,
+                "agency_violation": 0.6,
+                "knowledge_leak": 0.99,
+                "future_fact_leak": 0.78
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.78,
+                "agency_violation": 0.6,
+                "knowledge_leak": 0.99,
+                "future_fact_leak": 0.78,
+                "unsupported_claim": 0.97
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.04,
+              "missingPatchSupport": 0.89
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 22,
+                "agency_scope": 40,
+                "knowledge_boundary": 1,
+                "future_boundary": 22,
+                "grounding": 3,
+                "repair_support": 11,
+                "minimum_observational_score": 1
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "allow_with_patch": 0,
+              "allow": 0,
+              "rewrite": 0.99,
+              "reject": 0.01
+            },
+            "confidence": 0.99
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.78
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.6
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.99
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.78
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.03
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.89
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1819,
+          "output_tokens": 179,
+          "cost": 7.6398e-05
+        },
+        "durationMs": 1112
+      },
+      "wallMs": 1112,
+      "generation": null
+    },
+    {
+      "id": "fatal_future_person",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-fatal_future_person",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "knowledge_leak",
+          "future_fact_leak"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "knowledge_leak",
+            "future_fact_leak"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.88,
+                "agency_violation": 0.62,
+                "knowledge_leak": 0.88,
+                "future_fact_leak": 0.97
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.88,
+                "agency_violation": 0.62,
+                "knowledge_leak": 0.88,
+                "future_fact_leak": 0.97,
+                "unsupported_claim": 0.97
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.04,
+              "missingPatchSupport": 0.78
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 12,
+                "agency_scope": 38,
+                "knowledge_boundary": 12,
+                "future_boundary": 3,
+                "grounding": 3,
+                "repair_support": 22,
+                "minimum_observational_score": 3
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "reject": 0,
+              "allow": 0,
+              "rewrite": 1,
+              "allow_with_patch": 0
+            },
+            "confidence": 0.99
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.88
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.62
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.88
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.97
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.03
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.04
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.78
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1832,
+          "output_tokens": 179,
+          "cost": 7.6944e-05
+        },
+        "durationMs": 975
+      },
+      "wallMs": 975,
+      "generation": null
+    },
+    {
+      "id": "fatal_other_branch_secret",
+      "expectedDecision": "rewrite",
+      "gateway": {
+        "shadow": true,
+        "status": "ok",
+        "requestId": "shadow-fatal_other_branch_secret",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": true,
+          "reason": "preflight_passed"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract"
+        ],
+        "decision": "rewrite",
+        "reason": "fatal_or_unsupported_patch_risk",
+        "reasonCodes": [
+          "missing_patch_support",
+          "unsupported_claim",
+          "hard_state_conflict",
+          "agency_violation",
+          "knowledge_leak",
+          "future_fact_leak"
+        ],
+        "review": {
+          "ruleSetVersion": "jev-review-rules/0.3",
+          "decision": "rewrite",
+          "reason": "fatal_or_unsupported_patch_risk",
+          "reasonCodes": [
+            "missing_patch_support",
+            "unsupported_claim",
+            "hard_state_conflict",
+            "agency_violation",
+            "knowledge_leak",
+            "future_fact_leak"
+          ],
+          "layers": {
+            "L0": {
+              "status": "rewrite",
+              "fatalRisks": {
+                "hard_state_conflict": 0.78,
+                "agency_violation": 0.76,
+                "knowledge_leak": 0.95,
+                "future_fact_leak": 0.94
+              },
+              "blockingRisks": {
+                "hard_state_conflict": 0.78,
+                "agency_violation": 0.76,
+                "knowledge_leak": 0.95,
+                "future_fact_leak": 0.94,
+                "unsupported_claim": 0.98
+              },
+              "threshold": 0.65
+            },
+            "L1": {
+              "directDecision": "rewrite",
+              "boundedAnomaly": 0.02,
+              "missingPatchSupport": 0.89
+            },
+            "L2": {
+              "decision": "rewrite",
+              "codeOwned": true
+            },
+            "L3": {
+              "scores": {
+                "state_consistency": 22,
+                "agency_scope": 24,
+                "knowledge_boundary": 5,
+                "future_boundary": 6,
+                "grounding": 2,
+                "repair_support": 11,
+                "minimum_observational_score": 2
+              },
+              "scoreIsObservational": true
+            }
+          }
+        },
+        "answers": {
+          "review_decision": {
+            "type": "choice",
+            "choice": "rewrite",
+            "probabilities": {
+              "allow_with_patch": 0,
+              "allow": 0,
+              "reject": 0,
+              "rewrite": 1
+            },
+            "confidence": 1
+          },
+          "hard_state_conflict": {
+            "type": "noul",
+            "noul": 0.78
+          },
+          "agency_violation": {
+            "type": "noul",
+            "noul": 0.76
+          },
+          "knowledge_leak": {
+            "type": "noul",
+            "noul": 0.95
+          },
+          "future_fact_leak": {
+            "type": "noul",
+            "noul": 0.94
+          },
+          "claim_supported": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "bounded_anomaly": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "missing_patch_support": {
+            "type": "noul",
+            "noul": 0.89
+          }
+        },
+        "resolvedModel": "typesafe/jev-1.13-20260917",
+        "provider": "TypeSafe",
+        "usage": {
+          "input_tokens": 1832,
+          "output_tokens": 179,
+          "cost": 7.6944e-05
+        },
+        "durationMs": 916
+      },
+      "wallMs": 916,
+      "generation": null
+    },
+    {
+      "id": "reject_empty_evidence",
+      "expectedDecision": "reject",
+      "gateway": {
+        "shadow": true,
+        "status": "preflight_rejected",
+        "requestId": "shadow-reject_empty_evidence",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": false,
+          "reason": "insufficient_evidence"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract",
+          "reviewMeta"
+        ],
+        "decision": "reject",
+        "reason": "insufficient_evidence",
+        "reasonCodes": [
+          "insufficient_evidence"
+        ],
+        "durationMs": 0
+      },
+      "wallMs": 0,
+      "generation": null
+    },
+    {
+      "id": "reject_conflicting_state",
+      "expectedDecision": "reject",
+      "gateway": {
+        "shadow": true,
+        "status": "preflight_rejected",
+        "requestId": "shadow-reject_conflicting_state",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": false,
+          "reason": "conflicting_authority"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract",
+          "reviewMeta"
+        ],
+        "decision": "reject",
+        "reason": "conflicting_authority",
+        "reasonCodes": [
+          "conflicting_authority"
+        ],
+        "durationMs": 0
+      },
+      "wallMs": 0,
+      "generation": null
+    },
+    {
+      "id": "reject_missing_contract",
+      "expectedDecision": "reject",
+      "gateway": {
+        "shadow": true,
+        "status": "preflight_rejected",
+        "requestId": "shadow-reject_missing_contract",
+        "model": "~typesafe/jev-latest",
+        "preflight": {
+          "ok": false,
+          "reason": "missing_result_contract"
+        },
+        "inputFields": [
+          "allowedMechanisms",
+          "branchState",
+          "candidateNarrative",
+          "context",
+          "playerAction",
+          "resultContract",
+          "reviewMeta"
+        ],
+        "decision": "reject",
+        "reason": "missing_result_contract",
+        "reasonCodes": [
+          "missing_result_contract"
+        ],
+        "durationMs": 0
+      },
+      "wallMs": 0,
+      "generation": null
+    }
+  ],
+  "limitations": [
+    "这是显式 shadow replay，不改变 StoryPackage、BranchState 或提交路径。",
+    "generation 字段来自已保存的真实生成证据；Jev 调用在本次 replay 中独立发生，不能宣称端到端完整回合耗时。",
+    "默认 JEV_SHADOW_ENABLED=false；本命令仅为试验临时启用 gateway。"
+  ]
+}

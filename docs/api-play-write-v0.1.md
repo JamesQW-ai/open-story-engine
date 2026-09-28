@@ -15,6 +15,10 @@ STORY_API_PLAY=1 \
 
 `STORY_PLANNER=mock` 时使用 MockPlanner（仅结构测试草稿，不代表可读性验收）；`openai` 时按 CLI 相同参数构建真实 Planner。针对响应缓慢的端点，建议附加（进程环境变量优先于 `.env`）：
 
+`STORY_CONTEXT_PROJECTION_STATE_VISIBILITY_MODE` 控制上下文状态可见性闸门，默认 `audit_fallback`；只有所有官方包完成正式声明与回归后才允许切换为 `formal_required`。
+
+真实模型回合续写另有必需上下文包闸门：API 构建的 `PlayerNarrativePlanner` 固定启用 `require_context_bundle=True`，与上述可见性模式独立。模块缺失、解析/校验失败或受保护内容预算超限时，停止该阶段及后续模型调用，记录失败，不回退旧摘要或提交剧情；写前规划后构建正文上下文也适用。`formal_required` 本身同样要求上下文包成功，兼容调用也不能绕过已发生的预算超限。见[上下文包必需性审查](context-management-required-bundle-review-2026-09-27.md)。
+
 ```bash
 STORY_LLM_STREAM=true STORY_LLM_TRANSPORT_FALLBACK=false \
 STORY_LLM_TIMEOUT_SECONDS=120 STORY_LLM_FIRST_DELTA_TIMEOUT_SECONDS=30 \
@@ -31,13 +35,13 @@ STORY_LLM_REASONING_EFFORT=none
 | --- | --- |
 | `POST /api/v1/sessions` | 创建共创会话并写入入口根分支，返回 `{ session, branch }`（201）。支持原著角色或新角色；`identity_opening=true` 时调用真实模型生成第二人称开场，校验后保存。 |
 | `POST /api/v1/sessions/{session_id}/branches` | 回合续写：`parent_branch_id` + `direction_id`（已公布方向）或 + `text`（自由行动，二者互斥），返回 `{ status, request_id, deduplicated, branch, kind, reason }`。 |
-| `POST /api/v1/sessions/{session_id}/branches/stream` | 相同请求体，以 SSE 返回 `delta`、`reset`、`done` 或 `error` 事件，正文边生成边展示。 |
+| `POST /api/v1/sessions/{session_id}/branches/stream` | 相同请求体，以 SSE 返回审核提交后的 `delta`、`done` 或 `error` 事件；审核和提交前只显示连接心跳，不展示候选正文。 |
 | `POST /api/v1/import/novel` | 导入标准 UTF-8 TXT：网页提交 `{ file_name, source_text }`，后端自动生成内容标识与默认版本；相同正文再次导入复用已有包。构建及双审计通过后，全部文件写入完成才发布到书库，失败不暴露半成品。返回包引用与标题、章节、角色和剧情数量，前端直接跳转到剧情与角色选择页。兼容显式 `package_id`、`version` 调用，显式引用重复仍返回 `409 package_exists`。不调用模型；无效文件返回 `422`。 |
 
 行为契约：
 
-- 全部经过 `CoCreationService`：方向必须来自父分支已公布菜单；自由文本先经本地方向判定；正文通过本地事实与状态校验后才保存分支。生成失败不产生新正文分支，已经完成的方向判定可保留供同一请求恢复。Web 采用第二人称限知视角，开场600—1000字，续写2000—2500个非空白字符，分段生成与校验；不额外调用模型进行完整原著事实审阅。
-- `request_id` 幂等：同一请求重发返回同一分支并标记 `deduplicated: true`；同一 `request_id` 换父分支/方向/文本返回 `409`。
+- 全部经过 `CoCreationService`：方向必须来自父分支已公布菜单；自由文本先经本地方向判定；正文通过完整审核、本地事实与状态校验并成功提交后才回放和保存分支。首轮失败最多进行一次有界修复，二次失败不展示未确认候选且原分支保持不变。已经完成的方向判定可保留供同一请求恢复。Web 采用第二人称限知视角，开场600—1000字，续写2000—2500个非空白字符，分段生成与校验；不额外调用模型进行完整原著事实审阅。
+- `request_id` 是续写与 SSE 请求的必填非空幂等键：同一请求重发返回同一分支并标记 `deduplicated: true`；同一 `request_id` 换父分支/方向/文本返回 `409`。旧服务适配器可以在进入 Planner 前生成缺省 ID，但正式 HTTP 调用不能省略或传空值。
 - 不存在的会话返回 `404 session_not_found`；会话绑定的故事包不可加载时写入返回 `409 package_binding_changed`；入口与角色不匹配返回 `409 invalid_entry`。
 - 2026-09-10 产品决策：Web 玩家可用任意原著角色 × 任意剧情入口开局（`normalize_entry_selection(..., allow_any_source_character=True)`，核心为可选开关，CLI 默认行为不变）；包内每个入口声明的角色仅作引导建议，新建角色路径仍走完整档案校验。
 - 所有写入在应用内串行执行（单进程锁）；SQLite 单写者约束下不保证高并发吞吐，第一版面向本机使用。
@@ -64,10 +68,10 @@ git diff --check
 
 `POST /api/v1/sessions/{session_id}/branches/stream` 仅在 play 模式开放，请求体与普通续写一致。响应为 `text/event-stream`：
 
-- `delta`：`{"text":"正文片段"}`，前端追加到当前预览。
-- `reset`：`{}`，模型重试或传输切换时清空旧预览。
+- `delta`：`{"text":"正文片段"}`，仅在审核和权威提交成功后回放，前端追加到当前预览。
+- `reset`：旧版本兼容事件；当前续写审核阶段不向客户端发送，失败不会要求用户清空已读正文。
 - `done`：完整 `PlayContinueResponse`，只有返回的已保存分支才作为新进度。原著直接复用和幂等命中可能只有 `done`，不伪造打字动画。
-- `error`：`{"code":"generation_failed","status":503,"message":"..."}`，流内失败以事件表达；前端恢复原页并允许重试，不能仅以 HTTP 200 判断生成成功。
+- `error`：`{"code":"generation_failed","status":503,"message":"...","retryable":true,"candidateShown":false,"previousBranchUnchanged":true}`，流内失败以事件表达；前端保留原页并允许重试，不能仅以 HTTP 200 判断生成成功。
 
 连接使用心跳与有界队列。浏览器断开后，当前进程中的生成可继续完成保存；同一 `request_id` 重试复用结果。若自由行动已判定、正文尚未成功，则恢复正文生成，不重复登记行动。进程退出后的事件回放与自动恢复不在本轮范围。客户端同时验证 UTF-8 分段、结束事件和流中断，避免把半篇正文当作存档。
 

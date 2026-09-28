@@ -1,0 +1,810 @@
+{
+  "schemaVersion": "jev-narrative-review-fixture/0.3",
+  "sourceFixtures": [
+    "jev-narrative-review-expanded.json",
+    "jev-real-longform-review.json"
+  ],
+  "description": "Jev 长上下文与长篇真实候选压力夹具；用于独立探针，不计入正式产品质量验收。",
+  "caseCount": 58,
+  "coverage": {
+    "expandedCases": 34,
+    "longContextVariants": 17,
+    "realLongformVariants": 4,
+    "longCandidateVariants": 3,
+    "longContextNoteCount": 31,
+    "variants": [
+      "agency_violation",
+      "base",
+      "conflicting_evidence",
+      "future_branch_leak",
+      "future_fact_leak",
+      "hard_state_conflict",
+      "insufficient_evidence",
+      "knowledge_leak",
+      "long_context_noise",
+      "long_context_retrieval_noise",
+      "missing_output_contract",
+      "multi_character_scope",
+      "official_longform_long_candidate",
+      "official_longform_long_context",
+      "repairable_environment",
+      "repairable_environment_refined",
+      "repairable_identity",
+      "repairable_replica",
+      "sibling_branch_leak",
+      "soft_style_noise",
+      "state_conflict",
+      "uncertain_observation",
+      "unsupported_environment_claim"
+    ]
+  },
+  "cases": [
+    {
+      "id": "pass_consistent",
+      "expectedDecision": "allow",
+      "context": "铜牌当前由玩家持有；沈执事已说明登记堂在前方；玩家本回合只要求询问入口位置。",
+      "branchState": "player_has_token=true; steward_alive=true; location=archive_hall; no_unresolved_anomaly=true",
+      "playerAction": "我向沈执事询问登记堂入口的位置。",
+      "resultContract": "保留铜牌在玩家手中；完成一次询问；不移动地点；不新增未登记事实。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你没有移动铜牌，只抬眼问沈执事登记堂的入口。沈执事指向前方，说那里仍有人值守。"
+    },
+    {
+      "id": "environment_small_hallucination",
+      "expectedDecision": "rewrite",
+      "context": "当前场景是封闭的登记堂；已确认外门关闭，但门缝附近有持续冷风；没有确认冷风来源。",
+      "branchState": "outer_door_closed=true; cold_draft_observed=true; source_of_draft=unknown",
+      "playerAction": "我观察门缝和地面。",
+      "resultContract": "只描述可观察的门缝、地面和冷风；不得断言门外已经有人。",
+      "allowedMechanisms": [
+        "hidden_vent",
+        "unseen_gap"
+      ],
+      "candidateNarrative": "门外的雨声从门缝里压进来，地面却没有新的脚印。冷风贴着你的鞋面掠过，来源仍未查明，你决定随后检查墙面和门缝。",
+      "patchHint": "冷风来源仍需通过后续调查确认，不得直接写成已发现暗道。",
+      "labelRevision": "证据只确认冷风，原候选新增门外雨声，按 unsupported_claim 归为重写。"
+    },
+    {
+      "id": "false_death_ambiguous",
+      "expectedDecision": "allow_with_patch",
+      "context": "沈执事在上一段被记录为疑似死亡；现场没有遗体确认；世界观允许假死或身外化身，但当前没有选择具体机制。",
+      "branchState": "steward_status=suspected_dead; body_confirmed=false; anomaly_mechanisms_allowed=true",
+      "playerAction": "我查看门后的身影。",
+      "resultContract": "可以呈现相似身影或异常，但不得确认沈执事本人已经正常存活。",
+      "allowedMechanisms": [
+        "false_death",
+        "avatar",
+        "resurrection_ritual"
+      ],
+      "candidateNarrative": "门后的身影与沈执事极其相似，却隔着雨幕没有露出正脸。你只能确认那个人抬起了手，不能确认他究竟是不是已经死去的沈执事。",
+      "patchHint": "后续必须留下身份核验线索，并在有限回合内解释缺席原因。"
+    },
+    {
+      "id": "replica_item_ambiguous",
+      "expectedDecision": "allow_with_patch",
+      "context": "唯一的原铜牌已被记录为不可修复地损毁；世界观允许仿制品和诱饵；正文不能把新物品称为原物。",
+      "branchState": "original_token_destroyed=true; original_token_repairable=false; replica_allowed=true",
+      "playerAction": "我检查桌上的铜牌。",
+      "resultContract": "可以发现外观相同的物品，但不得恢复原铜牌或改变损毁状态。",
+      "allowedMechanisms": [
+        "replica",
+        "decoy",
+        "borrowed_token"
+      ],
+      "candidateNarrative": "桌上又放着一枚铜牌，边缘的刻痕和原先那枚相似得过分。你没有把它当作已经损毁的原物，只把它记作一件需要追查来源的仿制品。",
+      "patchHint": "后续需要给出仿制品的来源、代价或可观察线索。"
+    },
+    {
+      "id": "explicit_death_conflict",
+      "expectedDecision": "rewrite",
+      "context": "沈执事已确认死亡，遗体和死亡记录均已核实；当前世界观没有复生机制；玩家尚未获得任何相关线索。",
+      "branchState": "steward_status=confirmed_dead; body_confirmed=true; resurrection_allowed=false",
+      "playerAction": "我观察门后的动静。",
+      "resultContract": "不得让沈执事本人再次正常出现；只能描述可疑声响或其他角色。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "沈执事从门后走出来，拍了拍肩上的雨水，笑着问你为什么还站在这里。"
+    },
+    {
+      "id": "unique_weapon_restored",
+      "expectedDecision": "rewrite",
+      "context": "唯一的玄铁剑已在前回合被不可逆地熔毁；状态账本禁止恢复；没有复制或替身规则。",
+      "branchState": "iron_sword_destroyed=true; destruction_permanent=true; duplicate_allowed=false",
+      "playerAction": "我查看熔炉旁的残留物。",
+      "resultContract": "只能描述残渣、温度和线索；不得让原剑恢复或被挥舞。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你从灰烬中取出完整的玄铁剑，剑锋依旧锋利，随后握住它冲向门口的敌人。"
+    },
+    {
+      "id": "unauthorized_agency",
+      "expectedDecision": "rewrite",
+      "context": "玩家本回合只选择观察走廊；角色尚未决定移动、交战或开启铁门；铁门仍处于关闭状态。",
+      "branchState": "location=archive_hall; iron_gate=closed; player_action_scope=observe_only",
+      "playerAction": "我先观察走廊。",
+      "resultContract": "停留在观察和感知；不得替玩家移动、开门或发动战斗。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你推开铁门，冲进走廊，拔刀击退了守卫，并在尽头找到了出口。"
+    },
+    {
+      "id": "knowledge_leak",
+      "expectedDecision": "rewrite",
+      "context": "只有玩家看见过密信中的‘北井’暗号；沈执事、守卫和旁观者没有获知路径；当前没有转述事件。",
+      "branchState": "secret_known_by=[player]; steward_knows_secret=false; guards_knows_secret=false; relay_event=false",
+      "playerAction": "我把密信收好，不向任何人解释。",
+      "resultContract": "NPC 只能依据公开观察或已登记信息行动；不得直接说出北井暗号。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "沈执事看着你收起密信，立即说出了北井暗号，并提醒你不要把它告诉守卫。"
+    },
+    {
+      "id": "future_beat_leak",
+      "expectedDecision": "rewrite",
+      "context": "后续 beat 才会揭示‘白塔祭坛’和祭司姓名；当前入口上下文没有公开这些内容；玩家只知道登记堂。",
+      "branchState": "known_locations=[archive_hall, registration_hall]; future_locations=[white_tower_altar]; future_priest_name=unrevealed",
+      "playerAction": "我询问登记堂的路线。",
+      "resultContract": "正文只能使用当前已公开地点和人物，不得提前泄露未来剧情节点。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "沈执事告诉你，白塔祭坛的祭司顾长庚正在等你，那里才是解决登记问题的关键。"
+    },
+    {
+      "id": "unsupported_explanation",
+      "expectedDecision": "rewrite",
+      "context": "世界观允许假死，但要求出现机制、代价、线索和解释期限；当前没有任何机制证据；沈执事的死亡只被疑似记录。",
+      "branchState": "suspected_dead=true; mechanism_evidence=[]; repair_debt_required=true",
+      "playerAction": "我确认门后的身影。",
+      "resultContract": "如果呈现异常，只能保持疑问，并留下可验证线索；不得用一句话封闭解释。",
+      "allowedMechanisms": [
+        "false_death",
+        "avatar"
+      ],
+      "candidateNarrative": "沈执事其实早已用秘术复生，所有细节都已经解释清楚，你无需再调查。"
+    },
+    {
+      "id": "mixed_repair_and_fatal",
+      "expectedDecision": "rewrite",
+      "context": "原铜牌已不可修复地损毁，但允许出现仿制品；玩家只选择检查桌面，没有选择移动或攻击；守卫仍在门外。",
+      "branchState": "original_token_destroyed=true; replica_allowed=true; player_action_scope=inspect_only; guard_present=true",
+      "playerAction": "我检查桌面。",
+      "resultContract": "可以发现仿制品线索，但不得替玩家冲出门外攻击守卫。",
+      "allowedMechanisms": [
+        "replica",
+        "decoy"
+      ],
+      "candidateNarrative": "桌上的铜牌显然是仿制品。你随即冲出门外杀死守卫，把整条走廊都搜了一遍。"
+    },
+    {
+      "id": "uncertain_identity",
+      "expectedDecision": "allow_with_patch",
+      "context": "上一段只确认沈执事疑似死亡，没有遗体；当前雨幕遮挡视线；世界观允许替身，但没有确认替身已经出现。",
+      "branchState": "steward_status=suspected_dead; body_confirmed=false; visibility=poor; identity_unresolved=true",
+      "playerAction": "我远远观察雨幕中的人影。",
+      "resultContract": "只能表达相似、疑问和观察结果；不得确认身份或完成状态变化。",
+      "allowedMechanisms": [
+        "false_death",
+        "avatar",
+        "mistaken_identity"
+      ],
+      "candidateNarrative": "雨幕里站着一个与沈执事相似的人。你看不清他的脸，只注意到他抬手的动作和记忆中的动作完全一样。",
+      "patchHint": "保留身份不确定性，并给出后续核验方向。"
+    },
+    {
+      "id": "pass_long_context_noise",
+      "expectedDecision": "allow",
+      "variant": "long_context_noise",
+      "context": "当前场景是登记堂。已确认木牌在玩家手中，陆照临在场且知道公开的白线规则，玩家只说明准备参加后坡试炼。\n无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：",
+      "branchState": "player_has_token=true; steward_alive=true; location=registration_hall; current_beat=trial_intent; unrelated_branch_secret=hidden",
+      "playerAction": "我说明准备参加后坡试炼，暂不出发。",
+      "resultContract": "只陈述打算并等待回应；不得移动、战斗或揭示其他分支秘密。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你说明准备带着木牌参加后坡试炼，随后停在原地等陆照临回应。他只提醒你遵守当前已知的白线规则，没有替你决定下一步。"
+    },
+    {
+      "id": "pass_multi_character_scope",
+      "expectedDecision": "allow",
+      "variant": "multi_character_scope",
+      "context": "玩家、陆照临和沈砚秋都在登记堂；玩家只询问木牌登记依据。陆照临知道公开规则，沈砚秋负责登记。",
+      "branchState": "location=registration_hall; player_has_token=true; lu_knows_public_rules=true; shen_is_registrar=true",
+      "playerAction": "我询问木牌登记依据。",
+      "resultContract": "只允许两名 NPC 依据公开职责回应；玩家不移动、不交出木牌。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "沈砚秋指着登记册说明木牌需要核验，陆照临只补充他听过的公开规矩。你仍把木牌留在手里，没有作出下一步决定。"
+    },
+    {
+      "id": "pass_observation_stays_uncertain",
+      "expectedDecision": "allow_with_patch",
+      "variant": "uncertain_observation",
+      "context": "门后的声音来源未知；没有确认有人、机关或暗道。玩家只选择听和观察。",
+      "branchState": "door_closed=true; sound_source=unknown; hidden_mechanism_unconfirmed=true",
+      "playerAction": "我贴近门边听声音。",
+      "resultContract": "只描述声音和可观察反应，不确认来源，不开门。",
+      "allowedMechanisms": [
+        "hidden_vent",
+        "distant_step"
+      ],
+      "candidateNarrative": "门后传来两下轻响，间隔并不规律。你没有判断那是脚步还是机关，只记下声音的位置，仍未伸手开门。"
+    },
+    {
+      "id": "pass_style_noise_only",
+      "expectedDecision": "allow",
+      "variant": "soft_style_noise",
+      "context": "玩家已获得公开通行凭证，值守者在登记堂门口，当前只需要确认登记堂是否开放。没有状态冲突或隐藏事实。",
+      "branchState": "pass_granted=true; registration_hall_open=true; player_location=outer_hall",
+      "playerAction": "我询问登记堂是否开放。",
+      "resultContract": "完成一次询问即可；不要移动或新增世界事实。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你再次确认登记堂是否开放，值守者点头回答已经开放。你听完答复，仍留在原地，没有新增行动。"
+    },
+    {
+      "id": "repairable_replica_key",
+      "expectedDecision": "allow_with_patch",
+      "variant": "repairable_replica",
+      "context": "唯一的原钥匙已在账本中确认折断；世界观允许复制钥匙，但当前只看到一把外观相似的钥匙。",
+      "branchState": "original_key_broken=true; original_key_repairable=false; copy_key_allowed=true; copy_origin=unknown",
+      "playerAction": "我检查桌上的钥匙。",
+      "resultContract": "只能记录外观相似和来源未知，不得称其为原钥匙或使用它开门。",
+      "allowedMechanisms": [
+        "copy_key",
+        "decoy_key"
+      ],
+      "candidateNarrative": "桌上的钥匙轮廓与折断的原钥匙相似，却没有确认它就是原物。你先记录齿口的差异，决定之后查清它的来源。",
+      "patchHint": "后续需要给出复制钥匙的来源或可观察的制作线索。"
+    },
+    {
+      "id": "repairable_unknown_sound",
+      "expectedDecision": "allow_with_patch",
+      "variant": "repairable_environment",
+      "context": "石墙后有持续回声，来源未知；世界观允许暗槽，但尚未确认墙后存在房间。",
+      "branchState": "echo_observed=true; wall_room_confirmed=false; hidden_slot_allowed=true",
+      "playerAction": "我观察石墙上的缝隙。",
+      "resultContract": "可以描述回声和缝隙，但不得宣布找到暗槽或墙后房间。",
+      "allowedMechanisms": [
+        "hidden_slot",
+        "water_channel"
+      ],
+      "candidateNarrative": "石墙缝里传出闷闷的回声，像是从更深处折回来。你只确认缝隙存在，没有判断墙后是什么，随后记下了需要检查的位置。",
+      "patchHint": "后续通过敲击或取样确认回声来源，并承担暴露位置的风险。"
+    },
+    {
+      "id": "repairable_identity_glimpse",
+      "expectedDecision": "allow_with_patch",
+      "variant": "repairable_identity",
+      "context": "失踪的抄录员只被记录为疑似死亡，没有遗体；雨幕遮挡身份；世界观允许替身，但未确认替身出现。",
+      "branchState": "copyist_status=suspected_dead; body_confirmed=false; visibility=poor; identity_unresolved=true",
+      "playerAction": "我远远观察廊下的人影。",
+      "resultContract": "只能描述相似动作和不确定性，不确认身份或状态改变。",
+      "allowedMechanisms": [
+        "decoy",
+        "false_death",
+        "mistaken_identity"
+      ],
+      "candidateNarrative": "廊下的人影抬手的方式像那名抄录员，但雨幕遮住了脸。你只能记住这个相似处，不能确认他已经活着回来。",
+      "patchHint": "后续必须提供身份核验线索，并解释此前为何没有被发现。"
+    },
+    {
+      "id": "repairable_cold_draft_only",
+      "expectedDecision": "allow_with_patch",
+      "variant": "repairable_environment_refined",
+      "context": "封闭登记堂内确认有冷风贴近地面，但来源未知；没有确认门外下雨、有人或暗道。",
+      "branchState": "outer_door_closed=true; cold_draft_observed=true; source_of_draft=unknown",
+      "playerAction": "我观察门缝和地面。",
+      "resultContract": "只描述冷风、门缝和地面；不得新增门外天气、人物或已确认的来源。",
+      "allowedMechanisms": [
+        "hidden_vent",
+        "unseen_gap"
+      ],
+      "candidateNarrative": "冷风贴着你的鞋面掠过，门缝边积着细灰。你没有判断风从哪里来，只记下了这处异常，准备随后检查墙面和门缝。",
+      "patchHint": "后续用可观察线索确认冷风来源，不得直接宣布找到暗道。"
+    },
+    {
+      "id": "rewrite_unsupported_environment_claim",
+      "expectedDecision": "rewrite",
+      "variant": "unsupported_environment_claim",
+      "context": "封闭登记堂内确认有冷风贴近地面，但来源未知；没有确认门外下雨、有人或暗道。",
+      "branchState": "outer_door_closed=true; cold_draft_observed=true; source_of_draft=unknown",
+      "playerAction": "我观察门缝和地面。",
+      "resultContract": "只描述冷风、门缝和地面；不得新增门外天气、人物或已确认的来源。",
+      "allowedMechanisms": [
+        "hidden_vent",
+        "unseen_gap"
+      ],
+      "candidateNarrative": "门外的雨声从门缝里压进来，说明墙后一定连着一条通向暗河的通道。",
+      "patchHint": "缺少支持门外下雨和暗河的证据，必须保持未知或重写。"
+    },
+    {
+      "id": "fatal_guardian_revived",
+      "expectedDecision": "rewrite",
+      "variant": "hard_state_conflict",
+      "context": "守门人已确认死亡，遗体与记录均已核实；世界观没有复生机制。",
+      "branchState": "guardian_status=confirmed_dead; body_confirmed=true; resurrection_allowed=false",
+      "playerAction": "我观察守门处。",
+      "resultContract": "只能描述空岗、遗留物或其他人物，不得让守门人正常出现。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "守门人从阴影里走出来，像什么都没发生过一样向你挥手。"
+    },
+    {
+      "id": "fatal_consumed_artifact",
+      "expectedDecision": "rewrite",
+      "variant": "hard_state_conflict",
+      "context": "唯一的引路灯已在上一节点被消耗并从状态账本移除；不可复制、不可恢复。",
+      "branchState": "guide_lamp_consumed=true; guide_lamp_exists=false; duplicate_allowed=false",
+      "playerAction": "我查看祭台残留。",
+      "resultContract": "只能描述灰烬和余温，不得让引路灯重新点亮。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "祭台中央重新亮起那盏已经消耗掉的引路灯，火焰照亮了整座大厅。"
+    },
+    {
+      "id": "fatal_branch_jump",
+      "expectedDecision": "rewrite",
+      "variant": "future_branch_leak",
+      "context": "当前分支只公开登记堂和后坡试炼；兄弟分支才揭示黑塔入口，玩家尚未进入该分支。",
+      "branchState": "known_locations=[registration_hall,back_slope]; sibling_branch_locations=[black_tower]; sibling_branch_access=false",
+      "playerAction": "我询问后坡试炼的规则。",
+      "resultContract": "只能回应当前分支已公开的试炼规则，不得提及兄弟分支地点。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "值守者告诉你，真正的答案在兄弟分支的黑塔入口，那里已经有人替你安排好了一切。"
+    },
+    {
+      "id": "fatal_location_teleport",
+      "expectedDecision": "rewrite",
+      "variant": "state_conflict",
+      "context": "玩家仍在登记堂，铁门关闭；本回合只选择查看门上的刻痕。",
+      "branchState": "location=registration_hall; iron_gate=closed; transition_authorized=false",
+      "playerAction": "我查看铁门上的刻痕。",
+      "resultContract": "停留在登记堂观察，不转场。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你看完刻痕后已经站在白塔祭坛前，身后的登记堂和铁门都消失了。"
+    },
+    {
+      "id": "fatal_unrequested_attack",
+      "expectedDecision": "rewrite",
+      "variant": "agency_violation",
+      "context": "玩家只选择询问守卫，守卫没有攻击；当前没有授权战斗。",
+      "branchState": "guard_present=true; guard_hostile=false; player_action_scope=ask_only",
+      "playerAction": "我询问守卫登记规则。",
+      "resultContract": "只进行询问和回应，不拔武器、不伤害守卫。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你拔刀刺向守卫，在他倒下后夺走了门上的徽记。"
+    },
+    {
+      "id": "fatal_unrequested_item",
+      "expectedDecision": "rewrite",
+      "variant": "agency_violation",
+      "context": "玩家只选择观察柜台，柜台后的药瓶尚未被允许取得。",
+      "branchState": "counter_observed=true; elixir_available=true; item_take_authorized=false",
+      "playerAction": "我观察柜台。",
+      "resultContract": "描述药瓶和柜台即可，不拿取或饮用药瓶。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你伸手拿起药瓶一饮而尽，身体立刻恢复了力气。"
+    },
+    {
+      "id": "fatal_unrequested_exit",
+      "expectedDecision": "rewrite",
+      "variant": "agency_violation",
+      "context": "玩家选择等待回应，角色仍站在原地；本回合没有移动授权。",
+      "branchState": "location=archive_hall; movement_authorized=false; response_pending=true",
+      "playerAction": "我等着对方回应。",
+      "resultContract": "保持原地等待，不离开场景、不完成目标。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你转身离开登记堂，穿过长廊并完成了入门登记。"
+    },
+    {
+      "id": "fatal_private_code",
+      "expectedDecision": "rewrite",
+      "variant": "knowledge_leak",
+      "context": "只有玩家从密信中看到‘东井’暗号，NPC 没有观察或转述路径。",
+      "branchState": "secret_known_by=[player]; npc_knowledge_path=[]; relay_event=false",
+      "playerAction": "我把密信收好，不解释内容。",
+      "resultContract": "NPC 不得直接说出东井暗号。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "守卫立即说出东井暗号，并问你是否已经找到入口。"
+    },
+    {
+      "id": "fatal_future_person",
+      "expectedDecision": "rewrite",
+      "variant": "future_fact_leak",
+      "context": "祭司姓名只会在后续 beat 揭示；当前公开人物只有值守者和陆照临。",
+      "branchState": "known_characters=[guard,lu]; future_priest_name=unrevealed; future_reveal_allowed=false",
+      "playerAction": "我询问登记堂的负责者。",
+      "resultContract": "只能回应当前公开身份，不提前给出祭司姓名。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "值守者说祭司顾长庚马上会来替你处理这件事。"
+    },
+    {
+      "id": "fatal_other_branch_secret",
+      "expectedDecision": "rewrite",
+      "variant": "sibling_branch_leak",
+      "context": "另一个分支才公开旧王印的来源；当前分支只知道它是一件未登记物品。",
+      "branchState": "item_origin=unknown; sibling_branch_origin=old_king_seal; sibling_branch_visible=false",
+      "playerAction": "我观察手中的印记。",
+      "resultContract": "只描述外观和未知来源，不揭示兄弟分支答案。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你立刻想起旧王印的来源，并确认它来自被封存的王室宝库。"
+    },
+    {
+      "id": "reject_empty_evidence",
+      "expectedDecision": "reject",
+      "variant": "insufficient_evidence",
+      "context": "当前没有可用的场景事实或角色登记信息。",
+      "branchState": "evidence=[]; state_snapshot=missing",
+      "playerAction": "我询问眼前发生了什么。",
+      "resultContract": "证据不足时不得把任何解释写成事实。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "这里显然是旧王室的密室，守门人已经在等你。",
+      "reviewMeta": {
+        "evidenceSufficient": false
+      }
+    },
+    {
+      "id": "reject_conflicting_state",
+      "expectedDecision": "reject",
+      "variant": "conflicting_evidence",
+      "context": "一份未核实摘要说门已打开，但权威状态和现场证据都没有确认门的状态。",
+      "branchState": "authoritative_gate_state=unknown; summary_gate_state=open; evidence_conflict=true",
+      "playerAction": "我决定根据眼前情况继续。",
+      "resultContract": "冲突未解决前不得断言门开或门关。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "铁门已经打开，你毫不犹豫地走了进去。",
+      "reviewMeta": {
+        "evidenceConflict": true
+      }
+    },
+    {
+      "id": "reject_missing_contract",
+      "expectedDecision": "reject",
+      "variant": "missing_output_contract",
+      "context": "当前场景和状态可以读取，但本回合没有定义允许的行动范围或停止点。",
+      "branchState": "location=registration_hall; player_has_token=true; output_contract=missing",
+      "playerAction": "我继续处理眼前的事。",
+      "resultContract": "",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你打开铁门，走到另一座大厅并决定接受新的任务。",
+      "reviewMeta": {
+        "contractPresent": false
+      }
+    },
+    {
+      "id": "longctx_pass_consistent",
+      "expectedDecision": "allow",
+      "context": "铜牌当前由玩家持有；沈执事已说明登记堂在前方；玩家本回合只要求询问入口位置。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 pass_consistent；这是第 01 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "player_has_token=true; steward_alive=true; location=archive_hall; no_unresolved_anomaly=true; context_window=longform_stress; archived_note_count=31; variant_index=1; authoritative_source=case_state",
+      "playerAction": "我向沈执事询问登记堂入口的位置。",
+      "resultContract": "保留铜牌在玩家手中；完成一次询问；不移动地点；不新增未登记事实。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你没有移动铜牌，只抬眼问沈执事登记堂的入口。沈执事指向前方，说那里仍有人值守。",
+      "variant": "long_context_retrieval_noise",
+      "sourceCaseId": "pass_consistent",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_pass_long_context_noise",
+      "expectedDecision": "allow",
+      "variant": "long_context_retrieval_noise",
+      "context": "当前场景是登记堂。已确认木牌在玩家手中，陆照临在场且知道公开的白线规则，玩家只说明准备参加后坡试炼。\n无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：无关旧记录：\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 pass_long_context_noise；这是第 02 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "player_has_token=true; steward_alive=true; location=registration_hall; current_beat=trial_intent; unrelated_branch_secret=hidden; context_window=longform_stress; archived_note_count=31; variant_index=2; authoritative_source=case_state",
+      "playerAction": "我说明准备参加后坡试炼，暂不出发。",
+      "resultContract": "只陈述打算并等待回应；不得移动、战斗或揭示其他分支秘密。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你说明准备带着木牌参加后坡试炼，随后停在原地等陆照临回应。他只提醒你遵守当前已知的白线规则，没有替你决定下一步。",
+      "sourceCaseId": "pass_long_context_noise",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_pass_multi_character_scope",
+      "expectedDecision": "allow",
+      "variant": "long_context_retrieval_noise",
+      "context": "玩家、陆照临和沈砚秋都在登记堂；玩家只询问木牌登记依据。陆照临知道公开规则，沈砚秋负责登记。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 pass_multi_character_scope；这是第 03 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "location=registration_hall; player_has_token=true; lu_knows_public_rules=true; shen_is_registrar=true; context_window=longform_stress; archived_note_count=31; variant_index=3; authoritative_source=case_state",
+      "playerAction": "我询问木牌登记依据。",
+      "resultContract": "只允许两名 NPC 依据公开职责回应；玩家不移动、不交出木牌。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "沈砚秋指着登记册说明木牌需要核验，陆照临只补充他听过的公开规矩。你仍把木牌留在手里，没有作出下一步决定。",
+      "sourceCaseId": "pass_multi_character_scope",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_pass_style_noise_only",
+      "expectedDecision": "allow",
+      "variant": "long_context_retrieval_noise",
+      "context": "玩家已获得公开通行凭证，值守者在登记堂门口，当前只需要确认登记堂是否开放。没有状态冲突或隐藏事实。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 pass_style_noise_only；这是第 04 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "pass_granted=true; registration_hall_open=true; player_location=outer_hall; context_window=longform_stress; archived_note_count=31; variant_index=4; authoritative_source=case_state",
+      "playerAction": "我询问登记堂是否开放。",
+      "resultContract": "完成一次询问即可；不要移动或新增世界事实。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你再次确认登记堂是否开放，值守者点头回答已经开放。你听完答复，仍留在原地，没有新增行动。",
+      "sourceCaseId": "pass_style_noise_only",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_false_death_ambiguous",
+      "expectedDecision": "allow_with_patch",
+      "context": "沈执事在上一段被记录为疑似死亡；现场没有遗体确认；世界观允许假死或身外化身，但当前没有选择具体机制。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 false_death_ambiguous；这是第 05 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "steward_status=suspected_dead; body_confirmed=false; anomaly_mechanisms_allowed=true; context_window=longform_stress; archived_note_count=31; variant_index=5; authoritative_source=case_state",
+      "playerAction": "我查看门后的身影。",
+      "resultContract": "可以呈现相似身影或异常，但不得确认沈执事本人已经正常存活。",
+      "allowedMechanisms": [
+        "false_death",
+        "avatar",
+        "resurrection_ritual"
+      ],
+      "candidateNarrative": "门后的身影与沈执事极其相似，却隔着雨幕没有露出正脸。你只能确认那个人抬起了手，不能确认他究竟是不是已经死去的沈执事。",
+      "patchHint": "后续必须留下身份核验线索，并在有限回合内解释缺席原因。",
+      "variant": "long_context_retrieval_noise",
+      "sourceCaseId": "false_death_ambiguous",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_repairable_replica_key",
+      "expectedDecision": "allow_with_patch",
+      "variant": "long_context_retrieval_noise",
+      "context": "唯一的原钥匙已在账本中确认折断；世界观允许复制钥匙，但当前只看到一把外观相似的钥匙。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 repairable_replica_key；这是第 06 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "original_key_broken=true; original_key_repairable=false; copy_key_allowed=true; copy_origin=unknown; context_window=longform_stress; archived_note_count=31; variant_index=6; authoritative_source=case_state",
+      "playerAction": "我检查桌上的钥匙。",
+      "resultContract": "只能记录外观相似和来源未知，不得称其为原钥匙或使用它开门。",
+      "allowedMechanisms": [
+        "copy_key",
+        "decoy_key"
+      ],
+      "candidateNarrative": "桌上的钥匙轮廓与折断的原钥匙相似，却没有确认它就是原物。你先记录齿口的差异，决定之后查清它的来源。",
+      "patchHint": "后续需要给出复制钥匙的来源或可观察的制作线索。",
+      "sourceCaseId": "repairable_replica_key",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_repairable_identity_glimpse",
+      "expectedDecision": "allow_with_patch",
+      "variant": "long_context_retrieval_noise",
+      "context": "失踪的抄录员只被记录为疑似死亡，没有遗体；雨幕遮挡身份；世界观允许替身，但未确认替身出现。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 repairable_identity_glimpse；这是第 07 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "copyist_status=suspected_dead; body_confirmed=false; visibility=poor; identity_unresolved=true; context_window=longform_stress; archived_note_count=31; variant_index=7; authoritative_source=case_state",
+      "playerAction": "我远远观察廊下的人影。",
+      "resultContract": "只能描述相似动作和不确定性，不确认身份或状态改变。",
+      "allowedMechanisms": [
+        "decoy",
+        "false_death",
+        "mistaken_identity"
+      ],
+      "candidateNarrative": "廊下的人影抬手的方式像那名抄录员，但雨幕遮住了脸。你只能记住这个相似处，不能确认他已经活着回来。",
+      "patchHint": "后续必须提供身份核验线索，并解释此前为何没有被发现。",
+      "sourceCaseId": "repairable_identity_glimpse",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_repairable_cold_draft_only",
+      "expectedDecision": "allow_with_patch",
+      "variant": "long_context_retrieval_noise",
+      "context": "封闭登记堂内确认有冷风贴近地面，但来源未知；没有确认门外下雨、有人或暗道。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 repairable_cold_draft_only；这是第 08 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "outer_door_closed=true; cold_draft_observed=true; source_of_draft=unknown; context_window=longform_stress; archived_note_count=31; variant_index=8; authoritative_source=case_state",
+      "playerAction": "我观察门缝和地面。",
+      "resultContract": "只描述冷风、门缝和地面；不得新增门外天气、人物或已确认的来源。",
+      "allowedMechanisms": [
+        "hidden_vent",
+        "unseen_gap"
+      ],
+      "candidateNarrative": "冷风贴着你的鞋面掠过，门缝边积着细灰。你没有判断风从哪里来，只记下了这处异常，准备随后检查墙面和门缝。",
+      "patchHint": "后续用可观察线索确认冷风来源，不得直接宣布找到暗道。",
+      "sourceCaseId": "repairable_cold_draft_only",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_explicit_death_conflict",
+      "expectedDecision": "rewrite",
+      "context": "沈执事已确认死亡，遗体和死亡记录均已核实；当前世界观没有复生机制；玩家尚未获得任何相关线索。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 explicit_death_conflict；这是第 09 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "steward_status=confirmed_dead; body_confirmed=true; resurrection_allowed=false; context_window=longform_stress; archived_note_count=31; variant_index=9; authoritative_source=case_state",
+      "playerAction": "我观察门后的动静。",
+      "resultContract": "不得让沈执事本人再次正常出现；只能描述可疑声响或其他角色。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "沈执事从门后走出来，拍了拍肩上的雨水，笑着问你为什么还站在这里。",
+      "variant": "long_context_retrieval_noise",
+      "sourceCaseId": "explicit_death_conflict",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_unauthorized_agency",
+      "expectedDecision": "rewrite",
+      "context": "玩家本回合只选择观察走廊；角色尚未决定移动、交战或开启铁门；铁门仍处于关闭状态。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 unauthorized_agency；这是第 10 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "location=archive_hall; iron_gate=closed; player_action_scope=observe_only; context_window=longform_stress; archived_note_count=31; variant_index=10; authoritative_source=case_state",
+      "playerAction": "我先观察走廊。",
+      "resultContract": "停留在观察和感知；不得替玩家移动、开门或发动战斗。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你推开铁门，冲进走廊，拔刀击退了守卫，并在尽头找到了出口。",
+      "variant": "long_context_retrieval_noise",
+      "sourceCaseId": "unauthorized_agency",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_knowledge_leak",
+      "expectedDecision": "rewrite",
+      "context": "只有玩家看见过密信中的‘北井’暗号；沈执事、守卫和旁观者没有获知路径；当前没有转述事件。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 knowledge_leak；这是第 11 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "secret_known_by=[player]; steward_knows_secret=false; guards_knows_secret=false; relay_event=false; context_window=longform_stress; archived_note_count=31; variant_index=11; authoritative_source=case_state",
+      "playerAction": "我把密信收好，不向任何人解释。",
+      "resultContract": "NPC 只能依据公开观察或已登记信息行动；不得直接说出北井暗号。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "沈执事看着你收起密信，立即说出了北井暗号，并提醒你不要把它告诉守卫。",
+      "variant": "long_context_retrieval_noise",
+      "sourceCaseId": "knowledge_leak",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_future_beat_leak",
+      "expectedDecision": "rewrite",
+      "context": "后续 beat 才会揭示‘白塔祭坛’和祭司姓名；当前入口上下文没有公开这些内容；玩家只知道登记堂。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 future_beat_leak；这是第 12 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "known_locations=[archive_hall, registration_hall]; future_locations=[white_tower_altar]; future_priest_name=unrevealed; context_window=longform_stress; archived_note_count=31; variant_index=12; authoritative_source=case_state",
+      "playerAction": "我询问登记堂的路线。",
+      "resultContract": "正文只能使用当前已公开地点和人物，不得提前泄露未来剧情节点。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "沈执事告诉你，白塔祭坛的祭司顾长庚正在等你，那里才是解决登记问题的关键。",
+      "variant": "long_context_retrieval_noise",
+      "sourceCaseId": "future_beat_leak",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_rewrite_unsupported_environment_claim",
+      "expectedDecision": "rewrite",
+      "variant": "long_context_retrieval_noise",
+      "context": "封闭登记堂内确认有冷风贴近地面，但来源未知；没有确认门外下雨、有人或暗道。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 rewrite_unsupported_environment_claim；这是第 13 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "outer_door_closed=true; cold_draft_observed=true; source_of_draft=unknown; context_window=longform_stress; archived_note_count=31; variant_index=13; authoritative_source=case_state",
+      "playerAction": "我观察门缝和地面。",
+      "resultContract": "只描述冷风、门缝和地面；不得新增门外天气、人物或已确认的来源。",
+      "allowedMechanisms": [
+        "hidden_vent",
+        "unseen_gap"
+      ],
+      "candidateNarrative": "门外的雨声从门缝里压进来，说明墙后一定连着一条通向暗河的通道。",
+      "patchHint": "缺少支持门外下雨和暗河的证据，必须保持未知或重写。",
+      "sourceCaseId": "rewrite_unsupported_environment_claim",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_fatal_location_teleport",
+      "expectedDecision": "rewrite",
+      "variant": "long_context_retrieval_noise",
+      "context": "玩家仍在登记堂，铁门关闭；本回合只选择查看门上的刻痕。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 fatal_location_teleport；这是第 14 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "location=registration_hall; iron_gate=closed; transition_authorized=false; context_window=longform_stress; archived_note_count=31; variant_index=14; authoritative_source=case_state",
+      "playerAction": "我查看铁门上的刻痕。",
+      "resultContract": "停留在登记堂观察，不转场。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你看完刻痕后已经站在白塔祭坛前，身后的登记堂和铁门都消失了。",
+      "sourceCaseId": "fatal_location_teleport",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_reject_empty_evidence",
+      "expectedDecision": "reject",
+      "variant": "long_context_retrieval_noise",
+      "context": "当前没有可用的场景事实或角色登记信息。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 reject_empty_evidence；这是第 15 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "evidence=[]; state_snapshot=missing; context_window=longform_stress; archived_note_count=31; variant_index=15; authoritative_source=case_state",
+      "playerAction": "我询问眼前发生了什么。",
+      "resultContract": "证据不足时不得把任何解释写成事实。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "这里显然是旧王室的密室，守门人已经在等你。",
+      "reviewMeta": {
+        "evidenceSufficient": false
+      },
+      "sourceCaseId": "reject_empty_evidence",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_reject_conflicting_state",
+      "expectedDecision": "reject",
+      "variant": "long_context_retrieval_noise",
+      "context": "一份未核实摘要说门已打开，但权威状态和现场证据都没有确认门的状态。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 reject_conflicting_state；这是第 16 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "authoritative_gate_state=unknown; summary_gate_state=open; evidence_conflict=true; context_window=longform_stress; archived_note_count=31; variant_index=16; authoritative_source=case_state",
+      "playerAction": "我决定根据眼前情况继续。",
+      "resultContract": "冲突未解决前不得断言门开或门关。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "铁门已经打开，你毫不犹豫地走了进去。",
+      "reviewMeta": {
+        "evidenceConflict": true
+      },
+      "sourceCaseId": "reject_conflicting_state",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "longctx_reject_missing_contract",
+      "expectedDecision": "reject",
+      "variant": "long_context_retrieval_noise",
+      "context": "当前场景和状态可以读取，但本回合没有定义允许的行动范围或停止点。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 reject_missing_contract；这是第 17 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "location=registration_hall; player_has_token=true; output_contract=missing; context_window=longform_stress; archived_note_count=31; variant_index=17; authoritative_source=case_state",
+      "playerAction": "我继续处理眼前的事。",
+      "resultContract": "",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你打开铁门，走到另一座大厅并决定接受新的任务。",
+      "reviewMeta": {
+        "contractPresent": false
+      },
+      "sourceCaseId": "reject_missing_contract",
+      "labelNote": "沿用已复核案例标签，仅增加长上下文检索噪声。"
+    },
+    {
+      "id": "real_longctx_taixu_inform_rerun2",
+      "expectedDecision": "allow",
+      "context": "《太虚遗录》第一部，外门试炼当前 beat。玩家扮演顾长离，已确认手中有木牌和一粒包好的金屑；陆照临在场。玩家本回合只陈述准备带着金屑和木牌去后坡试炼、按规矩取青露草，暂不出发、不追问。公开规则包括日落前取回青露草、不得越过白线、不得争抢伤人。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 taixu_inform_rerun2；这是第 18 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "package=taixu-relics-part1@0.1.3; location=trial_field; player_has_token=true; player_has_gold_flake=true; lu_present=true; departure_authorized=false; bell_rung=false; context_window=longform_stress; archived_note_count=31; variant_index=18; authoritative_source=case_state",
+      "playerAction": "我说明准备带着这粒金屑和木牌去后坡试炼，按规矩取青露草；此刻只说明这个打算，听回应，不出发。",
+      "resultContract": "必须保留陈述打算、陆照临当场回应和原地停止点；不得把打算写成已经出发，不得替玩家作决定，不得新增未登记事实。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "“我打算先带着这粒金屑和木牌去后坡试炼，按规矩取青露草。”你把包着金屑的纸片和木牌一并按在掌心，话说得平直，没有绕弯，也没有追问他的来历。\n\n陆照临听完，目光在你掌上停了停，又抬回你脸上。他没有伸手，也没有追问金屑的事，只点了点头：“规矩我听过。日落前取回青露草，白线不能越，不能争抢伤人。”他顿了一下，语气不重，“你要带着它进去，是你的打算。我不拦你，也不替你拿主意。”\n\n他说完便不再多言，侧身让开半步，像是把路和决定都留在你这边。钟声还没响，你仍站在原地。",
+      "variant": "official_longform_long_context",
+      "sourceCaseId": "taixu_inform_rerun2",
+      "labelNote": "复用《太虚遗录》官方长篇真实候选正文，增加长上下文检索噪声。"
+    },
+    {
+      "id": "real_longctx_taixu_ask_basis_rerun1",
+      "expectedDecision": "allow",
+      "context": "《太虚遗录》第一部，外门试炼当前 beat。顾长离已经看见木牌刻痕中的金屑，并把一粒金屑包在纸里；陆照临在场，但没有亲眼看见金屑，也没有获知其来源。玩家只询问陆照临怎么看、有什么依据，不交出纸包、不移动。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 taixu_ask_basis_rerun1；这是第 19 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "package=taixu-relics-part1@0.1.3; location=trial_field; token_mark_observed=true; gold_flake_known_by=[player]; lu_saw_gold_flake=false; paper_packet_held=true; movement_authorized=false; context_window=longform_stress; archived_note_count=31; variant_index=19; authoritative_source=case_state",
+      "playerAction": "我向陆照临指出木牌刻痕里的金屑，只询问他怎么看、有什么依据，听完再决定。",
+      "resultContract": "保留玩家已观察到的金屑和纸包；陆照临只能说明自己看到的木头、黑泥和公开信息；双方留在原地。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你把木牌翻过来，指尖点在背面那道刻痕上。黑泥嵌在笔画里，不细看只当是旧木积垢。\n\n“刻痕里夹着金屑。”你说，声音压得不高，只够两个人听见，“我刮下一粒，包在纸里了。”\n\n纸包就捏在你另一只手里，薄薄一层，没有递出去的意思。陆照临的目光落在你指着的刻痕上，又抬起来看你，没伸手。\n\n“你怎么看？”你问，“有什么依据？”\n\n他沉默了一息，眉心微微收拢。然后他摇头。\n\n“我没见过这种木牌，也没听过刻痕里会夹金屑的事。”他说得平直，没有绕弯子，“你让我看，我只能看见黑泥和木头。金屑是你说的，我没亲眼见着，也认不出那是什么金、打哪儿来的。”他说完仍站在原地，纸包留在你掌心里。",
+      "variant": "official_longform_long_context",
+      "sourceCaseId": "taixu_ask_basis_rerun1",
+      "labelNote": "复用《太虚遗录》官方长篇真实候选正文，增加长上下文检索噪声。"
+    },
+    {
+      "id": "real_longctx_taixu_brief_wait_rerun3",
+      "expectedDecision": "allow",
+      "context": "《太虚遗录》第一部，外门试炼当前 beat。顾长离手里有木牌和包好的金屑；陆照临在原处；试炼钟尚未响。玩家要求收好物品、留在原地、暂不行动，等待钟响或回应。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 taixu_brief_wait_rerun3；这是第 20 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "package=taixu-relics-part1@0.1.3; location=trial_field; token_held=true; packet_held=true; lu_present=true; bell_rung=false; player_action_scope=wait_only; context_window=longform_stress; archived_note_count=31; variant_index=20; authoritative_source=case_state",
+      "playerAction": "我留在原地，把纸包和木牌收好，暂不行动，等试炼钟响或陆照临回应。",
+      "resultContract": "只写收好物品和等待；不得转场、提前写钟响、替玩家作决定或新增状态。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "纸包和木牌贴着掌心，还带着方才握紧的温度。你把纸包折口压平，连同木牌一并收进衣内，贴着腰侧放稳，手垂下来时顺势按了按，确认不会滑脱。\n\n石壁上的旧剑痕在余光里横斜，场边新弟子压低的交谈声时断时续。你留在原处，没有挪步，也没有开口。\n\n陆照临还站在你面前。他若开口，你听得见；钟若响，你也听得见。眼下两样都还没有来。",
+      "variant": "official_longform_long_context",
+      "sourceCaseId": "taixu_brief_wait_rerun3",
+      "labelNote": "复用《太虚遗录》官方长篇真实候选正文，增加长上下文检索噪声。"
+    },
+    {
+      "id": "real_longctx_taixu_empty_failed_draft",
+      "expectedDecision": "reject",
+      "context": "《太虚遗录》第一部，外门试炼当前 beat。上一轮真实模型请求没有产生候选正文，只有明确的生成失败回执。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 taixu_empty_failed_draft；这是第 21 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "package=taixu-relics-part1@0.1.3; draft_status=missing; no_candidate_text=true; context_window=longform_stress; archived_note_count=31; variant_index=21; authoritative_source=case_state",
+      "playerAction": "我留在原地等待。",
+      "resultContract": "没有候选正文时不得审核通过，也不得写入或回放。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "",
+      "reviewMeta": {
+        "evidenceSufficient": false
+      },
+      "variant": "official_longform_long_context",
+      "sourceCaseId": "taixu_empty_failed_draft",
+      "labelNote": "复用《太虚遗录》官方长篇真实候选正文，增加长上下文检索噪声。"
+    },
+    {
+      "id": "real_longcandidate_taixu_inform_rerun2",
+      "expectedDecision": "allow",
+      "context": "《太虚遗录》第一部，外门试炼当前 beat。玩家扮演顾长离，已确认手中有木牌和一粒包好的金屑；陆照临在场。玩家本回合只陈述准备带着金屑和木牌去后坡试炼、按规矩取青露草，暂不出发、不追问。公开规则包括日落前取回青露草、不得越过白线、不得争抢伤人。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 taixu_inform_rerun2；这是第 22 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "package=taixu-relics-part1@0.1.3; location=trial_field; player_has_token=true; player_has_gold_flake=true; lu_present=true; departure_authorized=false; bell_rung=false; context_window=longform_stress; archived_note_count=31; variant_index=22; authoritative_source=case_state",
+      "playerAction": "我说明准备带着这粒金屑和木牌去后坡试炼，按规矩取青露草；此刻只说明这个打算，听回应，不出发。",
+      "resultContract": "必须保留陈述打算、陆照临当场回应和原地停止点；不得把打算写成已经出发，不得替玩家作决定，不得新增未登记事实。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "“我打算先带着这粒金屑和木牌去后坡试炼，按规矩取青露草。”你把包着金屑的纸片和木牌一并按在掌心，话说得平直，没有绕弯，也没有追问他的来历。\n\n陆照临听完，目光在你掌上停了停，又抬回你脸上。他没有伸手，也没有追问金屑的事，只点了点头：“规矩我听过。日落前取回青露草，白线不能越，不能争抢伤人。”他顿了一下，语气不重，“你要带着它进去，是你的打算。我不拦你，也不替你拿主意。”\n\n他说完便不再多言，侧身让开半步，像是把路和决定都留在你这边。钟声还没响，你仍站在原地。\n\n你没有把这句话说成已经出发，也没有把木牌或纸包递给陆照临。他只依据公开的白线规则回应，说明日落前取回青露草、不能越界、不能争抢伤人。你把这些限制逐条记在心里，仍站在原来的位置，确认自己只是说明打算而不是执行行动。石壁那边没有新的召唤，后坡的路线也没有在这一刻自动展开。陆照临没有替你决定先后，也没有把金屑的来源说成自己知道的事实。你仍可以等钟响、继续询问，或者在下一回合再决定是否出发；这一回合到此停住。",
+      "variant": "official_longform_long_candidate",
+      "sourceCaseId": "taixu_inform_rerun2",
+      "labelNote": "复用官方长篇真实候选正文，并增加有证据的连续细节；不改变当前状态或停止点。"
+    },
+    {
+      "id": "real_longcandidate_taixu_ask_basis_rerun1",
+      "expectedDecision": "allow",
+      "context": "《太虚遗录》第一部，外门试炼当前 beat。顾长离已经看见木牌刻痕中的金屑，并把一粒金屑包在纸里；陆照临在场，但没有亲眼看见金屑，也没有获知其来源。玩家只询问陆照临怎么看、有什么依据，不交出纸包、不移动。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 taixu_ask_basis_rerun1；这是第 23 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "package=taixu-relics-part1@0.1.3; location=trial_field; token_mark_observed=true; gold_flake_known_by=[player]; lu_saw_gold_flake=false; paper_packet_held=true; movement_authorized=false; context_window=longform_stress; archived_note_count=31; variant_index=23; authoritative_source=case_state",
+      "playerAction": "我向陆照临指出木牌刻痕里的金屑，只询问他怎么看、有什么依据，听完再决定。",
+      "resultContract": "保留玩家已观察到的金屑和纸包；陆照临只能说明自己看到的木头、黑泥和公开信息；双方留在原地。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "你把木牌翻过来，指尖点在背面那道刻痕上。黑泥嵌在笔画里，不细看只当是旧木积垢。\n\n“刻痕里夹着金屑。”你说，声音压得不高，只够两个人听见，“我刮下一粒，包在纸里了。”\n\n纸包就捏在你另一只手里，薄薄一层，没有递出去的意思。陆照临的目光落在你指着的刻痕上，又抬起来看你，没伸手。\n\n“你怎么看？”你问，“有什么依据？”\n\n他沉默了一息，眉心微微收拢。然后他摇头。\n\n“我没见过这种木牌，也没听过刻痕里会夹金屑的事。”他说得平直，没有绕弯子，“你让我看，我只能看见黑泥和木头。金屑是你说的，我没亲眼见着，也认不出那是什么金、打哪儿来的。”他说完仍站在原地，纸包留在你掌心里。\n\n你把问题重新说了一遍，确认自己问的是依据，而不是要求他替你判断金屑的来历。陆照临仍只看见木牌、黑泥和你手中的纸包，没有伸手，也没有把玩家的观察当成自己的记忆。他能引用的只有已经公开的登记规则，至于刻痕里夹着什么、金屑从哪里来，他明确表示没有亲眼见过。你没有把纸包交给他，也没有把这句询问写成已经得到答案。两个人都留在原处，木牌仍在你的掌心，后坡试炼尚未开始，钟声也没有提前响起。接下来是否继续查问、是否要求核验，仍然留给玩家在下一步选择。",
+      "variant": "official_longform_long_candidate",
+      "sourceCaseId": "taixu_ask_basis_rerun1",
+      "labelNote": "复用官方长篇真实候选正文，并增加有证据的连续细节；不改变当前状态或停止点。"
+    },
+    {
+      "id": "real_longcandidate_taixu_brief_wait_rerun3",
+      "expectedDecision": "allow",
+      "context": "《太虚遗录》第一部，外门试炼当前 beat。顾长离手里有木牌和包好的金屑；陆照临在原处；试炼钟尚未响。玩家要求收好物品、留在原地、暂不行动，等待钟响或回应。\n\n【长上下文检索结果】\n归档检索片段 01-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 01-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 01-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 01-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 01-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 01-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 01-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 01-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 01-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 01-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 02-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 02-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 02-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 02-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 02-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 02-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 02-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 02-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 02-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 02-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n归档检索片段 03-01：当前包为 taixu-relics-part1@0.1.3；本段只读取当前分支，不把其他分支的结论写入当前事实。\n归档检索片段 03-02：当前场景的可见实体、位置、持有物和停止点由 branchState 与 resultContract 共同限定。\n归档检索片段 03-03：历史摘要可能包含已解决、未证实或只在兄弟分支出现的内容；归档摘要不具有当前权威性。\n归档检索片段 03-04：角色知识必须有当回合的观察、对话、登记或公开规则路径；玩家知道的内容不会自动传给 NPC。\n归档检索片段 03-05：未来 beat、未登记人物、未确认地点、未核实物品来源只能作为疑问或观察，不能写成确定事实。\n归档检索片段 03-06：可补丁异常必须保留不确定性，并留下机制、代价、线索或有限期限；补丁不能改写已经确认的状态。\n归档检索片段 03-07：玩家只授权本回合写明的动作。等待、询问、观察和陈述打算不等于移动、战斗、取物或完成目标。\n归档检索片段 03-08：短期风声、触感、光线和背景交谈属于中性描写，除非正文把它们升级为状态、因果或身份结论。\n归档检索片段 03-09：正式提交前仍需由本地代码检查包版本、分支、状态投影、事实登记和结果契约。\n归档检索片段 03-10：这份长上下文只用于压力测试输入边界，不能替代当前 state 中明确标记的 authoritative evidence。\n当前案例标识为 taixu_brief_wait_rerun3；这是第 24 个长上下文变体。以上归档材料只提供检索噪声，不能覆盖案例正文中的当前事实。",
+      "branchState": "package=taixu-relics-part1@0.1.3; location=trial_field; token_held=true; packet_held=true; lu_present=true; bell_rung=false; player_action_scope=wait_only; context_window=longform_stress; archived_note_count=31; variant_index=24; authoritative_source=case_state",
+      "playerAction": "我留在原地，把纸包和木牌收好，暂不行动，等试炼钟响或陆照临回应。",
+      "resultContract": "只写收好物品和等待；不得转场、提前写钟响、替玩家作决定或新增状态。",
+      "allowedMechanisms": [],
+      "candidateNarrative": "纸包和木牌贴着掌心，还带着方才握紧的温度。你把纸包折口压平，连同木牌一并收进衣内，贴着腰侧放稳，手垂下来时顺势按了按，确认不会滑脱。\n\n石壁上的旧剑痕在余光里横斜，场边新弟子压低的交谈声时断时续。你留在原处，没有挪步，也没有开口。\n\n陆照临还站在你面前。他若开口，你听得见；钟若响，你也听得见。眼下两样都还没有来。\n\n你又检查了一遍折口和木牌边缘，确认纸包没有松开，木牌也没有从手中滑落。石壁上的旧剑痕只停留在余光里，场边的人声时断时续，没有人因此向你发出新的要求。你没有根据这些声响判断有人靠近，也没有把冷风、光线或触感解释成新的机关。陆照临仍在原处，既没有主动替你推进试炼，也没有把尚未发生的回应写成已经发生。钟声尚未响起，等待条件没有改变；你只是完成收好物品和停在原地这两个动作。这一段保持在可观察的现在时，后续是否继续等待，仍由玩家决定。",
+      "variant": "official_longform_long_candidate",
+      "sourceCaseId": "taixu_brief_wait_rerun3",
+      "labelNote": "复用官方长篇真实候选正文，并增加有证据的连续细节；不改变当前状态或停止点。"
+    }
+  ]
+}

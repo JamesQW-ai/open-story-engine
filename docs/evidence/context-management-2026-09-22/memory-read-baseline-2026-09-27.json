@@ -1,0 +1,561 @@
+{
+  "schemaVersion": "memory-read-benchmark/1",
+  "semanticAcceptance": false,
+  "databaseMeasured": true,
+  "modelCalls": 0,
+  "mode": "offline_synthetic_ledgers_official_text",
+  "scope": "read-only SQLite lineage + module resolve + memory select + bundle + chapter JSON; excludes API turn setup, budget and model",
+  "python": "3.12.14",
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "sourceHashes": {
+    "test_support/dynamic_memory_read_benchmark.py": "e293d2bd9063547424864d365546146682a9407fda635f1416b0efb5a2da863a",
+    "test_support/dynamic_memory_benchmark.py": "b1bd9a515409482dcf0204f8b93bd35710f91d404dbccae1bb29294f9e635091",
+    "open_story_engine/dynamic_memory.py": "53da0a236335243468848df256b8e64e93d7417466c176de163eb31358843632",
+    "open_story_engine/storage.py": "17068aefbf72206baab41e10219e0f165f0edd014fdadf389fe6f468094181ee",
+    "open_story_engine/module_context.py": "92d08f045fcd7e17f2c33ec29cb87b1c5c5c3234ecd47535be486e4a5b78411b",
+    "open_story_engine/context_bundle.py": "d4db048b4fd07c01e98f8d5c4ab81fb5b07be3e48ddad4b86ab60163502d8521",
+    "open_story_engine/api_read.py": "c9dcf55153a8fa7761ab47293cb08441c3ab978ef791f5d880d9393a0e2a7889"
+  },
+  "rows": [
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "goal",
+      "turns": 32,
+      "repeats": 5,
+      "fixtureInputSha256": "2e9cc674497d8fe37a74859c5d83afcb79ad7a312a26760943f28c1866c85fce",
+      "databaseBytes": 442368,
+      "databaseUnchanged": true,
+      "finalLedgerEntries": 24,
+      "timings": [
+        {
+          "readMs": 1.733791,
+          "resolveMs": 5.870125,
+          "selectMs": 1.8715,
+          "bundleMs": 1.256625,
+          "projectMs": 0.1635,
+          "totalMs": 10.895541
+        },
+        {
+          "readMs": 2.157125,
+          "resolveMs": 0.60625,
+          "selectMs": 1.818917,
+          "bundleMs": 1.188375,
+          "projectMs": 0.156167,
+          "totalMs": 5.926834
+        },
+        {
+          "readMs": 1.735708,
+          "resolveMs": 0.588292,
+          "selectMs": 1.8185,
+          "bundleMs": 1.287958,
+          "projectMs": 0.154333,
+          "totalMs": 5.584791
+        },
+        {
+          "readMs": 1.693458,
+          "resolveMs": 0.589958,
+          "selectMs": 1.814959,
+          "bundleMs": 1.21025,
+          "projectMs": 0.154833,
+          "totalMs": 5.463458
+        },
+        {
+          "readMs": 1.666833,
+          "resolveMs": 0.626542,
+          "selectMs": 2.03375,
+          "bundleMs": 1.295625,
+          "projectMs": 0.159583,
+          "totalMs": 5.782333
+        }
+      ],
+      "metrics": {
+        "readMs": {
+          "medianMs": 1.733791,
+          "p95Ms": 2.157125
+        },
+        "resolveMs": {
+          "medianMs": 0.60625,
+          "p95Ms": 5.870125
+        },
+        "selectMs": {
+          "medianMs": 1.818917,
+          "p95Ms": 2.03375
+        },
+        "bundleMs": {
+          "medianMs": 1.256625,
+          "p95Ms": 1.295625
+        },
+        "projectMs": {
+          "medianMs": 0.156167,
+          "p95Ms": 0.1635
+        },
+        "totalMs": {
+          "medianMs": 5.782333,
+          "p95Ms": 10.895541
+        }
+      },
+      "selectedSources": [
+        "memory:goal:memory-bench-31:goal-97dfd1f3809d2156"
+      ],
+      "selectedCount": 1,
+      "memoryChars": 22,
+      "chapterChars": 4754,
+      "chapterSha256": "8cca378670d11739d58c9ead83435bbdecabffcb0440019e12f0ca53f6e5cfc5",
+      "bundleSha256": "6653c142a0070ad4a8cd83c09f3644e0dae8a1139ae3db3202c3e47aa5ee44ac",
+      "uniqueBodies": 32
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "goal",
+      "turns": 128,
+      "repeats": 5,
+      "fixtureInputSha256": "049aaac57db8b65880e755a5ccecadbc50216388c391c837bcedc7cc1468de25",
+      "databaseBytes": 3297280,
+      "databaseUnchanged": true,
+      "finalLedgerEntries": 96,
+      "timings": [
+        {
+          "readMs": 14.601917,
+          "resolveMs": 5.259958,
+          "selectMs": 7.472209,
+          "bundleMs": 3.494458,
+          "projectMs": 0.358792,
+          "totalMs": 31.187334
+        },
+        {
+          "readMs": 24.113958,
+          "resolveMs": 0.653,
+          "selectMs": 7.4885,
+          "bundleMs": 3.010709,
+          "projectMs": 0.358583,
+          "totalMs": 35.62475
+        },
+        {
+          "readMs": 14.075459,
+          "resolveMs": 0.644833,
+          "selectMs": 7.450583,
+          "bundleMs": 2.956542,
+          "projectMs": 0.365542,
+          "totalMs": 25.492959
+        },
+        {
+          "readMs": 13.999208,
+          "resolveMs": 0.637959,
+          "selectMs": 7.458583,
+          "bundleMs": 3.102292,
+          "projectMs": 0.35675,
+          "totalMs": 25.554792
+        },
+        {
+          "readMs": 14.729917,
+          "resolveMs": 0.643833,
+          "selectMs": 7.542958,
+          "bundleMs": 3.312167,
+          "projectMs": 0.399958,
+          "totalMs": 26.628833
+        }
+      ],
+      "metrics": {
+        "readMs": {
+          "medianMs": 14.601917,
+          "p95Ms": 24.113958
+        },
+        "resolveMs": {
+          "medianMs": 0.644833,
+          "p95Ms": 5.259958
+        },
+        "selectMs": {
+          "medianMs": 7.472209,
+          "p95Ms": 7.542958
+        },
+        "bundleMs": {
+          "medianMs": 3.102292,
+          "p95Ms": 3.494458
+        },
+        "projectMs": {
+          "medianMs": 0.358792,
+          "p95Ms": 0.399958
+        },
+        "totalMs": {
+          "medianMs": 26.628833,
+          "p95Ms": 35.62475
+        }
+      },
+      "selectedSources": [
+        "memory:goal:memory-bench-127:goal-bc7f3b59610b70bf"
+      ],
+      "selectedCount": 1,
+      "memoryChars": 22,
+      "chapterChars": 4691,
+      "chapterSha256": "85bd14016aaa35ab8873cadd08cf53ec6818af6366a0356f07de54864ec891b7",
+      "bundleSha256": "d3d7c951a4e37678ee9ff21570f9e0d08183213156c2ae6e5666600d05201180",
+      "uniqueBodies": 128
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "goal",
+      "turns": 512,
+      "repeats": 5,
+      "fixtureInputSha256": "0bce690313c700afe5de44f2648e282ba33c264413e7b4ebbae4703ccbcd75b3",
+      "databaseBytes": 42598400,
+      "databaseUnchanged": true,
+      "finalLedgerEntries": 384,
+      "timings": [
+        {
+          "readMs": 248.898208,
+          "resolveMs": 5.294167,
+          "selectMs": 36.5235,
+          "bundleMs": 10.168417,
+          "projectMs": 1.146333,
+          "totalMs": 302.030625
+        },
+        {
+          "readMs": 407.364666,
+          "resolveMs": 0.655209,
+          "selectMs": 35.945416,
+          "bundleMs": 10.135167,
+          "projectMs": 1.160542,
+          "totalMs": 455.261
+        },
+        {
+          "readMs": 294.457375,
+          "resolveMs": 0.655291,
+          "selectMs": 36.826792,
+          "bundleMs": 10.348792,
+          "projectMs": 1.148583,
+          "totalMs": 343.436833
+        },
+        {
+          "readMs": 422.296959,
+          "resolveMs": 0.652125,
+          "selectMs": 36.589541,
+          "bundleMs": 10.321667,
+          "projectMs": 1.149,
+          "totalMs": 471.009292
+        },
+        {
+          "readMs": 300.703084,
+          "resolveMs": 0.656083,
+          "selectMs": 36.371208,
+          "bundleMs": 10.147375,
+          "projectMs": 1.156125,
+          "totalMs": 349.033875
+        }
+      ],
+      "metrics": {
+        "readMs": {
+          "medianMs": 300.703084,
+          "p95Ms": 422.296959
+        },
+        "resolveMs": {
+          "medianMs": 0.655291,
+          "p95Ms": 5.294167
+        },
+        "selectMs": {
+          "medianMs": 36.5235,
+          "p95Ms": 36.826792
+        },
+        "bundleMs": {
+          "medianMs": 10.168417,
+          "p95Ms": 10.348792
+        },
+        "projectMs": {
+          "medianMs": 1.149,
+          "p95Ms": 1.160542
+        },
+        "totalMs": {
+          "medianMs": 349.033875,
+          "p95Ms": 471.009292
+        }
+      },
+      "selectedSources": [
+        "memory:goal:memory-bench-511:goal-0c14539111e1f006"
+      ],
+      "selectedCount": 1,
+      "memoryChars": 22,
+      "chapterChars": 4653,
+      "chapterSha256": "3d4509caa145e5b1f64af290daa53637b5576a0b7f78eb4fbe559d174f22d86b",
+      "bundleSha256": "5fcf57014e06f3526970112296bf4a8548f6f18b6ac54cbf0545483ec77ce588",
+      "uniqueBodies": 512
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "thread",
+      "turns": 32,
+      "repeats": 5,
+      "fixtureInputSha256": "79e456e0e770eeb96fb2b5e7f8b5eb91b49c5b693ed40780e435e0cdb8d94288",
+      "databaseBytes": 454656,
+      "databaseUnchanged": true,
+      "finalLedgerEntries": 26,
+      "timings": [
+        {
+          "readMs": 1.949875,
+          "resolveMs": 5.180833,
+          "selectMs": 1.87775,
+          "bundleMs": 1.369958,
+          "projectMs": 0.16025,
+          "totalMs": 10.538666
+        },
+        {
+          "readMs": 1.933333,
+          "resolveMs": 0.64425,
+          "selectMs": 2.0255,
+          "bundleMs": 1.292125,
+          "projectMs": 0.162417,
+          "totalMs": 6.057625
+        },
+        {
+          "readMs": 1.838791,
+          "resolveMs": 0.627084,
+          "selectMs": 1.867833,
+          "bundleMs": 1.267,
+          "projectMs": 0.164042,
+          "totalMs": 5.76475
+        },
+        {
+          "readMs": 1.953042,
+          "resolveMs": 0.7005,
+          "selectMs": 1.932541,
+          "bundleMs": 1.283375,
+          "projectMs": 0.161,
+          "totalMs": 6.030458
+        },
+        {
+          "readMs": 2.118917,
+          "resolveMs": 0.620292,
+          "selectMs": 1.892125,
+          "bundleMs": 1.242291,
+          "projectMs": 0.162084,
+          "totalMs": 6.035709
+        }
+      ],
+      "metrics": {
+        "readMs": {
+          "medianMs": 1.949875,
+          "p95Ms": 2.118917
+        },
+        "resolveMs": {
+          "medianMs": 0.64425,
+          "p95Ms": 5.180833
+        },
+        "selectMs": {
+          "medianMs": 1.892125,
+          "p95Ms": 2.0255
+        },
+        "bundleMs": {
+          "medianMs": 1.283375,
+          "p95Ms": 1.369958
+        },
+        "projectMs": {
+          "medianMs": 0.162084,
+          "p95Ms": 0.164042
+        },
+        "totalMs": {
+          "medianMs": 6.035709,
+          "p95Ms": 10.538666
+        }
+      },
+      "selectedSources": [
+        "memory:thread:memory-bench-31:thread-97dfd1f3809d2156"
+      ],
+      "selectedCount": 1,
+      "memoryChars": 24,
+      "chapterChars": 4760,
+      "chapterSha256": "b73754296c4ffd05f682a09583a43c31b2a16f39f0cc5792e7cbab8831784428",
+      "bundleSha256": "a202785239050961d30186adf02d388a42f5e721fadf0bce7fd2dd962f27002f",
+      "uniqueBodies": 32
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "thread",
+      "turns": 128,
+      "repeats": 5,
+      "fixtureInputSha256": "538c33c2e58abb79e48c41334d69c0dd4beb4382ef2143c9d31b2326932b8706",
+      "databaseBytes": 3461120,
+      "databaseUnchanged": true,
+      "finalLedgerEntries": 98,
+      "timings": [
+        {
+          "readMs": 13.474833,
+          "resolveMs": 5.233625,
+          "selectMs": 7.56725,
+          "bundleMs": 3.374542,
+          "projectMs": 0.374458,
+          "totalMs": 30.024708
+        },
+        {
+          "readMs": 13.698292,
+          "resolveMs": 0.653,
+          "selectMs": 7.9005,
+          "bundleMs": 3.409833,
+          "projectMs": 0.401417,
+          "totalMs": 26.063042
+        },
+        {
+          "readMs": 14.371958,
+          "resolveMs": 0.689375,
+          "selectMs": 7.817209,
+          "bundleMs": 3.506,
+          "projectMs": 0.404333,
+          "totalMs": 26.788875
+        },
+        {
+          "readMs": 14.212791,
+          "resolveMs": 0.667584,
+          "selectMs": 7.583166,
+          "bundleMs": 3.508125,
+          "projectMs": 0.381625,
+          "totalMs": 26.353291
+        },
+        {
+          "readMs": 13.884625,
+          "resolveMs": 0.645458,
+          "selectMs": 7.547125,
+          "bundleMs": 3.576542,
+          "projectMs": 0.382375,
+          "totalMs": 26.036125
+        }
+      ],
+      "metrics": {
+        "readMs": {
+          "medianMs": 13.884625,
+          "p95Ms": 14.371958
+        },
+        "resolveMs": {
+          "medianMs": 0.667584,
+          "p95Ms": 5.233625
+        },
+        "selectMs": {
+          "medianMs": 7.583166,
+          "p95Ms": 7.9005
+        },
+        "bundleMs": {
+          "medianMs": 3.506,
+          "p95Ms": 3.576542
+        },
+        "projectMs": {
+          "medianMs": 0.382375,
+          "p95Ms": 0.404333
+        },
+        "totalMs": {
+          "medianMs": 26.353291,
+          "p95Ms": 30.024708
+        }
+      },
+      "selectedSources": [
+        "memory:thread:memory-bench-127:thread-bc7f3b59610b70bf"
+      ],
+      "selectedCount": 1,
+      "memoryChars": 24,
+      "chapterChars": 4697,
+      "chapterSha256": "55c6b3c510510c266f7223cfea445174189b3a5100499550c79c2956bffb8889",
+      "bundleSha256": "54b8e95b093e9135d73111aa1cb51e26917016b03441efb46fcefa19f11d72b7",
+      "uniqueBodies": 128
+    },
+    {
+      "packageId": "taixu-relics-part1",
+      "packageVersion": "0.1.3",
+      "novelCjk": 102610,
+      "sourceSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+      "profile": "thread",
+      "turns": 512,
+      "repeats": 5,
+      "fixtureInputSha256": "2f11ac7b84ed1c6ba71a229c6d4581e0758fe8f63c1d3c44a18df377d8d42e13",
+      "databaseBytes": 45228032,
+      "databaseUnchanged": true,
+      "finalLedgerEntries": 386,
+      "timings": [
+        {
+          "readMs": 173.562,
+          "resolveMs": 5.523583,
+          "selectMs": 36.614375,
+          "bundleMs": 10.959167,
+          "projectMs": 1.2665,
+          "totalMs": 227.925625
+        },
+        {
+          "readMs": 175.431125,
+          "resolveMs": 0.667875,
+          "selectMs": 37.522875,
+          "bundleMs": 11.253417,
+          "projectMs": 1.227625,
+          "totalMs": 226.102917
+        },
+        {
+          "readMs": 171.598292,
+          "resolveMs": 0.661666,
+          "selectMs": 36.336334,
+          "bundleMs": 10.984916,
+          "projectMs": 1.236667,
+          "totalMs": 220.817875
+        },
+        {
+          "readMs": 188.38425,
+          "resolveMs": 0.659417,
+          "selectMs": 37.051333,
+          "bundleMs": 11.307458,
+          "projectMs": 1.224292,
+          "totalMs": 238.62675
+        },
+        {
+          "readMs": 184.547458,
+          "resolveMs": 0.658875,
+          "selectMs": 37.109417,
+          "bundleMs": 10.979166,
+          "projectMs": 1.293417,
+          "totalMs": 234.588333
+        }
+      ],
+      "metrics": {
+        "readMs": {
+          "medianMs": 175.431125,
+          "p95Ms": 188.38425
+        },
+        "resolveMs": {
+          "medianMs": 0.661666,
+          "p95Ms": 5.523583
+        },
+        "selectMs": {
+          "medianMs": 37.051333,
+          "p95Ms": 37.522875
+        },
+        "bundleMs": {
+          "medianMs": 10.984916,
+          "p95Ms": 11.307458
+        },
+        "projectMs": {
+          "medianMs": 1.236667,
+          "p95Ms": 1.293417
+        },
+        "totalMs": {
+          "medianMs": 227.925625,
+          "p95Ms": 238.62675
+        }
+      },
+      "selectedSources": [
+        "memory:thread:memory-bench-511:thread-0c14539111e1f006"
+      ],
+      "selectedCount": 1,
+      "memoryChars": 24,
+      "chapterChars": 4659,
+      "chapterSha256": "13d305f55264db7046681f8a4737dc6b66f84cb1fd10b90a437c53639ad067e4",
+      "bundleSha256": "0ef93587251e99bc088735eedea8c6bb937af6373307e3dc80ca146e91b90d09",
+      "uniqueBodies": 512
+    }
+  ]
+}

@@ -68,6 +68,7 @@ class PackageList(BaseModel):
 
 class PublishedScene(BaseModel):
     id: str
+    asset_key: str | None = None
     url: str
     alt: str
     source: Literal["published"]
@@ -563,7 +564,7 @@ class PlayContinueRequest(RequestModel):
     parent_branch_id: str = Field(min_length=1, max_length=200)
     direction_id: str | None = Field(default=None, min_length=1, max_length=200)
     text: str | None = Field(default=None, min_length=1, max_length=2000)
-    request_id: str | None = Field(default=None, min_length=1, max_length=100)
+    request_id: str = Field(min_length=1, max_length=100)
 
 
 class PlayContinueResponse(BaseModel):

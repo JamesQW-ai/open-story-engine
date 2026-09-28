@@ -1,5 +1,6 @@
 """Scene-independent action authority and evidence-bound entity changes."""
 import math
+import re
 
 from .prompts import render_prompt
 from . import item_lifecycle
@@ -19,6 +20,22 @@ PLAN_RULES = render_prompt('actions.plan')
 OBSERVE_RULES = render_prompt('actions.observe')
 
 REVIEW_RULES = render_prompt('actions.review')
+
+
+_WAIT_MARKER = re.compile(r'(?:等|等待|候着|候)')
+_INITIATION_MARKER = re.compile(r'(?:询问|追问|发问|告诉|说明|指出|展示|请求|交出|解释|邀请|通知)')
+
+
+def _wait_only_intent(requirements):
+    """Identify a turn that only waits for a future condition or reply."""
+    texts = []
+    for requirement in (requirements or {}).values():
+        if isinstance(requirement, dict):
+            requirement = requirement.get('summary', '')
+        if isinstance(requirement, str):
+            texts.append(requirement)
+    text = '；'.join(texts)
+    return bool(_WAIT_MARKER.search(text)) and not _INITIATION_MARKER.search(text)
 
 
 def registry(package, state, introductions=None):
@@ -120,6 +137,10 @@ def validate_plan(plan, context):
         if step['authority'] == 'player' and step.get('actorId') != context['contract']['persona'].get('sourceCharacterId'):
             raise ValueError('玩家授权步骤的主体必须是玩家')
         seen.add(step['id'])
+    if (context.get('narrativePolicy') != 'context_only'
+            and _wait_only_intent(plan.get('requirements'))
+            and any(step.get('authority') == 'reaction' for step in steps)):
+        raise ValueError('等待条件尚未满足：等待型行动本回合只能记录玩家的等待与收束，不能提前写入NPC或环境反应')
     for entity in introductions(plan):
         if not isinstance(entity.get('sourceStepId'), str) or entity['sourceStepId'] not in seen:
             raise ValueError('新增实体必须有实际形成或出现的步骤')
@@ -252,7 +273,11 @@ def validate_observations(data, body, required_paragraphs=None):
 
 
 def validate_events(review, events, plan, state=None, package=None):
-    checks = review.get('eventChecks')
+    return validate_event_links(review.get('eventChecks'), events, plan, state, package, require_verdict=True)
+
+
+def validate_event_links(checks, events, plan, state=None, package=None, *, require_verdict=False):
+    """Validate typed event/state references; quality verdicts are legacy-only."""
     if not isinstance(checks, list) or len(checks) != len(events):
         raise ValueError('通用行动审查未逐项覆盖实际事件')
     by_id = {c.get('id'): c for c in checks if isinstance(c, dict) and isinstance(c.get('id'), str)}
@@ -265,7 +290,7 @@ def validate_events(review, events, plan, state=None, package=None):
     # Semantic rejection takes precedence over a repairable reference typo.
     for event in events:
         check = by_id[event['id']]
-        if check.get('verdict') != 'supported':
+        if require_verdict and check.get('verdict') != 'supported':
             raise ValueError('正文越出行动契约：' + str(check.get('reason', event['summary'])))
         # Static descriptions of a body are still valid actual events. Current
         # speech/thought is different from a recalled or hypothetical utterance.
@@ -318,8 +343,15 @@ def validate_events(review, events, plan, state=None, package=None):
                 continue
             observed_values[key] = observed.get('value')
             matches = [changes[r] for r in check['changeIds'] if changes[r]['entityId'] == observed.get('entityId') and changes[r]['attribute'] == observed.get('attribute')]
-            if observed.get('attribute') in ('locationId', 'ownerCharacterId') or type(observed.get('value')) is not str:
+            # The extractor uses boolean true as a presence marker for a
+            # newly registered custom knowledge/state attribute. Structural
+            # fields and all other scalar values still require exact matches.
+            exact_value = (observed.get('attribute') in ('locationId', 'ownerCharacterId', item_lifecycle.ATTRIBUTE)
+                           or (type(observed.get('value')) is not str and observed.get('value') is not True))
+            if exact_value:
                 matches = [c for c in matches if c['value'] == observed.get('value')]
+            elif observed.get('value') is True:
+                matches = [c for c in matches if c['value'] is not None]
             # Outcomes/goals have their own immutable state and evidence gate.
             specialized = (observed.get('attribute') == 'outcome' and any(o['characterId'] == observed.get('entityId') and o['status'] == observed.get('value') for o in plan['outcomes'])) or (observed.get('attribute') == 'goal' and bool(plan['goalUpdates']))
             if not matches and not specialized:

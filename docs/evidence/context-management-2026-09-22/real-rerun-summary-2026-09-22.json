@@ -1,0 +1,107 @@
+{
+  "schema": "context-real-rerun/0.1",
+  "recordedAt": "2026-09-22",
+  "purpose": "修复后三类真实模型场景定向重审",
+  "baselineSourceDirectory": "/tmp/open-story-engine-context-baseline-20260922/real-baseline-runs",
+  "promptVersion": "prompt-catalog/1:638cb42bf5b1c0487f60c80c444d65c49c340d41b96a451e441879588cad08be",
+  "formalDatabase": "/Users/James/open-story-engine/data/open-story-engine.sqlite",
+  "scenes": [
+    {
+      "id": "inform",
+      "status": "written",
+      "elapsedSeconds": 52.51,
+      "firstTextMs": 17810,
+      "actualCjk": 197,
+      "error": null,
+      "code": null,
+      "branchId": "branch_257a2c4e-64f9-476f-9fa9-eb2227583c9a",
+      "metrics": {
+        "first_text_ms": 17594,
+        "ready_hit": false,
+        "selection_count": 1,
+        "ready_hits": 0,
+        "queue_ms": 1,
+        "complete_ms": 52084,
+        "reported_tokens": 78142,
+        "calls": 14,
+        "unreported_calls": 0,
+        "tokens": 78142,
+        "commit_ms": 205,
+        "committed": true,
+        "result_reused": false,
+        "committed_branch_id": "branch_257a2c4e-64f9-476f-9fa9-eb2227583c9a",
+        "selection_to_complete_ms": 52513
+      },
+      "narrativeText": "石壁上的旧剑痕在日头下泛着浅白，场边新弟子压低的说话声时起时落。你把手按在腰间，木牌和那包金屑都还在。\n\n“我打算先带着这粒金屑和木牌去后坡试炼，按规矩取青露草。”你看着陆照临，只把这句话说出来，没有多问别的。\n\n陆照临听完，眉头动了一下，目光在你腰间停了一瞬，又收回去。他没有立刻接话，像是先把这句话在心里过了一遍。\n\n“带着去，倒也不碍规矩。”他开口时声音不高，“只是那金屑的来路，我确实不知道。”\n\n他说完便不再往下讲，也没有催你动身，只站在原地，等着看你怎么接。"
+    },
+    {
+      "id": "ask_basis",
+      "status": "written",
+      "elapsedSeconds": 180.26,
+      "firstTextMs": 12550,
+      "actualCjk": 275,
+      "error": null,
+      "code": null,
+      "branchId": "branch_ddc4683d-dd1b-4015-ae9b-812f95ce10bc",
+      "metrics": {
+        "first_text_ms": 12374,
+        "ready_hit": false,
+        "selection_count": 1,
+        "ready_hits": 0,
+        "queue_ms": 1,
+        "complete_ms": 179862,
+        "reported_tokens": 74110,
+        "calls": 14,
+        "unreported_calls": 1,
+        "tokens": null,
+        "commit_ms": 211,
+        "committed": true,
+        "result_reused": false,
+        "committed_branch_id": "branch_ddc4683d-dd1b-4015-ae9b-812f95ce10bc",
+        "selection_to_complete_ms": 180255
+      },
+      "narrativeText": "你把木牌翻过来，指尖点在背面那道刻痕上。黑泥嵌在笔画里，不细看只当是旧木积垢。\n\n“刻痕里夹着金屑。”你说，声音压得不高，只够两个人听见，“我刮下一粒，包在纸里了。”\n\n纸包就捏在你另一只手里，薄薄一层，没有递出去的意思。陆照临的目光落在你指着的刻痕上，又抬起来看你，没伸手。\n\n“你怎么看？”你问，“有什么依据？”\n\n他沉默了一息，眉心微微收拢。然后他摇头。\n\n“我没见过这种木牌，也没听过刻痕里会夹金屑的事。”他说得平直，没有绕弯子，“你让我看，我只能看见黑泥和木头。金屑是你说的，我没亲眼见着，也认不出那是什么金、打哪儿来的。”\n\n他顿了一下，又补一句：“要我说依据——没有。我答不上来。”\n\n风从石壁那边过来，吹得你袖口贴了贴手腕。钟还没响。他站在原地没动，你也没动，纸包仍在你掌心里。"
+    },
+    {
+      "id": "brief_wait",
+      "status": "failed",
+      "elapsedSeconds": 11.99,
+      "firstTextMs": null,
+      "actualCjk": 0,
+      "error": "这次续写未能完成，请重试或调整行动。",
+      "code": "generation_failed",
+      "branchId": null,
+      "metrics": {
+        "first_text_ms": null,
+        "ready_hit": false,
+        "selection_count": 1,
+        "ready_hits": 0,
+        "queue_ms": 1,
+        "complete_ms": 11806,
+        "reported_tokens": 17513,
+        "calls": 2,
+        "unreported_calls": 0,
+        "tokens": 17513
+      },
+      "narrativeText": ""
+    }
+  ],
+  "evidenceDirectory": "/tmp/open-story-engine-context-reruns-20260922",
+  "reviewFindings": [
+    {
+      "scene": "inform",
+      "status": "written_and_gate_passed",
+      "finding": "原先跨引文拼接的“后坡药圃在白线以内”未再出现；正文仍有“日头下泛着浅白”“场边新弟子压低的说话声”“带着去不碍规矩”等缺少明确公开依据的表达，需保留人工质量问题。"
+    },
+    {
+      "scene": "ask_basis",
+      "status": "written_and_gate_passed",
+      "finding": "同回合 NPC 知识状态已成功提交，正文明确保留“金屑是你说的，我没亲眼见着”的知识边界；“薄薄一层”“旧木积垢”等细节仍需人工判断是否有依据。"
+    },
+    {
+      "scene": "brief_wait",
+      "status": "rejected_without_branch",
+      "finding": "真实模型连续两次生成超出原始 A1-A7 的 A8，触发“结果契约必须覆盖每项原始输入”；没有写入错误分支，但等待专用 guard 未实际走到，用户侧仍显示 generation_failed。"
+    }
+  ]
+}

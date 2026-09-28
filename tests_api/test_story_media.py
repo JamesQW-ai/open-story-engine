@@ -116,6 +116,7 @@ class MediaTests(unittest.TestCase):
             request = call.call_args.args[0]
             self.assertEqual(request.full_url, 'https://images.example/v1/images/generations')
             self.assertEqual(json.loads(request.data)['prompt'], '绘制门边的灯')
+            self.assertEqual(json.loads(request.data)['quality'], 'low')
             self.assertNotIn('response_format', json.loads(request.data))
         with self.assertRaises(ValueError): image_bytes(b'<html>provider failure</html>')
 
@@ -132,7 +133,9 @@ class MediaTests(unittest.TestCase):
 
     def test_long_scene_without_preset_allows_explicit_private_draw(self):
         read, gateway = Mock(), Mock(available=True, model='image-model')
-        read.branch_view.side_effect = lambda sid, bid: {'parentId': 'root' if bid == 'b' else None, 'narrativeText': '雨' * 700}
+        from test_support.longform import longform_cases
+        source = longform_cases()[0]['source'].read_text()
+        read.branch_view.side_effect = lambda sid, bid: {'parentId': 'root' if bid == 'b' else None, 'narrativeText': source[:2000] if bid == 'b' else source[:500]}
         with tempfile.TemporaryDirectory() as directory:
             service = media_service(read, directory, gateway)
             self.addCleanup(service.close)
@@ -141,7 +144,8 @@ class MediaTests(unittest.TestCase):
             self.assertFalse(service.view('s', 'root')['can_generate'])
             gateway.generate.return_value = (PNG, 'image/png')
             result = service.ensure('s', 'b', subscriber='reader', draw=True)
-            self.assertIn(result['items'][0]['status'], ('queued', 'generating'))
+            # A fast provider may finish before the non-blocking view is read.
+            self.assertIn(result['items'][0]['status'], ('queued', 'generating', 'ready'))
             service._pool.shutdown(wait=True)
             self.assertEqual(service.view('s', 'b')['items'][0]['status'], 'ready')
 

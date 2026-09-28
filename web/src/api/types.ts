@@ -41,6 +41,7 @@ export interface PackageList {
 
 export interface PublishedScene {
   id: string
+  asset_key?: string | null
   url: string
   alt: string
   source: 'published'
@@ -341,7 +342,7 @@ export interface PlayContinueRequest {
   parent_branch_id: string
   direction_id?: string
   text?: string
-  request_id?: string
+  request_id: string
 }
 
 export interface PlayContinueResponse {
@@ -445,7 +446,8 @@ export interface JournalRelationship {
 export interface SceneIllustrations {
   available: boolean
   can_generate: boolean
-  items: { id?: string; index: number; status: 'idle' | 'queued' | 'generating' | 'ready' | 'failed' | 'cancelled'; reason?: string; url?: string; alt: string; source: 'published' | 'private' }[]
+  automatic?: boolean
+  items: { id?: string; asset_key?: string | null; index: number; status: 'idle' | 'queued' | 'generating' | 'ready' | 'failed' | 'cancelled'; reason?: string; url?: string; alt: string; source: 'published' | 'private' }[]
 }
 
 export interface OpeningNavigation {

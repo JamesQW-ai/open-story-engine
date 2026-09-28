@@ -1,0 +1,1218 @@
+{
+  "schemaVersion": "action-history-selection-eval/1",
+  "labelOrigin": "assistant_authored_controls_not_independent_human_review",
+  "packageId": "taixu-relics-part1",
+  "packageVersion": "0.1.3",
+  "novelSha256": "61efaffb17d652ccc0fcb15b98a133fd976296d342966c0a426b7831f9810904",
+  "novelCjk": 102610,
+  "scope": "synthetic_controls_on_official_longform_not_live_story_or_independent_heldout",
+  "inputHashes": {
+    "test_support/action_history_selection_eval.py": "c494bdaea358809df058a623bdfe1d516f55e30f2bbdd20fd255bcc6cd800c7b",
+    "test_support/fixtures/action-history-stress-2026-09-27.json": "dbbef0b611bca44521c2fb3bcf588ac6c163617b65c051f06abbdbcff1b80eb4",
+    "open_story_engine/action_review_context.py": "a1ceb6c10beea5e6743ce9557b49579a155703c3286e8c4c32013b3ff0c90eee",
+    "open_story_engine/context_bundle.py": "d4db048b4fd07c01e98f8d5c4ab81fb5b07be3e48ddad4b86ab60163502d8521",
+    "open_story_engine/dynamic_memory.py": "53da0a236335243468848df256b8e64e93d7417466c176de163eb31358843632",
+    "test_support/dynamic_memory_benchmark.py": "b1bd9a515409482dcf0204f8b93bd35710f91d404dbccae1bb29294f9e635091",
+    "test_support/dynamic_memory_read_benchmark.py": "107f8dffce02f762f539a217ceb0f59bbb8690b13a377c62f46260924c52bf27",
+    "content/packages/taixu-relics-part1/0.1.3/package.json": "94f8591c009e3733c9ac505b5ef63554912003de3ebdd2143045099cbe019dcd"
+  },
+  "history": [
+    {
+      "caseId": "paraphrase-document",
+      "input": {
+        "action": "确认推荐信是否仍在我掌中",
+        "prior": "引荐文书在你手中，尚未交出。",
+        "parent": "你停下脚步。",
+        "explicit": false,
+        "between": [],
+        "priorAsModule": false
+      },
+      "expectedSources": [
+        "branch:lineage:control-prior"
+      ],
+      "selectedSources": [
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "推荐信和掌中改写引荐文书及手中，仍需物品归属依据。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 1,
+      "missing": [
+        "branch:lineage:control-prior"
+      ],
+      "unexpected": [],
+      "exactMatch": false,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [],
+      "contextSha256": "68a216c044d803f67efd353e11dd5705966aa7293146cbb4b90007a03f160be6",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-e07d99e35ba74317",
+        "contextSha256": "68a216c044d803f67efd353e11dd5705966aa7293146cbb4b90007a03f160be6",
+        "selectedSourceIds": [
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:control-prior"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "paraphrase-father",
+      "input": {
+        "action": "追问家父杳无音讯的经过",
+        "prior": "父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。",
+        "parent": "你停下脚步。",
+        "explicit": false,
+        "between": [],
+        "priorAsModule": false
+      },
+      "expectedSources": [
+        "branch:lineage:control-prior"
+      ],
+      "selectedSources": [
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "家父杳无音讯改写父亲失踪，需要保持生死未确认边界。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 1,
+      "missing": [
+        "branch:lineage:control-prior"
+      ],
+      "unexpected": [],
+      "exactMatch": false,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [],
+      "contextSha256": "fb2ab6ab78c16a9e4f61688dd24942c06882fd8da7cdb6ed4601c2540f541945",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-ebb54e7b1fd93239",
+        "contextSha256": "fb2ab6ab78c16a9e4f61688dd24942c06882fd8da7cdb6ed4601c2540f541945",
+        "selectedSourceIds": [
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:control-prior"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "paraphrase-lamp",
+      "input": {
+        "action": "观察那盏未点燃的照明器物",
+        "prior": "空灯仍在伤者手边，不能写进你的持有物；未登记人物持物只记为场景事实。",
+        "parent": "你停下脚步。",
+        "explicit": false,
+        "between": [],
+        "priorAsModule": false
+      },
+      "expectedSources": [
+        "branch:lineage:control-prior"
+      ],
+      "selectedSources": [
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "此控制只有空灯作为灯具先行对象；改写仍需持物归属依据。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 1,
+      "missing": [
+        "branch:lineage:control-prior"
+      ],
+      "unexpected": [],
+      "exactMatch": false,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [],
+      "contextSha256": "ae1c586231fca3611afda5dabf276bb3e2656f961ab7f9ac017ac5c6ea4aeb07",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-d87899e0afc3d0e9",
+        "contextSha256": "ae1c586231fca3611afda5dabf276bb3e2656f961ab7f9ac017ac5c6ea4aeb07",
+        "selectedSourceIds": [
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:control-prior"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "anchored-pronoun",
+      "input": {
+        "action": "照他说的做",
+        "prior": "老人让你到玄霄宗问山门的灯。",
+        "parent": "你记起老人交代的话。",
+        "explicit": false,
+        "between": [],
+        "priorAsModule": false
+      },
+      "expectedSources": [
+        "branch:lineage:control-prior"
+      ],
+      "selectedSources": [
+        "branch:lineage:control-prior",
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "父页明确承接老人交代，指代有已知锚点。",
+      "truePositive": 1,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [],
+      "exactMatch": true,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [],
+      "contextSha256": "d7286813bcf4af03f579df6bb9e9a5074d73f1d8cf75999ee236d844a4ff7686",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-e7af35ad299c29fa",
+        "contextSha256": "d7286813bcf4af03f579df6bb9e9a5074d73f1d8cf75999ee236d844a4ff7686",
+        "selectedSourceIds": [
+          "branch:lineage:control-prior",
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-prior",
+            "reason": "action_or_parent_overlap"
+          },
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [],
+        "missingContext": [],
+        "serializedCharacters": 518,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "explicit-paraphrase",
+      "input": {
+        "action": "确认推荐信是否仍在我掌中",
+        "prior": "引荐文书在你手中，尚未交出。",
+        "parent": "你停下脚步。",
+        "explicit": true,
+        "between": [],
+        "priorAsModule": false
+      },
+      "expectedSources": [
+        "branch:lineage:control-prior"
+      ],
+      "selectedSources": [
+        "branch:lineage:control-prior",
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "明确来源绑定应保护无词面重合的计划引用。",
+      "truePositive": 1,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [],
+      "exactMatch": true,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [],
+      "contextSha256": "68a216c044d803f67efd353e11dd5705966aa7293146cbb4b90007a03f160be6",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-e07d99e35ba74317",
+        "contextSha256": "68a216c044d803f67efd353e11dd5705966aa7293146cbb4b90007a03f160be6",
+        "selectedSourceIds": [
+          "branch:lineage:control-prior",
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-prior",
+            "reason": "scene_plan_source"
+          },
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [],
+        "missingContext": [],
+        "serializedCharacters": 511,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "module-explicit-document",
+      "input": {
+        "action": "照先前的线索核对",
+        "prior": "引荐文书在你手中，尚未交出。",
+        "parent": "你停下脚步。",
+        "explicit": true,
+        "between": [
+          "雨势未变。"
+        ],
+        "priorAsModule": true
+      },
+      "expectedSources": [
+        "module:previousBeat:control-prior"
+      ],
+      "selectedSources": [
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "公开的模块历史摘要仍在冻结包内，计划明确引用，不应仅因两条连续性名额已满而丢引用。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 1,
+      "missing": [
+        "module:previousBeat:control-prior"
+      ],
+      "unexpected": [],
+      "exactMatch": false,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [],
+      "contextSha256": "fea09b695b8b28f1557e7e4b47df6b25b57eebd36ce6e285e66a13ad750ccc7c",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-71911eb55dc47d1b",
+        "contextSha256": "fea09b695b8b28f1557e7e4b47df6b25b57eebd36ce6e285e66a13ad750ccc7c",
+        "selectedSourceIds": [
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:control-between-module"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "module-explicit-father",
+      "input": {
+        "action": "继续追问",
+        "prior": "父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。",
+        "parent": "你停下脚步。",
+        "explicit": true,
+        "between": [
+          "雨势未变。"
+        ],
+        "priorAsModule": true
+      },
+      "expectedSources": [
+        "module:previousBeat:control-prior"
+      ],
+      "selectedSources": [
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "计划明确引用冻结包内前事摘要，须传递到行动审核。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 1,
+      "missing": [
+        "module:previousBeat:control-prior"
+      ],
+      "unexpected": [],
+      "exactMatch": false,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [],
+      "contextSha256": "024047a9befc5a955067382acecb3600526fca24a75b3f821c7e115aff1e676d",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-d2b6b81826a3c78b",
+        "contextSha256": "024047a9befc5a955067382acecb3600526fca24a75b3f821c7e115aff1e676d",
+        "selectedSourceIds": [
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:control-between-module"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "module-named-document",
+      "input": {
+        "action": "阅读引荐文书",
+        "prior": "引荐文书在你手中，尚未交出。",
+        "parent": "你停下脚步。",
+        "explicit": false,
+        "between": [
+          "雨势未变。"
+        ],
+        "priorAsModule": true
+      },
+      "expectedSources": [
+        "module:previousBeat:control-prior"
+      ],
+      "selectedSources": [
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "明确点名的对象有公开历史来源，词面筛选仅扫描连续性窗口会遗漏。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 1,
+      "missing": [
+        "module:previousBeat:control-prior"
+      ],
+      "unexpected": [],
+      "exactMatch": false,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [],
+      "contextSha256": "d2a1c48720eca0602e1364f14f8c5ade7a24b042904aa04d14c9dce8f11b5977",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-50b8ce96d7e75523",
+        "contextSha256": "d2a1c48720eca0602e1364f14f8c5ade7a24b042904aa04d14c9dce8f11b5977",
+        "selectedSourceIds": [
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:control-between-module"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "gap-one-document",
+      "input": {
+        "action": "阅读引荐文书",
+        "prior": "引荐文书在你手中，尚未交出。",
+        "parent": "你停下脚步。",
+        "explicit": false,
+        "between": [
+          "雨势未变。"
+        ],
+        "priorAsModule": false
+      },
+      "expectedSources": [
+        "branch:lineage:control-prior"
+      ],
+      "selectedSources": [
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "隔一页仍需先前物品归属，检查该证据是否已在建包时丢失。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 1,
+      "missing": [
+        "branch:lineage:control-prior"
+      ],
+      "unexpected": [],
+      "exactMatch": false,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [
+        "branch:lineage:control-prior"
+      ],
+      "contextSha256": "1ba2cc22347d4af48a019f5479b04d444dea72554209794fac86d36e5e593181",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-50b8ce96d7e75523",
+        "contextSha256": "1ba2cc22347d4af48a019f5479b04d444dea72554209794fac86d36e5e593181",
+        "selectedSourceIds": [
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:control-between-0"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "gap-three-document",
+      "input": {
+        "action": "阅读引荐文书",
+        "prior": "引荐文书在你手中，尚未交出。",
+        "parent": "你停下脚步。",
+        "explicit": false,
+        "between": [
+          "雨势未变。",
+          "你侧耳倾听。",
+          "你停了片刻。"
+        ],
+        "priorAsModule": false
+      },
+      "expectedSources": [
+        "branch:lineage:control-prior"
+      ],
+      "selectedSources": [
+        "branch:lineage:control-between-2",
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "更多中间页不应被误报为具备长期承接能力；无已确认记忆时如实记录缺失。",
+      "truePositive": 0,
+      "falsePositive": 1,
+      "falseNegative": 1,
+      "missing": [
+        "branch:lineage:control-prior"
+      ],
+      "unexpected": [
+        "branch:lineage:control-between-2"
+      ],
+      "exactMatch": false,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [
+        "branch:lineage:control-prior"
+      ],
+      "contextSha256": "6034195f64935f4aef5c03b86705094885d896c7d33b048a3ff6331452acb800",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-50b8ce96d7e75523",
+        "contextSha256": "6034195f64935f4aef5c03b86705094885d896c7d33b048a3ff6331452acb800",
+        "selectedSourceIds": [
+          "branch:lineage:control-between-2",
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-between-2",
+            "reason": "action_or_parent_overlap"
+          },
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [],
+        "missingContext": [],
+        "serializedCharacters": 522,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "gap-parent-anchor",
+      "input": {
+        "action": "照他说的做",
+        "prior": "老人让你到玄霄宗问山门的灯。",
+        "parent": "你记起老人交代的话。",
+        "explicit": false,
+        "between": [
+          "雨势未变。"
+        ],
+        "priorAsModule": false
+      },
+      "expectedSources": [
+        "branch:lineage:control-prior"
+      ],
+      "selectedSources": [
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "父页锚点明确但具体交代位于窗口外；需区分指代锚点与承接内容。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 1,
+      "missing": [
+        "branch:lineage:control-prior"
+      ],
+      "unexpected": [],
+      "exactMatch": false,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [
+        "branch:lineage:control-prior"
+      ],
+      "contextSha256": "e234e8b967f7f62fdd1120c017fac6c536e566274aa799adcf09f0d77aef2c9a",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-e7af35ad299c29fa",
+        "contextSha256": "e234e8b967f7f62fdd1120c017fac6c536e566274aa799adcf09f0d77aef2c9a",
+        "selectedSourceIds": [
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:control-between-0"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "ambiguous-pronoun",
+      "input": {
+        "action": "按那个人的意思继续",
+        "prior": "引荐文书在你手中，尚未交出。",
+        "parent": "你停下脚步。",
+        "explicit": false,
+        "between": [],
+        "priorAsModule": false
+      },
+      "expectedSources": [],
+      "selectedSources": [
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "父页没有指向文书的绑定，不得臆测一个先行对象。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [],
+      "exactMatch": true,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [],
+      "contextSha256": "43a1251301fb5d8eec93af3af9da82a6df8dfbc3fa708c27df40e639c374167f",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-d518210004556a11",
+        "contextSha256": "43a1251301fb5d8eec93af3af9da82a6df8dfbc3fa708c27df40e639c374167f",
+        "selectedSourceIds": [
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:control-prior"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "homonym-clerk-document",
+      "input": {
+        "action": "向值守文书询问执事的去向",
+        "prior": "引荐文书在你手中，尚未交出。",
+        "parent": "你停下脚步。",
+        "explicit": false,
+        "between": [],
+        "priorAsModule": false
+      },
+      "expectedSources": [],
+      "selectedSources": [
+        "branch:lineage:control-prior",
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "行动中的值守文书指职务人员，来源中的引荐文书指纸件，不能因同词误选；行动本身不证明该人员存在。",
+      "truePositive": 0,
+      "falsePositive": 1,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [
+        "branch:lineage:control-prior"
+      ],
+      "exactMatch": false,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [],
+      "contextSha256": "f0ca52eeb7beaf86cdf350619bc3b69a69804f6d624e87d6ff42099d543a6fef",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-695ca4a04adbf0ef",
+        "contextSha256": "f0ca52eeb7beaf86cdf350619bc3b69a69804f6d624e87d6ff42099d543a6fef",
+        "selectedSourceIds": [
+          "branch:lineage:control-prior",
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-prior",
+            "reason": "action_or_parent_overlap"
+          },
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [],
+        "missingContext": [],
+        "serializedCharacters": 518,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "shared-time-other-event",
+      "input": {
+        "action": "三年前那封家信是否寄出",
+        "prior": "父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。",
+        "parent": "你停下脚步。",
+        "explicit": false,
+        "between": [],
+        "priorAsModule": false
+      },
+      "expectedSources": [],
+      "selectedSources": [
+        "branch:lineage:control-prior",
+        "branch:lineage:control-parent"
+      ],
+      "rationale": "同为三年前不证明家信与父亲押灯失踪有关；提问不确立寄信事实。",
+      "truePositive": 0,
+      "falsePositive": 1,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [
+        "branch:lineage:control-prior"
+      ],
+      "exactMatch": false,
+      "parentRetained": true,
+      "missingFromFullPublicEvidence": [],
+      "contextSha256": "6ca82a3b850fae4ce4027467002b5b0a4fbae1554bd9f10e0cd0c52421938883",
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-310608c716dea47e",
+        "contextSha256": "6ca82a3b850fae4ce4027467002b5b0a4fbae1554bd9f10e0cd0c52421938883",
+        "selectedSourceIds": [
+          "branch:lineage:control-prior",
+          "branch:lineage:control-parent"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:control-prior",
+            "reason": "action_or_parent_overlap"
+          },
+          {
+            "sourceId": "branch:lineage:control-parent",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [],
+        "missingContext": [],
+        "serializedCharacters": 518,
+        "duplicatedEvidenceCharacters": 0
+      }
+    }
+  ],
+  "memory": [
+    {
+      "caseId": "active-goal",
+      "expectedSources": [
+        "memory:goal:memory-bench-0:goal-b0f8b060ab612aad"
+      ],
+      "selectedSources": [
+        "memory:goal:memory-bench-0:goal-b0f8b060ab612aad"
+      ],
+      "rationale": "当前明确点名的未完成目标需保留。",
+      "truePositive": 1,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [],
+      "exactMatch": true,
+      "lifecycle": {
+        "schemaVersion": "committed-outcome-memory/2",
+        "selectedCount": 1,
+        "omitted": {},
+        "contentChars": 22,
+        "lifecycle": {
+          "schemaVersion": "memory-selection-lifecycle/1",
+          "counts": {},
+          "details": [],
+          "omittedDetails": 0
+        }
+      },
+      "missingFromFullPublicEvidence": [],
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-af028d64b0078f66",
+        "contextSha256": "bf41c7576a46231deb2eb07d76f63b0300b0af77d8aeb23cc17d22d5acf37a93",
+        "selectedSourceIds": [
+          "branch:lineage:memory-bench-0",
+          "memory:goal:memory-bench-0:goal-b0f8b060ab612aad"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:memory-bench-0",
+            "reason": "parent_continuity"
+          },
+          {
+            "sourceId": "memory:goal:memory-bench-0:goal-b0f8b060ab612aad",
+            "reason": "selected_dynamic_memory"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:memory-benchmark-root"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 537,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "open-thread",
+      "expectedSources": [
+        "memory:thread:memory-bench-0:thread-b0f8b060ab612aad"
+      ],
+      "selectedSources": [
+        "memory:thread:memory-bench-0:thread-b0f8b060ab612aad"
+      ],
+      "rationale": "当前明确点名的未结问题需保留。",
+      "truePositive": 1,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [],
+      "exactMatch": true,
+      "lifecycle": {
+        "schemaVersion": "committed-outcome-memory/2",
+        "selectedCount": 1,
+        "omitted": {},
+        "contentChars": 24,
+        "lifecycle": {
+          "schemaVersion": "memory-selection-lifecycle/1",
+          "counts": {},
+          "details": [],
+          "omittedDetails": 0
+        }
+      },
+      "missingFromFullPublicEvidence": [],
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-676306bd117dfbed",
+        "contextSha256": "ca13534678b553341bf14e0469788f21bf62ef80eb581a575661721ea78a2a22",
+        "selectedSourceIds": [
+          "branch:lineage:memory-bench-0",
+          "memory:thread:memory-bench-0:thread-b0f8b060ab612aad"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:memory-bench-0",
+            "reason": "parent_continuity"
+          },
+          {
+            "sourceId": "memory:thread:memory-bench-0:thread-b0f8b060ab612aad",
+            "reason": "selected_dynamic_memory"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:memory-benchmark-root"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 541,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "completed-goal",
+      "expectedSources": [
+        "memory:goal:memory-bench-3:goal-39c8845c485cf985"
+      ],
+      "selectedSources": [
+        "memory:goal:memory-bench-3:goal-39c8845c485cf985"
+      ],
+      "rationale": "已完成状态取代旧进行中状态，不能复活旧事实。",
+      "truePositive": 1,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [],
+      "exactMatch": true,
+      "lifecycle": {
+        "schemaVersion": "committed-outcome-memory/2",
+        "selectedCount": 1,
+        "omitted": {
+          "state_changed": 1,
+          "irrelevant": 2
+        },
+        "contentChars": 22,
+        "lifecycle": {
+          "schemaVersion": "memory-selection-lifecycle/1",
+          "counts": {
+            "superseded": 1
+          },
+          "details": [
+            {
+              "reason": "superseded",
+              "originBranchId": "memory-bench-2",
+              "atBranchId": "memory-bench-3",
+              "memoryId": "memory-8d3210b0695894ddf54eaaf1",
+              "domain": "goal",
+              "entityId": "goal-39c8845c485cf985",
+              "replacementMemoryId": "memory-924e827aa4cbc18e2541ac55"
+            }
+          ],
+          "omittedDetails": 0
+        }
+      },
+      "missingFromFullPublicEvidence": [],
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-99b2b232a11b558d",
+        "contextSha256": "7891cc33d5a571d894dc93b54fbfa7a9c600ccfd7fd2ce9d153e07bf90f4a934",
+        "selectedSourceIds": [
+          "branch:lineage:memory-bench-2",
+          "branch:lineage:memory-bench-3",
+          "memory:goal:memory-bench-3:goal-39c8845c485cf985"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:memory-bench-2",
+            "reason": "action_or_parent_overlap"
+          },
+          {
+            "sourceId": "branch:lineage:memory-bench-3",
+            "reason": "parent_continuity"
+          },
+          {
+            "sourceId": "memory:goal:memory-bench-3:goal-39c8845c485cf985",
+            "reason": "selected_dynamic_memory"
+          }
+        ],
+        "omittedContinuitySourceIds": [],
+        "missingContext": [],
+        "serializedCharacters": 622,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "resolved-thread",
+      "expectedSources": [
+        "memory:thread:memory-bench-3:thread-39c8845c485cf985"
+      ],
+      "selectedSources": [
+        "memory:thread:memory-bench-3:thread-39c8845c485cf985"
+      ],
+      "rationale": "已解决状态取代旧待处理状态。",
+      "truePositive": 1,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [],
+      "exactMatch": true,
+      "lifecycle": {
+        "schemaVersion": "committed-outcome-memory/2",
+        "selectedCount": 1,
+        "omitted": {
+          "state_changed": 1,
+          "irrelevant": 2
+        },
+        "contentChars": 24,
+        "lifecycle": {
+          "schemaVersion": "memory-selection-lifecycle/1",
+          "counts": {
+            "superseded": 1
+          },
+          "details": [
+            {
+              "reason": "superseded",
+              "originBranchId": "memory-bench-2",
+              "atBranchId": "memory-bench-3",
+              "memoryId": "memory-a7e67879205a41a992fd8bb4",
+              "domain": "thread",
+              "entityId": "thread-39c8845c485cf985",
+              "replacementMemoryId": "memory-9c3c1e455f57c7f722b074de"
+            }
+          ],
+          "omittedDetails": 0
+        }
+      },
+      "missingFromFullPublicEvidence": [],
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-561198eca63ea68b",
+        "contextSha256": "c4e1f43a7cebe25d09a0ea81392a477d0e6618ae0d33bf8c44ef4f52c4a108c0",
+        "selectedSourceIds": [
+          "branch:lineage:memory-bench-2",
+          "branch:lineage:memory-bench-3",
+          "memory:thread:memory-bench-3:thread-39c8845c485cf985"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:memory-bench-2",
+            "reason": "action_or_parent_overlap"
+          },
+          {
+            "sourceId": "branch:lineage:memory-bench-3",
+            "reason": "parent_continuity"
+          },
+          {
+            "sourceId": "memory:thread:memory-bench-3:thread-39c8845c485cf985",
+            "reason": "selected_dynamic_memory"
+          }
+        ],
+        "omittedContinuitySourceIds": [],
+        "missingContext": [],
+        "serializedCharacters": 626,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "irrelevant-goal",
+      "expectedSources": [],
+      "selectedSources": [],
+      "rationale": "无关目标不得仅因存在账本就进入动态记忆。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [],
+      "exactMatch": true,
+      "lifecycle": {
+        "schemaVersion": "committed-outcome-memory/2",
+        "selectedCount": 0,
+        "omitted": {
+          "irrelevant": 1
+        },
+        "contentChars": 0,
+        "lifecycle": {
+          "schemaVersion": "memory-selection-lifecycle/1",
+          "counts": {},
+          "details": [],
+          "omittedDetails": 0
+        }
+      },
+      "missingFromFullPublicEvidence": [],
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-af028d64b0078f66",
+        "contextSha256": "59a1a431d13c444594ed420ff1d8c705bfcc1f0a2ae9fd9a5efff29f1ac55564",
+        "selectedSourceIds": [
+          "branch:lineage:memory-bench-0"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:memory-bench-0",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:memory-benchmark-root"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "irrelevant-thread",
+      "expectedSources": [],
+      "selectedSources": [],
+      "rationale": "无关问题不得堆入动态记忆。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [],
+      "exactMatch": true,
+      "lifecycle": {
+        "schemaVersion": "committed-outcome-memory/2",
+        "selectedCount": 0,
+        "omitted": {
+          "irrelevant": 1
+        },
+        "contentChars": 0,
+        "lifecycle": {
+          "schemaVersion": "memory-selection-lifecycle/1",
+          "counts": {},
+          "details": [],
+          "omittedDetails": 0
+        }
+      },
+      "missingFromFullPublicEvidence": [],
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-676306bd117dfbed",
+        "contextSha256": "2f5a7b60d3db6228cfa5d26a06053382f444e728ba3de798799d224e77fcacdb",
+        "selectedSourceIds": [
+          "branch:lineage:memory-bench-0"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:memory-bench-0",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:memory-benchmark-root"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "invalid-goal-source",
+      "expectedSources": [],
+      "selectedSources": [],
+      "rationale": "来源正文变化使回执失效，不得仍当确认记忆。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [],
+      "exactMatch": true,
+      "lifecycle": {
+        "schemaVersion": "committed-outcome-memory/2",
+        "selectedCount": 0,
+        "omitted": {
+          "source_changed": 1
+        },
+        "contentChars": 0,
+        "lifecycle": {
+          "schemaVersion": "memory-selection-lifecycle/1",
+          "counts": {
+            "source_invalid": 1
+          },
+          "details": [
+            {
+              "reason": "source_invalid",
+              "originBranchId": "memory-bench-0",
+              "atBranchId": "memory-bench-0"
+            }
+          ],
+          "omittedDetails": 0
+        }
+      },
+      "missingFromFullPublicEvidence": [],
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-af028d64b0078f66",
+        "contextSha256": "f0aed95bddcfc34bf163c16e84fa8285e35040dcb8c7a99d0ab0d5232894244b",
+        "selectedSourceIds": [
+          "branch:lineage:memory-bench-0"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:memory-bench-0",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:memory-benchmark-root"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    },
+    {
+      "caseId": "invalid-thread-source",
+      "expectedSources": [],
+      "selectedSources": [],
+      "rationale": "来源正文变化使回执失效，不得仍当确认记忆。",
+      "truePositive": 0,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "missing": [],
+      "unexpected": [],
+      "exactMatch": true,
+      "lifecycle": {
+        "schemaVersion": "committed-outcome-memory/2",
+        "selectedCount": 0,
+        "omitted": {
+          "source_changed": 1
+        },
+        "contentChars": 0,
+        "lifecycle": {
+          "schemaVersion": "memory-selection-lifecycle/1",
+          "counts": {
+            "source_invalid": 1
+          },
+          "details": [
+            {
+              "reason": "source_invalid",
+              "originBranchId": "memory-bench-0",
+              "atBranchId": "memory-bench-0"
+            }
+          ],
+          "omittedDetails": 0
+        }
+      },
+      "missingFromFullPublicEvidence": [],
+      "audit": {
+        "source": "context_bundle",
+        "contextId": "ctx-676306bd117dfbed",
+        "contextSha256": "cb03a0f0736e1acc1d4a81e72fca73bab641e1dcbd0737cd5467fc5f5dd1f035",
+        "selectedSourceIds": [
+          "branch:lineage:memory-bench-0"
+        ],
+        "selectionReasons": [
+          {
+            "sourceId": "branch:lineage:memory-bench-0",
+            "reason": "parent_continuity"
+          }
+        ],
+        "omittedContinuitySourceIds": [
+          "branch:lineage:memory-benchmark-root"
+        ],
+        "missingContext": [],
+        "serializedCharacters": 434,
+        "duplicatedEvidenceCharacters": 0
+      }
+    }
+  ],
+  "summary": {
+    "history": {
+      "cases": 14,
+      "matched": 3,
+      "truePositive": 2,
+      "falsePositive": 3,
+      "falseNegative": 9,
+      "precision": 0.4,
+      "recall": 0.18181818181818182
+    },
+    "memory": {
+      "cases": 8,
+      "matched": 8,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "precision": 1.0,
+      "recall": 1.0
+    }
+  },
+  "newModelCalls": 0,
+  "formalSessionWrites": 0,
+  "semanticAcceptance": false
+}

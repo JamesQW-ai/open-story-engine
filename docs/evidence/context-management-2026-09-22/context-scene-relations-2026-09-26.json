@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "scene-relation-audit/0.1",
+  "dataSha256": "6fc47d80c86449e6ebf7449eb7222837a795310de6e89ce8fc2ef134a5995bc8",
+  "reviewSha256": "4bae2096311bcb6c6f1c550ce0cdc0919d1f62214e93bcbff7aa0ad509f29abb",
+  "harnessSha256": "c312b3efde6f36a38adfc9dc4555547cead9e19aec326721eb1c0576ec2f7ead",
+  "scope": {
+    "snapshotId": "588b66e8ed3807ee6e671de9573d7e5697599f6847f69a74123222362f19a45d",
+    "branchId": "branch_c6711408-1fff-47d3-bd80-9ea4aef206d9",
+    "packageId": "taixu-relics-part1",
+    "packageVersion": "0.1.3",
+    "sceneId": "beat_chapter_001"
+  },
+  "cases": [
+    {
+      "id": "position_out",
+      "origin": "position_out",
+      "expected": "supported",
+      "result": {
+        "verdict": "supported",
+        "reason": "reviewed_boundary_relation_comparison",
+        "sources": [
+          {
+            "id": "module:currentBeat:beat_chapter_001",
+            "span": {
+              "start": 11,
+              "end": 25,
+              "quote": "陌生伤者与空灯被挡在封山线外"
+            },
+            "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+          }
+        ],
+        "proseAcceptance": false
+      }
+    },
+    {
+      "id": "position_in",
+      "origin": "position_in",
+      "expected": "contradicted",
+      "result": {
+        "verdict": "contradicted",
+        "reason": "reviewed_boundary_relation_comparison",
+        "sources": [
+          {
+            "id": "module:currentBeat:beat_chapter_001",
+            "span": {
+              "start": 11,
+              "end": 25,
+              "quote": "陌生伤者与空灯被挡在封山线外"
+            },
+            "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+          }
+        ],
+        "proseAcceptance": false
+      }
+    },
+    {
+      "id": "position_not_out",
+      "origin": "position_not_out",
+      "expected": "contradicted",
+      "result": {
+        "verdict": "contradicted",
+        "reason": "reviewed_boundary_relation_comparison",
+        "sources": [
+          {
+            "id": "module:currentBeat:beat_chapter_001",
+            "span": {
+              "start": 11,
+              "end": 25,
+              "quote": "陌生伤者与空灯被挡在封山线外"
+            },
+            "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+          }
+        ],
+        "proseAcceptance": false
+      }
+    },
+    {
+      "id": "position_not_in",
+      "origin": "position_not_in",
+      "expected": "supported",
+      "result": {
+        "verdict": "supported",
+        "reason": "reviewed_boundary_relation_comparison",
+        "sources": [
+          {
+            "id": "module:currentBeat:beat_chapter_001",
+            "span": {
+              "start": 11,
+              "end": 25,
+              "quote": "陌生伤者与空灯被挡在封山线外"
+            },
+            "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+          }
+        ],
+        "proseAcceptance": false
+      }
+    },
+    {
+      "id": "original_C10",
+      "origin": "recorded_v11:C10",
+      "expected": "contradicted",
+      "result": {
+        "verdict": "contradicted",
+        "reason": "reviewed_boundary_relation_comparison",
+        "sources": [
+          {
+            "id": "module:currentBeat:beat_chapter_001",
+            "span": {
+              "start": 11,
+              "end": 25,
+              "quote": "陌生伤者与空灯被挡在封山线外"
+            },
+            "contentSha256": "a37368aca39dc603c444bb0ea4a9eb9cd28ffe8a048b3c7297bb8fe62ea1abb3"
+          }
+        ],
+        "proseAcceptance": false
+      }
+    }
+  ],
+  "summary": {
+    "reviewedMappings": 5,
+    "matched": 5,
+    "unmappedContrasts": 12
+  },
+  "automaticExtractionVerified": false,
+  "modelCalls": 0,
+  "formalSessionWrites": 0,
+  "jevCalls": 0,
+  "acceptance": false,
+  "productionEnablement": false
+}

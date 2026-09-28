@@ -98,10 +98,12 @@ class ScenePlanTests(unittest.TestCase):
         context = {'contract': {'openingContext': {'knownFacts': ['纸包仍然合着。']}},
                    'parent': {'branchState': {'characterLocationIds': {'幕后人物': '密室'},
                                               'readerEntityStates': {'纸包': {'内容': '隐藏线索'}}}},
-                   'lineage': [{'id': 'a', 'narrativeText': '他说自己不清楚来历。'}]}
+                   'lineage': [{'id': 'a', 'summary': '他说自己不清楚来历。',
+                                'narrativeText': '不应作为公开来源的整段历史正文。'}]}
         knowledge = scene_knowledge(context)
         self.assertNotIn('密室', str(knowledge))
         self.assertNotIn('隐藏线索', str(knowledge))
+        self.assertNotIn('整段历史正文', str(knowledge))
         self.assertEqual(knowledge['sourceKinds']['history-a-P1'], 'history_scene')
 
     def test_precise_repair_keeps_valid_neighbor_sentence(self):
