@@ -679,14 +679,14 @@ export function SessionPage() {
                       <button
                         className="direction"
                         key={d.id}
-                        title={d.summary ?? undefined}
+                        title={d.summary ? playerFacingAction(d.summary, role) : undefined}
                         disabled={writing || loading}
                         onClick={() => submit({ choice_id: d.id, draft_id: d.draft_id })}
                       >
                         <span>{String(i + 1).padStart(2, '0')}</span>
                         <span className="direction-copy">
-                          <strong>{d.title}</strong>
-                          <small>{d.summary}</small>
+                          <strong>{playerFacingAction(d.title, role)}</strong>
+                          <small>{d.summary ? playerFacingAction(d.summary, role) : null}</small>
                         </span>
                       </button>
                     ))}
