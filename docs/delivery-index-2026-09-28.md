@@ -54,6 +54,8 @@
 - [原始游玩记录 HTML](evidence/delivery-handoff-2026-09-28/short-play-record/player-record.html)
 - [原始游玩记录 JSON](evidence/delivery-handoff-2026-09-28/short-play-record/player-record.json)
 - [验证结果](evidence/delivery-handoff-2026-09-28/short-play-verification.json)
-- [刷新后页面](evidence/delivery-handoff-2026-09-28/short-play-restored.png)
+- [刷新后实际视口](evidence/delivery-handoff-2026-09-28/short-play-viewport.png)
+
+全页截图 `short-play-restored.png` 存在截图工具的滚动拼接重复，保留但不作页面布局凭证；实际视口截图和 `short-play-restored.ax.txt` 用于复核当前显示。
 
 旧 25 回合存档的 26 个节点再次逐一核对 SHA-256，全部未变。中间试验也保留。新记录的 `incomplete / not_assessed` 表示旅程仍进行中、导出器不认证结局；本次按用户最新要求验收基本流程，不宣称通关或所有路线零缺陷。两个新回合仍有 5、7 条不完整或重复状态提取诊断，已保留在存档；它们没有阻断正文，不能将这些观察诊断隐藏后宣称全系统零缺陷。
