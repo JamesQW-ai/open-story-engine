@@ -286,6 +286,92 @@ class ContextTurnTests(unittest.TestCase):
         self.assertTrue(record['followups'])
         self.assertEqual(state['characterOutcomeStates'][LU]['status'], 'dead')
 
+    def test_unnamed_person_gets_independent_durable_outcome_without_guessing_identity(self):
+        self.action = '杀死眼前的伤者'
+        self.context['playerDirection'] = self.action
+        self.body = '你杀死了伤者。伤者已经死亡，没有呼吸。'
+        cid = 'character_wounded_stranger'
+        self.data['updates'] = dict(introductions=dict(characters=[dict(id=cid, name='伤者',
+            summary='当前场景中身份未明的伤者', paragraphIds=['P1'])], items=[], locations=[]),
+            outcomes=[dict(characterId=cid, entityName='伤者', basis='observed', status='dead',
+                permanence='permanent', cause='玩家杀死眼前伤者', paragraphIds=['P1'], evidenceQuote=self.body)])
+        result, _ = self.generate(self.gateway())
+        state = self.commit(result)
+        self.assertEqual(state['characterOutcomeStates'][cid]['status'], 'dead')
+        self.assertEqual(state['characterOutcomeStates'][cid]['permanence'], 'permanent')
+        self.assertNotIn(LU, state['characterOutcomeStates'])
+        self.assertEqual(result['narrativeText'], self.body)
+
+    def test_new_person_pronoun_outcome_uses_same_turn_introduction_anchor(self):
+        self.action = '杀死眼前的伤者'
+        self.context['playerDirection'] = self.action
+        self.body = '伤者倒在石阶下。\n\n你对他动了手。\n\n他的呼吸停了，身体渐渐冷下去。'
+        cid = 'character_wounded_stranger'
+        self.data['updates'] = dict(introductions=dict(characters=[dict(id=cid, name='伤者',
+            summary='身份未明的伤者', paragraphIds=['P1', 'P3'])], items=[], locations=[]),
+            outcomes=[dict(characterId=cid, entityName='伤者', basis='observed', status='dead',
+                permanence='permanent', cause='玩家杀死眼前伤者', paragraphIds=['P2', 'P3'])])
+        original = copy.deepcopy(self.data)
+        gateway = self.gateway()
+        result, _ = self.generate(gateway)
+        state = self.commit(result)
+        self.assertEqual(state['characterOutcomeStates'][cid]['status'], 'dead')
+        self.assertEqual(state['characterOutcomeStates'][cid]['evidence'], self.body)
+        self.assertEqual(self.data, original)
+        self.assertEqual(gateway.complete_json.call_count, 2)
+        self.assertEqual(result['narrativeText'], self.body)
+
+        # A later pronoun in a reported account is still not observed death.
+        self.body = '伤者倒在石阶下。\n\n守门人说：“他已死了。”'
+        self.data['updates']['introductions']['characters'][0]['paragraphIds'] = ['P1']
+        self.data['updates']['outcomes'][0]['paragraphIds'] = ['P2']
+        result, _ = self.generate(self.gateway())
+        self.assertEqual(result['consequenceUpdate']['outcomes'], [])
+        self.assertTrue(result['observationDiagnostics'])
+
+    def test_selected_result_paragraph_excludes_unrelated_dialogue_without_copying_prose(self):
+        self.body = '守门人喊：“你做什么！”\n\n你杀死了伤者，伤者的呼吸停止。\n\n守门人说：“去请执事。”'
+        cid = 'character_wounded_stranger'
+        self.data['updates'] = dict(introductions=dict(characters=[dict(id=cid, name='伤者',
+            summary='身份未明的伤者', paragraphIds=['P2'])], items=[], locations=[]),
+            outcomes=[dict(characterId=cid, entityName='伤者', basis='observed', status='dead',
+                permanence='permanent', cause='玩家杀死伤者', paragraphIds=['P1', 'P2', 'P3'], evidenceParagraphId='P2')])
+        result, _ = self.generate(self.gateway())
+        self.assertEqual(self.commit(result)['characterOutcomeStates'][cid]['evidence'], self.body.split('\n\n')[1])
+        self.assertEqual(result['narrativeText'], self.body)
+        for changes in ({'evidenceParagraphId': 'P9'}, {'evidenceParagraphId': 'P1'},
+                        {'paragraphIds': ['P1', 'P3']}, {'evidenceQuote': '伤者死了'}):
+            data = copy.deepcopy(self.data)
+            data['updates']['outcomes'][0].update(changes)
+            result, _ = self.generate(self.gateway(data))
+            self.assertEqual(result['consequenceUpdate']['outcomes'], [])
+            self.assertTrue(result['observationDiagnostics'])
+
+    def test_separate_result_paragraph_and_new_identity_preserve_legacy_receipts(self):
+        self.body = '伤者躺在石阶旁。\n\n守门人喊：“停手！”\n\n你杀死了他，他的呼吸停止。'
+        cid = 'character_wounded_stranger'
+        self.data['updates'] = dict(introductions=dict(characters=[dict(id=cid, name='伤者',
+            summary='身份未明的伤者', paragraphIds=['P1'])], items=[], locations=[]),
+            outcomes=[dict(characterId=cid, entityName='伤者', basis='observed', status='dead',
+                permanence='permanent', cause='玩家杀死伤者', paragraphIds=['P1', 'P3'], evidenceParagraphId='P3')])
+        result, _ = self.generate(self.gateway())
+        self.assertEqual(self.commit(result)['characterOutcomeStates'][cid]['evidence'], self.body.split('\n\n')[2])
+        data = result['deliveryReceipt']['data']
+        old = delivery.observe(self.context, self.body, data, separate_identity=False)
+        self.assertEqual(old['update']['outcomes'], [])
+        saved = {**result, 'consequenceUpdate': old['update'], 'readerOutcome': old['outcome'],
+                 'continuityFollowups': old['followups'],
+                 'deliveryReceipt': {**result['deliveryReceipt'], 'version': 'narrative-delivery/4'}}
+        delivery.validate_commit(self.context, saved)
+        for change in ({'basis': 'reported'}, {'entityName': '陌生伤者'}, {'evidenceParagraphId': 'P2'}):
+            invalid = copy.deepcopy(self.data)
+            invalid['updates']['outcomes'][0].update(change)
+            rejected, _ = self.generate(self.gateway(invalid))
+            self.assertEqual(rejected['consequenceUpdate']['outcomes'], [])
+        invalid = copy.deepcopy(data)
+        invalid['updates']['outcomes'][0]['evidenceParagraphId'] = 'P99'
+        self.assertEqual(delivery.observe(self.context, self.body, invalid)['update']['outcomes'], [])
+
     def test_followup_survives_unselected_turn_and_needs_actual_resolution_reference(self):
         prior = delivery.observe(self.context, self.body, {**self.data, 'actionStatus': 'partial'})
         self.assertTrue(prior['followups'])

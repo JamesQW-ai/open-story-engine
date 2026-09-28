@@ -1,0 +1,1319 @@
+{
+  "status": "written",
+  "request_id": "playthrough-704b215fb4c64774b2e49bd83bbc81e3",
+  "deduplicated": false,
+  "branch": {
+    "id": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+    "sessionId": "43c77e36-a9ef-5adf-90ac-af611006c4a1",
+    "sequence": 2,
+    "parentId": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+    "kind": "generated",
+    "sourceNodeRef": "node_source_continuity",
+    "narrativeText": "你收回左脚，双指松开，垂回身侧。指节上还留着方才撞上他小臂的钝痛，像一根弦的余震，从骨缝里慢慢散开。你退开半步，与陆照临之间重新隔出五步的距离。\n\n没有再看他。\n\n你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。\n\n石阶往下还有很长一段，隐进半山的雾里。回望时，试炼场被石壁挡去大半，只露出高处一角灰白的檐。场内的动静传不过来，只有风声。怀里那枚木牌还贴着胸口，包着金屑的纸片被体温焐得发软。\n\n你站在门外，身后是退出的试炼，身前是下山的路。",
+    "summary": "顾长离收手退开，向试炼执事表明自己走，执事侧身让出通往山下的石径并说明木牌可交回门房或留着，陆照临未追未问，随人流往后坡药圃去。顾长离沿石径离开试炼场，跨出木栅门后在门外石阶停下，回望半山。",
+    "branchState": {
+      "playerLocationId": "location_open_trial",
+      "playerCharacterId": "character_e663361ab1c7",
+      "characterLocationIds": {
+        "character_e663361ab1c7": "location_open_trial",
+        "character_ae4cb42b9b49": "location_open_trial"
+      },
+      "branchLedger": {
+        "schemaVersion": "branch-state-ledger/0.1",
+        "entries": [
+          {
+            "id": "ledger_000001_41cecccb9fe5",
+            "sequence": 1,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:freeTextProgress",
+            "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+            "before": 0,
+            "after": 1,
+            "source": {
+              "kind": "player_direction",
+              "ref": "direction_free_a597e5eb77e8",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000002_e95006373cd4",
+            "sequence": 2,
+            "kind": "character",
+            "operation": "added",
+            "entityId": "character_lu_zhaolin",
+            "summary": "刚与顾长离互通姓名的试炼弟子，身手不弱，遭袭后格挡退开而未还手，留在执事身后等待说法。",
+            "before": null,
+            "after": {
+              "id": "character_lu_zhaolin",
+              "name": "陆照临",
+              "summary": "刚与顾长离互通姓名的试炼弟子，身手不弱，遭袭后格挡退开而未还手，留在执事身后等待说法。"
+            },
+            "source": {
+              "kind": "direction",
+              "ref": "reader-action",
+              "nodeRef": "reader-action"
+            }
+          },
+          {
+            "id": "ledger_000003_5fa2039d2a47",
+            "sequence": 3,
+            "kind": "character",
+            "operation": "added",
+            "entityId": "character_trial_steward",
+            "summary": "负责本场外门试炼的灰袍中年人，腰间悬铜牌，闻变即至，以场规喝止争斗并要顾长离离场。",
+            "before": null,
+            "after": {
+              "id": "character_trial_steward",
+              "name": "试炼执事",
+              "summary": "负责本场外门试炼的灰袍中年人，腰间悬铜牌，闻变即至，以场规喝止争斗并要顾长离离场。"
+            },
+            "source": {
+              "kind": "direction",
+              "ref": "reader-action",
+              "nodeRef": "reader-action"
+            }
+          },
+          {
+            "id": "ledger_000004_46e316b2f8c7",
+            "sequence": 4,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:characterOutcomeStates",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": {},
+            "after": {
+              "character_lu_zhaolin": {
+                "characterId": "character_lu_zhaolin",
+                "status": "alive",
+                "permanence": "temporary",
+                "requirementId": "A1",
+                "cause": "顾长离的突袭被格挡，试炼执事随即介入，杀死未达成",
+                "evidence": "侧身、卸力、抬臂格挡，三步之内一气呵成。你的指节撞在他小臂上，像撞上一根绷紧的弦。他借力后撤，脚跟碾过碎石，拉开到五步之外。没有还手，甚至没有抬手反击的意思，只是沉声问了一句：“顾长离，你这是何意？”\n\n你没有答。\n\n石阶高处一道灰影掠下，快得几乎看不清身形。一只手掌横插进你和陆照临之间，掌风把你震退半步。来的是个灰袍中年人，腰间悬着一枚铜牌，眉目间没有多余表情。\n\n“试炼场禁争抢伤人。”他声音不高，却压得场中一静，“动手者，即刻逐出。”",
+                "causeBranchId": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928"
+              }
+            },
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000005_8d2201e6f31f",
+            "sequence": 5,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:goalLedger",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": null,
+            "after": [
+              {
+                "id": "opening-goal-1",
+                "title": "木牌刻痕里为何有金屑",
+                "status": "active",
+                "characterId": "character_e663361ab1c7",
+                "dependencies": [],
+                "source": "opening",
+                "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                "causeBranchId": null
+              },
+              {
+                "id": "opening-goal-2",
+                "title": "如何完成第一场外门试炼",
+                "status": "active",
+                "characterId": "character_e663361ab1c7",
+                "dependencies": [],
+                "source": "opening",
+                "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                "causeBranchId": null
+              }
+            ],
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000006_9cd0ec225bdd",
+            "sequence": 6,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:threadLedger",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": [
+              {
+                "id": "opening-thread-1",
+                "title": "木牌刻痕里为何有金屑",
+                "status": "open",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": null,
+                "reason": "",
+                "evidence": "",
+                "priority": "unknown",
+                "recoveryWindow": "unknown"
+              },
+              {
+                "id": "opening-thread-2",
+                "title": "如何完成第一场外门试炼",
+                "status": "open",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": null,
+                "reason": "",
+                "evidence": "",
+                "priority": "unknown",
+                "recoveryWindow": "unknown"
+              }
+            ],
+            "after": [
+              {
+                "id": "opening-thread-1",
+                "title": "木牌刻痕里为何有金屑",
+                "status": "open",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": null,
+                "reason": "",
+                "evidence": "",
+                "priority": "unknown",
+                "recoveryWindow": "unknown"
+              },
+              {
+                "id": "opening-thread-2",
+                "title": "如何完成第一场外门试炼",
+                "status": "open",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+                "reason": "当众动手违反禁争抢伤人的场规，执事已介入并要求顾长离离场，试炼资格面临即刻处置",
+                "evidence": "“试炼场禁争抢伤人。”他声音不高，却压得场中一静，“动手者，即刻逐出。”\n\n你认得这身灰袍——试炼执事。他挡在你们中间，目光在你脸上停了一瞬，又扫过陆照临，像是在确认谁先动的手。\n\n陆照临放下手臂，没有辩解，只是退了一步，把距离让给执事。\n\n就在这时，试炼钟轰然响起。钟声从山顶荡下来，撞在石壁上又弹回来，震得人耳膜发麻。场中弟子纷纷动身，沿着石径往后坡药圃奔去，脚步声杂乱而急促。有人回头看了你一眼，又很快转开。\n\n执事没有动。他仍挡在你面前，等着你开口。\n\n钟声还在响。日落之前，青露草。你的木牌还在怀里，包着金屑的纸片贴着胸口。陆照临站在执事身后，没有走，也没有再看你，只是垂着手，像在等一个说法。\n\n执事开口了：“你是自己走，还是我送你下山？”",
+                "priority": "high",
+                "recoveryWindow": "immediate"
+              }
+            ],
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000007_2204bb7e461b",
+            "sequence": 7,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:readerEntityStates",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": null,
+            "after": {
+              "character_e663361ab1c7": {
+                "standing": "violated_no_combat_rule"
+              }
+            },
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000008_bd505243a84b",
+            "sequence": 8,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:freeTextProgress",
+            "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+            "before": 1,
+            "after": 2,
+            "source": {
+              "kind": "player_direction",
+              "ref": "direction_free_1723f9ad23a8",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000009_ff755d9e2ca2",
+            "sequence": 9,
+            "kind": "location",
+            "operation": "added",
+            "entityId": "location_trial_gate",
+            "summary": "半山试炼场沿石径下行尽头的木栅门，门外是一段被雨水洗亮的石阶，可回望试炼场方向。",
+            "before": null,
+            "after": {
+              "id": "location_trial_gate",
+              "name": "试炼场门外",
+              "summary": "半山试炼场沿石径下行尽头的木栅门，门外是一段被雨水洗亮的石阶，可回望试炼场方向。"
+            },
+            "source": {
+              "kind": "direction",
+              "ref": "reader-action",
+              "nodeRef": "reader-action"
+            }
+          },
+          {
+            "id": "ledger_000010_12edece0aa6d",
+            "sequence": 10,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:goalLedger",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": [
+              {
+                "id": "opening-goal-1",
+                "title": "木牌刻痕里为何有金屑",
+                "status": "active",
+                "characterId": "character_e663361ab1c7",
+                "dependencies": [],
+                "source": "opening",
+                "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                "causeBranchId": null
+              },
+              {
+                "id": "opening-goal-2",
+                "title": "如何完成第一场外门试炼",
+                "status": "active",
+                "characterId": "character_e663361ab1c7",
+                "dependencies": [],
+                "source": "opening",
+                "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                "causeBranchId": null
+              }
+            ],
+            "after": [
+              {
+                "id": "opening-goal-1",
+                "title": "木牌刻痕里为何有金屑",
+                "status": "active",
+                "characterId": "character_e663361ab1c7",
+                "dependencies": [],
+                "source": "opening",
+                "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+                "causeBranchId": null
+              },
+              {
+                "id": "opening-goal-2",
+                "title": "如何完成第一场外门试炼",
+                "status": "abandoned",
+                "characterId": "character_e663361ab1c7",
+                "dependencies": [],
+                "source": "player_branch",
+                "evidence": "你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。",
+                "causeBranchId": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+                "reason": "顾长离接受退出试炼并离场，本场试炼资格终止",
+                "successor": ""
+              }
+            ],
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000011_ad90e16c90c3",
+            "sequence": 11,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:threadLedger",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": [
+              {
+                "id": "opening-thread-1",
+                "title": "木牌刻痕里为何有金屑",
+                "status": "open",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": null,
+                "reason": "",
+                "evidence": "",
+                "priority": "unknown",
+                "recoveryWindow": "unknown"
+              },
+              {
+                "id": "opening-thread-2",
+                "title": "如何完成第一场外门试炼",
+                "status": "open",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+                "reason": "当众动手违反禁争抢伤人的场规，执事已介入并要求顾长离离场，试炼资格面临即刻处置",
+                "evidence": "“试炼场禁争抢伤人。”他声音不高，却压得场中一静，“动手者，即刻逐出。”\n\n你认得这身灰袍——试炼执事。他挡在你们中间，目光在你脸上停了一瞬，又扫过陆照临，像是在确认谁先动的手。\n\n陆照临放下手臂，没有辩解，只是退了一步，把距离让给执事。\n\n就在这时，试炼钟轰然响起。钟声从山顶荡下来，撞在石壁上又弹回来，震得人耳膜发麻。场中弟子纷纷动身，沿着石径往后坡药圃奔去，脚步声杂乱而急促。有人回头看了你一眼，又很快转开。\n\n执事没有动。他仍挡在你面前，等着你开口。\n\n钟声还在响。日落之前，青露草。你的木牌还在怀里，包着金屑的纸片贴着胸口。陆照临站在执事身后，没有走，也没有再看你，只是垂着手，像在等一个说法。\n\n执事开口了：“你是自己走，还是我送你下山？”",
+                "priority": "high",
+                "recoveryWindow": "immediate"
+              }
+            ],
+            "after": [
+              {
+                "id": "opening-thread-1",
+                "title": "木牌刻痕里为何有金屑",
+                "status": "open",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": null,
+                "reason": "",
+                "evidence": "",
+                "priority": "unknown",
+                "recoveryWindow": "unknown"
+              },
+              {
+                "id": "opening-thread-2",
+                "title": "如何完成第一场外门试炼",
+                "status": "resolved",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+                "reason": "执事处置落实：顾长离自行离场，退出本场试炼，场规冲突了结",
+                "evidence": "你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。",
+                "priority": "high",
+                "recoveryWindow": "immediate"
+              }
+            ],
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+              "nodeRef": "node_source_continuity"
+            }
+          }
+        ]
+      },
+      "sourceProgress": "chapter_011",
+      "freeTextProgress": 2,
+      "storyScope": "source",
+      "derivativeStage": "inactive",
+      "derivedTurn": 0,
+      "derivedLocations": [
+        {
+          "id": "location_trial_gate",
+          "name": "试炼场门外",
+          "summary": "半山试炼场沿石径下行尽头的木栅门，门外是一段被雨水洗亮的石阶，可回望试炼场方向。"
+        }
+      ],
+      "derivedCharacters": [
+        {
+          "id": "character_lu_zhaolin",
+          "name": "陆照临",
+          "summary": "刚与顾长离互通姓名的试炼弟子，身手不弱，遭袭后格挡退开而未还手，留在执事身后等待说法。"
+        },
+        {
+          "id": "character_trial_steward",
+          "name": "试炼执事",
+          "summary": "负责本场外门试炼的灰袍中年人，腰间悬铜牌，闻变即至，以场规喝止争斗并要顾长离离场。"
+        }
+      ],
+      "derivedItems": [],
+      "derivedCharacterReveals": [],
+      "derivedRelationships": [],
+      "derivedClues": [],
+      "derivedEvents": [],
+      "itemOwnerCharacterIds": {
+        "item_open_gu_token": "character_e663361ab1c7",
+        "item_open_gold_paper": "character_e663361ab1c7"
+      },
+      "itemLocationIds": {},
+      "characterOutcomeStates": {
+        "character_lu_zhaolin": {
+          "characterId": "character_lu_zhaolin",
+          "status": "alive",
+          "permanence": "temporary",
+          "requirementId": "A1",
+          "cause": "顾长离的突袭被格挡，试炼执事随即介入，杀死未达成",
+          "evidence": "侧身、卸力、抬臂格挡，三步之内一气呵成。你的指节撞在他小臂上，像撞上一根绷紧的弦。他借力后撤，脚跟碾过碎石，拉开到五步之外。没有还手，甚至没有抬手反击的意思，只是沉声问了一句：“顾长离，你这是何意？”\n\n你没有答。\n\n石阶高处一道灰影掠下，快得几乎看不清身形。一只手掌横插进你和陆照临之间，掌风把你震退半步。来的是个灰袍中年人，腰间悬着一枚铜牌，眉目间没有多余表情。\n\n“试炼场禁争抢伤人。”他声音不高，却压得场中一静，“动手者，即刻逐出。”",
+          "causeBranchId": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928"
+        }
+      },
+      "threadLedger": [
+        {
+          "id": "opening-thread-1",
+          "title": "木牌刻痕里为何有金屑",
+          "status": "open",
+          "source": "opening",
+          "openedBranchId": null,
+          "causeBranchId": null,
+          "reason": "",
+          "evidence": "",
+          "priority": "unknown",
+          "recoveryWindow": "unknown"
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "如何完成第一场外门试炼",
+          "status": "resolved",
+          "source": "opening",
+          "openedBranchId": null,
+          "causeBranchId": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+          "reason": "执事处置落实：顾长离自行离场，退出本场试炼，场规冲突了结",
+          "evidence": "你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。",
+          "priority": "high",
+          "recoveryWindow": "immediate"
+        }
+      ],
+      "readerEntityStates": {
+        "character_e663361ab1c7": {
+          "standing": "violated_no_combat_rule"
+        }
+      },
+      "goalLedger": [
+        {
+          "id": "opening-goal-1",
+          "title": "木牌刻痕里为何有金屑",
+          "status": "active",
+          "characterId": "character_e663361ab1c7",
+          "dependencies": [],
+          "source": "opening",
+          "evidence": "试炼钟将响，你刚与陆照临互通姓名，木牌刻痕里的金屑还包在纸中。",
+          "causeBranchId": null
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "如何完成第一场外门试炼",
+          "status": "abandoned",
+          "characterId": "character_e663361ab1c7",
+          "dependencies": [],
+          "source": "player_branch",
+          "evidence": "你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。",
+          "causeBranchId": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+          "reason": "顾长离接受退出试炼并离场，本场试炼资格终止",
+          "successor": ""
+        }
+      ]
+    },
+    "nextDirections": [
+      {
+        "id": "goal-direction-opening-goal-1-3",
+        "title": "推进目标：木牌刻痕里为何有金屑",
+        "summary": "围绕“木牌刻痕里为何有金屑”，依据眼前条件采取下一步行动，不恢复已放下的目标。",
+        "statePatch": {
+          "freeTextProgress": 3
+        },
+        "isFreeText": true
+      }
+    ],
+    "openThreads": [
+      "木牌刻痕里为何有金屑",
+      "如何完成第一场外门试炼",
+      "尚未完成的当前目标"
+    ],
+    "createdAt": "2026-09-28T07:57:29.874Z",
+    "canonicalRelation": "diverged",
+    "factDeltas": [],
+    "storyArc": {
+      "activeGoal": "自定行动：我杀死眼前的陆照临。",
+      "currentPhase": "自定行动：我停止攻击，不再接近陆照",
+      "goalDisposition": "continued",
+      "chapter": {
+        "title": "《太虚遗录》·共创篇",
+        "status": "continuing"
+      }
+    },
+    "planning": {
+      "citations": [
+        {
+          "kind": "branch_node",
+          "ref": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+          "rationale": "承接已确认的上一节点。"
+        }
+      ],
+      "confidence": "medium",
+      "stateChangeProposals": []
+    },
+    "branchAdditions": {
+      "locations": [],
+      "characters": [],
+      "items": [],
+      "relationships": [],
+      "clues": [],
+      "events": [],
+      "characterReveals": [],
+      "changes": []
+    },
+    "consequenceUpdate": {
+      "decision": "ready",
+      "message": "",
+      "requirements": {
+        "A1": {
+          "mode": "attempt",
+          "summary": "我停止攻击，不再接近陆照临，接受退出试炼，按执事指的路离开试炼场，在门外停下。"
+        }
+      },
+      "method": "只登记正文已发生的结果",
+      "steps": [
+        {
+          "id": "S1",
+          "actorId": "character_e663361ab1c7",
+          "action": "我停止攻击，不再接近陆照临，接受退出试炼，按执事指的路离开试炼场，在门外停下。",
+          "requirementIds": [
+            "A1"
+          ],
+          "authority": "player",
+          "causeStepId": null,
+          "usedItemIds": []
+        }
+      ],
+      "introductions": {
+        "characters": [],
+        "items": [],
+        "locations": [
+          {
+            "id": "location_trial_gate",
+            "name": "试炼场门外",
+            "summary": "半山试炼场沿石径下行尽头的木栅门，门外是一段被雨水洗亮的石阶，可回望试炼场方向。",
+            "sourceStepId": "S1",
+            "evidence": "你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。\n\n石阶往下还有很长一段，隐进半山的雾里。回望时，试炼场被石壁挡去大半，只露出高处一角灰白的檐。场内的动静传不过来，只有风声。怀里那枚木牌还贴着胸口，包着金屑的纸片被体温焐得发软。"
+          }
+        ]
+      },
+      "stateChanges": [],
+      "outcomes": [],
+      "goalUpdates": [
+        {
+          "id": "opening-goal-2",
+          "title": "如何完成第一场外门试炼",
+          "status": "abandoned",
+          "dependencies": [],
+          "reason": "顾长离接受退出试炼并离场，本场试炼资格终止",
+          "evidence": "你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。",
+          "successor": ""
+        }
+      ],
+      "threadUpdates": [
+        {
+          "id": "opening-thread-2",
+          "title": "如何完成第一场外门试炼",
+          "status": "resolved",
+          "priority": "high",
+          "recoveryWindow": "immediate",
+          "reason": "执事处置落实：顾长离自行离场，退出本场试炼，场规冲突了结",
+          "stepIds": [
+            "S1"
+          ],
+          "evidence": "你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。"
+        }
+      ]
+    },
+    "actionIntent": {
+      "input": "我停止攻击，不再接近陆照临，接受退出试炼，按执事指的路离开试炼场，在门外停下。",
+      "requirements": {
+        "A1": "我停止攻击",
+        "A2": "不再接近陆照临",
+        "A3": "接受退出试炼",
+        "A4": "按执事指的路离开试炼场",
+        "A5": "在门外停下"
+      }
+    },
+    "deliveryReceipt": {
+      "version": "narrative-delivery/4",
+      "kind": "observed_state_not_prose_approval",
+      "parentSha256": "9faf83264399a65c9e5ecb9c2f708de5bc7c72387ca8d454b8e1d5aec88ee290",
+      "narrativeSha256": "30ece257498b7d925fa19f52749ab49604aa218abbb1ede63f4cff98316b82ce",
+      "actionSha256": "880505e48d506cf4a7d4c0ad1548721c3aa80a9a50048e17e6c871d4e35cd902",
+      "data": {
+        "summary": "顾长离收手退开，向试炼执事表明自己走，执事侧身让出通往山下的石径并说明木牌可交回门房或留着，陆照临未追未问，随人流往后坡药圃去。顾长离沿石径离开试炼场，跨出木栅门后在门外石阶停下，回望半山。",
+        "actionStatus": "performed",
+        "updates": {
+          "introductions": {
+            "characters": [],
+            "items": [],
+            "locations": [
+              {
+                "id": "location_trial_gate",
+                "name": "试炼场门外",
+                "summary": "半山试炼场沿石径下行尽头的木栅门，门外是一段被雨水洗亮的石阶，可回望试炼场方向。",
+                "paragraphIds": [
+                  "P8",
+                  "P9",
+                  "P10"
+                ]
+              }
+            ]
+          },
+          "stateChanges": [
+            {
+              "entityId": "character_e663361ab1c7",
+              "entityName": "你",
+              "attribute": "locationId",
+              "value": "location_trial_gate",
+              "reason": "沿执事所指石径下行，跨出木栅门，在门外石阶停下",
+              "paragraphIds": [
+                "P8",
+                "P9"
+              ],
+              "basis": "observed"
+            },
+            {
+              "entityId": "character_e663361ab1c7",
+              "entityName": "你",
+              "attribute": "trialStatus",
+              "value": "已退出外门试炼",
+              "reason": "顾长离向执事表明自己走，执事让出石径并说今日之事到此为止",
+              "paragraphIds": [
+                "P3",
+                "P5"
+              ],
+              "basis": "observed"
+            }
+          ],
+          "outcomes": [
+            {
+              "characterId": "character_e663361ab1c7",
+              "entityName": "你",
+              "status": "alive",
+              "permanence": "temporary",
+              "cause": "自行离场退出试炼，未受伤",
+              "paragraphIds": [
+                "P3",
+                "P9"
+              ]
+            }
+          ],
+          "goalUpdates": [
+            {
+              "id": "opening-goal-2",
+              "title": "如何完成第一场外门试炼",
+              "status": "abandoned",
+              "dependencies": [],
+              "reason": "顾长离接受退出试炼并离场，本场试炼资格终止",
+              "successor": "",
+              "paragraphIds": [
+                "P3",
+                "P5",
+                "P9"
+              ]
+            }
+          ],
+          "threadUpdates": [
+            {
+              "id": "opening-thread-2",
+              "title": "如何完成第一场外门试炼",
+              "status": "resolved",
+              "priority": "high",
+              "recoveryWindow": "immediate",
+              "reason": "执事处置落实：顾长离自行离场，退出本场试炼，场规冲突了结",
+              "paragraphIds": [
+                "P3",
+                "P5",
+                "P9"
+              ]
+            }
+          ]
+        },
+        "currentScene": {
+          "name": "试炼场门外",
+          "basis": "observed",
+          "paragraphIds": [
+            "P9"
+          ],
+          "presentEntities": [
+            {
+              "entityId": "character_e663361ab1c7",
+              "entityName": "你",
+              "basis": "observed",
+              "paragraphIds": [
+                "P9"
+              ],
+              "evidenceQuote": "你跨出门，在门外的石阶上停下。"
+            }
+          ]
+        },
+        "confirmedStates": [
+          {
+            "entityId": "character_e663361ab1c7",
+            "entityName": "你",
+            "attribute": "locationId",
+            "value": "location_trial_gate",
+            "reason": "跨出木栅门，在门外石阶停下",
+            "paragraphIds": [
+              "P9"
+            ],
+            "basis": "observed"
+          },
+          {
+            "entityId": "character_lu_zhaolin",
+            "entityName": "陆照临",
+            "attribute": "locationId",
+            "value": "location_open_trial",
+            "reason": "未追出，随人流往后坡药圃去，仍在试炼场范围内",
+            "paragraphIds": [
+              "P7"
+            ],
+            "basis": "observed"
+          }
+        ],
+        "followups": [
+          {
+            "id": "followup-3ff4015efd9015dba978",
+            "summary": "陆照临遭袭后未还手，本回合未追未问，随人流往后坡药圃去；其真实意图与身手底细仍未明。",
+            "paragraphIds": [
+              "P7"
+            ]
+          },
+          {
+            "id": "followup-b8ca45598ea4e457051f",
+            "summary": "顾长离当众动手违反试炼场禁争抢伤人的规定，执事已处置：顾长离自行离场，今日之事到此为止。",
+            "paragraphIds": [
+              "P3",
+              "P5"
+            ]
+          },
+          {
+            "id": "followup-16e4ae96a366b88dc7cd",
+            "summary": "顾长离已停止攻击并退出试炼，杀死陆照临的行动未落实且已放弃。",
+            "paragraphIds": [
+              "P1",
+              "P3"
+            ]
+          }
+        ],
+        "resolvedFollowups": [
+          {
+            "id": "followup-a4a66ea4563ea68daeff",
+            "summary": "陆照临遭袭后留在执事身后未离开的状态已澄清：本回合他未追未问，随人流往后坡药圃去。",
+            "paragraphIds": [
+              "P7"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    "readerOutcome": {
+      "action": {
+        "status": "performed",
+        "summary": "顾长离收手退开，向试炼执事表明自己走，执事侧身让出通往山下的石径并说明木牌可交回门房或留着，陆照临未追未问，随人流往后坡药圃去。顾长离沿石径离开试炼场，跨出木栅门后在门外石阶停下，回望半山。",
+        "evidence": "你收回左脚，双指松开，垂回身侧。指节上还留着方才撞上他小臂的钝痛，像一根弦的余震，从骨缝里慢慢散开。你退开半步，与陆照临之间重新隔出五步的距离。\n\n没有再看他。\n\n你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。\n\n石阶往下还有很长一段，隐进半山的雾里。回望时，试炼场被石壁挡去大半，只露出高处一角灰白的檐。场内的动静传不过来，只有风声。怀里那枚木牌还贴着胸口，包着金屑的纸片被体温焐得发软。\n\n你站在门外，身后是退出的试炼"
+      },
+      "actions": [],
+      "clues": [],
+      "relationships": []
+    },
+    "continuityFollowups": [
+      {
+        "id": "followup-85d94526412395823879",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。",
+        "evidence": "照临站在你三步外，手里还捏着那块刻了名字的木牌，目光落在石径尽头的方向。你左脚前踏，右手两指并拢，直取他咽喉。这一式你练过很多遍，快、准、不留余地。\n\n他的反应比你预想的快。\n\n侧身、卸力、抬臂格挡，三步之内一气呵成。你的指节撞在他小臂上，像撞上一根绷紧的弦。他借力后撤，脚跟碾过碎石，拉开到五步之外。没有还手，甚至没有抬手反击的意思，只是沉声问了一句：“顾长离，你这是何意？”\n\n你没有答。\n\n石阶高处一道灰影掠下，快得几乎看不清身形。一只手掌横插进你和陆照临之间，掌风把你震退半步。来的是个灰袍中年人，腰间悬着一枚铜牌，眉目间没有多余表情。\n\n“试炼场禁争抢伤人。”他声音不高，却压得场中一静，“动手者，即刻逐出。”\n\n你认得这身灰袍——试炼执事。他挡在你们中间，目光在你脸上停了一瞬，又扫过陆照临，像是在确认谁先动的手。\n\n陆照临放下手臂，没有辩解，只是退了一步，把距离让给执事。\n\n就在这时，试炼钟轰然响起。钟声从山顶荡下来，撞在石壁上又弹回来，震得人耳膜发麻。场中弟子纷纷动身，沿着石径往后坡药圃奔去，脚步声杂乱而急促。有人回头看了你一眼，又很快转开。\n\n执事没有动。他仍挡在你面前，等着你开口。\n\n钟声还在响。日落之前，青露草。你的木牌还在怀里，包着金屑的纸片贴着胸口。陆照临站在执事身后，没有走，也没有再看你，只是垂着手，像在等一个说法。\n\n执事开口了：“你是自己走，还是我送你下山？”",
+        "entityIds": [],
+        "originParentId": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+        "originNarrativeSha256": "f3d14cdebece455ec681c825988c225820e84543aa47f201fb9d587f1fce6b5c"
+      },
+      {
+        "id": "followup-69a276a5883492a298c0",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。格挡退开，未受致命伤",
+        "evidence": "照临站在你三步外，手里还捏着那块刻了名字的木牌，目光落在石径尽头的方向。你左脚前踏，右手两指并拢，直取他咽喉。这一式你练过很多遍，快、准、不留余地。\n\n他的反应比你预想的快。\n\n侧身、卸力、抬臂格挡，三步之内一气呵成。你的指节撞在他小臂上，像撞上一根绷紧的弦。他借力后撤，脚跟碾过碎石，拉开到五步之外。没有还手，甚至没有抬手反击的意思，只是沉声问了一句：“顾长离，你这是何意？”\n\n你没有答。\n\n石阶高处一道灰影掠下，快得几乎看不清身形。一只手掌横插进你和陆照临之间，掌风把你震退半步。来的是个灰袍中年人，腰间悬着一枚铜牌，眉目间没有多余表情。\n\n“试炼场禁争抢伤人。”他声音不高，却压得场中一静，“动手者，即刻逐出。”\n\n你认得这身灰袍——试炼执事。他挡在你们中间，目光在你脸上停了一瞬，又扫过陆照临，像是在确认谁先动的手。\n\n陆照临放下手臂，没有辩解，只是退了一步，把距离让给执事。\n\n就在这时，试炼钟轰然响起。钟声从山顶荡下来，撞在石壁上又弹回来，震得人耳膜发麻。场中弟子纷纷动身，沿着石径往后坡药圃奔去，脚步声杂乱而急促。有人回头看了你一眼，又很快转开。\n\n执事没有动。他仍挡在你面前，等着你开口。\n\n钟声还在响。日落之前，青露草。你的木牌还在怀里，包着金屑的纸片贴着胸口。陆照临站在执事身后，没有走，也没有再看你，只是垂着手，像在等一个说法。\n\n执事开口了：“你是自己走，还是我送你下山？”",
+        "entityIds": [
+          "character_lu_zhaolin"
+        ],
+        "originParentId": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+        "originNarrativeSha256": "f3d14cdebece455ec681c825988c225820e84543aa47f201fb9d587f1fce6b5c"
+      },
+      {
+        "id": "followup-fffeb39cdc100a22f471",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。本回合仍在此处出手、被执事拦下",
+        "evidence": "照临站在你三步外，手里还捏着那块刻了名字的木牌，目光落在石径尽头的方向。你左脚前踏，右手两指并拢，直取他咽喉。这一式你练过很多遍，快、准、不留余地。\n\n他的反应比你预想的快。\n\n侧身、卸力、抬臂格挡，三步之内一气呵成。你的指节撞在他小臂上，像撞上一根绷紧的弦。他借力后撤，脚跟碾过碎石，拉开到五步之外。没有还手，甚至没有抬手反击的意思，只是沉声问了一句：“顾长离，你这是何意？”\n\n你没有答。\n\n石阶高处一道灰影掠下，快得几乎看不清身形。一只手掌横插进你和陆照临之间，掌风把你震退半步。来的是个灰袍中年人，腰间悬着一枚铜牌，眉目间没有多余表情。\n\n“试炼场禁争抢伤人。”他声音不高，却压得场中一静，“动手者，即刻逐出。”\n\n你认得这身灰袍——试炼执事。他挡在你们中间，目光在你脸上停了一瞬，又扫过陆照临，像是在确认谁先动的手。\n\n陆照临放下手臂，没有辩解，只是退了一步，把距离让给执事。\n\n就在这时，试炼钟轰然响起。钟声从山顶荡下来，撞在石壁上又弹回来，震得人耳膜发麻。场中弟子纷纷动身，沿着石径往后坡药圃奔去，脚步声杂乱而急促。有人回头看了你一眼，又很快转开。\n\n执事没有动。他仍挡在你面前，等着你开口。\n\n钟声还在响。日落之前，青露草。你的木牌还在怀里，包着金屑的纸片贴着胸口。陆照临站在执事身后，没有走，也没有再看你，只是垂着手，像在等一个说法。\n\n执事开口了：“你是自己走，还是我送你下山？”",
+        "entityIds": [
+          "character_e663361ab1c7"
+        ],
+        "originParentId": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+        "originNarrativeSha256": "f3d14cdebece455ec681c825988c225820e84543aa47f201fb9d587f1fce6b5c"
+      },
+      {
+        "id": "followup-805cb967813bccffa668",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。从石阶掠下后挡在两人之间，未离开",
+        "evidence": "照临站在你三步外，手里还捏着那块刻了名字的木牌，目光落在石径尽头的方向。你左脚前踏，右手两指并拢，直取他咽喉。这一式你练过很多遍，快、准、不留余地。\n\n他的反应比你预想的快。\n\n侧身、卸力、抬臂格挡，三步之内一气呵成。你的指节撞在他小臂上，像撞上一根绷紧的弦。他借力后撤，脚跟碾过碎石，拉开到五步之外。没有还手，甚至没有抬手反击的意思，只是沉声问了一句：“顾长离，你这是何意？”\n\n你没有答。\n\n石阶高处一道灰影掠下，快得几乎看不清身形。一只手掌横插进你和陆照临之间，掌风把你震退半步。来的是个灰袍中年人，腰间悬着一枚铜牌，眉目间没有多余表情。\n\n“试炼场禁争抢伤人。”他声音不高，却压得场中一静，“动手者，即刻逐出。”\n\n你认得这身灰袍——试炼执事。他挡在你们中间，目光在你脸上停了一瞬，又扫过陆照临，像是在确认谁先动的手。\n\n陆照临放下手臂，没有辩解，只是退了一步，把距离让给执事。\n\n就在这时，试炼钟轰然响起。钟声从山顶荡下来，撞在石壁上又弹回来，震得人耳膜发麻。场中弟子纷纷动身，沿着石径往后坡药圃奔去，脚步声杂乱而急促。有人回头看了你一眼，又很快转开。\n\n执事没有动。他仍挡在你面前，等着你开口。\n\n钟声还在响。日落之前，青露草。你的木牌还在怀里，包着金屑的纸片贴着胸口。陆照临站在执事身后，没有走，也没有再看你，只是垂着手，像在等一个说法。\n\n执事开口了：“你是自己走，还是我送你下山？”",
+        "entityIds": [
+          "character_trial_steward"
+        ],
+        "originParentId": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+        "originNarrativeSha256": "f3d14cdebece455ec681c825988c225820e84543aa47f201fb9d587f1fce6b5c"
+      },
+      {
+        "id": "followup-16e4ae96a366b88dc7cd",
+        "kind": "action_pending",
+        "status": "open",
+        "summary": "顾长离已停止攻击并退出试炼，杀死陆照临的行动未落实且已放弃。",
+        "evidence": "你收回左脚，双指松开，垂回身侧。指节上还留着方才撞上他小臂的钝痛，像一根弦的余震，从骨缝里慢慢散开。你退开半步，与陆照临之间重新隔出五步的距离。\n\n没有再看他。\n\n你转向执事，声音压得很平：“我自己走，不劳相送。”",
+        "entityIds": [],
+        "originParentId": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+        "originNarrativeSha256": "f3d14cdebece455ec681c825988c225820e84543aa47f201fb9d587f1fce6b5c",
+        "lastObservedNarrativeSha256": "7ca0537ba0f4eb992d2f9bf8a8afb53f7caba9e1b622db8d9540e78a181e8e38"
+      },
+      {
+        "id": "followup-b8ca45598ea4e457051f",
+        "kind": "continuity",
+        "status": "open",
+        "summary": "顾长离当众动手违反试炼场禁争抢伤人的规定，执事已处置：顾长离自行离场，今日之事到此为止。",
+        "evidence": "你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”",
+        "entityIds": [],
+        "originParentId": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+        "originNarrativeSha256": "f3d14cdebece455ec681c825988c225820e84543aa47f201fb9d587f1fce6b5c",
+        "lastObservedNarrativeSha256": "7ca0537ba0f4eb992d2f9bf8a8afb53f7caba9e1b622db8d9540e78a181e8e38"
+      },
+      {
+        "id": "followup-3ff4015efd9015dba978",
+        "kind": "continuity",
+        "status": "open",
+        "summary": "陆照临遭袭后未还手，本回合未追未问，随人流往后坡药圃去；其真实意图与身手底细仍未明。",
+        "evidence": "陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。",
+        "entityIds": [],
+        "originParentId": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+        "originNarrativeSha256": "f3d14cdebece455ec681c825988c225820e84543aa47f201fb9d587f1fce6b5c",
+        "lastObservedNarrativeSha256": "7ca0537ba0f4eb992d2f9bf8a8afb53f7caba9e1b622db8d9540e78a181e8e38"
+      },
+      {
+        "id": "followup-7bff21afc4fb14d8c54e",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。character_e663361ab1c7",
+        "evidence": "开，垂回身侧。指节上还留着方才撞上他小臂的钝痛，像一根弦的余震，从骨缝里慢慢散开。你退开半步，与陆照临之间重新隔出五步的距离。\n\n没有再看他。\n\n你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。\n\n石阶往下还有很长一段，隐进半山的雾里。回望时，试炼场被石壁挡去大半，只露出高处一角灰白的檐。场内的动静传不过来，只有风声。怀里那枚木牌还贴着胸口，包着金屑的纸片被体温焐得发软。\n\n你站在门外，身后是退出的试炼，身前是下山的路。",
+        "entityIds": [
+          "character_e663361ab1c7"
+        ],
+        "originParentId": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+        "originNarrativeSha256": "7ca0537ba0f4eb992d2f9bf8a8afb53f7caba9e1b622db8d9540e78a181e8e38"
+      },
+      {
+        "id": "followup-be19605b397ade7f34ef",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。沿执事所指石径下行，跨出木栅门，在门外石阶停下",
+        "evidence": "开，垂回身侧。指节上还留着方才撞上他小臂的钝痛，像一根弦的余震，从骨缝里慢慢散开。你退开半步，与陆照临之间重新隔出五步的距离。\n\n没有再看他。\n\n你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。\n\n石阶往下还有很长一段，隐进半山的雾里。回望时，试炼场被石壁挡去大半，只露出高处一角灰白的檐。场内的动静传不过来，只有风声。怀里那枚木牌还贴着胸口，包着金屑的纸片被体温焐得发软。\n\n你站在门外，身后是退出的试炼，身前是下山的路。",
+        "entityIds": [
+          "character_e663361ab1c7"
+        ],
+        "originParentId": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+        "originNarrativeSha256": "7ca0537ba0f4eb992d2f9bf8a8afb53f7caba9e1b622db8d9540e78a181e8e38"
+      },
+      {
+        "id": "followup-22fcec802f5eb8b61b43",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。顾长离向执事表明自己走，执事让出石径并说今日之事到此为止",
+        "evidence": "开，垂回身侧。指节上还留着方才撞上他小臂的钝痛，像一根弦的余震，从骨缝里慢慢散开。你退开半步，与陆照临之间重新隔出五步的距离。\n\n没有再看他。\n\n你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。\n\n石阶往下还有很长一段，隐进半山的雾里。回望时，试炼场被石壁挡去大半，只露出高处一角灰白的檐。场内的动静传不过来，只有风声。怀里那枚木牌还贴着胸口，包着金屑的纸片被体温焐得发软。\n\n你站在门外，身后是退出的试炼，身前是下山的路。",
+        "entityIds": [
+          "character_e663361ab1c7"
+        ],
+        "originParentId": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+        "originNarrativeSha256": "7ca0537ba0f4eb992d2f9bf8a8afb53f7caba9e1b622db8d9540e78a181e8e38"
+      },
+      {
+        "id": "followup-2329c1f0ba73d9e45eed",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。跨出木栅门，在门外石阶停下",
+        "evidence": "开，垂回身侧。指节上还留着方才撞上他小臂的钝痛，像一根弦的余震，从骨缝里慢慢散开。你退开半步，与陆照临之间重新隔出五步的距离。\n\n没有再看他。\n\n你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。\n\n石阶往下还有很长一段，隐进半山的雾里。回望时，试炼场被石壁挡去大半，只露出高处一角灰白的檐。场内的动静传不过来，只有风声。怀里那枚木牌还贴着胸口，包着金屑的纸片被体温焐得发软。\n\n你站在门外，身后是退出的试炼，身前是下山的路。",
+        "entityIds": [
+          "character_e663361ab1c7"
+        ],
+        "originParentId": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+        "originNarrativeSha256": "7ca0537ba0f4eb992d2f9bf8a8afb53f7caba9e1b622db8d9540e78a181e8e38"
+      },
+      {
+        "id": "followup-72bc38d0a765e2d9d121",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。未追出，随人流往后坡药圃去，仍在试炼场范围内",
+        "evidence": "开，垂回身侧。指节上还留着方才撞上他小臂的钝痛，像一根弦的余震，从骨缝里慢慢散开。你退开半步，与陆照临之间重新隔出五步的距离。\n\n没有再看他。\n\n你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。\n\n石阶往下还有很长一段，隐进半山的雾里。回望时，试炼场被石壁挡去大半，只露出高处一角灰白的檐。场内的动静传不过来，只有风声。怀里那枚木牌还贴着胸口，包着金屑的纸片被体温焐得发软。\n\n你站在门外，身后是退出的试炼，身前是下山的路。",
+        "entityIds": [
+          "character_lu_zhaolin"
+        ],
+        "originParentId": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+        "originNarrativeSha256": "7ca0537ba0f4eb992d2f9bf8a8afb53f7caba9e1b622db8d9540e78a181e8e38"
+      },
+      {
+        "id": "followup-a4a66ea4563ea68daeff",
+        "kind": "state_uncertain",
+        "status": "resolved",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。遭袭后留在执事身后，未离开",
+        "evidence": "照临站在你三步外，手里还捏着那块刻了名字的木牌，目光落在石径尽头的方向。你左脚前踏，右手两指并拢，直取他咽喉。这一式你练过很多遍，快、准、不留余地。\n\n他的反应比你预想的快。\n\n侧身、卸力、抬臂格挡，三步之内一气呵成。你的指节撞在他小臂上，像撞上一根绷紧的弦。他借力后撤，脚跟碾过碎石，拉开到五步之外。没有还手，甚至没有抬手反击的意思，只是沉声问了一句：“顾长离，你这是何意？”\n\n你没有答。\n\n石阶高处一道灰影掠下，快得几乎看不清身形。一只手掌横插进你和陆照临之间，掌风把你震退半步。来的是个灰袍中年人，腰间悬着一枚铜牌，眉目间没有多余表情。\n\n“试炼场禁争抢伤人。”他声音不高，却压得场中一静，“动手者，即刻逐出。”\n\n你认得这身灰袍——试炼执事。他挡在你们中间，目光在你脸上停了一瞬，又扫过陆照临，像是在确认谁先动的手。\n\n陆照临放下手臂，没有辩解，只是退了一步，把距离让给执事。\n\n就在这时，试炼钟轰然响起。钟声从山顶荡下来，撞在石壁上又弹回来，震得人耳膜发麻。场中弟子纷纷动身，沿着石径往后坡药圃奔去，脚步声杂乱而急促。有人回头看了你一眼，又很快转开。\n\n执事没有动。他仍挡在你面前，等着你开口。\n\n钟声还在响。日落之前，青露草。你的木牌还在怀里，包着金屑的纸片贴着胸口。陆照临站在执事身后，没有走，也没有再看你，只是垂着手，像在等一个说法。\n\n执事开口了：“你是自己走，还是我送你下山？”",
+        "entityIds": [
+          "character_lu_zhaolin"
+        ],
+        "originParentId": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+        "originNarrativeSha256": "f3d14cdebece455ec681c825988c225820e84543aa47f201fb9d587f1fce6b5c",
+        "resolution": "陆照临遭袭后留在执事身后未离开的状态已澄清：本回合他未追未问，随人流往后坡药圃去。",
+        "resolutionEvidence": "陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。",
+        "resolutionNarrativeSha256": "7ca0537ba0f4eb992d2f9bf8a8afb53f7caba9e1b622db8d9540e78a181e8e38"
+      }
+    ],
+    "observationDiagnostics": [
+      {
+        "item": {
+          "name": "试炼场门外",
+          "basis": "observed",
+          "paragraphIds": [
+            "P9"
+          ],
+          "presentEntities": [
+            {
+              "entityId": "character_e663361ab1c7",
+              "entityName": "你",
+              "basis": "observed",
+              "paragraphIds": [
+                "P9"
+              ],
+              "evidenceQuote": "你跨出门，在门外的石阶上停下。"
+            }
+          ]
+        },
+        "reason": "当前场所名称不在引用原文中"
+      },
+      {
+        "item": {
+          "characterId": "character_e663361ab1c7",
+          "entityName": "你",
+          "status": "alive",
+          "permanence": "temporary",
+          "cause": "自行离场退出试炼，未受伤",
+          "paragraphIds": [
+            "P3",
+            "P9"
+          ]
+        },
+        "reason": "状态依据类型无效"
+      },
+      {
+        "item": {
+          "entityId": "character_e663361ab1c7",
+          "entityName": "你",
+          "attribute": "locationId",
+          "value": "location_trial_gate",
+          "reason": "沿执事所指石径下行，跨出木栅门，在门外石阶停下",
+          "paragraphIds": [
+            "P8",
+            "P9"
+          ],
+          "basis": "observed"
+        },
+        "reason": "位置记录缺少实际地点称呼，保留待澄清"
+      },
+      {
+        "item": {
+          "entityId": "character_e663361ab1c7",
+          "entityName": "你",
+          "attribute": "trialStatus",
+          "value": "已退出外门试炼",
+          "reason": "顾长离向执事表明自己走，执事让出石径并说今日之事到此为止",
+          "paragraphIds": [
+            "P3",
+            "P5"
+          ],
+          "basis": "observed"
+        },
+        "reason": "状态依据含转述、设想或未核实信息，保留待澄清"
+      },
+      {
+        "item": {
+          "entityId": "character_e663361ab1c7",
+          "entityName": "你",
+          "attribute": "locationId",
+          "value": "location_trial_gate",
+          "reason": "跨出木栅门，在门外石阶停下",
+          "paragraphIds": [
+            "P9"
+          ],
+          "basis": "observed"
+        },
+        "reason": "位置记录缺少实际地点称呼，保留待澄清"
+      },
+      {
+        "item": {
+          "entityId": "character_lu_zhaolin",
+          "entityName": "陆照临",
+          "attribute": "locationId",
+          "value": "location_open_trial",
+          "reason": "未追出，随人流往后坡药圃去，仍在试炼场范围内",
+          "paragraphIds": [
+            "P7"
+          ],
+          "basis": "observed"
+        },
+        "reason": "位置记录缺少实际地点称呼，保留待澄清"
+      }
+    ],
+    "readingProfile": {
+      "level": "dynamic",
+      "targetCjk": [
+        420,
+        420
+      ],
+      "reason": "需落实收手、表态、执事回应、陆照临反应与离场停步五个动作，并交代退出试炼的持续结果",
+      "hardMinimum": false,
+      "minCjk": 80,
+      "maxCjk": 1500,
+      "lengthPolicy": "final_visible_prose_dynamic_80_1500",
+      "actualCjk": 514,
+      "expansionApplied": false
+    },
+    "proseQuality": {
+      "status": "not_automatically_reviewed",
+      "reviewer": "developer"
+    },
+    "selectedDirectionId": "direction_free_1723f9ad23a8",
+    "selectedDirection": {
+      "id": "direction_free_1723f9ad23a8",
+      "title": "自定行动：我停止攻击，不再接近陆照",
+      "summary": "我停止攻击，不再接近陆照临，接受退出试炼，按执事指的路离开试炼场，在门外停下。",
+      "statePatch": {
+        "freeTextProgress": 2
+      },
+      "isFreeText": true
+    },
+    "playerDirection": "我停止攻击，不再接近陆照临，接受退出试炼，按执事指的路离开试炼场，在门外停下。",
+    "requestId": "playthrough-704b215fb4c64774b2e49bd83bbc81e3",
+    "contextId": "ctx-97222968e0ac55b7",
+    "contextMemory": {
+      "schemaVersion": "committed-outcome-memory/2",
+      "package": {
+        "id": "taixu-relics-part1",
+        "version": "0.1.3",
+        "moduleIndexSha256": "0894f7eebc6fa34b23310839da0eb3cd7b15d2784d7e559aee3f18af9aa171c2"
+      },
+      "originBranchId": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+      "parentBranchId": "branch_b50bd03c-0f98-402c-b6c6-6ded86699928",
+      "sourceNodeRef": "node_source_continuity",
+      "narrativeSha256": "30ece257498b7d925fa19f52749ab49604aa218abbb1ede63f4cff98316b82ce",
+      "intentSha256": "d1204602f74b5230f3908bf269184262c5aca45f8ddd1a3e4cd78eacbe668903",
+      "reviewSha256": "772c44d700af57c68b68e9f303de4d77ea0fe3b89617739f3561296392e0986b",
+      "records": [
+        {
+          "domain": "goal",
+          "entityId": "opening-goal-2",
+          "stateSha256": "bc96b171c8bc039ef9316b7b4da5319c5a1437119ddb81cc92077e6a718c3dd6",
+          "memory": {
+            "memoryId": "memory-e530752164578014bd052239",
+            "kind": "event",
+            "sourceIds": [
+              "memory:goal:branch_3af08b21-c865-4fee-afe2-981ef81151b1:opening-goal-2"
+            ],
+            "branchId": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+            "visibility": "player_known",
+            "authority": "confirmed_evidence",
+            "validity": "confirmed",
+            "status": "confirmed",
+            "sequence": 2,
+            "content": "目标「如何完成第一场外门试炼」：已放下。"
+          }
+        },
+        {
+          "domain": "thread",
+          "entityId": "opening-thread-2",
+          "stateSha256": "b1c93242e5f74b554bf4b8341557eb0365a1d957b3e652aaf295a5d3769d28de",
+          "memory": {
+            "memoryId": "memory-2d541a002f17b13cfbd68a4a",
+            "kind": "event",
+            "sourceIds": [
+              "memory:thread:branch_3af08b21-c865-4fee-afe2-981ef81151b1:opening-thread-2"
+            ],
+            "branchId": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+            "visibility": "player_known",
+            "authority": "confirmed_evidence",
+            "validity": "confirmed",
+            "status": "confirmed",
+            "sequence": 2,
+            "content": "剧情问题「如何完成第一场外门试炼」：已解决。"
+          }
+        }
+      ]
+    },
+    "readerChoices": [
+      {
+        "id": "reader-1158ffa263c39472",
+        "title": "在门外石阶停步，取出木牌细看",
+        "summary": "我在门外石阶上停下，从怀里取出那枚试炼木牌，就着天光翻看刻痕与包着金屑的纸片，确认金屑嵌在何处、纸片是否与木牌有关。只看，不急着下山，也不回头。",
+        "evidence": [
+          "你跨出门，在门外的石阶上停下。",
+          "石阶往下还有很长一段，隐进半山的雾里。回望时，试炼场被石壁挡去大半，只露出高处一角灰白的檐。场内的动静传不过来，只有风声。怀里那枚木牌还贴着胸口，包着金屑的纸片被体温焐得发软。",
+          "你站在门外，身后是退出的试炼，身前是下山的路。"
+        ],
+        "dependencies": {
+          "version": "reader-choice-dependencies/3",
+          "contextDigest": "7645ad7615ffaf23cd2b7d17da6c296a390969b44e292bfb8b77f42445c330ee",
+          "paragraphIds": [
+            "P9",
+            "P10",
+            "P11"
+          ],
+          "interactWith": [],
+          "mentionOnly": [],
+          "useItems": [
+            "item_open_gu_token",
+            "item_open_gold_paper"
+          ]
+        }
+      }
+    ],
+    "turnInput": {
+      "text": "我停止攻击，不再接近陆照临，接受退出试炼，按执事指的路离开试炼场，在门外停下。"
+    },
+    "preparedTurnKey": "0294430125f92684649c0d4e3d3da8356798bb8bc2bfd254e58cf6f4f0e57320",
+    "preparedAttemptId": "17951e810e464c98bea623b854a4496a",
+    "routeOutline": {
+      "version": "route-outline/3",
+      "branch_id": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+      "root_branch_id": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+      "binding_digest": "c51071643c5f3c45097fd323baa7bcefd8bc8e045c63bff1e364aefb1c6666d0",
+      "structure": {
+        "volume": null,
+        "arc": "arc_source_chapter_003",
+        "beat": "beat_chapter_011",
+        "source_progress": "chapter_011"
+      },
+      "goals": [
+        {
+          "id": "opening-goal-1",
+          "title": "木牌刻痕里为何有金屑",
+          "status": "active",
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+            "ref": "opening-goal-1",
+            "quote": "木牌刻痕里为何有金屑"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "如何完成第一场外门试炼",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+            "ref": "opening-goal-2",
+            "quote": "你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "opening-thread-1",
+          "title": "木牌刻痕里为何有金屑",
+          "status": "open",
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+            "ref": "opening-thread-1",
+            "quote": "木牌刻痕里为何有金屑"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "如何完成第一场外门试炼",
+          "status": "resolved",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "branch_3af08b21-c865-4fee-afe2-981ef81151b1",
+            "ref": "opening-thread-2",
+            "quote": "你转向执事，声音压得很平：“我自己走，不劳相送。”\n\n执事看了你一息，像是要确认这句话里没有别的意思。然后他侧过身，让出通往山下的那条石径。石径贴着石壁往下拐，尽头是一道半开的木栅门，门外的石阶被雨水洗得发亮。\n\n“沿这条路下去就是场门。”他说，“木牌交回门房，或留着——随你。今日之事，到此为止。”\n\n语气公事公办，没有多余的话，也没有再提“逐出”二字。他退开一步，把场中的空地重新让给那些还在往药圃赶的弟子。\n\n陆照临仍站在执事身后，垂着手。他没有追上来，也没有开口。你转身的瞬间，余光里他正把目光从石径方向收回，随后跟着人流往后坡去了。脚步声杂在众人里，很快听不分明。\n\n你沿石径下行。两侧石壁上的旧剑痕一道压着一道，被雨水浸成深色。钟声已经停了，山风从坡下卷上来，带着湿草和泥土的气味。走了约莫百步，石径豁然开阔，一道木栅门横在面前，门框上钉着块褪色的木牌，字迹被风雨磨得只剩轮廓。\n\n你跨出门，在门外的石阶上停下。"
+          },
+          "priority": "high",
+          "recoveryWindow": "immediate",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "conflicts": [],
+      "steps": [
+        {
+          "id": "goal:opening-goal-1",
+          "kind": "pursue_goal",
+          "target_id": "opening-goal-1",
+          "title": "木牌刻痕里为何有金屑",
+          "blockers": [],
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+            "ref": "opening-goal-1",
+            "quote": "木牌刻痕里为何有金屑"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "thread:opening-thread-1",
+          "kind": "address_thread",
+          "target_id": "opening-thread-1",
+          "title": "木牌刻痕里为何有金屑",
+          "blockers": [],
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_bd7a476d-e5b6-4095-85d5-62bae70ef18c",
+            "ref": "opening-thread-1",
+            "quote": "木牌刻痕里为何有金屑"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ]
+    }
+  },
+  "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+}

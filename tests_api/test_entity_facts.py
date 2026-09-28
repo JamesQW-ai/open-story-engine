@@ -1,11 +1,35 @@
 import copy
 import unittest
 
-from open_story_engine.entity_facts import turn_entity_facts, check_observed_reference, observation_state
+from open_story_engine.entity_facts import turn_entity_facts, check_observed_reference, observation_state, bind_new_entity_references
 from tests_api import test_reader_consequences as fixtures
 
 
 class EntityFactsTests(unittest.TestCase):
+    def test_new_reference_binding_does_not_guess_aliases_or_widen_short_quotes(self):
+        body = '伤者躺在石阶下。\n\n他的呼吸已经停止。'
+        base = dict(updates=dict(introductions=dict(characters=[dict(id='character_new', name='伤者', paragraphIds=['P1'])]),
+                                 outcomes=[dict(characterId='character_new', entityName='伤者', paragraphIds=['P2'])]))
+        cases = []
+        quoted = copy.deepcopy(base)
+        quoted['updates']['outcomes'][0]['evidenceQuote'] = '他的呼吸已经停止。'
+        cases.append((quoted, set()))
+        alias = copy.deepcopy(base)
+        alias['updates']['introductions']['characters'][0]['name'] = '陌生伤者'
+        cases.append((alias, set()))
+        cases.append((base, {'character_new'}))
+        duplicate = copy.deepcopy(base)
+        duplicate['updates']['introductions']['characters'].append(dict(id='character_other', name='伤者', paragraphIds=['P1']))
+        cases.append((duplicate, set()))
+        fabricated = copy.deepcopy(base)
+        fabricated['updates']['introductions']['characters'][0]['paragraphIds'] = ['P99']
+        cases.append((fabricated, set()))
+        for data, existing in cases:
+            with self.subTest(data=data, existing=existing):
+                original = copy.deepcopy(data)
+                self.assertEqual(bind_new_entity_references(data, body, existing), original)
+                self.assertEqual(data, original)
+
     def setUp(self):
         fixture = fixtures.ConsequenceTests()
         fixture.setUp()

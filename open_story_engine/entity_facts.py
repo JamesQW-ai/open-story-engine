@@ -3,6 +3,86 @@ import re
 import copy
 
 
+def bind_evidence_paragraphs(data, body):
+    """Resolve an explicit result paragraph to its literal text, without edits.
+
+    Bad selectors deliberately remain invalid observations; never fall back to
+    a broader span that could silently change the model's source attribution.
+    """
+    if not isinstance(data, dict):
+        return data
+    result = copy.deepcopy(data)
+    paragraphs = body.split('\n\n')
+    groups = [result]
+    if isinstance(result.get('updates'), dict):
+        groups.append(result['updates'])
+    for group in groups:
+        for field in ('outcomes', 'stateChanges', 'confirmedStates'):
+            items = group.get(field, [])
+            for item in items if isinstance(items, list) else []:
+                if not isinstance(item, dict) or 'evidenceParagraphId' not in item:
+                    continue
+                ref = item['evidenceParagraphId']
+                valid = (isinstance(ref, str) and re.fullmatch(r'P[1-9]\d{0,6}', ref)
+                         and int(ref[1:]) <= len(paragraphs)
+                         and isinstance(item.get('paragraphIds'), list) and ref in item['paragraphIds'])
+                quote = paragraphs[int(ref[1:]) - 1] if valid else ''
+                if 'evidenceQuote' in item and item['evidenceQuote'] != quote:
+                    quote = ''
+                item['evidenceQuote'] = quote
+    return result
+
+
+def bind_new_entity_references(data, body, existing_ids):
+    """Link same-turn introductions to later pronouns using explicit IDs only.
+
+    The merged span still passes the usual literal/attribution checks. Never
+    widen a selected short quote or use this to alias an existing character.
+    """
+    from .narrative_delivery import _quote
+    if not isinstance(data, dict):
+        return data
+    result = copy.deepcopy(data)
+    updates = result.get('updates', result)
+    if not isinstance(updates, dict):
+        return result
+    additions = updates.get('introductions', {})
+    if not isinstance(additions, dict):
+        return result
+    entries = [e for group in ('characters', 'items', 'locations')
+               for e in additions.get(group, []) if isinstance(e, dict)] if all(
+                   isinstance(additions.get(group, []), list) for group in ('characters', 'items', 'locations')) else []
+    for group in (updates, result):
+        for field in ('outcomes', 'stateChanges', 'confirmedStates'):
+            items = group.get(field, [])
+            for item in items if isinstance(items, list) else []:
+                if not isinstance(item, dict) or 'evidenceQuote' in item:
+                    continue
+                eid = item.get('characterId') or item.get('entityId')
+                name = item.get('entityName')
+                if not isinstance(eid, str) or eid in existing_ids or not isinstance(name, str) or not name:
+                    continue
+                matches = [e for e in entries if e.get('id') == eid and e.get('name') == name]
+                if (len(matches) != 1 or sum(e.get('name') == name for e in entries) != 1
+                        or sum(e.get('id') == eid for e in entries) != 1):
+                    continue
+                intro = matches[0]
+                try:
+                    if name in _quote(item, body) or name not in _quote(intro, body):
+                        continue
+                    refs, anchors = item['paragraphIds'], intro['paragraphIds']
+                    start, end = min(int(p[1:]) for p in anchors), max(int(p[1:]) for p in anchors)
+                    end = min(end, min(int(p[1:]) for p in refs))
+                    paragraphs = body.split('\n\n')
+                    labels = [i for i in range(start, end + 1) if name in paragraphs[i - 1]]
+                    if not labels:
+                        continue
+                    item['paragraphIds'] = sorted(set([f'P{labels[-1]}'] + refs), key=lambda p: int(p[1:]))
+                except (ValueError, TypeError, KeyError):
+                    continue
+    return result
+
+
 def bind_player_mentions(data, body, player_id, player_name):
     """The session contract, not name similarity, identifies narrative 'you'."""
     if not isinstance(data, dict):
@@ -146,7 +226,8 @@ def check_narrated_location(evidence, place, person=None):
         raise ValueError('位置只在对白中提及，尚无人物实际到场叙述')
 
 
-def check_observed_reference(item, known, evidence, new_location_ids=(), *, strict=False, player_id=None):
+def check_observed_reference(item, known, evidence, new_location_ids=(), *, strict=False, player_id=None,
+                             identity_evidence=''):
     """Validate explicit reference labels, without judging or changing prose."""
     entity_id = item.get('entityId') or item.get('characterId')
     if strict:
@@ -156,7 +237,7 @@ def check_observed_reference(item, known, evidence, new_location_ids=(), *, stri
         name = item['entityName']
         player_reference = entity_id == player_id and name == '你'
         if not entity or not isinstance(name, str) or not name or (
-                name != entity['name'] and not player_reference) or name not in evidence:
+                name != entity['name'] and not player_reference) or (name not in evidence and name not in identity_evidence):
             raise ValueError('实际称呼没有绑定登记身份，不能补全近似姓名')
         check_direct_evidence(evidence)
     if 'entityName' in item:

@@ -48,7 +48,7 @@ def receipt_for(package, node, *, version=VERSION):
     if 'deliveryReceipt' in node:
         from .narrative_delivery import VERSION as delivery_version
         receipt = node['deliveryReceipt']
-        if (not isinstance(receipt, dict) or receipt.get('version') != delivery_version
+        if (not isinstance(receipt, dict) or receipt.get('version') not in (delivery_version, 'narrative-delivery/4')
                 or receipt.get('kind') != 'observed_state_not_prose_approval'
                 or receipt.get('narrativeSha256') != body_sha):
             raise ValueError('动态记忆与已保存正文绑定不符')

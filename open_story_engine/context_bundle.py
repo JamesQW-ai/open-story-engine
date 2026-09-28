@@ -154,6 +154,23 @@ def focused_recent_lineage(lineage, query):
                 passages[index] = paragraph
                 used += cost
 
+        # The cause of an irreversible result outranks incidental keyword
+        # matches (e.g. "I admit what I just did" does not repeat "killed").
+        # Keep its actual prose within the existing per-turn budget.
+        update = node.get('consequenceUpdate') or {}
+        consequences = [item for item in update.get('outcomes', [])
+                        if item.get('status') == 'dead' or
+                        item.get('status') == 'departed' and item.get('permanence') == 'permanent']
+        consequences += [item for item in update.get('stateChanges', [])
+                         if item.get('attribute') == 'destroyedPermanently' and item.get('value') is True]
+        evidence = [item['evidence'] for item in consequences
+                    if isinstance(item.get('evidence'), str) and item['evidence'].strip()
+                    and item['evidence'] in node.get('narrativeText', '')]
+        # A referenced span can start with identification/setup. Prefer its
+        # concluding result and immediate cause over that setup.
+        for index, paragraph in reversed(paragraphs):
+            if any(paragraph in quote or quote in paragraph for quote in evidence):
+                include(index, paragraph)
         for index, paragraph in ranked:
             if index in anchors:
                 include(index, paragraph)

@@ -126,10 +126,12 @@ def plan_turn(planner, context, selected, resolved_state, stream=None, stream_re
                 raw.append(error.raw_response)
             observations.extend({**o, 'generationStage': 'state_observation'}
                                 for o in getattr(error, 'observations', []))
-        from .entity_facts import bind_player_mentions
+        from .entity_facts import bind_player_mentions, bind_new_entity_references, bind_evidence_paragraphs
         player_id = context['contract']['persona']['sourceCharacterId']
         player_name = reader_actions.registry(context['package'], state)[player_id]['name']
+        data = bind_evidence_paragraphs(data, body)
         data = bind_player_mentions(data, body, player_id, player_name)
+        data = bind_new_entity_references(data, body, reader_actions.registry(context['package'], state))
         recorded = narrative_delivery.observe(context, body, data, extraction_failure)
         actual = consequences.projected_state(resolved_state, recorded['update'], context['package'])
         directions = consequences.filter_directions(scripted_followup_directions(context, selected, actual),

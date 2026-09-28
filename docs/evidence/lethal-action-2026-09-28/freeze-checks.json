@@ -1,0 +1,89 @@
+{
+  "checkedAt": "2026-09-28T17:03:58.258830+08:00",
+  "acceptance": "有限正文与死亡后果边界通过；位置台账完整性未通过",
+  "version": "narrative-delivery/5",
+  "tests": {
+    "core": {
+      "passed": 663,
+      "seconds": 660.658,
+      "log": "logs/core-final-v5.log"
+    },
+    "api": {
+      "passed": 590,
+      "seconds": 95.593,
+      "log": "logs/api-final-v5.log"
+    },
+    "focused": {
+      "passed": 68,
+      "seconds": 1.175,
+      "overlapsFullSuites": true,
+      "log": "logs/focused-v5.log"
+    },
+    "web": {
+      "passed": 65,
+      "log": "logs/web.log"
+    },
+    "webBuild": {
+      "passed": true,
+      "log": "logs/web-build.log"
+    }
+  },
+  "live": {
+    "attempt": "attempt-09",
+    "openingPlusActions": 5,
+    "actionRequests": 4,
+    "errors": 0,
+    "manualGenerationRetries": 0,
+    "proseRewrites": 0,
+    "endingClaimed": false,
+    "verification": "verification-release.json"
+  },
+  "desktop": {
+    "observedPages": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "finalPage": "release-page-5.ax.txt",
+    "finalPageContainsContinuationChoices": true,
+    "finalPageContainsFreeActionInput": true,
+    "generationErrorOrRetryNoticeObserved": false,
+    "singleTabContinuousNavigation": "未确认：部分旧验证标签页点击后无变化；新开页面恢复进度后可进入下一页。不能据此声称全部桌面交互无缺陷。",
+    "priorAttempt06": "已有末页及重新打开验证，见 restored-after-reading.ax.txt；不冒充 attempt-09",
+    "reopenRestoresPage5": true,
+    "restoredPage": "release-restored.ax.txt"
+  },
+  "services": {
+    "ports": [
+      8000,
+      8001
+    ],
+    "healthy": true,
+    "originalSaveReadHttp": 200,
+    "preservation": "after-restart.json"
+  },
+  "cleanup": {
+    "deletedThisTurn": [],
+    "retained": [
+      "全部现有游玩记录",
+      "历史失败及原始 SSE",
+      "旧规划和小说母本",
+      "已有本地数据库和图片缓存"
+    ],
+    "excludedFromGit": [
+      ".env",
+      "SQLite 数据库及 WAL",
+      "依赖与构建缓存",
+      "运行期图片缓存"
+    ],
+    "newEvidenceCredentialPatternMatches": 0
+  },
+  "limitations": [
+    "位置台账未从石阶下更新到石牢，连续两回合未自动补齐",
+    "少量重复动作与问话限制扩写",
+    "模型和生图服务仍有外部超时风险",
+    "最终桌面同一标签连续翻页未完全确认"
+  ],
+  "scope": "真实游玩无错误事件不等于任意输入保证零错；没有通关声明"
+}

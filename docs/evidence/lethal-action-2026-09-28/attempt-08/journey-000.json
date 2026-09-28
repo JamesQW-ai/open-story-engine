@@ -1,0 +1,152 @@
+{
+  "branch_id": "branch_f9039544-b836-4dc4-be4f-e6d10a523cd8",
+  "threads": [
+    {
+      "id": "opening-thread-1",
+      "title": "陌生伤者是否能得到救助",
+      "status": "open",
+      "source": "opening",
+      "openedBranchId": null,
+      "causeBranchId": null,
+      "reason": "",
+      "evidence": "",
+      "priority": "unknown",
+      "recoveryWindow": "unknown"
+    },
+    {
+      "id": "opening-thread-2",
+      "title": "空灯与父亲失踪是否有关",
+      "status": "open",
+      "source": "opening",
+      "openedBranchId": null,
+      "causeBranchId": null,
+      "reason": "",
+      "evidence": "",
+      "priority": "unknown",
+      "recoveryWindow": "unknown"
+    }
+  ],
+  "goals": [
+    {
+      "id": "opening-goal-1",
+      "title": "陌生伤者是否能得到救助",
+      "status": "active",
+      "characterId": "character_ae4cb42b9b49",
+      "dependencies": [],
+      "source": "opening",
+      "evidence": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+      "causeBranchId": null
+    },
+    {
+      "id": "opening-goal-2",
+      "title": "空灯与父亲失踪是否有关",
+      "status": "active",
+      "characterId": "character_ae4cb42b9b49",
+      "dependencies": [],
+      "source": "opening",
+      "evidence": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+      "causeBranchId": null
+    }
+  ],
+  "ledger_coverage": {
+    "goals": "unknown",
+    "threads": "recorded"
+  },
+  "role_name": "陆照临",
+  "goal": "陌生伤者是否能得到救助；空灯与父亲失踪是否有关",
+  "progress": 0,
+  "progress_label": "原著路线进度",
+  "choices_made": 0,
+  "milestones": [],
+  "current_task": "陌生伤者是否能得到救助",
+  "status": "active",
+  "feedback": [],
+  "clues": [
+    "父亲陆沉舟三年前押送引路灯后失踪，没有尸骨和遗物证明死讯。",
+    "老人让你到玄霄宗问山门的灯。",
+    "伤者仍活着，手边抓着空灯；守门人阻止靠近，山门将闭。"
+  ],
+  "people": [
+    {
+      "id": "character_ae4cb42b9b49",
+      "name": "陆照临",
+      "is_player": true,
+      "first_page": 1,
+      "last_page": 1,
+      "identity": "初入玄霄宗、追查父亲陆沉舟去向的年轻修行者",
+      "summary": "立场与经历，随着你的探索逐渐明晰。",
+      "summarized": false,
+      "name_evidence": {
+        "branch_id": "branch_f9039544-b836-4dc4-be4f-e6d10a523cd8",
+        "page": 1,
+        "quote": "雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。",
+        "source": "narrative"
+      },
+      "portrait": {
+        "url": "/images/taixu-lu-zhaolin-v1.png",
+        "source": "published",
+        "fallback_key": "person-6"
+      },
+      "status": {
+        "code": "unknown",
+        "label": "状态未确认",
+        "permanence": null,
+        "evidence": null
+      }
+    },
+    {
+      "id": "character_37531636ecf5",
+      "name": "陆沉舟",
+      "is_player": false,
+      "first_page": 1,
+      "last_page": 1,
+      "identity": "身份随剧情逐渐明确",
+      "summary": "立场与经历，随着你的探索逐渐明晰。",
+      "summarized": false,
+      "name_evidence": {
+        "branch_id": "branch_f9039544-b836-4dc4-be4f-e6d10a523cd8",
+        "page": 1,
+        "quote": "雨水顺着斗笠落下，你站在玄霄宗的封山石外，手中的引荐文书已经受潮。三年前，父亲陆沉舟替宗门押送引路灯，此后再无归讯。家中老人让你来这里，问山门的灯。",
+        "source": "narrative"
+      },
+      "portrait": {
+        "url": "/images/taixu-lu-chenzhou-v1.png",
+        "source": "published",
+        "fallback_key": "person-8"
+      },
+      "status": {
+        "code": "unknown",
+        "label": "状态未确认",
+        "permanence": null,
+        "evidence": null
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "source": "character_ae4cb42b9b49",
+      "target": "character_37531636ecf5",
+      "label": "父亲",
+      "evidence": "父亲，失踪，生死未确认。",
+      "page": 1,
+      "origin": "opening"
+    }
+  ],
+  "recap": [],
+  "lineage": [
+    "branch_f9039544-b836-4dc4-be4f-e6d10a523cd8"
+  ],
+  "route_health": {
+    "signals": [],
+    "review_recommended": false,
+    "window": 3,
+    "unchanged_state_turns": 0,
+    "repeated_action_turns": 0,
+    "source_progress_streak": 0,
+    "closure_readiness": "needs_explanation",
+    "closure_outstanding_count": 4,
+    "ending_written": false,
+    "note": "停滞信号与收束清单仅作路线诊断；不表示应强制结束，也不表示自然结局已写成。"
+  },
+  "location": "玄霄宗山门"
+}

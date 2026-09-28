@@ -6,6 +6,36 @@ from open_story_engine.context_bundle import ContextBundleBuilder, focused_recen
 
 
 class RecentMemoryTests(unittest.TestCase):
+    def test_admitting_previous_action_keeps_irreversible_cause_before_keyword_matches(self):
+        cause = '你杀死了伤者，伤者的呼吸已经停止。'
+        node = dict(id='latest', narrativeText=cause + '\n\n' + '守门弟子在原地等候。' * 35 +
+                    '\n\n' + '你留在原地，等待守门弟子回应。' * 30,
+                    consequenceUpdate=dict(outcomes=[dict(status='dead', evidence=cause)]))
+        before = copy.deepcopy(node)
+        text = focused_recent_lineage([dict(id='older', narrativeText='雨落。'), node],
+                                      '我承认刚才的行为，留在原地等候守门弟子处置。')
+        self.assertIn(cause, text[-1]['summary'])
+        self.assertLessEqual(sum(len(n['summary']) for n in text), 1400)
+        self.assertEqual(node, before)
+
+    def test_irreversible_priority_does_not_inject_nonliteral_evidence(self):
+        node = dict(id='latest', narrativeText='你在原地等候。',
+                    consequenceUpdate=dict(outcomes=[dict(status='dead', evidence='虚构的死亡依据')]))
+        self.assertNotIn('虚构的死亡依据', focused_recent_lineage([node], '继续')[0]['summary'])
+
+    def test_long_outcome_span_keeps_result_and_cause_before_identification_setup(self):
+        setup = '伤者躺在石阶旁。' + '雨滴落在石上。' * 50
+        cause = '你按住他的肩，对他动了手。'
+        result = '他的身体不再动弹，伤者已经死亡。'
+        evidence = '\n\n'.join([setup, cause, result])
+        node = dict(id='latest', narrativeText=evidence + '\n\n守门弟子等候你的回答。',
+                    consequenceUpdate=dict(outcomes=[dict(status='dead', evidence=evidence)]))
+        memory = focused_recent_lineage([dict(id='older', narrativeText='山门已关。'), node],
+                                        '我承认刚才的行为，等候守门弟子处置。')
+        self.assertIn(cause, memory[-1]['summary'])
+        self.assertIn(result, memory[-1]['summary'])
+        self.assertLessEqual(sum(len(n['summary']) for n in memory), 1400)
+
     def test_question_retrieves_actual_answer_and_preserves_attribution(self):
         nodes = [dict(id='old', narrativeText='旧路线秘密', summary='旧路线秘密'),
                  dict(id='one', narrativeText='雨落在屋檐上。\n\n阿渡说：“空灯是我在雪原路上捡的。”\n\n你起身挡住风。',

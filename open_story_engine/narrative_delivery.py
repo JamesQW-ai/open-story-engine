@@ -10,7 +10,7 @@ import re
 
 from . import reader_actions as actions, reader_consequences as consequences, reader_threads
 
-VERSION = 'narrative-delivery/4'
+VERSION = 'narrative-delivery/5'
 LEGACY_VERSION = 'narrative-delivery/1'
 
 
@@ -93,7 +93,8 @@ def _text(value, maximum=180):
     return value.strip()
 
 
-def observe(context, body, data, failure=None, *, legacy=False, literal_scope=True, narrated_location=True):
+def observe(context, body, data, failure=None, *, legacy=False, literal_scope=True, narrated_location=True,
+            separate_identity=True):
     """Project usable observations; report uncertain items without vetoing prose."""
     state, package = context['parent']['branchState'], context['package']
     action = context['playerDirection']
@@ -276,6 +277,13 @@ def observe(context, body, data, failure=None, *, legacy=False, literal_scope=Tr
 
     def observed_quote(item):
         evidence = _quote(item, body)
+        if separate_identity and 'evidenceParagraphId' in item:
+            ref = item['evidenceParagraphId']
+            paragraphs = body.split('\n\n')
+            if (not isinstance(ref, str) or not re.fullmatch(r'P[1-9]\d{0,6}', ref)
+                    or int(ref[1:]) > len(paragraphs) or ref not in item['paragraphIds']
+                    or item.get('evidenceQuote') != paragraphs[int(ref[1:]) - 1]):
+                raise ValueError('结果段号未绑定原文，保留待澄清')
         from .entity_facts import check_observed_reference, observation_evidence
         if not legacy:
             evidence = observation_evidence(item, evidence, local_attribution=literal_scope)
@@ -302,8 +310,30 @@ def observe(context, body, data, failure=None, *, legacy=False, literal_scope=Tr
         if not legacy and any(item is c for c in scene_confirmations):
             reference = {k: v for k, v in item.items() if k != 'attribute'}
         if not legacy:
+            # A newly introduced person's label and a later pronoun outcome
+            # have separate sources. The explicit ID joins them; the outcome
+            # paragraph still needs direct, literal evidence of its own.
+            identity_evidence = ''
+            if separate_identity and 'evidenceParagraphId' in item:
+                from .entity_facts import check_direct_evidence
+                eid = item.get('characterId') or item.get('entityId')
+                name = item.get('entityName')
+                introduced = [e for group in update['introductions'].values() for e in group]
+                matches = [e for e in introduced if e['id'] == eid and e['name'] == name]
+                if len(matches) == 1 and sum(e['name'] == name for e in introduced) == 1:
+                    for paragraph in matches[0]['evidence'].split('\n\n'):
+                        narration = re.sub(r'“[^”]*”|「[^」]*」|"[^"]*"', '', paragraph)
+                        if name not in narration:
+                            continue
+                        try:
+                            check_direct_evidence(paragraph)
+                        except ValueError:
+                            continue
+                        identity_evidence = paragraph
+                        break
             check_observed_reference(reference, known, evidence,
-                {e['id'] for e in update['introductions']['locations']}, strict=True, player_id=player)
+                {e['id'] for e in update['introductions']['locations']}, strict=True, player_id=player,
+                identity_evidence=identity_evidence)
             if narrated_location and reference.get('attribute') == 'locationId':
                 from .entity_facts import check_narrated_location
                 check_narrated_location(evidence, reference['observedLocationName'], reference['entityName'])
@@ -476,7 +506,7 @@ def seal(context, body, data, failure=None):
 def validate_commit(context, result):
     receipt = result.get('deliveryReceipt')
     action = context.get('playerDirection') or result['actionIntent']['input']
-    if (not isinstance(receipt, dict) or receipt.get('version') not in (VERSION, LEGACY_VERSION, 'narrative-delivery/2', 'narrative-delivery/3')
+    if (not isinstance(receipt, dict) or receipt.get('version') not in (VERSION, LEGACY_VERSION, 'narrative-delivery/2', 'narrative-delivery/3', 'narrative-delivery/4')
             or receipt.get('kind') != 'observed_state_not_prose_approval'
             or receipt.get('parentSha256') != digest(context['parent'])
             or receipt.get('narrativeSha256') != hashlib.sha256(result['narrativeText'].encode()).hexdigest()
@@ -484,8 +514,9 @@ def validate_commit(context, result):
         raise ValueError('正文交付凭据与请求、父分支或正文不符')
     recorded = observe({**context, 'playerDirection': action}, result['narrativeText'], receipt.get('data'),
                        receipt.get('failure'), legacy=receipt['version'] == LEGACY_VERSION,
-                       literal_scope=receipt['version'] in (VERSION, 'narrative-delivery/3'),
-                       narrated_location=receipt['version'] == VERSION)
+                       literal_scope=receipt['version'] in (VERSION, 'narrative-delivery/3', 'narrative-delivery/4'),
+                       narrated_location=receipt['version'] in (VERSION, 'narrative-delivery/4'),
+                       separate_identity=receipt['version'] == VERSION)
     if (recorded['update'] != result.get('consequenceUpdate')
             or recorded['followups'] != result.get('continuityFollowups')
             or recorded['outcome'] != result.get('readerOutcome')):

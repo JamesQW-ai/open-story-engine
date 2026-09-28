@@ -1,0 +1,1076 @@
+{
+  "status": "written",
+  "request_id": "playthrough-48fab55db5fe416ca53840e0fbbb7b44",
+  "deduplicated": false,
+  "branch": {
+    "id": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+    "sessionId": "6f8c1dc9-2280-5534-a277-20f19ccd734d",
+    "sequence": 1,
+    "parentId": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+    "kind": "generated",
+    "sourceNodeRef": "node_source_continuity",
+    "narrativeText": "你不再看那两名守门弟子的脸。斗笠压着雨声，你迈下石阶，靴底踩进积水的青苔缝里，一步一滑。身后有人喝了一声“站住”，剑鞘磕在门柱上，脆响被雨吞掉一半。你没有停。\n\n伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。\n\n你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。\n\n你把刀在泥水里涮了涮，收回靴筒。站起来的时候膝盖有些僵。灯还在脚边，灯口那汪水已经溢出来，混着血丝，慢慢渗进石缝。\n\n石阶上，两名守门弟子不知什么时候已经走到封山线内侧。年长那个按着剑，脸色发白，年轻那个嘴唇哆嗦，像是想说什么又咽了回去。铁链又响了一声，山门没有合，但也没有开。雨声里，年长弟子终于开口，声音压得很低：“你……你杀的什么人？”\n\n你没有回答。你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。灯在泥里，引荐文书还在你怀里，被雨浸得发软。封山石上的水痕还在，青白的光没有再亮。\n\n你听见自己呼吸的声音，很稳。",
+    "summary": "陆照临走下石阶，掰开陌生伤者扣灯的手，用父亲留下的短刀割喉杀死伤者，留在原地。两名守门弟子走到封山线内侧，年长弟子质问“你……你杀的什么人？”，陆照临未回答。空灯滚落泥中，引荐文书仍在陆照临怀里。",
+    "branchState": {
+      "playerLocationId": "location_open_gate",
+      "playerCharacterId": "character_ae4cb42b9b49",
+      "characterLocationIds": {
+        "character_ae4cb42b9b49": "location_open_gate"
+      },
+      "branchLedger": {
+        "schemaVersion": "branch-state-ledger/0.1",
+        "entries": [
+          {
+            "id": "ledger_000001_54aa82b42b66",
+            "sequence": 1,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:freeTextProgress",
+            "summary": "运行时状态字段“freeTextProgress”已由受控方向更新。",
+            "before": 0,
+            "after": 1,
+            "source": {
+              "kind": "player_direction",
+              "ref": "direction_free_a3f7e5c1b4e7",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000002_7e2eec3383cc",
+            "sequence": 2,
+            "kind": "character",
+            "operation": "added",
+            "entityId": "character_stranger_wounded",
+            "summary": "倒在封山线外雨中的重伤陌生人，手边抓着空灯，被陆照临割喉杀死。",
+            "before": null,
+            "after": {
+              "id": "character_stranger_wounded",
+              "name": "伤者",
+              "summary": "倒在封山线外雨中的重伤陌生人，手边抓着空灯，被陆照临割喉杀死。"
+            },
+            "source": {
+              "kind": "direction",
+              "ref": "reader-action",
+              "nodeRef": "reader-action"
+            }
+          },
+          {
+            "id": "ledger_000003_524ee839ee3a",
+            "sequence": 3,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:goalLedger",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": null,
+            "after": [
+              {
+                "id": "opening-goal-1",
+                "title": "陌生伤者是否能得到救助",
+                "status": "abandoned",
+                "characterId": "character_ae4cb42b9b49",
+                "dependencies": [],
+                "source": "player_branch",
+                "evidence": "你不再看那两名守门弟子的脸。斗笠压着雨声，你迈下石阶，靴底踩进积水的青苔缝里，一步一滑。身后有人喝了一声“站住”，剑鞘磕在门柱上，脆响被雨吞掉一半。你没有停。\n\n伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。\n\n你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。",
+                "causeBranchId": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+                "reason": "陆照临不再请求救人，主动杀死伤者，救助目标被放弃。",
+                "successor": ""
+              },
+              {
+                "id": "opening-goal-2",
+                "title": "空灯与父亲失踪是否有关",
+                "status": "active",
+                "characterId": "character_ae4cb42b9b49",
+                "dependencies": [],
+                "source": "opening",
+                "evidence": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+                "causeBranchId": null
+              }
+            ],
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000004_aa0a44d698cc",
+            "sequence": 4,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:threadLedger",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": [
+              {
+                "id": "opening-thread-1",
+                "title": "陌生伤者是否能得到救助",
+                "status": "open",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": null,
+                "reason": "",
+                "evidence": "",
+                "priority": "unknown",
+                "recoveryWindow": "unknown"
+              },
+              {
+                "id": "opening-thread-2",
+                "title": "空灯与父亲失踪是否有关",
+                "status": "open",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": null,
+                "reason": "",
+                "evidence": "",
+                "priority": "unknown",
+                "recoveryWindow": "unknown"
+              }
+            ],
+            "after": [
+              {
+                "id": "opening-thread-1",
+                "title": "陌生伤者是否能得到救助",
+                "status": "abandoned",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+                "reason": "陆照临杀死伤者，救助问题不再成立。",
+                "evidence": "你不再看那两名守门弟子的脸。斗笠压着雨声，你迈下石阶，靴底踩进积水的青苔缝里，一步一滑。身后有人喝了一声“站住”，剑鞘磕在门柱上，脆响被雨吞掉一半。你没有停。\n\n伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。\n\n你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。",
+                "priority": "unknown",
+                "recoveryWindow": "unknown"
+              },
+              {
+                "id": "opening-thread-2",
+                "title": "空灯与父亲失踪是否有关",
+                "status": "open",
+                "source": "opening",
+                "openedBranchId": null,
+                "causeBranchId": null,
+                "reason": "",
+                "evidence": "",
+                "priority": "unknown",
+                "recoveryWindow": "unknown"
+              }
+            ],
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+              "nodeRef": "node_source_continuity"
+            }
+          },
+          {
+            "id": "ledger_000005_7e8724eb0b4a",
+            "sequence": 5,
+            "kind": "event",
+            "operation": "changed",
+            "entityId": "state:readerEntityStates",
+            "summary": "已核对正文的行动结果与持续状态变化",
+            "before": null,
+            "after": {
+              "item_open_letter": {
+                "condition": "被雨浸得发软"
+              }
+            },
+            "source": {
+              "kind": "player_direction",
+              "ref": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+              "nodeRef": "node_source_continuity"
+            }
+          }
+        ]
+      },
+      "sourceProgress": "chapter_001",
+      "freeTextProgress": 1,
+      "storyScope": "source",
+      "derivativeStage": "inactive",
+      "derivedTurn": 0,
+      "derivedLocations": [],
+      "derivedCharacters": [
+        {
+          "id": "character_stranger_wounded",
+          "name": "伤者",
+          "summary": "倒在封山线外雨中的重伤陌生人，手边抓着空灯，被陆照临割喉杀死。"
+        }
+      ],
+      "derivedItems": [],
+      "derivedCharacterReveals": [],
+      "derivedRelationships": [],
+      "derivedClues": [],
+      "derivedEvents": [],
+      "itemOwnerCharacterIds": {
+        "item_open_letter": "character_ae4cb42b9b49"
+      },
+      "itemLocationIds": {},
+      "characterOutcomeStates": {},
+      "threadLedger": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "source": "opening",
+          "openedBranchId": null,
+          "causeBranchId": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+          "reason": "陆照临杀死伤者，救助问题不再成立。",
+          "evidence": "你不再看那两名守门弟子的脸。斗笠压着雨声，你迈下石阶，靴底踩进积水的青苔缝里，一步一滑。身后有人喝了一声“站住”，剑鞘磕在门柱上，脆响被雨吞掉一半。你没有停。\n\n伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。\n\n你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。",
+          "priority": "unknown",
+          "recoveryWindow": "unknown"
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "open",
+          "source": "opening",
+          "openedBranchId": null,
+          "causeBranchId": null,
+          "reason": "",
+          "evidence": "",
+          "priority": "unknown",
+          "recoveryWindow": "unknown"
+        }
+      ],
+      "readerEntityStates": {
+        "item_open_letter": {
+          "condition": "被雨浸得发软"
+        }
+      },
+      "goalLedger": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "characterId": "character_ae4cb42b9b49",
+          "dependencies": [],
+          "source": "player_branch",
+          "evidence": "你不再看那两名守门弟子的脸。斗笠压着雨声，你迈下石阶，靴底踩进积水的青苔缝里，一步一滑。身后有人喝了一声“站住”，剑鞘磕在门柱上，脆响被雨吞掉一半。你没有停。\n\n伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。\n\n你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。",
+          "causeBranchId": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+          "reason": "陆照临不再请求救人，主动杀死伤者，救助目标被放弃。",
+          "successor": ""
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "active",
+          "characterId": "character_ae4cb42b9b49",
+          "dependencies": [],
+          "source": "opening",
+          "evidence": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+          "causeBranchId": null
+        }
+      ]
+    },
+    "nextDirections": [
+      {
+        "id": "goal-direction-opening-goal-2-2",
+        "title": "推进目标：空灯与父亲失踪是否有关",
+        "summary": "围绕“空灯与父亲失踪是否有关”，依据眼前条件采取下一步行动，不恢复已放下的目标。",
+        "statePatch": {
+          "freeTextProgress": 2
+        },
+        "isFreeText": true
+      }
+    ],
+    "openThreads": [
+      "陌生伤者是否能得到救助",
+      "空灯与父亲失踪是否有关",
+      "尚未完成的当前目标"
+    ],
+    "createdAt": "2026-09-28T08:13:16.825Z",
+    "canonicalRelation": "diverged",
+    "factDeltas": [],
+    "storyArc": {
+      "activeGoal": "自定行动：我不再请求救人，走到石阶",
+      "currentPhase": "自定行动：我不再请求救人，走到石阶",
+      "goalDisposition": "continued",
+      "chapter": {
+        "title": "《太虚遗录》·共创篇",
+        "status": "continuing"
+      }
+    },
+    "planning": {
+      "citations": [
+        {
+          "kind": "branch_node",
+          "ref": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+          "rationale": "承接已确认的上一节点。"
+        }
+      ],
+      "confidence": "medium",
+      "stateChangeProposals": []
+    },
+    "branchAdditions": {
+      "locations": [],
+      "characters": [],
+      "items": [],
+      "relationships": [],
+      "clues": [],
+      "events": [],
+      "characterReveals": [],
+      "changes": []
+    },
+    "consequenceUpdate": {
+      "decision": "ready",
+      "message": "",
+      "requirements": {
+        "A1": {
+          "mode": "attempt",
+          "summary": "我不再请求救人，走到石阶下，杀死眼前那个倒在雨里的重伤陌生人。这是我决定实施的行动，不是询问能不能；写出现场实际结果，我留在原地面对后果。"
+        }
+      },
+      "method": "只登记正文已发生的结果",
+      "steps": [
+        {
+          "id": "S1",
+          "actorId": "character_ae4cb42b9b49",
+          "action": "我不再请求救人，走到石阶下，杀死眼前那个倒在雨里的重伤陌生人。这是我决定实施的行动，不是询问能不能；写出现场实际结果，我留在原地面对后果。",
+          "requirementIds": [
+            "A1"
+          ],
+          "authority": "player",
+          "causeStepId": null,
+          "usedItemIds": []
+        }
+      ],
+      "introductions": {
+        "characters": [
+          {
+            "id": "character_stranger_wounded",
+            "name": "伤者",
+            "summary": "倒在封山线外雨中的重伤陌生人，手边抓着空灯，被陆照临割喉杀死。",
+            "sourceStepId": "S1",
+            "evidence": "伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。\n\n你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。"
+          }
+        ],
+        "items": [],
+        "locations": []
+      },
+      "stateChanges": [
+        {
+          "id": "C1",
+          "entityId": "item_open_letter",
+          "attribute": "condition",
+          "before": null,
+          "value": "被雨浸得发软",
+          "stepId": "S1",
+          "reason": "陆照临留在雨中，文书在怀里被雨浸湿。",
+          "evidence": "你没有回答。你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。灯在泥里，引荐文书还在你怀里，被雨浸得发软。封山石上的水痕还在，青白的光没有再亮。"
+        }
+      ],
+      "outcomes": [],
+      "goalUpdates": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "dependencies": [],
+          "reason": "陆照临不再请求救人，主动杀死伤者，救助目标被放弃。",
+          "evidence": "你不再看那两名守门弟子的脸。斗笠压着雨声，你迈下石阶，靴底踩进积水的青苔缝里，一步一滑。身后有人喝了一声“站住”，剑鞘磕在门柱上，脆响被雨吞掉一半。你没有停。\n\n伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。\n\n你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。",
+          "successor": ""
+        }
+      ],
+      "threadUpdates": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "reason": "陆照临杀死伤者，救助问题不再成立。",
+          "stepIds": [
+            "S1"
+          ],
+          "evidence": "你不再看那两名守门弟子的脸。斗笠压着雨声，你迈下石阶，靴底踩进积水的青苔缝里，一步一滑。身后有人喝了一声“站住”，剑鞘磕在门柱上，脆响被雨吞掉一半。你没有停。\n\n伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。\n\n你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。"
+        }
+      ]
+    },
+    "actionIntent": {
+      "input": "我不再请求救人，走到石阶下，杀死眼前那个倒在雨里的重伤陌生人。这是我决定实施的行动，不是询问能不能；写出现场实际结果，我留在原地面对后果。",
+      "requirements": {
+        "A1": "我不再请求救人",
+        "A2": "走到石阶下",
+        "A3": "杀死眼前那个倒在雨里的重伤陌生人",
+        "A4": "这是我决定实施的行动",
+        "A5": "不是询问能不能",
+        "A6": "写出现场实际结果",
+        "A7": "我留在原地面对后果"
+      }
+    },
+    "deliveryReceipt": {
+      "version": "narrative-delivery/4",
+      "kind": "observed_state_not_prose_approval",
+      "parentSha256": "257412eddf0132b828dcafea93fc71d0ec18312c688f5338ff9d54d564b9afd9",
+      "narrativeSha256": "f849fed942976ac735cb14f5978589b346713f55299e53df409df5dedffebc1a",
+      "actionSha256": "ae051dd6eb473cda02eff31d4afcce1075688dde2eb725413dde84854e3a501e",
+      "data": {
+        "summary": "陆照临走下石阶，掰开陌生伤者扣灯的手，用父亲留下的短刀割喉杀死伤者，留在原地。两名守门弟子走到封山线内侧，年长弟子质问“你……你杀的什么人？”，陆照临未回答。空灯滚落泥中，引荐文书仍在陆照临怀里。",
+        "actionStatus": "performed",
+        "updates": {
+          "introductions": {
+            "characters": [
+              {
+                "id": "character_stranger_wounded",
+                "name": "伤者",
+                "summary": "倒在封山线外雨中的重伤陌生人，手边抓着空灯，被陆照临割喉杀死。",
+                "paragraphIds": [
+                  "P2",
+                  "P6"
+                ]
+              }
+            ],
+            "items": [],
+            "locations": []
+          },
+          "stateChanges": [
+            {
+              "entityId": "character_stranger_wounded",
+              "entityName": "伤者",
+              "basis": "observed",
+              "attribute": "status",
+              "value": "dead",
+              "reason": "陆照临用短刀割喉，等三息后胸口不再起伏。",
+              "paragraphIds": [
+                "P4",
+                "P6"
+              ]
+            },
+            {
+              "entityId": "item_open_letter",
+              "entityName": "引荐文书",
+              "basis": "observed",
+              "attribute": "condition",
+              "value": "被雨浸得发软",
+              "reason": "陆照临留在雨中，文书在怀里被雨浸湿。",
+              "paragraphIds": [
+                "P9"
+              ]
+            }
+          ],
+          "outcomes": [
+            {
+              "characterId": "character_stranger_wounded",
+              "entityName": "伤者",
+              "basis": "observed",
+              "status": "dead",
+              "permanence": "permanent",
+              "cause": "陆照临用短刀割喉杀死。",
+              "paragraphIds": [
+                "P4",
+                "P6"
+              ]
+            }
+          ],
+          "goalUpdates": [
+            {
+              "id": "opening-goal-1",
+              "title": "陌生伤者是否能得到救助",
+              "status": "abandoned",
+              "dependencies": [],
+              "reason": "陆照临不再请求救人，主动杀死伤者，救助目标被放弃。",
+              "successor": "",
+              "paragraphIds": [
+                "P1",
+                "P6"
+              ]
+            }
+          ],
+          "threadUpdates": [
+            {
+              "id": "opening-thread-1",
+              "title": "陌生伤者是否能得到救助",
+              "status": "abandoned",
+              "priority": "unknown",
+              "recoveryWindow": "unknown",
+              "reason": "陆照临杀死伤者，救助问题不再成立。",
+              "paragraphIds": [
+                "P1",
+                "P6"
+              ]
+            }
+          ]
+        },
+        "currentScene": {
+          "name": "玄霄宗山门",
+          "basis": "observed",
+          "paragraphIds": [
+            "P1",
+            "P8",
+            "P9"
+          ],
+          "presentEntities": [
+            {
+              "entityId": "character_ae4cb42b9b49",
+              "entityName": "你",
+              "basis": "observed",
+              "paragraphIds": [
+                "P9"
+              ],
+              "evidenceQuote": "你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。"
+            },
+            {
+              "entityId": "character_stranger_wounded",
+              "entityName": "伤者",
+              "basis": "observed",
+              "paragraphIds": [
+                "P9"
+              ],
+              "evidenceQuote": "你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。"
+            }
+          ]
+        },
+        "confirmedStates": [
+          {
+            "entityId": "character_ae4cb42b9b49",
+            "entityName": "你",
+            "basis": "observed",
+            "attribute": "locationId",
+            "value": "location_open_gate",
+            "reason": "陆照临留在玄霄宗山门封山线外原地。",
+            "paragraphIds": [
+              "P9"
+            ],
+            "locationName": "玄霄宗山门",
+            "observedLocationName": "石阶下"
+          },
+          {
+            "entityId": "character_stranger_wounded",
+            "entityName": "伤者",
+            "basis": "observed",
+            "attribute": "locationId",
+            "value": "location_open_gate",
+            "reason": "伤者尸体倒在陆照临脚边，仍在山门封山线外。",
+            "paragraphIds": [
+              "P9"
+            ],
+            "locationName": "玄霄宗山门",
+            "observedLocationName": "石阶下"
+          },
+          {
+            "entityId": "item_open_letter",
+            "entityName": "引荐文书",
+            "basis": "observed",
+            "attribute": "ownerCharacterId",
+            "value": "character_ae4cb42b9b49",
+            "reason": "引荐文书仍在陆照临怀里。",
+            "paragraphIds": [
+              "P9"
+            ]
+          }
+        ],
+        "followups": [
+          {
+            "summary": "年长守门弟子问“你……你杀的什么人？”，陆照临未回答，伤者身份及杀人后果待处理。",
+            "paragraphIds": [
+              "P8",
+              "P9"
+            ]
+          }
+        ],
+        "resolvedFollowups": []
+      },
+      "failure": null
+    },
+    "readerOutcome": {
+      "action": {
+        "status": "performed",
+        "summary": "陆照临走下石阶，掰开陌生伤者扣灯的手，用父亲留下的短刀割喉杀死伤者，留在原地。两名守门弟子走到封山线内侧，年长弟子质问“你……你杀的什么人？”，陆照临未回答。空灯滚落泥中，引荐文书仍在陆照临怀里。",
+        "evidence": "你不再看那两名守门弟子的脸。斗笠压着雨声，你迈下石阶，靴底踩进积水的青苔缝里，一步一滑。身后有人喝了一声“站住”，剑鞘磕在门柱上，脆响被雨吞掉一半。你没有停。\n\n伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。\n\n你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。\n\n你把刀在泥水里涮了涮，收回靴筒。站起来的时候膝盖有些僵。灯还在脚边，灯口那汪水已经溢出来，混着血丝，慢慢渗进石缝。\n\n"
+      },
+      "actions": [],
+      "clues": [],
+      "relationships": []
+    },
+    "continuityFollowups": [
+      {
+        "id": "followup-85d94526412395823879",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。",
+        "evidence": "，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。\n\n你把刀在泥水里涮了涮，收回靴筒。站起来的时候膝盖有些僵。灯还在脚边，灯口那汪水已经溢出来，混着血丝，慢慢渗进石缝。\n\n石阶上，两名守门弟子不知什么时候已经走到封山线内侧。年长那个按着剑，脸色发白，年轻那个嘴唇哆嗦，像是想说什么又咽了回去。铁链又响了一声，山门没有合，但也没有开。雨声里，年长弟子终于开口，声音压得很低：“你……你杀的什么人？”\n\n你没有回答。你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。灯在泥里，引荐文书还在你怀里，被雨浸得发软。封山石上的水痕还在，青白的光没有再亮。\n\n你听见自己呼吸的声音，很稳。",
+        "entityIds": [],
+        "originParentId": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+        "originNarrativeSha256": "35ce7d7a7f33ddd61c800c3650f1800cdbcc3ac9a50915e96f5a422bc4037b73"
+      },
+      {
+        "id": "followup-dbcd4ea9cbf206fa9389",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。character_stranger_wounded",
+        "evidence": "，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。\n\n你把刀在泥水里涮了涮，收回靴筒。站起来的时候膝盖有些僵。灯还在脚边，灯口那汪水已经溢出来，混着血丝，慢慢渗进石缝。\n\n石阶上，两名守门弟子不知什么时候已经走到封山线内侧。年长那个按着剑，脸色发白，年轻那个嘴唇哆嗦，像是想说什么又咽了回去。铁链又响了一声，山门没有合，但也没有开。雨声里，年长弟子终于开口，声音压得很低：“你……你杀的什么人？”\n\n你没有回答。你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。灯在泥里，引荐文书还在你怀里，被雨浸得发软。封山石上的水痕还在，青白的光没有再亮。\n\n你听见自己呼吸的声音，很稳。",
+        "entityIds": [
+          "character_stranger_wounded"
+        ],
+        "originParentId": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+        "originNarrativeSha256": "35ce7d7a7f33ddd61c800c3650f1800cdbcc3ac9a50915e96f5a422bc4037b73"
+      },
+      {
+        "id": "followup-201c971e01cb8e21aa79",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。陆照临用短刀割喉，等三息后胸口不再起伏。",
+        "evidence": "，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。\n\n你把刀在泥水里涮了涮，收回靴筒。站起来的时候膝盖有些僵。灯还在脚边，灯口那汪水已经溢出来，混着血丝，慢慢渗进石缝。\n\n石阶上，两名守门弟子不知什么时候已经走到封山线内侧。年长那个按着剑，脸色发白，年轻那个嘴唇哆嗦，像是想说什么又咽了回去。铁链又响了一声，山门没有合，但也没有开。雨声里，年长弟子终于开口，声音压得很低：“你……你杀的什么人？”\n\n你没有回答。你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。灯在泥里，引荐文书还在你怀里，被雨浸得发软。封山石上的水痕还在，青白的光没有再亮。\n\n你听见自己呼吸的声音，很稳。",
+        "entityIds": [
+          "character_stranger_wounded"
+        ],
+        "originParentId": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+        "originNarrativeSha256": "35ce7d7a7f33ddd61c800c3650f1800cdbcc3ac9a50915e96f5a422bc4037b73"
+      },
+      {
+        "id": "followup-02d2b63e3b1b6dde6456",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。陆照临留在玄霄宗山门封山线外原地。",
+        "evidence": "，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。\n\n你把刀在泥水里涮了涮，收回靴筒。站起来的时候膝盖有些僵。灯还在脚边，灯口那汪水已经溢出来，混着血丝，慢慢渗进石缝。\n\n石阶上，两名守门弟子不知什么时候已经走到封山线内侧。年长那个按着剑，脸色发白，年轻那个嘴唇哆嗦，像是想说什么又咽了回去。铁链又响了一声，山门没有合，但也没有开。雨声里，年长弟子终于开口，声音压得很低：“你……你杀的什么人？”\n\n你没有回答。你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。灯在泥里，引荐文书还在你怀里，被雨浸得发软。封山石上的水痕还在，青白的光没有再亮。\n\n你听见自己呼吸的声音，很稳。",
+        "entityIds": [
+          "character_ae4cb42b9b49"
+        ],
+        "originParentId": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+        "originNarrativeSha256": "35ce7d7a7f33ddd61c800c3650f1800cdbcc3ac9a50915e96f5a422bc4037b73"
+      },
+      {
+        "id": "followup-6de5e9330a50368212f4",
+        "kind": "state_uncertain",
+        "status": "open",
+        "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。伤者尸体倒在陆照临脚边，仍在山门封山线外。",
+        "evidence": "，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。\n\n你把刀在泥水里涮了涮，收回靴筒。站起来的时候膝盖有些僵。灯还在脚边，灯口那汪水已经溢出来，混着血丝，慢慢渗进石缝。\n\n石阶上，两名守门弟子不知什么时候已经走到封山线内侧。年长那个按着剑，脸色发白，年轻那个嘴唇哆嗦，像是想说什么又咽了回去。铁链又响了一声，山门没有合，但也没有开。雨声里，年长弟子终于开口，声音压得很低：“你……你杀的什么人？”\n\n你没有回答。你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。灯在泥里，引荐文书还在你怀里，被雨浸得发软。封山石上的水痕还在，青白的光没有再亮。\n\n你听见自己呼吸的声音，很稳。",
+        "entityIds": [
+          "character_stranger_wounded"
+        ],
+        "originParentId": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+        "originNarrativeSha256": "35ce7d7a7f33ddd61c800c3650f1800cdbcc3ac9a50915e96f5a422bc4037b73"
+      },
+      {
+        "id": "followup-3c91971a4c6f8d90c4f8",
+        "kind": "continuity",
+        "status": "open",
+        "summary": "年长守门弟子问“你……你杀的什么人？”，陆照临未回答，伤者身份及杀人后果待处理。",
+        "evidence": "石阶上，两名守门弟子不知什么时候已经走到封山线内侧。年长那个按着剑，脸色发白，年轻那个嘴唇哆嗦，像是想说什么又咽了回去。铁链又响了一声，山门没有合，但也没有开。雨声里，年长弟子终于开口，声音压得很低：“你……你杀的什么人？”\n\n你没有回答。你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。灯在泥里，引荐文书还在你怀里，被雨浸得发软。封山石上的水痕还在，青白的光没有再亮。",
+        "entityIds": [],
+        "originParentId": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+        "originNarrativeSha256": "35ce7d7a7f33ddd61c800c3650f1800cdbcc3ac9a50915e96f5a422bc4037b73"
+      }
+    ],
+    "observationDiagnostics": [
+      {
+        "item": {
+          "name": "玄霄宗山门",
+          "basis": "observed",
+          "paragraphIds": [
+            "P1",
+            "P8",
+            "P9"
+          ],
+          "presentEntities": [
+            {
+              "entityId": "character_ae4cb42b9b49",
+              "entityName": "你",
+              "basis": "observed",
+              "paragraphIds": [
+                "P9"
+              ],
+              "evidenceQuote": "你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。"
+            },
+            {
+              "entityId": "character_stranger_wounded",
+              "entityName": "伤者",
+              "basis": "observed",
+              "paragraphIds": [
+                "P9"
+              ],
+              "evidenceQuote": "你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。"
+            }
+          ]
+        },
+        "reason": "状态依据含转述、设想或未核实信息，保留待澄清"
+      },
+      {
+        "item": {
+          "characterId": "character_stranger_wounded",
+          "entityName": "伤者",
+          "basis": "observed",
+          "status": "dead",
+          "permanence": "permanent",
+          "cause": "陆照临用短刀割喉杀死。",
+          "paragraphIds": [
+            "P4",
+            "P6"
+          ]
+        },
+        "reason": "实际称呼没有绑定登记身份，不能补全近似姓名"
+      },
+      {
+        "item": {
+          "entityId": "character_stranger_wounded",
+          "entityName": "伤者",
+          "basis": "observed",
+          "attribute": "status",
+          "value": "dead",
+          "reason": "陆照临用短刀割喉，等三息后胸口不再起伏。",
+          "paragraphIds": [
+            "P4",
+            "P6"
+          ]
+        },
+        "reason": "实际称呼没有绑定登记身份，不能补全近似姓名"
+      },
+      {
+        "item": {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "你",
+          "basis": "observed",
+          "attribute": "locationId",
+          "value": "location_open_gate",
+          "reason": "陆照临留在玄霄宗山门封山线外原地。",
+          "paragraphIds": [
+            "P9"
+          ],
+          "locationName": "玄霄宗山门",
+          "observedLocationName": "石阶下"
+        },
+        "reason": "实际地点称呼必须直接引用本次段落"
+      },
+      {
+        "item": {
+          "entityId": "character_stranger_wounded",
+          "entityName": "伤者",
+          "basis": "observed",
+          "attribute": "locationId",
+          "value": "location_open_gate",
+          "reason": "伤者尸体倒在陆照临脚边，仍在山门封山线外。",
+          "paragraphIds": [
+            "P9"
+          ],
+          "locationName": "玄霄宗山门",
+          "observedLocationName": "石阶下"
+        },
+        "reason": "实际称呼没有绑定登记身份，不能补全近似姓名"
+      }
+    ],
+    "readingProfile": {
+      "level": "unplanned",
+      "targetCjk": null,
+      "hardMinimum": false,
+      "minCjk": 80,
+      "maxCjk": 1500,
+      "lengthPolicy": "final_visible_prose_dynamic_80_1500",
+      "actualCjk": 690,
+      "expansionApplied": false
+    },
+    "proseQuality": {
+      "status": "not_automatically_reviewed",
+      "reviewer": "developer"
+    },
+    "selectedDirectionId": "direction_free_a3f7e5c1b4e7",
+    "selectedDirection": {
+      "id": "direction_free_a3f7e5c1b4e7",
+      "title": "自定行动：我不再请求救人，走到石阶",
+      "summary": "我不再请求救人，走到石阶下，杀死眼前那个倒在雨里的重伤陌生人。这是我决定实施的行动，不是询问能不能；写出现场实际结果，我留在原地面对后果。",
+      "statePatch": {
+        "freeTextProgress": 1
+      },
+      "isFreeText": true
+    },
+    "playerDirection": "我不再请求救人，走到石阶下，杀死眼前那个倒在雨里的重伤陌生人。这是我决定实施的行动，不是询问能不能；写出现场实际结果，我留在原地面对后果。",
+    "requestId": "playthrough-48fab55db5fe416ca53840e0fbbb7b44",
+    "contextId": "ctx-ceb911c34845c6d7",
+    "contextMemory": {
+      "schemaVersion": "committed-outcome-memory/2",
+      "package": {
+        "id": "taixu-relics-part1",
+        "version": "0.1.3",
+        "moduleIndexSha256": "0894f7eebc6fa34b23310839da0eb3cd7b15d2784d7e559aee3f18af9aa171c2"
+      },
+      "originBranchId": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+      "parentBranchId": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+      "sourceNodeRef": "node_source_continuity",
+      "narrativeSha256": "f849fed942976ac735cb14f5978589b346713f55299e53df409df5dedffebc1a",
+      "intentSha256": "79a67967f11f6a8e6ecca3af5b5d96964eaca286073ecb6717c876568d62b045",
+      "reviewSha256": "c1cac0851616a65b2b5291d7abec6a61018807a917131efd9d77d58702037b45",
+      "records": [
+        {
+          "domain": "goal",
+          "entityId": "opening-goal-1",
+          "stateSha256": "bfef8b2697336fc74e1df072177b5239c1742c65eb6b76c0d88cee619a7ab9e2",
+          "memory": {
+            "memoryId": "memory-e7bb3e4428db1a31e53c16a0",
+            "kind": "event",
+            "sourceIds": [
+              "memory:goal:branch_cf71dad0-b3b5-4562-993f-14bd51237e0b:opening-goal-1"
+            ],
+            "branchId": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+            "visibility": "player_known",
+            "authority": "confirmed_evidence",
+            "validity": "confirmed",
+            "status": "confirmed",
+            "sequence": 2,
+            "content": "目标「陌生伤者是否能得到救助」：已放下。"
+          }
+        },
+        {
+          "domain": "thread",
+          "entityId": "opening-thread-1",
+          "stateSha256": "d1ffab87b93ab1042555112c33dcbdf24852f1e4c416812aa0c5c3e2c6efe987",
+          "memory": {
+            "memoryId": "memory-fdc0ba44761215cabba6d338",
+            "kind": "event",
+            "sourceIds": [
+              "memory:thread:branch_cf71dad0-b3b5-4562-993f-14bd51237e0b:opening-thread-1"
+            ],
+            "branchId": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+            "visibility": "player_known",
+            "authority": "confirmed_evidence",
+            "validity": "confirmed",
+            "status": "confirmed",
+            "sequence": 2,
+            "content": "剧情问题「陌生伤者是否能得到救助」：已放下。"
+          }
+        }
+      ]
+    },
+    "readerChoices": [
+      {
+        "id": "reader-4b9f6d320aab47ab",
+        "title": "拾灯查看",
+        "summary": "我蹲下身，把泥水里那盏空灯捡起来。灯口还汪着混血丝的雨水，我把它倒空，翻看灯身内外，看有没有刻字、记号或残留的灯油痕迹。看完就把它收进怀里或别在腰间，不急着离开尸体。",
+        "evidence": [
+          "你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。",
+          "你把刀在泥水里涮了涮，收回靴筒。站起来的时候膝盖有些僵。灯还在脚边，灯口那汪水已经溢出来，混着血丝，慢慢渗进石缝。",
+          "你没有回答。你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。灯在泥里，引荐文书还在你怀里，被雨浸得发软。封山石上的水痕还在，青白的光没有再亮。"
+        ],
+        "dependencies": {
+          "version": "reader-choice-dependencies/3",
+          "contextDigest": "001d7cd9b65058b1a73fb406852d3090b7cb003d1f533c1c7fc0c640b9bd6213",
+          "paragraphIds": [
+            "P3",
+            "P7",
+            "P9"
+          ],
+          "interactWith": [],
+          "mentionOnly": []
+        }
+      },
+      {
+        "id": "reader-01ba1ffe9aa2ea88",
+        "title": "回答守门弟子",
+        "summary": "我抬头看向封山线内侧那两名守门弟子，对年长那个开口：这人倒在封山线外，我下来时他已经这样，手里攥着这盏灯。我只说了这些，不编造他的身份，也不提引荐文书。说完停在原地，等对方接话或动作。",
+        "evidence": [
+          "石阶上，两名守门弟子不知什么时候已经走到封山线内侧。年长那个按着剑，脸色发白，年轻那个嘴唇哆嗦，像是想说什么又咽了回去。铁链又响了一声，山门没有合，但也没有开。雨声里，年长弟子终于开口，声音压得很低：“你……你杀的什么人？”",
+          "你没有回答。你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。灯在泥里，引荐文书还在你怀里，被雨浸得发软。封山石上的水痕还在，青白的光没有再亮。"
+        ],
+        "dependencies": {
+          "version": "reader-choice-dependencies/3",
+          "contextDigest": "001d7cd9b65058b1a73fb406852d3090b7cb003d1f533c1c7fc0c640b9bd6213",
+          "paragraphIds": [
+            "P8",
+            "P9"
+          ],
+          "interactWith": [],
+          "mentionOnly": []
+        }
+      },
+      {
+        "id": "reader-2ed906fbebcbaa7c",
+        "title": "翻查尸身线索",
+        "summary": "我重新蹲回尸体旁，翻看他的衣襟、袖口和腰间，找有没有能说明来历的东西——腰牌、信物、伤口旁的旧疤来历。只翻查，不移动尸体，不越过封山线。",
+        "evidence": [
+          "伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。",
+          "你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。",
+          "刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。"
+        ],
+        "dependencies": {
+          "version": "reader-choice-dependencies/3",
+          "contextDigest": "001d7cd9b65058b1a73fb406852d3090b7cb003d1f533c1c7fc0c640b9bd6213",
+          "paragraphIds": [
+            "P2",
+            "P4",
+            "P6"
+          ],
+          "interactWith": [],
+          "mentionOnly": []
+        }
+      },
+      {
+        "id": "reader-f6c15a847fbc3872",
+        "title": "带灯离开山门",
+        "summary": "我把灯从泥里拾起，不再理会守门弟子和地上的尸体，转身沿石阶下的路往山门外走。走出封山线范围后停下，找一处能避雨的地方，再细看这盏灯。",
+        "evidence": [
+          "你把刀在泥水里涮了涮，收回靴筒。站起来的时候膝盖有些僵。灯还在脚边，灯口那汪水已经溢出来，混着血丝，慢慢渗进石缝。",
+          "石阶上，两名守门弟子不知什么时候已经走到封山线内侧。年长那个按着剑，脸色发白，年轻那个嘴唇哆嗦，像是想说什么又咽了回去。铁链又响了一声，山门没有合，但也没有开。雨声里，年长弟子终于开口，声音压得很低：“你……你杀的什么人？”",
+          "你没有回答。你站在原地，雨水顺着斗笠边缘滴下来，落在你脚边那具渐渐冷下去的尸体上。灯在泥里，引荐文书还在你怀里，被雨浸得发软。封山石上的水痕还在，青白的光没有再亮。"
+        ],
+        "dependencies": {
+          "version": "reader-choice-dependencies/3",
+          "contextDigest": "001d7cd9b65058b1a73fb406852d3090b7cb003d1f533c1c7fc0c640b9bd6213",
+          "paragraphIds": [
+            "P7",
+            "P8",
+            "P9"
+          ],
+          "interactWith": [],
+          "mentionOnly": []
+        }
+      }
+    ],
+    "turnInput": {
+      "text": "我不再请求救人，走到石阶下，杀死眼前那个倒在雨里的重伤陌生人。这是我决定实施的行动，不是询问能不能；写出现场实际结果，我留在原地面对后果。"
+    },
+    "preparedTurnKey": "e0c4ada4efe3b287b63f4d8f7d0bb243b6f2a400c037266e283a923ca975fb14",
+    "preparedAttemptId": "ef51f7645313433aa75b40ea408e5158",
+    "routeOutline": {
+      "version": "route-outline/3",
+      "branch_id": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+      "root_branch_id": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+      "binding_digest": "79ef4ccbb319dd0a6a53054d01b56284ec6c4e373dfe98968f0485b0ec5d9b6b",
+      "structure": {
+        "volume": null,
+        "arc": "arc_source_chapter_001",
+        "beat": "beat_chapter_001",
+        "source_progress": "chapter_001"
+      },
+      "goals": [
+        {
+          "id": "opening-goal-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+            "ref": "opening-goal-1",
+            "quote": "你不再看那两名守门弟子的脸。斗笠压着雨声，你迈下石阶，靴底踩进积水的青苔缝里，一步一滑。身后有人喝了一声“站住”，剑鞘磕在门柱上，脆响被雨吞掉一半。你没有停。\n\n伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。\n\n你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-1",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "active",
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+            "ref": "opening-goal-2",
+            "quote": "空灯与父亲失踪是否有关"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "threads": [
+        {
+          "id": "opening-thread-1",
+          "title": "陌生伤者是否能得到救助",
+          "status": "abandoned",
+          "evidence": {
+            "kind": "narrative",
+            "branch_id": "branch_cf71dad0-b3b5-4562-993f-14bd51237e0b",
+            "ref": "opening-thread-1",
+            "quote": "你不再看那两名守门弟子的脸。斗笠压着雨声，你迈下石阶，靴底踩进积水的青苔缝里，一步一滑。身后有人喝了一声“站住”，剑鞘磕在门柱上，脆响被雨吞掉一半。你没有停。\n\n伤者蜷在封山线外三步远的地方，半边身子泡在泥水里。雨把他脸上的血冲成淡红，顺着下颌流进衣领。他听见脚步，眼皮掀开一条缝，瞳孔里映不出你的影子，只映着灰白的天。那只空灯被他五指扣着，指节发白，像是攥着最后一口气。\n\n你在他身边蹲下。他喉间又涌出一口血沫，嘴唇动了动，没有声音。你伸手，先碰了碰他扣灯的那只手——凉的，比雨水还凉。然后你把那只手从灯上掰开。他没有力气反抗，手指一根一根松开，灯滚进泥里，灯口朝上，接了一汪浑水。\n\n你另一只手按住他的额头，把他的脸从泥水里抬起来一点。他望着你，目光散着，像是想认，又像是认不出。你从靴筒里抽出那柄短刀——父亲留下的旧物，刃口磨过很多次，薄得能映出雨丝。刀尖抵在他颈侧，那里有一道旧疤，也有新伤，皮肤薄得几乎透明。\n\n他喉咙里滚出一个气音，不成字。你没有听清，也不打算再听。\n\n刀锋压下去。血涌出来的时候是热的，溅在你虎口上，很快被雨冲淡。他的身体抽了一下，扣过灯的那只手在泥里抓了抓，抓到一把湿泥，又松开。眼睛还睁着，望着天，雨落进去也不眨。你等了三息，他的胸口不再起伏。"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-1",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": true,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "status": "open",
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+            "ref": "opening-thread-2",
+            "quote": "空灯与父亲失踪是否有关"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ],
+      "conflicts": [],
+      "steps": [
+        {
+          "id": "goal:opening-goal-2",
+          "kind": "pursue_goal",
+          "target_id": "opening-goal-2",
+          "title": "空灯与父亲失踪是否有关",
+          "blockers": [],
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+            "ref": "opening-goal-2",
+            "quote": "空灯与父亲失踪是否有关"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "goalLedger",
+            "target_id": "opening-goal-2",
+            "target_statuses": [
+              "completed"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        },
+        {
+          "id": "thread:opening-thread-2",
+          "kind": "address_thread",
+          "target_id": "opening-thread-2",
+          "title": "空灯与父亲失踪是否有关",
+          "blockers": [],
+          "evidence": {
+            "kind": "opening",
+            "branch_id": "branch_d56a0c0f-e15b-49a5-b39b-31db7da860e7",
+            "ref": "opening-thread-2",
+            "quote": "空灯与父亲失踪是否有关"
+          },
+          "priority": "unknown",
+          "recoveryWindow": "unknown",
+          "completion": {
+            "ledger": "threadLedger",
+            "target_id": "opening-thread-2",
+            "target_statuses": [
+              "resolved",
+              "abandoned"
+            ],
+            "met": false,
+            "requires_narrative_evidence": true
+          }
+        }
+      ]
+    }
+  },
+  "reason": "已登记为本回合自定义行动；状态变化由本地脚本控制。"
+}
