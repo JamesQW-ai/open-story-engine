@@ -4,10 +4,12 @@
 
 | 用途 | 入口 |
 | --- | --- |
-| 展示已有简短路线 | [原三页记录：救人、入侧廊](http://127.0.0.1:5187/sessions/584ab3e1-ef71-5959-9cd9-616393d58caf) |
-| 展示本次重新验证的操作流程 | [新四页记录：选择、交文书、问话](http://127.0.0.1:5187/sessions/ea5f67cb-328d-59fc-bd1d-3625a4b5378d) |
-| 展示较长历史 | [已有 25 回合路线](http://127.0.0.1:5187/sessions/6a444eaf-322e-5644-aa26-2743b819826b)，保留历史细节问题，不作零瑕疵样本 |
+| 展示已有简短路线 | [演示01｜救人入侧廊（3页）](http://127.0.0.1:5187/sessions/584ab3e1-ef71-5959-9cd9-616393d58caf) |
+| 展示本次重新验证的操作流程 | [演示02｜交文书与问话（4页）](http://127.0.0.1:5187/sessions/ea5f67cb-328d-59fc-bd1d-3625a4b5378d) |
+| 展示较长历史 | [演示03｜长线调查（25回合）](http://127.0.0.1:5187/sessions/6a444eaf-322e-5644-aa26-2743b819826b)，保留历史细节问题，不作零瑕疵样本 |
 | 现场从头开始 | [书架](http://127.0.0.1:5187/packages) →《太虚遗录》→选择身份→陆照临→开始故事 |
+
+当前“我的故事”列表仅保留上表三个命名存档，其余五个存档已按用户要求从演示库移除，清理前完整备份与历史导出保留。三个存档共 33 个节点的正文和状态未变化；[清理核对](evidence/demo-readiness-2026-09-28/session-cleanup.json)。
 
 建议先展示原三页记录，说明“玩家行动如何改变后续故事”，再现场从书架开一个新存档。书架创建的是新路线，不覆盖已有记录。实时生成会变化，不要求复现同样措辞或完全相同剧情。
 
@@ -55,9 +57,9 @@ curl -fsS http://127.0.0.1:5187/api/v1/health
 
 ## 真实记录备份
 
-- [原三页记录 HTML](evidence/demo-readiness-2026-09-28/existing-record/player-record.html)
-- [本次四页记录 HTML](evidence/demo-readiness-2026-09-28/fresh-record/player-record.html)
-- [已有 25 回合记录 HTML](evidence/entity-facts-2026-09-28/export-25/player-record.html)
+- [演示01｜救人入侧廊（3页）HTML](evidence/demo-readiness-2026-09-28/existing-record/player-record.html)
+- [演示02｜交文书与问话（4页）HTML](evidence/demo-readiness-2026-09-28/fresh-record/player-record.html)
+- [演示03｜长线调查（25回合）HTML](evidence/entity-facts-2026-09-28/export-25/player-record.html)
 
 HTML 都来自实际存档原文，正文和样式自包含、不依赖 API 或模型；用途是展示历史记录，不能冒充实时生成。内置浏览器工具因 `file:` 协议限制拒绝本次预览，因此离线文件的浏览器展示没有计入实测通过项；在线记录已实际验证。JSON 同目录保留正文、输入和哈希。
 
