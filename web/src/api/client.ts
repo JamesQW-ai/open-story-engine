@@ -188,8 +188,8 @@ export const api = {
   releaseIllustrations: (sid: string, bid: string, subscriber: string) =>
     request(`/sessions/${sid}/branches/${bid}/illustrations/release?subscriber=${encodeURIComponent(subscriber)}`,
       { method: 'POST', keepalive: true }),
-  shownIllustration: (sid: string, bid: string, subscriber: string, ms: number) =>
-    request(`/sessions/${sid}/branches/${bid}/illustrations/shown?subscriber=${encodeURIComponent(subscriber)}&display_ms=${Math.min(3600000, Math.max(0, Math.round(ms)))}`,
+  shownIllustration: (sid: string, bid: string, subscriber: string, ms: number, source?: 'published' | 'private') =>
+    request(`/sessions/${sid}/branches/${bid}/illustrations/shown?subscriber=${encodeURIComponent(subscriber)}&display_ms=${Math.min(3600000, Math.max(0, Math.round(ms)))}${source ? `&source=${source}` : ''}`,
       { method: 'POST', keepalive: true }),
   prepareChoices: (sessionId: string, parent: string, subscriber: string, history_id?: string) =>
     request<{ parent_branch_id: string; choices: PreparedChoice[] }>(

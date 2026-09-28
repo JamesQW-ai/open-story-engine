@@ -11,6 +11,7 @@ import { createReadingTiming, saveReadingTiming } from '../components/readingTim
 import { observeReadingDisplay } from '../components/readingDisplay'
 import { subscribeChoices } from '../components/choiceSubscription'
 import { playerFacingAction } from '../components/storyPresentation'
+import { intervalIllustrationDue } from '../components/readingLayout'
 import type {
   OpeningNavigation,
   PublishedScene,
@@ -573,6 +574,7 @@ export function SessionPage() {
                 key={opening && (!selected || selected.id === openingBranch) ? opening.request.request_id : selected?.id}
                 text={readingText}
                 fullText={selected?.narrativeText ?? readingText}
+                intervalIllustration={selected ? intervalIllustrationDue(selected.id, branches) : false}
                 sessionId={sessionId === 'new' ? openingSessionId : sessionId}
                 branchId={selected?.id}
                 title={storyTitle}

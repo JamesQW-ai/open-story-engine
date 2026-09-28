@@ -4,8 +4,9 @@ import type { SceneIllustrations, PublishedScene } from '../api/types'
 import { illustrationAnchor, readingSections } from './readingLayout'
 import { subscribeIllustration } from './illustrationSubscription'
 import { illustrationAssetKey, readIllustrationHistory, rememberIllustration } from './illustrationHistory'
+import { ReadingInterlude } from './ReadingInterlude'
 
-function SceneImage({ url, alt, shown }: { url: string; alt: string; shown: () => void }) {
+function SceneImage({ url, alt, shown, fallback = false }: { url: string; alt: string; shown: () => void; fallback?: boolean }) {
   const ref = useRef<HTMLImageElement>(null)
   const [loaded, setLoaded] = useState(false)
   const [failed, setFailed] = useState(false)
@@ -17,12 +18,13 @@ function SceneImage({ url, alt, shown }: { url: string; alt: string; shown: () =
     observer.observe(ref.current)
     return () => observer.disconnect()
   }, [loaded, shown])
-  if (failed) return <p className="muted">插图暂未加载，故事照常继续。</p>
+  if (failed) return fallback ? <ReadingInterlude /> : <p className="muted">插图暂未加载，故事照常继续。</p>
   return <img onError={() => setFailed(true)} ref={ref} src={url} alt={alt} onLoad={() => setLoaded(true)}
     loading="eager" decoding="async" width="1536" height="1024" />
 }
 
-export function StoryProse({ text, fullText = text, streaming, sessionId, branchId, fixedOpeningImage }: {
+export function StoryProse({ text, fullText = text, streaming, sessionId, branchId, fixedOpeningImage, intervalIllustration = false }: {
+  intervalIllustration?: boolean
   fullText?: string
   fixedOpeningImage?: PublishedScene | null
   text: string
@@ -42,7 +44,8 @@ export function StoryProse({ text, fullText = text, streaming, sessionId, branch
   const visibleAssets = useRef(new Set<string>())
   const defaultAnchor = illustrationAnchor(fullText)
   const hasFixedImage = Boolean(fixedOpeningImage)
-  const automatic = defaultAnchor !== null && !hasFixedImage
+  const automatic = defaultAnchor !== null || intervalIllustration
+  const fixedInline = hasFixedImage && defaultAnchor !== null
   useEffect(() => {
     setArt(null)
     opened.current = 0
@@ -57,7 +60,7 @@ export function StoryProse({ text, fullText = text, streaming, sessionId, branch
         if (subscriber) { opened.current = performance.now(); shown.current = false }
       },
       ready: result => {
-        const shouldDraw = result.automatic ?? automatic
+        const shouldDraw = automatic || result.automatic === true
         setArt({ branch: branchId, value: shouldDraw && requested && result.can_generate
           ? { ...result, can_generate: false } : result })
         if (shouldDraw && result.can_generate && !requested) {
@@ -84,7 +87,7 @@ export function StoryProse({ text, fullText = text, streaming, sessionId, branch
     }
   }, [sessionId, branchId, automatic, hasFixedImage])
   const activeArt = art && art.branch === branchId ? art.value : null
-  const anchor = illustrationAnchor(fullText, activeArt?.automatic === true)
+  const anchor = illustrationAnchor(fullText, automatic || activeArt?.automatic === true)
   const sections = readingSections(text)
   const fullParagraphs = readingSections(fullText).flatMap(section => section.paragraphs)
   const visibleHere = (key?: string) => {
@@ -106,17 +109,28 @@ export function StoryProse({ text, fullText = text, streaming, sessionId, branch
     if (!sessionId || !key) return true
     return visibleHere(key)
   })
-  const imageBlock = () => <>
-    {((!activeArt && automatic) || (activeArt?.can_generate && (activeArt.automatic ?? automatic))) && <div className="illustration-placeholder" role="status"><p className="muted">正在准备这一幕的插图，正文继续展开。</p></div>}
-    {activeArt?.can_generate && !(activeArt.automatic ?? automatic) && <button className="text-button" onClick={() => drawRequest.current()}>绘制这一幕</button>}
+  const fixedImage = () => showFixedOpeningImage && fixedOpeningImage ? <figure className="reading-illustration opening-illustration">
+    <SceneImage url={fixedOpeningImage.url} alt={fixedOpeningImage.alt} fallback={automatic} shown={() => {
+      if (!shown.current && sessionId && branchId) {
+        shown.current = true
+        const key = illustrationAssetKey(fixedOpeningImage)
+        if (key) rememberIllustration(sessionId, key, branchId)
+        void api.viewIllustrations(sessionId, branchId, new AbortController().signal).catch(() => undefined)
+        void api.shownIllustration(sessionId, branchId, subscription.current, performance.now() - opened.current, 'published').catch(() => undefined)
+      }
+    }} />
+  </figure> : automatic ? <ReadingInterlude /> : null
+  const imageBlock = () => fixedInline ? fixedImage() : <>
+    {automatic && !imageItems.some(image => image.status === 'ready' && image.url) && <ReadingInterlude />}
+    {activeArt?.can_generate && !(automatic || activeArt.automatic) && <button className="text-button" onClick={() => drawRequest.current()}>绘制这一幕</button>}
     {imageItems.map((image) => <div key={image.id ?? image.url ?? image.index}>
       {image.status === 'ready' && image.url && <figure className="reading-illustration">
-        <SceneImage key={image.url} url={image.url} alt={image.alt} shown={() => {
+        <SceneImage key={image.url} url={image.url} alt={image.alt} fallback={automatic} shown={() => {
           if (!shown.current && sessionId && branchId) {
             shown.current = true
             const key = illustrationAssetKey(image)
             if (key) rememberIllustration(sessionId, key, branchId)
-            void api.shownIllustration(sessionId, branchId, subscription.current, performance.now() - opened.current).catch(() => undefined)
+            void api.shownIllustration(sessionId, branchId, subscription.current, performance.now() - opened.current, image.source).catch(() => undefined)
           }
         }} />
       </figure>}
@@ -126,23 +140,13 @@ export function StoryProse({ text, fullText = text, streaming, sessionId, branch
     </div>)}
   </>
   return <>
-    {showFixedOpeningImage && fixedOpeningImage && <figure className="reading-illustration opening-illustration">
-      <SceneImage url={fixedOpeningImage.url} alt={fixedOpeningImage.alt} shown={() => {
-        if (!shown.current && sessionId && branchId) {
-          shown.current = true
-          const key = illustrationAssetKey(fixedOpeningImage)
-          if (key) rememberIllustration(sessionId, key, branchId)
-          void api.viewIllustrations(sessionId, branchId, new AbortController().signal).catch(() => undefined)
-          void api.shownIllustration(sessionId, branchId, subscription.current, performance.now() - opened.current).catch(() => undefined)
-        }
-      }} />
-    </figure>}
+    {!fixedInline && hasFixedImage && fixedImage()}
     {sections.map((section, i) => <section className="reading-section" key={i} aria-busy={streaming}>
       {section.paragraphs.map((p, j) => {
         const index = sections.slice(0, i).reduce((count, item) => count + item.paragraphs.length, 0) + j
         return <Fragment key={j}>
           <p className="passage">{p}</p>
-          {!hasFixedImage && index === anchor && p === fullParagraphs[index] && <div className="inline-scene-slot">{imageBlock()}</div>}
+          {(!hasFixedImage || fixedInline) && index === anchor && p === fullParagraphs[index] && <div className="inline-scene-slot">{imageBlock()}</div>}
         </Fragment>
       })}
       {!hasFixedImage && anchor === null && !streaming && i === sections.length - 1 && imageBlock()}

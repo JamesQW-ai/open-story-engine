@@ -99,6 +99,9 @@ const server = http.createServer(async (req, res) => {
   }
   if (path === '/__fixture/illustrations' && req.method === 'POST') {
     illustrationMode = input
+    if (Number.isInteger(input.seed_pages) && input.seed_pages > 1 && input.seed_pages <= 10 && nodes.length === 1) {
+      for (let i = 1; i < input.seed_pages; i++) nodes.push(branch(`page-${i}`, nodes.at(-1).id, i))
+    }
     return json(res, { ok: true })
   }
   if (path === '/__fixture/state') return json(res, { requests, saved: nodes.length, paused: !!releaseStream, displayed: [...displayed] })

@@ -12,6 +12,42 @@ from tests_api.test_story_media import PNG, media_service
 
 
 class InlineIllustrationTests(unittest.TestCase):
+    def test_very_short_pages_still_trigger_fourth_and_seventh_pages(self):
+        source = longform_cases()[0]['source'].read_text()
+        nodes = [dict(narrativeText=source[i:i+180]) for i in range(0, 1260, 180)]
+        self.assertEqual([i + 1 for i in range(len(nodes)) if scheduled_scene(nodes[:i+1])], [4, 7])
+
+    def test_every_long_page_is_automatic_even_immediately_after_an_image(self):
+        source = longform_cases()[0]['source'].read_text()
+        nodes = [dict(narrativeText=source[i:i+3000]) for i in range(0, 9000, 3000)]
+        self.assertTrue(all(scheduled_scene(nodes[:i+1]) for i in range(len(nodes))))
+        with tempfile.TemporaryDirectory() as directory:
+            read, gateway = Mock(), Mock(available=True)
+            read.branch_view.return_value = nodes[1]
+            service = media_service(read, directory, gateway)
+            self.addCleanup(service.close)
+            read.store.return_value.__enter__.return_value.lineage.return_value = nodes[:2]
+            self.assertTrue(service.view('s', 'long-second')['automatic'])
+
+    def test_consumed_published_image_does_not_suppress_new_private_picture(self):
+        source = longform_cases()[0]['source'].read_text()
+        read, gateway = Mock(), Mock(available=True, model='test-image', usage=None)
+        read.branch_view.return_value = dict(parentId='root', narrativeText=source[:3000], branchState={})
+        gateway.generate.return_value = PNG, 'image/png'
+        with tempfile.TemporaryDirectory() as directory:
+            service = media_service(read, directory, gateway)
+            self.addCleanup(service.close)
+            service.library.resolve.return_value = dict(id='art', asset_key='one-image', source='published', url='/art', alt='素材')
+            self.assertEqual(service.ensure('s', 'opening', subscriber='a')['items'][0]['source'], 'published')
+            self.assertTrue(service.ensure('s', 'later', subscriber='b')['can_generate'])
+            service.ensure('s', 'later', subscriber='b', draw=True)
+            service._pool.shutdown(wait=True)
+            self.assertEqual(service.view('s', 'later')['items'][0]['source'], 'private')
+            self.assertEqual(service.view('s', 'later')['items'][0]['status'], 'ready')
+            service.shown('s', 'later', 'b', 20, source='private')
+            self.assertTrue(next(iter(service._jobs.values()))['displayed'])
+            gateway.generate.assert_called_once()
+
     def test_queue_time_is_deducted_from_provider_budget_and_expired_jobs_never_spend(self):
         read = Mock()
         read.branch_view.return_value = dict(parentId='root', narrativeText='你查看眼前的石壁。', branchState={})

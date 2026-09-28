@@ -4,6 +4,20 @@ export interface ReadingSection {
 
 export const LONG_SCENE_CJK = 1000
 
+// Follow parents rather than global sequence numbers, which include siblings.
+export function intervalIllustrationDue(branchId: string, branches: { id: string; parent_id: string | null }[]): boolean {
+  const byId = new Map(branches.map(branch => [branch.id, branch]))
+  const seen = new Set<string>()
+  let current = byId.get(branchId), depth = 0
+  while (current && !seen.has(current.id)) {
+    seen.add(current.id)
+    if (!current.parent_id) return depth > 0 && depth % 3 === 0
+    depth++
+    current = byId.get(current.parent_id)
+  }
+  return false
+}
+
 export function cjkCount(text: string): number {
   return (text.match(/[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\u{20000}-\u{2ebef}]/gu) ?? []).length
 }

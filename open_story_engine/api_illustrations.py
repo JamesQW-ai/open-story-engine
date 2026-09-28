@@ -124,27 +124,15 @@ def long_scene_policy(node):
 
 
 def scheduled_scene(lineage):
-    """Choose sparse illustration opportunities from this saved ancestry only."""
-    gap, reading = 0, 0
-    selection = None
-    for index, node in enumerate(lineage):
-        selection = None
-        count = len(CJK.findall(node.get('narrativeText', '')))
-        if index == 0:
-            # The opening normally has a published picture of its own.
-            continue
-        gap += 1
-        reading += count
-        update = node.get('consequenceUpdate', {})
-        highlight = (any(i.get('status') in ('dead', 'departed') for i in update.get('outcomes', []))
-                     or any(i.get('status') == 'completed' for i in update.get('goalUpdates', []))
-                     or any(i.get('status') == 'resolved' for i in update.get('threadUpdates', [])))
-        if ((gap >= 3 and count >= 250 and (highlight or reading >= 1800))
-                or (gap >= 2 and count >= LONG_SCENE_CJK)):
-            selection = dict(id='runtime-reading-scene', reason='highlight' if highlight else 'reading_interval',
-                             prompt=SCENE_PROMPT)
-            gap, reading = 0, 0
-    return selection
+    """Pages 4/7/10... and every long page; forks use their own ancestry."""
+    if not lineage:
+        return None
+    index = len(lineage) - 1
+    long = bool(long_scene_policy(lineage[-1]))
+    if long or index > 0 and index % 3 == 0:
+        return dict(id='runtime-reading-scene', reason='long_scene' if long else 'reading_interval',
+                    prompt=SCENE_PROMPT)
+    return None
 
 
 def scene_prompt(node, policy):
@@ -422,7 +410,9 @@ class IllustrationService:
         node, package_id, version = self._context(sid, bid)
         published = self.library.resolve(package_id, version, node)
         if published:
-            return self._published_result(sid, published)
+            result = self._published_result(sid, published)
+            if result['items']:
+                return result
         policy = self._policy(package_id, version, node)
         key = self._key(sid, bid, node)
         with self._lock:
@@ -463,7 +453,8 @@ class IllustrationService:
                         if not visit.exists():
                             visit.write_text(json.dumps({'sid': sid, 'bid': bid, 'published_hit': True,
                                                          'private_cache_hit': False}))
-            return result
+            if result['items']:
+                return result
         key = self._key(sid, bid, node)
         policy = self._policy(package_id, version, node)
         with self._lock:
@@ -555,15 +546,16 @@ class IllustrationService:
                 job['generation_ms'] = round((time.monotonic() - started) * 1000)
                 self._persist(job)
 
-    def shown(self, sid, bid, subscriber, display_ms):
+    def shown(self, sid, bid, subscriber, display_ms, source=None):
         node, package_id, version = self._context(sid, bid)
         key = self._key(sid, bid, node)
         # Public display receipts are separate from private generation records.
         with self._lock:
             job = self._record(key)
             published = self.library.resolve(package_id, version, node)
-            private_ready = bool(not published and job and job['status'] == 'ready')
-            if not private_ready and not published:
+            private_ready = bool(job and job['status'] == 'ready' and
+                                 (source == 'private' or source is None and not published))
+            if (source == 'private' and not private_ready) or (not private_ready and not published):
                 raise ReadError(409, 'illustration_not_ready', '没有可展示的插图')
             if private_ready:
                 job.update(displayed=True, display_ms=display_ms)

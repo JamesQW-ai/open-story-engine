@@ -190,8 +190,9 @@ def create_app(package_root: Path | None = None, database_path: Path | None = No
 
         @app.post('/api/v1/sessions/{session_id}/branches/{branch_id}/illustrations/shown')
         def shown_illustrations(session_id: str, branch_id: str, subscriber: str = Query(..., min_length=1, max_length=100),
-                               display_ms: int = Query(..., ge=0, le=3600000)):
-            return illustrations.shown(session_id, branch_id, subscriber, display_ms)
+                               display_ms: int = Query(..., ge=0, le=3600000),
+                               source: str | None = Query(None, pattern='^(published|private)$')):
+            return illustrations.shown(session_id, branch_id, subscriber, display_ms, source)
 
         @app.get('/api/v1/scene-assets/{package_id}/{version}/{asset_id}')
         def published_scene_image(package_id: str, version: str, asset_id: str):
