@@ -50,7 +50,13 @@ export function StoryProse({ text, fullText = text, streaming, sessionId, branch
     setArt(null)
     opened.current = 0
     shown.current = false
-    if (!sessionId || !branchId || !fullText.trim() || hasFixedImage) return
+    if (!sessionId || !branchId || !fullText.trim()) return
+    if (hasFixedImage) {
+      // Preloaded artwork has a display receipt but no generation lease.
+      subscription.current = crypto.randomUUID()
+      opened.current = performance.now()
+      return
+    }
     let requested = false
     const request = subscribeIllustration({
       prepare: (subscriber, draw) => api.illustrations(sessionId, branchId, subscriber, draw),
