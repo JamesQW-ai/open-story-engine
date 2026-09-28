@@ -1,0 +1,144 @@
+{
+  "currentScene": {
+    "evidenceQuote": "弟子把你引到靠里的一间，打开栅门，示意你进去。",
+    "name": "靠里的一间",
+    "basis": "observed",
+    "paragraphIds": [
+      "P10"
+    ],
+    "presentEntities": [
+      {
+        "entityId": "character_ae4cb42b9b49",
+        "entityName": "陆照临",
+        "basis": "observed",
+        "paragraphIds": [
+          "P10",
+          "P12"
+        ],
+        "evidenceQuote": "你站在石室中央。"
+      }
+    ]
+  },
+  "summary": "陆照临未反抗，松开短刀、不碰空灯，随两名弟子穿过前庭与石廊。执事在石廊中段停下问“山门外那个人是你杀的？”，陆照临承认夺刀动手，未解释原因。执事下令先关石牢，宗门议事前不许放人探视。弟子将陆照临押入石牢靠里的一间石室，栅门锁死，看守离开，无人再来问话。",
+  "actionStatus": "performed",
+  "updates": {
+    "introductions": {
+      "characters": [],
+      "items": [],
+      "locations": []
+    },
+    "stateChanges": [
+      {
+        "entityId": "character_ae4cb42b9b49",
+        "entityName": "陆照临",
+        "basis": "observed",
+        "attribute": "locationId",
+        "value": "location_shilao",
+        "reason": "被执事下令押入石牢，弟子引至靠里一间石室并锁上栅门。",
+        "paragraphIds": [
+          "P8",
+          "P9",
+          "P10",
+          "P11"
+        ],
+        "locationId": "location_shilao",
+        "locationName": "石牢",
+        "observedLocationName": "石牢"
+      },
+      {
+        "entityId": "item_short_blade",
+        "entityName": "短刀",
+        "basis": "observed",
+        "attribute": "ownerCharacterId",
+        "value": null,
+        "reason": "陆照临松开手，短刀落在石阶上，未再持有。",
+        "paragraphIds": [
+          "P1"
+        ]
+      },
+      {
+        "entityId": "item_empty_lantern",
+        "entityName": "空灯",
+        "basis": "observed",
+        "attribute": "ownerCharacterId",
+        "value": null,
+        "reason": "陆照临未再碰空灯，空灯留在石阶下，被弟子带走。",
+        "paragraphIds": [
+          "P1",
+          "P12"
+        ]
+      }
+    ],
+    "outcomes": [],
+    "goalUpdates": [
+      {
+        "id": "opening-goal-2",
+        "title": "空灯与父亲失踪是否有关",
+        "status": "active",
+        "dependencies": [],
+        "reason": "空灯被弟子带走，陆照临被关入石牢，关联仍未查清。",
+        "successor": "",
+        "paragraphIds": [
+          "P12"
+        ]
+      }
+    ],
+    "threadUpdates": [
+      {
+        "id": "followup-8e858c66cd2c9802e1d9",
+        "title": "本回合有尚未确认的持续结果，需要结合原文澄清。被执事下令押入石牢，随弟子往山门内走。",
+        "status": "resolved",
+        "priority": "normal",
+        "recoveryWindow": "unknown",
+        "reason": "陆照临已被押入石牢靠里一间石室，栅门锁死，看守离开。",
+        "paragraphIds": [
+          "P10",
+          "P11"
+        ]
+      }
+    ]
+  },
+  "confirmedStates": [
+    {
+      "entityId": "character_ae4cb42b9b49",
+      "entityName": "陆照临",
+      "basis": "observed",
+      "attribute": "locationId",
+      "value": "location_shilao",
+      "reason": "被押入石牢靠里一间石室。",
+      "paragraphIds": [
+        "P10",
+        "P11"
+      ]
+    },
+    {
+      "entityId": "item_open_letter",
+      "entityName": "引荐文书",
+      "basis": "observed",
+      "attribute": "ownerCharacterId",
+      "value": "character_ae4cb42b9b49",
+      "reason": "引荐文书仍贴在陆照临怀里。",
+      "paragraphIds": [
+        "P12"
+      ]
+    }
+  ],
+  "followups": [
+    {
+      "summary": "执事翻看空灯灯底时眉头微动，但未说明原因；空灯被弟子带走，其异常与陆沉舟失踪的关联仍未查清。",
+      "paragraphIds": [
+        "P12"
+      ]
+    }
+  ],
+  "resolvedFollowups": [
+    {
+      "id": "followup-8e858c66cd2c9802e1d9",
+      "summary": "陆照临已被押入石牢靠里一间石室，栅门锁死，看守离开，押送结果已明确。",
+      "paragraphIds": [
+        "P10",
+        "P11"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "summary": "陆照临未反抗，按押送弟子指引穿过前庭与石廊，途中向执事承认亲手杀死伤者，未作辩解。执事下令将其关入石牢，宗门议事前不许放人探视；短刀被留在石阶上，空灯被执事命人带走。陆照临被带入石牢靠里的一间石室，栅门锁死，身上只剩引荐文书。",
+  "actionStatus": "performed",
+  "updates": {
+    "introductions": {
+      "characters": [],
+      "items": [],
+      "locations": []
+    },
+    "stateChanges": [
+      {
+        "entityId": "character_ae4cb42b9b49",
+        "entityName": "陆照临",
+        "basis": "observed",
+        "attribute": "locationId",
+        "value": "location_shilao",
+        "reason": "被执事下令押入石牢，弟子引至靠里一间石室并锁上栅门。",
+        "paragraphIds": [
+          "P8",
+          "P9",
+          "P10",
+          "P11"
+        ]
+      },
+      {
+        "entityId": "item_short_blade",
+        "entityName": "短刀",
+        "basis": "observed",
+        "attribute": "locationId",
+        "value": "location_observed_66499c85e3ccc5c3",
+        "reason": "陆照临松开手，短刀落在石阶上，未被带走。",
+        "paragraphIds": [
+          "P1"
+        ]
+      },
+      {
+        "entityId": "item_empty_lantern",
+        "entityName": "空灯",
+        "basis": "observed",
+        "attribute": "ownerCharacterId",
+        "value": "character_zhishi",
+        "reason": "执事命弟子将空灯带走。",
+        "paragraphIds": [
+          "P8"
+        ]
+      }
+    ],
+    "outcomes": [],
+    "goalUpdates": [],
+    "threadUpdates": []
+  },
+  "currentScene": {
+    "name": "石牢",
+    "basis": "observed",
+    "paragraphIds": [
+      "P9",
+      "P10",
+      "P11"
+    ],
+    "presentEntities": [
+      {
+        "entityId": "character_ae4cb42b9b49",
+        "entityName": "陆照临",
+        "basis": "observed",
+        "paragraphIds": [
+          "P10",
+          "P12"
+        ],
+        "evidenceQuote": "弟子把你引到靠里的一间，打开栅门，示意你进去。"
+      }
+    ]
+  },
+  "confirmedStates": [
+    {
+      "entityId": "character_ae4cb42b9b49",
+      "entityName": "陆照临",
+      "basis": "observed",
+      "attribute": "custodyStatus",
+      "value": "关押于石牢，宗门议事前不许放人探视",
+      "reason": "执事下令先关石牢，宗门议事之前不许放人，也不许旁人探视。",
+      "paragraphIds": [
+        "P8"
+      ]
+    },
+    {
+      "entityId": "item_open_letter",
+      "entityName": "引荐文书",
+      "basis": "observed",
+      "attribute": "ownerCharacterId",
+      "value": "character_ae4cb42b9b49",
+      "reason": "陆照临身上只剩那封潮了边的引荐文书，还贴在怀里。",
+      "paragraphIds": [
+        "P12"
+      ]
+    }
+  ],
+  "followups": [
+    {
+      "id": "followup-8e858c66cd2c9802e1d9",
+      "summary": "陆照临已被押入石牢靠里一间石室，栅门锁死，宗门议事前无人问话；其后续处置待宗门议事决定。",
+      "paragraphIds": [
+        "P8",
+        "P9",
+        "P10",
+        "P11",
+        "P13"
+      ]
+    },
+    {
+      "id": "followup-6b5ac9dbcd70b869bdf7",
+      "summary": "执事翻看空灯灯底时眉头微动但未说明原因；空灯已被执事命人带走，其异常与陆沉舟失踪的关联仍未查清。",
+      "paragraphIds": [
+        "P8"
+      ]
+    }
+  ],
+  "resolvedFollowups": []
+}

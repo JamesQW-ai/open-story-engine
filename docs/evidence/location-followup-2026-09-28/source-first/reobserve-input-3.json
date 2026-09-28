@@ -1,0 +1,224 @@
+{
+  "input": "我不反抗，也不擅自拿回刀和灯，按照押送弟子的指引继续走，到他们安排我等候问话的地方停下。我承认亲手杀死伤者，等候问话，不替自己编造理由。",
+  "desiredPlan": null,
+  "entityFacts": {
+    "entities": [
+      {
+        "id": "character_wounded_stranger",
+        "name": "伤者",
+        "kind": "character",
+        "source": "current_branch",
+        "detail": "倒在石阶下、攥着空灯的重伤陌生人，被陆照临用其腰间短刀割喉杀死。"
+      },
+      {
+        "id": "character_zhishi",
+        "name": "执事",
+        "kind": "character",
+        "source": "current_branch",
+        "detail": "从山门内出来的中年男子，青灰道袍，腰间悬铜牌，带四五名弟子；确认伤者死亡后下令将陆照临押入石牢，并命人带走空灯。"
+      },
+      {
+        "id": "item_open_letter",
+        "name": "引荐文书",
+        "kind": "item",
+        "source": "visible_package",
+        "detail": ""
+      },
+      {
+        "id": "item_empty_lantern",
+        "name": "空灯",
+        "kind": "item",
+        "source": "current_branch",
+        "detail": "伤者手边攥着的空灯，被陆照临夺走后现由其持有；灯壁有旧痕，灯芯曾极短暂亮起青白色。"
+      },
+      {
+        "id": "item_short_blade",
+        "name": "短刀",
+        "kind": "item",
+        "source": "current_branch",
+        "detail": "伤者腰间所带的短刀，被陆照临抽出用于割喉，现仍握在陆照临手中。"
+      },
+      {
+        "id": "location_9c23a624e6b0",
+        "name": "宗门",
+        "kind": "location",
+        "source": "visible_package",
+        "detail": ""
+      },
+      {
+        "id": "location_shilao",
+        "name": "石牢",
+        "kind": "location",
+        "source": "current_branch",
+        "detail": "执事下令将陆照临押入之处，位于山门内，具体位置陆照临不知。"
+      },
+      {
+        "id": "character_ae4cb42b9b49",
+        "name": "陆照临",
+        "kind": "character",
+        "source": "visible_package",
+        "detail": ""
+      }
+    ],
+    "lastRecordedPlayerLocation": {
+      "id": "location_observed_66499c85e3ccc5c3",
+      "name": "石阶下"
+    },
+    "identityRule": "名称相似只是候选，不是同一身份；无已确认别名关系时不得合并。",
+    "locationRule": "登记位置可能漏记。当前正文实际场所与登记名不同且无已确认别名时，独立登记；不把新场所绑定旧ID。"
+  },
+  "authoritativeState": {
+    "playerLocationId": "location_observed_66499c85e3ccc5c3",
+    "characterLocationIds": {
+      "character_ae4cb42b9b49": "location_observed_66499c85e3ccc5c3",
+      "character_wounded_stranger": "location_observed_66499c85e3ccc5c3"
+    },
+    "itemLocationIds": {},
+    "itemOwnerCharacterIds": {
+      "item_open_letter": "character_ae4cb42b9b49"
+    },
+    "characterOutcomeStates": {
+      "character_wounded_stranger": {
+        "characterId": "character_wounded_stranger",
+        "status": "dead",
+        "permanence": "permanent",
+        "requirementId": "A1",
+        "cause": "被陆照临用其腰间短刀割喉杀死。",
+        "evidence": "他的挣扎很快弱下去。手垂进积水，指尖最后蜷了一下，不动了。",
+        "causeBranchId": "branch_7602f92d-f4d0-43bf-a725-8d04ed893a01"
+      }
+    },
+    "readerEntityStates": {
+      "character_wounded_stranger": {
+        "status": "dead"
+      }
+    }
+  },
+  "registry": {
+    "character_ae4cb42b9b49": {
+      "id": "character_ae4cb42b9b49",
+      "name": "陆照临",
+      "kind": "character"
+    },
+    "character_wounded_stranger": {
+      "id": "character_wounded_stranger",
+      "name": "伤者",
+      "kind": "character"
+    },
+    "character_zhishi": {
+      "id": "character_zhishi",
+      "name": "执事",
+      "kind": "character"
+    },
+    "item_open_letter": {
+      "id": "item_open_letter",
+      "name": "引荐文书",
+      "kind": "item"
+    },
+    "item_empty_lantern": {
+      "id": "item_empty_lantern",
+      "name": "空灯",
+      "kind": "item"
+    },
+    "item_short_blade": {
+      "id": "item_short_blade",
+      "name": "短刀",
+      "kind": "item"
+    },
+    "location_9c23a624e6b0": {
+      "id": "location_9c23a624e6b0",
+      "name": "宗门",
+      "kind": "location"
+    },
+    "location_observed_66499c85e3ccc5c3": {
+      "id": "location_observed_66499c85e3ccc5c3",
+      "name": "石阶下",
+      "kind": "location"
+    },
+    "location_shilao": {
+      "id": "location_shilao",
+      "name": "石牢",
+      "kind": "location"
+    }
+  },
+  "goals": [
+    {
+      "id": "opening-goal-1",
+      "title": "陌生伤者是否能得到救助",
+      "status": "abandoned",
+      "characterId": "character_ae4cb42b9b49",
+      "dependencies": [],
+      "source": "player_branch",
+      "evidence": "你没有再犹豫。你抽出他腰间那柄短刀——他带着刀，只是没力气拔——刀锋在雨里泛着钝光。你一手按住他的肩，一手将刀送进他颈侧。他猛地一挣，力气大得不像重伤之人，你几乎被掀开，但你压住了。血涌出来，被雨水冲开，漫过石阶的裂纹，流进那道青色的水痕里。\n\n他的挣扎很快弱下去。手垂进积水，指尖最后蜷了一下，不动了。",
+      "causeBranchId": "branch_7602f92d-f4d0-43bf-a725-8d04ed893a01",
+      "reason": "玩家明确不再请求救人，并亲手杀死伤者。",
+      "successor": ""
+    },
+    {
+      "id": "opening-goal-2",
+      "title": "空灯与父亲失踪是否有关",
+      "status": "active",
+      "characterId": "character_ae4cb42b9b49",
+      "dependencies": [],
+      "source": "opening",
+      "evidence": "你携引荐文书来到山门，陌生伤者与空灯被挡在封山线外。",
+      "causeBranchId": null
+    }
+  ],
+  "threads": [
+    "陌生伤者是否能得到救助",
+    "空灯与父亲失踪是否有关",
+    "尚未完成的当前目标"
+  ],
+  "pendingFollowups": [
+    {
+      "id": "followup-6b5ac9dbcd70b869bdf7",
+      "kind": "continuity",
+      "status": "open",
+      "entityIds": [],
+      "originParentId": "branch_7602f92d-f4d0-43bf-a725-8d04ed893a01",
+      "summary": "执事翻看空灯灯底时眉头微动，但未说明原因；空灯被弟子带走，其异常与陆沉舟失踪的关联仍未查清。",
+      "evidence": "两名弟子走到你身侧，一左一右。他们没有拔剑，但手都按在剑柄上。执事弯腰，从积水里拾起那盏空灯，翻过来看了一眼灯底，眉头微微一动，随即把灯递给身后的弟子。\n\n“灯也带走。”他说。"
+    },
+    {
+      "id": "followup-8e858c66cd2c9802e1d9",
+      "kind": "state_uncertain",
+      "status": "open",
+      "entityIds": [
+        "character_ae4cb42b9b49"
+      ],
+      "originParentId": "branch_7602f92d-f4d0-43bf-a725-8d04ed893a01",
+      "summary": "本回合有尚未确认的持续结果，需要结合原文澄清。被执事下令押入石牢，随弟子往山门内走。",
+      "evidence": "他夺了那人的刀，把人杀了。”\n\n执事没有立刻说话。他看了你一眼，又看向你脚边的空灯。灯壁上的旧痕在灯光下泛着暗色，像一道干涸的水渍。\n\n“你叫什么名字？”他问。\n\n“陆照临。”你说，“北河城来的。怀里有引荐文书。”\n\n“文书。”执事重复了一遍，语气听不出情绪，“你带着文书来投宗门，却在山门前杀了人。”\n\n你没有辩解。你站在原地，双手仍放在身前，雨水从下颌滴落。你承认刚才发生的事——你夺了刀，也用了刀。至于为什么，你没有说，他也没有问。\n\n执事朝身后偏了偏头。两名弟子走上前，绕",
+      "evidenceTruncated": true
+    }
+  ],
+  "resolvedFollowups": [
+    {
+      "id": "followup-1c45abc5c6e52957304b",
+      "kind": "continuity",
+      "status": "resolved",
+      "entityIds": [],
+      "originParentId": "branch_2b70cd5a-b433-43b8-ac8b-c3b6883add5b",
+      "resolution": "守门弟子拔剑要求放下空灯一事已由执事到场接手：陆照临未反抗，空灯被执事命人带走，冲突转为押入石牢候审。",
+      "resolutionEvidence": "你松开短刀。刀落在石阶上，发出一声轻响，滚了半圈，停在积水里。你站起身，双手放在身前，掌心朝外，雨水顺着指缝流下。空灯还在你脚边，你没有再去碰它。\n\n雨声里，山门方向传来急促的脚步。铁链哗啦一响，有人从门内跨了出来。为首的是个中年男子，青灰道袍，腰间悬着一枚铜牌，身后跟着四五名弟子，手中都提着灯。灯光穿过雨幕，照在你脸上，也照在你脚边那具不再动弹的躯体上。\n\n“怎么回事？”中年男子停在封山石内侧，目光从你扫到地上的人，又扫到那把短刀。\n\n年长些的守门弟子抢先开口：“执事，此人",
+      "resolutionEvidenceTruncated": true
+    }
+  ],
+  "recentContext": [],
+  "draft": {
+    "P1": "你松开手。短刀落在石阶上，发出一声轻响，滚了半圈，停在积水里。你没有去捡，也没有碰脚边那盏空灯。两名弟子一左一右走到你身侧，手按在剑柄上，等你迈步。",
+    "P2": "你迈过封山石。铁链在身后重新挂上，哗啦一声，雨声被隔在了门外。",
+    "P3": "山门内的前庭铺着青石，雨水从檐角连成线往下淌。执事走在前面，青灰道袍的下摆已经湿了半截。穿过前庭，是一段有顶的石廊，廊柱上的灯一盏一盏亮着，光晕昏黄。走到石廊中段，执事忽然停下，侧过身来。",
+    "P4": "“山门外那个人，”他问，“是你杀的？”",
+    "P5": "你站定。两名弟子也跟着停下，没有催你。",
+    "P6": "“是。”你说，“我夺了他的刀，动了手。”",
+    "P7": "执事看着你，等你说下去。你没有再开口。为什么动手，那人是谁，刀从哪来——这些你都没有说。他也没有问。廊下的灯焰被穿堂风压了一下，又直起来。",
+    "P8": "“带走。”执事对两名弟子说，“先关石牢，宗门议事之前不许放人，也不许旁人探视。”",
+    "P9": "两名弟子应了一声，引你继续往里走。石廊尽头是一道向下的窄阶，越走越暗，潮气混着石壁的凉意漫上来。阶底有一扇铁栅门，看守的弟子见有人来，提灯照了照你的脸，又看了看押送弟子的腰牌，才把门拉开。",
+    "P10": "里面是一条短甬道，两侧凿出几间石室，铁栅封门。弟子把你引到靠里的一间，打开栅门，示意你进去。石室里只有一张石床，墙角放着一只旧木桶，顶上高处开着一道窄窗，雨丝斜斜地飘进来，在石地上积了一小片湿痕。",
+    "P11": "栅门在你身后合上，锁扣咔嗒一声扣死。两名弟子没有多话，转身沿甬道走了。看守的脚步声在外头来回踱了两趟，也渐渐停下。",
+    "P12": "你站在石室中央。短刀不在你手里，空灯也不在。你身上只剩那封潮了边的引荐文书，还贴在怀里。石壁上渗着水，一滴一滴落进角落，声音很轻，也很规律。",
+    "P13": "没有人再来问你话。宗门议事之前，这里大概不会有人来。"
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "summary": "陆照临被关入石牢靠里一间石室，栅门锁死。他主动向看守询问宗门议事何时来人问话，看守答“议事之前不许问话，快则明日午后，慢则两三日”，并应他讨水之请从栅缝递进半碗粗陶碗凉水。此后无人再来问话，看守换过一次班，陆照临靠壁等天亮。",
+  "actionStatus": "performed",
+  "updates": {
+    "introductions": {
+      "characters": [
+        {
+          "id": "character_shilao_guard",
+          "name": "看守",
+          "summary": "石牢甬道尽头值守的年轻弟子，眉间带倦意，语气不凶也不客气；告知议事之前不许问话，快则明日午后、慢则两三日，并递了半碗水给陆照临。",
+          "paragraphIds": [
+            "P4",
+            "P6",
+            "P7"
+          ]
+        }
+      ],
+      "items": [],
+      "locations": []
+    },
+    "stateChanges": [
+      {
+        "entityId": "character_ae4cb42b9b49",
+        "entityName": "陆照临",
+        "basis": "observed",
+        "attribute": "locationId",
+        "value": "location_shilao",
+        "reason": "被押入石牢靠里一间石室，栅门锁死。",
+        "paragraphIds": [
+          "P1",
+          "P10"
+        ],
+        "locationName": "石牢",
+        "observedLocationName": "石牢"
+      },
+      {
+        "entityId": "item_empty_lantern",
+        "entityName": "空灯",
+        "basis": "observed",
+        "attribute": "ownerCharacterId",
+        "value": null,
+        "reason": "空灯已被执事命人带走，不在陆照临手上。",
+        "paragraphIds": [
+          "P10"
+        ]
+      }
+    ],
+    "outcomes": [],
+    "goalUpdates": [],
+    "threadUpdates": []
+  },
+  "currentScene": {
+    "name": "石牢",
+    "basis": "observed",
+    "paragraphIds": [
+      "P1",
+      "P9"
+    ],
+    "presentEntities": [
+      {
+        "entityId": "character_ae4cb42b9b49",
+        "entityName": "陆照临",
+        "basis": "observed",
+        "paragraphIds": [
+          "P1",
+          "P11"
+        ],
+        "evidenceQuote": "你靠着石壁，把膝盖收起来，等天亮。"
+      }
+    ]
+  },
+  "confirmedStates": [
+    {
+      "entityId": "character_ae4cb42b9b49",
+      "entityName": "陆照临",
+      "basis": "observed",
+      "attribute": "locationId",
+      "value": "location_shilao",
+      "reason": "被押入石牢靠里一间石室，栅门锁死，独自等候宗门议事。",
+      "paragraphIds": [
+        "P1",
+        "P10"
+      ]
+    },
+    {
+      "entityId": "item_empty_lantern",
+      "entityName": "空灯",
+      "basis": "observed",
+      "attribute": "ownerCharacterId",
+      "value": null,
+      "reason": "空灯已被执事命人带走，不在陆照临手上。",
+      "paragraphIds": [
+        "P10"
+      ]
+    }
+  ],
+  "followups": [
+    {
+      "summary": "陆照临被关入石牢候审，看守称宗门议事之前不许问话，快则明日午后、慢则两三日；议事将如何处置、是否会追问动机与身份，尚未发生。",
+      "paragraphIds": [
+        "P4",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "summary": "空灯已被执事命人带走，不在陆照临手上；灯与父亲失踪是否有关仍未查清。",
+      "paragraphIds": [
+        "P10"
+      ]
+    }
+  ],
+  "resolvedFollowups": []
+}

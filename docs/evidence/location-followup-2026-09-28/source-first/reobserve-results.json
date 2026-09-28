@@ -1,0 +1,170 @@
+[
+  {
+    "number": 3,
+    "mode": "read_only_reobservation_not_live_turn",
+    "promptVersion": "prompt-catalog/1:63bbe0e133f31c1c760e9b437ac8bdd5eeab3f46a378e312e6cfa40382532caf",
+    "seconds": 3.99,
+    "sourceSha256": "a660b19af95a03455455b58a880c8c4522fdcde40467c9fd703bb710629df75c",
+    "originalNodeUnchanged": true,
+    "scene": {
+      "evidenceQuote": "弟子把你引到靠里的一间，打开栅门，示意你进去。",
+      "name": "靠里的一间",
+      "basis": "observed",
+      "paragraphIds": [
+        "P10"
+      ],
+      "presentEntities": [
+        {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "陆照临",
+          "basis": "observed",
+          "paragraphIds": [
+            "P10"
+          ],
+          "evidenceQuote": "弟子把你引到靠里的一间，打开栅门，示意你进去。"
+        }
+      ]
+    },
+    "locationId": "location_observed_6bbcdbc74db621c9",
+    "locationName": "靠里的一间",
+    "locationChanged": true,
+    "diagnostics": [
+      {
+        "item": {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "你",
+          "basis": "observed",
+          "attribute": "locationId",
+          "value": "location_observed_66499c85e3ccc5c3",
+          "reason": "被押入石牢靠里一间石室。",
+          "paragraphIds": [
+            "P10"
+          ],
+          "locationId": "location_shilao",
+          "locationName": "石牢",
+          "observedLocationName": "石牢"
+        },
+        "reason": "实际地点称呼必须直接引用本次段落"
+      },
+      {
+        "item": {
+          "entityId": "item_empty_lantern",
+          "entityName": "空灯",
+          "basis": "observed",
+          "attribute": "ownerCharacterId",
+          "value": null,
+          "reason": "陆照临未碰空灯，空灯不在其手中。",
+          "paragraphIds": [
+            "P1",
+            "P12"
+          ]
+        },
+        "reason": "状态依据含转述、设想或未核实信息，保留待澄清"
+      },
+      {
+        "item": {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "你",
+          "basis": "observed",
+          "attribute": "locationId",
+          "value": "location_shilao",
+          "reason": "被关入石牢靠里一间石室。",
+          "paragraphIds": [
+            "P10"
+          ]
+        },
+        "reason": "位置记录缺少实际地点称呼，保留待澄清"
+      },
+      {
+        "item": {
+          "entityId": "item_empty_lantern",
+          "entityName": "空灯",
+          "basis": "observed",
+          "attribute": "ownerCharacterId",
+          "value": null,
+          "reason": "空灯不在陆照临手中。",
+          "paragraphIds": [
+            "P1",
+            "P12"
+          ]
+        },
+        "reason": "状态依据含转述、设想或未核实信息，保留待澄清"
+      }
+    ]
+  },
+  {
+    "number": 4,
+    "mode": "read_only_reobservation_not_live_turn",
+    "promptVersion": "prompt-catalog/1:63bbe0e133f31c1c760e9b437ac8bdd5eeab3f46a378e312e6cfa40382532caf",
+    "seconds": 3.369,
+    "sourceSha256": "ef11fb0f01d8f348b374fe7fe8ca922ea55ab80a39349448e1c2ed756c976332",
+    "originalNodeUnchanged": true,
+    "scene": {
+      "evidenceQuote": "石室里没有灯。",
+      "name": "石室",
+      "basis": "observed",
+      "paragraphIds": [
+        "P1"
+      ],
+      "presentEntities": [
+        {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "陆照临",
+          "basis": "observed",
+          "paragraphIds": [
+            "P1"
+          ],
+          "evidenceQuote": "你靠着石壁坐下，湿透的衣料贴着后背，凉意一层层渗进来。"
+        }
+      ]
+    },
+    "locationId": "location_observed_2b758cfe18d2de53",
+    "locationName": "石室",
+    "locationChanged": true,
+    "diagnostics": [
+      {
+        "item": {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "你",
+          "basis": "observed",
+          "attribute": "locationId",
+          "value": "location_observed_66499c85e3ccc5c3",
+          "reason": "被押入石牢靠里的石室，栅门锁上。",
+          "paragraphIds": [
+            "P1"
+          ]
+        },
+        "reason": "位置记录缺少实际地点称呼，保留待澄清"
+      },
+      {
+        "item": {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "你",
+          "basis": "observed",
+          "attribute": "locationId",
+          "value": "location_observed_66499c85e3ccc5c3",
+          "reason": "被关入石牢靠里的石室，栅门锁上。",
+          "paragraphIds": [
+            "P1"
+          ]
+        },
+        "reason": "位置记录缺少实际地点称呼，保留待澄清"
+      },
+      {
+        "item": {
+          "entityId": "character_shilao_kanshou",
+          "entityName": "看守",
+          "basis": "observed",
+          "attribute": "locationId",
+          "value": "location_observed_66499c85e3ccc5c3",
+          "reason": "在石牢甬道尽头看守，灯影在甬道里晃动。",
+          "paragraphIds": [
+            "P1",
+            "P4"
+          ]
+        },
+        "reason": "位置记录缺少实际地点称呼，保留待澄清"
+      }
+    ]
+  }
+]

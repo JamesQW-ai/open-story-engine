@@ -146,7 +146,7 @@ export function SessionPage() {
     })
   }
 
-  async function selectBranch(id: string, readyBranch?: BranchView, preserveReading = false, reveal = !preserveReading) {
+  async function selectBranch(id: string, readyBranch?: BranchView, preserveReading = false, reveal = false) {
     if (!preserveReading) {
       readingTiming.current?.finish('interrupted')
       readingTiming.current = null
@@ -155,6 +155,10 @@ export function SessionPage() {
     imageController.current?.abort()
     replayController.current?.abort()
     setReplaying(false)
+    if (!preserveReading) {
+      setWriting(false)
+      setStreamText('')
+    }
     if (!preserveReading) setLoading(true)
     setJournal(null)
     setJournalError('')

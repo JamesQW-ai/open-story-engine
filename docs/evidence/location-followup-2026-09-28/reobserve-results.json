@@ -1,0 +1,184 @@
+[
+  {
+    "number": 3,
+    "mode": "read_only_reobservation_not_live_turn",
+    "promptVersion": "prompt-catalog/1:ee292954494a9b24c660a6954b848f13af067d43efa1b6f50eb589023b412196",
+    "seconds": 3.733,
+    "sourceSha256": "a660b19af95a03455455b58a880c8c4522fdcde40467c9fd703bb710629df75c",
+    "originalNodeUnchanged": true,
+    "scene": {
+      "name": "石牢",
+      "basis": "observed",
+      "paragraphIds": [
+        "P9",
+        "P10",
+        "P11"
+      ],
+      "presentEntities": [
+        {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "陆照临",
+          "basis": "observed",
+          "paragraphIds": [
+            "P10",
+            "P12"
+          ],
+          "evidenceQuote": "弟子把你引到靠里的一间，打开栅门，示意你进去。"
+        }
+      ]
+    },
+    "locationId": "location_observed_66499c85e3ccc5c3",
+    "locationName": "石阶下",
+    "locationChanged": false,
+    "diagnostics": [
+      {
+        "item": {
+          "name": "石牢",
+          "basis": "observed",
+          "paragraphIds": [
+            "P9",
+            "P10",
+            "P11"
+          ],
+          "presentEntities": [
+            {
+              "entityId": "character_ae4cb42b9b49",
+              "entityName": "你",
+              "basis": "observed",
+              "paragraphIds": [
+                "P10",
+                "P12"
+              ],
+              "evidenceQuote": "弟子把你引到靠里的一间，打开栅门，示意你进去。"
+            }
+          ]
+        },
+        "reason": "当前场所名称不在引用原文中"
+      },
+      {
+        "item": {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "你",
+          "basis": "observed",
+          "attribute": "locationId",
+          "value": "location_shilao",
+          "reason": "被执事下令押入石牢，弟子引至靠里一间石室并锁上栅门。",
+          "paragraphIds": [
+            "P8",
+            "P9",
+            "P10",
+            "P11"
+          ]
+        },
+        "reason": "状态依据含转述、设想或未核实信息，保留待澄清"
+      },
+      {
+        "item": {
+          "entityId": "item_short_blade",
+          "entityName": "短刀",
+          "basis": "observed",
+          "attribute": "locationId",
+          "value": "location_observed_66499c85e3ccc5c3",
+          "reason": "陆照临松开手，短刀落在石阶上，未被带走。",
+          "paragraphIds": [
+            "P1"
+          ]
+        },
+        "reason": "位置记录缺少实际地点称呼，保留待澄清"
+      },
+      {
+        "item": {
+          "entityId": "item_empty_lantern",
+          "entityName": "空灯",
+          "basis": "observed",
+          "attribute": "ownerCharacterId",
+          "value": "character_zhishi",
+          "reason": "执事命弟子将空灯带走。",
+          "paragraphIds": [
+            "P8"
+          ]
+        },
+        "reason": "实际称呼没有绑定登记身份，不能补全近似姓名"
+      },
+      {
+        "item": {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "陆照临",
+          "basis": "observed",
+          "attribute": "custodyStatus",
+          "value": "关押于石牢，宗门议事前不许放人探视",
+          "reason": "执事下令先关石牢，宗门议事之前不许放人，也不许旁人探视。",
+          "paragraphIds": [
+            "P8"
+          ]
+        },
+        "reason": "实际称呼没有绑定登记身份，不能补全近似姓名"
+      }
+    ]
+  },
+  {
+    "number": 4,
+    "mode": "read_only_reobservation_not_live_turn",
+    "promptVersion": "prompt-catalog/1:ee292954494a9b24c660a6954b848f13af067d43efa1b6f50eb589023b412196",
+    "seconds": 3.619,
+    "sourceSha256": "ef11fb0f01d8f348b374fe7fe8ca922ea55ab80a39349448e1c2ed756c976332",
+    "originalNodeUnchanged": true,
+    "scene": {
+      "name": "石牢",
+      "basis": "observed",
+      "paragraphIds": [
+        "P1",
+        "P9"
+      ],
+      "presentEntities": [
+        {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "陆照临",
+          "basis": "observed",
+          "paragraphIds": [
+            "P1",
+            "P11"
+          ],
+          "evidenceQuote": "你靠着石壁，把膝盖收起来，等天亮。"
+        }
+      ]
+    },
+    "locationId": "location_shilao",
+    "locationName": "石牢",
+    "locationChanged": true,
+    "diagnostics": [
+      {
+        "item": {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "你",
+          "basis": "observed",
+          "attribute": "locationId",
+          "value": "location_shilao",
+          "reason": "被押入石牢靠里一间石室，栅门锁死。",
+          "paragraphIds": [
+            "P1",
+            "P10"
+          ],
+          "locationName": "石牢",
+          "observedLocationName": "石牢"
+        },
+        "reason": "状态依据含转述、设想或未核实信息，保留待澄清"
+      },
+      {
+        "item": {
+          "entityId": "character_ae4cb42b9b49",
+          "entityName": "你",
+          "basis": "observed",
+          "attribute": "locationId",
+          "value": "location_shilao",
+          "reason": "被押入石牢靠里一间石室，栅门锁死，独自等候宗门议事。",
+          "paragraphIds": [
+            "P1",
+            "P10"
+          ]
+        },
+        "reason": "状态依据含转述、设想或未核实信息，保留待澄清"
+      }
+    ]
+  }
+]
