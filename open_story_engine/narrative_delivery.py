@@ -10,7 +10,7 @@ import re
 
 from . import reader_actions as actions, reader_consequences as consequences, reader_threads
 
-VERSION = 'narrative-delivery/3'
+VERSION = 'narrative-delivery/4'
 LEGACY_VERSION = 'narrative-delivery/1'
 
 
@@ -93,7 +93,7 @@ def _text(value, maximum=180):
     return value.strip()
 
 
-def observe(context, body, data, failure=None, *, legacy=False, literal_scope=True):
+def observe(context, body, data, failure=None, *, legacy=False, literal_scope=True, narrated_location=True):
     """Project usable observations; report uncertain items without vetoing prose."""
     state, package = context['parent']['branchState'], context['package']
     action = context['playerDirection']
@@ -224,6 +224,9 @@ def observe(context, body, data, failure=None, *, legacy=False, literal_scope=Tr
                     # The model proposed an unregistered ID. Register the
                     # actual literal place, never the guessed ID/display label.
                     name = observed_name
+            if not legacy and narrated_location:
+                from .entity_facts import check_narrated_location
+                check_narrated_location(evidence, observed_name)
             people = scene.get('presentEntityIds') if legacy else scene.get('presentEntities')
             if not legacy:
                 if not isinstance(people, list) or not people or len(people) > 12:
@@ -301,6 +304,9 @@ def observe(context, body, data, failure=None, *, legacy=False, literal_scope=Tr
         if not legacy:
             check_observed_reference(reference, known, evidence,
                 {e['id'] for e in update['introductions']['locations']}, strict=True, player_id=player)
+            if narrated_location and reference.get('attribute') == 'locationId':
+                from .entity_facts import check_narrated_location
+                check_narrated_location(evidence, reference['observedLocationName'], reference['entityName'])
         return evidence
 
     seen = set()
@@ -470,7 +476,7 @@ def seal(context, body, data, failure=None):
 def validate_commit(context, result):
     receipt = result.get('deliveryReceipt')
     action = context.get('playerDirection') or result['actionIntent']['input']
-    if (not isinstance(receipt, dict) or receipt.get('version') not in (VERSION, LEGACY_VERSION, 'narrative-delivery/2')
+    if (not isinstance(receipt, dict) or receipt.get('version') not in (VERSION, LEGACY_VERSION, 'narrative-delivery/2', 'narrative-delivery/3')
             or receipt.get('kind') != 'observed_state_not_prose_approval'
             or receipt.get('parentSha256') != digest(context['parent'])
             or receipt.get('narrativeSha256') != hashlib.sha256(result['narrativeText'].encode()).hexdigest()
@@ -478,7 +484,8 @@ def validate_commit(context, result):
         raise ValueError('正文交付凭据与请求、父分支或正文不符')
     recorded = observe({**context, 'playerDirection': action}, result['narrativeText'], receipt.get('data'),
                        receipt.get('failure'), legacy=receipt['version'] == LEGACY_VERSION,
-                       literal_scope=receipt['version'] == VERSION)
+                       literal_scope=receipt['version'] in (VERSION, 'narrative-delivery/3'),
+                       narrated_location=receipt['version'] == VERSION)
     if (recorded['update'] != result.get('consequenceUpdate')
             or recorded['followups'] != result.get('continuityFollowups')
             or recorded['outcome'] != result.get('readerOutcome')):

@@ -676,6 +676,34 @@ class ContextTurnTests(unittest.TestCase):
                  'deliveryReceipt': {**result['deliveryReceipt'], 'version': 'narrative-delivery/2'}}
         delivery.validate_commit(self.context, saved)
 
+    def test_destination_in_dialogue_does_not_mean_arrival(self):
+        place = next(p for p in self.fixture.package['locations']
+                     if p['id'] != self.context['parent']['branchState']['playerLocationId'])
+        self.body = '“你今晚只能歇在' + place['name'] + '。”执事把文书还给你。\n\n你仍站在线外。'
+        self.data['confirmedStates'] = [dict(entityId=GU, entityName='你', basis='observed',
+            attribute='locationId', value=place['id'], observedLocationName=place['name'],
+            reason='执事指定今晚住处', paragraphIds=['P1'])]
+        result, _ = self.generate(self.gateway())
+        self.assertEqual(self.commit(result)['playerLocationId'],
+                         self.context['parent']['branchState']['playerLocationId'])
+        self.assertTrue(result['observationDiagnostics'])
+        self.assertEqual(result['narrativeText'], self.body)
+        old = delivery.observe(self.context, self.body, self.data, narrated_location=False)
+        self.assertEqual(old['update']['stateChanges'][0]['value'], place['id'])
+        saved = {**result, 'consequenceUpdate': old['update'], 'readerOutcome': old['outcome'],
+                 'continuityFollowups': old['followups'],
+                 'deliveryReceipt': {**result['deliveryReceipt'], 'version': 'narrative-delivery/3'}}
+        delivery.validate_commit(self.context, saved)
+        self.data['currentScene'] = scene(place['name'], [GU])
+        result, _ = self.generate(self.gateway())
+        self.assertEqual(result['consequenceUpdate']['stateChanges'], [])
+        # A subsequent actual arrival is recorded without rejecting the dialogue.
+        self.body += '\n\n你随后走进' + place['name'] + '，在桌边坐下。'
+        self.data.pop('currentScene')
+        self.data['confirmedStates'][0]['paragraphIds'] = ['P3']
+        result, _ = self.generate(self.gateway())
+        self.assertEqual(self.commit(result)['playerLocationId'], place['id'])
+
     def test_contract_binds_player_you_without_promoting_other_near_names(self):
         self.body = '你进入门洞，在石凳上坐下。'
         self.data['currentScene'] = scene('门洞', [GU])

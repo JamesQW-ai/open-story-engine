@@ -1,7 +1,13 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { prologueText, storyChoices, identityEntry } from '../src/components/storyPresentation.ts'
+import { prologueText, storyChoices, identityEntry, playerFacingAction } from '../src/components/storyPresentation.ts'
+
+test('action feedback addresses the selected player without changing other speakers', () => {
+  assert.equal(playerFacingAction('陆照临把文书交给周执事。周执事说：“我认得陆照临。”', '陆照临'),
+    '你把文书交给周执事。周执事说：“我认得陆照临。”')
+  assert.equal(playerFacingAction('自定行动：我等候周执事。', '陆照临'), '你等候周执事。')
+})
 
 test('official defaults override summary heuristics and reject invalid bindings', () => {
   const catalog = {package:{title:'太虚遗录'},characters:[{id:'gu',name:'顾长离',defaultEntryPointId:'official'}],entries:[

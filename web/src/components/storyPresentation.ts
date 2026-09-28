@@ -1,5 +1,16 @@
 import type { BranchView, PackageCatalog } from '../api/types'
 
+export function playerFacingAction(value?: string | null, playerName?: string) {
+  const raw = (value ?? '').trim().replace(/^自定行动[：:]\s*/, '')
+  if (!raw) return '继续探索故事'
+  // Only the display copy changes; quoted speakers keep their own perspective.
+  return raw.split(/(“[^”]*”|「[^」]*」|"[^"]*")/g).map((part, index) => {
+    if (index % 2) return part
+    const text = part.replaceAll('我', '你')
+    return playerName && playerName !== '你' ? text.replaceAll(playerName, '你') : text
+  }).join('')
+}
+
 export function identityEntry(catalog: PackageCatalog, characterId: string) {
   const person = identityCharacters(catalog).find((c) => c.id === characterId)
   const declared = person?.defaultEntryPointId

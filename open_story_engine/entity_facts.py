@@ -139,6 +139,13 @@ def check_direct_evidence(evidence):
         raise ValueError('状态依据含转述、设想或未核实信息，保留待澄清')
 
 
+def check_narrated_location(evidence, place, person=None):
+    """A destination mentioned in dialogue is not narrated presence there."""
+    narration = re.sub(r'“[^”]*”|「[^」]*」|"[^"]*"', '', evidence)
+    if place not in narration or person and person not in narration:
+        raise ValueError('位置只在对白中提及，尚无人物实际到场叙述')
+
+
 def check_observed_reference(item, known, evidence, new_location_ids=(), *, strict=False, player_id=None):
     """Validate explicit reference labels, without judging or changing prose."""
     entity_id = item.get('entityId') or item.get('characterId')

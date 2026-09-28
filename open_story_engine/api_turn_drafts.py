@@ -16,7 +16,7 @@ from .api_read import ReadError
 from .storage import prepared_branch
 from .prompts import catalog_version
 
-RULES_VERSION = 'prepared-player-turn/55+' + catalog_version()
+RULES_VERSION = 'prepared-player-turn/56+' + catalog_version()
 TERMINAL = {'ready', 'failed', 'expired'}
 LEASE_SECONDS = 45
 TTL_SECONDS = 600

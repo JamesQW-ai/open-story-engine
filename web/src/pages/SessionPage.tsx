@@ -10,6 +10,7 @@ import { api } from '../api/client'
 import { createReadingTiming, saveReadingTiming } from '../components/readingTimings'
 import { observeReadingDisplay } from '../components/readingDisplay'
 import { subscribeChoices } from '../components/choiceSubscription'
+import { playerFacingAction } from '../components/storyPresentation'
 import type {
   OpeningNavigation,
   PublishedScene,
@@ -28,12 +29,6 @@ import type {
 import { Loading, messageOf, Notice, storyImage } from '../components/StoryUI'
 
 type Attempt = PlayContinueRequest & { request_id: string }
-
-function playerFacingAction(value?: string | null) {
-  const raw = (value ?? '').trim().replace(/^自定行动[：:]\s*/, '')
-  if (!raw) return '继续探索故事'
-  return raw.replaceAll('我', '你')
-}
 
 export function SessionPage() {
   const { sessionId = '' } = useParams()
@@ -670,7 +665,7 @@ export function SessionPage() {
                   {!!journal?.feedback.length && !writing && (
                     <div className="choice-feedback">
                       {journal.feedback.map((f, i) => (
-                        <span key={i}>{f}</span>
+                        <span key={i}>{playerFacingAction(f, role)}</span>
                       ))}
                     </div>
                   )}
@@ -848,7 +843,7 @@ export function SessionPage() {
                         <div className="journal-review-entry">
                           <div className="journal-review-copy">
                             <span>第 {b.sequence + 1} 页{selected?.id === b.id ? ' · 当前' : ''}</span>
-                            <strong>{b.parent_id ? playerFacingAction(b.action) : '故事开篇'}</strong>
+                            <strong>{b.parent_id ? playerFacingAction(b.action, role) : '故事开篇'}</strong>
                             {fork && b.parent_id && <small>{onRoute ? '当前路线' : '另一条分支'}</small>}
                           </div>
                           <div className="journal-review-actions">
