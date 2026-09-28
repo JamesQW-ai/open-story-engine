@@ -18,6 +18,12 @@ from tests_api import test_reader_consequences as fixtures
 from tests_api.test_reader_consequences import GU, LU, ROOT, plan
 
 
+def scene(name, people):
+    return dict(name=name, basis='observed', paragraphIds=['P1'],
+                presentEntities=[dict(entityId=p, entityName='你' if p == GU else '陆照临',
+                                      basis='observed', paragraphIds=['P1']) for p in people])
+
+
 class ContextTurnTests(unittest.TestCase):
     def setUp(self):
         fixture = fixtures.ConsequenceTests()
@@ -100,7 +106,7 @@ class ContextTurnTests(unittest.TestCase):
         from open_story_engine.reader_actions import registry
         name = registry(self.fixture.package, self.fixture.root['branchState'])[location]['name']
         self.body = '你走进器物房，站在案前。'
-        self.data['confirmedStates'] = [dict(entityId=GU, attribute='locationId', value=location,
+        self.data['confirmedStates'] = [dict(entityId=GU, entityName='你', basis='observed', attribute='locationId', value=location,
             locationName=name, observedLocationName='器物房', reason='已经进屋', paragraphIds=['P1'])]
         result, _ = self.generate(self.gateway())
         self.commit(result)
@@ -111,7 +117,7 @@ class ContextTurnTests(unittest.TestCase):
     def test_current_scene_registers_literal_new_place_without_guessing_old_id(self):
         old = copy.deepcopy(self.fixture.root['branchState'])
         self.body = '你和陆照临一起走进器物房，停在案前。'
-        self.data['currentScene'] = dict(name='器物房', paragraphIds=['P1'], presentEntityIds=[GU, LU])
+        self.data['currentScene'] = scene('器物房', [GU, LU])
         self.data['confirmedStates'] = [dict(entityId=GU, attribute='当前位置',
             value=old['playerLocationId'], reason='借用旧地点', paragraphIds=['P1'])]
         result, _ = self.generate(self.gateway())
@@ -128,7 +134,7 @@ class ContextTurnTests(unittest.TestCase):
     def test_current_scene_reuses_exact_place_and_defers_unquoted_or_ambiguous_name(self):
         state = self.context['parent']['branchState']
         state['derivedLocations'] = [dict(id='location_qiwu', name='器物房', summary='此前登记')]
-        self.data['currentScene'] = dict(name='器物房', paragraphIds=['P1'], presentEntityIds=[GU])
+        self.data['currentScene'] = scene('器物房', [GU])
         record = delivery.observe(self.context, '你在器物房里翻册。', self.data)
         self.assertEqual(record['update']['introductions']['locations'], [])
         self.assertEqual(record['update']['stateChanges'][0]['value'], 'location_qiwu')
@@ -145,8 +151,8 @@ class ContextTurnTests(unittest.TestCase):
         name = '库房西架的器物房'
         self.data['updates'] = dict(introductions=dict(locations=[dict(
             id='location_qiwu', name=name, summary='本回合进入的新房间', paragraphIds=['P1'])]))
-        self.data['currentScene'] = dict(name=name, paragraphIds=['P1'], presentEntityIds=[GU, LU])
-        self.data['confirmedStates'] = [dict(entityId=GU, attribute='locationId', value='location_qiwu',
+        self.data['currentScene'] = scene(name, [GU, LU])
+        self.data['confirmedStates'] = [dict(entityId=GU, entityName='你', basis='observed', attribute='locationId', value='location_qiwu',
             locationName=name, observedLocationName='库房西架这间屋子', reason='在场', paragraphIds=['P1'])]
         result, _ = self.generate(self.gateway())
         state = self.commit(result)
@@ -157,8 +163,8 @@ class ContextTurnTests(unittest.TestCase):
 
     def test_scene_with_undefined_model_id_registers_literal_place_for_present_people(self):
         self.body = '你和陆照临站在库房西架这间屋子里。'
-        self.data['currentScene'] = dict(name='库房西架的器物房', paragraphIds=['P1'], presentEntityIds=[GU, LU])
-        self.data['confirmedStates'] = [dict(entityId=GU, attribute='locationId', value='location_undefined',
+        self.data['currentScene'] = scene('库房西架的器物房', [GU, LU])
+        self.data['confirmedStates'] = [dict(entityId=GU, entityName='你', basis='observed', attribute='locationId', value='location_undefined',
             locationName='库房西架的器物房', observedLocationName='库房西架这间屋子', reason='在场', paragraphIds=['P1'])]
         result, _ = self.generate(self.gateway())
         state = self.commit(result)
@@ -175,7 +181,7 @@ class ContextTurnTests(unittest.TestCase):
         self.plan = self.fixture.plan
         self.body = '你出手后陆照临倒在地上，但他仍有呼吸。'
         self.data.update(summary='陆照临倒地，仍有呼吸。', actionStatus='partial',
-            updates=dict(outcomes=[dict(characterId=LU, status='injured', permanence='temporary',
+            updates=dict(outcomes=[dict(characterId=LU, entityName='陆照临', basis='observed', status='injured', permanence='temporary',
                                        cause='本回合受伤', paragraphIds=['P1'])]))
         result, _ = self.generate(self.gateway())
         state = self.commit(result)
@@ -195,7 +201,7 @@ class ContextTurnTests(unittest.TestCase):
         self.assertEqual(gateway.complete_json.call_count, 2)
 
     def test_malformed_observations_do_not_lose_prose_or_invent_location(self):
-        self.data['updates'] = dict(stateChanges=[dict(entityId=GU, attribute='locationId', value='missing',
+        self.data['updates'] = dict(stateChanges=[dict(entityId=GU, entityName='你', basis='observed', attribute='locationId', value='missing',
                                                      reason='进入房间', paragraphIds=['P2'])])
         result, _ = self.generate(self.gateway())
         state = self.commit(result)
@@ -263,7 +269,7 @@ class ContextTurnTests(unittest.TestCase):
         self.context['playerDirection'] = self.action
         self.plan = self.fixture.plan
         self.body = '你扼住陆照临的喉咙，直到他彻底停止呼吸，确认已经死亡。'
-        self.data['updates'] = dict(outcomes=[dict(characterId=LU, status='dead', cause='窒息死亡', paragraphIds=['P1'])])
+        self.data['updates'] = dict(outcomes=[dict(characterId=LU, entityName='陆照临', basis='observed', status='dead', cause='窒息死亡', paragraphIds=['P1'])])
         result, _ = self.generate(self.gateway())
         state = self.commit(result)
         self.assertEqual(state['characterOutcomeStates'][LU]['status'], 'dead')
@@ -335,10 +341,10 @@ class ContextTurnTests(unittest.TestCase):
     def test_later_observation_can_confirm_state_after_an_earlier_guess(self):
         item = self.fixture.package['items'][0]['id']
         self.context['parent']['branchState'].setdefault('itemOwnerCharacterIds', {})[item] = GU
-        self.body = '书办猜东西已交给陆照临。\n\n你随后当面交给陆照临，他接过收好。'
+        self.body = '书办猜东西已交给陆照临。\n\n你随后当面将药瓶交给陆照临，他接过收好。'
         guessed = dict(entityId=item, attribute='ownerCharacterId', value=LU,
                        reason='书办猜测', basis='inferred', paragraphIds=['P1'])
-        observed = dict(entityId=item, attribute='ownerCharacterId', value=LU,
+        observed = dict(entityId=item, entityName='药瓶', attribute='ownerCharacterId', value=LU,
                         reason='实际交接', basis='observed', paragraphIds=['P2'])
         self.data['updates'] = dict(stateChanges=[guessed, observed])
         result, _ = self.generate(self.gateway())
@@ -348,8 +354,8 @@ class ContextTurnTests(unittest.TestCase):
     def test_actual_item_transfer_need_not_equal_planned_holder(self):
         item = self.fixture.package['items'][0]['id']
         self.context['parent']['branchState'].setdefault('itemOwnerCharacterIds', {})[item] = GU
-        self.body = '你把物品交给陆照临，他接过并收好。'
-        self.data['updates'] = dict(stateChanges=[dict(entityId=item, attribute='ownerCharacterId', value=LU,
+        self.body = '你把药瓶交给陆照临，他接过并收好。'
+        self.data['updates'] = dict(stateChanges=[dict(entityId=item, entityName='药瓶', basis='observed', attribute='ownerCharacterId', value=LU,
                                                      reason='实际交接', paragraphIds=['P1'])])
         result, _ = self.generate(self.gateway())
         self.assertEqual(self.plan['stateChanges'], [])
@@ -359,8 +365,8 @@ class ContextTurnTests(unittest.TestCase):
         item = self.fixture.package['items'][0]['id']
         parent = self.context['parent']['branchState']
         parent.setdefault('itemOwnerCharacterIds', {})[item] = GU
-        self.body = '陆照临打开匣子，你当面核对过，东西确实仍由他保管。'
-        self.data['confirmedStates'] = [dict(entityId=item, attribute='ownerCharacterId', value=LU,
+        self.body = '陆照临打开匣子，你当面核对过，药瓶确实仍由他保管。'
+        self.data['confirmedStates'] = [dict(entityId=item, entityName='药瓶', basis='observed', attribute='ownerCharacterId', value=LU,
                                             reason='当面核对现状，补齐此前漏记的保管人', paragraphIds=['P1'])]
         result, _ = self.generate(self.gateway())
         self.assertEqual(self.commit(result)['itemOwnerCharacterIds'][item], LU)
@@ -391,8 +397,8 @@ class ContextTurnTests(unittest.TestCase):
     def test_top_level_state_changes_are_validated_and_committed(self):
         item = self.fixture.package['items'][0]['id']
         self.context['parent']['branchState'].setdefault('itemOwnerCharacterIds', {})[item] = GU
-        self.body = '你把物品交给陆照临，他接过并收好。'
-        self.data['stateChanges'] = [dict(entityId=item, attribute='ownerCharacterId', value=LU,
+        self.body = '你把药瓶交给陆照临，他接过并收好。'
+        self.data['stateChanges'] = [dict(entityId=item, entityName='药瓶', basis='observed', attribute='ownerCharacterId', value=LU,
                                         reason='实际交接', paragraphIds=['P1'])]
         result, _ = self.generate(self.gateway())
         self.assertEqual(self.commit(result)['itemOwnerCharacterIds'][item], LU)
@@ -408,8 +414,8 @@ class ContextTurnTests(unittest.TestCase):
     def test_custody_alias_cannot_override_actual_handover_and_bad_change_can_be_recovered(self):
         item = self.fixture.package['items'][0]['id']
         self.context['parent']['branchState'].setdefault('itemOwnerCharacterIds', {})[item] = GU
-        self.body = '你把物品交给陆照临，他接过并收好。'
-        change = dict(entityId=item, attribute='holderCharacterId', value=LU,
+        self.body = '你把药瓶交给陆照临，他接过并收好。'
+        change = dict(entityId=item, entityName='药瓶', basis='observed', attribute='holderCharacterId', value=LU,
                       reason='实际交接', paragraphIds=['P1'])
         self.data['updates'] = dict(stateChanges=[change])
         self.data['confirmedStates'] = [dict(change, attribute='ownerCharacterId', value=GU)]
@@ -451,12 +457,12 @@ class ContextTurnTests(unittest.TestCase):
     def test_location_name_id_mismatch_is_not_committed_or_a_prose_veto(self):
         old = self.context['parent']['branchState']['playerLocationId']
         self.body = '你抵达器物房，在门边停下。'
-        self.data['confirmedStates'] = [dict(entityId=GU, attribute='locationId', value=old,
-            locationName='器物房', basis='observed', reason='抵达器物房', paragraphIds=['P1'])]
+        self.data['confirmedStates'] = [dict(entityId=GU, entityName='你', basis='observed', attribute='locationId', value=old,
+            locationName='器物房', observedLocationName='器物房', reason='抵达器物房', paragraphIds=['P1'])]
         gateway = self.gateway()
         result, _ = self.generate(gateway)
         self.assertEqual(self.commit(result)['playerLocationId'], old)
-        self.assertTrue(any('地点名称与ID不对应' in d['reason'] for d in result['observationDiagnostics']))
+        self.assertTrue(any('地点' in d['reason'] for d in result['observationDiagnostics']))
         self.assertEqual(result['narrativeText'], self.body)
         self.assertEqual(gateway.complete_text.call_count, 1)
 
@@ -465,8 +471,8 @@ class ContextTurnTests(unittest.TestCase):
         self.body = '你与陆照临进入器物房，在长案旁停下。'
         self.data['updates'] = dict(introductions=dict(locations=[dict(id='location_new_storage',
             name='器物房', summary='库房西架的器物房，供当面调阅总册。', paragraphIds=['P1'])]))
-        self.data['confirmedStates'] = [dict(entityId=cid, attribute='locationId',
-            value='location_new_storage', locationName='器物房', basis='observed',
+        self.data['confirmedStates'] = [dict(entityId=cid, entityName='你' if cid == GU else '陆照临', attribute='locationId',
+            value='location_new_storage', locationName='器物房', observedLocationName='器物房', basis='observed',
             reason='实际抵达器物房', paragraphIds=['P1']) for cid in (GU, LU)]
         result, _ = self.generate(self.gateway())
         state = self.commit(result)
@@ -553,12 +559,139 @@ class ContextTurnTests(unittest.TestCase):
         data = {**self.data, 'updates': {
             'introductions': [dict(id='character_new_clerk', name='书办', summary='办理登记的书办', paragraphIds=['P1']),
                               dict(id='item_new_token', name='外门木牌', summary='书办发给你的木牌', paragraphIds=['P1'])],
-            'stateChanges': [dict(entityId='item_new_token', attribute='ownerCharacterId', value=GU,
+            'stateChanges': [dict(entityId='item_new_token', entityName='外门木牌', basis='observed', attribute='ownerCharacterId', value=GU,
                                   reason='接过木牌', paragraphIds=['P1'])]}}
         record = delivery.observe(self.context, body, data)
         self.assertEqual(record['diagnostics'], [])
         self.assertEqual(len(record['update']['introductions']['characters']), 1)
         self.assertEqual(record['update']['stateChanges'][0]['value'], GU)
+
+    def test_reported_scene_cannot_move_people_even_with_valid_ids(self):
+        self.body = '顾长离听门外的人说：“陆照临已经去了器物房。”顾长离仍留在原处，并未亲眼看见陆照临。'
+        before = copy.deepcopy(self.context['parent']['branchState'])
+        for basis in ('reported', 'observed', None):
+            with self.subTest(basis=basis):
+                self.data['currentScene'] = {**scene('器物房', [GU, LU]), 'basis': basis}
+                gateway = self.gateway()
+                result, _ = self.generate(gateway)
+                state = self.commit(result)
+                self.assertEqual(state['characterLocationIds'], before['characterLocationIds'])
+                self.assertEqual(result['consequenceUpdate']['introductions']['locations'], [])
+                self.assertTrue(result['observationDiagnostics'])
+                self.assertEqual(result['narrativeText'], self.body)
+                self.assertEqual(gateway.complete_text.call_count, 1)
+
+    def test_each_person_needs_own_present_evidence_and_valid_person_still_moves(self):
+        self.body = '你走进器物房，在案边停下。\n\n陆照临并不在屋里。'
+        self.data['currentScene'] = scene('器物房', [GU, LU])
+        for refs in (['P1'], ['P2']):
+            self.data['currentScene']['presentEntities'][1]['paragraphIds'] = refs
+            result, _ = self.generate(self.gateway())
+            state = self.commit(result)
+            self.assertNotEqual(state['playerLocationId'], self.context['parent']['branchState']['playerLocationId'])
+            self.assertEqual(state['characterLocationIds'][LU], self.context['parent']['branchState']['characterLocationIds'][LU])
+            self.assertTrue(result['observationDiagnostics'])
+
+    def test_omitted_or_copied_identity_cannot_turn_near_name_rumor_into_death(self):
+        father = next(c for c in self.fixture.package['characters'] if c['name'] == '陆沉舟')
+        self.body = '传话人说：“一个自称陆沉的人已经死了。”这只是传闻，身份尚未核实。'
+        for extra in ({}, {'entityName': '陆沉舟', 'basis': 'observed'},
+                      {'entityName': '陆沉', 'basis': 'observed'}, {'basis': 'reported'}):
+            self.data['updates'] = dict(outcomes=[dict(characterId=father['id'], status='dead',
+                cause='转述陆沉死亡', paragraphIds=['P1'], **extra)])
+            gateway = self.gateway()
+            result, _ = self.generate(gateway)
+            state = self.commit(result)
+            self.assertNotIn(father['id'], state['characterOutcomeStates'])
+            self.assertTrue(result['continuityFollowups'])
+            self.assertEqual(result['narrativeText'], self.body)
+            self.assertEqual(gateway.complete_text.call_count, 1)
+
+    def test_copied_full_name_without_literal_identity_is_deferred(self):
+        self.body = '陆照倒在地上，已经死亡。'
+        self.data['updates'] = dict(outcomes=[dict(characterId=LU, entityName='陆照临', basis='observed',
+            status='dead', cause='已死亡', paragraphIds=['P1'])])
+        result, _ = self.generate(self.gateway())
+        self.assertNotIn(LU, self.commit(result)['characterOutcomeStates'])
+        self.assertTrue(result['observationDiagnostics'])
+
+    def test_missing_basis_does_not_implicitly_mean_observed(self):
+        self.body = '陆照临倒在地上，已经死亡。'
+        self.data['updates'] = dict(outcomes=[dict(characterId=LU, entityName='陆照临',
+            status='dead', cause='已死亡', paragraphIds=['P1'])])
+        result, _ = self.generate(self.gateway())
+        self.assertNotIn(LU, self.commit(result)['characterOutcomeStates'])
+
+    def test_literal_quote_can_isolate_actual_action_from_unrelated_hearsay(self):
+        self.body = '有人说：“听说雨要停了。”你把药瓶交给陆照临，他接过收好。'
+        item = self.fixture.package['items'][0]['id']
+        change = dict(entityId=item, entityName='药瓶', basis='observed', attribute='ownerCharacterId',
+            value=LU, reason='当面交接', paragraphIds=['P1'], evidenceQuote='你把药瓶交给陆照临，他接过收好。')
+        self.data['updates'] = dict(stateChanges=[change])
+        result, _ = self.generate(self.gateway())
+        self.assertEqual(self.commit(result)['itemOwnerCharacterIds'][item], LU)
+        change['evidenceQuote'] = '你将药瓶递给陆照临。'
+        result, _ = self.generate(self.gateway())
+        self.assertEqual(result['consequenceUpdate']['stateChanges'], [])
+        self.assertEqual(result['narrativeText'], self.body)
+
+    def test_legacy_receipt_replays_old_projection_without_changing_saved_history(self):
+        self.body = '你和陆照临走进器物房。'
+        self.data['currentScene'] = dict(name='器物房', paragraphIds=['P1'], presentEntityIds=[GU, LU])
+        old = delivery.observe(self.context, self.body, self.data, legacy=True)
+        result = dict(narrativeText=self.body, actionIntent={'input': self.action},
+            consequenceUpdate=old['update'], readerOutcome=old['outcome'], continuityFollowups=old['followups'],
+            deliveryReceipt={**delivery.seal(self.context, self.body, self.data), 'version': delivery.LEGACY_VERSION})
+        before = copy.deepcopy(result)
+        delivery.validate_commit(self.context, result)
+        self.assertEqual(result, before)
+        result['deliveryReceipt']['version'] = delivery.VERSION
+        with self.assertRaises(ValueError):
+            delivery.validate_commit(self.context, result)
+
+    def test_short_quote_cannot_strip_reporter_or_quotation_marks(self):
+        for body in ('书办说：“陆照临已经死亡。”', '据说陆照临已经死亡。'):
+            self.body = body
+            self.data['updates'] = dict(outcomes=[dict(characterId=LU, entityName='陆照临', basis='observed',
+                status='dead', cause='死亡', paragraphIds=['P1'], evidenceQuote='陆照临已经死亡。')])
+            result, _ = self.generate(self.gateway())
+            self.assertNotIn(LU, self.commit(result)['characterOutcomeStates'])
+            self.assertTrue(result['observationDiagnostics'])
+            self.assertEqual(result['narrativeText'], body)
+
+    def test_actual_arrival_is_not_lost_to_unrelated_dialogue_in_same_paragraph(self):
+        self.body = '门房的门被推开，一股暖气扑出来。你把伤者放到门内长凳上，中年人回头说：“去叫医修。”'
+        self.data['currentScene'] = scene('门房', [GU])
+        self.data['currentScene']['presentEntities'][0]['evidenceQuote'] = '你把伤者放到门内长凳上'
+        result, _ = self.generate(self.gateway())
+        state = self.commit(result)
+        self.assertNotEqual(state['playerLocationId'], self.context['parent']['branchState']['playerLocationId'])
+        self.assertEqual(result['observationDiagnostics'], [])
+        self.assertEqual(result['narrativeText'], self.body)
+        # Preserve the intermediate v2 receipt's original projection as well.
+        old = delivery.observe(self.context, self.body, self.data, literal_scope=False)
+        self.assertEqual(old['update']['stateChanges'], [])
+        saved = {**result, 'consequenceUpdate': old['update'], 'readerOutcome': old['outcome'],
+                 'continuityFollowups': old['followups'],
+                 'deliveryReceipt': {**result['deliveryReceipt'], 'version': 'narrative-delivery/2'}}
+        delivery.validate_commit(self.context, saved)
+
+    def test_contract_binds_player_you_without_promoting_other_near_names(self):
+        self.body = '你进入门洞，在石凳上坐下。'
+        self.data['currentScene'] = scene('门洞', [GU])
+        self.data['currentScene']['presentEntities'][0].update(
+            entityName='顾长离', evidenceQuote='你进入门洞，在石凳上坐下。')
+        before = copy.deepcopy(self.data)
+        result, _ = self.generate(self.gateway())
+        state = self.commit(result)
+        self.assertNotEqual(state['playerLocationId'], self.context['parent']['branchState']['playerLocationId'])
+        self.assertEqual(result['observationDiagnostics'], [])
+        self.assertEqual(self.data, before)
+        self.assertEqual(result['deliveryReceipt']['data']['currentScene']['presentEntities'][0]['entityName'], '你')
+        self.data['currentScene']['presentEntities'][0].update(entityId=LU, entityName='陆照临')
+        result, _ = self.generate(self.gateway())
+        self.assertEqual(self.commit(result)['characterLocationIds'][LU],
+                         self.context['parent']['branchState']['characterLocationIds'][LU])
 
 
 if __name__ == '__main__':

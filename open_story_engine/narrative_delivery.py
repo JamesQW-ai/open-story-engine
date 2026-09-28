@@ -10,7 +10,8 @@ import re
 
 from . import reader_actions as actions, reader_consequences as consequences, reader_threads
 
-VERSION = 'narrative-delivery/1'
+VERSION = 'narrative-delivery/3'
+LEGACY_VERSION = 'narrative-delivery/1'
 
 
 def digest(value):
@@ -92,7 +93,7 @@ def _text(value, maximum=180):
     return value.strip()
 
 
-def observe(context, body, data, failure=None):
+def observe(context, body, data, failure=None, *, legacy=False, literal_scope=True):
     """Project usable observations; report uncertain items without vetoing prose."""
     state, package = context['parent']['branchState'], context['package']
     action = context['playerDirection']
@@ -196,6 +197,13 @@ def observe(context, body, data, failure=None):
     if scene is not None:
         try:
             evidence = _quote(scene, body)
+            if not legacy:
+                from .entity_facts import observation_evidence, scene_evidence, check_direct_evidence
+                if scene.get('basis') != 'observed':
+                    raise ValueError('当前场所缺少直接观察依据，不能用传闻登记位置')
+                evidence = scene_evidence(scene, evidence) if literal_scope else observation_evidence(
+                    scene, evidence, local_attribution=False)
+                check_direct_evidence(evidence)
             name = _text(scene.get('name'), 100)
             observed_name = name
             if name not in evidence:
@@ -216,7 +224,24 @@ def observe(context, body, data, failure=None):
                     # The model proposed an unregistered ID. Register the
                     # actual literal place, never the guessed ID/display label.
                     name = observed_name
-            people = scene.get('presentEntityIds')
+            people = scene.get('presentEntityIds') if legacy else scene.get('presentEntities')
+            if not legacy:
+                if not isinstance(people, list) or not people or len(people) > 12:
+                    raise ValueError('当前场所缺少逐人在场依据')
+                verified = []
+                from .entity_facts import check_observed_reference
+                for person in people:
+                    try:
+                        quote = observation_evidence(person, _quote(person, body), local_attribution=literal_scope)
+                        check_observed_reference(person, known, quote, strict=True, player_id=player)
+                        if re.search(r'不在|并未到|尚未到|没有到|离开|离去|走出|告辞', quote):
+                            raise ValueError('人物未到或已离场，不能登记为仍在场')
+                        if known[person['entityId']]['kind'] != 'character':
+                            raise ValueError('在场实体不是人物')
+                        verified.append(person)
+                    except (ValueError, TypeError, KeyError, AttributeError) as error:
+                        deferred(person, error)
+                people = [p['entityId'] for p in verified]
             if not isinstance(people, list) or not people or len(people) > 12 or any(
                     not isinstance(p, str) or known.get(p, {}).get('kind') != 'character' for p in people):
                 raise ValueError('当前场所在场人物引用无效')
@@ -236,17 +261,28 @@ def observe(context, body, data, failure=None):
             scene_confirmations = [dict(entityId=p, attribute='locationId', value=location_id,
                 locationName=name, observedLocationName=observed_name, basis='observed',
                 reason='本回合当前场所原文确认', paragraphIds=scene['paragraphIds']) for p in dict.fromkeys(people)]
+            if not legacy:
+                # Keep each person's literal evidence. A list of IDs cannot
+                # turn an off-page or merely mentioned person into a witness.
+                for confirmation, person in zip(scene_confirmations, {p['entityId']: p for p in verified}.values()):
+                    confirmation.update(entityName=person['entityName'],
+                        paragraphIds=person['paragraphIds'],
+                        evidenceQuote=observation_evidence(person, _quote(person, body), local_attribution=literal_scope))
         except (ValueError, TypeError, KeyError, AttributeError) as error:
             deferred(scene, error)
 
     def observed_quote(item):
         evidence = _quote(item, body)
-        from .entity_facts import check_observed_reference
-        check_observed_reference(item, known, evidence, {e['id'] for e in update['introductions']['locations']})
+        from .entity_facts import check_observed_reference, observation_evidence
+        if not legacy:
+            evidence = observation_evidence(item, evidence, local_attribution=literal_scope)
+        else:
+            check_observed_reference(item, known, evidence,
+                {e['id'] for e in update['introductions']['locations']})
         # Route explicitly attributed accounts to continuity memory, not world
         # state. This never edits or rejects prose; omitted basis stays compatible
         # with previously saved observation receipts.
-        basis = item.get('basis', 'observed')
+        basis = item.get('basis', 'observed' if legacy else None)
         if basis in ('reported', 'inferred'):
             reason = _text(item.get('reason') or item.get('cause'), 400)
             entity = item.get('entityId') or item.get('characterId')
@@ -257,6 +293,14 @@ def observe(context, body, data, failure=None):
             return None
         if basis != 'observed':
             raise ValueError('状态依据类型无效')
+        # Scene location was independently grounded above; individual presence
+        # can be stated in a later paragraph without repeating the room name.
+        reference = item
+        if not legacy and any(item is c for c in scene_confirmations):
+            reference = {k: v for k, v in item.items() if k != 'attribute'}
+        if not legacy:
+            check_observed_reference(reference, known, evidence,
+                {e['id'] for e in update['introductions']['locations']}, strict=True, player_id=player)
         return evidence
 
     seen = set()
@@ -426,13 +470,15 @@ def seal(context, body, data, failure=None):
 def validate_commit(context, result):
     receipt = result.get('deliveryReceipt')
     action = context.get('playerDirection') or result['actionIntent']['input']
-    if (not isinstance(receipt, dict) or receipt.get('version') != VERSION
+    if (not isinstance(receipt, dict) or receipt.get('version') not in (VERSION, LEGACY_VERSION, 'narrative-delivery/2')
             or receipt.get('kind') != 'observed_state_not_prose_approval'
             or receipt.get('parentSha256') != digest(context['parent'])
             or receipt.get('narrativeSha256') != hashlib.sha256(result['narrativeText'].encode()).hexdigest()
             or receipt.get('actionSha256') != digest(action)):
         raise ValueError('正文交付凭据与请求、父分支或正文不符')
-    recorded = observe({**context, 'playerDirection': action}, result['narrativeText'], receipt.get('data'), receipt.get('failure'))
+    recorded = observe({**context, 'playerDirection': action}, result['narrativeText'], receipt.get('data'),
+                       receipt.get('failure'), legacy=receipt['version'] == LEGACY_VERSION,
+                       literal_scope=receipt['version'] == VERSION)
     if (recorded['update'] != result.get('consequenceUpdate')
             or recorded['followups'] != result.get('continuityFollowups')
             or recorded['outcome'] != result.get('readerOutcome')):

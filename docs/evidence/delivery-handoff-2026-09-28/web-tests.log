@@ -1,0 +1,88 @@
+
+> open-story-engine-web@0.1.0 test
+> node --experimental-strip-types --test tests/*.test.mjs
+
+✔ preparing directions poll quickly and ready menus return to the normal interval (5.310625ms)
+✔ restored page ignores late old response and releases only the old lease (2.484458ms)
+✔ late old error cannot replace restored directions or create another poll chain (1.119042ms)
+✔ cleanup removes listeners and pending completion cannot publish or resume (1.326125ms)
+✔ repeated pageshow starts once and non-persisted pageshow never resumes (1.40325ms)
+✔ a timer already queued before pagehide cannot renew the released lease (0.738166ms)
+✔ foreground submission pauses renewal and suppresses an in-flight menu response (1.800375ms)
+✔ wrong-parent response stays hidden and a subsequent valid response recovers (3.223042ms)
+✔ failed release does not prevent restoration and multiple old completions stay isolated (2.627709ms)
+✔ lost review response and reload preserve identity; explicit new review gets a new id (1.31375ms)
+✔ branches isolate requests and editing evidence allocates a different identity (0.558916ms)
+✔ corrupt storage is ignored and persistence failure prevents a sendable attempt (0.814375ms)
+✔ double clicks serialize; disposing suppresses late result and parent refresh (0.256083ms)
+✔ failure releases action lock and does not automatically retry (0.1715ms)
+✔ physical asset fingerprint wins over aliases for once-only history (1.383959ms)
+✔ history remains empty when storage is unavailable (1.090166ms)
+✔ image polling stops at terminal state and loading alone never requests drawing (9.790416ms)
+✔ draw during pending lookup is serialized and repeated clicks spend once (6.4535ms)
+✔ image page restoration isolates late responses and never repeats a draw request (5.659375ms)
+✔ cancel suppresses late image and stops requests without affecting another lease (1.523041ms)
+✔ image errors retry within a fixed limit and old errors cannot schedule work (2.134917ms)
+✔ hung image request releases at the page deadline and late success stays hidden (1.536625ms)
+✔ opening art is ready before prose, including a cached image (0.735875ms)
+✔ missing, failed and timed-out art remain absent even when the image arrives late (5.679166ms)
+✔ leaving the opening cancels image preparation before any generation starts (0.233916ms)
+✔ saved longform prose grows over separate frames without losing or replacing text (13.546208ms)
+✔ leaving during replay cancels timers and cannot publish another frame (0.428125ms)
+✔ 1000 CJK triggers a fixed middle paragraph boundary for every official longform (1.821875ms)
+✔ visible paragraph reports once after paint, not on intersection alone (4.384333ms)
+✔ hidden page waits until visible and rechecks visibility before reporting (1.385042ms)
+✔ branch switch or a paragraph leaving the viewport cancels pending receipt (1.807666ms)
+✔ receipt errors retry once without affecting reading, cleanup cancels retry (3.017833ms)
+✔ long reading sections preserve every character in order, including unbroken prose (5.064709ms)
+✔ streaming growth keeps completed reading sections stable (2.217041ms)
+✔ identity opening actions submit their own prose (0.170333ms)
+✔ opening keeps one clock across session assignment and waits for its own menu (2.654458ms)
+✔ stream reset preserves first visible text; full prose and delayed menu have distinct clocks (0.200667ms)
+✔ cache hit without deltas records first text and complete prose together (0.099834ms)
+✔ failed draft and restored page never count as complete; retry is a separate attempt (0.124209ms)
+✔ interruption stays incomplete; ending without choices keeps menu unavailable (0.087625ms)
+✔ diagnostics retain only 50 attempts and update in place without storing prose (1.7905ms)
+✔ relationship label accounts for the name below each portrait (2.403542ms)
+✔ relationship label keeps the name offset for diagonal connections (0.297666ms)
+✔ graph keeps player central and never renders edges to hidden people (1.103375ms)
+✔ graph spreads dense casts across balanced rings (0.264792ms)
+✔ route health messages preserve each diagnostic signal (0.874167ms)
+✔ missing source progress stays unknown in the message (0.092ms)
+✔ official defaults override summary heuristics and reject invalid bindings (0.577625ms)
+✔ other novels select the earliest declared entry led by the chosen character (11.087417ms)
+✔ long novel prologue preserves its scene and fallback summary stays bounded (5.233792ms)
+✔ menus preserve actual choices without padding or truncating them (0.723625ms)
+✔ inline slot appears after its complete paragraph and stays there through replay completion (73.382ms)
+✔ only the complete confirmed branch is displayed, ignoring deltas and resets (18.665875ms)
+✔ a closed stream without done is a failure, not a saved chapter (0.680792ms)
+✔ server error is surfaced without treating preview as saved (0.624333ms)
+✔ opening also publishes exactly one complete confirmed body (0.66775ms)
+✔ missing confirmed body and rejected turns never publish preview text (2.547ms)
+✔ lost turn receipt automatically recovers with the same request and displays once (0.7375ms)
+✔ opening network failure recovers once using its original idempotency key (0.558583ms)
+✔ read failure recovers but persistent disconnect stops after two requests (1.107ms)
+✔ a request without a key never retries a network failure (0.148ms)
+✔ generation rejection and malformed confirmation are not retried (0.6685ms)
+✔ cancelling the request prevents recovery and publishing (0.533875ms)
+ℹ tests 63
+ℹ suites 0
+ℹ pass 63
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 473.528041
+
+> open-story-engine-web@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 56 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.61 kB │ gzip:  0.44 kB
+dist/assets/index-On2FAgwO.css   48.89 kB │ gzip: 10.66 kB
+dist/assets/index-Cs_1nWPa.js   245.62 kB │ gzip: 81.72 kB
+✓ built in 664ms
