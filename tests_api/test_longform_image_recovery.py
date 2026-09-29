@@ -80,6 +80,21 @@ class LongformImageRecoveryTests(unittest.TestCase):
         gateway.generate.reset_mock()
         self.blocked(service, gateway)
 
+    def test_ready_private_image_replays_after_leave_and_restart_without_spend(self):
+        service, gateway = self.service()
+        gateway.generate.return_value = (PNG, 'image/png')
+        service.ensure(self.sid, self.parent, subscriber='original', draw=True)
+        job = next(iter(service._jobs.values()))
+        job['future'].result(timeout=5)
+        first = service.view(self.sid, self.parent)['items']
+        service.release(self.sid, self.parent, 'original')
+        self.assertEqual(service.ensure(self.sid, self.parent, subscriber='back', draw=True)['items'], first)
+        restored, restored_gateway = self.service()
+        self.assertEqual(restored.ensure(self.sid, self.parent, subscriber='reload', draw=True)['items'], first)
+        self.assertEqual(restored.asset(self.sid, self.parent, 0)[0].read_bytes(), PNG)
+        gateway.generate.assert_called_once()
+        restored_gateway.generate.assert_not_called()
+
     def test_orphan_asset_and_invalid_mime_do_not_count_as_ready(self):
         for name in ('orphan', 'mime'):
             service, gateway, key, path = self.seed(name, mime=None)

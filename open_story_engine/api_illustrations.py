@@ -302,8 +302,32 @@ class IllustrationService:
         digest = hashlib.sha256((sid + '\0' + asset_key).encode()).hexdigest()
         return self.directory / ('published-' + digest + '.claim')
 
-    def _claim_published(self, sid, published):
-        """Atomically reserve a reviewed asset for one play session."""
+    def _legacy_published_owner(self, sid, published):
+        """Recover old branch-less claims only from unambiguous public receipts."""
+        candidates = set()
+        for pattern in ('visit-*.json', 'views-*.json'):
+            for path in self.directory.glob(pattern):
+                try:
+                    receipt = json.loads(path.read_text())
+                except (OSError, ValueError):
+                    continue
+                if (isinstance(receipt, dict) and receipt.get('sid') == sid
+                        and (receipt.get('published_hit') is True or receipt.get('source') == 'published')
+                        and isinstance(receipt.get('bid'), str)):
+                    candidates.add(receipt['bid'])
+        owners = set()
+        for bid in candidates:
+            try:
+                node, package_id, version = self._context(sid, bid)
+                asset = self.library.resolve(package_id, version, node)
+            except (ReadError, ValueError, OSError):
+                continue
+            if asset and self._published_asset_key(asset) == self._published_asset_key(published):
+                owners.add(bid)
+        return next(iter(owners)) if len(owners) == 1 else None
+
+    def _claim_published(self, sid, bid, published):
+        """Reserve an asset for one branch, retaining same-page replay."""
         path = self._published_claim_path(sid, published)
         if path is None:
             return False
@@ -311,18 +335,32 @@ class IllustrationService:
             self.directory.mkdir(parents=True, exist_ok=True)
             descriptor = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
             with os.fdopen(descriptor, 'w') as handle:
-                json.dump({'sid': sid, 'asset_key': self._published_asset_key(published)}, handle,
+                json.dump({'sid': sid, 'bid': bid, 'asset_key': self._published_asset_key(published)}, handle,
                           ensure_ascii=False)
             return True
         except FileExistsError:
-            return False
+            try:
+                claim = json.loads(path.read_text())
+            except (OSError, ValueError):
+                return False
+            if (not isinstance(claim, dict) or claim.get('sid') != sid
+                    or claim.get('asset_key') != self._published_asset_key(published)):
+                return False
+            owner = claim.get('bid')
+            if owner is None:
+                owner = self._legacy_published_owner(sid, published)
+            return owner == bid
         except OSError:
             # A non-persistent claim cannot safely be retried: hiding the
             # optional image preserves the once-only contract for this play.
             return False
 
-    def _published_result(self, sid, published):
-        if not self._claim_published(sid, published):
+    def _published_result(self, sid, bid, published):
+        # Keep creation and reads serialized so a concurrent revisit cannot
+        # observe a partially written claim in this service.
+        with self._lock:
+            claimed = self._claim_published(sid, bid, published)
+        if not claimed:
             return {'available': False, 'items': [], 'can_generate': False}
         return {'available': True, 'items': [dict(published, index=0, status='ready')], 'can_generate': False}
 
@@ -410,7 +448,7 @@ class IllustrationService:
         node, package_id, version = self._context(sid, bid)
         published = self.library.resolve(package_id, version, node)
         if published:
-            result = self._published_result(sid, published)
+            result = self._published_result(sid, bid, published)
             if result['items']:
                 return result
         policy = self._policy(package_id, version, node)
@@ -444,7 +482,7 @@ class IllustrationService:
         node, package_id, version = self._context(sid, bid)
         published = self.library.resolve(package_id, version, node)
         if published:
-            result = self._published_result(sid, published)
+            result = self._published_result(sid, bid, published)
             if subscriber:
                 with self._lock:
                     if result['items']:

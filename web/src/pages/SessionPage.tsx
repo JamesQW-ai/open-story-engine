@@ -184,7 +184,7 @@ export function SessionPage() {
         try {
           const art = await api.viewIllustrations(sessionId, id, controller.signal)
           const asset = art.items.find((i) => i.source === 'published' && i.status === 'ready' && i.url)
-          if (asset?.url) image = await prepareOpeningImage({ id: asset.url, url: asset.url,
+          if (asset?.url) image = await prepareOpeningImage({ id: asset.id ?? asset.url, asset_key: asset.asset_key, url: asset.url,
             alt: asset.alt, source: 'published' }, controller.signal)
         } catch { /* A missing image never blocks reading. */ }
         finally { window.clearTimeout(timeout) }

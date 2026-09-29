@@ -3,7 +3,7 @@ import { api } from '../api/client'
 import type { SceneIllustrations, PublishedScene } from '../api/types'
 import { illustrationAnchor, readingSections } from './readingLayout'
 import { subscribeIllustration } from './illustrationSubscription'
-import { illustrationAssetKey, readIllustrationHistory, rememberIllustration } from './illustrationHistory'
+import { illustrationAssetKey, canShowIllustration, rememberIllustration } from './illustrationHistory'
 import { ReadingInterlude } from './ReadingInterlude'
 
 function SceneImage({ url, alt, shown, fallback = false }: { url: string; alt: string; shown: () => void; fallback?: boolean }) {
@@ -99,7 +99,7 @@ export function StoryProse({ text, fullText = text, streaming, sessionId, branch
   const visibleHere = (key?: string) => {
     if (!key || !sessionId) return true
     if (visibleAssets.current.has(key)) return true
-    if (readIllustrationHistory(sessionId)[key]) return false
+    if (!canShowIllustration(sessionId, key, branchId)) return false
     visibleAssets.current.add(key)
     return true
   }
@@ -108,9 +108,8 @@ export function StoryProse({ text, fullText = text, streaming, sessionId, branch
     const key = illustrationAssetKey(image) ?? `index:${image.index ?? index}`
     return all.findIndex(candidate => (illustrationAssetKey(candidate) ?? `index:${candidate.index}`) === key) === index
   }).filter((image) => {
-    // Every image asset is displayed at most once in a reading session.
-    // Compatibility decides whether an asset can match; session history
-    // decides whether this reader has already seen it.
+    // An asset belongs to one branch. Revisiting its original page must
+    // restore it; session history only prevents reuse on other branches.
     const key = illustrationAssetKey(image)
     if (!sessionId || !key) return true
     return visibleHere(key)

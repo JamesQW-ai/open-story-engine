@@ -46,3 +46,8 @@ export function rememberIllustration(sessionId: string, assetKey: string, branch
     /* Storage is optional; reading must continue. */
   }
 }
+
+export function canShowIllustration(sessionId: string, assetKey: string, branchId?: string, storage?: Storage | null): boolean {
+  const owner = readIllustrationHistory(sessionId, storage)[assetKey]
+  return !owner || owner === branchId
+}

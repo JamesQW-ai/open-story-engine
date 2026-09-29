@@ -1,5 +1,6 @@
 """Optional art fails closed on every eligible official long novel."""
 import copy
+from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
 from pathlib import Path
@@ -140,6 +141,70 @@ class LongformSceneLibraryTests(unittest.TestCase):
                 changed = copy.deepcopy(package)
                 changed['sourceAnalysis']['sha256'] = 'different-source'
                 self.assertIsNone(library.opening(changed, entry))
+
+    def test_published_revisit_and_restart_restore_owner_without_generation(self):
+        service, gateway = self.service()
+        service.library = self.library
+        before = self.read.branch_view(self.sid, self.parent)
+        first = service.ensure(self.sid, self.parent, subscriber='first')
+        service.release(self.sid, self.parent, 'first')
+        self.assertEqual(first['items'][0]['source'], 'published')
+        self.assertEqual(service.ensure(self.sid, self.parent, subscriber='back', draw=True)['items'], first['items'])
+        restored, other_gateway = self.service()
+        restored.library = self.library
+        self.assertEqual(restored.view(self.sid, self.parent)['items'], first['items'])
+        self.assertEqual(restored.ensure(self.sid, self.parent, subscriber='reload', draw=True)['items'], first['items'])
+        self.assertFalse(restored._claim_published(self.sid, 'other-page', self.resolve()))
+        self.assertEqual(self.read.branch_view(self.sid, self.parent), before)
+        gateway.generate.assert_not_called()
+        other_gateway.generate.assert_not_called()
+
+    def test_concurrent_public_claim_has_one_owner_and_replays_for_that_owner(self):
+        service, gateway = self.service()
+        asset = self.resolve()
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            results = list(pool.map(lambda bid: (bid, service._published_result(self.sid, bid, asset)),
+                                    [self.parent, 'other-page', self.parent, 'other-page']))
+        owners = {bid for bid, result in results if result['items']}
+        self.assertEqual(len(owners), 1)
+        owner = next(iter(owners))
+        self.assertTrue(service._published_result(self.sid, owner, asset)['items'])
+        gateway.generate.assert_not_called()
+
+    def test_legacy_public_claim_recovers_only_from_confirmed_matching_receipt(self):
+        service, gateway = self.service()
+        service.library = self.library
+        asset = self.resolve()
+        claim = service._published_claim_path(self.sid, asset)
+        claim.parent.mkdir(parents=True, exist_ok=True)
+        original = json.dumps(dict(sid=self.sid, asset_key=asset['asset_key']))
+        claim.write_text(original)
+        self.assertEqual(service.view(self.sid, self.parent)['items'], [])
+        receipt = service.directory / 'visit-legacy.json'
+        receipt.write_text(json.dumps(dict(sid=self.sid, bid=self.parent, published_hit=False)))
+        self.assertEqual(service.view(self.sid, self.parent)['items'], [])
+        receipt.write_text(json.dumps(dict(sid=self.sid, bid=self.parent, published_hit=True)))
+        self.assertEqual(service.ensure(self.sid, self.parent, subscriber='back', draw=True)['items'][0]['url'], asset['url'])
+        self.assertFalse(service._claim_published(self.sid, 'other-page', asset))
+        self.assertEqual(claim.read_text(), original)
+        gateway.generate.assert_not_called()
+
+    def test_ambiguous_or_corrupt_legacy_claim_is_not_reassigned(self):
+        service, gateway = self.service()
+        service.library = self.library
+        asset = self.resolve()
+        claim = service._published_claim_path(self.sid, asset)
+        claim.parent.mkdir(parents=True, exist_ok=True)
+        for raw in ('{broken', '[]', 'null', json.dumps(dict(sid='other-session', asset_key=asset['asset_key']))):
+            claim.write_text(raw)
+            self.assertEqual(service.view(self.sid, self.parent)['items'], [])
+            self.assertEqual(claim.read_text(), raw)
+        claim.write_text(json.dumps(dict(sid=self.sid, asset_key=asset['asset_key'])))
+        for i, bid in enumerate((self.parent, 'other-page')):
+            (service.directory / f'views-legacy-{i}.json').write_text(json.dumps(dict(sid=self.sid, bid=bid, source='published')))
+        with patch.object(service, '_context', return_value=(self.node, self.case['package_id'], self.case['version'])):
+            self.assertFalse(service._claim_published(self.sid, self.parent, asset))
+        gateway.generate.assert_not_called()
 
     def test_invalid_live_prompts_never_create_image_tasks_and_valid_rule_survives(self):
         node = dict(self.node, parentId=self.parent)
