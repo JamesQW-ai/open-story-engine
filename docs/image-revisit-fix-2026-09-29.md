@@ -14,7 +14,7 @@
 - 前端：66 项通过，构建通过；`git diff --check` 通过。
 - 使用当前长线存档 `6a444eaf-322e-5644-aa26-2743b819826b` 第 23 页实测：显示原图 → 第 24 页 → 回到第 23 页 → 刷新。各次均恢复 `branch_b6b9f7f0-b1f2-4e42-8ea8-623ac0da0be5` 原图，浏览器确认加载成功，宽度 1370 像素。
 - 图片请求返回 HTTP 200、`image/png`；SHA-256 为 `112e0b4ab65bbf8499011a0558a7e738ed49b588fe7df26fa7aca06650c1e8d3`。该图片任务 `provider_calls` 始终为 1，回看请求 `draw=false`。
-- 本轮开始时库内 43 个节点，验证后逐节点 JSON 哈希一致，数据库完整性 `ok`。保留用户后续新增的存档和剧情，不按昨日三个存档的旧数量再做清理。
+- 本轮开始时库内 43 个节点，验证后逐节点 JSON 哈希一致，数据库完整性 `ok`。保留用户后续新增的存档和剧情，不按 2026-09-28 三个存档的旧数量再做清理。
 - 本机备份：`data/backups/before-image-revisit-fix-2026-09-29.sqlite`；API 8001 已重启应用修复，5187 健康检查正常。
 - 浏览器证据：[回看截图](evidence/image-revisit-2026-09-29/revisited-page.jpg)、[页面文本](evidence/image-revisit-2026-09-29/revisited-page.txt)。现有标签页自动化鼠标点击曾无响应，改用按钮键盘 Enter 完成翻页；本轮不据此声称完成鼠标操作复验。
 
